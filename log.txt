@@ -12,19 +12,5 @@ AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav, with 
 AudioManager::removeAllSamples() called.
 AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav) called.
 AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav) called.
-CurrentDirectory: X:\MyProjects\c++\2023\X
+CurrentDirectory: X:\media\Audio
 Files in current directory...
-X:\MyProjects\c++\2023\X\.gitattributes
-X:\MyProjects\c++\2023\X\.gitignore
-X:\MyProjects\c++\2023\X\github_social_image.png
-X:\MyProjects\c++\2023\X\log.txt
-X:\MyProjects\c++\2023\X\README.md
-X:\MyProjects\c++\2023\X\X.exe
-X:\MyProjects\c++\2023\X\X.sln
-X:\MyProjects\c++\2023\X\X.vcxproj
-X:\MyProjects\c++\2023\X\X.vcxproj.filters
-X:\MyProjects\c++\2023\X\X.vcxproj.user
-ApplicationManager::mainLoop() calling Development Application's onStart()
-ApplicationManager::mainLoop() is entering main loop...
-ApplicationManager::mainLoop() is shutting down...
-Total runtime: 18sec 0min 0hr 0days 0weeks.

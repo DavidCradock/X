@@ -14,10 +14,11 @@ namespace X
 		pAudioManager->removeAllSamples();
 
 		Log* pLog = Log::getPointer();
-		std::string strCurrentDir = getCurrentDirectory();
+		std::string strCurrentDir = "X:\\media\\Audio";// getCurrentDirectory();
 		pLog->add("CurrentDirectory: " + strCurrentDir);
 		pLog->add("Files in current directory...");
-		std::vector<std::string> files = getFilesInDir(strCurrentDir);
+		std::string fileExtension = "wav";
+		std::vector<std::string> files = getFilesInDir(strCurrentDir, fileExtension, true);
 		for (int i = 0; i < files.size(); ++i)
 		{
 			pLog->add(files[i]);

@@ -33,10 +33,18 @@ namespace X
 	}
 
 	// Returns a vector of strings holding each filename stored within the given directory
-	std::vector<std::string> getFilesInDir(std::string &strDirectory);
+	// If bRecursiveDirs is true, then files within sub directories are also added instead of just the ones in the given directory.
+	std::vector<std::string> getFilesInDir(std::string &strDirectory, bool bRecursiveDirs = false);
+
+	// Returns a vector of strings holding each filename stored within the given directory which have the given filename extension
+	// If bRecursiveDirs is true, then files within sub directories are also added instead of just the ones in the given directory.
+	std::vector<std::string> getFilesInDir(std::string& strDirectory, std::string& ext, bool bRecursiveDirs = false);
 
 	// Returns a vector of strings holding each directory stored within the given directory
-	std::vector<std::string> getDirsInDir(std::string &strDirectory);
+	// If bRecursiveDirs is true, then directories within sub directories are also added instead of just the ones in the given directory.
+	std::vector<std::string> getDirsInDir(std::string &strDirectory, bool bRecursiveDirs = false);
+
+	
 
 	// Returns the current directory
 	std::string getCurrentDirectory(void);
