@@ -1,0 +1,8 @@
+ApplicationManager::mainLoop() called.
+ApplicationManager::addApp(Development Application) called.
+ApplicationManager::addApp(Game) called.
+ApplicationManager::callAllApps_initOnce() called.
+ApplicationManager::mainLoop() calling Development Application's onStart()
+ApplicationManager::mainLoop() is entering main loop...
+ApplicationManager::mainLoop() is shutting down...
+Total runtime: 2sec 0min 0hr 0days 0weeks.

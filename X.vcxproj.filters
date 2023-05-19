@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="applications">
+      <UniqueIdentifier>{2832a56b-f37a-4e1d-bfd1-9dc00deb1a05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sourcecode\log.cpp" />
+    <ClCompile Include="sourcecode\WinMain.cpp" />
+    <ClCompile Include="sourcecode\timer.cpp" />
+    <ClCompile Include="sourcecode\applicationBase.cpp" />
+    <ClCompile Include="sourcecode\applicationManager.cpp" />
+    <ClCompile Include="sourcecode\PCH.cpp" />
+    <ClCompile Include="sourcecode\applicationDevelopment.cpp">
+      <Filter>applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applicationGame.cpp">
+      <Filter>applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\window.cpp" />
+    <ClCompile Include="sourcecode\audioManager.cpp" />
+    <ClCompile Include="sourcecode\audioSample.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sourcecode\log.h" />
+    <ClInclude Include="sourcecode\singleton.h" />
+    <ClInclude Include="sourcecode\timer.h" />
+    <ClInclude Include="sourcecode\utilities.h" />
+    <ClInclude Include="sourcecode\applicationBase.h" />
+    <ClInclude Include="sourcecode\applicationManager.h" />
+    <ClInclude Include="sourcecode\PCH.h" />
+    <ClInclude Include="sourcecode\applicationDevelopment.h">
+      <Filter>applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applicationGame.h">
+      <Filter>applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\window.h" />
+    <ClInclude Include="sourcecode\audioManager.h" />
+    <ClInclude Include="sourcecode\audioSample.h" />
+  </ItemGroup>
+</Project>
