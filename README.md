@@ -9,5 +9,6 @@
 - Within Solution Explorer, right click on X, click properties and add the Vulkan SDK include and lib dir...
 - C++/General additional include directories and add c:\VulkanSDK\1.3.246.1\Include\ or equivalent
 - Linker/Additional Library Directories and add C:\VulkanSDK\1.3.246.1\Lib or equivalent
+
 **Current features**
-- None lol (It DOES have a WinMain though, that exits straight away)
+- None lol (It DOES have a WinMain though!)

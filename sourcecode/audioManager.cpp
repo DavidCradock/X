@@ -90,6 +90,18 @@ namespace X
 		mmapSamples.erase(itr);
 	}
 
+	void AudioManager::removeAllSamples(void)
+	{
+		Log* pLog = Log::getPointer();
+		pLog->add("AudioManager::removeAllSamples() called.");
+		std::map<std::string, AudioSample*>::iterator itr = mmapSamples.begin();
+		while (itr != mmapSamples.end())
+		{
+			removeSample(itr->first);
+			itr = mmapSamples.begin();
+		}
+	}
+
 	void AudioManager::playSample(const std::string& name, float fVolume, float fPlaybackSpeed, bool bLoop)
 	{
 		std::map<std::string, AudioSample*>::iterator itr = mmapSamples.find(name);

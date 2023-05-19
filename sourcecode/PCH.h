@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <chrono>
 #include <codecvt>
+#include <filesystem>
 #include <fstream>
 #include <locale>
 #include <map>

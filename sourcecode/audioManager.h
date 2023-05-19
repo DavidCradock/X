@@ -36,6 +36,9 @@ namespace X
 		// Throws an exception if the named object doesn't exist.
 		void removeSample(const std::string& name);
 
+		// Removes all samples
+		void removeAllSamples(void);
+
 		// Plays the named sample
 		// Multiple instances of this sample can be played back to iMaxNumberVoices parsed to addSample()
 		void playSample(const std::string& name, float fVolume = 1.0f, float fPlaybackSpeed = 1.0f, bool bLoop = false);

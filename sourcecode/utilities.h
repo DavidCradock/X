@@ -31,4 +31,15 @@ namespace X
 		WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, buffer, 512, NULL, NULL);
 		return std::string(buffer);
 	}
+
+	// Returns a vector of strings holding each filename stored within the given directory
+	std::vector<std::string> getFilesInDir(std::string &strDirectory);
+
+	// Returns a vector of strings holding each directory stored within the given directory
+	std::vector<std::string> getDirsInDir(std::string &strDirectory);
+
+	// Returns the current directory
+	std::string getCurrentDirectory(void);
+
+
 }
