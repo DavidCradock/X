@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "audioManager.h"
 #include "log.h"
-
+#include "utilities.h"
 
 namespace X
 {
@@ -56,6 +56,23 @@ namespace X
 			// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
 			ThrowIfTrue(FAILED(hr = mpXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&pNewRes->wfx)), "AudioManager::addSample() failed to create source voice.");
 			pNewRes->vecVoices.push_back(pVoice);
+		}
+	}
+
+	void AudioManager::addSamples(const std::string& strDirectory, unsigned int iMaxNumberVoices, bool bRecursiveDirs)
+	{
+		Log* pLog = Log::getPointer();
+		pLog->add("AudioManager::addSamples(" + strDirectory + ") called.");
+
+		std::string strExtension(".wav");
+		std::vector<std::string> strFilenames = getFilesInDir(strDirectory, strExtension, bRecursiveDirs);
+		std::string strFilename;	// Holds file name including the given directory
+		if (0 == strFilenames.size())
+			return;
+		pLog->add("Samples found: " + std::to_string(strFilenames.size()));
+		for (int i = 0; i < (int)strFilenames.size(); ++i)
+		{
+			addSample(strFilenames[i], iMaxNumberVoices);
 		}
 	}
 

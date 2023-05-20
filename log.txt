@@ -12,5 +12,8 @@ AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav, with 
 AudioManager::removeAllSamples() called.
 AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav) called.
 AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav) called.
-CurrentDirectory: X:\media\Audio
-Files in current directory...
+AudioManager::addSamples(audio) called.
+Samples found: 3
+AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 8
+AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Density_120BPM.wav, with iMaxNumberVoices set to 8
+AudioManager::addSample(audio\gui\short_beep_C.wav, with iMaxNumberVoices set to 8

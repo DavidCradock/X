@@ -13,16 +13,7 @@ namespace X
 		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Density_120BPM.wav");
 		pAudioManager->removeAllSamples();
 
-		Log* pLog = Log::getPointer();
-		std::string strCurrentDir = "X:\\media\\Audio";// getCurrentDirectory();
-		pLog->add("CurrentDirectory: " + strCurrentDir);
-		pLog->add("Files in current directory...");
-		std::string fileExtension = "wav";
-		std::vector<std::string> files = getFilesInDir(strCurrentDir, fileExtension, true);
-		for (int i = 0; i < files.size(); ++i)
-		{
-			pLog->add(files[i]);
-		}
+		pAudioManager->addSamples("audio", 8, true);
 	}
 
 	void ApplicationDevelopment::onStart(void)

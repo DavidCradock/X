@@ -25,9 +25,16 @@ namespace X
 		friend class AudioSample;
 		AudioManager();
 
-		// Creates a new object and loads it's data in
+		// Adds a new audio sample and loads it's data in so it's ready to be played back
 		// iMaxNumberVoices is the total number of times this sample can be played back simultaneously
 		void addSample(const std::string& name, unsigned int iMaxNumberVoices = 8);
+
+		// Adds new audio samples from the given directory and loads it's data in so they're ready to be played back
+		// iMaxNumberVoices is the total number of times this sample can be played back simultaneously.
+		// If bRecursiveDirs is true, then files within sub directories are also added instead of just the ones in the given directory.
+		// If no files were found, this simply returns.
+		// The samples can then be accessed via the directory followed by the filename of each sample filename.
+		void addSamples(const std::string& strDirectory, unsigned int iMaxNumberVoices = 8, bool bRecursiveDirs = false);
 
 		// Returns true if the named object exists, else false.
 		bool getSampleExists(const std::string& name);

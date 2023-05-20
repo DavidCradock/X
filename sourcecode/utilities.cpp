@@ -4,7 +4,7 @@
 
 namespace X
 {
-	std::vector<std::string> getFilesInDir(std::string &strDirectory, bool bRecursiveDirs)
+	std::vector<std::string> getFilesInDir(const std::string &strDirectory, bool bRecursiveDirs)
 	{
 		std::vector<std::string> filenames;
 		if (bRecursiveDirs)
@@ -26,7 +26,7 @@ namespace X
 		return filenames;
 	}
 
-	std::vector<std::string> getFilesInDir(std::string& strDirectory, std::string& ext, bool bRecursiveDirs)
+	std::vector<std::string> getFilesInDir(const std::string& strDirectory, const std::string& ext, bool bRecursiveDirs)
 	{
 		// Make sure the given extension has the "." character
 		ThrowIfTrue(0 == ext.length(), "getFilesInDir() extension has length of zero.");
@@ -61,7 +61,7 @@ namespace X
 		return filenames;
 	}
 
-	std::vector<std::string> getDirsInDir(std::string& strDirectory, bool bRecursiveDirs)
+	std::vector<std::string> getDirsInDir(const std::string& strDirectory, bool bRecursiveDirs)
 	{
 		std::vector<std::string> dirnames;
 		if (bRecursiveDirs)
