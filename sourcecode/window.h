@@ -29,5 +29,7 @@ namespace X
 		std::string mstrWindowTitle;	// Window's title text
 		int miWindowWidth;				// Width of window
 		int miWindowHeight;				// Height of window
+
+		VkInstance mvkInstance;			// Main Vulkan instance
 	};
 }

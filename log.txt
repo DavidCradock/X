@@ -17,3 +17,22 @@ Samples found: 3
 AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 8
 AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Density_120BPM.wav, with iMaxNumberVoices set to 8
 AudioManager::addSample(audio\gui\short_beep_C.wav, with iMaxNumberVoices set to 8
+Window::initialise() called.
+Window::initialise() has created the application window.
+Window::initialise() has detected 12 extensions.
+Window::initialise() extension name: VK_KHR_device_group_creation
+Window::initialise() extension name: VK_KHR_external_fence_capabilities
+Window::initialise() extension name: VK_KHR_external_memory_capabilities
+Window::initialise() extension name: VK_KHR_external_semaphore_capabilities
+Window::initialise() extension name: VK_KHR_get_physical_device_properties2
+Window::initialise() extension name: VK_KHR_get_surface_capabilities2
+Window::initialise() extension name: VK_KHR_surface
+Window::initialise() extension name: VK_KHR_win32_surface
+Window::initialise() extension name: VK_EXT_debug_report
+Window::initialise() extension name: VK_EXT_debug_utils
+Window::initialise() extension name: VK_EXT_swapchain_colorspace
+Window::initialise() extension name: VK_KHR_portability_enumeration
+Window::initialise() attempting to create main Vulkan instance.
+Window::initialise() main Vulkan instance created.
+ApplicationManager::mainLoop() calling Development Application's onStart()
+ApplicationManager::mainLoop() is entering main loop...

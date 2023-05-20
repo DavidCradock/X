@@ -34,6 +34,10 @@ namespace X
 		// If bRecursiveDirs is true, then files within sub directories are also added instead of just the ones in the given directory.
 		// If no files were found, this simply returns.
 		// The samples can then be accessed via the directory followed by the filename of each sample filename.
+		// There's no need to add either "\\"s or "/"s to the directory name.
+		// Here's how the samples will be named...
+		// Example "audio" directory containing a sample "fart1.wav" and a subfolder with "farts" and a sample in that named "fart2.wav"...
+		// "audio\\fart1.wav" and "audio\\farts\\fart2.wav"
 		void addSamples(const std::string& strDirectory, unsigned int iMaxNumberVoices = 8, bool bRecursiveDirs = false);
 
 		// Returns true if the named object exists, else false.

@@ -19,6 +19,9 @@ namespace X
 
 	void Window::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight)
 	{
+		Log* pLog = Log::getPointer();
+		pLog->add("Window::initialise() called.");
+
 		mstrWindowTitle = strWindowTitle;
 
 		// Create application window
@@ -49,9 +52,63 @@ namespace X
 		int iPosLeft = (rectDesktop.right / 2) - (width / 2);
 		int iPosTop = (rectDesktop.bottom / 2) - (height / 2);
 		SetWindowPos(mhWindowHandle, HWND_TOP, iPosLeft, iPosTop, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
-
 		ShowWindow(mhWindowHandle, SW_SHOW);
 		UpdateWindow(mhWindowHandle);
+		pLog->add("Window::initialise() has created the application window.");
+
+		// Create Vulkan main instance
+		// This next struct is optional, but as we're using Vulkan that's a pretty verbose API,
+		// we might aswell use it.
+		VkApplicationInfo vkApplicationInfo{};
+		vkApplicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		vkApplicationInfo.pNext = nullptr;
+		vkApplicationInfo.pApplicationName = "X";
+		vkApplicationInfo.applicationVersion = VK_MAKE_API_VERSION(1, 1, 0, 0);
+		vkApplicationInfo.pEngineName = "X";
+		vkApplicationInfo.engineVersion = VK_MAKE_API_VERSION(1, 1, 0, 0);
+		vkApplicationInfo.apiVersion = VK_API_VERSION_1_3;
+		
+		// Get extensions supported
+		uint32_t extensionCount = 0;
+		vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+		std::vector<std::string> supportedInstanceExtensions;
+		if (extensionCount > 0)
+		{
+			pLog->add("Window::initialise() has detected " + std::to_string(extensionCount) + " extensions.");
+			std::vector<VkExtensionProperties> extensions(extensionCount);
+			if (VK_SUCCESS == vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, &extensions.front()))
+			{
+				for (VkExtensionProperties extension : extensions)
+				{
+					supportedInstanceExtensions.push_back(extension.extensionName);
+				}
+			}
+		}
+		for (int i = 0; i < supportedInstanceExtensions.size(); ++i)
+		{
+			pLog->add("Window::initialise() extension name: " + supportedInstanceExtensions[i]);
+		}
+
+		// This next struct isn't optional.
+		// It tells the Vulkan driver which extensions and validation layers which we wish to use.
+		// Add required extensions
+		std::vector<const char*> instanceExtensions = { VK_KHR_SURFACE_EXTENSION_NAME };
+		instanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+
+		VkInstanceCreateInfo vkInstanceCreateInfo{};
+		vkInstanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+		vkInstanceCreateInfo.pNext = nullptr;
+		vkInstanceCreateInfo.flags = 0;
+		vkInstanceCreateInfo.pApplicationInfo = &vkApplicationInfo;
+		vkInstanceCreateInfo.enabledLayerCount = 0;	// Number of global layers to enable
+		vkInstanceCreateInfo.enabledExtensionCount = (uint32_t)instanceExtensions.size();	// Number of global extensions to enable
+		vkInstanceCreateInfo.ppEnabledExtensionNames = instanceExtensions.data();
+		
+		// Attempt to create the Vulkan instance
+		pLog->add("Window::initialise() attempting to create main Vulkan instance.");
+		VkResult result = vkCreateInstance(&vkInstanceCreateInfo, nullptr, &mvkInstance);
+		ThrowIfFalse(VK_SUCCESS == result, "Window::initialise() failed to create the main Vulkan instance.");
+		pLog->add("Window::initialise() main Vulkan instance created.");
 	}
 
 	bool Window::update(void)
