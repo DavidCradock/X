@@ -26,11 +26,10 @@ namespace X
 		return filenames;
 	}
 
-	// Returns a vector of strings holding each filename stored within the given directory which have the given filename extension
 	std::vector<std::string> getFilesInDir(std::string& strDirectory, std::string& ext, bool bRecursiveDirs)
 	{
 		// Make sure the given extension has the "." character
-		ThrowIfTrue(ext.length() < 1, "getFilesInDir() extension has length of zero.");
+		ThrowIfTrue(0 == ext.length(), "getFilesInDir() extension has length of zero.");
 		std::string strExt;
 		if (ext.c_str()[0] != '.')
 			strExt.append(".");
