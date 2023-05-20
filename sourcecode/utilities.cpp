@@ -53,7 +53,7 @@ namespace X
 			{
 				if (filename.is_regular_file())
 				{
-					if (filename.path().extension() == ext)
+					if (filename.path().extension() == strExt)
 						filenames.push_back(filename.path().string());
 				}
 			}
