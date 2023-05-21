@@ -36,6 +36,8 @@ namespace X
 		VkPhysicalDevice mvkPhysicalDevice;			// Physical Vulkan device found and choosen in _initPhysicalDevice()
 		VkDevice mvkLogicalDevice;					// Logical Vulkan device
 		VkQueue mvkGraphicsQueue;					// Graphics queue for the logical device
+		VkSurfaceKHR mvkWindowSurface;				// The window surface which Vulkan will render to
+
 		// Find a physical device
 		void _initPhysicalDevice(void);
 

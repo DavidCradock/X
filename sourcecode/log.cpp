@@ -11,10 +11,26 @@ namespace X
 		mlogEntry.clear();
 	}
 
-	void Log::add(const std::string& string, bool bAddNewLine)
+	void Log::add(const std::string& string, bool bAddNewLine, bool bAddTime)
 	{
 		std::fstream fs;
 		fs.open("log.txt", std::ios::out | std::ios::app);
+		if (bAddTime)
+		{
+			timer.update();
+			float fClockSec;
+			int iClockMin, iClockHours, iClockDays, iClockWeeks;
+			timer.getClock(fClockSec, iClockMin, iClockHours, iClockDays, iClockWeeks);
+			std::string strClock;
+			strClock += std::to_string(iClockWeeks) + "w:";
+			strClock += std::to_string(iClockDays) + "d:";
+			strClock += std::to_string(iClockHours) + "h:";
+			strClock += std::to_string(iClockMin) + "m:";
+			if (fClockSec < 10.0f)
+				strClock += "0";
+			strClock += std::to_string(int(fClockSec)) + "s : ";
+			fs << strClock.c_str();
+		}
 		fs << string.c_str();
 		if (bAddNewLine)
 			fs << "\n";

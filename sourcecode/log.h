@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "singleton.h"
 #include "utilities.h"
+#include "timer.h"
 
 namespace X
 {
@@ -44,7 +45,7 @@ namespace X
 		void clear(void);
 
 		// Add text to the log file and entries in memory
-		void add(const std::string& string, bool bAddNewLine = true);
+		void add(const std::string& string, bool bAddNewLine = true, bool bAddTime = true);
 
 		// Return number of entries added via add()
 		size_t getNumEntries(void);
@@ -54,5 +55,6 @@ namespace X
 		std::string getEntryText(size_t entryIndex);
 	private:
 		std::vector<std::string> mlogEntry;	// A vector of strings, to hold each entry added by add() method
+		Timer timer;						// For adding time to the beginning of each entry
 	};
 }

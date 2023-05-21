@@ -250,13 +250,24 @@ namespace X
 		createInfo.queueCreateInfoCount = 1;
 		createInfo.pEnabledFeatures = &deviceFeatures;
 		// Set debug layer info from the physical device's creation structure
+		// Apparantly, these are ignored by more recent API versions, but we'll add it anyway, just for backwards compatibility.
 		createInfo.enabledLayerCount = vkInstanceCreateInfo.enabledLayerCount;
 		createInfo.ppEnabledLayerNames = vkInstanceCreateInfo.ppEnabledLayerNames;
 		// Attempt to create the logical device
 		ThrowIfTrue(VK_SUCCESS != vkCreateDevice(mvkPhysicalDevice, &createInfo, nullptr, &mvkLogicalDevice), "Window::initialise() was unable to create the Vulkan logical device.");
 		// Obtain the graphics queue
 		vkGetDeviceQueue(mvkLogicalDevice, graphicsFamily.value(), 0, &mvkGraphicsQueue);
-		
+		pLog->add("Window::initialise() has created the Vulkan logical device and obtained the graphics queue.");
+
+		// Now create the window surface which Vulkan will render to and present in the window
+		VkWin32SurfaceCreateInfoKHR createInfoWindowSurface{};
+		createInfoWindowSurface.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+		createInfoWindowSurface.hwnd = mhWindowHandle;
+		createInfoWindowSurface.hinstance = mhInstance;
+		ThrowIfTrue(VK_SUCCESS != vkCreateWin32SurfaceKHR(mvkInstance, &createInfoWindowSurface, nullptr, &mvkWindowSurface), "Window::initialise() failed during call to vkCreateWin32SurfaceKHR()");
+		pLog->add("Window::initialise() has created the window surface.");
+
+
 	}
 
 	void Window::_initPhysicalDevice(void)
@@ -287,7 +298,7 @@ namespace X
 			}
 		}
 		ThrowIfTrue(0 == iHighestScore, strLogPrefix + "unable to find a physical device which has required features.");
-
+		pLog->add(strLogPrefix + "Vulkan physical device has been created.");
 	}
 
 	int Window::_initComputePhysicalDeviceScore(VkPhysicalDevice vkPhysicalDevice)
@@ -359,10 +370,13 @@ namespace X
 			}
 		}
 
-		// Delete the Vulkan logical device
+		// Destroy window surface
+		vkDestroySurfaceKHR(mvkInstance, mvkWindowSurface, nullptr);
+
+		// Destroy the Vulkan logical device
 		vkDestroyDevice(mvkLogicalDevice, nullptr);
 
-		// Delete main Vulkan instance
+		// Destroy main Vulkan instance
 		vkDestroyInstance(mvkInstance, nullptr);
 
 		// Close window
