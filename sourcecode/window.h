@@ -31,7 +31,16 @@ namespace X
 		int miWindowWidth;				// Width of window
 		int miWindowHeight;				// Height of window
 
-		VkInstance mvkInstance;			// Main Vulkan instance
+		VkInstance mvkInstance;						// Main Vulkan instance
 		VkDebugUtilsMessengerEXT debugMessenger;	// Debug layers messenger
+		VkPhysicalDevice mvkPhysicalDevice;			// Physical Vulkan device found and choosen in _initPhysicalDevice()
+		// Find a physical device
+		void _initPhysicalDevice(void);
+
+		// Used by _initPhysicalDevice to compute a "score" for a physical device
+		// _initPhysicalDevice then chooses the device with the highest score.
+		// The more features, a higher score for a physical device.
+		// Also logs device features to log file.
+		int _initComputePhysicalDeviceScore(VkPhysicalDevice vkPhysicalDevice);
 	};
 }

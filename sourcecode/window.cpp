@@ -38,6 +38,8 @@ namespace X
 		mhWindowHandle = NULL;
 		miWindowWidth = 1024;
 		miWindowHeight = 576;
+
+		mvkPhysicalDevice = VK_NULL_HANDLE;
 	}
 
 	void Window::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight)
@@ -211,9 +213,83 @@ namespace X
 				ThrowIfTrue(1, "Window::initialise() unable to obtain vkCreateDebugUtilsMessengerExt function.");
 			}
 		}
+		
+		_initPhysicalDevice();
 	}
 
-	
+	void Window::_initPhysicalDevice(void)
+	{
+		Log* pLog = Log::getPointer();
+		std::string strLogPrefix = "Window::_initPhysicalDevice() ";
+		pLog->add(strLogPrefix + "called.");
+
+		// Find how many physical devices there are, if none, throw stuff around have a little tantrum.
+		uint32_t uiDeviceCount = 0;
+		vkEnumeratePhysicalDevices(mvkInstance, &uiDeviceCount, nullptr);
+		pLog->add("Window::_initPhysicalDevice() found " + std::to_string(uiDeviceCount) + " physical devices.");
+		ThrowIfTrue(0 == uiDeviceCount, strLogPrefix + "no physical devices were found.");
+
+		// Populate a vector with information about each physical device.
+		std::vector<VkPhysicalDevice> vkPhysicalDevices(uiDeviceCount);
+		vkEnumeratePhysicalDevices(mvkInstance, &uiDeviceCount, vkPhysicalDevices.data());
+
+		// For each physical device, compute their score and set mvkPhysicalDevice to the highest scoring device.
+		int iHighestScore = 0;
+		for (const auto& vkPhysicalDevice : vkPhysicalDevices)
+		{
+			int iScore = _initComputePhysicalDeviceScore(vkPhysicalDevice);
+			if (iScore > iHighestScore)
+			{
+				iHighestScore = iScore;
+				mvkPhysicalDevice = vkPhysicalDevice;
+			}
+		}
+		ThrowIfTrue(0 == iHighestScore, strLogPrefix + "unable to find a physical device which has required features.");
+
+	}
+
+	int Window::_initComputePhysicalDeviceScore(VkPhysicalDevice vkPhysicalDevice)
+	{
+		int iScore = 0;
+
+		// Get physical device properties
+		VkPhysicalDeviceProperties vkDeviceProperties;
+		vkGetPhysicalDeviceProperties(vkPhysicalDevice, &vkDeviceProperties);
+
+		// Log physical device properties
+		Log* pLog = Log::getPointer();
+		pLog->add("_initComputePhysicalDeviceScore() Vulkan Physical Device Name: " + std::string(vkDeviceProperties.deviceName));
+		
+		// Get physical device features
+		VkPhysicalDeviceFeatures vkDeviceFeatures;
+		vkGetPhysicalDeviceFeatures(vkPhysicalDevice, &vkDeviceFeatures);
+		if (vkDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU)
+		{
+			pLog->add("_initComputePhysicalDeviceScore() Vulkan Physical Device Type: Virtual GPU");
+			iScore += 1;
+		}
+		if (vkDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
+		{
+			pLog->add("_initComputePhysicalDeviceScore() Vulkan Physical Device Type: Integrated GPU");
+			iScore += 1000;
+		}
+		if (vkDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+		{
+			pLog->add("_initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU");
+			iScore += 100000;
+		}
+
+		// Nice to have features
+		// Nice to have larger texture dimensions
+		iScore += vkDeviceProperties.limits.maxImageDimension2D;
+		pLog->add("_initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: " + std::to_string(vkDeviceProperties.limits.maxImageDimension2D));
+
+		// Check features we NEED
+		if (!vkDeviceFeatures.geometryShader)
+			return 0;
+
+		return iScore;
+	}
 
 	bool Window::update(void)
 	{
