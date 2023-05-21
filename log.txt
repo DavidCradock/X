@@ -1,22 +1,6 @@
 ApplicationManager::mainLoop() called.
 ApplicationManager::addApp(Development Application) called.
 ApplicationManager::addApp(Game) called.
-ApplicationManager::callAllApps_initOnce() called.
-AudioManager constructor called.
-AudioManager initialising COM.
-AudioManager creating XAudio2 engine instance.
-AudioManager creating mastering voice.
-AudioManager initialisation complete.
-AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 8
-AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav, with iMaxNumberVoices set to 8
-AudioManager::removeAllSamples() called.
-AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav) called.
-AudioManager::removeSample(audio/drone_loops/Falcon_Volkm_Density_120BPM.wav) called.
-AudioManager::addSamples(audio) called.
-Samples found: 3
-AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 8
-AudioManager::addSample(audio\drone_loops\Falcon_Volkm_Density_120BPM.wav, with iMaxNumberVoices set to 8
-AudioManager::addSample(audio\gui\short_beep_C.wav, with iMaxNumberVoices set to 8
 Window::initialise() called.
 Window::initialise() has created the application window.
 Window::initialise() has detected 12 extensions.
@@ -32,7 +16,11 @@ Window::initialise() extension name: VK_EXT_debug_report
 Window::initialise() extension name: VK_EXT_debug_utils
 Window::initialise() extension name: VK_EXT_swapchain_colorspace
 Window::initialise() extension name: VK_KHR_portability_enumeration
+Window::initialise() has enabled the debug layers.
 Window::initialise() attempting to create main Vulkan instance.
 Window::initialise() main Vulkan instance created.
+ApplicationManager::callAllApps_initOnce() called.
 ApplicationManager::mainLoop() calling Development Application's onStart()
 ApplicationManager::mainLoop() is entering main loop...
+ApplicationManager::mainLoop() is shutting down...
+Total runtime: 1sec 0min 0hr 0days 0weeks.

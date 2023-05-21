@@ -22,6 +22,7 @@ namespace X
 		LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 		HWND getWindowHandle(void);
+
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle
@@ -31,5 +32,6 @@ namespace X
 		int miWindowHeight;				// Height of window
 
 		VkInstance mvkInstance;			// Main Vulkan instance
+		VkDebugUtilsMessengerEXT debugMessenger;	// Debug layers messenger
 	};
 }

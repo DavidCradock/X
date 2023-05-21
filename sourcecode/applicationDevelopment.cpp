@@ -8,12 +8,6 @@ namespace X
 {
 	void ApplicationDevelopment::initOnce(void)
 	{
-		AudioManager* pAudioManager = AudioManager::getPointer();
-		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav");
-		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Density_120BPM.wav");
-		pAudioManager->removeAllSamples();
-
-		pAudioManager->addSamples("audio", 8, true);
 	}
 
 	void ApplicationDevelopment::onStart(void)

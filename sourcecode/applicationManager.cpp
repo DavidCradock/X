@@ -30,12 +30,12 @@ namespace X
 			addApp("Development Application", pAppDevelopment);
 			addApp("Game", pAppGame);
 
-			// Now call each application's initOnce method
-			callAllApps_initOnce();
-
 			// Create window
 			Window* pWindow = Window::getPointer();
 			pWindow->initialise("X", 1024, 576);
+
+			// Now call each application's initOnce method
+			callAllApps_initOnce();
 
 			// Call currently set application's onStart method
 			std::string strLog = "ApplicationManager::mainLoop() calling " + mstrCurrentApp + "'s onStart()";
