@@ -34,6 +34,8 @@ namespace X
 		VkInstance mvkInstance;						// Main Vulkan instance
 		VkDebugUtilsMessengerEXT debugMessenger;	// Debug layers messenger
 		VkPhysicalDevice mvkPhysicalDevice;			// Physical Vulkan device found and choosen in _initPhysicalDevice()
+		VkDevice mvkLogicalDevice;					// Logical Vulkan device
+		VkQueue mvkGraphicsQueue;					// Graphics queue for the logical device
 		// Find a physical device
 		void _initPhysicalDevice(void);
 

@@ -215,6 +215,48 @@ namespace X
 		}
 		
 		_initPhysicalDevice();
+
+		// Get each Queue family of the physical device and make sure the VK_QUEUE_GRAPHICS_BIT is set for one of them.
+		// Also, store the index to the graphics queue so we can use it below when parsing the VkDeviceQueueCreateInfo.queueFamilyIndex
+		uint32_t queueFamilyCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(mvkPhysicalDevice, &queueFamilyCount, nullptr);
+		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(mvkPhysicalDevice, &queueFamilyCount, queueFamilies.data());
+		int i = 0;
+		std::optional<uint32_t> graphicsFamily;
+		for (const auto& queueFamily : queueFamilies)
+		{
+			if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				graphicsFamily = i;
+			}
+			i++;
+		}
+		ThrowIfFalse(graphicsFamily.has_value(), "Window::initialise() was unable to find the VK_QUEUE_GRAPHICS_BIT for the chosen physical Vulkan device.");
+
+		// Create logical Vulkan device for the physical device
+		VkDeviceQueueCreateInfo queueCreateInfo{};
+		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueCreateInfo.queueFamilyIndex = graphicsFamily.value();
+		queueCreateInfo.queueCount = 1;
+		float queuePriority = 1.0f;
+		queueCreateInfo.pQueuePriorities = &queuePriority;
+		// Specify used device features
+		VkPhysicalDeviceFeatures deviceFeatures{};
+		deviceFeatures.geometryShader = true;
+		VkDeviceCreateInfo createInfo{};
+		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		createInfo.pQueueCreateInfos = &queueCreateInfo;
+		createInfo.queueCreateInfoCount = 1;
+		createInfo.pEnabledFeatures = &deviceFeatures;
+		// Set debug layer info from the physical device's creation structure
+		createInfo.enabledLayerCount = vkInstanceCreateInfo.enabledLayerCount;
+		createInfo.ppEnabledLayerNames = vkInstanceCreateInfo.ppEnabledLayerNames;
+		// Attempt to create the logical device
+		ThrowIfTrue(VK_SUCCESS != vkCreateDevice(mvkPhysicalDevice, &createInfo, nullptr, &mvkLogicalDevice), "Window::initialise() was unable to create the Vulkan logical device.");
+		// Obtain the graphics queue
+		vkGetDeviceQueue(mvkLogicalDevice, graphicsFamily.value(), 0, &mvkGraphicsQueue);
+		
 	}
 
 	void Window::_initPhysicalDevice(void)
@@ -316,6 +358,9 @@ namespace X
 				ThrowIfTrue(1, "Window::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
 			}
 		}
+
+		// Delete the Vulkan logical device
+		vkDestroyDevice(mvkLogicalDevice, nullptr);
 
 		// Delete main Vulkan instance
 		vkDestroyInstance(mvkInstance, nullptr);

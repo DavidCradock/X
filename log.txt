@@ -23,4 +23,9 @@ Window::_initPhysicalDevice() called.
 Window::_initPhysicalDevice() found 1 physical devices.
 _initComputePhysicalDeviceScore() Vulkan Physical Device Name: AMD Radeon RX 6800 XT
 _initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU
-_initComputePhysicalDeviceScore() Vulkan Physical Device maxMemoryAllocationCount: 4096
+_initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: 16384
+ApplicationManager::callAllApps_initOnce() called.
+ApplicationManager::mainLoop() calling Development Application's onStart()
+ApplicationManager::mainLoop() is entering main loop...
+ApplicationManager::mainLoop() is shutting down...
+Total runtime: 1sec 0min 0hr 0days 0weeks.
