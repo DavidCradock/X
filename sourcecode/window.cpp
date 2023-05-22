@@ -214,7 +214,7 @@ namespace X
 			auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mvkInstance, "vkCreateDebugUtilsMessengerEXT");
 			if (func != nullptr)
 			{
-				ThrowIfTrue(VK_SUCCESS != func(mvkInstance, &createInfo, nullptr, &debugMessenger), "Window::initialise() failed whilst setting up debug function.");
+				ThrowIfTrue(VK_SUCCESS != func(mvkInstance, &createInfo, nullptr, &mvkDebugMessenger), "Window::initialise() failed whilst setting up debug function.");
 			}
 			else
 			{
@@ -476,6 +476,36 @@ namespace X
 		// Finally, store the image format of the images used in the swap chain
 		mvkSwapchainImageFormat = foundFormat.format;
 
+		// Now we setup image views for the swapchain's images
+		// Resize the image views vector to the number of images in the swapchain
+		mvkSwapchainImageViews.resize(mvkSwapChainImages.size());
+		// For each image in the swap chain, create an image view
+		pLog->add("Window::initialise() attempting to create image views for the swapchain images...", false, true);
+		for (size_t i = 0; i < mvkSwapChainImages.size(); i++)
+		{
+			VkImageViewCreateInfo imageViewCreateInfo{};
+			imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			imageViewCreateInfo.image = mvkSwapChainImages[i];
+			imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+			imageViewCreateInfo.format = mvkSwapchainImageFormat;
+			imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+			imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+			imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+			imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+			// No mipmaps or multiple layers...
+			imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
+			imageViewCreateInfo.subresourceRange.levelCount = 1;
+			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
+			imageViewCreateInfo.subresourceRange.layerCount = 1;
+			
+			if (vkCreateImageView(mvkLogicalDevice, &imageViewCreateInfo, nullptr, &mvkSwapchainImageViews[i]) != VK_SUCCESS)
+			{
+				ThrowIfTrue(1, "Window::initialise() failed to create image views for the swapchain images");
+			}
+		}
+		pLog->add(" done.", true, false);
+
 
 	}
 
@@ -571,12 +601,18 @@ namespace X
 			auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mvkInstance, "vkDestroyDebugUtilsMessengerEXT");
 			if (func != nullptr)
 			{
-				func(mvkInstance, debugMessenger, nullptr);
+				func(mvkInstance, mvkDebugMessenger, nullptr);
 			}
 			else
 			{
 				ThrowIfTrue(1, "Window::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
 			}
+		}
+
+		// Destroy swapchain image views
+		for (auto imageView : mvkSwapchainImageViews)
+		{
+			vkDestroyImageView(mvkLogicalDevice, imageView, nullptr);
 		}
 
 		// Destroy the swapchain

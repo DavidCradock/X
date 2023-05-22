@@ -149,6 +149,8 @@
     <ClCompile Include="sourcecode\applicationManager.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\audioSample.cpp" />
+    <ClCompile Include="sourcecode\graphicsPipeline.cpp" />
+    <ClCompile Include="sourcecode\graphicsPipelineManager.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
     <ClCompile Include="sourcecode\log.cpp" />
@@ -169,6 +171,8 @@
     <ClInclude Include="sourcecode\applicationManager.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\audioSample.h" />
+    <ClInclude Include="sourcecode\graphicsPipeline.h" />
+    <ClInclude Include="sourcecode\graphicsPipelineManager.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\PCH.h" />

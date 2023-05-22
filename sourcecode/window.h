@@ -35,17 +35,18 @@ namespace X
 		int miWindowWidth;				// Width of window
 		int miWindowHeight;				// Height of window
 
-		VkInstance mvkInstance;						// Main Vulkan instance
-		VkDebugUtilsMessengerEXT debugMessenger;	// Debug layers messenger
-		VkPhysicalDevice mvkPhysicalDevice;			// Physical Vulkan device found and choosen in _initPhysicalDevice()
-		VkDevice mvkLogicalDevice;					// Logical Vulkan device
-		VkQueue mvkGraphicsQueue;					// Graphics queue for the logical device
-		VkSurfaceKHR mvkWindowSurface;				// The window surface which Vulkan will render to
-		VkQueue mvkPresentationQueue;				// Presentation queue for the window surface of the logical device.
-		VkSwapchainKHR mvkSwapChain;				// Vulkan swap chain
-		VkExtent2D mvkSwapChainExtent;				// The dimensions of the images in the swapchain
-		VkFormat mvkSwapchainImageFormat;			// Image format of the swapchain images
-		std::vector<VkImage> mvkSwapChainImages;	// Images for the swap chain
+		VkInstance mvkInstance;								// Main Vulkan instance
+		VkDebugUtilsMessengerEXT mvkDebugMessenger;			// Debug layers messenger
+		VkPhysicalDevice mvkPhysicalDevice;					// Physical Vulkan device found and choosen in _initPhysicalDevice()
+		VkDevice mvkLogicalDevice;							// Logical Vulkan device
+		VkQueue mvkGraphicsQueue;							// Graphics queue for the logical device
+		VkSurfaceKHR mvkWindowSurface;						// The window surface which Vulkan will render to
+		VkQueue mvkPresentationQueue;						// Presentation queue for the window surface of the logical device.
+		VkSwapchainKHR mvkSwapChain;						// Vulkan swap chain
+		VkExtent2D mvkSwapChainExtent;						// The dimensions of the images in the swapchain
+		VkFormat mvkSwapchainImageFormat;					// Image format of the swapchain images
+		std::vector<VkImage> mvkSwapChainImages;			// Images for the swap chain
+		std::vector<VkImageView> mvkSwapchainImageViews;	// Image views for the swap chain images
 
 		// Find a physical device
 		void _initPhysicalDevice(void);

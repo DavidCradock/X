@@ -34,6 +34,8 @@
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\audioSample.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
+    <ClCompile Include="sourcecode\graphicsPipelineManager.cpp" />
+    <ClCompile Include="sourcecode\graphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -55,5 +57,7 @@
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\audioSample.h" />
+    <ClInclude Include="sourcecode\graphicsPipelineManager.h" />
+    <ClInclude Include="sourcecode\graphicsPipeline.h" />
   </ItemGroup>
 </Project>
