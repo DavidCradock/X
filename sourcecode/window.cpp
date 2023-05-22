@@ -417,17 +417,16 @@ namespace X
 
 		// Setup the swap chain (That was quick! :D)
 		// Get swap chain image dimensions, aka, the extent.
-		VkExtent2D vkSwapChainExtent;
 		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 		{
-			vkSwapChainExtent = capabilities.currentExtent;
+			mvkSwapChainExtent = capabilities.currentExtent;
 		}
 		else
 		{
 			VkExtent2D actualExtent = { static_cast<uint32_t>(iWindowWidth), static_cast<uint32_t>(iWindowHeight) };
 			actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
 			actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
-			vkSwapChainExtent = actualExtent;
+			mvkSwapChainExtent = actualExtent;
 		}
 		// How many images are needed in the swap chain?
 		// Vulkan specifies the minimum amount needed, but we give it an extra one so that we
@@ -446,7 +445,7 @@ namespace X
 		vkSwapchainCreateInfo.minImageCount = imageCount;
 		vkSwapchainCreateInfo.imageFormat = foundFormat.format;
 		vkSwapchainCreateInfo.imageColorSpace = foundFormat.colorSpace;
-		vkSwapchainCreateInfo.imageExtent = vkSwapChainExtent;
+		vkSwapchainCreateInfo.imageExtent = mvkSwapChainExtent;
 		vkSwapchainCreateInfo.imageArrayLayers = 1;
 		// VK_IMAGE_USAGE_TRANSFER_DST_BIT  could be used here if we want to do post-processing, render to this and then copy it manually
 		vkSwapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
@@ -459,9 +458,6 @@ namespace X
 		vkSwapchainCreateInfo.clipped = VK_TRUE;
 		vkSwapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-
-
-
 		// Create the swap chain
 		pLog->add("Window::initialise() attempting to create swapchain... ", false, true);
 		if (vkCreateSwapchainKHR(mvkLogicalDevice, &vkSwapchainCreateInfo, nullptr, &mvkSwapChain) != VK_SUCCESS)
@@ -470,8 +466,17 @@ namespace X
 		}
 		pLog->add("done.", true, false);
 
-		std::vector<VkImage> swapChainImages;
-		VkFormat swapChainImageFormat;
+		// Get image handles
+		// First, return the actual number of images created by Vulkan
+		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapChain, &imageCount, nullptr);
+		// Resize to fit them all
+		mvkSwapChainImages.resize(imageCount);
+		// Get the swapchain images
+		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapChain, &imageCount, mvkSwapChainImages.data());
+		// Finally, store the image format of the images used in the swap chain
+		mvkSwapchainImageFormat = foundFormat.format;
+
+
 	}
 
 	void Window::_initPhysicalDevice(void)
@@ -637,5 +642,10 @@ namespace X
 	HWND Window::getWindowHandle(void)
 	{
 		return mhWindowHandle;
+	}
+
+	HINSTANCE Window::getApplicationInstance(void)
+	{
+		return mhInstance;
 	}
 }

@@ -21,7 +21,11 @@ namespace X
 		// Window message procedure
 		LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+		// Returns the window's handle
 		HWND getWindowHandle(void);
+
+		// Returns the application's HINSTANCE
+		HINSTANCE getApplicationInstance(void);
 
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
@@ -39,6 +43,9 @@ namespace X
 		VkSurfaceKHR mvkWindowSurface;				// The window surface which Vulkan will render to
 		VkQueue mvkPresentationQueue;				// Presentation queue for the window surface of the logical device.
 		VkSwapchainKHR mvkSwapChain;				// Vulkan swap chain
+		VkExtent2D mvkSwapChainExtent;				// The dimensions of the images in the swapchain
+		VkFormat mvkSwapchainImageFormat;			// Image format of the swapchain images
+		std::vector<VkImage> mvkSwapChainImages;	// Images for the swap chain
 
 		// Find a physical device
 		void _initPhysicalDevice(void);
