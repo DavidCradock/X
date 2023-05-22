@@ -34,7 +34,7 @@ namespace X
 
 	Window::Window()
 	{
-		mhInstance = NULL;
+		mhInstance = NULL;	 GetModuleHandle(NULL);
 		mhWindowHandle = NULL;
 		miWindowWidth = 1024;
 		miWindowHeight = 576;
@@ -42,7 +42,7 @@ namespace X
 		mvkPhysicalDevice = VK_NULL_HANDLE;
 	}
 
-	void Window::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight)
+	void Window::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled)
 	{
 		Log* pLog = Log::getPointer();
 		pLog->add("Window::initialise() called.");
@@ -133,6 +133,13 @@ namespace X
 				// Add the extension to the required extensions
 				instanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 			}
+		}
+
+		// Log required extensions
+		pLog->add("Required Extensions...");
+		for (int i = 0; i < instanceExtensions.size(); ++i)
+		{
+			pLog->add(instanceExtensions[i]);
 		}
 
 		// We can just attempt to create the device attempting to use the above requested extensions
@@ -266,6 +273,92 @@ namespace X
 		createInfoWindowSurface.hinstance = mhInstance;
 		ThrowIfTrue(VK_SUCCESS != vkCreateWin32SurfaceKHR(mvkInstance, &createInfoWindowSurface, nullptr, &mvkWindowSurface), "Window::initialise() failed during call to vkCreateWin32SurfaceKHR()");
 		pLog->add("Window::initialise() has created the window surface.");
+
+		// Make sure that the surface has presentation support
+		VkBool32 presentSupport = false;
+		vkGetPhysicalDeviceSurfaceSupportKHR(mvkPhysicalDevice, graphicsFamily.value(), mvkWindowSurface, &presentSupport);
+		ThrowIfFalse(presentSupport, "Window::initialise() has detected that the created surface does not have presentation support.");
+		pLog->add("Window::initialise() has detected that the created surface does have presentation support.");
+
+		// Create the presentation queue
+		vkGetDeviceQueue(mvkLogicalDevice, graphicsFamily.value(), 0, &mvkPresentationQueue);
+		ThrowIfFalse(mvkPresentationQueue, "Window::initialise() was unable to create the presentation queue for the Vulkan logical device.");
+		pLog->add("Window::initialise() has created the presentation queue for the Vulkan logical device.");
+
+		// Swapchain
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+		// Get surface capabilies
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(mvkPhysicalDevice, mvkWindowSurface, &capabilities);
+		// Get formats
+		uint32_t formatCount;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(mvkPhysicalDevice, mvkWindowSurface, &formatCount, nullptr);
+		if (formatCount != 0)
+		{
+			formats.resize(formatCount);
+			vkGetPhysicalDeviceSurfaceFormatsKHR(mvkPhysicalDevice, mvkWindowSurface, &formatCount, formats.data());
+		}
+		else
+		{
+			ThrowIfTrue(1, "Window::initialise() detected that the Vulkan physical device and it's created window surface have no formats.");
+		}
+		pLog->add("Window::initialise() has detected " + std::to_string(formatCount) + " formats available.");
+		
+		// Go through all formats to see if the one we want is available
+		VkSurfaceFormatKHR foundFormat;	// Will hold the requested format
+		bool bFormatFound = false;
+		for (const auto& format : formats)
+		{
+			if (format.format == VK_FORMAT_B8G8R8A8_SRGB && format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+			{
+				bFormatFound = true;
+				foundFormat = format;
+				break;
+			}
+		}
+		ThrowIfFalse(bFormatFound, "Window::initialise() was unable to find the requested format of VK_FORMAT_B8G8R8A8_SRGB.");
+		pLog->add("Window::initialise() found the requested format of VK_FORMAT_B8G8R8A8_SRGB.");
+
+		// Get presentation modes
+		uint32_t presentModeCount;
+		vkGetPhysicalDeviceSurfacePresentModesKHR(mvkPhysicalDevice, mvkWindowSurface, &presentModeCount, nullptr);
+
+		if (presentModeCount != 0)
+		{
+			presentModes.resize(presentModeCount);
+			vkGetPhysicalDeviceSurfacePresentModesKHR(mvkPhysicalDevice, mvkWindowSurface, &presentModeCount, presentModes.data());
+		}
+		else
+		{
+			ThrowIfTrue(1, "Window::initialise() detected that the Vulkan physical device and it's created window surface have no presentation modes.");
+		}
+		pLog->add("Window::initialise() has detected " + std::to_string(presentModeCount) + " presentation modes available.");
+
+		// Go though all the presentation modes to see if the one we want is available
+		VkPresentModeKHR requestedPresentMode = VK_PRESENT_MODE_FIFO_KHR;
+		if (!bVsyncEnabled)
+			requestedPresentMode = VK_PRESENT_MODE_IMMEDIATE_KHR;
+		VkPresentModeKHR foundPresentMode;	// Will hold the requested presentation mode.
+		bool bPresentationModeFound = false;
+		for (const auto& presentMode : presentModes)
+		{
+			if (presentMode == requestedPresentMode)
+			{
+				// If we get here, we've found either immediate or vsync mode
+				bPresentationModeFound = true;
+				foundPresentMode = presentMode;
+				break;
+			}
+		}
+		ThrowIfFalse(bPresentationModeFound, "Window::initialise() was unable to find the requested presentation mode.");
+		pLog->add("Window::initialise() was able to find the requested presentation mode.", false, true);
+		if (bVsyncEnabled)
+			pLog->add(" (VSync enabled)", true, false);
+		else
+			pLog->add(" (VSync disabled)", true, false);
+
+		// If we get here, both foundFormat and foundPresentMode are correct
 
 
 	}

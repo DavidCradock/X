@@ -10,7 +10,7 @@ namespace X
 		Window();
 
 		// Creates the window and initialises Vulkan
-		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight);
+		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled = true);
 
 		// Updates the window 
 		bool update(void);
@@ -37,6 +37,7 @@ namespace X
 		VkDevice mvkLogicalDevice;					// Logical Vulkan device
 		VkQueue mvkGraphicsQueue;					// Graphics queue for the logical device
 		VkSurfaceKHR mvkWindowSurface;				// The window surface which Vulkan will render to
+		VkQueue mvkPresentationQueue;				// Presentation queue for the window surface of the logical device.
 
 		// Find a physical device
 		void _initPhysicalDevice(void);

@@ -1,34 +1,4 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
-0w:0d:0h:0m:00s : Window::initialise() called.
-0w:0d:0h:0m:00s : Window::initialise() has created the application window.
-0w:0d:0h:0m:00s : Window::initialise() has detected 12 extensions.
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_device_group_creation
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_external_fence_capabilities
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_external_memory_capabilities
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_external_semaphore_capabilities
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_get_physical_device_properties2
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_get_surface_capabilities2
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_surface
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_win32_surface
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_EXT_debug_report
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_EXT_debug_utils
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_EXT_swapchain_colorspace
-0w:0d:0h:0m:00s : Window::initialise() extension name: VK_KHR_portability_enumeration
-0w:0d:0h:0m:00s : Window::initialise() has enabled the debug layers.
-0w:0d:0h:0m:00s : Window::initialise() attempting to create main Vulkan instance.
-0w:0d:0h:0m:00s : Window::initialise() main Vulkan instance created.
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() called.
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() found 1 physical devices.
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device Name: AMD Radeon RX 6800 XT
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: 16384
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() Vulkan physical device has been created.
-0w:0d:0h:0m:00s : Window::initialise() has created the Vulkan logical device and obtained the graphics queue.
-0w:0d:0h:0m:00s : Window::initialise() has created the window surface.
-0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:01s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:01s : Total runtime: 1sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:04s : Window::initialise() called.
