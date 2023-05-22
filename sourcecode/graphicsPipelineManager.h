@@ -72,14 +72,20 @@ namespace X
 
 	private:
 
+		// A resource and various variables needed by the manager for each resource
+		struct Resource
+		{
+			GraphicsPipeline* pResource;	// Pointer to the resource
+			unsigned int uiReferenceCount;	// How many times the resource has been added/removed
+			bool bLoaded;					// Whether the resource is loaded or not
+		};
 		// A resource group holding resources
-		class Group
+		struct Group
 		{
 		public:
-			std::map<std::string, GraphicsPipeline*>	resource;		// Hash map holding named object
+			std::map<std::string, Resource*> mmapResource;	// Hash map holding named resource
 		};
-
-		std::map<std::string, Group*> group;	// Hash map holding named resource groups
+		std::map<std::string, Group*> mmapGroup;			// Hash map holding named resource groups
 	};
 
 }

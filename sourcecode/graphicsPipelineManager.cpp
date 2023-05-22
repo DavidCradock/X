@@ -6,11 +6,12 @@ namespace X
 {
 	GraphicsPipelineManager::GraphicsPipelineManager()
 	{
+		addNewGroup("default");
 	}
 
 	unsigned int GraphicsPipelineManager::getNumGroups(void)
 	{
-		return (unsigned int)group.size();
+		return (unsigned int)mmapGroup.size();
 	}
 
 	unsigned int GraphicsPipelineManager::getNumResInGroup(const std::string& strGroupName)
@@ -22,8 +23,8 @@ namespace X
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
-		return (unsigned int)itg->second->resource.size();;
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		return (unsigned int)itg->second->mmapResource.size();;
 	}
 
 	unsigned int GraphicsPipelineManager::getNumResInGroupLoaded(const std::string& strGroupName)
@@ -35,13 +36,13 @@ namespace X
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 
 		unsigned int iResLoadedTotal = 0;
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.begin();
-		while (it != itg->second->resource.end())
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+		while (it != itg->second->mmapResource.end())
 		{
-			if (it->second->getLoaded())
+			if (it->second->bLoaded)
 				++iResLoadedTotal;
 			it++;
 		}
@@ -50,7 +51,7 @@ namespace X
 
 	const std::string& GraphicsPipelineManager::getGroupName(unsigned int iGroupIndex)
 	{
-		if (iGroupIndex >= group.size())
+		if (iGroupIndex >= mmapGroup.size())
 		{
 			std::string err("GraphicsPipelineManager::getGroupName(");
 
@@ -59,7 +60,7 @@ namespace X
 			err.append(std::to_string(getNumGroups()));
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = group.begin();
+		std::map<std::string, Group*>::iterator itg = mmapGroup.begin();
 		unsigned int i = 0;
 		while (i < iGroupIndex)
 		{
@@ -76,13 +77,13 @@ namespace X
 			return;
 		}
 		Group* pNewGroup = new Group;
-		group[strNewGroupName] = pNewGroup;
+		mmapGroup[strNewGroupName] = pNewGroup;
 	}
 
 	bool GraphicsPipelineManager::groupExists(const std::string& strGroupName)
 	{
-		std::map<std::string, Group*>::iterator it = group.find(strGroupName);
-		if (it == group.end())
+		std::map<std::string, Group*>::iterator it = mmapGroup.find(strGroupName);
+		if (it == mmapGroup.end())
 			return false;
 		return true;
 	}
@@ -99,16 +100,16 @@ namespace X
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 
-		// For each 2d texture resource in this group...
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.begin();
-		while (it != itg->second->resource.end())
+		// For each resource in this group...
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+		while (it != itg->second->mmapResource.end())
 		{
-			if (!it->second->loaded)
+			if (!it->second->bLoaded)
 			{
-				it->second->load();
-				it->second->loaded = true;
+				it->second->pResource->load();
+				it->second->bLoaded = true;
 			}
 			it++;
 		}
@@ -126,16 +127,16 @@ namespace X
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 
 		// For each resource in this group...
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.begin();
-		while (it != itg->second->resource.end())
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+		while (it != itg->second->mmapResource.end())
 		{
-			if (!it->second->loaded)
+			if (!it->second->bLoaded)
 			{
-				it->second->load();
-				it->second->loaded = true;
+				it->second->pResource->load();
+				it->second->bLoaded = true;
 				return;	// We've changed a resource from unloaded to loaded state, aka, we've loaded a resource, simply return.
 			}
 			it++;
@@ -154,16 +155,16 @@ namespace X
 		}
 
 		// Unload any loaded resources within the group
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 
 		// For each resource in this group...
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.begin();
-		while (it != itg->second->resource.end())
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+		while (it != itg->second->mmapResource.end())
 		{
-			if (it->second->loaded)
+			if (it->second->bLoaded)
 			{
-				it->second->unload();
-				it->second->loaded = false;
+				it->second->pResource->unload();
+				it->second->bLoaded = false;
 			}
 			it++;
 		}
@@ -185,17 +186,20 @@ namespace X
 		}
 
 		// Resource already exists in the group?
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);									// Get iterator to the group (we know it exists)
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.find(strNewResourceName);	// Try to find the named resource in the group
-		if (itg->second->resource.end() != it)
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);								// Get iterator to the group (we know it exists)
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.find(strNewResourceName);		// Try to find the named resource in the group
+		if (itg->second->mmapResource.end() != it)
 		{
-			it->second->refCount++;
+			it->second->uiReferenceCount++;
 			return;
 		}
 
 		// If we get here, we have got to create, then add the resource to the existing named group
-		GraphicsPipeline* pNewRes = new GraphicsPipeline();
-		itg->second->resource[strNewResourceName] = pNewRes;
+		Resource* pNewRes = new Resource;
+		pNewRes->pResource = new GraphicsPipeline();
+		pNewRes->uiReferenceCount = 1;
+		pNewRes->bLoaded = false;
+		itg->second->mmapResource[strNewResourceName] = pNewRes;
 	}
 
 	GraphicsPipeline* GraphicsPipelineManager::get(const std::string& strResourceName, const std::string& strGroupName)
@@ -214,9 +218,9 @@ namespace X
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->resource.end() == it)
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);							// Get iterator to the group (we know it exists)
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
+		if (itg->second->mmapResource.end() == it)
 		{
 			std::string err("GraphicsPipelineManager::get(\"");
 			err.append(strResourceName);
@@ -229,23 +233,23 @@ namespace X
 		}
 
 		// Is the resource in an unloaded state?
-		if (!it->second->loaded)
+		if (!it->second->bLoaded)
 		{
 			// Load it
-			it->second->load();
-			it->second->loaded = true;
+			it->second->pResource->load();
+			it->second->bLoaded = true;
 		}
 		// Return the resource pointer...
-		return (GraphicsPipeline*)it->second;
+		return (GraphicsPipeline*)it->second->pResource;
 	}
 
 	bool GraphicsPipelineManager::getExists(const std::string& strResourceName, const std::string& strGroupName)
 	{
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
-		if (itg == group.end())
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		if (itg == mmapGroup.end())
 			return false;
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.find(strResourceName);
-		if (it == itg->second->resource.end())
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.find(strResourceName);
+		if (it == itg->second->mmapResource.end())
 			return false;
 		return true;
 	}
@@ -266,9 +270,9 @@ namespace X
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);									// Get iterator to the group (we know it exists)
-		std::map<std::string, GraphicsPipeline*>::iterator it = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->resource.end() == it)
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);							// Get iterator to the group (we know it exists)
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
+		if (itg->second->mmapResource.end() == it)
 		{
 			std::string err("GraphicsPipelineManager::remove(\"");
 			err.append(strResourceName);
@@ -282,20 +286,21 @@ namespace X
 
 		// If we get here, we've found the resource in the group
 		// Decrement it's reference count 
-		it->second->refCount--;
+		it->second->uiReferenceCount--;
 		// If the reference count is now at zero
-		if (it->second->refCount <= 0)
+		if (it->second->uiReferenceCount <= 0)
 		{
 			// If it's in a loaded state, unload it
-			if (it->second->loaded)
+			if (it->second->bLoaded)
 			{
-				it->second->unload();
-				it->second->loaded = false;
+				it->second->pResource->unload();
+				it->second->bLoaded = false;
 			}
 
 			// Destroy the resource
+			delete it->second->pResource;
 			delete it->second;
-			itg->second->resource.erase(it);
+			itg->second->mmapResource.erase(it);
 		}
 	}
 }
