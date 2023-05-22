@@ -34,7 +34,7 @@ namespace X
 
 	Window::Window()
 	{
-		mhInstance = NULL;	 GetModuleHandle(NULL);
+		mhInstance = GetModuleHandle(NULL);
 		mhWindowHandle = NULL;
 		miWindowWidth = 1024;
 		miWindowHeight = 576;
@@ -83,9 +83,9 @@ namespace X
 
 		// Debug layers
 		bool bValidationLayersInUse = false;
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		bValidationLayersInUse = true;
-		#endif
+#endif
 
 		// Create Vulkan main instance
 		// This next struct is optional, but as we're using Vulkan that's a pretty verbose API,
@@ -98,16 +98,16 @@ namespace X
 		vkApplicationInfo.pEngineName = "X";
 		vkApplicationInfo.engineVersion = VK_MAKE_API_VERSION(1, 1, 0, 0);
 		vkApplicationInfo.apiVersion = VK_API_VERSION_1_3;
-		
-		// Get supported extensions 
-		uint32_t extensionCount = 0;
-		vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+
+		// Get supported instance extensions 
+		uint32_t uiInstanceExtensionCount = 0;
+		vkEnumerateInstanceExtensionProperties(nullptr, &uiInstanceExtensionCount, nullptr);
 		std::vector<std::string> supportedInstanceExtensions;
-		if (extensionCount > 0)
+		if (uiInstanceExtensionCount > 0)
 		{
-			pLog->add("Window::initialise() has detected " + std::to_string(extensionCount) + " extensions.");
-			std::vector<VkExtensionProperties> extensions(extensionCount);
-			if (VK_SUCCESS == vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, &extensions.front()))
+			pLog->add("Window::initialise() has detected " + std::to_string(uiInstanceExtensionCount) + " instance extensions.");
+			std::vector<VkExtensionProperties> extensions(uiInstanceExtensionCount);
+			if (VK_SUCCESS == vkEnumerateInstanceExtensionProperties(nullptr, &uiInstanceExtensionCount, &extensions.front()))
 			{
 				for (VkExtensionProperties extension : extensions)
 				{
@@ -115,15 +115,16 @@ namespace X
 				}
 			}
 		}
+		// Log supported instance extensions
 		for (int i = 0; i < supportedInstanceExtensions.size(); ++i)
 		{
-			pLog->add("Window::initialise() extension name: " + supportedInstanceExtensions[i]);
+			pLog->add("Window::initialise() instance extension name: " + supportedInstanceExtensions[i]);
 		}
 
-		// Add required extensions
-		std::vector<const char*> instanceExtensions = { VK_KHR_SURFACE_EXTENSION_NAME };
-		instanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
-
+		// Add required instance extensions
+		std::vector<const char*> requiredInstanceExtensions = { VK_KHR_SURFACE_EXTENSION_NAME };
+		requiredInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+		
 		// Add debug tools if in debug AND they are available (Due to the VulkanSDK being installed)
 		if (bValidationLayersInUse)	// If we're in DEBUG build
 		{
@@ -131,28 +132,28 @@ namespace X
 			if (std::find(supportedInstanceExtensions.begin(), supportedInstanceExtensions.end(), VK_EXT_DEBUG_UTILS_EXTENSION_NAME) != supportedInstanceExtensions.end())
 			{
 				// Add the extension to the required extensions
-				instanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+				requiredInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 			}
 		}
 
-		// Log required extensions
-		pLog->add("Required Extensions...");
-		for (int i = 0; i < instanceExtensions.size(); ++i)
+		// Log required instance extensions
+		pLog->add("Required instance extensions...");
+		for (int i = 0; i < requiredInstanceExtensions.size(); ++i)
 		{
-			pLog->add(instanceExtensions[i]);
+			pLog->add(requiredInstanceExtensions[i]);
 		}
 
 		// We can just attempt to create the device attempting to use the above requested extensions
 		// and then if it fails, bail out, but it'd be nice to see which extension isn't supported by
-		// comparing and attempting to find whether each extension in instanceExtensions is found in
+		// comparing and attempting to find whether each extension in requiredInstanceExtensions is found in
 		// supportedInstanceExtensions, so let's do that...
-		for (int i = 0; i < instanceExtensions.size(); ++i)
+		for (int i = 0; i < requiredInstanceExtensions.size(); ++i)
 		{
 			// Attempt to find the extension in supportedInstanceExtensions
-			if (std::find(supportedInstanceExtensions.begin(), supportedInstanceExtensions.end(), instanceExtensions[i]) == supportedInstanceExtensions.end())
+			if (std::find(supportedInstanceExtensions.begin(), supportedInstanceExtensions.end(), requiredInstanceExtensions[i]) == supportedInstanceExtensions.end())
 			{
-				std::string strError("Window::initialise() failed to find required extension: ");
-				strError += instanceExtensions[i];
+				std::string strError("Window::initialise() failed to find required instance extension: ");
+				strError += requiredInstanceExtensions[i];
 				ThrowIfTrue(1, strError);
 			}
 		}
@@ -191,8 +192,8 @@ namespace X
 		vkInstanceCreateInfo.pNext = nullptr;
 		vkInstanceCreateInfo.flags = 0;
 		vkInstanceCreateInfo.pApplicationInfo = &vkApplicationInfo;
-		vkInstanceCreateInfo.enabledExtensionCount = (uint32_t)instanceExtensions.size();	// Number of global extensions to enable
-		vkInstanceCreateInfo.ppEnabledExtensionNames = instanceExtensions.data();
+		vkInstanceCreateInfo.enabledExtensionCount = (uint32_t)requiredInstanceExtensions.size();	// Number of global extensions to enable
+		vkInstanceCreateInfo.ppEnabledExtensionNames = requiredInstanceExtensions.data();
 
 		// Attempt to create the Vulkan instance
 		pLog->add("Window::initialise() attempting to create main Vulkan instance.");
@@ -220,7 +221,7 @@ namespace X
 				ThrowIfTrue(1, "Window::initialise() unable to obtain vkCreateDebugUtilsMessengerExt function.");
 			}
 		}
-		
+
 		_initPhysicalDevice();
 
 		// Get each Queue family of the physical device and make sure the VK_QUEUE_GRAPHICS_BIT is set for one of them.
@@ -241,6 +242,55 @@ namespace X
 		}
 		ThrowIfFalse(graphicsFamily.has_value(), "Window::initialise() was unable to find the VK_QUEUE_GRAPHICS_BIT for the chosen physical Vulkan device.");
 
+		// We have already checked for instance level extensions.
+		// We need to check device level extensions for the VK_KHR_SWAPCHAIN_EXTENSION_NAME and enable it
+		uint32_t uiDeviceExtensionCount = 0;
+		vkEnumerateDeviceExtensionProperties(mvkPhysicalDevice, nullptr, &uiDeviceExtensionCount, nullptr);
+		std::vector<std::string> supportedDeviceExtensions;
+		if (uiDeviceExtensionCount > 0)
+		{
+			pLog->add("Window::initialise() has detected " + std::to_string(uiDeviceExtensionCount) + " physical device extensions.");
+			std::vector<VkExtensionProperties> extensions(uiDeviceExtensionCount);
+			if (VK_SUCCESS == vkEnumerateDeviceExtensionProperties(mvkPhysicalDevice, nullptr, &uiDeviceExtensionCount, &extensions.front()))
+			{
+				for (VkExtensionProperties extension : extensions)
+				{
+					supportedDeviceExtensions.push_back(extension.extensionName);
+				}
+			}
+		}
+		// Log supported device extensions
+		for (int i = 0; i < supportedDeviceExtensions.size(); ++i)
+		{
+			pLog->add("Window::initialise() device extension name: " + supportedDeviceExtensions[i]);
+		}
+
+		// Add required device extensions
+		std::vector<const char*> requiredDeviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+//		requiredDeviceExtensions.push_back(MORE_EXTENSIONS);
+
+		// Log required device extensions
+		pLog->add("Required device extensions...");
+		for (int i = 0; i < requiredDeviceExtensions.size(); ++i)
+		{
+			pLog->add(requiredDeviceExtensions[i]);
+		}
+
+		// We can just attempt to create the logical device attempting to use the above requested extensions
+		// and then if it fails, bail out, but it'd be nice to see which extension isn't supported by
+		// comparing and attempting to find whether each extension in requiredDeviceExtensions is found in
+		// supportedDeviceExtensions, so let's do that...
+		for (int i = 0; i < requiredDeviceExtensions.size(); ++i)
+		{
+			// Attempt to find the extension in supportedInstanceExtensions
+			if (std::find(supportedDeviceExtensions.begin(), supportedDeviceExtensions.end(), requiredDeviceExtensions[i]) == supportedDeviceExtensions.end())
+			{
+				std::string strError("Window::initialise() failed to find required device extension: ");
+				strError += requiredDeviceExtensions[i];
+				ThrowIfTrue(1, strError);
+			}
+		}
+
 		// Create logical Vulkan device for the physical device
 		VkDeviceQueueCreateInfo queueCreateInfo{};
 		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -256,6 +306,10 @@ namespace X
 		createInfo.pQueueCreateInfos = &queueCreateInfo;
 		createInfo.queueCreateInfoCount = 1;
 		createInfo.pEnabledFeatures = &deviceFeatures;
+		// Device level extensions
+		createInfo.ppEnabledExtensionNames = requiredDeviceExtensions.data();
+		createInfo.enabledExtensionCount = (uint32_t)requiredDeviceExtensions.size();
+
 		// Set debug layer info from the physical device's creation structure
 		// Apparantly, these are ignored by more recent API versions, but we'll add it anyway, just for backwards compatibility.
 		createInfo.enabledLayerCount = vkInstanceCreateInfo.enabledLayerCount;
@@ -304,7 +358,7 @@ namespace X
 			ThrowIfTrue(1, "Window::initialise() detected that the Vulkan physical device and it's created window surface have no formats.");
 		}
 		pLog->add("Window::initialise() has detected " + std::to_string(formatCount) + " formats available.");
-		
+
 		// Go through all formats to see if the one we want is available
 		VkSurfaceFormatKHR foundFormat;	// Will hold the requested format
 		bool bFormatFound = false;
@@ -359,8 +413,65 @@ namespace X
 			pLog->add(" (VSync disabled)", true, false);
 
 		// If we get here, both foundFormat and foundPresentMode are correct
+		// We'll use those in a bit to setup the swapchain.
+
+		// Setup the swap chain (That was quick! :D)
+		// Get swap chain image dimensions, aka, the extent.
+		VkExtent2D vkSwapChainExtent;
+		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+		{
+			vkSwapChainExtent = capabilities.currentExtent;
+		}
+		else
+		{
+			VkExtent2D actualExtent = { static_cast<uint32_t>(iWindowWidth), static_cast<uint32_t>(iWindowHeight) };
+			actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
+			actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
+			vkSwapChainExtent = actualExtent;
+		}
+		// How many images are needed in the swap chain?
+		// Vulkan specifies the minimum amount needed, but we give it an extra one so that we
+		// don't have to wait around for the driver to finish "internal stuff" before using the next one.
+		uint32_t imageCount = capabilities.minImageCount + 1;
+		// We should however, make sure that we do not exceed the maximum number of images allowed.
+		// If maxImageCount is 0, that means that there is no limit.
+		if (capabilities.maxImageCount > 0 && imageCount > capabilities.maxImageCount)
+		{
+			imageCount = capabilities.maxImageCount;
+		}
+		// Now set up a Vulkan struct
+		VkSwapchainCreateInfoKHR vkSwapchainCreateInfo{};
+		vkSwapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+		vkSwapchainCreateInfo.surface = mvkWindowSurface;
+		vkSwapchainCreateInfo.minImageCount = imageCount;
+		vkSwapchainCreateInfo.imageFormat = foundFormat.format;
+		vkSwapchainCreateInfo.imageColorSpace = foundFormat.colorSpace;
+		vkSwapchainCreateInfo.imageExtent = vkSwapChainExtent;
+		vkSwapchainCreateInfo.imageArrayLayers = 1;
+		// VK_IMAGE_USAGE_TRANSFER_DST_BIT  could be used here if we want to do post-processing, render to this and then copy it manually
+		vkSwapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+		vkSwapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		vkSwapchainCreateInfo.queueFamilyIndexCount = 0; // Optional
+		vkSwapchainCreateInfo.pQueueFamilyIndices = nullptr; // Optional
+		vkSwapchainCreateInfo.preTransform = capabilities.currentTransform;
+		vkSwapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+		vkSwapchainCreateInfo.presentMode = foundPresentMode;
+		vkSwapchainCreateInfo.clipped = VK_TRUE;
+		vkSwapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
 
+
+
+		// Create the swap chain
+		pLog->add("Window::initialise() attempting to create swapchain... ", false, true);
+		if (vkCreateSwapchainKHR(mvkLogicalDevice, &vkSwapchainCreateInfo, nullptr, &mvkSwapChain) != VK_SUCCESS)
+		{
+			ThrowIfTrue(1, "Window::intialise() failed to create Vulkan swapchain.");
+		}
+		pLog->add("done.", true, false);
+
+		std::vector<VkImage> swapChainImages;
+		VkFormat swapChainImageFormat;
 	}
 
 	void Window::_initPhysicalDevice(void)
@@ -462,6 +573,9 @@ namespace X
 				ThrowIfTrue(1, "Window::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
 			}
 		}
+
+		// Destroy the swapchain
+		vkDestroySwapchainKHR(mvkLogicalDevice, mvkSwapChain, nullptr);
 
 		// Destroy window surface
 		vkDestroySurfaceKHR(mvkInstance, mvkWindowSurface, nullptr);

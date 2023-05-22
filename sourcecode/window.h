@@ -38,6 +38,7 @@ namespace X
 		VkQueue mvkGraphicsQueue;					// Graphics queue for the logical device
 		VkSurfaceKHR mvkWindowSurface;				// The window surface which Vulkan will render to
 		VkQueue mvkPresentationQueue;				// Presentation queue for the window surface of the logical device.
+		VkSwapchainKHR mvkSwapChain;				// Vulkan swap chain
 
 		// Find a physical device
 		void _initPhysicalDevice(void);
