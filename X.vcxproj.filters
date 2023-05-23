@@ -16,6 +16,9 @@
     <Filter Include="applications">
       <UniqueIdentifier>{2832a56b-f37a-4e1d-bfd1-9dc00deb1a05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GPUprograms">
+      <UniqueIdentifier>{784921ba-c3a2-4db4-865e-edb5d51db436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\log.cpp" />
@@ -30,15 +33,23 @@
     <ClCompile Include="sourcecode\applicationGame.cpp">
       <Filter>applications</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\window.cpp" />
+    <ClCompile Include="sourcecode\vulkanWindow.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\audioSample.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
-    <ClCompile Include="sourcecode\graphicsPipelineManager.cpp" />
-    <ClCompile Include="sourcecode\graphicsPipeline.cpp" />
+    <ClCompile Include="sourcecode\graphicsPipelines.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="GPUprograms\compile.bat">
+      <Filter>GPUprograms</Filter>
+    </None>
+    <None Include="GPUprograms\dev.frag">
+      <Filter>GPUprograms</Filter>
+    </None>
+    <None Include="GPUprograms\dev.vert">
+      <Filter>GPUprograms</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\log.h" />
@@ -54,10 +65,9 @@
     <ClInclude Include="sourcecode\applicationGame.h">
       <Filter>applications</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\window.h" />
+    <ClInclude Include="sourcecode\vulkanWindow.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\audioSample.h" />
-    <ClInclude Include="sourcecode\graphicsPipelineManager.h" />
-    <ClInclude Include="sourcecode\graphicsPipeline.h" />
+    <ClInclude Include="sourcecode\graphicsPipelines.h" />
   </ItemGroup>
 </Project>

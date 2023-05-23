@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "applicationManager.h"
 #include "log.h"
-#include "window.h"
+#include "vulkanWindow.h"
 // Include each application
 #include "applicationDevelopment.h"
 #include "applicationGame.h"
@@ -31,8 +31,8 @@ namespace X
 			addApp("Game", pAppGame);
 
 			// Create window
-			Window* pWindow = Window::getPointer();
-			pWindow->initialise("X", 1024, 576);
+			VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
+			pVulkanWindow->initialise("X", 1024, 576);
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
@@ -60,7 +60,7 @@ namespace X
 				else
 				{
 					mTimer.update();
-					pWindow->update();
+					pVulkanWindow->update();
 
 					if (!callCurrentApp_onUpdate())
 					{
@@ -78,13 +78,13 @@ namespace X
 			it->second->onStop();
 
 			// Now close the window
-			pWindow->shutdown();
+			pVulkanWindow->shutdown();
 		}
 		catch (Exception &exception)
 		{
 			Log::getPointer()->add("Total runtime: " + mTimer.getClock());
 			Log::getPointer()->add(exception.mstrException, true);
-			MessageBox(Window::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
+			MessageBox(VulkanWindow::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
 			__debugbreak();
 		}
 		Log::getPointer()->add("Total runtime: " + mTimer.getClock());
