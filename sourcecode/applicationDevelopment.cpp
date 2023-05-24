@@ -12,6 +12,7 @@ namespace X
 		GraphicsPipelineManager* pGPM = GraphicsPipelineManager::getPointer();
 		GraphicsPipeline *pGP = pGPM->add("dev");
 		
+
 	}
 
 	void ApplicationDevelopment::onStart(void)

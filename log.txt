@@ -1,200 +1,200 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
-0w:0d:0h:0m:00s : Window::initialise() called.
-0w:0d:0h:0m:00s : Window::initialise() has created the application window.
-0w:0d:0h:0m:00s : Window::initialise() has detected 12 instance extensions.
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_device_group_creation
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_external_fence_capabilities
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_external_memory_capabilities
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_external_semaphore_capabilities
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_get_physical_device_properties2
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_get_surface_capabilities2
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_surface
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_win32_surface
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_EXT_debug_report
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_EXT_debug_utils
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_EXT_swapchain_colorspace
-0w:0d:0h:0m:00s : Window::initialise() instance extension name: VK_KHR_portability_enumeration
+0w:0d:0h:0m:00s : VulkanWindow::initialise() called.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the application window.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 12 instance extensions.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_device_group_creation
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_fence_capabilities
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_memory_capabilities
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_semaphore_capabilities
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_get_physical_device_properties2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_get_surface_capabilities2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_surface
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_win32_surface
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_debug_report
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_debug_utils
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_swapchain_colorspace
+0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_portability_enumeration
 0w:0d:0h:0m:00s : Required instance extensions...
 0w:0d:0h:0m:00s : VK_KHR_surface
 0w:0d:0h:0m:00s : VK_KHR_win32_surface
 0w:0d:0h:0m:00s : VK_EXT_debug_utils
-0w:0d:0h:0m:00s : Window::initialise() has enabled the debug layers.
-0w:0d:0h:0m:00s : Window::initialise() attempting to create main Vulkan instance.
-0w:0d:0h:0m:00s : Window::initialise() main Vulkan instance created.
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() called.
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() found 1 physical devices.
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device Name: AMD Radeon RX 6800 XT
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU
-0w:0d:0h:0m:00s : _initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: 16384
-0w:0d:0h:0m:00s : Window::_initPhysicalDevice() Vulkan physical device has been created.
-0w:0d:0h:0m:00s : Window::initialise() has detected 155 physical device extensions.
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_16bit_storage
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_8bit_storage
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_acceleration_structure
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_bind_memory2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_buffer_device_address
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_copy_commands2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_create_renderpass2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_dedicated_allocation
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_deferred_host_operations
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_depth_stencil_resolve
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_descriptor_update_template
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_device_group
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_draw_indirect_count
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_driver_properties
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_dynamic_rendering
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_fence
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_fence_win32
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_memory
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_memory_win32
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_semaphore
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_external_semaphore_win32
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_format_feature_flags2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_fragment_shader_barycentric
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_fragment_shading_rate
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_get_memory_requirements2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_global_priority
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_imageless_framebuffer
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_image_format_list
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_maintenance1
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_maintenance2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_maintenance3
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_maintenance4
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_map_memory2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_multiview
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_pipeline_executable_properties
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_pipeline_library
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_push_descriptor
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_ray_query
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_ray_tracing_maintenance1
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_ray_tracing_pipeline
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_relaxed_block_layout
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_sampler_mirror_clamp_to_edge
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_sampler_ycbcr_conversion
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_separate_depth_stencil_layouts
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_atomic_int64
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_clock
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_draw_parameters
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_float16_int8
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_float_controls
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_integer_dot_product
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_non_semantic_info
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_subgroup_extended_types
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_subgroup_uniform_control_flow
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_shader_terminate_invocation
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_spirv_1_4
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_storage_buffer_storage_class
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_swapchain
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_swapchain_mutable_format
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_synchronization2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_timeline_semaphore
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_uniform_buffer_standard_layout
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_variable_pointers
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_vulkan_memory_model
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_win32_keyed_mutex
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_workgroup_memory_explicit_layout
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_KHR_zero_initialize_workgroup_memory
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_4444_formats
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_attachment_feedback_loop_layout
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_border_color_swizzle
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_calibrated_timestamps
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_color_write_enable
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_conditional_rendering
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_conservative_rasterization
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_custom_border_color
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_depth_clamp_zero_one
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_depth_clip_control
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_depth_clip_enable
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_depth_range_unrestricted
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_descriptor_buffer
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_descriptor_indexing
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_device_fault
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_extended_dynamic_state
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_extended_dynamic_state2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_extended_dynamic_state3
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_external_memory_host
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_full_screen_exclusive
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_global_priority
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_global_priority_query
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_hdr_metadata
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_host_query_reset
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_image_robustness
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_image_sliced_view_of_3d
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_image_view_min_lod
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_index_type_uint8
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_inline_uniform_block
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_line_rasterization
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_load_store_op_none
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_memory_budget
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_memory_priority
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_mesh_shader
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_non_seamless_cube_map
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_pageable_device_local_memory
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_pipeline_creation_cache_control
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_pipeline_creation_feedback
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_pipeline_library_group_handles
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_post_depth_coverage
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_primitive_topology_list_restart
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_private_data
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_provoking_vertex
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_queue_family_foreign
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_robustness2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_sampler_filter_minmax
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_sample_locations
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_scalar_block_layout
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_separate_stencil_usage
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_atomic_float
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_atomic_float2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_demote_to_helper_invocation
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_image_atomic_int64
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_module_identifier
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_stencil_export
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_subgroup_ballot
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_subgroup_vote
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_shader_viewport_index_layer
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_subgroup_size_control
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_texel_buffer_alignment
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_tooling_info
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_transform_feedback
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_vertex_attribute_divisor
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_vertex_input_dynamic_state
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_EXT_ycbcr_image_arrays
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_buffer_marker
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_calibrated_timestamps
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_device_coherent_memory
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_display_native_hdr
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_draw_indirect_count
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_gcn_shader
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_gpa_interface
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_gpu_shader_half_float
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_gpu_shader_int16
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_memory_overallocation_behavior
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_mixed_attachment_samples
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_ballot
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_core_properties
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_core_properties2
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_early_and_late_fragment_tests
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_explicit_vertex_parameter
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_fragment_mask
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_image_load_store_lod
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_info
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_shader_trinary_minmax
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_AMD_texture_gather_bias_lod
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_GOOGLE_decorate_string
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_GOOGLE_hlsl_functionality1
-0w:0d:0h:0m:00s : Window::initialise() device extension name: VK_GOOGLE_user_type
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has enabled the debug layers.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create main Vulkan instance.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() main Vulkan instance created.
+0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() called.
+0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() found 1 physical devices.
+0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device Name: AMD Radeon RX 6800 XT
+0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU
+0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: 16384
+0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() Vulkan physical device has been created.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 155 physical device extensions.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_16bit_storage
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_8bit_storage
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_acceleration_structure
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_bind_memory2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_buffer_device_address
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_copy_commands2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_create_renderpass2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_dedicated_allocation
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_deferred_host_operations
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_depth_stencil_resolve
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_descriptor_update_template
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_device_group
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_draw_indirect_count
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_driver_properties
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_dynamic_rendering
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_fence
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_fence_win32
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_memory
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_memory_win32
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_semaphore
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_external_semaphore_win32
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_format_feature_flags2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_fragment_shader_barycentric
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_fragment_shading_rate
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_get_memory_requirements2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_global_priority
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_imageless_framebuffer
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_image_format_list
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_maintenance1
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_maintenance2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_maintenance3
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_maintenance4
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_map_memory2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_multiview
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_pipeline_executable_properties
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_pipeline_library
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_push_descriptor
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_ray_query
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_ray_tracing_maintenance1
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_ray_tracing_pipeline
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_relaxed_block_layout
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_sampler_mirror_clamp_to_edge
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_sampler_ycbcr_conversion
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_separate_depth_stencil_layouts
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_atomic_int64
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_clock
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_draw_parameters
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_float16_int8
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_float_controls
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_integer_dot_product
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_non_semantic_info
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_subgroup_extended_types
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_subgroup_uniform_control_flow
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_shader_terminate_invocation
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_spirv_1_4
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_storage_buffer_storage_class
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_swapchain
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_swapchain_mutable_format
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_synchronization2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_timeline_semaphore
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_uniform_buffer_standard_layout
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_variable_pointers
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_vulkan_memory_model
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_win32_keyed_mutex
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_workgroup_memory_explicit_layout
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_KHR_zero_initialize_workgroup_memory
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_4444_formats
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_attachment_feedback_loop_layout
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_border_color_swizzle
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_calibrated_timestamps
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_color_write_enable
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_conditional_rendering
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_conservative_rasterization
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_custom_border_color
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_depth_clamp_zero_one
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_depth_clip_control
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_depth_clip_enable
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_depth_range_unrestricted
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_descriptor_buffer
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_descriptor_indexing
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_device_fault
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_extended_dynamic_state
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_extended_dynamic_state2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_extended_dynamic_state3
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_external_memory_host
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_full_screen_exclusive
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_global_priority
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_global_priority_query
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_hdr_metadata
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_host_query_reset
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_image_robustness
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_image_sliced_view_of_3d
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_image_view_min_lod
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_index_type_uint8
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_inline_uniform_block
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_line_rasterization
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_load_store_op_none
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_memory_budget
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_memory_priority
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_mesh_shader
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_non_seamless_cube_map
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_pageable_device_local_memory
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_pipeline_creation_cache_control
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_pipeline_creation_feedback
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_pipeline_library_group_handles
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_post_depth_coverage
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_primitive_topology_list_restart
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_private_data
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_provoking_vertex
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_queue_family_foreign
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_robustness2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_sampler_filter_minmax
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_sample_locations
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_scalar_block_layout
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_separate_stencil_usage
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_atomic_float
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_atomic_float2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_demote_to_helper_invocation
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_image_atomic_int64
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_module_identifier
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_stencil_export
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_subgroup_ballot
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_subgroup_vote
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_shader_viewport_index_layer
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_subgroup_size_control
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_texel_buffer_alignment
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_tooling_info
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_transform_feedback
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_vertex_attribute_divisor
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_vertex_input_dynamic_state
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_EXT_ycbcr_image_arrays
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_buffer_marker
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_calibrated_timestamps
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_device_coherent_memory
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_display_native_hdr
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_draw_indirect_count
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_gcn_shader
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_gpa_interface
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_gpu_shader_half_float
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_gpu_shader_int16
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_memory_overallocation_behavior
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_mixed_attachment_samples
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_ballot
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_core_properties
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_core_properties2
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_early_and_late_fragment_tests
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_explicit_vertex_parameter
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_fragment_mask
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_image_load_store_lod
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_info
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_shader_trinary_minmax
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_AMD_texture_gather_bias_lod
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_GOOGLE_decorate_string
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_GOOGLE_hlsl_functionality1
+0w:0d:0h:0m:00s : VulkanWindow::initialise() device extension name: VK_GOOGLE_user_type
 0w:0d:0h:0m:00s : Required device extensions...
 0w:0d:0h:0m:00s : VK_KHR_swapchain
-0w:0d:0h:0m:00s : Window::initialise() has created the Vulkan logical device and obtained the graphics queue.
-0w:0d:0h:0m:00s : Window::initialise() has created the window surface.
-0w:0d:0h:0m:00s : Window::initialise() has detected that the created surface does have presentation support.
-0w:0d:0h:0m:00s : Window::initialise() has created the presentation queue for the Vulkan logical device.
-0w:0d:0h:0m:00s : Window::initialise() has detected 25 formats available.
-0w:0d:0h:0m:00s : Window::initialise() found the requested format of VK_FORMAT_B8G8R8A8_SRGB.
-0w:0d:0h:0m:00s : Window::initialise() has detected 3 presentation modes available.
-0w:0d:0h:0m:00s : Window::initialise() was able to find the requested presentation mode. (VSync enabled)
-0w:0d:0h:0m:00s : Window::initialise() attempting to create swapchain... done.
-0w:0d:0h:0m:00s : Window::initialise() attempting to create image views for the swapchain images... done.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the Vulkan logical device and obtained the graphics queue.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the window surface.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected that the created surface does have presentation support.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the presentation queue for the Vulkan logical device.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 25 formats available.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() found the requested format of VK_FORMAT_B8G8R8A8_SRGB.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 3 presentation modes available.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() was able to find the requested presentation mode. (VSync enabled)
+0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create swapchain... done.
+0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create image views for the swapchain images... done.
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
