@@ -62,9 +62,17 @@ namespace X
 		// If an invalid index is given, an exception occurs
 		void setVolume(unsigned int uiIndex, float fVolume);
 
+		// Retrieves a voice's currently set volume
+		// If an invalid index is given, an exception occurs
+		float getVolume(unsigned int uiIndex);
+
 		// Sets a voice's frequency whilst it's playing
 		// If an invalid index is given, an exception occurs
 		void setFrequency(unsigned int uiIndex, float fVolume);
+
+		// Retrieves a voice's currently set frequency
+		// If an invalid index is given, an exception occurs
+		float getFrequency(unsigned int uiIndex);
 
 		unsigned int _muiMaxSimultaneousInstances;		// Maximum number of sounds which can be played back simultaneously
 		std::vector<IXAudio2SourceVoice*> _mvecVoices;	// Multiple instances playback

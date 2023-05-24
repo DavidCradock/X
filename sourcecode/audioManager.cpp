@@ -287,6 +287,22 @@ namespace X
 		_mvecVoices[uiIndex]->SetVolume(fVolume);
 	}
 
+	float AudioEmitter::getVolume(unsigned int uiIndex)
+	{
+		// Make sure valid index is given
+		if (uiIndex >= _muiMaxSimultaneousInstances)
+		{
+			std::string strErr("AudioEmitter::getVolume(");
+			strErr += std::to_string(uiIndex);
+			strErr += ") failed as given index has to be less than ";
+			strErr += std::to_string(_muiMaxSimultaneousInstances);
+			ThrowIfTrue(1, strErr);
+		}
+		float fVolume = 0.0f;
+		_mvecVoices[uiIndex]->GetVolume(&fVolume);
+		return fVolume;
+	}
+
 	void AudioEmitter::setFrequency(unsigned int uiIndex, float fFrequency)
 	{
 		// Make sure valid index is given
@@ -299,6 +315,22 @@ namespace X
 			ThrowIfTrue(1, strErr);
 		}
 		_mvecVoices[uiIndex]->SetFrequencyRatio(fFrequency);
+	}
+
+	float AudioEmitter::getFrequency(unsigned int uiIndex)
+	{
+		// Make sure valid index is given
+		if (uiIndex >= _muiMaxSimultaneousInstances)
+		{
+			std::string strErr("AudioEmitter::getFrequency(");
+			strErr += std::to_string(uiIndex);
+			strErr += ") failed as given index has to be less than ";
+			strErr += std::to_string(_muiMaxSimultaneousInstances);
+			ThrowIfTrue(1, strErr);
+		}
+		float fFrequency = 0.0f;
+		_mvecVoices[uiIndex]->GetFrequencyRatio(&fFrequency);
+		return fFrequency;
 	}
 
 	AudioManager::AudioManager()
