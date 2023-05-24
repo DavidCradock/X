@@ -15,6 +15,8 @@ namespace X
 		AudioManager* pAudioManager = AudioManager::getPointer();
 		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav", "default");
 		pAudioManager->loadSampleGroup("default");
+		AudioEmitter *pEmitter = pAudioManager->addEmitter("emitter", "audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav", 8, "default");
+		pEmitter->play(1, 1, false);
 
 	}
 
