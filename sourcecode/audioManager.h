@@ -81,7 +81,11 @@ namespace X
 	// pAudioManager->addSample("audio/fart.wav", "default");
 	// // Add more samples if needed and then call..
 	// pAudioManager->loadSampleGroup("default");	// Load all audio data, so it's ready for use
-	// 
+	// Create an emitter which will be used to playback a sample.
+	// Emitters are "linked" to a single sample, they can only play that one sample
+	// AudioEmitter *pAudioEmitter = pAudioManager->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
+	// Now we can playback the sample with...
+	// pAudioEmitter->play(1.0f, 1.0f, false);	// Where parameters are volume, playback speed and whether to loop the sample or not
 	class AudioManager : public Singleton<AudioManager>
 	{
 	public:
@@ -166,6 +170,10 @@ namespace X
 
 		// Returns whether the named emitter already exists
 		bool getExistsEmitter(const std::string& strEmitterName);
+
+		// Returns a pointer to the named emitter
+		// If the named emitter doesn't exist, an exception occurs
+		AudioEmitter* getEmitter(const std::string& strEmitterName);
 	private:
 
 		// A resource and various variables needed by the manager for each resource

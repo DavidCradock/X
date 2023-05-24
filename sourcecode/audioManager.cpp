@@ -676,4 +676,17 @@ namespace X
 			return false;
 		return true;
 	}
+
+	AudioEmitter* AudioManager::getEmitter(const std::string& strEmitterName)
+	{
+		std::map<std::string, AudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
+		if (it == _mmapEmitters.end())
+		{
+			std::string strErr("AudioManager::getEmitter(");
+			strErr += strEmitterName;
+			strErr += ") failed as the named emitter doesn't exist.";
+			ThrowIfTrue(1, strErr);
+		}
+		return it->second;
+	}
 }
