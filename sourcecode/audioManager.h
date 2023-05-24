@@ -33,7 +33,7 @@ namespace X
 		HRESULT _findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition);
 		HRESULT _readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset);
 		XAUDIO2_BUFFER buffer = { 0 };		// Holds the sample data once the object is loaded
-		WAVEFORMATEXTENSIBLE wfx = { 0 };	// Holds the information about the sample data once the object is loaded
+		WAVEFORMATEXTENSIBLE wfx = { 0 };	// Holds the information about the sample data once loadFormat() has been called
 	};
 
 	// An audio emitter which emits sounds from loaded audio samples
@@ -57,6 +57,14 @@ namespace X
 
 		// Returns the number of voices which are currently playing for this emitter
 		unsigned int getNumVoicesPlaying(void);
+
+		// Sets a voice's volume whilst it's playing
+		// If an invalid index is given, an exception occurs
+		void setVolume(unsigned int uiIndex, float fVolume);
+
+		// Sets a voice's frequency whilst it's playing
+		// If an invalid index is given, an exception occurs
+		void setFrequency(unsigned int uiIndex, float fVolume);
 
 		unsigned int _muiMaxSimultaneousInstances;		// Maximum number of sounds which can be played back simultaneously
 		std::vector<IXAudio2SourceVoice*> _mvecVoices;	// Multiple instances playback
@@ -154,6 +162,7 @@ namespace X
 
 		// Removes the named sample resource from the named group
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
+		// Remove all emitters that are playing this sample before calling this.
 		void removeSample(const std::string& strResourceName, const std::string& strGroupName);
 
 		// Returns memory usage in bytes

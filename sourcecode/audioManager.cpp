@@ -273,6 +273,34 @@ namespace X
 		return iNumberVoicesPlaying;
 	}
 
+	void AudioEmitter::setVolume(unsigned int uiIndex, float fVolume)
+	{
+		// Make sure valid index is given
+		if (uiIndex >= _muiMaxSimultaneousInstances)
+		{
+			std::string strErr("AudioEmitter::setVolume(");
+			strErr += std::to_string(uiIndex);
+			strErr += ") failed as given index has to be less than ";
+			strErr += std::to_string(_muiMaxSimultaneousInstances);
+			ThrowIfTrue(1, strErr);
+		}
+		_mvecVoices[uiIndex]->SetVolume(fVolume);
+	}
+
+	void AudioEmitter::setFrequency(unsigned int uiIndex, float fFrequency)
+	{
+		// Make sure valid index is given
+		if (uiIndex >= _muiMaxSimultaneousInstances)
+		{
+			std::string strErr("AudioEmitter::setFrequency(");
+			strErr += std::to_string(uiIndex);
+			strErr += ") failed as given index has to be less than ";
+			strErr += std::to_string(_muiMaxSimultaneousInstances);
+			ThrowIfTrue(1, strErr);
+		}
+		_mvecVoices[uiIndex]->SetFrequencyRatio(fFrequency);
+	}
+
 	AudioManager::AudioManager()
 	{
 		Log* pLog = Log::getPointer();
