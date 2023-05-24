@@ -148,7 +148,6 @@
     <ClCompile Include="sourcecode\applicationGame.cpp" />
     <ClCompile Include="sourcecode\applicationManager.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
-    <ClCompile Include="sourcecode\audioSample.cpp" />
     <ClCompile Include="sourcecode\graphicsPipelines.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\vulkanWindow.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="sourcecode\applicationGame.h" />
     <ClInclude Include="sourcecode\applicationManager.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
-    <ClInclude Include="sourcecode\audioSample.h" />
     <ClInclude Include="sourcecode\graphicsPipelines.h" />
     <ClInclude Include="sourcecode\vulkanWindow.h" />
     <ClInclude Include="sourcecode\log.h" />

@@ -12,6 +12,9 @@ namespace X
 		GraphicsPipelineManager* pGPM = GraphicsPipelineManager::getPointer();
 		GraphicsPipeline *pGP = pGPM->add("dev");
 		
+		AudioManager* pAudioManager = AudioManager::getPointer();
+		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav", "default");
+		pAudioManager->loadSampleGroup("default");
 
 	}
 

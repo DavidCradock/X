@@ -14,7 +14,8 @@ namespace X
 
 	void GraphicsPipeline::load(void)
 	{
-		// Make sure
+		// Make sure filenames exist
+		ThrowIfFalse(mstrVertexProgramFilename.size() > 0 && mstrFragmentProgramFilename.size() > 0, "GraphicsPipeline::load() failed as filenames of the GPU programs are not set.");
 	}
 
 	void GraphicsPipeline::unload(void)
