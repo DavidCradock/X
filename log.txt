@@ -198,12 +198,3 @@
 0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create swapchain... done.
 0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create image views for the swapchain images... done.
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : AudioManager constructor called.
-0w:0d:0h:0m:00s : AudioManager initialising COM.
-0w:0d:0h:0m:00s : AudioManager creating XAudio2 engine instance.
-0w:0d:0h:0m:00s : AudioManager creating mastering voice.
-0w:0d:0h:0m:00s : AudioManager initialisation complete.
-0w:0d:0h:0m:16s : ApplicationManager::mainLoop() calling Development Application's onStart()
-0w:0d:0h:0m:16s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:19s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:19s : Total runtime: 19sec 0min 0hr 0days 0weeks.

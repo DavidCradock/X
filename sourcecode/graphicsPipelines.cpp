@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "graphicsPipelines.h"
 #include "log.h"
+#include "vulkanWindow.h"
 
 namespace X
 {
@@ -15,7 +16,138 @@ namespace X
 	void GraphicsPipeline::load(void)
 	{
 		// Make sure filenames exist
-		ThrowIfFalse(mstrVertexProgramFilename.size() > 0 && mstrFragmentProgramFilename.size() > 0, "GraphicsPipeline::load() failed as filenames of the GPU programs are not set.");
+		ThrowIfFalse(bool(mstrVertexProgramFilename.size() > 0 && mstrFragmentProgramFilename.size() > 0), "GraphicsPipeline::load() failed as filenames of the GPU programs are not set.");
+
+		// Get pointer to the Vulkan window as we need access to some of it's members
+		VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
+		
+		// Get logical device as we'll use it below
+		VkDevice vkLogicalDevice = pVulkanWindow->getLogicalDevice();
+
+		// These will hold the shader modules for each of the GPU programs
+		VkShaderModule vertexShaderModule;
+		VkShaderModule fragmentShaderModule;
+
+		// Attempt to create the shader module for the vertex program
+		auto vertexCode = _readFile(mstrVertexProgramFilename);	// Read in shader code from file
+		VkShaderModuleCreateInfo createInfo{};
+		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		createInfo.codeSize = vertexCode.size();
+		createInfo.pCode = reinterpret_cast<const uint32_t*>(vertexCode.data());
+		if (VK_SUCCESS != vkCreateShaderModule(vkLogicalDevice, &createInfo, nullptr, &vertexShaderModule))
+		{
+			ThrowIfTrue(1, "GraphicsPipeline::load() failed to create shader module for " + mstrVertexProgramFilename);
+		}
+
+		// Attempt to create the shader module for the fragment program
+		auto fragmentCode = _readFile(mstrFragmentProgramFilename);	// Read in shader code from file
+		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		createInfo.codeSize = fragmentCode.size();
+		createInfo.pCode = reinterpret_cast<const uint32_t*>(fragmentCode.data());
+		if (VK_SUCCESS != vkCreateShaderModule(vkLogicalDevice, &createInfo, nullptr, &fragmentShaderModule))
+		{
+			ThrowIfTrue(1, "GraphicsPipeline::load() failed to create shader module for " + mstrFragmentProgramFilename);
+		}
+
+		// Shaders need to be assigned to a pipeline stage, so create those
+		VkPipelineShaderStageCreateInfo vertexPipelineShaderStageCreateInfo{};
+		vertexPipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		vertexPipelineShaderStageCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+		vertexPipelineShaderStageCreateInfo.module = vertexShaderModule;
+		vertexPipelineShaderStageCreateInfo.pName = "main";
+
+		VkPipelineShaderStageCreateInfo fragmentPipelineShaderStageCreateInfo{};
+		fragmentPipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		fragmentPipelineShaderStageCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		fragmentPipelineShaderStageCreateInfo.module = fragmentShaderModule;
+		fragmentPipelineShaderStageCreateInfo.pName = "main";
+
+		// Setup the fixed function pipeline
+
+		// Setup how the vertex data will be passed to the vertex shader
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
+		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		vertexInputInfo.vertexBindingDescriptionCount = 0;
+		vertexInputInfo.pVertexBindingDescriptions = nullptr; // Optional
+		vertexInputInfo.vertexAttributeDescriptionCount = 0;
+		vertexInputInfo.pVertexAttributeDescriptions = nullptr; // Optional
+
+		// Input assembly
+		// VK_PRIMITIVE_TOPOLOGY_POINT_LIST: points from vertices
+		// VK_PRIMITIVE_TOPOLOGY_LINE_LIST: line from every 2 vertices without reuse
+		// VK_PRIMITIVE_TOPOLOGY_LINE_STRIP : the end vertex of every line is used as start vertex for the next line
+		// VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST : triangle from every 3 vertices without reuse
+		// VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP : the second and third vertex of every triangle are used as first two vertices of the next triangle
+		VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
+		inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+		inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+		inputAssembly.primitiveRestartEnable = VK_FALSE;
+
+		// Viewport and scissor testing
+		VkPipelineViewportStateCreateInfo viewportState{};
+		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+		viewportState.viewportCount = 1;
+		viewportState.scissorCount = 1;
+
+		// Rasterizer performs converting tris into fragments, depth testing, face culling and scissor testing
+		VkPipelineRasterizationStateCreateInfo rasterizer{};
+		rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+		rasterizer.depthClampEnable = VK_FALSE;
+		rasterizer.rasterizerDiscardEnable = VK_FALSE;
+		rasterizer.polygonMode = VK_POLYGON_MODE_FILL;	// or VK_POLYGON_MODE_LINE or VK_POLYGON_MODE_POINT
+		rasterizer.lineWidth = 1.0f;
+		rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
+		rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizer.depthBiasEnable = VK_FALSE;
+
+		// Cheaper than super-sampling (Rendering to a larger framebuffer and downsizing)
+		// If enabled, we need to enable a GPU feature
+		VkPipelineMultisampleStateCreateInfo multisampling{};
+		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+		multisampling.sampleShadingEnable = VK_FALSE;
+		multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+
+		VkPipelineColorBlendAttachmentState colorBlendAttachment{};
+		colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		colorBlendAttachment.blendEnable = VK_FALSE;
+
+		// Blending
+		VkPipelineColorBlendStateCreateInfo colorBlending{};
+		colorBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+		colorBlending.logicOpEnable = VK_FALSE;
+		colorBlending.logicOp = VK_LOGIC_OP_COPY;
+		colorBlending.attachmentCount = 1;
+		colorBlending.pAttachments = &colorBlendAttachment;
+		colorBlending.blendConstants[0] = 0.0f;
+		colorBlending.blendConstants[1] = 0.0f;
+		colorBlending.blendConstants[2] = 0.0f;
+		colorBlending.blendConstants[3] = 0.0f;
+
+		std::vector<VkDynamicState> dynamicStates = {
+			VK_DYNAMIC_STATE_VIEWPORT,
+			VK_DYNAMIC_STATE_SCISSOR
+		};
+		VkPipelineDynamicStateCreateInfo dynamicState{};
+		dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+		dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+		dynamicState.pDynamicStates = dynamicStates.data();
+
+		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
+		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		pipelineLayoutInfo.setLayoutCount = 0;
+		pipelineLayoutInfo.pushConstantRangeCount = 0;
+
+		// Attempt to create the pipeline layout
+		if (VK_SUCCESS != vkCreatePipelineLayout(vkLogicalDevice, &pipelineLayoutInfo, nullptr, &mvkPipelineLayout) != VK_SUCCESS)
+			ThrowIfTrue(1, "GraphicsPipeline::load() failed to create pipeline layout for " + mstrVertexProgramFilename + " and " + mstrFragmentProgramFilename);
+
+
+
+
+
+		// Destroy the shader modules as they're no longer needed
+		vkDestroyShaderModule(vkLogicalDevice, vertexShaderModule, nullptr);
+		vkDestroyShaderModule(vkLogicalDevice, fragmentShaderModule, nullptr);
 	}
 
 	void GraphicsPipeline::unload(void)

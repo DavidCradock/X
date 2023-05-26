@@ -11,21 +11,9 @@ namespace X
 	{
 		GraphicsPipelineManager* pGPM = GraphicsPipelineManager::getPointer();
 		GraphicsPipeline *pGP = pGPM->add("dev");
-		
-		AudioManager* pAudioManager = AudioManager::getPointer();
-		pAudioManager->addSample("audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav", "default");
-		pAudioManager->loadSampleGroup("default");
-		AudioEmitter *pEmitter = pAudioManager->addEmitter("emitter", "audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav", 8, "default");
-		pEmitter->play(1, 1, true);
-		float fFrequency = 1.0f;
-		while (1)
-		{
-			Sleep(10);
-			fFrequency -= 0.001f;
-			pEmitter->setFrequency(0, fFrequency);
-			if (fFrequency < 0.0f)
-				break;
-		}
+		pGP->setFilenames("GPUprograms/dev_v.spv", "GPUprograms/dev_f.spv");
+
+		pGPM->loadGroup("default");
 
 	}
 

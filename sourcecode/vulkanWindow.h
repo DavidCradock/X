@@ -27,6 +27,12 @@ namespace X
 		// Returns the application's HINSTANCE
 		HINSTANCE getApplicationInstance(void);
 
+		// Returns the Vulkan logical device
+		VkDevice getLogicalDevice(void) {	return mvkLogicalDevice;	}
+
+		// Returns the extent(dimensions) of the swap chain
+		VkExtent2D getSwapchainExtent(void) {	return mvkSwapChainExtent;	}
+
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle
