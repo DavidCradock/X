@@ -328,4 +328,107 @@ namespace X
 			itg->second->mmapResource.erase(it);
 		}
 	}
+
+	void GeometryManager::convertObj(const std::string filename)
+	{
+		// Used to temporarily hold each line of data from file
+		glm::vec3 vertex;
+		glm::vec3 normal;
+		glm::vec2 texCoord;
+		unsigned int index[9];	// Index to vertex, texcoord, normal
+
+		// Used to temporarily hold all unique items from the file
+		std::vector<glm::vec3> vVertices;
+		std::vector<glm::vec3> vNormals;
+		std::vector<glm::vec2> vTexCoords;
+		std::vector<unsigned int> vIndicesVertices;
+		std::vector<unsigned int> vIndicesNormals;
+		std::vector<unsigned int> vIndicesTexCoords;
+
+		FILE* file = 0;
+		errno_t err;
+		err = fopen_s(&file, filename.c_str(), "r");
+		ThrowIfTrue(bool(err != 0), "GeometryManager::convertObj() failed to open file " + filename);
+
+		char strLine[255] = { 0 };
+		char ch = 0;
+		// Go through entire file, loading everything to the above vectors
+		while (!feof(file))
+		{
+			// Get the beginning character of the current line in the file
+			ch = fgetc(file);
+
+			if ('v' == ch)	// Could be v(vertex), vn(normal or vt(texcoord)
+			{
+				ch = fgetc(file);
+				if (' ' == ch)	// v(vertex)
+				{
+					fscanf_s(file, "%f %f %f", &vertex.x, &vertex.y, &vertex.z);
+					fgets(strLine, 255, file);	// Read the rest of the line
+					vVertices.push_back(vertex);
+				}
+				else if ('n' == ch)	// n(normal)
+				{
+					fscanf_s(file, "%f %f %f", &normal.x, &normal.y, &normal.z);
+					fgets(strLine, 255, file);	// Read the rest of the line
+					vNormals.push_back(normal);
+				}
+				else if ('t' == ch)	// t(texcoord)
+				{
+					fscanf_s(file, "%f %f", &texCoord.x, &texCoord.y);
+					fgets(strLine, 255, file);	// Read the rest of the line
+					vTexCoords.push_back(texCoord);
+				}
+			}
+			else if ('f' == ch)	// f vertex/texcoord/normal indicies
+			{
+				fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &index[0], &index[1], &index[2], &index[3], &index[4], &index[5], &index[6], &index[7], &index[8]);
+				fgets(strLine, 255, file);	// Read the rest of the line
+				vIndicesVertices.push_back(index[0]);
+				vIndicesTexCoords.push_back(index[1]);
+				vIndicesNormals.push_back(index[2]);
+				vIndicesVertices.push_back(index[3]);
+				vIndicesTexCoords.push_back(index[4]);
+				vIndicesNormals.push_back(index[5]);
+				vIndicesVertices.push_back(index[6]);
+				vIndicesTexCoords.push_back(index[7]);
+				vIndicesNormals.push_back(index[8]);
+			}
+			else if ('\n' == ch)	// Newline
+			{
+			}
+			else // Don't care
+			{
+				fgets(strLine, 255, file);	// Read the rest of the line
+			}
+		}
+		fclose(file);
+
+		// Now we have everything loaded from the file,
+		// save out to binary file.
+		std::string strOutputFilename = filename;
+		for (int i = 0; i < 3; ++i)
+		{
+			strOutputFilename.pop_back();
+		}
+		strOutputFilename += "geom";
+		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
+		ThrowIfTrue(bool(err != 0), "GeometryManager::convertObj() failed to open file " + filename + " for saving.");
+
+		// Loop through each face, generating and saving as we go
+		Geometry::Vertex geomVertex;
+		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
+		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
+		ThrowIfTrue(bool(0 == written), "GeometryManager::convertObj() failed to write to file " + filename);
+
+		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
+		{
+			geomVertex.pos = vVertices[vIndicesVertices[i] - 1];		// Vertex position
+			geomVertex.normal = vNormals[vIndicesNormals[i] - 1];		// Normal
+			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
+			written = fwrite(&geomVertex, sizeof(Geometry::Vertex), 1, file);
+			ThrowIfTrue(bool(0 == written), "GeometryManager::convertObj() failed to write to file " + filename);
+		}
+		fclose(file);
+	}
 }

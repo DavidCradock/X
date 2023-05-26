@@ -21,8 +21,16 @@ namespace X
 
 		// Sets the filename of the file which holds the vertex information
 		void setFilename(const std::string& strGeometryFilename);
-	private:
+
 		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
+		struct Vertex
+		{
+			glm::vec3 pos;
+			glm::vec3 normal;
+			glm::vec2 texCoord;
+		};
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
 	};
 
 	// Use this to manage all geometry
@@ -91,6 +99,8 @@ namespace X
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
 		void remove(const std::string& strResourceName, const std::string& strGroupName);
 
+		// Converts an .obj file to our custom geometry file format and saves to disk
+		void convertObj(const std::string filename);
 	private:
 
 		// A resource and various variables needed by the manager for each resource
