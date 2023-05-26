@@ -4,12 +4,12 @@
 
 namespace X
 {
-	// An object to hold vertex information
-	class Geometry
+	// An object to hold a texture
+	class Texture
 	{
 	public:
-		Geometry();
-		~Geometry();
+		Texture();
+		~Texture();
 
 		// Loads the resource so it's ready for use.
 		// Used by the manager
@@ -19,18 +19,18 @@ namespace X
 		// Used by the manager 
 		void unload(void);
 
-		// Sets the filename of the file which holds the vertex information
-		void setFilename(const std::string& strGeometryFilename);
+		// Sets the filename of the file which holds the texture information
+		void setFilename(const std::string& strTextureFilename);
 	private:
-		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
+		std::string mstrTextureFilename;		// Holds the name of the file holding the texture
 	};
 
-	// Use this to manage all geometry
+	// Use this to manage all textures
 	// By default, a group named "default" is created for use upon construction.
-	class GeometryManager : public Singleton<GeometryManager>
+	class TextureManager : public Singleton<TextureManager>
 	{
 	public:
-		GeometryManager();
+		TextureManager();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);
@@ -77,12 +77,12 @@ namespace X
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		Geometry* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
+		Texture* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs
 		// Also, if the resource is in the unloaded state, it is loaded here
-		Geometry* get(const std::string& strResourceName, const std::string& strGroupName = "default");
+		Texture* get(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Returns true if the named resource exists in the named group, else false
 		bool getExists(const std::string& strResourceName, const std::string& strGroupName = "default");
@@ -96,7 +96,7 @@ namespace X
 		// A resource and various variables needed by the manager for each resource
 		struct Resource
 		{
-			Geometry* pResource;			// Pointer to the resource
+			Texture* pResource;				// Pointer to the resource
 			unsigned int uiReferenceCount;	// How many times the resource has been added/removed
 			bool bLoaded;					// Whether the resource is loaded or not
 		};
