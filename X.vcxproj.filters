@@ -37,6 +37,9 @@
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\graphicsPipelines.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
+    <ClCompile Include="sourcecode\geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -67,5 +70,8 @@
     <ClInclude Include="sourcecode\vulkanWindow.h" />
     <ClInclude Include="sourcecode\graphicsPipelines.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
+    <ClInclude Include="sourcecode\geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
