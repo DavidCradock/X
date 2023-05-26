@@ -15,6 +15,9 @@ namespace X
 
 	void GraphicsPipeline::load(void)
 	{
+		// Needed for logging...
+		Log* pLog = Log::getPointer();
+
 		// Make sure filenames exist
 		ThrowIfFalse(bool(mstrVertexProgramFilename.size() > 0 && mstrFragmentProgramFilename.size() > 0), "GraphicsPipeline::load() failed as filenames of the GPU programs are not set.");
 
@@ -23,6 +26,9 @@ namespace X
 		
 		// Get logical device as we'll use it below
 		VkDevice vkLogicalDevice = pVulkanWindow->getLogicalDevice();
+
+		// Well also need the render pass from the window...
+		VkRenderPass vkRenderPass = pVulkanWindow->getRenderpass();
 
 		// These will hold the shader modules for each of the GPU programs
 		VkShaderModule vertexShaderModule;
@@ -141,9 +147,31 @@ namespace X
 		if (VK_SUCCESS != vkCreatePipelineLayout(vkLogicalDevice, &createInfoPipelineLayout, nullptr, &mvkPipelineLayout) != VK_SUCCESS)
 			ThrowIfTrue(1, "GraphicsPipeline::load() failed to create pipeline layout for " + mstrVertexProgramFilename + " and " + mstrFragmentProgramFilename);
 
+		// Create the graphics pipeline
+		// First, place the vertex and fragment shader stages into an array...
+		VkPipelineShaderStageCreateInfo shaderStages[] = { createInfoVertexPipelineShaderStage, createInfoFragmentPipelineShaderStage };
+		VkGraphicsPipelineCreateInfo createInfoGraphicsPipeline{};
+		createInfoGraphicsPipeline.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		createInfoGraphicsPipeline.stageCount = 2;
+		createInfoGraphicsPipeline.pStages = shaderStages;
+		createInfoGraphicsPipeline.pVertexInputState = &createInfoPipelineVertexInputState;
+		createInfoGraphicsPipeline.pInputAssemblyState = &createInfoPipelineInputAssemblyState;
+		createInfoGraphicsPipeline.pViewportState = &createInfoPipelineViewportState;
+		createInfoGraphicsPipeline.pRasterizationState = &createInfoRasterizationState;
+		createInfoGraphicsPipeline.pMultisampleState = &createInfoMultisampleState;
+		createInfoGraphicsPipeline.pDepthStencilState = nullptr; // Optional
+		createInfoGraphicsPipeline.pColorBlendState = &createInfoPipelineColourBlendState;
+		createInfoGraphicsPipeline.pDynamicState = &createInfoPipelineDynamicState;
+		createInfoGraphicsPipeline.layout = mvkPipelineLayout;
+		createInfoGraphicsPipeline.renderPass = vkRenderPass;
+		createInfoGraphicsPipeline.subpass = 0;
+		createInfoGraphicsPipeline.basePipelineHandle = VK_NULL_HANDLE; // Optional
+		createInfoGraphicsPipeline.basePipelineIndex = -1; // Optional
+		pLog->add("GraphicsPipeline::load() attempting to create graphics pipeline for " + mstrVertexProgramFilename + " and " + mstrFragmentProgramFilename + "...", false, true);
+		ThrowIfTrue(VK_SUCCESS != vkCreateGraphicsPipelines(vkLogicalDevice, VK_NULL_HANDLE, 1, &createInfoGraphicsPipeline, nullptr, &mvkGraphicsPipeline), "GraphicsPipeline::load() failed to create graphics pipeline for " + mstrVertexProgramFilename + " and " + mstrFragmentProgramFilename);
+		pLog->add(" done.", true, false);
 
-
-
+		
 
 		// Destroy the shader modules as they're no longer needed
 		vkDestroyShaderModule(vkLogicalDevice, vertexShaderModule, nullptr);
@@ -152,7 +180,11 @@ namespace X
 
 	void GraphicsPipeline::unload(void)
 	{
+		VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
+		VkDevice vkLogicalDevice = pVulkanWindow->getLogicalDevice();
 
+		vkDestroyPipeline(vkLogicalDevice, mvkGraphicsPipeline, nullptr);
+		vkDestroyPipelineLayout(vkLogicalDevice, mvkPipelineLayout, nullptr);
 	}
 
 	std::vector<char> GraphicsPipeline::_readFile(const std::string& filename)

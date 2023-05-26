@@ -36,8 +36,8 @@ namespace X
 		std::vector<char> _readFile(const std::string& filename);
 		std::string mstrVertexProgramFilename;		// Holds the name of the file for the vertex program
 		std::string mstrFragmentProgramFilename;	// Holds the name of the file for the fragment program
-		VkPipelineLayout mvkPipelineLayout;			// Pipeline layout used to pass uniform variables such as matrixs and textures to the programs
-		
+		VkPipelineLayout mvkPipelineLayout;			// Pipeline layout used to pass uniform variables such as matricies and textures to the programs
+		VkPipeline mvkGraphicsPipeline;				// The graphics pipeline
 	};
 
 	// Use this to manage all graphics pipelines

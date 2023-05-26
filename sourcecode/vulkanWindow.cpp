@@ -42,7 +42,7 @@ namespace X
 		mvkPhysicalDevice = VK_NULL_HANDLE;
 	}
 
-	void VulkanWindow::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled)
+	void VulkanWindow::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled, bool bLogLogicalDeviceExtensions)
 	{
 		Log* pLog = Log::getPointer();
 		pLog->add("VulkanWindow::initialise() called.");
@@ -260,9 +260,12 @@ namespace X
 			}
 		}
 		// Log supported device extensions
-		for (int i = 0; i < supportedDeviceExtensions.size(); ++i)
+		if (bLogLogicalDeviceExtensions)
 		{
-			pLog->add("VulkanWindow::initialise() device extension name: " + supportedDeviceExtensions[i]);
+			for (int i = 0; i < supportedDeviceExtensions.size(); ++i)
+			{
+				pLog->add("VulkanWindow::initialise() device extension name: " + supportedDeviceExtensions[i]);
+			}
 		}
 
 		// Add required device extensions
@@ -506,6 +509,37 @@ namespace X
 		}
 		pLog->add(" done.", true, false);
 
+		// Now setup the render pass
+		VkAttachmentDescription colorAttachment{};
+		colorAttachment.format = mvkSwapchainImageFormat;
+		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+		colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+		VkAttachmentReference colorAttachmentRef{};
+		colorAttachmentRef.attachment = 0;
+		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+		VkSubpassDescription subpass{};
+		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		subpass.colorAttachmentCount = 1;
+		subpass.pColorAttachments = &colorAttachmentRef;
+		VkRenderPassCreateInfo createInfoRenderPass{};
+		createInfoRenderPass.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+		createInfoRenderPass.attachmentCount = 1;
+		createInfoRenderPass.pAttachments = &colorAttachment;
+		createInfoRenderPass.subpassCount = 1;
+		createInfoRenderPass.pSubpasses = &subpass;
+		pLog->add("VulkanWindow::initialise() attempting to create the render pass...", false, true);
+		ThrowIfTrue(VK_SUCCESS != vkCreateRenderPass(mvkLogicalDevice, &createInfoRenderPass, nullptr, &mvkRenderPass), "VulkanWindow::initialise() failed to create render pass.");
+		pLog->add(" done.", true, false);
+
+
+
 
 	}
 
@@ -608,6 +642,9 @@ namespace X
 				ThrowIfTrue(1, "VulkanWindow::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
 			}
 		}
+
+		// Destroy the render pass
+		vkDestroyRenderPass(mvkLogicalDevice, mvkRenderPass, nullptr);
 
 		// Destroy swapchain image views
 		for (auto imageView : mvkSwapchainImageViews)

@@ -29,8 +29,8 @@ namespace X
 			glm::vec3 normal;
 			glm::vec2 texCoord;
 		};
-		std::vector<Vertex> vertices;
-		std::vector<uint32_t> indices;
+		std::vector<Vertex> mvVertices;
+		std::vector<uint32_t> mvuiIndices;
 	};
 
 	// Use this to manage all geometry

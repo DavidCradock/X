@@ -10,7 +10,7 @@ namespace X
 		VulkanWindow();
 
 		// Creates the window and initialises Vulkan
-		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled = true);
+		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled = true, bool bLogLogicalDeviceExtensions = false);
 
 		// Updates the window 
 		bool update(void);
@@ -33,6 +33,8 @@ namespace X
 		// Returns the extent(dimensions) of the swap chain
 		VkExtent2D getSwapchainExtent(void) {	return mvkSwapChainExtent;	}
 
+		// Returns the render pass (Used by graphics pipelines)
+		VkRenderPass getRenderpass(void) {	return mvkRenderPass;	}
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle
@@ -53,6 +55,7 @@ namespace X
 		VkFormat mvkSwapchainImageFormat;					// Image format of the swapchain images
 		std::vector<VkImage> mvkSwapChainImages;			// Images for the swap chain
 		std::vector<VkImageView> mvkSwapchainImageViews;	// Image views for the swap chain images
+		VkRenderPass mvkRenderPass;							// Render pass
 
 		// Find a physical device
 		void _initPhysicalDevice(void);
