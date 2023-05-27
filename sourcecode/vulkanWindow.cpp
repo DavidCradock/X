@@ -655,7 +655,7 @@ namespace X
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
 		// Draw a triangle
-		//vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+		vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 
 		// End the render pass
 		vkCmdEndRenderPass(commandBuffer);
