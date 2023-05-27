@@ -51,6 +51,12 @@
     <None Include="GPUprograms\dev.vert">
       <Filter>GPUprograms</Filter>
     </None>
+    <None Include="GPUprograms\default.frag">
+      <Filter>GPUprograms</Filter>
+    </None>
+    <None Include="GPUprograms\default.vert">
+      <Filter>GPUprograms</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\log.h" />

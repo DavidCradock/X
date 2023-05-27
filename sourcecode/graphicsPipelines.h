@@ -30,6 +30,9 @@ namespace X
 
 		// Sets the filenames which hold the compiled .spv bytecode for the vertex and fragment programs
 		void setFilenames(const std::string& strVertexProgram, const std::string& strFragmentProgram);
+
+		// Returns the graphics pipeline
+		VkPipeline getGraphicsPipeline(void) { return mvkGraphicsPipeline; }
 	private:
 		// Reads in a file and returns a vector of chars
 		// An exception is thrown if the file was unable to be opened.

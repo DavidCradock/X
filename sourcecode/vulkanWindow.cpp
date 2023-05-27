@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "vulkanWindow.h"
 #include "log.h"
+#include "graphicsPipelines.h"
 
 namespace X
 {
@@ -26,7 +27,7 @@ namespace X
 		{
 			Log* pLog = Log::getPointer();
 			std::string strError = pCallbackData->pMessage;
-			pLog->add("Vulkan debug message: " + strError);
+			pLog->add("\nVulkan debug message: " + strError, true, false);
 			ThrowIfTrue(1, strError);
 		}
 		return VK_FALSE;
@@ -124,7 +125,7 @@ namespace X
 		// Add required instance extensions
 		std::vector<const char*> requiredInstanceExtensions = { VK_KHR_SURFACE_EXTENSION_NAME };
 		requiredInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
-		
+
 		// Add debug tools if in debug AND they are available (Due to the VulkanSDK being installed)
 		if (bValidationLayersInUse)	// If we're in DEBUG build
 		{
@@ -225,7 +226,7 @@ namespace X
 		_initPhysicalDevice();
 
 		// Get each Queue family of the physical device and make sure the VK_QUEUE_GRAPHICS_BIT is set for one of them.
-		// Also, store the index to the graphics queue so we can use it below when parsing the VkDeviceQueueCreateInfo.queueFamilyIndex
+		// Also, store the index to the graphics queue so we can use it below
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(mvkPhysicalDevice, &queueFamilyCount, nullptr);
 		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
@@ -270,9 +271,9 @@ namespace X
 
 		// Add required device extensions
 		std::vector<const char*> requiredDeviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
-//		requiredDeviceExtensions.push_back(MORE_EXTENSIONS);
+		//		requiredDeviceExtensions.push_back(MORE_EXTENSIONS);
 
-		// Log required device extensions
+				// Log required device extensions
 		pLog->add("Required device extensions...");
 		for (int i = 0; i < requiredDeviceExtensions.size(); ++i)
 		{
@@ -422,14 +423,14 @@ namespace X
 		// Get swap chain image dimensions, aka, the extent.
 		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 		{
-			mvkSwapChainExtent = capabilities.currentExtent;
+			mvkSwapchainExtent = capabilities.currentExtent;
 		}
 		else
 		{
 			VkExtent2D actualExtent = { static_cast<uint32_t>(iWindowWidth), static_cast<uint32_t>(iWindowHeight) };
 			actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
 			actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
-			mvkSwapChainExtent = actualExtent;
+			mvkSwapchainExtent = actualExtent;
 		}
 		// How many images are needed in the swap chain?
 		// Vulkan specifies the minimum amount needed, but we give it an extra one so that we
@@ -448,7 +449,7 @@ namespace X
 		vkSwapchainCreateInfo.minImageCount = imageCount;
 		vkSwapchainCreateInfo.imageFormat = foundFormat.format;
 		vkSwapchainCreateInfo.imageColorSpace = foundFormat.colorSpace;
-		vkSwapchainCreateInfo.imageExtent = mvkSwapChainExtent;
+		vkSwapchainCreateInfo.imageExtent = mvkSwapchainExtent;
 		vkSwapchainCreateInfo.imageArrayLayers = 1;
 		// VK_IMAGE_USAGE_TRANSFER_DST_BIT  could be used here if we want to do post-processing, render to this and then copy it manually
 		vkSwapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
@@ -463,32 +464,29 @@ namespace X
 
 		// Create the swap chain
 		pLog->add("VulkanWindow::initialise() attempting to create swapchain... ", false, true);
-		if (vkCreateSwapchainKHR(mvkLogicalDevice, &vkSwapchainCreateInfo, nullptr, &mvkSwapChain) != VK_SUCCESS)
-		{
-			ThrowIfTrue(1, "VulkanWindow::intialise() failed to create Vulkan swapchain.");
-		}
+		ThrowIfTrue(VK_SUCCESS != vkCreateSwapchainKHR(mvkLogicalDevice, &vkSwapchainCreateInfo, nullptr, &mvkSwapchain), "VulkanWindow::intialise() failed to create Vulkan swapchain.");
 		pLog->add("done.", true, false);
 
 		// Get image handles
 		// First, return the actual number of images created by Vulkan
-		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapChain, &imageCount, nullptr);
+		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapchain, &imageCount, nullptr);
 		// Resize to fit them all
-		mvkSwapChainImages.resize(imageCount);
+		mvkSwapchainImages.resize(imageCount);
 		// Get the swapchain images
-		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapChain, &imageCount, mvkSwapChainImages.data());
+		vkGetSwapchainImagesKHR(mvkLogicalDevice, mvkSwapchain, &imageCount, mvkSwapchainImages.data());
 		// Finally, store the image format of the images used in the swap chain
 		mvkSwapchainImageFormat = foundFormat.format;
 
 		// Now we setup image views for the swapchain's images
 		// Resize the image views vector to the number of images in the swapchain
-		mvkSwapchainImageViews.resize(mvkSwapChainImages.size());
+		mvkSwapchainImageViews.resize(mvkSwapchainImages.size());
 		// For each image in the swap chain, create an image view
 		pLog->add("VulkanWindow::initialise() attempting to create image views for the swapchain images...", false, true);
-		for (size_t i = 0; i < mvkSwapChainImages.size(); i++)
+		for (size_t i = 0; i < mvkSwapchainImages.size(); i++)
 		{
 			VkImageViewCreateInfo imageViewCreateInfo{};
 			imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			imageViewCreateInfo.image = mvkSwapChainImages[i];
+			imageViewCreateInfo.image = mvkSwapchainImages[i];
 			imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 			imageViewCreateInfo.format = mvkSwapchainImageFormat;
 			imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
@@ -501,7 +499,7 @@ namespace X
 			imageViewCreateInfo.subresourceRange.levelCount = 1;
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
-			
+
 			if (vkCreateImageView(mvkLogicalDevice, &imageViewCreateInfo, nullptr, &mvkSwapchainImageViews[i]) != VK_SUCCESS)
 			{
 				ThrowIfTrue(1, "VulkanWindow::initialise() failed to create image views for the swapchain images");
@@ -524,6 +522,14 @@ namespace X
 		colorAttachmentRef.attachment = 0;
 		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
+		VkSubpassDependency dependency{};
+		dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+		dependency.dstSubpass = 0;
+		dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		dependency.srcAccessMask = 0;
+		dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
 		VkSubpassDescription subpass{};
 		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		subpass.colorAttachmentCount = 1;
@@ -534,13 +540,198 @@ namespace X
 		createInfoRenderPass.pAttachments = &colorAttachment;
 		createInfoRenderPass.subpassCount = 1;
 		createInfoRenderPass.pSubpasses = &subpass;
+		createInfoRenderPass.dependencyCount = 1;
+		createInfoRenderPass.pDependencies = &dependency;
+
 		pLog->add("VulkanWindow::initialise() attempting to create the render pass...", false, true);
 		ThrowIfTrue(VK_SUCCESS != vkCreateRenderPass(mvkLogicalDevice, &createInfoRenderPass, nullptr, &mvkRenderPass), "VulkanWindow::initialise() failed to create render pass.");
 		pLog->add(" done.", true, false);
 
+		
 
+		//  Swapchain framebuffers
+		mvkSwapchainFramebuffers.resize(mvkSwapchainImageViews.size());
+		for (size_t i = 0; i < mvkSwapchainImageViews.size(); i++)
+		{
+			VkImageView attachments[] = {
+				mvkSwapchainImageViews[i]
+			};
 
+			VkFramebufferCreateInfo createInfoframebuffer{};
+			createInfoframebuffer.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			createInfoframebuffer.renderPass = mvkRenderPass;
+			createInfoframebuffer.attachmentCount = 1;
+			createInfoframebuffer.pAttachments = attachments;
+			createInfoframebuffer.width = mvkSwapchainExtent.width;
+			createInfoframebuffer.height = mvkSwapchainExtent.height;
+			createInfoframebuffer.layers = 1;
+			ThrowIfTrue(VK_SUCCESS != vkCreateFramebuffer(mvkLogicalDevice, &createInfoframebuffer, nullptr, &mvkSwapchainFramebuffers[i]), "VulkanWindow::initialise() failed to create framebuffer.");
+		}
 
+		// Command pool
+		VkCommandPoolCreateInfo createInfoCommandPool{};
+		createInfoCommandPool.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		createInfoCommandPool.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		createInfoCommandPool.queueFamilyIndex = graphicsFamily.value();
+		ThrowIfTrue(VK_SUCCESS != vkCreateCommandPool(mvkLogicalDevice, &createInfoCommandPool, nullptr, &mvkCommandPool), "VulkanWindow::initialise() failed to create command pool.");
+
+		// Command buffer
+		VkCommandBufferAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.commandPool = mvkCommandPool;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandBufferCount = 1;
+		ThrowIfTrue(VK_SUCCESS != vkAllocateCommandBuffers(mvkLogicalDevice, &allocInfo, &mvkCommandBuffer),  "VulkanWindow::initialise() failed to allocate command buffer.");
+		
+		// Create syncronization objects
+		VkSemaphoreCreateInfo createInfoSemaphore{};
+		createInfoSemaphore.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+		ThrowIfTrue(VK_SUCCESS != vkCreateSemaphore(mvkLogicalDevice, &createInfoSemaphore, nullptr, &mvkSemaphoreImageAvailable), "VulkanWindow::initialise() failed to create semaphore used to determine whether swapchain image is available.");
+		ThrowIfTrue(VK_SUCCESS != vkCreateSemaphore(mvkLogicalDevice, &createInfoSemaphore, nullptr, &mvkSemaphoreRenderFinished), "VulkanWindow::initialise() failed to create semaphore used to determine whether rendering has finished.");
+		VkFenceCreateInfo createInfoFence{};
+		createInfoFence.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		// Set the fence to initially be signalled so that upon first call to the drawFrame() method, we won't wait forever for it to be signalled.
+		createInfoFence.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+		ThrowIfTrue(VK_SUCCESS != vkCreateFence(mvkLogicalDevice, &createInfoFence, nullptr, &mvkFenceInFlight), "VulkanWindow::initialise() failed to create in flight fence.");
+		
+		// Create default graphics pipeline
+		_createDefaultGraphicsPipeline();
+	}
+
+	void VulkanWindow::_createDefaultGraphicsPipeline(void)
+	{
+		GraphicsPipelineManager* pGraphicsPipelineManager = GraphicsPipelineManager::getPointer();
+		GraphicsPipeline* pGraphicsPipeline = pGraphicsPipelineManager->add("default", "default");
+		pGraphicsPipeline->setFilenames("GPUprograms/dev_v.spv", "GPUprograms/dev_f.spv");
+		pGraphicsPipelineManager->loadGroup("default");
+	}
+
+	void VulkanWindow::_recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex, const std::string &strGraphicsPipelineName, const std::string &strGraphicsPipelineGroupName)
+	{
+		// Obtain graphics pipeline from manager
+		GraphicsPipelineManager* pGraphicsPipelineManager = GraphicsPipelineManager::getPointer();
+		GraphicsPipeline* pGraphicsPipeline = pGraphicsPipelineManager->get(strGraphicsPipelineName, strGraphicsPipelineGroupName);
+		VkPipeline graphicsPipeline = pGraphicsPipeline->getGraphicsPipeline();
+
+		VkCommandBufferBeginInfo beginInfo{};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = 0; // Optional
+		beginInfo.pInheritanceInfo = nullptr; // Optional
+
+		// Being recording to the command buffer
+		ThrowIfTrue(VK_SUCCESS != vkBeginCommandBuffer(commandBuffer, &beginInfo), "VulkanWindow::_recordCommandBuffer() failed to begin recording to the command buffer.");
+		VkRenderPassBeginInfo renderPassInfo{};
+		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassInfo.renderPass = mvkRenderPass;
+		renderPassInfo.framebuffer = mvkSwapchainFramebuffers[imageIndex];
+		renderPassInfo.renderArea.offset = { 0, 0 };
+		renderPassInfo.renderArea.extent = mvkSwapchainExtent;
+		VkClearValue clearColour{};
+		clearColour.color.float32[0] = mv4ClearColour.r;
+		clearColour.color.float32[1] = mv4ClearColour.g;
+		clearColour.color.float32[2] = mv4ClearColour.b;
+		clearColour.color.float32[3] = mv4ClearColour.a;
+		renderPassInfo.clearValueCount = 1;
+		renderPassInfo.pClearValues = &clearColour;
+
+		// Begin the render pass
+		vkCmdBeginRenderPass(commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+		// Bind the named graphics pipeline
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+
+		// Viewport and scissor state for pipelines are dynamic, so we need to set them here
+		VkViewport viewport{};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = static_cast<float>(mvkSwapchainExtent.width);
+		viewport.height = static_cast<float>(mvkSwapchainExtent.height);
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
+		VkRect2D scissor{};
+		scissor.offset = { 0, 0 };
+		scissor.extent = mvkSwapchainExtent;
+		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+
+		// Draw a triangle
+		//vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+
+		// End the render pass
+		vkCmdEndRenderPass(commandBuffer);
+
+		// End recording to the command buffer
+		ThrowIfTrue(VK_SUCCESS != vkEndCommandBuffer(commandBuffer), "VulkanWindow::_recordCommandBuffer() failed to end recording to the command buffer.");
+	}
+
+	void VulkanWindow::shutdown(void)
+	{
+		// Wait for things to be finished before continuing
+		// Otherwise, we might be trying to destroy stuff while stuff is still going on which is a bad idea
+		vkDeviceWaitIdle(mvkLogicalDevice);
+
+		// Delete the debug messenger if in DEBUG
+		bool bValidationLayersInUse = false;
+#ifdef _DEBUG
+		bValidationLayersInUse = true;
+#endif
+		if (bValidationLayersInUse)
+		{
+			// Obtain the function for destroying the callback
+			auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mvkInstance, "vkDestroyDebugUtilsMessengerEXT");
+			if (func != nullptr)
+			{
+				func(mvkInstance, mvkDebugMessenger, nullptr);
+			}
+			else
+			{
+				ThrowIfTrue(1, "VulkanWindow::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
+			}
+		}
+
+		// Destroy syncronization objects
+		vkDestroySemaphore(mvkLogicalDevice, mvkSemaphoreImageAvailable, nullptr);
+		vkDestroySemaphore(mvkLogicalDevice, mvkSemaphoreRenderFinished, nullptr);
+		vkDestroyFence(mvkLogicalDevice, mvkFenceInFlight, nullptr);
+
+		// Destroy command pool
+		vkDestroyCommandPool(mvkLogicalDevice, mvkCommandPool, nullptr);
+
+		// Destroy framebuffers
+		for (auto framebuffer : mvkSwapchainFramebuffers)
+		{
+			vkDestroyFramebuffer(mvkLogicalDevice, framebuffer, nullptr);
+		}
+
+		// Destroy the render pass
+		vkDestroyRenderPass(mvkLogicalDevice, mvkRenderPass, nullptr);
+
+		// Destroy swapchain image views
+		for (auto imageView : mvkSwapchainImageViews)
+		{
+			vkDestroyImageView(mvkLogicalDevice, imageView, nullptr);
+		}
+
+		// Destroy the swapchain
+		vkDestroySwapchainKHR(mvkLogicalDevice, mvkSwapchain, nullptr);
+
+		// Destroy window surface
+		vkDestroySurfaceKHR(mvkInstance, mvkWindowSurface, nullptr);
+
+		// Destroy the Vulkan logical device
+		vkDestroyDevice(mvkLogicalDevice, nullptr);
+
+		// Destroy main Vulkan instance
+		vkDestroyInstance(mvkInstance, nullptr);
+
+		// Close window
+		if (mhWindowHandle)
+		{
+			CloseWindow(mhWindowHandle);
+			mhWindowHandle = NULL;
+		}
+		// Unregister window class
+		UnregisterClass(L"XWindowClassName", mhInstance);
 	}
 
 	void VulkanWindow::_initPhysicalDevice(void)
@@ -585,7 +776,7 @@ namespace X
 		// Log physical device properties
 		Log* pLog = Log::getPointer();
 		pLog->add("VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device Name: " + std::string(vkDeviceProperties.deviceName));
-		
+
 		// Get physical device features
 		VkPhysicalDeviceFeatures vkDeviceFeatures;
 		vkGetPhysicalDeviceFeatures(vkPhysicalDevice, &vkDeviceFeatures);
@@ -622,56 +813,50 @@ namespace X
 		return true;
 	}
 
-	void VulkanWindow::shutdown(void)
+	void VulkanWindow::drawFrame(void)
 	{
-		// Delete the debug messenger if in DEBUG
-		bool bValidationLayersInUse = false;
-		#ifdef _DEBUG
-		bValidationLayersInUse = true;
-		#endif
-		if (bValidationLayersInUse)
-		{
-			// Obtain the function for destroying the callback
-			auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(mvkInstance, "vkDestroyDebugUtilsMessengerEXT");
-			if (func != nullptr)
-			{
-				func(mvkInstance, mvkDebugMessenger, nullptr);
-			}
-			else
-			{
-				ThrowIfTrue(1, "VulkanWindow::shutdown() unable to obtain function pointer to vkDestroyDebugUtilsMessengerEXT function.");
-			}
-		}
+		// Wait for frames to be rendered
+		vkWaitForFences(mvkLogicalDevice, 1, &mvkFenceInFlight, VK_TRUE, UINT64_MAX);
 
-		// Destroy the render pass
-		vkDestroyRenderPass(mvkLogicalDevice, mvkRenderPass, nullptr);
+		// Reset fence object to be unsignalled again...
+		vkResetFences(mvkLogicalDevice, 1, &mvkFenceInFlight);
 
-		// Destroy swapchain image views
-		for (auto imageView : mvkSwapchainImageViews)
-		{
-			vkDestroyImageView(mvkLogicalDevice, imageView, nullptr);
-		}
+		// Get image from the swapchain
+		uint32_t imageIndex;	// Index into mvkSwapchainImages which is now available
+		vkAcquireNextImageKHR(mvkLogicalDevice, mvkSwapchain, UINT64_MAX, mvkSemaphoreImageAvailable, VK_NULL_HANDLE, &imageIndex);
 
-		// Destroy the swapchain
-		vkDestroySwapchainKHR(mvkLogicalDevice, mvkSwapChain, nullptr);
+		// Reset the command buffer so it can be recorded to
+		vkResetCommandBuffer(mvkCommandBuffer, 0);
 
-		// Destroy window surface
-		vkDestroySurfaceKHR(mvkInstance, mvkWindowSurface, nullptr);
+		// Record the command buffer
+		_recordCommandBuffer(mvkCommandBuffer, imageIndex, "default", "default");
 
-		// Destroy the Vulkan logical device
-		vkDestroyDevice(mvkLogicalDevice, nullptr);
+		// Submit the command buffer
+		VkSubmitInfo submitInfo{};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		VkSemaphore waitSemaphores[] = { mvkSemaphoreImageAvailable };
+		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+		submitInfo.waitSemaphoreCount = 1;
+		submitInfo.pWaitSemaphores = waitSemaphores;
+		submitInfo.pWaitDstStageMask = waitStages;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &mvkCommandBuffer;
+		VkSemaphore signalSemaphores[] = { mvkSemaphoreRenderFinished };
+		submitInfo.signalSemaphoreCount = 1;
+		submitInfo.pSignalSemaphores = signalSemaphores;
+		ThrowIfTrue(VK_SUCCESS != vkQueueSubmit(mvkGraphicsQueue, 1, &submitInfo, mvkFenceInFlight), "VulkanWindow::drawFrame() failed to submit draw command buffer.");
 
-		// Destroy main Vulkan instance
-		vkDestroyInstance(mvkInstance, nullptr);
-
-		// Close window
-		if (mhWindowHandle)
-		{
-			CloseWindow(mhWindowHandle);
-			mhWindowHandle = NULL;
-		}
-		// Unregister window class
-		UnregisterClass(L"XWindowClassName", mhInstance);
+		// Present the frame to the window
+		VkPresentInfoKHR presentInfo{};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = 1;
+		presentInfo.pWaitSemaphores = signalSemaphores;
+		VkSwapchainKHR swapChains[] = { mvkSwapchain };
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = swapChains;
+		presentInfo.pImageIndices = &imageIndex;
+		presentInfo.pResults = nullptr; // Optional
+		vkQueuePresentKHR(mvkPresentationQueue, &presentInfo);
 	}
 
 	LRESULT VulkanWindow::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -692,8 +877,8 @@ namespace X
 			PostQuitMessage(0);
 			return 0;
 		case WM_SIZE:		// WM_SIZE is sent when the user resizes the window.  
-//			miWindowWidth = LOWORD(lParam);
-//			miWindowHeight = HIWORD(lParam);
+			//			miWindowWidth = LOWORD(lParam);
+			//			miWindowHeight = HIWORD(lParam);
 			return 0;
 		case WM_ENTERSIZEMOVE:	// WM_EXITSIZEMOVE is sent when the user grabs the resize bars.
 			return 0;
@@ -720,5 +905,10 @@ namespace X
 	HINSTANCE VulkanWindow::getApplicationInstance(void)
 	{
 		return mhInstance;
+	}
+
+	void VulkanWindow::setClearColour(glm::vec4& clearColour)
+	{
+		mv4ClearColour = clearColour;
 	}
 }

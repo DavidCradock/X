@@ -43,10 +43,10 @@
 0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create swapchain... done.
 0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create image views for the swapchain images... done.
 0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create the render pass... done.
+0w:0d:0h:0m:00s : GraphicsPipeline::load() attempting to create graphics pipeline for GPUprograms/dev_v.spv and GPUprograms/dev_f.spv... done.
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : GraphicsPipeline::load() attempting to create graphics pipeline for GPUprograms/dev_v.spv and GPUprograms/dev_f.spv...0w:0d:0h:0m:00s : Vulkan debug message: Validation Error: [ VUID-VkGraphicsPipelineCreateInfo-layout-07988 ] Object 0: handle = 0xee647e0000000009, type = VK_OBJECT_TYPE_SHADER_MODULE; Object 1: handle = 0xec4bec000000000b, type = VK_OBJECT_TYPE_PIPELINE_LAYOUT; | MessageID = 0x215f02cd | vkCreateGraphicsPipelines(): pCreateInfos[0] Set 0 Binding 0 in shader (VK_SHADER_STAGE_VERTEX_BIT) uses descriptor slot (expected `VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK`) but not declared in pipeline layout The Vulkan spec states: If a resource variables is declared in a shader, a descriptor slot in layout must match the shader stage (https://vulkan.lunarg.com/doc/view/1.3.246.1/windows/1.3-extensions/vkspec.html#VUID-VkGraphicsPipelineCreateInfo-layout-07988)
-0w:0d:0h:0m:00s : Total runtime: 0sec 0min 0hr 0days 0weeks.
-0w:0d:0h:0m:00s : File: X:\MyProjects\c++\2023\X\sourcecode\vulkanWindow.cpp
-Line: 30
-Desc: Validation Error: [ VUID-VkGraphicsPipelineCreateInfo-layout-07988 ] Object 0: handle = 0xee647e0000000009, type = VK_OBJECT_TYPE_SHADER_MODULE; Object 1: handle = 0xec4bec000000000b, type = VK_OBJECT_TYPE_PIPELINE_LAYOUT; | MessageID = 0x215f02cd | vkCreateGraphicsPipelines(): pCreateInfos[0] Set 0 Binding 0 in shader (VK_SHADER_STAGE_VERTEX_BIT) uses descriptor slot (expected `VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK`) but not declared in pipeline layout The Vulkan spec states: If a resource variables is declared in a shader, a descriptor slot in layout must match the shader stage (https://vulkan.lunarg.com/doc/view/1.3.246.1/windows/1.3-extensions/vkspec.html#VUID-VkGraphicsPipelineCreateInfo-layout-07988)
-Please click the OK button to close.
+0w:0d:0h:0m:00s : GraphicsPipeline::load() attempting to create graphics pipeline for GPUprograms/dev_v.spv and GPUprograms/dev_f.spv... done.
+0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
+0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:12s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:12s : Total runtime: 12sec 0min 0hr 0days 0weeks.

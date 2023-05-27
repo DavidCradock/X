@@ -163,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GPUprograms\compile.bat" />
+    <None Include="GPUprograms\default.frag" />
+    <None Include="GPUprograms\default.vert" />
     <None Include="GPUprograms\dev.frag" />
     <None Include="GPUprograms\dev.vert" />
     <None Include="README.md" />

@@ -67,7 +67,7 @@ namespace X
 						// Application wants to shutdown
 						PostQuitMessage(0);
 					}
-						
+					pVulkanWindow->drawFrame();
 				}
 			}
 
