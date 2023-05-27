@@ -1,4 +1,4 @@
-![X project logo. A character X, extruded slightly and placed against a quad within the 3D application Blender.](https://github.com/DavidCradock/X/blob/ed253cf27bfdadf152ca4013c0d976c04d54021c/github_social_image.png)
+![X project logo. A character X, extruded slightly and placed against a quad within the 3D application Blender.](https://github.com/DavidCradock/X/blob/200f84dbc67354e97e7b7fabf2b3106daf09888a/github_images/github_social_image.png)
 # My current personal project.
 ## Written in C++ for Windows 11, using Vulkan for rendering.
 ### It's early days, but I'm enjoying programming again after about a nine year gap due to a health issue and this project will develop into a nice little game development framework.
@@ -13,3 +13,5 @@
 - layers which are enabled on debug builds only work if we have the VulkanSDK installed anyway.
 **Current features**
 - None lol (It DOES have a WinMain though!)
+- 2013 05 27: My first Vulkan triangle.
+![A screenshot of X display it's first Vulkan triangle.](https://github.com/DavidCradock/X/blob/200f84dbc67354e97e7b7fabf2b3106daf09888a/github_images/my_first_Vulkan_triangle.png)
