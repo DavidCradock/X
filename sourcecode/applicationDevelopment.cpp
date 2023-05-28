@@ -10,8 +10,8 @@ namespace X
 	void ApplicationDevelopment::initOnce(void)
 	{
 		GraphicsPipelineManager* pGPM = GraphicsPipelineManager::getPointer();
-		GraphicsPipeline *pGP = pGPM->add("dev");
-		pGP->setFilenames("GPUprograms/dev_v.spv", "GPUprograms/dev_f.spv");
+//		GraphicsPipeline *pGP = pGPM->add("dev");
+//		pGP->setFilenames("GPUprograms/dev_v.spv", "GPUprograms/dev_f.spv");
 
 		pGPM->loadGroup("default");
 

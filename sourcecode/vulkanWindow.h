@@ -1,89 +1,144 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+#include "log.h"
 
 namespace X
 {
+	struct QueueFamilyIndices {
+		std::optional<uint32_t> graphicsFamily;
+		std::optional<uint32_t> presentFamily;
+
+		bool isComplete() {
+			return graphicsFamily.has_value() && presentFamily.has_value();
+		}
+	};
+
+	struct SwapChainSupportDetails {
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
+
 	class VulkanWindow : public Singleton<VulkanWindow>
 	{
 	public:
-		VulkanWindow();
-
 		// Creates the window and initialises Vulkan
-		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bVsyncEnabled = true, bool bLogLogicalDeviceExtensions = false);
+		void initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bFullscreen);
 
-		// Updates the window 
+		// Updates the window and checks for window close messages, returning false if the window has been asked to close
 		bool update(void);
 
-		// Frees all objects and closes the window.
+		// Closes the window and destroys all the Vulkan objects
 		void shutdown(void);
-
-		// Draws a frame to the backbuffer and presents to the window
-		void drawFrame(void);
-
-		// Window message procedure
-		LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 		// Returns the window's handle
 		HWND getWindowHandle(void);
 
-		// Returns the application's HINSTANCE
-		HINSTANCE getApplicationInstance(void);
-
 		// Returns the Vulkan logical device
-		VkDevice getLogicalDevice(void) {	return mvkLogicalDevice;	}
-
-		// Returns the extent (dimensions) of the swap chain
-		VkExtent2D getSwapchainExtent(void) {	return mvkSwapchainExtent;	}
+		VkDevice getLogicalDevice(void) { return device; }
 
 		// Returns the render pass (Used by graphics pipelines)
-		VkRenderPass getRenderpass(void) {	return mvkRenderPass;	}
+		VkRenderPass getRenderpass(void) { return renderPass; }
 
-		// Sets the colour used when clearing the framebuffers
-		void setClearColour(glm::vec4& clearColour);
+		
+
+		void initWindow(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bFullscreen);
+		void initVulkan(void);
+		void createInstance(void);
+
 	private:
-		WNDCLASS mWindowClass;			// Window class used to create the window
-		HINSTANCE mhInstance;			// Application instance handle
-		HWND mhWindowHandle;			// Window handle
-		std::string mstrWindowTitle;	// Window's title text
-		int miWindowWidth;				// Width of window
-		int miWindowHeight;				// Height of window
+		GLFWwindow* window;
 
-		VkInstance mvkInstance;									// Main Vulkan instance
-		VkDebugUtilsMessengerEXT mvkDebugMessenger;				// Debug layers messenger
-		VkPhysicalDevice mvkPhysicalDevice;						// Physical Vulkan device found and choosen in _initPhysicalDevice()
-		VkDevice mvkLogicalDevice;								// Logical Vulkan device
-		VkQueue mvkGraphicsQueue;								// Graphics queue for the logical device
-		VkSurfaceKHR mvkWindowSurface;							// The window surface which Vulkan will render to
-		VkQueue mvkPresentationQueue;							// Presentation queue for the window surface of the logical device.
-		VkSwapchainKHR mvkSwapchain;							// Vulkan swap chain
-		VkExtent2D mvkSwapchainExtent;							// The dimensions of the images in the swapchain
-		VkFormat mvkSwapchainImageFormat;						// Image format of the swapchain images
-		std::vector<VkImage> mvkSwapchainImages;				// Images for the swap chain
-		std::vector<VkImageView> mvkSwapchainImageViews;		// Image views for the swap chain images
-		VkRenderPass mvkRenderPass;								// Render pass
-		std::vector<VkFramebuffer> mvkSwapchainFramebuffers;	// Framebuffers for each of the swapchain images
-		VkCommandPool mvkCommandPool;							// Command pool
-		VkCommandBuffer mvkCommandBuffer;						// Command buffer (No need to destroy this as it is when command pool is)
-		glm::vec4 mv4ClearColour;								// The clear colour set by setClearColour();
-		VkSemaphore mvkSemaphoreImageAvailable;					// GPU syncronization semaphore
-		VkSemaphore mvkSemaphoreRenderFinished;					// GPU syncronization semaphore
-		VkFence mvkFenceInFlight;								// GPU syncronization fence
+		VkInstance instance;
+		VkDebugUtilsMessengerEXT debugMessenger;
+		VkSurfaceKHR surface;
 
-		// Create default graphic pipeline.
-		// Called from initialise() method once everything has been initialised
-		void _createDefaultGraphicsPipeline(void);
+		VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+		VkDevice device;
 
-		// Record a command buffer for a framebuffer image
-		void _recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex, const std::string& strGraphicsPipelineName, const std::string& strGraphicsPipelineGroupName);
+		VkQueue graphicsQueue;
+		VkQueue presentQueue;
 
-		// Find a physical device
-		void _initPhysicalDevice(void);
+		VkSwapchainKHR swapChain;
+		std::vector<VkImage> swapChainImages;
+		VkFormat swapChainImageFormat;
+		VkExtent2D swapChainExtent;
+		std::vector<VkImageView> swapChainImageViews;
+		std::vector<VkFramebuffer> swapChainFramebuffers;
 
-		// Used by _initPhysicalDevice to compute a "score" for a physical device
-		// _initPhysicalDevice then chooses the device with the highest score.
-		// The more features, a higher score for a physical device.
-		// Also logs device features to log file.
-		int _initComputePhysicalDeviceScore(VkPhysicalDevice vkPhysicalDevice);
+		VkRenderPass renderPass;
+		VkPipelineLayout pipelineLayout;
+		VkPipeline graphicsPipeline;
+
+		VkCommandPool commandPool;
+		std::vector<VkCommandBuffer> commandBuffers;
+
+		std::vector<VkSemaphore> imageAvailableSemaphores;
+		std::vector<VkSemaphore> renderFinishedSemaphores;
+		std::vector<VkFence> inFlightFences;
+		uint32_t currentFrame = 0;
+
+		bool framebufferResized = false;
+		static void framebufferResizeCallback(GLFWwindow* window, int width, int height)
+		{
+			auto app = reinterpret_cast<VulkanWindow*>(glfwGetWindowUserPointer(window));
+			app->framebufferResized = true;
+		}
+
+		void cleanupSwapChain(void);
+		void cleanup(void);
+		void recreateSwapChain(void);
+		void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+		void setupDebugMessenger(void);
+		void createSurface(void);
+		void pickPhysicalDevice(void);
+		void createLogicalDevice(void);
+		void createSwapChain(void);
+		void createImageViews(void);
+		void createRenderPass(void);
+		void createGraphicsPipeline(void);
+		void createFramebuffers(void);
+		void createCommandPool(void);
+		void createCommandBuffers(void);
+		void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+		void createSyncObjects(void);
+		void drawFrame(void);
+		VkShaderModule createShaderModule(const std::vector<char>& code);
+		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+		SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+		bool isDeviceSuitable(VkPhysicalDevice device);
+		bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+		std::vector<const char*> getRequiredExtensions(void);
+		bool checkValidationLayerSupport(void);
+		static std::vector<char> readFile(const std::string& filename)
+		{
+			std::ifstream file(filename, std::ios::ate | std::ios::binary);
+
+			if (!file.is_open()) {
+				throw std::runtime_error("failed to open file!");
+			}
+
+			size_t fileSize = (size_t)file.tellg();
+			std::vector<char> buffer(fileSize);
+
+			file.seekg(0);
+			file.read(buffer.data(), fileSize);
+
+			file.close();
+
+			return buffer;
+		}
+		static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
+		{
+			std::string strErr = "validation layer : ";
+			strErr +=pCallbackData->pMessage;
+			Log::getPointer()->add(strErr);
+//			ThrowIfTrue(1, strErr);
+			return VK_FALSE;
+		}
 	};
 }

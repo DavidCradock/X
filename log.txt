@@ -1,52 +1,16 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() called.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the application window.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 12 instance extensions.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_device_group_creation
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_fence_capabilities
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_memory_capabilities
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_external_semaphore_capabilities
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_get_physical_device_properties2
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_get_surface_capabilities2
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_surface
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_win32_surface
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_debug_report
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_debug_utils
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_EXT_swapchain_colorspace
-0w:0d:0h:0m:00s : VulkanWindow::initialise() instance extension name: VK_KHR_portability_enumeration
-0w:0d:0h:0m:00s : Required instance extensions...
-0w:0d:0h:0m:00s : VK_KHR_surface
-0w:0d:0h:0m:00s : VK_KHR_win32_surface
-0w:0d:0h:0m:00s : VK_EXT_debug_utils
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has enabled the debug layers.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create main Vulkan instance.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() main Vulkan instance created.
-0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() called.
-0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() found 1 physical devices.
-0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device Name: AMD Radeon RX 6800 XT
-0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device Type: Discrete GPU
-0w:0d:0h:0m:00s : VulkanWindow::_initComputePhysicalDeviceScore() Vulkan Physical Device maxImageDimension2D: 16384
-0w:0d:0h:0m:00s : VulkanWindow::_initPhysicalDevice() Vulkan physical device has been created.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 155 physical device extensions.
-0w:0d:0h:0m:00s : Required device extensions...
-0w:0d:0h:0m:00s : VK_KHR_swapchain
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the Vulkan logical device and obtained the graphics queue.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the window surface.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected that the created surface does have presentation support.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has created the presentation queue for the Vulkan logical device.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 25 formats available.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() found the requested format of VK_FORMAT_B8G8R8A8_SRGB.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() has detected 3 presentation modes available.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() was able to find the requested presentation mode. (VSync enabled)
-0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create swapchain... done.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create image views for the swapchain images... done.
-0w:0d:0h:0m:00s : VulkanWindow::initialise() attempting to create the render pass... done.
-0w:0d:0h:0m:00s : GraphicsPipeline::load() attempting to create graphics pipeline for GPUprograms/dev_v.spv and GPUprograms/dev_f.spv... done.
+0w:0d:0h:0m:00s : validation layer : windows_get_device_registry_files: GUID for 27 is not SoftwareComponent skipping
+0w:0d:0h:0m:00s : validation layer : Searching for ICD drivers named .\amdvlk64.dll
+0w:0d:0h:0m:00s : validation layer : Loading layer library C:\VulkanSDK\1.3.246.1\Bin\.\VkLayer_khronos_validation.dll
+0w:0d:0h:0m:00s : validation layer : Loading layer library C:\ProgramData\obs-studio-hook\.\graphics-hook64.dll
+0w:0d:0h:0m:00s : validation layer : Loading layer library C:\WINDOWS\System32\DriverStore\FileRepository\u0391252.inf_amd64_b298c070ddf486e2\B391109\.\amdvlk64.dll
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : GraphicsPipeline::load() attempting to create graphics pipeline for GPUprograms/dev_v.spv and GPUprograms/dev_f.spv... done.
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:11s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:11s : Total runtime: 10sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:03s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:03s : validation layer : Unloading layer library C:\WINDOWS\System32\DriverStore\FileRepository\u0391252.inf_amd64_b298c070ddf486e2\B391109\.\amdvlk64.dll
+0w:0d:0h:0m:03s : validation layer : Unloading layer library C:\ProgramData\obs-studio-hook\.\graphics-hook64.dll
+0w:0d:0h:0m:04s : validation layer : Unloading layer library C:\VulkanSDK\1.3.246.1\Bin\.\VkLayer_khronos_validation.dll
+0w:0d:0h:0m:04s : Total runtime: 3sec 0min 0hr 0days 0weeks.

@@ -32,7 +32,7 @@ namespace X
 
 			// Create window
 			VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
-			pVulkanWindow->initialise("X", 1024, 576);
+			pVulkanWindow->initialise("X", 1024, 768, false);
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
@@ -47,27 +47,14 @@ namespace X
 			// Enter main loop...
 			pLog->add("ApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
-			MSG msg = { 0 };
-			while (msg.message != WM_QUIT)
-			{
-				// If there are Window messages then process them.
-				if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-				{
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
-				}
-				// Otherwise...
-				else
-				{
-					mTimer.update();
-					pVulkanWindow->update();
 
-					if (!callCurrentApp_onUpdate())
-					{
-						// Application wants to shutdown
-						PostQuitMessage(0);
-					}
-					pVulkanWindow->drawFrame();
+			while (pVulkanWindow->update())
+			{
+				mTimer.update();
+
+				if (!callCurrentApp_onUpdate())
+				{
+					break;	// Application wants to close
 				}
 			}
 

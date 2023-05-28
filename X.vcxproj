@@ -108,14 +108,14 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\glm\;c:\VulkanSDK\1.3.246.1\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)dependencies\glm\glm\;c:\VulkanSDK\1.3.246.1\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.3.246.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\glfw-3.3.8.bin.WIN64\lib-vc2022;C:\VulkanSDK\1.3.246.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,7 +130,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\glm\;c:\VulkanSDK\1.3.246.1\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)dependencies\glm\glm\;c:\VulkanSDK\1.3.246.1\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -139,7 +139,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.3.246.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\glfw-3.3.8.bin.WIN64\lib-vc2022;C:\VulkanSDK\1.3.246.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -153,6 +153,7 @@
     <ClCompile Include="sourcecode\textures.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\vulkanWindow.cpp" />
+    <ClCompile Include="sourcecode\vulkanWindowOLD.cpp" />
     <ClCompile Include="sourcecode\log.cpp" />
     <ClCompile Include="sourcecode\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -179,6 +180,7 @@
     <ClInclude Include="sourcecode\graphicsPipelines.h" />
     <ClInclude Include="sourcecode\textures.h" />
     <ClInclude Include="sourcecode\vulkanWindow.h" />
+    <ClInclude Include="sourcecode\vulkanWindowOLD.h" />
     <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\PCH.h" />
     <ClInclude Include="sourcecode\singleton.h" />

@@ -33,12 +33,13 @@
     <ClCompile Include="sourcecode\applicationGame.cpp">
       <Filter>applications</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\vulkanWindow.cpp" />
+    <ClCompile Include="sourcecode\vulkanWindowOLD.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\graphicsPipelines.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\geometry.cpp" />
     <ClCompile Include="sourcecode\textures.cpp" />
+    <ClCompile Include="sourcecode\vulkanWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -72,10 +73,11 @@
     <ClInclude Include="sourcecode\applicationGame.h">
       <Filter>applications</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\vulkanWindow.h" />
+    <ClInclude Include="sourcecode\vulkanWindowOLD.h" />
     <ClInclude Include="sourcecode\graphicsPipelines.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\geometry.h" />
     <ClInclude Include="sourcecode\textures.h" />
+    <ClInclude Include="sourcecode\vulkanWindow.h" />
   </ItemGroup>
 </Project>

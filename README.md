@@ -6,11 +6,15 @@
 - Download the source as a zip and extract somewhere.
 - Download and install Visual studio
 - Download the Vulkan SDK and install from https://www.lunarg.com/vulkan-sdk/
-- Within Solution Explorer, right click on X, click properties and add the Vulkan SDK include and lib dir...
+- Within Solution Explorer, right click on X, click properties and add the Vulkan SDK include and lib directories...
 - C++/General additional include directories and add c:\VulkanSDK\1.3.246.1\Include\ or equivalent
 - Linker/Additional Library Directories and add C:\VulkanSDK\1.3.246.1\Lib or equivalent
-- I decided to amke it so you have to install the VulkanSDK and perform the above setup because the debug
+- I decided to make it so you have to install the VulkanSDK and perform the above setup because the debug
 - layers which are enabled on debug builds only work if we have the VulkanSDK installed anyway.
+- We also need GLFW, which there's a copy of the prebuilt 64bit static binaries in the dependencies directory.
+- Extract that file to somewhere and right click on X, click properties and add the include and lib directories...
+- C++/General additional include directories and add C:\glfw-3.3.8.bin.WIN64\include or equivalent
+- Linker/Additional Library Directories and add C:\glfw-3.3.8.bin.WIN64\lib-vc2022 or equivalent
 **Current features**
 - None lol (It DOES have a WinMain though!)
 - 2013 05 27: My first Vulkan triangle.
