@@ -35,13 +35,37 @@ namespace X
 		}
 	}
 
-	
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
+	{
+		// messageSeverity can be one of the following...
+		// VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT : Diagnostic message
+		// VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT : Informational message like the creation of a resource
+		// VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT : Message which is probably something we've done wrong, but not an error
+		// VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT : Message which is an error and may cause a crash.
 
-	
+		Log* pLog = Log::getPointer();
+		std::string strError = pCallbackData->pMessage;
+		pLog->add("\nVulkan debug message: " + strError, true, false);
 
+		if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+		{
+			ThrowIfTrue(1, strError);
+		}
+		return VK_FALSE;
+	}
+
+	static void framebufferResizeCallback(GLFWwindow* window, int width, int height)
+	{
+		auto app = reinterpret_cast<VulkanWindow*>(glfwGetWindowUserPointer(window));
+		app->framebufferResized = true;
+	}
 
 	void VulkanWindow::initialise(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bFullscreen)
 	{
+		muiWindowWidth = iWindowWidth;
+		muiWindowHeight = iWindowHeight;
+		mbWindowFullscreen = bFullscreen;
+
 		glfwInit();
 		initWindow(strWindowTitle, iWindowWidth, iWindowHeight, bFullscreen);
 		initVulkan();
@@ -66,6 +90,21 @@ namespace X
 		return glfwGetWin32Window(window);
 	}
 
+	unsigned int VulkanWindow::getWindowWidth(void)
+	{
+		return muiWindowWidth;
+	}
+
+	unsigned int VulkanWindow::getWindowHeight(void)
+	{
+		return muiWindowHeight;
+	}
+
+	bool VulkanWindow::getWindowFullscreen(void)
+	{
+		return mbWindowFullscreen;
+	}
+
 	void VulkanWindow::initWindow(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bFullscreen)
 	{
 		// Get primary monitor, it's dimensions and center the window
@@ -86,12 +125,15 @@ namespace X
 
 		ThrowIfTrue(0 == window, "Unable to create window. Try updating your drivers?");
 
-		glfwGetWindowSize(window, &iCurrentWindowWidth, &iCurrentWindowHeight);
-		int iNewWindowPosX = iMonitorWidth / 2;
-		int iNewWindowPosY = iMonitorHeight / 2;
-		iNewWindowPosX -= iCurrentWindowWidth / 2;
-		iNewWindowPosY -= iCurrentWindowHeight / 2;
-		glfwSetWindowPos(window, iNewWindowPosX, iNewWindowPosY);
+		if (!bFullscreen)
+		{
+			glfwGetWindowSize(window, &iCurrentWindowWidth, &iCurrentWindowHeight);
+			int iNewWindowPosX = iMonitorWidth / 2;
+			int iNewWindowPosY = iMonitorHeight / 2;
+			iNewWindowPosX -= iCurrentWindowWidth / 2;
+			iNewWindowPosY -= iCurrentWindowHeight / 2;
+			glfwSetWindowPos(window, iNewWindowPosX, iNewWindowPosY);
+		}
 
 
 //		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -615,7 +657,7 @@ namespace X
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = swapChainExtent;
 
-		VkClearValue clearColor = { {{0.0f, 0.0f, 0.0f, 1.0f}} };
+		VkClearValue clearColor = { {{0.01f, 0.01f, 0.01f, 1.0f}} };
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 

@@ -20,17 +20,25 @@ namespace X
 		void unload(void);
 
 		// Sets the filename of the file which holds the vertex information
+		// If you wish to create the geometry manually instead of loading from a file
+		// Simply don't call this, setup the geometry manually.
+		// load() will still be called to create the Vulkan stuff for you.
 		void setFilename(const std::string& strGeometryFilename);
 
 		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
 		struct Vertex
 		{
-			glm::vec3 pos;
+			glm::vec2 pos;
+			glm::vec3 colour;
 			glm::vec3 normal;
 			glm::vec2 texCoord;
 		};
 		std::vector<Vertex> mvVertices;
 		std::vector<uint32_t> mvuiIndices;
+
+		// NOTE THESE SHOULD BE PLACED IN THE GraphicsPipeline::load() method around line 75
+		VkVertexInputBindingDescription mvkVertexBindingDescription;
+		std::array<VkVertexInputAttributeDescription, 2> mvkVertexInputAttributeDescription;
 	};
 
 	// Use this to manage all geometry
@@ -81,6 +89,12 @@ namespace X
 		// If the named group doesn't exist, an exception occurs
 		void unloadGroup(const std::string& strGroupName);
 
+		// Reloads the geometry into memory
+		// This is used if we're modifying geometry per frame
+		// Recreates the required Vulkan objects
+		// It simply calls unload and then load of the object.
+		void reload(const std::string& strResourceName, const std::string& strGroupName = "default");
+
 		// Adds a new resource to the named group
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
@@ -101,6 +115,8 @@ namespace X
 
 		// Converts an .obj file to our custom geometry file format and saves to disk
 		void convertObj(const std::string filename);
+
+		
 	private:
 
 		// A resource and various variables needed by the manager for each resource

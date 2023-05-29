@@ -150,6 +150,11 @@
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\geometry.cpp" />
     <ClCompile Include="sourcecode\graphicsPipelines.cpp" />
+    <ClCompile Include="sourcecode\input.cpp" />
+    <ClCompile Include="sourcecode\inputJoystick.cpp" />
+    <ClCompile Include="sourcecode\inputKeyboard.cpp" />
+    <ClCompile Include="sourcecode\inputMouse.cpp" />
+    <ClCompile Include="sourcecode\renderQueue.cpp" />
     <ClCompile Include="sourcecode\textures.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\vulkanWindow.cpp" />
@@ -178,6 +183,11 @@
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\geometry.h" />
     <ClInclude Include="sourcecode\graphicsPipelines.h" />
+    <ClInclude Include="sourcecode\input.h" />
+    <ClInclude Include="sourcecode\inputJoystick.h" />
+    <ClInclude Include="sourcecode\inputKeyboard.h" />
+    <ClInclude Include="sourcecode\inputMouse.h" />
+    <ClInclude Include="sourcecode\renderQueue.h" />
     <ClInclude Include="sourcecode\textures.h" />
     <ClInclude Include="sourcecode\vulkanWindow.h" />
     <ClInclude Include="sourcecode\vulkanWindowOLD.h" />

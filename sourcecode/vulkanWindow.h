@@ -41,12 +41,16 @@ namespace X
 		// Returns the render pass (Used by graphics pipelines)
 		VkRenderPass getRenderpass(void) { return renderPass; }
 
-		
+		unsigned int getWindowWidth(void);
+		unsigned int getWindowHeight(void);
+		bool getWindowFullscreen(void);
 
 		void initWindow(std::string strWindowTitle, int iWindowWidth, int iWindowHeight, bool bFullscreen);
 		void initVulkan(void);
-		void createInstance(void);
 
+		unsigned int muiWindowWidth;
+		unsigned int muiWindowHeight;
+		bool mbWindowFullscreen;
 	private:
 		GLFWwindow* window;
 
@@ -79,13 +83,7 @@ namespace X
 		std::vector<VkFence> inFlightFences;
 		uint32_t currentFrame = 0;
 
-		bool framebufferResized = false;
-		static void framebufferResizeCallback(GLFWwindow* window, int width, int height)
-		{
-			auto app = reinterpret_cast<VulkanWindow*>(glfwGetWindowUserPointer(window));
-			app->framebufferResized = true;
-		}
-
+		void createInstance(void);
 		void cleanupSwapChain(void);
 		void cleanup(void);
 		void recreateSwapChain(void);
@@ -132,13 +130,10 @@ namespace X
 
 			return buffer;
 		}
-		static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
-		{
-			std::string strErr = "validation layer : ";
-			strErr +=pCallbackData->pMessage;
-			Log::getPointer()->add(strErr);
-//			ThrowIfTrue(1, strErr);
-			return VK_FALSE;
-		}
+
+		public:
+			bool framebufferResized = false;
+		private:
+		
 	};
 }

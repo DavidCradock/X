@@ -2,6 +2,7 @@
 #include "applicationManager.h"
 #include "log.h"
 #include "vulkanWindow.h"
+#include "input.h"
 // Include each application
 #include "applicationDevelopment.h"
 #include "applicationGame.h"
@@ -34,6 +35,10 @@ namespace X
 			VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
 			pVulkanWindow->initialise("X", 1024, 768, false);
 
+			// Initialise input manager
+			InputManager* pInputManager = InputManager::getPointer();
+			pInputManager->init(pVulkanWindow->getWindowHandle());
+
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
 
@@ -51,6 +56,7 @@ namespace X
 			while (pVulkanWindow->update())
 			{
 				mTimer.update();
+				pInputManager->update(pVulkanWindow->getWindowFullscreen(), pVulkanWindow->getWindowWidth(), pVulkanWindow->getWindowHeight());
 
 				if (!callCurrentApp_onUpdate())
 				{
@@ -63,6 +69,9 @@ namespace X
 			it = mApplications.find(mstrCurrentApp);
 			ThrowIfTrue(it == mApplications.end(), "unable to find the current application called " + mstrCurrentApp);
 			it->second->onStop();
+
+			// Shutdown input manager
+			pInputManager->shutdown();
 
 			// Now close the window
 			pVulkanWindow->shutdown();

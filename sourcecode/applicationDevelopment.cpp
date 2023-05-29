@@ -4,6 +4,7 @@
 #include "log.h"
 #include "utilities.h"
 #include "graphicsPipelines.h"
+#include "input.h"
 
 namespace X
 {
@@ -28,6 +29,9 @@ namespace X
 
 	bool ApplicationDevelopment::onUpdate(void)
 	{
+		// Escape key to exit
+		if (InputManager::getPointer()->key.pressed(KC_ESCAPE))
+			return false;
 		return true;
 	}
 }

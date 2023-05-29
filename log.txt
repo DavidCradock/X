@@ -1,16 +1,8 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
 0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
-0w:0d:0h:0m:00s : validation layer : windows_get_device_registry_files: GUID for 27 is not SoftwareComponent skipping
-0w:0d:0h:0m:00s : validation layer : Searching for ICD drivers named .\amdvlk64.dll
-0w:0d:0h:0m:00s : validation layer : Loading layer library C:\VulkanSDK\1.3.246.1\Bin\.\VkLayer_khronos_validation.dll
-0w:0d:0h:0m:00s : validation layer : Loading layer library C:\ProgramData\obs-studio-hook\.\graphics-hook64.dll
-0w:0d:0h:0m:00s : validation layer : Loading layer library C:\WINDOWS\System32\DriverStore\FileRepository\u0391252.inf_amd64_b298c070ddf486e2\B391109\.\amdvlk64.dll
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:03s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:03s : validation layer : Unloading layer library C:\WINDOWS\System32\DriverStore\FileRepository\u0391252.inf_amd64_b298c070ddf486e2\B391109\.\amdvlk64.dll
-0w:0d:0h:0m:03s : validation layer : Unloading layer library C:\ProgramData\obs-studio-hook\.\graphics-hook64.dll
-0w:0d:0h:0m:04s : validation layer : Unloading layer library C:\VulkanSDK\1.3.246.1\Bin\.\VkLayer_khronos_validation.dll
-0w:0d:0h:0m:04s : Total runtime: 3sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:01s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:01s : Total runtime: 1sec 0min 0hr 0days 0weeks.

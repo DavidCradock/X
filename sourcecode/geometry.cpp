@@ -6,6 +6,20 @@ namespace X
 {
 	Geometry::Geometry(void)
 	{
+		// Setup vertex binding description
+		mvkVertexBindingDescription.binding = 0;
+		mvkVertexBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		mvkVertexBindingDescription.stride = sizeof(Vertex);
+
+		// Setup mvkVertexInputAttributeDescriptions
+		mvkVertexInputAttributeDescription[0].binding = 0;
+		mvkVertexInputAttributeDescription[0].format = VK_FORMAT_R32G32_SFLOAT;
+		mvkVertexInputAttributeDescription[0].location = 0;
+		mvkVertexInputAttributeDescription[0].offset = offsetof(Vertex, pos);
+		mvkVertexInputAttributeDescription[1].binding = 0;
+		mvkVertexInputAttributeDescription[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		mvkVertexInputAttributeDescription[1].location = 0;
+		mvkVertexInputAttributeDescription[1].offset = offsetof(Vertex, colour);
 	}
 
 	Geometry::~Geometry(void)
@@ -14,8 +28,16 @@ namespace X
 
 	void Geometry::load(void)
 	{
-		// Make sure filenames exist
-		ThrowIfFalse(bool(mstrGeometryFilename.size() > 0), "Geometry::load() failed as filename of the file holding the geometry is not set.");
+		// If the filename is set, we will attempt to load the geometry from a file on disk
+		// Otherwise we'll assume that the geometry has been set manually
+		if (mstrGeometryFilename.size() > 0)
+		{
+
+		}
+		else
+		{
+
+		}
 	}
 
 	void Geometry::unload(void)
@@ -191,6 +213,51 @@ namespace X
 				it->second->bLoaded = false;
 			}
 			it++;
+		}
+	}
+
+	void GeometryManager::reload(const std::string& strResourceName, const std::string& strGroupName)
+	{
+		// Group doesn't exist?
+		if (!groupExists(strGroupName))
+		{
+			std::string err("GeometryManager::reload(\"");
+			err.append(strResourceName);
+			err.append("\", \"");
+			err.append(strGroupName);
+			err.append("\") failed. As the given named group of \"");
+			err.append(strGroupName);
+			err.append("\" doesn't exist.");
+			ThrowIfTrue(1, err);
+		}
+
+		// Resource doesn't exist in the group?
+		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);							// Get iterator to the group (we know it exists)
+		std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
+		if (itg->second->mmapResource.end() == it)
+		{
+			std::string err("GeometryManager::reload(\"");
+			err.append(strResourceName);
+			err.append("\", \"");
+			err.append(strGroupName);
+			err.append("\") failed. Although the given named group of \"");
+			err.append(strGroupName);
+			err.append("\" exists, the named resource couldn't be found.");
+			ThrowIfTrue(1, err);
+		}
+
+		// Is the resource in an unloaded state?
+		if (!it->second->bLoaded)
+		{
+			// Load it
+			it->second->pResource->load();
+			it->second->bLoaded = true;
+		}
+		// Already loaded?
+		else
+		{
+			it->second->pResource->unload();
+			it->second->pResource->load();
 		}
 	}
 

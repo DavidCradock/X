@@ -63,3 +63,7 @@
 #include <xaudio2fx.h>
 //#include <hrtfapoapi.h>
 //#include <mmdeviceapi.h>
+
+// DirectX for direct input
+#define DIRECTINPUT_VERSION 0x0800
+#include <dinput.h>

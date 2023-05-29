@@ -40,6 +40,11 @@
     <ClCompile Include="sourcecode\geometry.cpp" />
     <ClCompile Include="sourcecode\textures.cpp" />
     <ClCompile Include="sourcecode\vulkanWindow.cpp" />
+    <ClCompile Include="sourcecode\renderQueue.cpp" />
+    <ClCompile Include="sourcecode\input.cpp" />
+    <ClCompile Include="sourcecode\inputJoystick.cpp" />
+    <ClCompile Include="sourcecode\inputKeyboard.cpp" />
+    <ClCompile Include="sourcecode\inputMouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -79,5 +84,10 @@
     <ClInclude Include="sourcecode\geometry.h" />
     <ClInclude Include="sourcecode\textures.h" />
     <ClInclude Include="sourcecode\vulkanWindow.h" />
+    <ClInclude Include="sourcecode\renderQueue.h" />
+    <ClInclude Include="sourcecode\input.h" />
+    <ClInclude Include="sourcecode\inputJoystick.h" />
+    <ClInclude Include="sourcecode\inputKeyboard.h" />
+    <ClInclude Include="sourcecode\inputMouse.h" />
   </ItemGroup>
 </Project>
