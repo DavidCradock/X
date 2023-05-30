@@ -21,6 +21,15 @@
 #include <vector>
 #include <windows.h>
 
+// OpenGL
+#include <gl\gl.h>                                // Header File For The OpenGL32 Library
+#include <gl\glu.h>                               // Header File For The GLu32 Library
+#include "..\dependencies\OpenGL\glcorearb.h"
+#include "..\dependencies\OpenGL\glext.h"
+#include "..\dependencies\OpenGL\khrplatform.h"
+#include "..\dependencies\OpenGL\wgl.h"
+#include "..\dependencies\OpenGL\wglext.h"
+
 // GLM
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE

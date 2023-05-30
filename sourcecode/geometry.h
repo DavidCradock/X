@@ -22,7 +22,7 @@ namespace X
 		// Sets the filename of the file which holds the vertex information
 		// If you wish to create the geometry manually instead of loading from a file
 		// Simply don't call this, setup the geometry manually.
-		// load() will still be called to create the Vulkan stuff for you.
+		// load() will still be called to create the OpenGL stuff for you.
 		void setFilename(const std::string& strGeometryFilename);
 
 		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
@@ -88,7 +88,7 @@ namespace X
 
 		// Reloads the geometry into memory
 		// This is used if we're modifying geometry per frame
-		// Recreates the required Vulkan objects
+		// Recreates the required OpenGL objects
 		// It simply calls unload and then load of the object.
 		void reload(const std::string& strResourceName, const std::string& strGroupName = "default");
 

@@ -1,14 +1,108 @@
-ApplicationManager::mainLoop() called.
-ApplicationManager::addApp(Development Application) called.
-ApplicationManager::addApp(Game) called.
-ApplicationManager::callAllApps_initOnce() called.
-AudioManager constructor called.
-AudioManager initialising COM.
-AudioManager creating XAudio2 engine instance.
-AudioManager creating mastering voice.
-AudioManager initialisation complete.
-AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 1
-ApplicationManager::mainLoop() calling Development Application's onStart()
-ApplicationManager::mainLoop() is entering main loop...
-ApplicationManager::mainLoop() is shutting down...
-Total runtime: 2sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
+0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
+0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
+0w:0d:0h:0m:00s : Window::createWindow() called.
+0w:0d:0h:0m:00s : Window::createWindow() creating window.
+0w:0d:0h:0m:00s : Window::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().
+0w:0d:0h:0m:00s : Window::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:00s : Window::createWindow() obtaining window's device context.
+0w:0d:0h:0m:00s : Window::createWindow() choosing a compatible pixel format.
+0w:0d:0h:0m:00s : Window::createWindow() setting pixel format.
+0w:0d:0h:0m:00s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
+0w:0d:0h:0m:00s : Window::createWindow() creating OpenGL core profile rendering context.
+0w:0d:0h:0m:00s : Window::createWindow() making rendering context the calling thread's current one.
+0w:0d:0h:0m:00s : Window::createWindow() deleting the temporary OpenGL rendering context.
+0w:0d:0h:0m:00s : Window::MsgProc() WM_ACTIVATE received.
+0w:0d:0h:0m:00s : Window::MsgProc() WM_ACTIVATE wParam WA_ACTIVE received.
+0w:0d:0h:0m:00s : Window::createWindow() resizing OpenGL viewport.
+0w:0d:0h:0m:00s : Window::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:00s : Window::createWindow() has created the window.
+0w:0d:0h:0m:00s : setupOpenGLExtensions() called...
+0w:0d:0h:0m:00s : Extension name: wglSwapIntervalEXT found.
+0w:0d:0h:0m:00s : Extension name: glActiveTextureARB found.
+0w:0d:0h:0m:00s : Extension name: glClientActiveTexture found.
+0w:0d:0h:0m:00s : Extension name: glMultiTexCoord1f found.
+0w:0d:0h:0m:00s : Extension name: glMultiTexCoord2f found.
+0w:0d:0h:0m:00s : Extension name: glMultiTexCoord3f found.
+0w:0d:0h:0m:00s : Extension name: glGenFramebuffersEXT found.
+0w:0d:0h:0m:00s : Extension name: glBindFramebufferEXT found.
+0w:0d:0h:0m:00s : Extension name: glDeleteFramebuffersEXT found.
+0w:0d:0h:0m:00s : Extension name: glGenRenderbuffersEXT found.
+0w:0d:0h:0m:00s : Extension name: glBindRenderbufferEXT found.
+0w:0d:0h:0m:00s : Extension name: glRenderbufferStorageEXT found.
+0w:0d:0h:0m:00s : Extension name: glFramebufferRenderbufferEXT found.
+0w:0d:0h:0m:00s : Extension name: glFramebufferTexture2DEXT found.
+0w:0d:0h:0m:00s : Extension name: glCheckFramebufferStatusEXT found.
+0w:0d:0h:0m:00s : Extension name: glDeleteRenderbuffersEXT found.
+0w:0d:0h:0m:00s : Extension name: glGenerateMipmapEXT found.
+0w:0d:0h:0m:00s : Extension name: glCreateShader found.
+0w:0d:0h:0m:00s : Extension name: glShaderSource found.
+0w:0d:0h:0m:00s : Extension name: glCompileShader found.
+0w:0d:0h:0m:00s : Extension name: glCreateProgram found.
+0w:0d:0h:0m:00s : Extension name: glAttachShader found.
+0w:0d:0h:0m:00s : Extension name: glLinkProgram found.
+0w:0d:0h:0m:00s : Extension name: glUseProgram found.
+0w:0d:0h:0m:00s : Extension name: glGetShaderiv found.
+0w:0d:0h:0m:00s : Extension name: glGetProgramiv found.
+0w:0d:0h:0m:00s : Extension name: glGetShaderInfoLog found.
+0w:0d:0h:0m:00s : Extension name: glGetProgramInfoLog found.
+0w:0d:0h:0m:00s : Extension name: glDetachShader found.
+0w:0d:0h:0m:00s : Extension name: glDeleteShader found.
+0w:0d:0h:0m:00s : Extension name: glDeleteProgram found.
+0w:0d:0h:0m:00s : Extension name: glGetUniformLocation found.
+0w:0d:0h:0m:00s : Extension name: glUniform1f found.
+0w:0d:0h:0m:00s : Extension name: glUniform2f found.
+0w:0d:0h:0m:00s : Extension name: glUniform3f found.
+0w:0d:0h:0m:00s : Extension name: glUniform4f found.
+0w:0d:0h:0m:00s : Extension name: glUniform1fv found.
+0w:0d:0h:0m:00s : Extension name: glUniform2fv found.
+0w:0d:0h:0m:00s : Extension name: glUniform3fv found.
+0w:0d:0h:0m:00s : Extension name: glUniform4fv found.
+0w:0d:0h:0m:00s : Extension name: glUniform1i found.
+0w:0d:0h:0m:00s : Extension name: glUniform2i found.
+0w:0d:0h:0m:00s : Extension name: glUniform3i found.
+0w:0d:0h:0m:00s : Extension name: glUniform4i found.
+0w:0d:0h:0m:00s : Extension name: glUniform1iv found.
+0w:0d:0h:0m:00s : Extension name: glUniform2iv found.
+0w:0d:0h:0m:00s : Extension name: glUniform3iv found.
+0w:0d:0h:0m:00s : Extension name: glUniform4iv found.
+0w:0d:0h:0m:00s : Extension name: glUniformMatrix2fv found.
+0w:0d:0h:0m:00s : Extension name: glUniformMatrix3fv found.
+0w:0d:0h:0m:00s : Extension name: glUniformMatrix4fv found.
+0w:0d:0h:0m:00s : Extension name: glGetAttribLocation found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib1f found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib2f found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib3f found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib4f found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib1fv found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib2fv found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib3fv found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttrib4fv found.
+0w:0d:0h:0m:00s : Extension name: glEnableVertexAttribArray found.
+0w:0d:0h:0m:00s : Extension name: glVertexAttribPointer found.
+0w:0d:0h:0m:00s : Extension name: glGenBuffers found.
+0w:0d:0h:0m:00s : Extension name: glBindBuffer found.
+0w:0d:0h:0m:00s : Extension name: glDeleteBuffers found.
+0w:0d:0h:0m:00s : Extension name: glBufferData found.
+0w:0d:0h:0m:00s : Extension name: glGenVertexArrays found.
+0w:0d:0h:0m:00s : setupOpenGLExtensions() complete.
+0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
+0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
+0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:01s : Window::MsgProc() WM_ACTIVATE received.
+0w:0d:0h:0m:01s : Window::MsgProc() WM_ACTIVATE wParam WA_INACTIVE received.
+0w:0d:0h:0m:16s : Window::MsgProc() WM_ACTIVATE received.
+0w:0d:0h:0m:16s : Window::MsgProc() WM_ACTIVATE wParam WA_ACTIVE received.
+0w:0d:0h:0m:17s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:17s : Window::destroyWindow() called.
+0w:0d:0h:0m:17s : Window::destroyWindow() changing display mode back to normal.
+0w:0d:0h:0m:17s : Window::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:17s : Window::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:17s : Window::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:17s : Window::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().
+0w:0d:0h:0m:17s : Window::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:17s : Window::MsgProc() WM_ACTIVATE received.
+0w:0d:0h:0m:17s : Window::MsgProc() WM_ACTIVATE wParam WA_INACTIVE received.
+0w:0d:0h:0m:17s : Window::destroyWindow() unregistering window class.
+0w:0d:0h:0m:17s : Window::destroyWindow() complete.
+0w:0d:0h:0m:17s : Total runtime: 17sec 0min 0hr 0days 0weeks.

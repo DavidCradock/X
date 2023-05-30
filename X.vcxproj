@@ -117,6 +117,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -141,6 +144,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\applicationBase.cpp" />
@@ -153,6 +159,7 @@
     <ClCompile Include="sourcecode\inputJoystick.cpp" />
     <ClCompile Include="sourcecode\inputKeyboard.cpp" />
     <ClCompile Include="sourcecode\inputMouse.cpp" />
+    <ClCompile Include="sourcecode\openGLExtensions.cpp" />
     <ClCompile Include="sourcecode\renderQueue.cpp" />
     <ClCompile Include="sourcecode\textures.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
@@ -166,14 +173,14 @@
     <ClCompile Include="sourcecode\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GPUprograms\compile.bat" />
-    <None Include="GPUprograms\default.frag" />
-    <None Include="GPUprograms\default.vert" />
-    <None Include="GPUprograms\dev.frag" />
-    <None Include="GPUprograms\dev.vert" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h" />
+    <ClInclude Include="dependencies\OpenGL\glext.h" />
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h" />
+    <ClInclude Include="dependencies\OpenGL\wgl.h" />
+    <ClInclude Include="dependencies\OpenGL\wglext.h" />
     <ClInclude Include="sourcecode\applicationBase.h" />
     <ClInclude Include="sourcecode\applicationDevelopment.h" />
     <ClInclude Include="sourcecode\applicationGame.h" />
@@ -184,6 +191,7 @@
     <ClInclude Include="sourcecode\inputJoystick.h" />
     <ClInclude Include="sourcecode\inputKeyboard.h" />
     <ClInclude Include="sourcecode\inputMouse.h" />
+    <ClInclude Include="sourcecode\openGLExtensions.h" />
     <ClInclude Include="sourcecode\renderQueue.h" />
     <ClInclude Include="sourcecode\textures.h" />
     <ClInclude Include="sourcecode\window.h" />

@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,8 +8,11 @@
     <Filter Include="applications">
       <UniqueIdentifier>{2832a56b-f37a-4e1d-bfd1-9dc00deb1a05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GPUprograms">
-      <UniqueIdentifier>{784921ba-c3a2-4db4-865e-edb5d51db436}</UniqueIdentifier>
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{ffaa8e79-59d2-43b4-92fe-bc1dc3bb6c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\OpenGL">
+      <UniqueIdentifier>{8f48e650-26e5-4a1a-a1d0-6cbd87b6a76e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,24 +38,10 @@
     <ClCompile Include="sourcecode\inputJoystick.cpp" />
     <ClCompile Include="sourcecode\inputKeyboard.cpp" />
     <ClCompile Include="sourcecode\inputMouse.cpp" />
+    <ClCompile Include="sourcecode\openGLExtensions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="GPUprograms\compile.bat">
-      <Filter>GPUprograms</Filter>
-    </None>
-    <None Include="GPUprograms\dev.frag">
-      <Filter>GPUprograms</Filter>
-    </None>
-    <None Include="GPUprograms\dev.vert">
-      <Filter>GPUprograms</Filter>
-    </None>
-    <None Include="GPUprograms\default.frag">
-      <Filter>GPUprograms</Filter>
-    </None>
-    <None Include="GPUprograms\default.vert">
-      <Filter>GPUprograms</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\log.h" />
@@ -85,5 +66,21 @@
     <ClInclude Include="sourcecode\inputJoystick.h" />
     <ClInclude Include="sourcecode\inputKeyboard.h" />
     <ClInclude Include="sourcecode\inputMouse.h" />
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\glext.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wgl.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wglext.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\openGLExtensions.h" />
   </ItemGroup>
 </Project>

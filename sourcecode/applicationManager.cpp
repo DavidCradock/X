@@ -3,6 +3,7 @@
 #include "log.h"
 #include "window.h"
 #include "input.h"
+
 // Include each application
 #include "applicationDevelopment.h"
 #include "applicationGame.h"
@@ -33,11 +34,10 @@ namespace X
 
 			// Create window
 			Window* pWindow = Window::getPointer();
-			pWindow->initialise("X", 1024, 768, false);
+			pWindow->createWindow("X");
 
-			// Initialise input manager
+			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
-			pInputManager->init(pWindow->getWindowHandle());
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
@@ -53,14 +53,26 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
 
-			while (pWindow->update())
+			// Check window messages and if WM_QUIT occurs, end execution and shutdown
+			while (pWindow->checkMessages())
 			{
-				mTimer.update();
-				pInputManager->update(pWindow->getWindowFullscreen(), pWindow->getWindowWidth(), pWindow->getWindowHeight());
-
-				if (!callCurrentApp_onUpdate())
+				// If the window is currently minimized, AKA not active
+				if (pWindow->getMinimized())
 				{
-					break;	// Application wants to close
+					// Just sit here, sleeping and continue to check messages
+					Sleep(1);
+				}
+				else // Perform main loop
+				{
+					mTimer.update();
+
+					// Swap buffers and clear
+					pWindow->swapBuffers();
+
+					if (!callCurrentApp_onUpdate())
+					{
+						break;	// Application wants to close
+					}
 				}
 			}
 
@@ -70,11 +82,8 @@ namespace X
 			ThrowIfTrue(it == mApplications.end(), "unable to find the current application called " + mstrCurrentApp);
 			it->second->onStop();
 
-			// Shutdown input manager
-			pInputManager->shutdown();
-
 			// Now close the window
-			pWindow->shutdown();
+			pWindow->destroyWindow();
 		}
 		catch (Exception &exception)
 		{
