@@ -6,20 +6,7 @@ namespace X
 {
 	Geometry::Geometry(void)
 	{
-		// Setup vertex binding description
-		mvkVertexBindingDescription.binding = 0;
-		mvkVertexBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-		mvkVertexBindingDescription.stride = sizeof(Vertex);
 
-		// Setup mvkVertexInputAttributeDescriptions
-		mvkVertexInputAttributeDescription[0].binding = 0;
-		mvkVertexInputAttributeDescription[0].format = VK_FORMAT_R32G32_SFLOAT;
-		mvkVertexInputAttributeDescription[0].location = 0;
-		mvkVertexInputAttributeDescription[0].offset = offsetof(Vertex, pos);
-		mvkVertexInputAttributeDescription[1].binding = 0;
-		mvkVertexInputAttributeDescription[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-		mvkVertexInputAttributeDescription[1].location = 0;
-		mvkVertexInputAttributeDescription[1].offset = offsetof(Vertex, colour);
 	}
 
 	Geometry::~Geometry(void)
@@ -38,6 +25,12 @@ namespace X
 		{
 
 		}
+
+		// If there's no geometry, something has gone wrong
+		ThrowIfTrue(0 == mvVertices.size(), "Geometry::load() failed as there is no vertex data.");
+
+
+
 	}
 
 	void Geometry::unload(void)

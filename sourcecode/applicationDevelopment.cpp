@@ -3,18 +3,14 @@
 #include "audioManager.h"
 #include "log.h"
 #include "utilities.h"
-#include "graphicsPipelines.h"
 #include "input.h"
+#include "geometry.h"
+#include "textures.h"
 
 namespace X
 {
 	void ApplicationDevelopment::initOnce(void)
 	{
-		GraphicsPipelineManager* pGPM = GraphicsPipelineManager::getPointer();
-//		GraphicsPipeline *pGP = pGPM->add("dev");
-//		pGP->setFilenames("GPUprograms/dev_v.spv", "GPUprograms/dev_f.spv");
-
-		pGPM->loadGroup("default");
 
 	}
 

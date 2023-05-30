@@ -36,9 +36,6 @@ namespace X
 		std::vector<Vertex> mvVertices;
 		std::vector<uint32_t> mvuiIndices;
 
-		// NOTE THESE SHOULD BE PLACED IN THE GraphicsPipeline::load() method around line 75
-		VkVertexInputBindingDescription mvkVertexBindingDescription;
-		std::array<VkVertexInputAttributeDescription, 2> mvkVertexInputAttributeDescription;
 	};
 
 	// Use this to manage all geometry

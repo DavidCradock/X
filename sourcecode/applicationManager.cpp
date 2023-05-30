@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "applicationManager.h"
 #include "log.h"
-#include "vulkanWindow.h"
+#include "window.h"
 #include "input.h"
 // Include each application
 #include "applicationDevelopment.h"
@@ -32,12 +32,12 @@ namespace X
 			addApp("Game", pAppGame);
 
 			// Create window
-			VulkanWindow* pVulkanWindow = VulkanWindow::getPointer();
-			pVulkanWindow->initialise("X", 1024, 768, false);
+			Window* pWindow = Window::getPointer();
+			pWindow->initialise("X", 1024, 768, false);
 
 			// Initialise input manager
 			InputManager* pInputManager = InputManager::getPointer();
-			pInputManager->init(pVulkanWindow->getWindowHandle());
+			pInputManager->init(pWindow->getWindowHandle());
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
@@ -53,10 +53,10 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
 
-			while (pVulkanWindow->update())
+			while (pWindow->update())
 			{
 				mTimer.update();
-				pInputManager->update(pVulkanWindow->getWindowFullscreen(), pVulkanWindow->getWindowWidth(), pVulkanWindow->getWindowHeight());
+				pInputManager->update(pWindow->getWindowFullscreen(), pWindow->getWindowWidth(), pWindow->getWindowHeight());
 
 				if (!callCurrentApp_onUpdate())
 				{
@@ -74,13 +74,13 @@ namespace X
 			pInputManager->shutdown();
 
 			// Now close the window
-			pVulkanWindow->shutdown();
+			pWindow->shutdown();
 		}
 		catch (Exception &exception)
 		{
 			Log::getPointer()->add("Total runtime: " + mTimer.getClock());
 			Log::getPointer()->add(exception.mstrException, true);
-			MessageBox(VulkanWindow::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
+			MessageBox(Window::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
 			__debugbreak();
 		}
 		Log::getPointer()->add("Total runtime: " + mTimer.getClock());

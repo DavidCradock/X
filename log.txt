@@ -1,8 +1,14 @@
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
-0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
-0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
-0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:01s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:01s : Total runtime: 1sec 0min 0hr 0days 0weeks.
+ApplicationManager::mainLoop() called.
+ApplicationManager::addApp(Development Application) called.
+ApplicationManager::addApp(Game) called.
+ApplicationManager::callAllApps_initOnce() called.
+AudioManager constructor called.
+AudioManager initialising COM.
+AudioManager creating XAudio2 engine instance.
+AudioManager creating mastering voice.
+AudioManager initialisation complete.
+AudioManager::addSample(audio/drone_loops/Falcon_Volkm_Beauty_120BPM.wav, with iMaxNumberVoices set to 1
+ApplicationManager::mainLoop() calling Development Application's onStart()
+ApplicationManager::mainLoop() is entering main loop...
+ApplicationManager::mainLoop() is shutting down...
+Total runtime: 2sec 0min 0hr 0days 0weeks.
