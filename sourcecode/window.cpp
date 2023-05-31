@@ -21,7 +21,7 @@ namespace X
 		mbWindowMinimized = false;
 		mWindowClass = WNDCLASS{};
 		mbVsyncEnabled = true;
-		mbWindowFullscreen = true;
+		mbWindowFullscreen = false;
 		miWindowWidth = 640;
 		miWindowHeight = 480;
 		mv4ClearColour = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -188,10 +188,10 @@ namespace X
 		// Bring the thread that created the specified window into the foreground and activates the window.
 		// Keyboard input is directed to the window, and various visual cues are changed for the user.
 		// The system assigns a slightly higher priority to the thread that created the foreground window than it does to other threads.
-//		SetForegroundWindow(mhWindowHandle);
+		SetForegroundWindow(mhWindowHandle);
 
 		// Sets the keyboard focus to the specified window
-//		SetFocus(mhWindowHandle);
+		SetFocus(mhWindowHandle);
 
 		// Resize the OpenGL viewport
 		pLog->add("Window::createWindow() resizing OpenGL viewport.");
@@ -267,7 +267,7 @@ namespace X
 
 		switch (msg)
 		{
-		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
+/*		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
 			pLog->add("Window::MsgProc() WM_ACTIVATE received.");
 			if (LOWORD(wParam) == WA_INACTIVE)
 			{
@@ -282,7 +282,7 @@ namespace X
 //				ShowWindow(mhWindowHandle, SW_RESTORE);
 			}
 			return 0;
-		case WM_SYSCOMMAND:			// System commands
+*/		case WM_SYSCOMMAND:			// System commands
 		{
 			switch (wParam)
 			{
@@ -403,5 +403,13 @@ namespace X
 	{
 		mbVsyncEnabled = bEnabled;
 		wglSwapIntervalEXT(mbVsyncEnabled);
+	}
+
+	void Window::toggleFullscreen(void)
+	{
+		destroyWindow();
+		mbWindowFullscreen = !mbWindowFullscreen;
+		createWindow(mstrWindowTitle);
+
 	}
 }
