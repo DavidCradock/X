@@ -13,7 +13,7 @@ namespace X
 	void ApplicationDevelopment::initOnce(void)
 	{
 		
-
+		getNumberOfCPUs();
 	}
 
 	void ApplicationDevelopment::onStart(void)

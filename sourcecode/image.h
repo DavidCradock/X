@@ -36,6 +36,7 @@ namespace X
 		//  An image of dimensions 1024x1024x4 is 4,194,304 bytes or 4096 KB or 4 MB
 		//  An image of dimensions 4096x4096x4 is 64MB
 		//  An image of dimensions 16384x16384x4 is 1024MB AKA 1GB
+		// Throws exceptions if invalid params given.
 		void createBlank(unsigned int iWidth, unsigned int iHeight, unsigned short iNumChannels);
 
 		// Attempts to load the image data from a file stored on disk.
@@ -50,19 +51,24 @@ namespace X
 		bool loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount);
 
 		// Save image as BMP file to disk.
+		// Throws exception if image contains no data or saving fails.
 		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false);
 
 		// Save image to JPG file to disk
+		// Throws exception if image contains no data or saving fails.
 		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
 
 		// Save image to PNG file to disk
+		// Throws exception if image contains no data or saving fails.
 		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false);
 
 		// Save image to TGA file to disk
+		// Throws exception if image contains no data or saving fails.
 		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
 
 		// Fills the image with the given colour values.
 		// If the image only contains 3 colour channels, the alpha component is ignored. 
+		// Throws exception if image hasn't been created yet
 		void fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha = 255);
 
 		// Return pointer to image data for manual modification. 
@@ -86,7 +92,7 @@ namespace X
 		// returns The number of channels of the image. 
 		unsigned int getNumChannels(void) const { return numChannels; }
 
-		// Returns whether this texture's width and height are to power of two
+		// Returns whether this texture's width and height are to power of two.
 		bool getDimsArePowerOfTwo(void);
 
 		// Sets pixel at given coordinate to given values.
@@ -113,8 +119,6 @@ namespace X
 
 		// Swap red and blue colour components around
 		void swapRedAndBlue(void);
-
-
 
 		// Flip the image vertically
 		void flipVertically(void);

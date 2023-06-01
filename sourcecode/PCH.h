@@ -21,6 +21,28 @@
 #include <vector>
 #include <windows.h>
 
+// Multithreading
+#include <mutex>
+#include <thread>
+/* Example threading code
+#include <mutex>
+#include <thread>
+unsigned int iNumberOfThreadsOnCPU = std::thread::hardware_concurrency();
+std::mutex mtx;
+void print_hello() {
+  std::unique_lock<std::mutex> lock(mtx);
+  std::cout << "Hello, world!" << std::endl;
+  lock.unlock();
+}
+int main() {
+  std::thread t1(print_hello);
+  std::thread t2(print_hello);
+  t1.join();
+  t2.join();
+  return 0;
+}
+*/
+
 // OpenGL
 #include <gl\gl.h>                                // Header File For The OpenGL32 Library
 #include <gl\glu.h>                               // Header File For The GLu32 Library
