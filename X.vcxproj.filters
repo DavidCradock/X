@@ -39,6 +39,7 @@
     <ClCompile Include="sourcecode\inputKeyboard.cpp" />
     <ClCompile Include="sourcecode\inputMouse.cpp" />
     <ClCompile Include="sourcecode\openGLExtensions.cpp" />
+    <ClCompile Include="sourcecode\image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -82,5 +83,12 @@
       <Filter>dependencies\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\openGLExtensions.h" />
+    <ClInclude Include="sourcecode\image.h" />
+    <ClInclude Include="dependencies\stb_image.h">
+      <Filter>dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\stb_image_write.h">
+      <Filter>dependencies</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

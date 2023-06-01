@@ -18,14 +18,12 @@ namespace X
 		mhWindowHandle = NULL;
 		mhGLRenderContext = NULL;
 		mhDeviceContext = NULL;
-		mbWindowMinimized = false;
 		mWindowClass = WNDCLASS{};
 		mbVsyncEnabled = true;
 		mbWindowFullscreen = false;
 		miWindowWidth = 640;
 		miWindowHeight = 480;
-		mv4ClearColour = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-
+		mv4ClearColour = glm::vec4(0.1f, 0.1f, 0.2f, 1.0f);
 	}
 
 	void Window::createWindow(std::string strWindowTitle)
@@ -70,7 +68,7 @@ namespace X
 		// First, determine the dimensions of the window, depending upon whether we're going windowed or fullscreen mode
 		// Remember, we're not changing display modes here
 		// Get current desktop dimensions
-		DEVMODE dmCurrent;
+		DEVMODE dmCurrent{};
 		EnumDisplaySettings(NULL,	// Current device which this thread is running on
 			ENUM_CURRENT_SETTINGS,
 			&dmCurrent);
@@ -79,8 +77,8 @@ namespace X
 		// If we're in windowed mode, reduce the size a little
 		if (!mbWindowFullscreen)
 		{
-			miWindowWidth -= float(miWindowWidth) * 0.2f;
-			miWindowHeight -= float(miWindowHeight) * 0.2f;
+			miWindowWidth -= int(float(miWindowWidth) * 0.2f);
+			miWindowHeight -= int(float(miWindowHeight) * 0.2f);
 		}
 
 		// Get a RECT to hold actual dimensions of the window so that, depending upon our set style,
@@ -164,7 +162,7 @@ namespace X
 		// Set the version we require
 		int attribs[] = {
 		WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
-		WGL_CONTEXT_MINOR_VERSION_ARB, 2,
+		WGL_CONTEXT_MINOR_VERSION_ARB, 3,
 		WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 		0};
 
@@ -204,7 +202,7 @@ namespace X
 		pInputManager->init(mhWindowHandle);
 
 		// Obtain OpenGL extensions
-		setupOpenGLExtensions();
+		setupOpenGLExtensions(false);
 
 		// Set Vsync (Needs extensions setup)
 		setVsync(mbVsyncEnabled);
@@ -268,37 +266,33 @@ namespace X
 		switch (msg)
 		{
 /*		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
-			pLog->add("Window::MsgProc() WM_ACTIVATE received.");
 			if (LOWORD(wParam) == WA_INACTIVE)
 			{
-				pLog->add("Window::MsgProc() WM_ACTIVATE wParam WA_INACTIVE received.");
 				mbWindowMinimized = true;
-//				ShowWindow(mhWindowHandle, SW_MINIMIZE);
 			}
 			else
 			{
-				pLog->add("Window::MsgProc() WM_ACTIVATE wParam WA_ACTIVE received.");
 				mbWindowMinimized = false;
-//				ShowWindow(mhWindowHandle, SW_RESTORE);
 			}
 			return 0;
-*/		case WM_SYSCOMMAND:			// System commands
+*/
+		case WM_SYSCOMMAND:			// System commands
 		{
 			switch (wParam)
 			{
 			case SC_SCREENSAVE:		// Screensaver is trying to start
 			case SC_MONITORPOWER:	// Monitor is trying to enter power saving mode
-				pLog->add("Window::MsgProc() SC_SCREENSAVE or SC_MONITORPOWER received.");
+//				pLog->add("Window::MsgProc() SC_SCREENSAVE or SC_MONITORPOWER received.");
 				return 0;			// Prevent these things from happening
 			}
 			break;
 		}
 		case WM_CLOSE:				// Window is being closed
-			pLog->add("Window::MsgProc() WM_CLOSE received. PostQuitMessage(0) called.");
+//			pLog->add("Window::MsgProc() WM_CLOSE received. PostQuitMessage(0) called.");
 			PostQuitMessage(0);		// We'll check this during our message peeking. Message will be WM_QUIT
 			return 0;
 		case WM_SIZE:				// WM_SIZE is sent when the user resizes the window.
-			pLog->add("Window::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().");
+//			pLog->add("Window::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().");
 			_resizeOpenGLViewport(LOWORD(lParam), HIWORD(lParam));	// Resize stuff
 			return 0;
 		}
@@ -384,11 +378,6 @@ namespace X
 		glViewport(0, 0, iNewWidth, iNewHeight);
 		miWindowWidth = iNewWidth;
 		miWindowHeight = iNewHeight;
-	}
-
-	bool Window::getMinimized(void)
-	{
-		return mbWindowMinimized;
 	}
 
 	void Window::swapBuffers(void)

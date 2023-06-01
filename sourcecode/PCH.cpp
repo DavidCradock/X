@@ -9,3 +9,9 @@
 // DirectX for input
 #pragma comment(lib, "dinput8.lib")	// DirectX input lib
 #pragma comment(lib, "dxguid.lib")	// DirectX global ID thing so I can use GUID_keyboard etc for creating standard devices
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "../dependencies/stb_image.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "../dependencies/stb_image_write.h"

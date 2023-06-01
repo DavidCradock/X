@@ -11,7 +11,7 @@ namespace X
 	// Must be called AFTER the OpenGL window is created.
 	// Called from Window::createWindow()
 	// If it has been called before, it'll silently return.
-	void setupOpenGLExtensions(void);
+	void setupOpenGLExtensions(bool bLogExtensions);
 
 	// VSync
 	extern PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;

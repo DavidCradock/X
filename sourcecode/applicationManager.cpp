@@ -56,23 +56,14 @@ namespace X
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())
 			{
-				// If the window is currently minimized, AKA not active
-				if (pWindow->getMinimized())
-				{
-					// Just sit here, sleeping and continue to check messages
-					Sleep(1);
-				}
-				else // Perform main loop
-				{
-					mTimer.update();
+				mTimer.update();
 
-					// Swap buffers and clear
-					pWindow->swapBuffers();
+				// Swap buffers and clear
+				pWindow->swapBuffers();
 
-					if (!callCurrentApp_onUpdate())
-					{
-						break;	// Application wants to close
-					}
+				if (!callCurrentApp_onUpdate())
+				{
+					break;	// Application wants to close
 				}
 			}
 

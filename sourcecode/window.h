@@ -50,9 +50,6 @@ namespace X
 		// Sets the colour used when clearing the back buffer
 		void setClearColour(glm::vec4& clearColour);
 
-		// Returns whether the window is minimized, aka not active
-		bool getMinimized(void);
-
 		// Swaps back and front buffers and then clears the back buffer
 		void swapBuffers(void);
 
@@ -76,7 +73,6 @@ namespace X
 		glm::vec4 mv4ClearColour;		// The clear colour set by setClearColour();
 		HGLRC mhGLRenderContext;		// OpenGL rendering context
 		HDC mhDeviceContext;			// Device context for the window
-		bool mbWindowMinimized;			// Whether the window is minimized
 
 		// Resize the window's OpenGL viewport
 		void _resizeOpenGLViewport(int iNewWidth, int iNewHeight);

@@ -155,6 +155,7 @@
     <ClCompile Include="sourcecode\applicationManager.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
     <ClCompile Include="sourcecode\geometry.cpp" />
+    <ClCompile Include="sourcecode\image.cpp" />
     <ClCompile Include="sourcecode\input.cpp" />
     <ClCompile Include="sourcecode\inputJoystick.cpp" />
     <ClCompile Include="sourcecode\inputKeyboard.cpp" />
@@ -181,12 +182,15 @@
     <ClInclude Include="dependencies\OpenGL\khrplatform.h" />
     <ClInclude Include="dependencies\OpenGL\wgl.h" />
     <ClInclude Include="dependencies\OpenGL\wglext.h" />
+    <ClInclude Include="dependencies\stb_image.h" />
+    <ClInclude Include="dependencies\stb_image_write.h" />
     <ClInclude Include="sourcecode\applicationBase.h" />
     <ClInclude Include="sourcecode\applicationDevelopment.h" />
     <ClInclude Include="sourcecode\applicationGame.h" />
     <ClInclude Include="sourcecode\applicationManager.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
     <ClInclude Include="sourcecode\geometry.h" />
+    <ClInclude Include="sourcecode\image.h" />
     <ClInclude Include="sourcecode\input.h" />
     <ClInclude Include="sourcecode\inputJoystick.h" />
     <ClInclude Include="sourcecode\inputKeyboard.h" />
