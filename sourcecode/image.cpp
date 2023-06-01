@@ -49,22 +49,22 @@ namespace X
 		}
 	}
 
-	void Image::load(const std::string& strFilename, bool bFlipForOpenGL)
+	bool Image::load(const std::string& strFilename, bool bFlipForOpenGL)
 	{
 		free();
-		if (bFlipForOpenGL)
-			stbi_set_flip_vertically_on_load(true);
+		stbi_set_flip_vertically_on_load(bFlipForOpenGL);
 		stbi_uc* pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
 		if (!pixels)
-			Log::getPointer()->exception("Image::load() failed to load texture image!");
+			return false;
 
 		dataSize = width * height * 4;
 		pData = new unsigned char[dataSize];
 		memcpy(pData, pixels, static_cast<size_t>(dataSize));
 		stbi_image_free(pixels);
+		return true;
 	}
 
-	void Image::loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount)
+	bool Image::loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount)
 	{
 		// To query the width, height and component count of an image without having to
 		// decode the full file, you can use the stbi_info family of functions:
@@ -73,13 +73,12 @@ namespace X
 		//   ok = stbi_info(filename, &x, &y, &n);
 		//   // returns ok=1 and sets x, y, n if image is a supported format,
 		//   // 0 otherwise.
-		stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
+		return (bool)stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
 
 	void Image::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::fill() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::fill() failed. Image not yet created.");
 
 		int i = 0;
 
@@ -124,8 +123,7 @@ namespace X
 
 	void Image::swapRedAndBlue(void)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::swapRedAndBlue() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::swapRedAndBlue() failed. Image not yet created.");
 
 		int i = 0;
 		int i2;
@@ -140,116 +138,37 @@ namespace X
 		}
 	}
 
-	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
+	void Image::saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::saveAsTGA() failed. Image not yet created.");
-
+		ThrowIfTrue(!pData, "Image::saveAsBMP() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-
-		if(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData))
-			Log::getPointer()->exception("Image::saveAsTGA() failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsBMP() failed. Image failed to be written.");
 	}
 
 	void Image::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::saveAsJPG() failed. Image not yet created.");
-
+		ThrowIfTrue(!pData, "Image::saveAsJPG() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-
-		if (!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality))
-			Log::getPointer()->exception("Image::saveAsJPG() failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "Image::saveAsJPG() failed. Image failed to be written.");
 	}
 
-	void Image::saveAsTGA_OLDWAY(const std::string&strFilename)
+	void Image::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::saveAsTGA_OLDWAY() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::saveAsPNG() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "Image::saveAsPNG failed. Image failed to be written.");
+	}
 
-		std::string cString(strFilename);
-
-		FILE *f;
-		fopen_s(&f, cString.c_str(), "wb");
-		if (!f)
-		{
-			// Unable to open file for saving.
-			Log::getPointer()->exception("Image::saveAsTGA_OLDWAY() failed to open file for saving,");
-		}
-
-		unsigned char byteSkip = 0;
-		short int shortSkip = 0;
-
-		// Write out un-needed (No ID field and no colour map)
-		if (1 != fwrite(&byteSkip, sizeof(unsigned char), 1, f)) { fclose(f);	return ; }	// Write error
-		if (1 != fwrite(&byteSkip, sizeof(unsigned char), 1, f)) { fclose(f);	return ; }	// Write error
-
-		// Write out image type (Uncompressed true colour = 2)
-		unsigned char imageType = 2;
-		if (1 != fwrite(&imageType, sizeof(unsigned char), 1, f))
-		{
-			fclose(f);
-			return;	// Write error
-		}
-		// Write out un-needed (Colour map)
-		for (int i = 0; i < 5; ++i)
-		{
-			if (1 != fwrite(&byteSkip, sizeof(unsigned char), 1, f))
-			{
-				fclose(f);
-				return;	// Write error
-			}
-		}
-		// X/Y origin (0)
-		for (int i = 0; i < 4; ++i)
-		{
-			if (1 != fwrite(&byteSkip, sizeof(unsigned char), 1, f))
-			{
-				fclose(f);
-				return;	// Write error
-			}
-		}
-		// Write out image dimensions
-		short int iDims[2];
-		iDims[0] = width;
-		iDims[1] = height;
-		if (2 != fwrite(iDims, sizeof(short int), 2, f))
-		{
-			fclose(f);
-			return;	// Write error
-		}
-		// Write out bit depth
-		unsigned char bitDepth = numChannels * 8;
-		if (1 != fwrite(&bitDepth, sizeof(unsigned char), 1, f))
-		{
-			fclose(f);
-			return;	// Write error
-		}
-		// Write out un-needed (Image descriptor)
-		if (1 != fwrite(&byteSkip, sizeof(unsigned char), 1, f))
-		{
-			fclose(f);
-			return;	// Write error
-		}
-		// Swap RGB
-		swapRedAndBlue();
-		// Write out image data
-		if (dataSize != fwrite(pData, sizeof(unsigned char), dataSize, f))
-		{
-			fclose(f);
-			swapRedAndBlue();
-			return;	// Write error
-		}
-
-		fclose(f);
-		swapRedAndBlue();
-		return;
+	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
+	{
+		ThrowIfTrue(!pData, "Image::saveAsTGA() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsTGA() failed. Image failed to be written.");
 	}
 
 	void Image::flipVertically(void)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::flipVertically() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::flipVertically() failed. Image not yet created.");
 
 		// Size of a row
 		unsigned int iRowSize = width * numChannels;
@@ -257,8 +176,7 @@ namespace X
 		// Allocate new flipped image
 		unsigned char *pNewImageStartAddress = new unsigned char[dataSize];
 		unsigned char *pNewImage = pNewImageStartAddress;
-		if (0==pNewImage)
-			Log::getPointer()->exception("OUT OF MEMORY");
+		ThrowIfTrue(0==pNewImage, "Image::flipVertically() failed to allocate memory.");
 
 		// Get pointer to current image
 		unsigned char *pOldImage = pData;
@@ -281,8 +199,7 @@ namespace X
 
 	bool Image::invert(bool bInvertColour, bool bInvertAlpha)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::invert() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::invert() failed. Image not yet created.");
 
 		int i = 0;
 		int iIndex;
@@ -312,8 +229,7 @@ namespace X
 
 	bool Image::greyscaleSimple(void)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::greyscaleSimple() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::greyscaleSimple() failed. Image not yet created.");
 
 		int i = 0;
 		float f1Over3 = 1.0f / 3.0f;
@@ -337,10 +253,9 @@ namespace X
 
 	bool Image::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::greyscale() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::greyscale() failed. Image not yet created.");
 
-		Vector3 vCol(fRedSensitivity, fGreenSensitivity, fBlueSensitivity);
+		glm::vec3 vCol(fRedSensitivity, fGreenSensitivity, fBlueSensitivity);
 
 		int i = 0;
 		float fTmp;
@@ -362,8 +277,7 @@ namespace X
 
 	bool Image::adjustBrightness(int iAmount)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::adjustBrightness() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::adjustBrightness() failed. Image not yet created.");
 
 		int i = 0;
 		int iCol;
@@ -387,8 +301,7 @@ namespace X
 
 	bool Image::adjustContrast(int iAmount)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::adjustContrast() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "Image::adjustContrast() failed. Image not yet created.");
 
 		clamp(iAmount, -100, 100);
 		double dPixel;
@@ -433,8 +346,7 @@ namespace X
 
 	void Image::copyTo(Image &destImage) const
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::copyTo() failed. Source image not yet created.");
+		ThrowIfTrue(!pData, "Image::copyTo() failed. Source image not yet created.");
 
 		// If destination image is the same as this one, do nothing
 		if (destImage.pData == this->pData)
@@ -449,10 +361,8 @@ namespace X
 	void Image::copyRectTo(Image &destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY)
 	{
 		// Check that both images have data
-		if (!pData)
-			Log::getPointer()->exception("Image::copyRectTo() failed. Source image not yet created.");
-		if (!destImage.pData)
-			Log::getPointer()->exception("Image::copyRectTo() failed. Destination image not yet created.");
+		ThrowIfTrue(!pData, "Image::copyRectTo() failed. Source image not yet created.");
+		ThrowIfTrue(!destImage.pData, "Image::copyRectTo() failed. Destination image not yet created.");
 
 		// Compute source rect
 		int iSrcLeft = iSrcPosX;
@@ -564,10 +474,8 @@ namespace X
 
 	void Image::removeAlphaChannel(void)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::removeAlphaChannel() failed. Image data doesn't exist.");
-		if (numChannels != 4)
-			Log::getPointer()->exception("Image::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+		ThrowIfTrue(!pData, "Image::removeAlphaChannel() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels != 4, "Image::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		// Copy this image to a new tmp image
 		Image old;
@@ -591,10 +499,8 @@ namespace X
 
 	void Image::copyAlphaChannelToRGB(void)
 	{
-		if (!pData)
-			Log::getPointer()->exception("Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
-		if (numChannels != 4)
-			Log::getPointer()->exception("Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+		ThrowIfTrue(!pData, "Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels != 4, "Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		int iIndex = 0;
 		while (iIndex < dataSize)

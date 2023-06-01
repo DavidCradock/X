@@ -40,13 +40,14 @@ namespace X
 
 		// Attempts to load the image data from a file stored on disk.
 		// Depending upon the file name extension, determines the file type and loads it in.
-		// If the image couldn't be loaded, an exception is thrown
+		// If the image couldn't be loaded, false is returned, else true
 		// The image is freed at the start of this method
 		// Loads image from file using the stb_image library
-		void load(const std::string& strFilename, bool bFlipForOpenGL = false);
+		bool load(const std::string& strFilename, bool bFlipForOpenGL = false);
 
-		// Attemps to read only the image width and height from the given filename, faster than loading the whole thing in
-		void loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount);
+		// Attempts to read only the image width and height from the given filename, which is faster than loading the whole thing in.
+		// Returns true if the image data was loaded, else false.
+		bool loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount);
 
 		// Fills the image with the given colour values.
 		// If the image only contains 3 colour channels, the alpha component is ignored. 
@@ -101,18 +102,17 @@ namespace X
 		// Swap red and blue colour components around
 		void swapRedAndBlue(void);
 
-		// Save image to TGA file on disk
-		// szFilename The filename to save the image to.
-		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
+		// Save image as BMP file to disk.
+		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false);
 
-		// Save image to JPG file on disk
-		// szFilename The filename to save the image to.
+		// Save image to JPG file to disk
 		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
 
-		// Save image to TGA file on disk
-		// szFilename The filename to save the image to. Extension will be added if not given 
-		// if this fails, it does so silently and wrongly
-		void saveAsTGA_OLDWAY(const std::string& strFilename);
+		// Save image to PNG file to disk
+		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false);
+
+		// Save image to TGA file to disk
+		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
 
 		// Flip the image vertically
 		void flipVertically(void);
