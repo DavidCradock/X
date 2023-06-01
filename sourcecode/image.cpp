@@ -76,6 +76,34 @@ namespace X
 		return (bool)stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
 
+	void Image::saveAsBMP(const std::string& strFilename, bool bFlipOnSave)
+	{
+		ThrowIfTrue(!pData, "Image::saveAsBMP() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsBMP() failed. Image failed to be written.");
+	}
+
+	void Image::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
+	{
+		ThrowIfTrue(!pData, "Image::saveAsJPG() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "Image::saveAsJPG() failed. Image failed to be written.");
+	}
+
+	void Image::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
+	{
+		ThrowIfTrue(!pData, "Image::saveAsPNG() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "Image::saveAsPNG failed. Image failed to be written.");
+	}
+
+	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
+	{
+		ThrowIfTrue(!pData, "Image::saveAsTGA() failed. Image not yet created.");
+		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsTGA() failed. Image failed to be written.");
+	}
+
 	void Image::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
 	{
 		ThrowIfTrue(!pData, "Image::fill() failed. Image not yet created.");
@@ -136,34 +164,6 @@ namespace X
 			pData[i2] = chTemp;
 			i += numChannels;
 		}
-	}
-
-	void Image::saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false)
-	{
-		ThrowIfTrue(!pData, "Image::saveAsBMP() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsBMP() failed. Image failed to be written.");
-	}
-
-	void Image::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
-	{
-		ThrowIfTrue(!pData, "Image::saveAsJPG() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "Image::saveAsJPG() failed. Image failed to be written.");
-	}
-
-	void Image::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
-	{
-		ThrowIfTrue(!pData, "Image::saveAsPNG() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "Image::saveAsPNG failed. Image failed to be written.");
-	}
-
-	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
-	{
-		ThrowIfTrue(!pData, "Image::saveAsTGA() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsTGA() failed. Image failed to be written.");
 	}
 
 	void Image::flipVertically(void)

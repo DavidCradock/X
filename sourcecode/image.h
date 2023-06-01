@@ -49,6 +49,18 @@ namespace X
 		// Returns true if the image data was loaded, else false.
 		bool loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount);
 
+		// Save image as BMP file to disk.
+		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false);
+
+		// Save image to JPG file to disk
+		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
+
+		// Save image to PNG file to disk
+		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false);
+
+		// Save image to TGA file to disk
+		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
+
 		// Fills the image with the given colour values.
 		// If the image only contains 3 colour channels, the alpha component is ignored. 
 		void fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha = 255);
@@ -102,17 +114,7 @@ namespace X
 		// Swap red and blue colour components around
 		void swapRedAndBlue(void);
 
-		// Save image as BMP file to disk.
-		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false);
 
-		// Save image to JPG file to disk
-		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
-
-		// Save image to PNG file to disk
-		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false);
-
-		// Save image to TGA file to disk
-		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
 
 		// Flip the image vertically
 		void flipVertically(void);
