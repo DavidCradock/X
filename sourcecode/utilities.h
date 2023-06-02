@@ -3,9 +3,6 @@
 
 namespace X
 {
-	// Return the number of processors on the system
-	unsigned int getNumberOfCPUs(void);
-
 	// Due to floating point errors, we use this to determine whether
 	// two floating points are roughly equal
 	const float Epsilon = 0.000001f;

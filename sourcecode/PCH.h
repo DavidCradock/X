@@ -21,7 +21,7 @@
 #include <vector>
 #include <windows.h>
 
-// Multithreading
+// Modern  multithreading basics
 #include <mutex>
 #include <thread>
 /* Example threading code

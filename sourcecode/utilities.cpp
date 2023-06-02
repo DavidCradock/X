@@ -4,14 +4,6 @@
 
 namespace X
 {
-	unsigned int getNumberOfCPUs(void)
-	{
-//		SYSTEM_INFO si;
-//		GetSystemInfo(&si);
-//		return unsigned int(si.dwNumberOfProcessors);
-		return std::thread::hardware_concurrency();
-	}
-
 	std::vector<std::string> getFilesInDir(const std::string &strDirectory, bool bRecursiveDirs)
 	{
 		std::vector<std::string> filenames;
