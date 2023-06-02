@@ -89,10 +89,12 @@ namespace X
 	// Vertex buffer objects
 	extern PFNGLGENBUFFERSPROC glGenBuffers;
 	extern PFNGLBINDBUFFERPROC glBindBuffer;
-	extern PFNGLDELETEBUFFERSPROC glDeleteBuffers;// (GLsizei n, const GLuint* buffers);
-	extern PFNGLBUFFERDATAARBPROC glBufferData;// GLenum target, GLsizeiptrARB size, const void* data, GLenum usage);
+	extern PFNGLDELETEBUFFERSPROC glDeleteBuffers;
+	extern PFNGLBUFFERDATAARBPROC glBufferData;
 	// Vertex array objects
 	extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
+	extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
+	extern PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
 
 	
 }

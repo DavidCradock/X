@@ -4,46 +4,61 @@
 
 namespace X
 {
-	// An object to hold vertex information
-	class Geometry
+	// Holds a pair of vertex and fragment shaders
+	// Example usage:
+	// Shader *pShader = ShaderManager::getPointer()->getShader("shaderName");
+	// Texture *pTexture = TextureManager::getPointer()->getTexture("textureName");
+	// pShader->setInt("texture1", pTexture->getID());
+	// Matrix matrixOrtho;
+	// matrixOrtho.setOrthographic();
+	// pShader->setMat4("transform", matrixOrtho);
+	// pShader->use();
+	class Shader
 	{
 	public:
-		Geometry();
-		~Geometry();
+		// Constructor to store filenames of the vertex and fragment programs
+		Shader();
 
-		// Loads the resource so it's ready for use.
-		// Used by the manager
+		// Set the names of the files holding the sourcecode for the vertex and fragment programs
+		void setFilenames(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn);
+
+		// Attempts to load and compile the shader programs
+		// If an error occurs, an exception is thrown
 		void load(void);
 
-		// Unloads the resource, freeing memory.
-		// Used by the manager 
+		// Unloads the thing
 		void unload(void);
 
-		// Sets the filename of the file which holds the vertex information
-		// If you wish to create the geometry manually instead of loading from a file
-		// Simply don't call this, setup the geometry manually.
-		// load() will still be called to create the OpenGL stuff for you.
-		void setFilename(const std::string& strGeometryFilename);
+		// Bind the shader
+		void bind(void);
 
-		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
-		struct Vertex
-		{
-			glm::vec3 pos;
-			glm::vec3 colour;
-			glm::vec3 normal;
-			glm::vec2 texCoord;
-		};
-		std::vector<Vertex> mvVertices;
-		std::vector<uint32_t> mvuiIndices;
+		// Unbind the shader
+		void unbind(void);
 
+		// Set uniform (call after bind())
+		void setBool(const std::string& name, bool value);
+
+		// Set uniform (call after bind())
+		void setInt(const std::string& name, int value);
+
+		// Set uniform (call after bind())
+		void setFloat(const std::string& name, float value);
+
+		// Set named matrix (call after bind())
+		void setMat4(const std::string& name, const glm::mat4& matrix);
+
+	private:
+		std::string vertexShaderFilename;
+		std::string fragmentShaderFilename;
+		unsigned int ID;
 	};
 
-	// Use this to manage all geometry
+	// Use this to manage all shaders
 	// By default, a group named "default" is created for use upon construction.
-	class GeometryManager : public Singleton<GeometryManager>
+	class ShaderManager : public Singleton<ShaderManager>
 	{
 	public:
-		GeometryManager();
+		ShaderManager();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);
@@ -86,22 +101,16 @@ namespace X
 		// If the named group doesn't exist, an exception occurs
 		void unloadGroup(const std::string& strGroupName);
 
-		// Reloads the geometry into memory
-		// This is used if we're modifying geometry per frame
-		// Recreates the required OpenGL objects
-		// It simply calls unload and then load of the object.
-		void reload(const std::string& strResourceName, const std::string& strGroupName = "default");
-
 		// Adds a new resource to the named group
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		Geometry* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
+		Shader* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs
 		// Also, if the resource is in the unloaded state, it is loaded here
-		Geometry* get(const std::string& strResourceName, const std::string& strGroupName = "default");
+		Shader* get(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Returns true if the named resource exists in the named group, else false
 		bool getExists(const std::string& strResourceName, const std::string& strGroupName = "default");
@@ -110,15 +119,12 @@ namespace X
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
 		void remove(const std::string& strResourceName, const std::string& strGroupName);
 
-		// Converts an .obj file to our custom geometry file format and saves to disk
-		void convertObj(const std::string filename);
-
 	private:
 
 		// A resource and various variables needed by the manager for each resource
 		struct Resource
 		{
-			Geometry* pResource;			// Pointer to the resource
+			Shader* pResource;				// Pointer to the resource
 			unsigned int uiReferenceCount;	// How many times the resource has been added/removed
 			bool bLoaded;					// Whether the resource is loaded or not
 		};
@@ -130,5 +136,4 @@ namespace X
 		};
 		std::map<std::string, Group*> mmapGroup;			// Hash map holding named resource groups
 	};
-
 }

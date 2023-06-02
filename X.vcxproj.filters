@@ -14,6 +14,9 @@
     <Filter Include="dependencies\OpenGL">
       <UniqueIdentifier>{8f48e650-26e5-4a1a-a1d0-6cbd87b6a76e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{ba3204b3-f3c6-454e-91cb-c87c07424cc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\log.cpp" />
@@ -40,9 +43,17 @@
     <ClCompile Include="sourcecode\inputMouse.cpp" />
     <ClCompile Include="sourcecode\openGLExtensions.cpp" />
     <ClCompile Include="sourcecode\image.cpp" />
+    <ClCompile Include="sourcecode\vertexBuffer.cpp" />
+    <ClCompile Include="sourcecode\shaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="shaders\default.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\default.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\log.h" />
@@ -90,5 +101,7 @@
     <ClInclude Include="dependencies\stb_image_write.h">
       <Filter>dependencies</Filter>
     </ClInclude>
+    <ClInclude Include="sourcecode\vertexBuffer.h" />
+    <ClInclude Include="sourcecode\shaders.h" />
   </ItemGroup>
 </Project>
