@@ -5,16 +5,12 @@
 
 namespace X
 {
-    Shader::Shader()
+    Shader::Shader(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn)
     {
-        ID = 0;
-    }
-
-	void Shader::setFilenames(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn)
-	{
 		vertexShaderFilename = vertexShaderFilenameIn;
 		fragmentShaderFilename = fragmentShaderFilenameIn;
-	}
+        ID = 0;
+    }
 
     void Shader::load(void)
     {
@@ -300,7 +296,7 @@ namespace X
 		}
 	}
 
-	Shader* ShaderManager::add(const std::string& strNewResourceName, const std::string& strGroupName)
+	Shader* ShaderManager::add(const std::string& strNewResourceName, const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
@@ -326,7 +322,7 @@ namespace X
 
 		// If we get here, we have got to create, then add the resource to the existing named group
 		Resource* pNewRes = new Resource;
-		pNewRes->pResource = new Shader;
+		pNewRes->pResource = new Shader(vertexShaderFilenameIn, fragmentShaderFilenameIn);
 		pNewRes->uiReferenceCount = 1;
 		pNewRes->bLoaded = false;
 		itg->second->mmapResource[strNewResourceName] = pNewRes;

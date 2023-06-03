@@ -17,10 +17,7 @@ namespace X
 	{
 	public:
 		// Constructor to store filenames of the vertex and fragment programs
-		Shader();
-
-		// Set the names of the files holding the sourcecode for the vertex and fragment programs
-		void setFilenames(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn);
+		Shader(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn);
 
 		// Attempts to load and compile the shader programs
 		// If an error occurs, an exception is thrown
@@ -105,7 +102,7 @@ namespace X
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		Shader* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
+		Shader* add(const std::string& strNewResourceName, const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs

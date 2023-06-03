@@ -9,26 +9,59 @@ namespace X
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
 		elementBufferObject = 0;
-		glGenVertexArrays(1, &vertexArrayObject);
-		glGenBuffers(1, &vertexBufferObject);
-		glGenBuffers(1, &elementBufferObject);
+		
 	}
 
 	VertexBuffer::~VertexBuffer()
 	{
-		glDeleteVertexArrays(1, &vertexArrayObject);
-		glDeleteBuffers(1, &vertexBufferObject);
-		glDeleteBuffers(1, &elementBufferObject);
+		if (vertexBufferObject)
+		{
+			glDeleteBuffers(1, &vertexBufferObject);
+			vertexBufferObject = 0;
+		}
+		if (vertexArrayObject)
+		{
+			glDeleteVertexArrays(1, &vertexArrayObject);
+			vertexArrayObject = 0;
+		}
+		if (elementBufferObject)
+		{
+			glDeleteBuffers(1, &elementBufferObject);
+			elementBufferObject = 0;
+		}
 	}
 
 	void VertexBuffer::reset(void)
 	{
 		vertices.clear();
 		indices.clear();
+
+		if (vertexBufferObject)
+		{
+			glDeleteBuffers(1, &vertexBufferObject);
+			vertexBufferObject = 0;
+		}
+		if (vertexArrayObject)
+		{
+			glDeleteVertexArrays(1, &vertexArrayObject);
+			vertexArrayObject = 0;
+		}
+		if (elementBufferObject)
+		{
+			glDeleteBuffers(1, &elementBufferObject);
+			elementBufferObject = 0;
+		}
 	}
 
 	void VertexBuffer::uploadToOpenGL(void)
 	{
+		if (!vertexBufferObject)
+			glGenBuffers(1, &vertexBufferObject);
+		if (!vertexArrayObject)
+			glGenVertexArrays(1, &vertexArrayObject);
+		if (!elementBufferObject)
+			glGenBuffers(1, &elementBufferObject);
+
 		if (!vertices.size())
 			return;
 		if (!indices.size())
@@ -57,23 +90,32 @@ namespace X
 			(void*)0);						// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 		glEnableVertexAttribArray(0);
 
-		// Colour
+		// Normal
 		glVertexAttribPointer(1,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			3,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(3 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(1);
+
+		// Colour
+		glVertexAttribPointer(2,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
 			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
 			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
 			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
 			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
-			(void*)(4 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
-		glEnableVertexAttribArray(1);
+			(void*)(6 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(2);
 
 		// Texture coordinates
-		glVertexAttribPointer(2,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+		glVertexAttribPointer(3,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
 			2,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
 			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
 			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
 			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
-			(void*)(8 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
-		glEnableVertexAttribArray(2);
+			(void*)(10 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(3);
 
 		// Unbind stuff as we're done
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

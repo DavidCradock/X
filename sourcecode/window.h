@@ -50,6 +50,9 @@ namespace X
 		// Sets the colour used when clearing the back buffer
 		void setClearColour(glm::vec4& clearColour);
 
+		// Clears the backbuffer with a call to glClearColor() using the set clear colour with setClearColour()
+		void clearBackbuffer(void);
+
 		// Swaps back and front buffers and then clears the back buffer
 		void swapBuffers(void);
 

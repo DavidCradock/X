@@ -58,13 +58,16 @@ namespace X
 			{
 				mTimer.update();
 
-				// Swap buffers and clear
-				pWindow->swapBuffers();
+				// Clear the backbuffer
+				pWindow->clearBackbuffer();
 
 				if (!callCurrentApp_onUpdate())
 				{
 					break;	// Application wants to close
 				}
+
+				// Swap buffers and clear
+				pWindow->swapBuffers();
 			}
 
 			// Last current app's onStop method

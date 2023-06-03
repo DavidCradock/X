@@ -23,7 +23,7 @@ namespace X
 		VertexBuffer();
 		~VertexBuffer();
 
-		// Clear everything
+		// Removes all previously added vertices and deletes OpenGL objects
 		void reset(void);
 
 		// Once all vertices have been added or loaded, prepares vertex buffer, ready for use.

@@ -23,7 +23,7 @@ namespace X
 		mbWindowFullscreen = false;
 		miWindowWidth = 640;
 		miWindowHeight = 480;
-		mv4ClearColour = glm::vec4(0.1f, 0.1f, 0.2f, 1.0f);
+		mv4ClearColour = glm::vec4(0.5f, 0.5f, 0.5f, 0.5f);
 	}
 
 	void Window::createWindow(std::string strWindowTitle)
@@ -380,12 +380,14 @@ namespace X
 		miWindowHeight = iNewHeight;
 	}
 
+	void Window::clearBackbuffer(void)
+	{
+		glClearColor(mv4ClearColour.r, mv4ClearColour.g, mv4ClearColour.b, mv4ClearColour.a);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
 	void Window::swapBuffers(void)
 	{
 		SwapBuffers(mhDeviceContext);
-
-		glClearColor(mv4ClearColour.r, mv4ClearColour.g, mv4ClearColour.b, mv4ClearColour.a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Window::setVsync(bool bEnabled)

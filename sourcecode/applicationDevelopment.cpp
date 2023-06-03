@@ -7,13 +7,15 @@
 #include "geometry.h"
 #include "textures.h"
 #include "window.h"
+#include "shaders.h"
 
 namespace X
 {
 	void ApplicationDevelopment::initOnce(void)
 	{
-		
-
+		ShaderManager* pSM = ShaderManager::getPointer();
+		pSM->add("default", "shaders/default.vs", "shaders/default.fs", "default");
+		pSM->loadGroup("default");
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -27,11 +29,33 @@ namespace X
 
 	bool ApplicationDevelopment::onUpdate(void)
 	{
+		// TEMP render some stuff
+		ShaderManager* pSM = ShaderManager::getPointer();
+		Shader* pShader = pSM->get("default");
+		pShader->bind();
+
+		float fWidth = Window::getPointer()->getWidth();
+		float fHeight = Window::getPointer()->getHeight();
+		glm::mat4 mat = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
+		pShader->setMat4("transform", mat);
+
+		VertexBuffer vertexBuffer;
+		vertexBuffer.addQuad(glm::vec2(0, 0), glm::vec2(100.5f, 100.0f));
+		vertexBuffer.uploadToOpenGL();
+		vertexBuffer.draw();
+
+
 		// Escape key to exit
 		if (InputManager::getPointer()->key.pressed(KC_ESCAPE))
 			return false;
+		// Toggle fullscreen
 		if (InputManager::getPointer()->key.once(KC_F1))
+		{
 			Window::getPointer()->toggleFullscreen();
+			// Reload stuff
+//			ShaderManager::getPointer()->unloadGroup("default");
+//			ShaderManager::getPointer()->loadGroup("default");
+		}
 		return true;
 	}
 }

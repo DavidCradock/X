@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "applicationBase.h"
 #include "timer.h"
+#include "vertexBuffer.h"
 
 namespace X
 {
@@ -28,6 +29,5 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-
 	};
 }
