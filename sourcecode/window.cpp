@@ -265,17 +265,21 @@ namespace X
 
 		switch (msg)
 		{
-/*		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
+		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
 			if (LOWORD(wParam) == WA_INACTIVE)
 			{
-				mbWindowMinimized = true;
+//				mbWindowMinimized = true;
+				// Minimize the window if we're in fullscreen mode to prevent
+				// the window from constantly showing over everything.
+				if (mbWindowFullscreen)
+					ShowWindow(mhWindowHandle, SW_MINIMIZE);
 			}
 			else
 			{
-				mbWindowMinimized = false;
+//				mbWindowMinimized = false;
 			}
 			return 0;
-*/
+
 		case WM_SYSCOMMAND:			// System commands
 		{
 			switch (wParam)
@@ -310,7 +314,7 @@ namespace X
 				return false;
 			else
 			{
-				TranslateMessage(&msg);	// Translates virtual-key messages into character messages
+//				TranslateMessage(&msg);	// Translates virtual-key messages into character messages
 				DispatchMessage(&msg);	// Dispatches a message to a window procedure
 			}
 		}

@@ -34,7 +34,7 @@ namespace X
 
 			// Create window
 			Window* pWindow = Window::getPointer();
-			pWindow->createWindow("X");
+			pWindow->createWindow("X : F1 - Toggle fullscreen.");
 
 			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
@@ -66,7 +66,7 @@ namespace X
 					break;	// Application wants to close
 				}
 
-				// Swap buffers and clear
+				// Swap buffers
 				pWindow->swapBuffers();
 			}
 

@@ -53,9 +53,13 @@ namespace X
 		{
 			Window::getPointer()->toggleFullscreen();
 			// Reload stuff
-//			ShaderManager::getPointer()->unloadGroup("default");
-//			ShaderManager::getPointer()->loadGroup("default");
+			ShaderManager::getPointer()->unloadGroup("default");
+			ShaderManager::getPointer()->loadGroup("default");
 		}
+		if (InputManager::getPointer()->key.once(KC_F2))
+			ShowWindow(Window::getPointer()->getWindowHandle(), SW_MINIMIZE);
+		if (InputManager::getPointer()->key.once(KC_F3))
+			ShowWindow(Window::getPointer()->getWindowHandle(), SW_SHOW);
 		return true;
 	}
 }
