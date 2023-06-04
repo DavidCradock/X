@@ -116,6 +116,14 @@ namespace X
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
 		void remove(const std::string& strResourceName, const std::string& strGroupName);
 
+		// Call this from where ever we can detect that the OpenGL context is about to be destoyed (ApplicationManager is a good choice)
+		// so that this manager can go each of the groups and store which resources are currently loaded and then unload them.
+		// After the context has been lost we then call _onOpenGLContextRestored() to reload those resources back in again.
+		void _onOpenGLContextLost(void);
+
+		// Pair with _onOpenGLContextLost()
+		void _onOpenGLContextRestored(void);
+
 	private:
 
 		// A resource and various variables needed by the manager for each resource
@@ -124,6 +132,7 @@ namespace X
 			Shader* pResource;				// Pointer to the resource
 			unsigned int uiReferenceCount;	// How many times the resource has been added/removed
 			bool bLoaded;					// Whether the resource is loaded or not
+			bool bLoadedContextLostBackup;	// Whether the resource is loaded or not BACKUP for OpenGL lost context methods.
 		};
 		// A resource group holding resources
 		struct Group

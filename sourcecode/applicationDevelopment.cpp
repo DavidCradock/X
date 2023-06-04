@@ -34,8 +34,8 @@ namespace X
 		Shader* pShader = pSM->get("default");
 		pShader->bind();
 
-		float fWidth = Window::getPointer()->getWidth();
-		float fHeight = Window::getPointer()->getHeight();
+		float fWidth = (float)Window::getPointer()->getWidth();
+		float fHeight = (float)Window::getPointer()->getHeight();
 		glm::mat4 mat = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
 		pShader->setMat4("transform", mat);
 
@@ -52,9 +52,6 @@ namespace X
 		if (InputManager::getPointer()->key.once(KC_F1))
 		{
 			Window::getPointer()->toggleFullscreen();
-			// Reload stuff
-			ShaderManager::getPointer()->unloadGroup("default");
-			ShaderManager::getPointer()->loadGroup("default");
 		}
 		if (InputManager::getPointer()->key.once(KC_F2))
 			ShowWindow(Window::getPointer()->getWindowHandle(), SW_MINIMIZE);

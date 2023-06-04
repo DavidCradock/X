@@ -4,6 +4,11 @@
 #include "openGLExtensions.h"
 #include "input.h"
 #include "utilities.h"
+// Managers (for toggleFullscreen)
+#include "geometry.h"
+#include "shaders.h"
+#include "textures.h"
+#include "vertexBuffer.h"
 
 namespace X
 {
@@ -402,9 +407,25 @@ namespace X
 
 	void Window::toggleFullscreen(void)
 	{
+		// For each manager which handles OpenGL resources which depend upon the windows' OpenGL context,
+		// store which resources in each of the groups are currently "loaded" into OpenGL
+		GeometryManager* pGeomMan = GeometryManager::getPointer();
+		pGeomMan->_onOpenGLContextLost();
+		ShaderManager* pShaderMan = ShaderManager::getPointer();
+		pShaderMan->_onOpenGLContextLost();
+		TextureManager* pTextureMan = TextureManager::getPointer();
+		pTextureMan->_onOpenGLContextLost();
+
+		// Now destroy and recreate the window, toggling fullscreen mode whilst doing so
 		destroyWindow();
 		mbWindowFullscreen = !mbWindowFullscreen;
 		createWindow(mstrWindowTitle);
+
+		// Now for each manager, re-load the previously loaded resources back again to their original state...
+		pGeomMan->_onOpenGLContextRestored();
+		pShaderMan->_onOpenGLContextRestored();
+		pTextureMan->_onOpenGLContextRestored();
+
 
 	}
 }

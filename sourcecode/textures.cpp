@@ -328,4 +328,57 @@ namespace X
 			itg->second->mmapResource.erase(it);
 		}
 	}
+
+	void TextureManager::_onOpenGLContextLost(void)
+	{
+		// For each group
+		std::map<std::string, Group*>::iterator itg = mmapGroup.begin();
+		while (itg != mmapGroup.end())
+		{
+			// For each resource in group
+			std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+			while (it != itg->second->mmapResource.end())
+			{
+				// Store whether the resource is loaded or not
+				it->second->bLoadedContextLostBackup = it->second->bLoaded;
+				it++;
+			}
+			itg++;
+		}
+
+		// Now that we've backup whether the resource is in the loaded state or not, unload everything
+		unsigned int iNumGroups = getNumGroups();
+		for (unsigned int iGroupIndex = 0; iGroupIndex < iNumGroups; iGroupIndex++)
+		{
+			const std::string& strGroupName = getGroupName(iGroupIndex);
+			unloadGroup(strGroupName);
+		}
+
+		// Done.
+	}
+
+	void TextureManager::_onOpenGLContextRestored(void)
+	{
+		// Now that the context has been lost, we need to reload all the unloaded resources back in.
+		// Hopefully a call to _onOpenGLContextLost() has been previously called to backup all the resources which were previously loaded.
+		// Now we go through each group and each resource in each group and reload if they were previously...
+		// For each group
+		std::map<std::string, Group*>::iterator itg = mmapGroup.begin();
+		while (itg != mmapGroup.end())
+		{
+			// For each resource in group
+			std::map<std::string, Resource*>::iterator it = itg->second->mmapResource.begin();
+			while (it != itg->second->mmapResource.end())
+			{
+				// Was it previously loaded?
+				if (it->second->bLoadedContextLostBackup)
+				{
+					it->second->pResource->load();
+					it->second->bLoaded = true;
+				}
+				it++;
+			}
+			itg++;
+		}
+	}
 }

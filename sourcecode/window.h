@@ -62,7 +62,11 @@ namespace X
 		// Sets whether VSync is enabled or not
 		void setVsync(bool bEnabled);
 
-		// Tobbles between windowed and fullscreen modes
+		// Toggles between windowed and fullscreen modes
+		// This method is currently the only place where the OpenGL context will be lost/destroyed and rebuilt as the window has to be re-created.
+		// Because of this, all OpenGL objects depending upon that context need to be recreated.
+		// This is done from within this method by calling each of the various managers' _onOpenGLContextLost() methods to store which objects are currently loaded
+		// and then the window and OpenGL context is re-created and then a call to each of the various managers' _onOpenGLContextRestored() methods which re-load/create the resources again.
 		void toggleFullscreen(void);
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
