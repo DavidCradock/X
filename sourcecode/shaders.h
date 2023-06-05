@@ -8,6 +8,7 @@ namespace X
 	// Example usage:
 	// Shader *pShader = ShaderManager::getPointer()->getShader("shaderName");
 	// Texture *pTexture = TextureManager::getPointer()->getTexture("textureName");
+	// Before setting any uniforms, be sure to bind the shader program...
 	// pShader->bind();
 	// pShader->setInt("texture1", pTexture->getID());
 	// float fWidth = (float)Window::getPointer()->getWidth();
