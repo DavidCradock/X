@@ -4,38 +4,84 @@
 
 namespace X
 {
-	// An object to hold vertex information
+	// Holds geometry information for rendering
+	// Usage:
+	// First we create some named geometry with the Geometry manager...
+	// Geometry *pGeom = GeometryManager::getPointer->add("MyFirstGeom", "default");
+	// Then we add some vertex information into system memory with the various add??? methods..
+	// pGeom->addFromFile("data/geometry/MyFirstGeom.geo");	// Load geometry info into system memory
+	// Then create the various OpenGL objects which point to the data with...
+	// GeometryManager::loadGroup("default");
+	// Now we're ready to draw the geometry with...
+	// Geometry *pGeom = GeometryManager::getPointer()->get("MyFirstGeom", "default");
+	// pGeom->draw();
+	// If you wish to create geometry which changes all the time, simply to as above but then when changing
+	// the geometry, simply call removeGeom() to remove all geometry from system memory, then call the various
+	// add??? methods to re-create the geometry into system memory and we're all done, call draw as normal.
+	// If you forget to add geometry after calling removeGeom, the draw() call will detect this and silently fail.
 	class Geometry
 	{
 	public:
 		Geometry();
 		~Geometry();
 
-		// Loads the resource so it's ready for use.
-		// Used by the manager
-		void load(void);
-
-		// Unloads the resource, freeing memory.
-		// Used by the manager 
-		void unload(void);
-
-		// Sets the filename of the file which holds the vertex information
-		// If you wish to create the geometry manually instead of loading from a file
-		// Simply don't call this, setup the geometry manually.
-		// load() will still be called to create the OpenGL stuff for you.
-		void setFilename(const std::string& strGeometryFilename);
-
-		std::string mstrGeometryFilename;		// Holds the name of the file holding the geometry
+		// A single vertex
 		struct Vertex
 		{
-			glm::vec3 pos;
-			glm::vec3 colour;
-			glm::vec3 normal;
-			glm::vec2 texCoord;
+			glm::vec3 position;		// Vertex position
+			glm::vec3 normal;		// Vertex normal
+			glm::vec4 colour;		// Vertex colour
+			glm::vec2 texCoord;		// Vertex texture coordinate
 		};
-		std::vector<Vertex> mvVertices;
-		std::vector<uint32_t> mvuiIndices;
 
+		// Deletes OpenGL objects, but does not remove any previously added vertices
+		void unload(void);
+
+		// Removes all previously added vertices
+		void removeGeom(void);
+
+		// Once all vertices have been added or loaded with eiter of the the various add?? methods,
+		// this creates the OpenGL objects and copies stuff to the GPU, ready for use.
+		// If no vertices have previously been added, this silently fails.
+		void load(void);
+
+		// Binds the vertexArrayObject and calls glDrawElements()
+		// If there's no vertex data, this silently fails.
+		void draw(bool bWireframeMode = false);
+
+		// Adds a new vertex, once all indicies and vertices are added, call load()
+		void addVertex(const Vertex& newVertex);
+
+		// Add a new index, once all indicies and vertices have been added, call load()
+		void addIndex(int newIndex);
+
+		// Adds a bunch of vertices and indices which represent a 2D quad
+		void addQuad(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateBottomLeft = glm::vec2(0, 0), const glm::vec2& textureCoordinateBottomRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateTopRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateTopLeft = glm::vec2(0, 1));
+
+		// Use the GeometryManager::convertObj() method to generate a binary file from an .obj file exported from
+		// some 3D modelling package such as Blender.
+		// The method will load in, convert and save out the stored geometry information into an efficient to load file which we use here
+		// to load the vertex information into memory.
+		// This does create the OpenGL objects, a call to load() does that.
+		void addFromFile(const std::string& strGeometryFilename);
+
+		// Return number of vertices which have been added so far.
+		inline size_t getNumVertices(void)
+		{
+			return vertices.size();
+		}
+
+		// Return nummber of indices which have been added so far.
+		inline size_t getNumIndicies(void)
+		{
+			return indices.size();
+		}
+	private:
+		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
+		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
+		unsigned int elementBufferObject;	// OpenGL element buffer object ID
+		std::vector<Vertex> vertices;		// Vector holding each unique vertex
+		std::vector<int> indices;			// Vector holding indicies to each unique vertex=
 	};
 
 	// Use this to manage all geometry

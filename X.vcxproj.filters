@@ -43,7 +43,6 @@
     <ClCompile Include="sourcecode\inputMouse.cpp" />
     <ClCompile Include="sourcecode\openGLExtensions.cpp" />
     <ClCompile Include="sourcecode\image.cpp" />
-    <ClCompile Include="sourcecode\vertexBuffer.cpp" />
     <ClCompile Include="sourcecode\shaders.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +100,6 @@
     <ClInclude Include="dependencies\stb_image_write.h">
       <Filter>dependencies</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\vertexBuffer.h" />
     <ClInclude Include="sourcecode\shaders.h" />
   </ItemGroup>
 </Project>

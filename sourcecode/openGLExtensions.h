@@ -96,5 +96,4 @@ namespace X
 	extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 	extern PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
 
-	
 }

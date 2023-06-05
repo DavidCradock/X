@@ -39,11 +39,6 @@ namespace X
 		glm::mat4 mat = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
 		pShader->setMat4("transform", mat);
 
-		VertexBuffer vertexBuffer;
-		vertexBuffer.addQuad(glm::vec2(0, 0), glm::vec2(100.5f, 100.0f));
-		vertexBuffer.uploadToOpenGL();
-		vertexBuffer.draw();
-
 
 		// Escape key to exit
 		if (InputManager::getPointer()->key.pressed(KC_ESCAPE))
@@ -53,10 +48,6 @@ namespace X
 		{
 			Window::getPointer()->toggleFullscreen();
 		}
-		if (InputManager::getPointer()->key.once(KC_F2))
-			ShowWindow(Window::getPointer()->getWindowHandle(), SW_MINIMIZE);
-		if (InputManager::getPointer()->key.once(KC_F3))
-			ShowWindow(Window::getPointer()->getWindowHandle(), SW_SHOW);
 		return true;
 	}
 }

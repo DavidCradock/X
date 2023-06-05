@@ -8,11 +8,14 @@ namespace X
 	// Example usage:
 	// Shader *pShader = ShaderManager::getPointer()->getShader("shaderName");
 	// Texture *pTexture = TextureManager::getPointer()->getTexture("textureName");
+	// pShader->bind();
 	// pShader->setInt("texture1", pTexture->getID());
-	// Matrix matrixOrtho;
-	// matrixOrtho.setOrthographic();
-	// pShader->setMat4("transform", matrixOrtho);
-	// pShader->use();
+	// float fWidth = (float)Window::getPointer()->getWidth();
+	// float fHeight = (float)Window::getPointer()->getHeight();
+	// glm::mat4 mat = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
+	// pShader->setMat4("transform", mat);
+	// // Render some geometry...
+	// // Then once that's done, call unbind() on the shader to finish up.
 	class Shader
 	{
 	public:

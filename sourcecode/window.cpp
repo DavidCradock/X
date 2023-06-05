@@ -8,7 +8,6 @@
 #include "geometry.h"
 #include "shaders.h"
 #include "textures.h"
-#include "vertexBuffer.h"
 
 namespace X
 {
@@ -410,10 +409,11 @@ namespace X
 		// For each manager which handles OpenGL resources which depend upon the windows' OpenGL context,
 		// store which resources in each of the groups are currently "loaded" into OpenGL
 		GeometryManager* pGeomMan = GeometryManager::getPointer();
-		pGeomMan->_onOpenGLContextLost();
 		ShaderManager* pShaderMan = ShaderManager::getPointer();
-		pShaderMan->_onOpenGLContextLost();
 		TextureManager* pTextureMan = TextureManager::getPointer();
+		
+		pGeomMan->_onOpenGLContextLost();
+		pShaderMan->_onOpenGLContextLost();
 		pTextureMan->_onOpenGLContextLost();
 
 		// Now destroy and recreate the window, toggling fullscreen mode whilst doing so

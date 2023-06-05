@@ -8,7 +8,7 @@ namespace X
 	class Texture
 	{
 	public:
-		Texture();
+		Texture(const std::string& strTextureFilename);
 		~Texture();
 
 		// Loads the resource so it's ready for use.
@@ -19,8 +19,6 @@ namespace X
 		// Used by the manager 
 		void unload(void);
 
-		// Sets the filename of the file which holds the texture information
-		void setFilename(const std::string& strTextureFilename);
 	private:
 		std::string mstrTextureFilename;		// Holds the name of the file holding the texture
 	};
@@ -77,7 +75,7 @@ namespace X
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		Texture* add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
+		Texture* add(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs

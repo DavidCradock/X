@@ -2,7 +2,6 @@
 #include "PCH.h"
 #include "applicationBase.h"
 #include "timer.h"
-#include "vertexBuffer.h"
 
 namespace X
 {

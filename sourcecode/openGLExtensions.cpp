@@ -191,7 +191,6 @@ namespace X
 		glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray");	checkOpenGLExtension(glBindVertexArray, "glBindVertexArray", bLogExtensions);
 		glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");	checkOpenGLExtension(glDeleteVertexArrays, "glDeleteVertexArrays", bLogExtensions);
 
-
 		pLog->add("setupOpenGLExtensions() complete.");
 	}
 }

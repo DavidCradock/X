@@ -165,7 +165,6 @@
     <ClCompile Include="sourcecode\shaders.cpp" />
     <ClCompile Include="sourcecode\textures.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
-    <ClCompile Include="sourcecode\vertexBuffer.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
     <ClCompile Include="sourcecode\log.cpp" />
     <ClCompile Include="sourcecode\PCH.cpp">
@@ -203,7 +202,6 @@
     <ClInclude Include="sourcecode\renderQueue.h" />
     <ClInclude Include="sourcecode\shaders.h" />
     <ClInclude Include="sourcecode\textures.h" />
-    <ClInclude Include="sourcecode\vertexBuffer.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\PCH.h" />

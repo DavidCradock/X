@@ -3,6 +3,7 @@
 #include "singleton.h"
 #include "utilities.h"
 #include "timer.h"
+#include "openGLExtensions.h"
 
 namespace X
 {

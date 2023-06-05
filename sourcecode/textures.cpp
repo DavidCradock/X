@@ -4,8 +4,9 @@
 
 namespace X
 {
-	Texture::Texture(void)
+	Texture::Texture(const std::string& strTextureFilename)
 	{
+		mstrTextureFilename = strTextureFilename;
 	}
 
 	Texture::~Texture(void)
@@ -21,11 +22,6 @@ namespace X
 	void Texture::unload(void)
 	{
 
-	}
-
-	void Texture::setFilename(const std::string& strTextureFilename)
-	{
-		mstrTextureFilename = strTextureFilename;
 	}
 
 	TextureManager::TextureManager()
@@ -194,7 +190,7 @@ namespace X
 		}
 	}
 
-	Texture* TextureManager::add(const std::string& strNewResourceName, const std::string& strGroupName)
+	Texture* TextureManager::add(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
@@ -220,7 +216,7 @@ namespace X
 
 		// If we get here, we have got to create, then add the resource to the existing named group
 		Resource* pNewRes = new Resource;
-		pNewRes->pResource = new Texture();
+		pNewRes->pResource = new Texture(strTextureFilename);
 		pNewRes->uiReferenceCount = 1;
 		pNewRes->bLoaded = false;
 		itg->second->mmapResource[strNewResourceName] = pNewRes;
