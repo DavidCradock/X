@@ -2,7 +2,6 @@
 #include "PCH.h"
 #include "singleton.h"
 #include "geometry.h"
-#include "textures.h"
 
 namespace X
 {

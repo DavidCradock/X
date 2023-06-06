@@ -133,7 +133,6 @@ namespace X
 		void unloadGroup(const std::string& strGroupName);
 
 		// Reloads the geometry into memory
-		// This is used if we're modifying geometry per frame
 		// Recreates the required OpenGL objects
 		// It simply calls unload and then load of the object.
 		void reload(const std::string& strResourceName, const std::string& strGroupName = "default");

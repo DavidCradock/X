@@ -162,8 +162,9 @@
     <ClCompile Include="sourcecode\inputMouse.cpp" />
     <ClCompile Include="sourcecode\openGLExtensions.cpp" />
     <ClCompile Include="sourcecode\renderQueue.cpp" />
-    <ClCompile Include="sourcecode\shaders.cpp" />
-    <ClCompile Include="sourcecode\textures.cpp" />
+    <ClCompile Include="sourcecode\resourceManager.cpp" />
+    <ClCompile Include="sourcecode\resourceShader.cpp" />
+    <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
     <ClCompile Include="sourcecode\log.cpp" />
@@ -200,8 +201,10 @@
     <ClInclude Include="sourcecode\inputMouse.h" />
     <ClInclude Include="sourcecode\openGLExtensions.h" />
     <ClInclude Include="sourcecode\renderQueue.h" />
-    <ClInclude Include="sourcecode\shaders.h" />
-    <ClInclude Include="sourcecode\textures.h" />
+    <ClInclude Include="sourcecode\resourceBase.h" />
+    <ClInclude Include="sourcecode\resourceManager.h" />
+    <ClInclude Include="sourcecode\resourceShader.h" />
+    <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\PCH.h" />
