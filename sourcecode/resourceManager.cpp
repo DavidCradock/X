@@ -7,6 +7,8 @@ namespace X
 	void ResourceManager::onGLContextToBeDestroyed(void)
 	{
 		// For each of the resources, call their onGLContextToBeDestroyed() methods.
+
+		// Shaders
 		std::map<std::string, ResourceShader*>::iterator itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
 		{
@@ -14,11 +16,20 @@ namespace X
 			itShaders++;
 		}
 
+		// Texture2D
 		std::map<std::string, ResourceTexture2D*>::iterator itTextures2D = _mmapResTextures2D.begin();
 		while (itTextures2D != _mmapResTextures2D.end())
 		{
 			itTextures2D->second->onGLContextToBeDestroyed();
 			itTextures2D++;
+		}
+
+		// Framebuffer
+		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		while (itFramebuffer != _mmapResFramebuffers.end())
+		{
+			itShaders->second->onGLContextToBeDestroyed();
+			itFramebuffer++;
 		}
 	}
 
@@ -38,6 +49,14 @@ namespace X
 		{
 			itTextures2D->second->onGLContextCreated();
 			itTextures2D++;
+		}
+
+		// Framebuffer
+		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		while (itFramebuffer != _mmapResFramebuffers.end())
+		{
+			itShaders->second->onGLContextCreated();
+			itFramebuffer++;
 		}
 	}
 
@@ -98,4 +117,34 @@ namespace X
 		delete it->second;
 		_mmapResTextures2D.erase(it);
 	}
+
+	ResourceFramebuffer* ResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	{
+		ResourceFramebuffer* pNewResource = new ResourceFramebuffer(uiWidth, uiHeight);
+		ThrowIfFalse(pNewResource, "ResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResFramebuffers[strResourceName] = pNewResource;
+		return pNewResource;
+	}
+
+	ResourceFramebuffer* ResourceManager::getFramebuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "ResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second;
+	}
+
+	bool ResourceManager::getFramebufferExists(const std::string& strResourceName)
+	{
+		return _mmapResFramebuffers.find(strResourceName) != _mmapResFramebuffers.end();
+	}
+
+	void ResourceManager::removeFramebuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		if (it == _mmapResFramebuffers.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		_mmapResFramebuffers.erase(it);
+	}
+
 }

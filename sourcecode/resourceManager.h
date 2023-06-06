@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+#include "resourceFramebuffer.h"
 #include "resourceShader.h"
 #include "resourceTexture2D.h"
 
@@ -52,9 +53,26 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeTexture2D(const std::string& strResourceName);
 
+		// Adds a new framebuffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// uiWidth and uiHeight are the dimensions of the framebuffer
+		ResourceFramebuffer* addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		ResourceFramebuffer* getFramebuffer(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getFramebufferExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		void removeFramebuffer(const std::string& strResourceName);
+
 	private:
 		std::map<std::string, ResourceShader*>		_mmapResShaders;		// A hash map holding each named shader resource
 		std::map<std::string, ResourceTexture2D*>	_mmapResTextures2D;		// A hash map holding each named 2D texture resource
+		std::map<std::string, ResourceFramebuffer*>	_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
 	};
 
 }
