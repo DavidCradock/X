@@ -8,6 +8,14 @@ namespace X
 	{
 		// For each of the resources, call their onGLContextToBeDestroyed() methods.
 
+		// Framebuffers
+		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		while (itFramebuffer != _mmapResFramebuffers.end())
+		{
+			itFramebuffer->second->onGLContextToBeDestroyed();
+			itFramebuffer++;
+		}
+
 		// Shaders
 		std::map<std::string, ResourceShader*>::iterator itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
@@ -16,7 +24,7 @@ namespace X
 			itShaders++;
 		}
 
-		// Texture2D
+		// Texture2Ds
 		std::map<std::string, ResourceTexture2D*>::iterator itTextures2D = _mmapResTextures2D.begin();
 		while (itTextures2D != _mmapResTextures2D.end())
 		{
@@ -24,19 +32,28 @@ namespace X
 			itTextures2D++;
 		}
 
-		// Framebuffer
-		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
-		while (itFramebuffer != _mmapResFramebuffers.end())
+		// Vertexbuffers
+		std::map<std::string, ResourceVertexbuffer*>::iterator itVertexbuffer = _mmapResVertexbuffers.begin();
+		while (itVertexbuffer != _mmapResVertexbuffers.end())
 		{
-			itShaders->second->onGLContextToBeDestroyed();
-			itFramebuffer++;
+			itVertexbuffer->second->onGLContextToBeDestroyed();
+			itVertexbuffer++;
 		}
 	}
 
-	
 	void ResourceManager::onGLContextRecreated(void)
 	{
 		// For each of the resources, call their onGLContextCreated() methods.
+
+		// Framebuffers
+		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		while (itFramebuffer != _mmapResFramebuffers.end())
+		{
+			itFramebuffer->second->onGLContextCreated();
+			itFramebuffer++;
+		}
+
+		// Shaders
 		std::map<std::string, ResourceShader*>::iterator itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
 		{
@@ -44,6 +61,7 @@ namespace X
 			itShaders++;
 		}
 
+		// Texture 2Ds
 		std::map<std::string, ResourceTexture2D*>::iterator itTextures2D = _mmapResTextures2D.begin();
 		while (itTextures2D != _mmapResTextures2D.end())
 		{
@@ -51,13 +69,42 @@ namespace X
 			itTextures2D++;
 		}
 
-		// Framebuffer
-		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
-		while (itFramebuffer != _mmapResFramebuffers.end())
+		// Vertexbuffers
+		std::map<std::string, ResourceVertexbuffer*>::iterator itVertexbuffer = _mmapResVertexbuffers.begin();
+		while (itVertexbuffer != _mmapResVertexbuffers.end())
 		{
-			itShaders->second->onGLContextCreated();
-			itFramebuffer++;
+			itVertexbuffer->second->onGLContextCreated();
+			itVertexbuffer++;
 		}
+	}
+
+	ResourceFramebuffer* ResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	{
+		ResourceFramebuffer* pNewResource = new ResourceFramebuffer(uiWidth, uiHeight);
+		ThrowIfFalse(pNewResource, "ResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResFramebuffers[strResourceName] = pNewResource;
+		return pNewResource;
+	}
+
+	ResourceFramebuffer* ResourceManager::getFramebuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "ResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second;
+	}
+
+	bool ResourceManager::getFramebufferExists(const std::string& strResourceName)
+	{
+		return _mmapResFramebuffers.find(strResourceName) != _mmapResFramebuffers.end();
+	}
+
+	void ResourceManager::removeFramebuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		if (it == _mmapResFramebuffers.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		_mmapResFramebuffers.erase(it);
 	}
 
 	ResourceShader* ResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
@@ -118,33 +165,33 @@ namespace X
 		_mmapResTextures2D.erase(it);
 	}
 
-	ResourceFramebuffer* ResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	ResourceVertexbuffer* ResourceManager::addVertexbuffer(const std::string& strResourceName)
 	{
-		ResourceFramebuffer* pNewResource = new ResourceFramebuffer(uiWidth, uiHeight);
-		ThrowIfFalse(pNewResource, "ResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResFramebuffers[strResourceName] = pNewResource;
+		ResourceVertexbuffer* pNewResource = new ResourceVertexbuffer();
+		ThrowIfFalse(pNewResource, "ResourceManager::addVertexbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexbuffers[strResourceName] = pNewResource;
 		return pNewResource;
 	}
 
-	ResourceFramebuffer* ResourceManager::getFramebuffer(const std::string& strResourceName)
+	ResourceVertexbuffer* ResourceManager::getVertexbuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
-		ThrowIfTrue(it == _mmapResFramebuffers.end(), "ResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		std::map<std::string, ResourceVertexbuffer*>::iterator it = _mmapResVertexbuffers.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexbuffers.end(), "ResourceManager::getVertexbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second;
 	}
 
-	bool ResourceManager::getFramebufferExists(const std::string& strResourceName)
+	bool ResourceManager::getVertexbufferExists(const std::string& strResourceName)
 	{
-		return _mmapResFramebuffers.find(strResourceName) != _mmapResFramebuffers.end();
+		return _mmapResVertexbuffers.find(strResourceName) != _mmapResVertexbuffers.end();
 	}
 
-	void ResourceManager::removeFramebuffer(const std::string& strResourceName)
+	void ResourceManager::removeVertexbuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceFramebuffer*>::iterator it = _mmapResFramebuffers.find(strResourceName);
-		if (it == _mmapResFramebuffers.end())
+		std::map<std::string, ResourceVertexbuffer*>::iterator it = _mmapResVertexbuffers.find(strResourceName);
+		if (it == _mmapResVertexbuffers.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		_mmapResFramebuffers.erase(it);
+		_mmapResVertexbuffers.erase(it);
 	}
 
 }
