@@ -16,6 +16,9 @@ namespace X
 		// Free all OpenGL context dependent objects before the OpenGL context is destroyed.
 		void onGLContextToBeDestroyed(void);
 
+		// Binds the texture to the given texture unit
+		void bind(unsigned int uiTextureUnit = 0);
+
 		std::string _mstrImageFilename;
 		unsigned int _muiTextureID;
 	};
