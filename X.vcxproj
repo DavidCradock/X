@@ -154,6 +154,7 @@
     <ClCompile Include="sourcecode\applicationGame.cpp" />
     <ClCompile Include="sourcecode\applicationManager.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
+    <ClCompile Include="sourcecode\camera.cpp" />
     <ClCompile Include="sourcecode\image.cpp" />
     <ClCompile Include="sourcecode\input.cpp" />
     <ClCompile Include="sourcecode\inputJoystick.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="sourcecode\applicationGame.h" />
     <ClInclude Include="sourcecode\applicationManager.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
+    <ClInclude Include="sourcecode\camera.h" />
     <ClInclude Include="sourcecode\image.h" />
     <ClInclude Include="sourcecode\input.h" />
     <ClInclude Include="sourcecode\inputJoystick.h" />

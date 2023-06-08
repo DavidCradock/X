@@ -44,7 +44,7 @@ namespace X
 		void addIndex(int newIndex);
 
 		// Adds a bunch of vertices and indices which represent a 2D quad
-		void addQuad(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateBottomLeft = glm::vec2(0, 0), const glm::vec2& textureCoordinateBottomRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateTopRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateTopLeft = glm::vec2(0, 1));
+		void addQuad(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateBottomLeft = glm::vec2(0, 1), const glm::vec2& textureCoordinateBottomRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateTopRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateTopLeft = glm::vec2(0, 0));
 
 		// Use the convertObj() method to generate a binary file from an .obj file exported from
 		// some 3D modelling package such as Blender.

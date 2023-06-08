@@ -21,14 +21,19 @@ namespace X
 	void ResourceTexture2D::onGLContextCreated(void)
 	{
 		Image image;
-		ThrowIfFalse(image.load(_mstrImageFilename, false), "ResourceTexture2D::onGLContextCreated() failed to load image from file containing image data.");
+		ThrowIfFalse(image.load(_mstrImageFilename, false), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getData());
+
+		if (3==image.getNumChannels())
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getData());
+		else  // We'll assume 4
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
+
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
@@ -70,7 +75,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void unbind(unsigned int uiTextureUnit)
+	void ResourceTexture2D::unbind(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{

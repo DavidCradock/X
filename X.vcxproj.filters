@@ -46,6 +46,7 @@
     <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\resourceFramebuffer.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -106,5 +107,6 @@
     <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\resourceFramebuffer.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
+    <ClInclude Include="sourcecode\camera.h" />
   </ItemGroup>
 </Project>

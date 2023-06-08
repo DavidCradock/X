@@ -57,7 +57,7 @@ namespace X
 		if (!pixels)
 			return false;
 
-		dataSize = width * height * 4;
+		dataSize = width * height * numChannels;
 		pData = new unsigned char[dataSize];
 		memcpy(pData, pixels, static_cast<size_t>(dataSize));
 		stbi_image_free(pixels);
