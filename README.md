@@ -6,3 +6,8 @@
 - Download the source as a zip and extract somewhere.
 - Download and install Visual studio
 - Load the X.sln file into Visual studio hit compile, done.
+** TODO **
+- implement resource Vertexbuffer
+- implement resource Framebuffer
+- implement resource Texture2D
+- Check resourceVertexbuffer::addFromFile()

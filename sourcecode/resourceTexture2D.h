@@ -17,5 +17,6 @@ namespace X
 		void onGLContextToBeDestroyed(void);
 
 		std::string _mstrImageFilename;
+		unsigned int _muiTextureID;
 	};
 }

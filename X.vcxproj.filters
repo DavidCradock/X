@@ -34,7 +34,6 @@
     <ClCompile Include="sourcecode\window.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\audioManager.cpp" />
-    <ClCompile Include="sourcecode\geometry.cpp" />
     <ClCompile Include="sourcecode\renderQueue.cpp" />
     <ClCompile Include="sourcecode\input.cpp" />
     <ClCompile Include="sourcecode\inputJoystick.cpp" />
@@ -73,7 +72,6 @@
     </ClInclude>
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\audioManager.h" />
-    <ClInclude Include="sourcecode\geometry.h" />
     <ClInclude Include="sourcecode\renderQueue.h" />
     <ClInclude Include="sourcecode\input.h" />
     <ClInclude Include="sourcecode\inputJoystick.h" />

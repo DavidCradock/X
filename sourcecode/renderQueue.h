@@ -1,7 +1,6 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
-#include "geometry.h"
 
 namespace X
 {

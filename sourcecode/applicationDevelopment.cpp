@@ -4,7 +4,6 @@
 #include "log.h"
 #include "utilities.h"
 #include "input.h"
-#include "geometry.h"
 
 #include "window.h"
 
