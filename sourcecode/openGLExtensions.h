@@ -16,25 +16,25 @@ namespace X
 	// VSync
 	extern PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
 	// Multi texturing
-	extern PFNGLACTIVETEXTUREARBPROC glActiveTextureARB;
-	extern PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture;
-	extern PFNGLMULTITEXCOORD1FARBPROC glMultiTexCoord1f;
-	extern PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2f;
-	extern PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3f;
+	extern PFNGLACTIVETEXTUREPROC glActiveTexture;
+//	extern PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture;
+//	extern PFNGLMULTITEXCOORD1FARBPROC glMultiTexCoord1f;
+//	extern PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2f;
+//	extern PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3f;
 	// Frame buffer
-	extern PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT;
-	extern PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT;
-	extern PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT;
+	extern PFNGLGENFRAMEBUFFERSPROC glGenFramebuffers;
+	extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
+	extern PFNGLDELETEFRAMEBUFFERSPROC glDeleteFramebuffers;
+	extern PFNGLFRAMEBUFFERTEXTURE2DPROC glFramebufferTexture2D;
 	// Render buffer
-	extern PFNGLGENRENDERBUFFERSEXTPROC glGenRenderbuffersEXT;
-	extern PFNGLBINDRENDERBUFFEREXTPROC glBindRenderbufferEXT;
-	extern PFNGLRENDERBUFFERSTORAGEEXTPROC glRenderbufferStorageEXT;
-	extern PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbufferEXT;
-	extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT;
-	extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT;
-	extern PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffersEXT;
+	extern PFNGLGENRENDERBUFFERSPROC glGenRenderbuffers;
+	extern PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
+	extern PFNGLRENDERBUFFERSTORAGEPROC glRenderbufferStorage;
+	extern PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
+	extern PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
+	extern PFNGLDELETERENDERBUFFERSPROC glDeleteRenderbuffers;
 	// Generating mip maps for textures bound to frame buffers
-	extern PFNGLGENERATEMIPMAPEXTPROC glGenerateMipmap;
+	extern PFNGLGENERATEMIPMAPPROC glGenerateMipmap;
 	// Programmable pipeline (Shaders)
 	extern PFNGLCREATESHADERPROC glCreateShader;
 	extern PFNGLSHADERSOURCEPROC glShaderSource;

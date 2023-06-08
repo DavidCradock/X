@@ -21,6 +21,7 @@ namespace X
 		// Call this after the OpenGL window context has been recreated, to return all the resource back to their original state.
 		void onGLContextRecreated(void);
 
+
 		// Adds a new framebuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the framebuffer
@@ -36,6 +37,7 @@ namespace X
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		void removeFramebuffer(const std::string& strResourceName);
+
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -53,6 +55,7 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeShader(const std::string& strResourceName);
 
+
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
@@ -69,6 +72,7 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeTexture2D(const std::string& strResourceName);
 
+
 		// Adds a new vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		ResourceVertexbuffer* addVertexbuffer(const std::string& strResourceName);
@@ -83,6 +87,7 @@ namespace X
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		void removeVertexbuffer(const std::string& strResourceName);
+
 	private:
 		std::map<std::string, ResourceFramebuffer*>		_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
 		std::map<std::string, ResourceShader*>			_mmapResShaders;		// A hash map holding each named shader resource

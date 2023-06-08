@@ -9,5 +9,4 @@
 ** TODO **
 - implement resource Vertexbuffer
 - implement resource Framebuffer
-- implement resource Texture2D
 - Check resourceVertexbuffer::addFromFile()

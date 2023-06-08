@@ -6,25 +6,25 @@ namespace X
 	// VSync
 	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
 	// Multi texturing
-	PFNGLACTIVETEXTUREARBPROC glActiveTextureARB;
-	PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture;
-	PFNGLMULTITEXCOORD1FARBPROC glMultiTexCoord1f;
-	PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2f;
-	PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3f;
+	PFNGLACTIVETEXTUREPROC glActiveTexture;
+//	PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture;
+//	PFNGLMULTITEXCOORD1FARBPROC glMultiTexCoord1f;
+//	PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2f;
+//	PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3f;
 	// Frame buffer
-	PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT;
-	PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT;
-	PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT;
+	PFNGLGENFRAMEBUFFERSPROC glGenFramebuffers;
+	PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
+	PFNGLDELETEFRAMEBUFFERSPROC glDeleteFramebuffers;
+	PFNGLFRAMEBUFFERTEXTURE2DPROC glFramebufferTexture2D;
 	// Render buffer
-	PFNGLGENRENDERBUFFERSEXTPROC glGenRenderbuffersEXT;
-	PFNGLBINDRENDERBUFFEREXTPROC glBindRenderbufferEXT;
-	PFNGLRENDERBUFFERSTORAGEEXTPROC glRenderbufferStorageEXT;
-	PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbufferEXT;
-	PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT;
-	PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT;
-	PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffersEXT;
+	PFNGLGENRENDERBUFFERSPROC glGenRenderbuffers;
+	PFNGLBINDRENDERBUFFERPROC glBindRenderbuffer;
+	PFNGLRENDERBUFFERSTORAGEPROC glRenderbufferStorage;
+	PFNGLFRAMEBUFFERRENDERBUFFERPROC glFramebufferRenderbuffer;
+	PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
+	PFNGLDELETERENDERBUFFERSPROC glDeleteRenderbuffers;
 	// Generating mip maps for textures bound to frame buffers
-	PFNGLGENERATEMIPMAPEXTPROC glGenerateMipmap;
+	PFNGLGENERATEMIPMAPPROC glGenerateMipmap;
 	// Programmable pipeline (Shaders)
 	PFNGLCREATESHADERPROC glCreateShader;
 	PFNGLSHADERSOURCEPROC glShaderSource;
@@ -111,25 +111,25 @@ namespace X
 		// VSync
 		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");	checkOpenGLExtension(wglSwapIntervalEXT, "wglSwapIntervalEXT", bLogExtensions);
 		// Multi texturing
-		glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");	checkOpenGLExtension(glActiveTextureARB, "glActiveTextureARB", bLogExtensions);
-		glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREARBPROC)wglGetProcAddress("glClientActiveTexture");	checkOpenGLExtension(glClientActiveTexture, "glClientActiveTexture", bLogExtensions);
-		glMultiTexCoord1f = (PFNGLMULTITEXCOORD1FARBPROC)wglGetProcAddress("glMultiTexCoord1f");	checkOpenGLExtension(glMultiTexCoord1f, "glMultiTexCoord1f", bLogExtensions);
-		glMultiTexCoord2f = (PFNGLMULTITEXCOORD2FARBPROC)wglGetProcAddress("glMultiTexCoord2f");	checkOpenGLExtension(glMultiTexCoord2f, "glMultiTexCoord2f", bLogExtensions);
-		glMultiTexCoord3f = (PFNGLMULTITEXCOORD3FARBPROC)wglGetProcAddress("glMultiTexCoord3f");	checkOpenGLExtension(glMultiTexCoord3f, "glMultiTexCoord3f", bLogExtensions);
+		glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");	checkOpenGLExtension(glActiveTexture, "glActiveTexture", bLogExtensions);
+//		glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREARBPROC)wglGetProcAddress("glClientActiveTexture");	checkOpenGLExtension(glClientActiveTexture, "glClientActiveTexture", bLogExtensions);
+//		glMultiTexCoord1f = (PFNGLMULTITEXCOORD1FARBPROC)wglGetProcAddress("glMultiTexCoord1f");	checkOpenGLExtension(glMultiTexCoord1f, "glMultiTexCoord1f", bLogExtensions);
+//		glMultiTexCoord2f = (PFNGLMULTITEXCOORD2FARBPROC)wglGetProcAddress("glMultiTexCoord2f");	checkOpenGLExtension(glMultiTexCoord2f, "glMultiTexCoord2f", bLogExtensions);
+//		glMultiTexCoord3f = (PFNGLMULTITEXCOORD3FARBPROC)wglGetProcAddress("glMultiTexCoord3f");	checkOpenGLExtension(glMultiTexCoord3f, "glMultiTexCoord3f", bLogExtensions);
 		// Frame buffer
-		glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)wglGetProcAddress("glGenFramebuffersEXT");	checkOpenGLExtension(glGenFramebuffersEXT, "glGenFramebuffersEXT", bLogExtensions);
-		glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC)wglGetProcAddress("glBindFramebufferEXT");	checkOpenGLExtension(glBindFramebufferEXT, "glBindFramebufferEXT", bLogExtensions);
-		glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC)wglGetProcAddress("glDeleteFramebuffersEXT");	checkOpenGLExtension(glDeleteFramebuffersEXT, "glDeleteFramebuffersEXT", bLogExtensions);
+		glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers");	checkOpenGLExtension(glGenFramebuffers, "glGenFramebuffers", bLogExtensions);
+		glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer");	checkOpenGLExtension(glBindFramebuffer, "glBindFramebuffer", bLogExtensions);
+		glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC)wglGetProcAddress("glDeleteFramebuffers");	checkOpenGLExtension(glDeleteFramebuffers, "glDeleteFramebuffers", bLogExtensions);
+		glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC)wglGetProcAddress("glFramebufferTexture2D");	checkOpenGLExtension(glFramebufferTexture2D, "glFramebufferTexture2D", bLogExtensions);
 		// Render buffer
-		glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC)wglGetProcAddress("glGenRenderbuffersEXT");	checkOpenGLExtension(glGenRenderbuffersEXT, "glGenRenderbuffersEXT", bLogExtensions);
-		glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC)wglGetProcAddress("glBindRenderbufferEXT");	checkOpenGLExtension(glBindRenderbufferEXT, "glBindRenderbufferEXT", bLogExtensions);
-		glRenderbufferStorageEXT = (PFNGLRENDERBUFFERSTORAGEEXTPROC)wglGetProcAddress("glRenderbufferStorageEXT");	checkOpenGLExtension(glRenderbufferStorageEXT, "glRenderbufferStorageEXT", bLogExtensions);
-		glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)wglGetProcAddress("glFramebufferRenderbufferEXT");	checkOpenGLExtension(glFramebufferRenderbufferEXT, "glFramebufferRenderbufferEXT", bLogExtensions);
-		glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC)wglGetProcAddress("glFramebufferTexture2DEXT");	checkOpenGLExtension(glFramebufferTexture2DEXT, "glFramebufferTexture2DEXT", bLogExtensions);
-		glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC)wglGetProcAddress("glCheckFramebufferStatusEXT");	checkOpenGLExtension(glCheckFramebufferStatusEXT, "glCheckFramebufferStatusEXT", bLogExtensions);
-		glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC)wglGetProcAddress("glDeleteRenderbuffersEXT");	checkOpenGLExtension(glDeleteRenderbuffersEXT, "glDeleteRenderbuffersEXT", bLogExtensions);
+		glGenRenderbuffers = (PFNGLGENRENDERBUFFERSEXTPROC)wglGetProcAddress("glGenRenderbuffers");	checkOpenGLExtension(glGenRenderbuffers, "glGenRenderbuffers", bLogExtensions);
+		glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC)wglGetProcAddress("glBindRenderbuffer");	checkOpenGLExtension(glBindRenderbuffer, "glBindRenderbuffer", bLogExtensions);
+		glRenderbufferStorage = (PFNGLRENDERBUFFERSTORAGEPROC)wglGetProcAddress("glRenderbufferStorage");	checkOpenGLExtension(glRenderbufferStorage, "glRenderbufferStorage", bLogExtensions);
+		glFramebufferRenderbuffer = (PFNGLFRAMEBUFFERRENDERBUFFERPROC)wglGetProcAddress("glFramebufferRenderbuffer");	checkOpenGLExtension(glFramebufferRenderbuffer, "glFramebufferRenderbuffer", bLogExtensions);
+		glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC)wglGetProcAddress("glCheckFramebufferStatus");	checkOpenGLExtension(glCheckFramebufferStatus, "glCheckFramebufferStatus", bLogExtensions);
+		glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC)wglGetProcAddress("glDeleteRenderbuffers");	checkOpenGLExtension(glDeleteRenderbuffers, "glDeleteRenderbuffers", bLogExtensions);		
 		// Generating mip maps for textures bound to frame buffers
-		glGenerateMipmap = (PFNGLGENERATEMIPMAPEXTPROC)wglGetProcAddress("glGenerateMipmapEXT");	checkOpenGLExtension(glGenerateMipmap, "glGenerateMipmapEXT", bLogExtensions);
+		glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap");	checkOpenGLExtension(glGenerateMipmap, "glGenerateMipmap", bLogExtensions);
 		// Programmable pipeline (Shaders)
 		glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress("glCreateShader");	checkOpenGLExtension(glCreateShader, "glCreateShader", bLogExtensions);
 		glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");	checkOpenGLExtension(glShaderSource, "glShaderSource", bLogExtensions);

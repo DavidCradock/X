@@ -4,15 +4,20 @@
 #include "log.h"
 #include "utilities.h"
 #include "input.h"
-
 #include "window.h"
-
+#include "resourceManager.h"
 
 namespace X
 {
 	void ApplicationDevelopment::initOnce(void)
 	{
-
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("TEST");
+		pVB->addQuad(
+			glm::vec2(100, 100),	// Position
+			glm::vec2(100, 100),	// Dims
+			glm::vec4(1, 1, 1, 1));	// Colour
+		pVB->update();
 	}
 
 	void ApplicationDevelopment::onStart(void)

@@ -35,12 +35,82 @@ namespace X
 	void ResourceTexture2D::onGLContextToBeDestroyed(void)
 	{
 		glDeleteTextures(1, &_muiTextureID);
-
+		_muiTextureID = 0;
 	}
 
 	void ResourceTexture2D::bind(unsigned int uiTextureUnit)
 	{
-		glActiveTextureARB(GL_TEXTURE0);
+		switch (uiTextureUnit)
+		{
+		case 0:
+			glActiveTexture(GL_TEXTURE0);
+			break;
+		case 1:
+			glActiveTexture(GL_TEXTURE1);
+			break;
+		case 2:
+			glActiveTexture(GL_TEXTURE2);
+			break;
+		case 3:
+			glActiveTexture(GL_TEXTURE3);
+			break;
+		case 4:
+			glActiveTexture(GL_TEXTURE4);
+			break;
+		case 5:
+			glActiveTexture(GL_TEXTURE5);
+			break;
+		case 6:
+			glActiveTexture(GL_TEXTURE6);
+			break;
+		case 7:
+			glActiveTexture(GL_TEXTURE7);
+			break;
+		}
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
+	}
+
+	void unbind(unsigned int uiTextureUnit)
+	{
+		switch (uiTextureUnit)
+		{
+		case 0:
+			glActiveTexture(GL_TEXTURE0);
+			break;
+		case 1:
+			glActiveTexture(GL_TEXTURE1);
+			break;
+		case 2:
+			glActiveTexture(GL_TEXTURE2);
+			break;
+		case 3:
+			glActiveTexture(GL_TEXTURE3);
+			break;
+		case 4:
+			glActiveTexture(GL_TEXTURE4);
+			break;
+		case 5:
+			glActiveTexture(GL_TEXTURE5);
+			break;
+		case 6:
+			glActiveTexture(GL_TEXTURE6);
+			break;
+		case 7:
+			glActiveTexture(GL_TEXTURE7);
+			break;
+		}
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void ResourceTexture2D::unbindAll(void)
+	{
+		glActiveTexture(GL_TEXTURE7);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE6);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE5);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE4);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE3);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE2);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE1);	glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);	glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
