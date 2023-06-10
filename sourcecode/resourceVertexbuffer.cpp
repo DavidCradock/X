@@ -204,6 +204,7 @@ namespace X
 		ThrowIfTrue(bool(0 == read), "ResourceVertexbuffer::addFromFile() failed to read from file " + strGeometryFilename);
 
 		// Read in a vertex at a time, adding one at a time..
+		/*
 		Vertex vertex;
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
@@ -212,6 +213,17 @@ namespace X
 			addVertex(vertex);
 			addIndex(i);
 		}
+		*/
+		// Load in all vertex data
+		vertices.resize(iNumVertices);
+		indices.resize(iNumVertices);
+		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "ResourceVertexbuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		vertices.resize(iNumVertices);
+		for (unsigned int i = 0; i < iNumVertices; i++)
+		{
+			indices.push_back(i);
+		}
+
 		fclose(file);
 	}
 
@@ -309,9 +321,10 @@ namespace X
 
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
-			geomVertex.position = vVertices[vIndicesVertices[i] - 1];		// Vertex position
+			geomVertex.position = vVertices[vIndicesVertices[i] - 1];	// Vertex position
 			geomVertex.normal = vNormals[vIndicesNormals[i] - 1];		// Normal
 			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
+			geomVertex.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
 			ThrowIfTrue(bool(0 == written), "ResourceVertexbuffer::convertObj() failed to write to file " + filename);
 		}

@@ -167,6 +167,8 @@
     <ClCompile Include="sourcecode\resourceShader.cpp" />
     <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\resourceFont.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
     <ClCompile Include="sourcecode\log.cpp" />
@@ -181,6 +183,8 @@
     <None Include="README.md" />
     <None Include="shaders\default.fs" />
     <None Include="shaders\default.vs" />
+    <None Include="shaders\font.fs" />
+    <None Include="shaders\font.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\OpenGL\glcorearb.h" />
@@ -209,6 +213,8 @@
     <ClInclude Include="sourcecode\resourceShader.h" />
     <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
+    <ClInclude Include="sourcecode\resourceFont.h" />
+    <ClInclude Include="sourcecode\sceneManagerSimple.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\PCH.h" />

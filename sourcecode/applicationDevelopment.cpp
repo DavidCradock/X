@@ -16,20 +16,24 @@ namespace X
 
 		// Create a vertex buffer
 		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("TEST");
-		pVB->addQuad(
-			glm::vec2(100, 100),	// Position
-			glm::vec2(512, 512),	// Dims
-			glm::vec4(1, 1, 1, 1));	// Colour
+		pVB->convertObj("obj/susan.obj");
+		pVB->addFromFile("obj/susan.geom");
 		pVB->update();
 
 		// Create vertex/fragment shader
 		ResourceShader* pShader = pRM->addShader("default", "shaders/default.vs", "shaders/default.fs");
 		
 		// Load in a texture
-		ResourceTexture2D* pTex = pRM->addTexture2D("default", "textures/default.png");
+		ResourceTexture2D* pTex = pRM->addTexture2D("default", "textures/default.png", true);
 
 		// Create a framebuffer
 		ResourceFramebuffer* pFB = pRM->addFramebuffer("default", Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
+
+		// Create some fonts using the resource manager
+//		pRM->buildFontFiles("fonts/arial", "arial", 26, true, false, false, false, false);
+
+		// Add some fonts
+		pRM->addFont("arial_26", "fonts/arial_26");
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -50,39 +54,30 @@ namespace X
 		ResourceShader* pShader = pRM->getShader("default");		// Shader
 		ResourceFramebuffer* pFB = pRM->getFramebuffer("default");	// Framebuffer
 
-		// Setup a camera
-		Camera camera;
-		camera.setProjectionAsOrthographic(Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
-
-		// Recreate vertex buffer for fun
+		// Timer delta
 		static Timer timer;
 		timer.update();
 		static float fInc = 0.0f;
-		fInc += timer.getSecondsPast() * 100.0f;
-		if (fInc > 2048)
-			fInc -= 2048;
-		pVB->removeGeom();
-		pVB->addQuad(
-			glm::vec2(100, 100),	// Pos
-			glm::vec2(fInc, fInc),	// Dims
-			glm::vec4(1,1,1,1));	// Colour
-		pVB->update();
+		fInc += timer.getSecondsPast() * kPi;// 1.0f;
+
+		// Setup a camera
+		Camera camera;
+//		camera.setProjectionAsOrthographic(Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
+		camera.setProjectionAsPerspective(55.0f, (float)Window::getPointer()->getWidth(), (float)Window::getPointer()->getHeight(), 0.1f, 1000.0f);
+		camera.setViewAsLookat(glm::vec3(sinf(fInc)*2.0f, 2.0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Draw stuff
 		pShader->bind();
-		pShader->setMat4("transform", camera.matrixProjection);
+		pShader->setMat4("transform", camera.getViewProjectionMatrix());
 		pTex->bind(0);
-
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 		pVB->draw(false);
-
-
 		pTex->unbind(0);
 		pShader->unbind();
-//		float fWidth = (float)Window::getPointer()->getWidth();
-//		float fHeight = (float)Window::getPointer()->getHeight();
-//		glm::mat4 mat = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
-//		pShader->setMat4("transform", mat);
 
+		// Render some text
+		pRM->getFont("arial_26")->print("Hello world! How are we doing today? 1234567890-=][;'l;kjh,./", 0, 0, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		// Escape key to exit
 		if (InputManager::getPointer()->key.pressed(KC_ESCAPE))

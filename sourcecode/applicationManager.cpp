@@ -3,6 +3,7 @@
 #include "log.h"
 #include "window.h"
 #include "input.h"
+#include "resourceManager.h"
 
 // Include each application
 #include "applicationDevelopment.h"
@@ -38,6 +39,11 @@ namespace X
 
 			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
+
+			// Add default resources used in various places
+			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");
+			ResourceManager* pResourceManager = ResourceManager::getPointer();
+			pResourceManager->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();

@@ -7,6 +7,9 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio hit compile, done.
 ** TODO **
-- implement resource Vertexbuffer
-- implement resource Framebuffer
-- Check resourceVertexbuffer::addFromFile()
+- implement more stuff into Camera
+- implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
+- implement GUI (2D)
+- implement lighting for 3D with shaders using ambient/emission map, diffuse map, specular map, normal map and parallax mapping
+- implement shadows
+- particle systems

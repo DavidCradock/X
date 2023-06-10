@@ -7,7 +7,7 @@ namespace X
 	class ResourceTexture2D : public ResourceBase
 	{
 	public:
-		ResourceTexture2D(const std::string& strImageFilename);
+		ResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis = false);
 		~ResourceTexture2D();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
@@ -29,5 +29,6 @@ namespace X
 
 		std::string _mstrImageFilename;
 		unsigned int _muiTextureID;
+		bool _mbFlipYaxis;	// Whether to flip the image data in during loading or not.
 	};
 }

@@ -6,10 +6,11 @@
 namespace X
 {
 
-	ResourceTexture2D::ResourceTexture2D(const std::string& strImageFilename)
+	ResourceTexture2D::ResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis)
 	{
 		_mstrImageFilename = strImageFilename;
 		_muiTextureID = 0;
+		_mbFlipYaxis = bFlipYaxis;
 		onGLContextCreated();
 	}
 
@@ -21,7 +22,7 @@ namespace X
 	void ResourceTexture2D::onGLContextCreated(void)
 	{
 		Image image;
-		ThrowIfFalse(image.load(_mstrImageFilename, false), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
+		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

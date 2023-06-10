@@ -47,6 +47,8 @@
     <ClCompile Include="sourcecode\resourceFramebuffer.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\camera.cpp" />
+    <ClCompile Include="sourcecode\resourceFont.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -54,6 +56,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\default.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\font.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\font.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
@@ -108,5 +116,7 @@
     <ClInclude Include="sourcecode\resourceFramebuffer.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
     <ClInclude Include="sourcecode\camera.h" />
+    <ClInclude Include="sourcecode\resourceFont.h" />
+    <ClInclude Include="sourcecode\sceneManagerSimple.h" />
   </ItemGroup>
 </Project>
