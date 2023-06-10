@@ -184,6 +184,8 @@
     <None Include="README.md" />
     <None Include="shaders\default.fs" />
     <None Include="shaders\default.vs" />
+    <None Include="shaders\diffuse_roughness.fs" />
+    <None Include="shaders\diffuse_roughness.vs" />
     <None Include="shaders\font.fs" />
     <None Include="shaders\font.vs" />
   </ItemGroup>

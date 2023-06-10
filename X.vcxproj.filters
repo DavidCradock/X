@@ -65,6 +65,12 @@
     <None Include="shaders\font.vs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\diffuse_roughness.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\diffuse_roughness.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\log.h" />

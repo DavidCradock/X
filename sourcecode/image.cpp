@@ -61,14 +61,37 @@ namespace X
 		stbi_uc* pixels = 0;
 		if (4 == iNumChannels)
 			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
-		else
+		else if (3 == iNumChannels)
 			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb);
+		else if (1 == iNumChannels)
+			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, 1);
+
 		if (!pixels)
 			return false;
 
+		// If number of channels is 1, then we convert that 1 channel to 3 and duplicate the R to G and B
+		if (1 == iNumChannels)
+		{
+			numChannels = 3;
+		}
+
+		// Compute size and allocate
 		dataSize = width * height * numChannels;
 		pData = new unsigned char[dataSize];
-		memcpy(pData, pixels, static_cast<size_t>(dataSize));
+
+		if (1 != iNumChannels)
+			memcpy(pData, pixels, static_cast<size_t>(dataSize));
+		else // We need to copy the R to G and B
+		{
+			unsigned int iPixelIndex = 0;
+			for (unsigned int i = 0; i < dataSize; i += 3)
+			{
+				pData[i] = pixels[iPixelIndex];
+				pData[i+1] = pixels[iPixelIndex];
+				pData[i+2] = pixels[iPixelIndex];
+				iPixelIndex++;
+			}
+		}
 		stbi_image_free(pixels);
 		return true;
 	}

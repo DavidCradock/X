@@ -44,6 +44,8 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");
 			ResourceManager* pResourceManager = ResourceManager::getPointer();
 			pResourceManager->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
+			pResourceManager->addShader("X:default", "shaders/default.vs", "shaders/default.fs");
+			pResourceManager->addShader("X:diffuse_roughness", "shaders/diffuse_roughness.vs", "shaders/diffuse_roughness.fs");
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();

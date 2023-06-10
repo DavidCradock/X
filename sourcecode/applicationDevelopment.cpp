@@ -19,12 +19,10 @@ namespace X
 //		pVB->convertObj("obj/susan.obj");
 		pVB->addFromFile("geometry/susan.geom");
 		pVB->update();
-
-		// Create vertex/fragment shader
-		ResourceShader* pShader = pRM->addShader("default", "shaders/default.vs", "shaders/default.fs");
 		
 		// Load in a texture
-		ResourceTexture2D* pTex = pRM->addTexture2D("textures/susan_DefaultMaterial_BaseColor.png", "textures/susan_DefaultMaterial_BaseColor.png", true);
+		ResourceTexture2D* pTex0 = pRM->addTexture2D("textures/susan_DefaultMaterial_BaseColor.png", "textures/susan_DefaultMaterial_BaseColor.png", true);
+		ResourceTexture2D* pTex1 = pRM->addTexture2D("textures/susan_DefaultMaterial_Roughness.png", "textures/susan_DefaultMaterial_Roughness.png", true);
 
 		// Create a framebuffer
 		ResourceFramebuffer* pFB = pRM->addFramebuffer("default", Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
@@ -52,8 +50,9 @@ namespace X
 		// Get resources
 		ResourceManager* pRM = ResourceManager::getPointer();		// Resource manager
 		ResourceVertexbuffer* pVB = pRM->getVertexbuffer("TEST");	// Vertex buffer
-		ResourceTexture2D* pTex = pRM->getTexture2D("textures/susan_DefaultMaterial_BaseColor.png");		// Texture
-		ResourceShader* pShader = pRM->getShader("default");		// Shader
+		ResourceTexture2D* pTexDiffuse = pRM->getTexture2D("textures/susan_DefaultMaterial_BaseColor.png");
+		ResourceTexture2D* pTexRoughness = pRM->getTexture2D("textures/susan_DefaultMaterial_Roughness.png");
+		ResourceShader* pShader = pRM->getShader("X:diffuse_roughness");		// Shader
 		ResourceFramebuffer* pFB = pRM->getFramebuffer("default");	// Framebuffer
 
 		// Timer delta
@@ -65,16 +64,24 @@ namespace X
 		Camera camera;
 //		camera.setProjectionAsOrthographic(Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
 		camera.setProjectionAsPerspective(55.0f, (float)Window::getPointer()->getWidth(), (float)Window::getPointer()->getHeight(), 0.1f, 1000.0f);
-		camera.setViewAsLookat(glm::vec3(sinf(fInc)*2.0f, .0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		camera.setViewAsLookat(glm::vec3(sinf(fInc)*3.0f, .0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Draw stuff
 		pShader->bind();
+		// Set view/projection matrix
 		pShader->setMat4("transform", camera.getViewProjectionMatrix());
-		pTex->bind(0);
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
+		pShader->setInt("texture1", 1);
+		// Bind each texture to each sampler unit
+		pTexDiffuse->bind(0);
+		pTexRoughness->bind(1);
+
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		pVB->draw(false);
-		pTex->unbind(0);
+		pTexDiffuse->unbind(0);
+		pTexRoughness->unbind(1);
 		pShader->unbind();
 
 		// Render some text

@@ -26,6 +26,11 @@ namespace X
 		void setBool(const std::string& name, bool value);
 
 		// Set uniform (call after bind())
+		// Usefull for telling OpenGL which sampler unit belongs to which uniform sampler2D name in the fragment program
+		// Example...
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		// pShader->setInt("texture0", 0);
+		// pShader->setInt("texture1", 1);
 		void setInt(const std::string& name, int value);
 
 		// Set uniform (call after bind())

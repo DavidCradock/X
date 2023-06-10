@@ -13,9 +13,10 @@ namespace X
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:font		// A shader used by the ResourceFont class to render text.
-	// X:default	// A shader which has vertex position, colour, texture coordinates and normals.
-	// They are loaded by the ApplicationManager class in
+	// X:font				// A shader used by the ResourceFont class to render text.
+	// X:default			// A shader which has vertex position, colour, texture coordinates, normals and a diffuse texture
+	// X:diffuse_roughness	// A shader which has vertex position, colour, texture coordinates, normals, a diffuse texture and a roughness texture.
+	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:
