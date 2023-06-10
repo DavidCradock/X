@@ -28,5 +28,6 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
+		Timer timer;
 	};
 }

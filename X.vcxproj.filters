@@ -49,6 +49,7 @@
     <ClCompile Include="sourcecode\camera.cpp" />
     <ClCompile Include="sourcecode\resourceFont.cpp" />
     <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
+    <ClCompile Include="sourcecode\SceneManagerEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -118,5 +119,6 @@
     <ClInclude Include="sourcecode\camera.h" />
     <ClInclude Include="sourcecode\resourceFont.h" />
     <ClInclude Include="sourcecode\sceneManagerSimple.h" />
+    <ClInclude Include="sourcecode\SceneManagerEntity.h" />
   </ItemGroup>
 </Project>

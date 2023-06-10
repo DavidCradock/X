@@ -168,6 +168,7 @@
     <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\resourceFont.cpp" />
+    <ClCompile Include="sourcecode\SceneManagerEntity.cpp" />
     <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
     <ClInclude Include="sourcecode\resourceFont.h" />
+    <ClInclude Include="sourcecode\SceneManagerEntity.h" />
     <ClInclude Include="sourcecode\sceneManagerSimple.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />

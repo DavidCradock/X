@@ -53,7 +53,16 @@ namespace X
 	{
 		free();
 		stbi_set_flip_vertically_on_load(bFlipForOpenGL);
-		stbi_uc* pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
+
+		// Get number of channels in the image file
+		int iDims[2];
+		int iNumChannels = 3;
+		loadInfo(strFilename, iDims[0], iDims[1], iNumChannels);
+		stbi_uc* pixels = 0;
+		if (4 == iNumChannels)
+			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
+		else
+			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb);
 		if (!pixels)
 			return false;
 
