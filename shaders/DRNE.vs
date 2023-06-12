@@ -20,7 +20,9 @@ uniform mat4 matrixWorld;
 void main()
 {
     gl_Position = matrixProjection * matrixView * matrixWorld * vec4(aPos, 1.0f);
-    normal = aNormal;                                       // Vertex normal
+    //normal = aNormal;                                       // Vertex normal (OK to do this if not scaling)
+    normal = mat3(transpose(inverse(matrixWorld))) * aNormal;  
+
     colour = aColour;                                       // Vertex colour
     textureCoordinate = aTexCoord;                          // Vertex texture coordinates
     vertexPosWorld = vec3(matrixWorld * vec4(aPos, 1.0));   // Vertex position in world space
