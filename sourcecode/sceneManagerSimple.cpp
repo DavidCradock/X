@@ -15,7 +15,7 @@ namespace X
 	{
 		// Camera
 		Window* pWindow = Window::getPointer();
-		mCamera.setProjectionAsPerspective(55.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 0.1f, 1000.0f);
+		mCamera.setProjectionAsPerspective(55.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
 		ResourceManager* pRM = ResourceManager::getPointer();	// Resource manager
 		ResourceShader* pShader = pRM->getShader("X:DRNE");		// Shader
@@ -46,6 +46,13 @@ namespace X
 		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
 		pShader->setVec3("v3LightPointColour0", mvLightPoint0.mvColour);
 		pShader->setVec3("v3LightPointPosition0", mvLightPoint0.mvPosition);
+
+		// Set camera uniforms
+		// Get the world matrix and then invert it, so it's actually in world space instead of reversed,
+		// Then get the position from that inverted matrix
+		glm::mat4 matViewInverse = glm::inverse(mCamera.matrixView);
+		glm::vec3 cameraWorldPos = matViewInverse * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
 		// Vertex buffer entities
 		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.begin();

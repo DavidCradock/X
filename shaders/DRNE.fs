@@ -20,6 +20,9 @@ uniform vec3 v3LightDirectionalDirection;   // Direction of directional light
 uniform vec3 v3LightPointColour0;           // Colour of point light 0
 uniform vec3 v3LightPointPosition0;         // Position in world space of point light 0
 
+// Camera
+uniform vec3 v3CameraPositionWorld;         // Camera position in world space
+
 void main()
 {
     // Set fragment out colour to that of the emission texture

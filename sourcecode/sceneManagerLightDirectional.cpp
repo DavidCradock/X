@@ -10,6 +10,6 @@ namespace X
 		mvDirection.z = -0.5f;
 		mvDirection = glm::normalize(mvDirection);
 
-		mvColour = glm::vec3(1.0f, 1.0f, 1.0f);
+		mvColour = glm::vec3(1.0f, 0.5f, 0.5f);
 	}
 }
