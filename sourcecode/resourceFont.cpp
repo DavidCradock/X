@@ -102,7 +102,7 @@ namespace X
 			tcTL.y = fontTypes.charDesc[charIndex].vTexMax.y;
 
 			// Add quad to vertex buffer
-			_mpResVertexbuffer->addQuad(vPosition, vDimensions, colour, tcBL, tcBR, tcTR, tcTL);
+			_mpResVertexbuffer->addQuad2D(vPosition, vDimensions, colour, tcBL, tcBR, tcTR, tcTL);
 
 			vPosition.x += fontTypes.charDesc[charIndex].fABCb + fontTypes.charDesc[charIndex].fABCc;
 		}

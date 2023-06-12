@@ -17,23 +17,35 @@ namespace X
 		Window* pWindow = Window::getPointer();
 		mCamera.setProjectionAsPerspective(55.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 0.1f, 1000.0f);
 
-		ResourceManager* pRM = ResourceManager::getPointer();		// Resource manager
-		ResourceShader* pShader = pRM->getShader("X:diffuse_roughness");		// Shader
+		ResourceManager* pRM = ResourceManager::getPointer();	// Resource manager
+		ResourceShader* pShader = pRM->getShader("X:DRNE");		// Shader
 		ResourceVertexbuffer* pVB;
 		ResourceTexture2D* pTexDiffuse = 0;
-		ResourceTexture2D* pTexEmission = 0;
-		ResourceTexture2D* pTexNormal = 0;
 		ResourceTexture2D* pTexRoughness = 0;
+		ResourceTexture2D* pTexNormal = 0;
+		ResourceTexture2D* pTexEmission = 0;
 
 		pShader->bind();
 		
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0", 0);
 		pShader->setInt("texture1", 1);
+		pShader->setInt("texture2", 2);
+		pShader->setInt("texture3", 3);
 
 		// Set blending/depth testing
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
+
+		// Set projection and view matrixs from the camera
+		pShader->setMat4("matrixProjection", mCamera.matrixProjection);
+		pShader->setMat4("matrixView", mCamera.matrixView);
+
+		// Set light uniforms
+		pShader->setVec3("v3LightDirectionalColour", mvLightDirectional.mvColour);
+		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
+		pShader->setVec3("v3LightPointColour0", mvLightPoint0.mvColour);
+		pShader->setVec3("v3LightPointPosition0", mvLightPoint0.mvPosition);
 
 		// Vertex buffer entities
 		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.begin();
@@ -42,22 +54,18 @@ namespace X
 			// Get vertex buffer and textures used by each entity
 			pVB = pRM->getVertexbuffer(it->second->mstrVertexbufferName);
 			pTexDiffuse = pRM->getTexture2D(it->second->mstrTextureNameDiffuse);
-			pTexEmission = pRM->getTexture2D(it->second->mstrTextureNameEmission);
-			pTexNormal = pRM->getTexture2D(it->second->mstrTextureNameNormalmap);
 			pTexRoughness = pRM->getTexture2D(it->second->mstrTextureNameRoughness);
+			pTexNormal = pRM->getTexture2D(it->second->mstrTextureNameNormalmap);
+			pTexEmission = pRM->getTexture2D(it->second->mstrTextureNameEmission);
 
 			// Bind each texture to each sampler unit
 			pTexDiffuse->bind(0);
 			pTexRoughness->bind(1);
-			//pTexEmission->bind(2);
-			//pTexNormal->bind(3);
+			pTexNormal->bind(2);
+			pTexEmission->bind(3);
 
-			// Set view/projection/model matrix
-			glm::mat4 matrix = mCamera.getViewProjectionMatrix();
-			matrix = matrix * it->second->matrixWorld;
-
-			pShader->setMat4("transform", matrix);
-//			pShader->setMat4("transform", mCamera.getViewProjectionMatrix());
+			// Set world matrix (Projection and View set above)
+			pShader->setMat4("matrixWorld", it->second->matrixWorld);
 
 			// Render the vertex buffer
 			pVB->draw(false);
@@ -67,8 +75,9 @@ namespace X
 		// Unbind everything
 		if (pTexDiffuse)	pTexDiffuse->unbind(0);
 		if (pTexRoughness)	pTexRoughness->unbind(1);
-		//if (pTexEmission)	pTexEmission->unbind(2);
-		//if (pTexNormal)		pTexNormal->unbind(3);
+		if (pTexNormal)		pTexNormal->unbind(2);
+		if (pTexEmission)	pTexEmission->unbind(3);
+		
 		pShader->unbind();
 	}
 

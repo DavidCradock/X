@@ -39,7 +39,7 @@ namespace X
 		for (int i = 0; i < 100; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "TEST", "textures/cube_BaseColor.png", "textures/cube_Roughness.png");
+			SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "TEST", "textures/cube_BaseColor.png", "textures/cube_Roughness.png", "textures/cube_Normal.png");
 			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-5.0f, 5.0f), randf(-5.0f, 5.0f), randf(-5.0f, 5.0f)));
 		}
 	}
@@ -59,12 +59,13 @@ namespace X
 
 		// Get resources
 		ResourceManager* pRM = ResourceManager::getPointer();		// Resource manager
-		ResourceVertexbuffer* pVB = pRM->getVertexbuffer("TEST");	// Vertex buffer
-		ResourceTexture2D* pTexDiffuse = pRM->getTexture2D("textures/cube_BaseColor.png");
-		ResourceTexture2D* pTexRoughness = pRM->getTexture2D("textures/cube_Roughness.png");
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D("textures/cube_Normal.png");
-		ResourceShader* pShader = pRM->getShader("X:diffuse_roughness");		// Shader
-		ResourceFramebuffer* pFB = pRM->getFramebuffer("default");	// Framebuffer
+//		ResourceVertexbuffer* pVB = pRM->getVertexbuffer("TEST");	// Vertex buffer
+//		ResourceTexture2D* pTexDiffuse = pRM->getTexture2D("textures/cube_BaseColor.png");
+//		ResourceTexture2D* pTexRoughness = pRM->getTexture2D("textures/cube_Roughness.png");
+//		ResourceTexture2D* pTexNormal = pRM->getTexture2D("textures/cube_Normal.png");
+//		ResourceTexture2D* pTexEmission = pRM->getTexture2D("textures/cube_Normal.png");
+//		ResourceShader* pShader = pRM->getShader("X:DRNE");			// Shader
+//		ResourceFramebuffer* pFB = pRM->getFramebuffer("default");	// Framebuffer
 
 		// Timer delta
 		static float fInc = 0.0f;
@@ -75,29 +76,29 @@ namespace X
 		mSceneManagerSimple.render();
 
 		// Setup a camera
-		Camera camera;
+//		Camera camera;
 //		camera.setProjectionAsOrthographic(Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
-		camera.setProjectionAsPerspective(55.0f, (float)Window::getPointer()->getWidth(), (float)Window::getPointer()->getHeight(), 0.1f, 1000.0f);
-		camera.setViewAsLookat(glm::vec3(sinf(fInc)*3.0f, 0.0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+//		camera.setProjectionAsPerspective(55.0f, (float)Window::getPointer()->getWidth(), (float)Window::getPointer()->getHeight(), 0.1f, 1000.0f);
+//		camera.setViewAsLookat(glm::vec3(sinf(fInc)*3.0f, 0.0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Draw stuff
-		pShader->bind();
+//		pShader->bind();
 		// Set view/projection matrix
-		pShader->setMat4("transform", camera.getViewProjectionMatrix());
+//		pShader->setMat4("transform", camera.getViewProjectionMatrix());
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0", 0);
-		pShader->setInt("texture1", 1);
+//		pShader->setInt("texture0", 0);
+//		pShader->setInt("texture1", 1);
 		// Bind each texture to each sampler unit
-		pTexDiffuse->bind(0);
-		pTexRoughness->bind(1);
+//		pTexDiffuse->bind(0);
+//		pTexRoughness->bind(1);
 		//pTexNormal->bind(2);
-		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
+//		glDisable(GL_BLEND);
+//		glEnable(GL_DEPTH_TEST);
 //		pVB->draw(false);
-		pTexDiffuse->unbind(0);
-		pTexRoughness->unbind(1);
+//		pTexDiffuse->unbind(0);
+//		pTexRoughness->unbind(1);
 		//pTexNormal->unbind(2);
-		pShader->unbind();
+//		pShader->unbind();
 
 		// Render some text
 		std::string strFPS = "FPS: ";

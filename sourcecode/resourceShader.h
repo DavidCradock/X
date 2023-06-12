@@ -39,6 +39,9 @@ namespace X
 		// Set named matrix (call after bind())
 		void setMat4(const std::string& name, const glm::mat4& matrix);
 
+		// Set uniform vec3 (call after bind())
+		void setVec3(const std::string& name, const glm::vec3& vec3);
+
 		std::string _mstrVertexShaderFilename;
 		std::string _mstrFragmentShaderFilename;
 		unsigned int _muiProgramID;

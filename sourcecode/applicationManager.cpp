@@ -220,7 +220,7 @@ namespace X
 		// Shaders
 		pRM->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
 		pRM->addShader("X:default", "shaders/default.vs", "shaders/default.fs");
-		pRM->addShader("X:diffuse_roughness", "shaders/diffuse_roughness.vs", "shaders/diffuse_roughness.fs");
+		pRM->addShader("X:DRNE", "shaders/DRNE.vs", "shaders/DRNE.fs");
 
 		// Textures
 		pRM->addTexture2D("X:default_diffuse", "textures/default_diffuse.png");

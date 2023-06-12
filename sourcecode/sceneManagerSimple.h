@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "sceneManagerLightDirectional.h"
+#include "sceneManagerLightPoint.h"
 #include "SceneManagerEntityVertexbuffer.h"
 #include "camera.h"
 
@@ -21,6 +22,7 @@ namespace X
 		Camera mCamera;
 
 		SceneManagerLightDirectional mvLightDirectional;	// The directional light for this scene
+		SceneManagerLightPoint mvLightPoint0;				// The point light for this scene
 
 		// Adds a new uniquely named vertex buffer entity to this scene amd returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs

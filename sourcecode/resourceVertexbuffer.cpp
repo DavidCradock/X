@@ -153,7 +153,7 @@ namespace X
 		indices.push_back(newIndex);
 	}
 
-	void ResourceVertexbuffer::addQuad(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateBottomLeft, const glm::vec2& textureCoordinateBottomRight, const glm::vec2& textureCoordinateTopRight, const glm::vec2& textureCoordinateTopLeft)
+	void ResourceVertexbuffer::addQuad2D(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateBottomLeft, const glm::vec2& textureCoordinateBottomRight, const glm::vec2& textureCoordinateTopRight, const glm::vec2& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();

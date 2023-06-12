@@ -19,75 +19,34 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() adding default resources to ResourceManager.
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:01s : Window::destroyWindow() called.
-0w:0d:0h:0m:01s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:01s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:01s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:01s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:01s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:01s : Window::destroyWindow() complete.
-0w:0d:0h:0m:01s : Window::createWindow() called.
-0w:0d:0h:0m:01s : Window::createWindow() creating window.
-0w:0d:0h:0m:01s : Window::_resizeOpenGLViewport( 3840, 2160) called.
-0w:0d:0h:0m:01s : Window::createWindow() obtaining window's device context.
-0w:0d:0h:0m:01s : Window::createWindow() choosing a compatible pixel format.
-0w:0d:0h:0m:01s : Window::createWindow() setting pixel format.
-0w:0d:0h:0m:01s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
-0w:0d:0h:0m:01s : Window::createWindow() creating OpenGL core profile rendering context.
-0w:0d:0h:0m:01s : Window::createWindow() making rendering context the calling thread's current one.
-0w:0d:0h:0m:01s : Window::createWindow() deleting the temporary OpenGL rendering context.
-0w:0d:0h:0m:01s : Window::createWindow() resizing OpenGL viewport.
-0w:0d:0h:0m:01s : Window::_resizeOpenGLViewport( 3840, 2160) called.
-0w:0d:0h:0m:01s : Window::createWindow() has created the window.
-0w:0d:0h:0m:06s : Window::destroyWindow() called.
-0w:0d:0h:0m:06s : Window::destroyWindow() changing display mode back to normal.
-0w:0d:0h:0m:06s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:06s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:06s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:06s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:06s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:06s : Window::destroyWindow() complete.
-0w:0d:0h:0m:06s : Window::createWindow() called.
-0w:0d:0h:0m:06s : Window::createWindow() creating window.
-0w:0d:0h:0m:06s : Window::createWindow() obtaining window's device context.
-0w:0d:0h:0m:06s : Window::createWindow() choosing a compatible pixel format.
-0w:0d:0h:0m:06s : Window::createWindow() setting pixel format.
-0w:0d:0h:0m:06s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
-0w:0d:0h:0m:06s : Window::createWindow() creating OpenGL core profile rendering context.
-0w:0d:0h:0m:06s : Window::createWindow() making rendering context the calling thread's current one.
-0w:0d:0h:0m:06s : Window::createWindow() deleting the temporary OpenGL rendering context.
-0w:0d:0h:0m:06s : Window::_resizeOpenGLViewport( 3072, 1728) called.
-0w:0d:0h:0m:06s : Window::createWindow() resizing OpenGL viewport.
-0w:0d:0h:0m:06s : Window::_resizeOpenGLViewport( 3072, 1728) called.
-0w:0d:0h:0m:06s : Window::createWindow() has created the window.
-0w:0d:0h:0m:10s : Window::destroyWindow() called.
-0w:0d:0h:0m:10s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:10s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:10s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:10s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:10s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:10s : Window::destroyWindow() complete.
-0w:0d:0h:0m:10s : Window::createWindow() called.
-0w:0d:0h:0m:10s : Window::createWindow() creating window.
-0w:0d:0h:0m:10s : Window::_resizeOpenGLViewport( 3840, 2160) called.
-0w:0d:0h:0m:10s : Window::createWindow() obtaining window's device context.
-0w:0d:0h:0m:10s : Window::createWindow() choosing a compatible pixel format.
-0w:0d:0h:0m:10s : Window::createWindow() setting pixel format.
-0w:0d:0h:0m:10s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
-0w:0d:0h:0m:10s : Window::createWindow() creating OpenGL core profile rendering context.
-0w:0d:0h:0m:10s : Window::createWindow() making rendering context the calling thread's current one.
-0w:0d:0h:0m:10s : Window::createWindow() deleting the temporary OpenGL rendering context.
-0w:0d:0h:0m:10s : Window::createWindow() resizing OpenGL viewport.
-0w:0d:0h:0m:10s : Window::_resizeOpenGLViewport( 3840, 2160) called.
-0w:0d:0h:0m:10s : Window::createWindow() has created the window.
-0w:0d:0h:0m:41s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:41s : Window::destroyWindow() called.
-0w:0d:0h:0m:41s : Window::destroyWindow() changing display mode back to normal.
-0w:0d:0h:0m:41s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:41s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:41s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:41s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:41s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:41s : Window::destroyWindow() complete.
-0w:0d:0h:0m:41s : Total runtime: 41sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:01s : ApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:11s : Window::destroyWindow() called.
+0w:0d:0h:0m:11s : Window::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:11s : Window::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:11s : Window::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:11s : Window::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:11s : Window::destroyWindow() unregistering window class.
+0w:0d:0h:0m:11s : Window::destroyWindow() complete.
+0w:0d:0h:0m:11s : Window::createWindow() called.
+0w:0d:0h:0m:11s : Window::createWindow() creating window.
+0w:0d:0h:0m:11s : Window::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:11s : Window::createWindow() obtaining window's device context.
+0w:0d:0h:0m:11s : Window::createWindow() choosing a compatible pixel format.
+0w:0d:0h:0m:11s : Window::createWindow() setting pixel format.
+0w:0d:0h:0m:11s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
+0w:0d:0h:0m:11s : Window::createWindow() creating OpenGL core profile rendering context.
+0w:0d:0h:0m:11s : Window::createWindow() making rendering context the calling thread's current one.
+0w:0d:0h:0m:11s : Window::createWindow() deleting the temporary OpenGL rendering context.
+0w:0d:0h:0m:11s : Window::createWindow() resizing OpenGL viewport.
+0w:0d:0h:0m:11s : Window::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:11s : Window::createWindow() has created the window.
+0w:0d:0h:0m:20s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:20s : Window::destroyWindow() called.
+0w:0d:0h:0m:20s : Window::destroyWindow() changing display mode back to normal.
+0w:0d:0h:0m:20s : Window::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:20s : Window::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:20s : Window::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:20s : Window::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:20s : Window::destroyWindow() unregistering window class.
+0w:0d:0h:0m:20s : Window::destroyWindow() complete.
+0w:0d:0h:0m:20s : Total runtime: 20sec 0min 0hr 0days 0weeks.

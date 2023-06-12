@@ -68,10 +68,10 @@
     <None Include="shaders\font.vs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\diffuse_roughness.fs">
+    <None Include="shaders\DRNE.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\diffuse_roughness.vs">
+    <None Include="shaders\DRNE.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
