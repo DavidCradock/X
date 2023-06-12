@@ -55,6 +55,9 @@ namespace X
 		// Returns false if the application wants to shutdown
 		bool callCurrentApp_onUpdate(void);
 
+		// Adds default required resources to the resource manager, called during startup from mainLoop
+		void addDefaultResources(void);
+
 		std::map<std::string, ApplicationBase*> mApplications;	// Hash map which holds each named application
 		std::string mstrCurrentApp;								// Application name of the current application.
 		Timer mTimer;											// Used to update application running time.

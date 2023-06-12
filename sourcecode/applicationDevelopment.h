@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "applicationBase.h"
 #include "timer.h"
+#include "sceneManagerSimple.h"
 
 namespace X
 {
@@ -29,5 +30,6 @@ namespace X
 		bool onUpdate(void);
 	private:
 		Timer timer;
+		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
 	};
 }

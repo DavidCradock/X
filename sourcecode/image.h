@@ -181,7 +181,7 @@ namespace X
 
 	private:
 		unsigned char* pData;
-		int dataSize;
+		unsigned int dataSize;
 		int width;
 		int height;
 		int numChannels;

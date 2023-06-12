@@ -25,7 +25,7 @@ namespace X
 		mbWindowFullscreen = false;
 		miWindowWidth = 640;
 		miWindowHeight = 480;
-		mv4ClearColour = glm::vec4(0.5f, 0.5f, 0.5f, 0.5f);
+		mv4ClearColour = glm::vec4(0.05f, 0.05f, 0.05f, 0.5f);
 	}
 
 	void Window::createWindow(std::string strWindowTitle)

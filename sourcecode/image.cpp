@@ -43,7 +43,7 @@ namespace X
 		ThrowIfTrue(!pData, "Image::createBlank() failed to allocate memory.");
 
 		// Zero out the new memory all to zero
-		for (int i = 0; i < dataSize; ++i)
+		for (unsigned int i = 0; i < dataSize; ++i)
 		{
 			pData[i] = 0;
 		}
@@ -140,7 +140,7 @@ namespace X
 	{
 		ThrowIfTrue(!pData, "Image::fill() failed. Image not yet created.");
 
-		int i = 0;
+		unsigned int i = 0;
 
 		// 3 Colour channels
 		if (3 == numChannels)
@@ -185,7 +185,7 @@ namespace X
 	{
 		ThrowIfTrue(!pData, "Image::swapRedAndBlue() failed. Image not yet created.");
 
-		int i = 0;
+		unsigned int i = 0;
 		int i2;
 		unsigned char chTemp;
 		while (i < dataSize)
@@ -233,7 +233,7 @@ namespace X
 	{
 		ThrowIfTrue(!pData, "Image::invert() failed. Image not yet created.");
 
-		int i = 0;
+		unsigned int i = 0;
 		int iIndex;
 		if (bInvertColour)
 		{
@@ -263,7 +263,7 @@ namespace X
 	{
 		ThrowIfTrue(!pData, "Image::greyscaleSimple() failed. Image not yet created.");
 
-		int i = 0;
+		unsigned int i = 0;
 		float f1Over3 = 1.0f / 3.0f;
 		float fTmp;
 		unsigned char cTmp;
@@ -289,7 +289,7 @@ namespace X
 
 		glm::vec3 vCol(fRedSensitivity, fGreenSensitivity, fBlueSensitivity);
 
-		int i = 0;
+		unsigned int i = 0;
 		float fTmp;
 		unsigned char cTmp;
 		while (i < dataSize)
@@ -311,7 +311,7 @@ namespace X
 	{
 		ThrowIfTrue(!pData, "Image::adjustBrightness() failed. Image not yet created.");
 
-		int i = 0;
+		unsigned int i = 0;
 		int iCol;
 		while (i < dataSize)
 		{
@@ -340,7 +340,7 @@ namespace X
 		double d1Over255 = 1.0 / 255.0;
 		double dContrast = (100.0 + double(iAmount)) * 0.01; // 0 and 2
 		dContrast *= dContrast;	// 0 and 4
-		int i = 0;
+		unsigned int i = 0;
 		int iIndex;
 		while (i < dataSize)
 		{
@@ -517,7 +517,7 @@ namespace X
 		createBlank(old.getWidth(), old.getHeight(), 3);
 
 		// Copy RGB from old to this...
-		int iIndex = 0;
+		unsigned int iIndex = 0;
 		int iIndexOld = 0;
 		while (iIndex < dataSize)
 		{
@@ -534,7 +534,7 @@ namespace X
 		ThrowIfTrue(!pData, "Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
 		ThrowIfTrue(numChannels != 4, "Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
-		int iIndex = 0;
+		unsigned int iIndex = 0;
 		while (iIndex < dataSize)
 		{
 			pData[iIndex] = pData[iIndex+3];	// Red

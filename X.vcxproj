@@ -109,7 +109,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -168,7 +168,10 @@
     <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\resourceFont.cpp" />
-    <ClCompile Include="sourcecode\SceneManagerEntity.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerEntityVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerEntityBase.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerLightDirectional.cpp" />
+    <ClCompile Include="sourcecode\sceneManagerLightPoint.cpp" />
     <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
@@ -217,7 +220,10 @@
     <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
     <ClInclude Include="sourcecode\resourceFont.h" />
-    <ClInclude Include="sourcecode\SceneManagerEntity.h" />
+    <ClInclude Include="sourcecode\sceneManagerEntityVertexbuffer.h" />
+    <ClInclude Include="sourcecode\sceneManagerEntityBase.h" />
+    <ClInclude Include="sourcecode\sceneManagerLightDirectional.h" />
+    <ClInclude Include="sourcecode\sceneManagerLightPoint.h" />
     <ClInclude Include="sourcecode\sceneManagerSimple.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />

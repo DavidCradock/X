@@ -8,6 +8,7 @@
 #include <chrono>
 #include <codecvt>
 #include <filesystem>
+#include <format>		// For stuff like std::string strFPS = "FPS: "; strFPS += std::format("{:.2f}", timer.getFPSAveraged());
 #include <fstream>
 #include <locale>
 #include <map>

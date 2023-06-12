@@ -35,17 +35,14 @@ namespace X
 
 			// Create window
 			Window* pWindow = Window::getPointer();
-			pWindow->createWindow("X : F1 - Toggle fullscreen.");
+			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync");
 
 			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
 
 			// Add default resources used in various places
 			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");
-			ResourceManager* pResourceManager = ResourceManager::getPointer();
-			pResourceManager->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
-			pResourceManager->addShader("X:default", "shaders/default.vs", "shaders/default.fs");
-			pResourceManager->addShader("X:diffuse_roughness", "shaders/diffuse_roughness.vs", "shaders/diffuse_roughness.fs");
+			addDefaultResources();
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
@@ -214,5 +211,21 @@ namespace X
 		std::map<std::string, ApplicationBase*>::iterator it = mApplications.find(applicationName);
 		ThrowIfTrue(it == mApplications.end(), "ApplicationManager::getApplicationRuntime(" + applicationName + " failed. Unable to find the named application");
 		return it->second->mfApplicationSecondsRunning;
+	}
+
+	void ApplicationManager::addDefaultResources(void)
+	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+
+		// Shaders
+		pRM->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
+		pRM->addShader("X:default", "shaders/default.vs", "shaders/default.fs");
+		pRM->addShader("X:diffuse_roughness", "shaders/diffuse_roughness.vs", "shaders/diffuse_roughness.fs");
+
+		// Textures
+		pRM->addTexture2D("X:default_diffuse", "textures/default_diffuse.png");
+		pRM->addTexture2D("X:default_emission", "textures/default_emission.png");
+		pRM->addTexture2D("X:default_normal", "textures/default_normal.png");
+		pRM->addTexture2D("X:default_roughness", "textures/default_roughness.png");
 	}
 }

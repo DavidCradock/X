@@ -6,6 +6,7 @@ namespace X
 
 	// A camera which holds view and projection matricies
 	// By default, both are set to identity matrixs
+	// By default, detects keypressed WSADRF to move forwards,back,left,right,up and down and left shift key(to speed up movement)
 	class Camera
 	{
 	public:
@@ -29,6 +30,9 @@ namespace X
 
 		// Multiplies the view and projection matrixs together and returns the result
 		glm::mat4 getViewProjectionMatrix(void);
+
+		// Updates this camera
+		void update(float fDeltaTimeSeconds);
 
 		glm::mat4 matrixView;
 		glm::mat4 matrixProjection;
