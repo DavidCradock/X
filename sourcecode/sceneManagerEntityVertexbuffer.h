@@ -31,6 +31,7 @@ namespace X
 		std::string mstrTextureNameRoughness;	// Name of the texture in the resource manager used to render this entity for roughness
 
 		float mfSpecularStrength;
+		float mfAmbientStrength;
 		
 	};
 }

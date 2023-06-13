@@ -28,10 +28,10 @@ namespace X
 		pShader->bind();
 		
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0", 0);
-		pShader->setInt("texture1", 1);
-		pShader->setInt("texture2", 2);
-		pShader->setInt("texture3", 3);
+		pShader->setInt("texture0_diffuse", 0);
+		pShader->setInt("texture1_roughness", 1);
+		pShader->setInt("texture2_normal", 2);
+		pShader->setInt("texture3_emission", 3);
 
 		// Set blending/depth testing
 		glDisable(GL_BLEND);
@@ -74,8 +74,10 @@ namespace X
 			// Set world matrix (Projection and View set above)
 			pShader->setMat4("matrixWorld", it->second->matrixWorld);
 
-			// Specular
+			// Ambient and specular uniforms
+			pShader->setFloat("fAmbientStrength", it->second->mfAmbientStrength);
 			pShader->setFloat("fSpecularStrength", it->second->mfSpecularStrength);
+			
 
 			// Render the vertex buffer
 			pVB->draw(false);
@@ -94,6 +96,7 @@ namespace X
 	SceneManagerEntityVertexbuffer* SceneManagerSimple::addEntityVertexbuffer(
 		const std::string& strEntityName,			// The unique name of this entity
 		const std::string& strVertexbufferName,		// The vertex buffer resource located in the ResourceManager used when rendering this entity
+		float fAmbientStrength,						//
 		const std::string& strTextureNameDiffuse,	// The texture resource located in the ResourceManager used for the diffuse colour
 		const std::string& strTextureNameRoughness,	// The texture resource located in the ResourceManager used for the roughness
 		float fSpecularStrength,					//
@@ -114,6 +117,7 @@ namespace X
 		pNewEntity->mstrTextureNameNormalmap = strTextureNameNormal;
 		pNewEntity->mstrTextureNameRoughness = strTextureNameRoughness;
 		pNewEntity->mfSpecularStrength = fSpecularStrength;
+		pNewEntity->mfAmbientStrength = fAmbientStrength;
 
 		// Place in the hashmap
 		mmapEnititiesVertexbuffer[strEntityName] = pNewEntity;

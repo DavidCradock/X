@@ -10,5 +10,6 @@ namespace X
 		mstrTextureNameNormalmap = "X:default_normal";
 		mstrTextureNameRoughness = "X:default_roughness";
 		mfSpecularStrength = 0.5f;
+		mfAmbientStrength = 0.05f;
 	}
 }

@@ -20,6 +20,7 @@ uniform mat4 matrixWorld;
 void main()
 {
     gl_Position = matrixProjection * matrixView * matrixWorld * vec4(aPos, 1.0f);
+
     //vec3VertexNormal = aNormal;                                       // Vertex normal (OK to do this if not performing non-uniform scaling with the world matrix)
     // Compute the normal matrix, multiply the normal by that and we're all good.
     // We convert the world transform matrix to a 3x3 matrix, removing the translation part

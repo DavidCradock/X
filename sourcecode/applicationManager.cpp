@@ -219,7 +219,6 @@ namespace X
 
 		// Shaders
 		pRM->addShader("X:font", "shaders/font.vert", "shaders/font.frag");
-		pRM->addShader("X:default", "shaders/default.vert", "shaders/default.frag");
 		pRM->addShader("X:DRNE", "shaders/DRNE.vert", "shaders/DRNE.frag");
 
 		// Textures

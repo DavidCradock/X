@@ -56,12 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="shaders\default.frag">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\default.vert">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="shaders\font.frag">
       <Filter>shaders</Filter>
     </None>

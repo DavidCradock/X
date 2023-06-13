@@ -185,8 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="shaders\default.frag" />
-    <None Include="shaders\default.vert" />
     <None Include="shaders\DRNE.frag" />
     <None Include="shaders\DRNE.vert" />
     <None Include="shaders\font.frag" />
