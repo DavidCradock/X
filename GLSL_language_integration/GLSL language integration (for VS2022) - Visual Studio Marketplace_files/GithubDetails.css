@@ -1,0 +1,49 @@
+.badges-container {
+  margin-top: 14px;
+}
+
+.badges-container ul li {
+  margin-left: 5px;
+}
+
+.item-details-control-root .ux-section-project-details {
+  margin-top: 16px;
+}
+
+.item-details-control-root .ux-section-project-details .itemdetails-section-header.right {
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.item-details-control-root .ux-section-project-details-spinner .spinner-control-root {
+  margin-top: 22px;
+  width: 25px;
+  height: 25px;
+}
+
+.item-details-control-root .ux-section-project-details ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 0 -3px;
+}
+
+.item-details-control-root .ux-section-project-details ul li {
+  margin-bottom: 4px;
+}
+
+.item-details-control-root .ux-section-project-details ul li .api-github-response.bowtie-icon {
+  color: rgba( 0, 0, 0 ,  1 );
+  color: rgba( var(--palette-neutral-100,0, 0, 0) ,  1 );
+}
+
+.item-details-control-root .ux-section-project-details ul li .api-github-response.bowtie-icon.bowtie-brand-github {
+  margin-left: 4px;
+  margin-top: 2px;
+  margin-right: 1px;
+}
+
+.item-details-control-root .ux-section-project-details span {
+  text-align: center;
+  vertical-align: top;
+  margin-left: 5px;
+}

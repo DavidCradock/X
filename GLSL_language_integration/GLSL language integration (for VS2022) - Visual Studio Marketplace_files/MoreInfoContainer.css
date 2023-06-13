@@ -1,0 +1,71 @@
+.item-details-control-root .item-share-container {
+  display: inline-block;
+  vertical-align: -4px;
+  margin: 20px -2px;
+}
+
+.item-details-control-root .item-share-container a:hover {
+  text-decoration: none;
+}
+
+.item-details-control-root .ux-social-icons span {
+  margin: 10px 0;
+}
+
+.item-details-control-root .social-link {
+  height: 23px;
+  width: 23px;
+  margin: 0 2px;
+  display: inline-block;
+}
+
+.item-share-container a:focus {
+  outline: none;
+}
+
+.item-share-container a:focus .social-link {
+  outline: 1px dotted #666;
+}
+
+.item-details-control-root .ux-table-metadata .info-list-callout td {
+  padding: 0 5px 0 0;
+}
+
+.item-details-control-root .ux-table-metadata .info-list-callout .info-icon {
+  height: 15px;
+  width: 15px;
+  margin-top: 1px;
+}
+
+.item-details-control-root .ux-table-metadata .info-list-callout .info-icon .ms-Button-icon {
+  font-size: 12px;
+}
+
+.row-callout .callout-container {
+  margin: 10px;
+  font-size: 12px;
+  max-width: 200px;
+}
+
+.report-abuse-callout .ms-Callout-beak {
+  background-color: rgba( 43, 136, 216 ,  1 );
+  background-color: rgba( var(--palette-primary-tint-10,43, 136, 216) ,  1 );
+}
+
+.report-abuse-callout .callout-container {
+  padding: 20px;
+  background-color: rgba( 43, 136, 216 ,  1 );
+  background-color: rgba( var(--palette-primary-tint-10,43, 136, 216) ,  1 );
+  color: white;
+}
+
+.report-abuse-callout .callout-container .report-abuse-callout-header {
+  padding-bottom: 15px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.report-abuse-callout .callout-container .report-abuse-callout-header .report-abuse-heading {
+  display: inline-block;
+  padding-left: 10px;
+}

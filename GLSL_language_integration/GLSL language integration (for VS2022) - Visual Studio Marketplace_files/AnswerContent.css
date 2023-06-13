@@ -1,0 +1,31 @@
+.qna-top-container .user-reply-top-container {
+  border-top:  1px solid;
+  border-top-color: rgba( 234, 234, 234 ,  1 );
+  border-top-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+}
+
+.qna-top-container .qna-user-image-column {
+  border-collapse: collapse;
+  padding-top: 14px;
+  text-align: center;
+  vertical-align: top;
+  padding-bottom: 14px;
+}
+
+.qna-top-container .qna-user-image {
+  width: 44px;
+  height: 44px;
+}
+
+.qna-top-container .user-reply-container {
+  border-collapse: collapse;
+  padding: 10px 5px 0px 10px;
+}
+
+.qna-top-container .action-link-container {
+  margin-top: 4px;
+}
+
+.qna-top-container .action-link {
+  margin-right: 10px;
+}

@@ -1,0 +1,2 @@
+// Copyright (C) Microsoft Corporation. All rights reserved.
+require.config(window.__vssPageContext.moduleLoaderConfig);require(["Gallery/Client/Pages/VSSItemDetailsSSR/VSSItemDetailsSSRAsync"],function(n){var t=new n.VSSItemDetailsSSRAsync;t.init()});

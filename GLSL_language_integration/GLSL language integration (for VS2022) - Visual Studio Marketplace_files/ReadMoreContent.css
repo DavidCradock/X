@@ -1,0 +1,10 @@
+.read-more-container {
+  word-wrap: break-word;
+}
+
+.user-name-div {
+  display: inline-block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, .55);
+  color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+}

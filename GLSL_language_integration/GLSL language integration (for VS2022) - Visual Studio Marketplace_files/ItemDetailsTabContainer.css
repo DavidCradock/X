@@ -1,0 +1,23 @@
+.ux-section-details-tabs {
+  margin-top: -20px;
+}
+
+.ux-section-details-tabs .ms-Pivot button:first-child {
+  margin-left: -8px;
+}
+
+.ux-section-details-tabs .ms-Pivot {
+  border-bottom:  1px solid;
+  border-bottom-color: rgba( 200, 200, 200 ,  1 );
+  border-bottom-color: rgba( var(--palette-neutral-20,200, 200, 200) ,  1 );
+  margin-bottom: 25px;
+}
+
+.ux-section-details-tabs .ms-Pivot-text {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.ux-section-details-tabs .ms-Pivot button:focus, .ux-section-details-tabs .ms-Pivot button:hover {
+  color: #106ebe;
+}

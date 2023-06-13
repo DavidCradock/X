@@ -1,0 +1,102 @@
+.item-details-control-root .ux-section-resources ul li {
+  margin-bottom: 4px;
+}
+
+.item-details-control-root .ux-section-resources ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-details-control-root .ux-section-resources ul .download-specific-version {
+  border: 2px solid rgba(0, 0, 0, .9);
+  border: 2px solid var(--text-primary-color,rgba(0, 0, 0, .9));
+  background-color: transparent;
+  color: rgba(0, 0, 0, .9);
+  color: var(--text-primary-color,rgba(0, 0, 0, .9));
+  width: 50%;
+}
+
+.item-details-control-root .ux-section-resources {
+  margin-top: 16px;
+}
+
+.copied-display-container {
+  float: right;
+  position: relative;
+  margin-left: 10px;
+}
+
+.copyID-display-div {
+  font-size: 11px;
+  background-color: #000000;
+  padding: 2px 4px;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  width: 120px;
+  display: none;
+  position: absolute;
+  left: 50px;
+}
+
+.item-details-download-dropbutton-container {
+  position: relative;
+  display: inline-block;
+}
+
+.item-details-download-dropbutton-container .item-details-download-button {
+  padding: 0;
+  border: none;
+}
+
+.item-details-download-dropbutton {
+  color: #0078d4;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.item-details-download-dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 0;
+  margin: 5px 0px 0px 16px;
+  background-color: white;
+}
+
+.item-details-download-dropdown-content li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background-color: white;
+  cursor: pointer;
+}
+
+.item-details-download-dropbutton-arrow {
+  border: solid #0078d4;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin: 0px 0px 2px 5px;
+}
+
+#item-details-download-dropdown-list {
+  margin-bottom: 0;
+}
+
+.item-details-download-dropdown-content li:hover {
+  background-color: #f1f1f1;
+}
+
+.item-details-download-dropbutton-container:hover .item-details-download-dropdown-content {
+  display: block;
+}

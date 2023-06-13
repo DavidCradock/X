@@ -9,5 +9,6 @@ namespace X
 		mstrTextureNameEmission = "X:default_emission";
 		mstrTextureNameNormalmap = "X:default_normal";
 		mstrTextureNameRoughness = "X:default_roughness";
+		mfSpecularStrength = 0.5f;
 	}
 }

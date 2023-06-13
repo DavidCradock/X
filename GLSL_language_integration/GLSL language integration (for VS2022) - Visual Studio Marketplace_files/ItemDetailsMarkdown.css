@@ -1,0 +1,23 @@
+.itemDetails .markdown {
+  color: #222;
+  line-height: 1.6;
+  position: relative;
+}
+
+.itemDetails .markdown blockquote {
+  color: #222 !important;
+}
+
+.itemDetails .markdown > *:first-child {
+  margin-top: 0 !important;
+}
+
+.item-details-control-root .markdown {
+  color: #222;
+  line-height: 1.6;
+  position: relative;
+}
+
+.item-details-control-root .markdown > *:first-child {
+  margin-top: 0 !important;
+}

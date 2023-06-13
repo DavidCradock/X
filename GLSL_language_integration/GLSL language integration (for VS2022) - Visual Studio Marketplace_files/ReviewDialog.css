@@ -1,0 +1,79 @@
+@media (min-width: 520px) {
+  .ms-Dialog-main.ReviewDialog {
+    max-width: 500px;
+  }
+  .ms-Dialog-main.ReviewDialog .reply-text {
+    min-width: 444px;
+    margin-top: 12px;
+  }
+  .ms-Dialog-main.ReviewDialog .reviews-row {
+    min-width: 444px;
+    padding-top: 0px;
+  }
+}
+
+.comments-mandatory-message {
+  color: #e50000;
+  font-size: 12px;
+}
+
+.ms-Dialog-main.ReviewDialog .write-review-privacy {
+  color: rgba(0, 0, 0, .55);
+  color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+  font-size: 12px;
+}
+
+.ms-Dialog-main.ReviewDialog .save-progress-spinner {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star {
+  margin-top: -5px;
+  padding-bottom: 5px;
+}
+
+.gallery-dialog .rating-control .review-container .ms-Rating-star {
+  margin-top: 0px;
+  padding-bottom: 0px;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:focus {
+  outline: 1px solid rgba( 102, 102, 102 ,  1 );
+  outline: 1px solid rgba( var(--palette-neutral-60,102, 102, 102) ,  1 );
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+  color: #C0442E;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+  color: #D2D2D2;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:hover, .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:focus {
+    border: 0 !important;
+  }
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+    color: #C0442E;
+  }
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+    color: #D2D2D2;
+  }
+}
+
+.gallery-dialog .review-container .rating-control .ms-Rating {
+  margin-top: 0px;
+  padding-bottom: 0px;
+}
+
+.invisibleButton {
+  display: none;
+}

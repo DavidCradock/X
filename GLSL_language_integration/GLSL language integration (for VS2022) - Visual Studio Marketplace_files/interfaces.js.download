@@ -1,0 +1,2 @@
+define("OfficeFabric/utilities/selection/interfaces",["require","exports"],function(n,t){"use strict";var i,r;Object.defineProperty(t,"__esModule",{value:!0});t.SELECTION_CHANGE="change",function(n){n[n.none=0]="none";n[n.single=1]="single";n[n.multiple=2]="multiple"}(i=t.SelectionMode||(t.SelectionMode={})),function(n){n[n.horizontal=0]="horizontal";n[n.vertical=1]="vertical"}(r=t.SelectionDirection||(t.SelectionDirection={}))});
+

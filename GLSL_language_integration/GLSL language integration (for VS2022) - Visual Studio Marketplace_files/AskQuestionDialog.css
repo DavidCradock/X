@@ -1,0 +1,40 @@
+@media (min-width: 520px) {
+  .ms-Dialog-main.QnAAskQuestionDialog {
+    max-width: 500px;
+  }
+  .ms-Dialog-main.QnAAskQuestionDialog .ask-question-text {
+    min-width: 444px;
+  }
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .qna-write-review-privacy {
+  color: rgba(0, 0, 0, .55);
+  color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+  font-size: 12px;
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .user-img {
+  padding-bottom: 14px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .user-reviews {
+  padding-bottom: 14px;
+  padding-right: 5px;
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .qna-user-image {
+  width: 44px;
+  height: 44px;
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .save-progress-spinner {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+.ms-Dialog-main.QnAAskQuestionDialog .invisibleButton {
+  display: none;
+}

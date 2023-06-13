@@ -1,0 +1,446 @@
+/* hide the spinner and show the elements*/
+.loader-container {
+    display: none;
+}
+
+.item-details-control-root .itemDetails-right {
+    display: table-cell;
+}
+
+.bowtie-brand-github::before {
+    content: "\E916";
+}
+
+.bowtie-status-error::before {
+    content: "\EA02";
+}
+
+.bowtie-status-waiting-fill::before {
+    content: "\EA15";
+}
+
+.bowtie-tfvc-pull-request::before {
+    content: "\EA3A";
+}
+
+.bowtie-status-waiting-fill {
+    color: rgba( 248, 168, 0, 1);
+    color: rgba( var(--palette-accent3, 248, 168, 0), 1);
+}
+
+.bowtie-status-error {
+    color: rgba( 218, 10, 0, 1);
+    color: rgba( var(--palette-accent1, 218, 10, 0), 1);
+}
+
+.ms-Fabric .bowtie-status-waiting-fill {
+    color: rgba( 248, 168, 0, 1);
+    color: rgba( var(--palette-accent3, 248, 168, 0), 1);
+}
+
+.ms-Fabric .bowtie-status-error {
+    color: rgba( 218, 10, 0, 1);
+    color: rgba( var(--palette-accent1, 218, 10, 0), 1);
+}
+
+.item-details-control-root .item-share-container {
+    display: inline-block;
+    vertical-align: -4px;
+    margin: 20px -2px;
+}
+
+.item-details-control-root .item-share-container a:hover {
+    text-decoration: none;
+}
+
+.item-details-control-root .social-link {
+    height: 23px;
+    width: 23px;
+    margin: 0 2px;
+    display: inline-block;
+}
+
+.item-share-container a:focus {
+    outline: none;
+}
+
+@font-face {
+    font-family: AzureDevOpsMDL2Assets;
+    src: url('../../../_content/Fonts/Icons/AzDevMDL2.woff') format('woff');
+}
+
+.item-share-container a:focus .social-link {
+    outline: 1px dotted #666;
+}
+
+.item-details-control-root .ux-section-details .itemdetails-section-header.right {
+    padding: 0 0 5px 0;
+    margin: 0;
+}
+
+.item-details-control-root .ux-section-resources ul li {
+    margin-bottom: 4px;
+}
+
+.item-details-control-root .ux-section-other {
+    margin-top: 16px;
+}
+
+.item-details-control-root .ux-section-resources ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-details-control-root .ux-section-project-details {
+    margin-top: 16px;
+    font-size: 14px;
+}
+.item-details-control-root .ux-section-project-details.hidden {
+    display: none;
+}
+
+.item-details-control-root .ux-section-resources {
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.item-details-control-root .ux-section-project-details .itemdetails-section-header.right {
+    padding: 0;
+    margin-bottom: 8px;
+}
+
+.item-details-control-root .ux-section-project-details ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 -3px;
+}
+
+.item-details-control-root .ux-section-project-details ul li {
+    margin-bottom: 4px;
+}
+
+.item-details-control-root .ux-section-project-details ul li .api-github-response.bowtie-icon {
+    color: rgba( 0, 0, 0, 1);
+    color: rgba( var(--palette-neutral-100, 0, 0, 0), 1);
+}
+
+.api-github-response.bowtie-icon.bowtie-brand-github {
+    margin-left: 4px;
+    margin-top: 2px;
+    margin-right: 1px;
+}
+
+.item-details-control-root .ux-section-project-details span {
+    text-align: center;
+    vertical-align: top;
+    margin-left: 5px;
+}
+
+.item-details-control-root .ux-table-metadata table {
+    font-size: 12px;
+    color: #666;
+    padding: 0;
+    margin-top: 0px;
+    border-collapse: collapse;
+}
+
+.item-details-control-root .ux-table-metadata td {
+    padding: 4px 18px 4px 0;
+}
+
+.meta-data-list-container .ux-section-meta-data-list .meta-data-list {
+    margin-top: 3px;
+}
+
+.meta-data-list-container a.meta-data-list-link:hover,
+.meta-data-list-container a.meta-data-list-link:focus {
+    background-color: #0078d4;
+    border: 1px solid #0078d4;
+    color: white;
+    cursor: pointer;
+}
+
+.meta-data-list-container .ux-section-meta-data-list>div:nth-last-child(1) {
+    padding-bottom: 16px;
+}
+
+.meta-data-list-container .ux-section-meta-data-list a {
+    border: 1px solid #ddd;
+    padding: 4px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #333;
+    margin: 0 6px 4px 0;
+    display: inline-block;
+}
+
+.meta-data-list-container .ux-section-meta-data-list a:hover {
+    text-decoration: none;
+}
+
+.meta-data-list-container .ux-section-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    padding-bottom: 16px;
+}
+
+.meta-data-list-container .ux-section-header.right {
+    padding: 0 0 5px 0;
+    margin: 0;
+}
+
+.ux-section-capabilities .ux-section-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    padding-bottom: 16px;
+}
+
+.ux-section-capabilities .ux-section-header.right {
+    padding: 0 0 5px 0;
+    margin: 0;
+}
+
+.ux-section-capabilities .capabilities-list-item, .vsix-id-text {
+    color: #666;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.vss-Icon.vss-Icon--bowtie {
+    font-family: "bowtie";
+}
+
+.vss-Icon {
+    font-style: normal;
+}
+
+.bowtie-status-info {
+    color: var(--communication-background,rgba(0, 120, 212, 1));
+}
+
+.item-details-control-root .ux-table-metadata .info-list-callout td {
+    padding: 0 5px 0 0;
+}
+
+.item-details-control-root .ux-table-metadata .info-list-callout .info-icon {
+    height: 15px;
+    width: 15px;
+    margin-top: 1px;
+    font-size: 12px;
+}
+
+.visibility-info:hover .visibility-help {
+    visibility: visible;
+}
+
+.visibility-info .visibility-help {
+    visibility: hidden;
+    width: 200px;
+    color: black;
+    background-color: #eff1f3;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+
+.qna-top-container, .gallery-dialog {
+    .ms-Button.ms-Button--default {
+        .ms-Button-label, .ms-Button-icon {
+            height: initial;
+            line-height: initial;
+        }
+    }
+}
+
+.ms-Grid {
+    box-sizing: border-box;
+    *zoom: 1;
+    padding: 0 8px;
+}
+
+.ms-Grid::before, .ms-Grid::after {
+    display: table;
+    content: '';
+    line-height: 0;
+}
+
+.ms-Grid::after {
+    clear: both;
+}
+
+.ms-Grid-row {
+    margin: 0 -8px;
+    box-sizing: border-box;
+    *zoom: 1;
+}
+
+.ms-Grid-row::before, .ms-Grid-row::after {
+    display: table;
+    content: '';
+    line-height: 0;
+}
+
+.ms-Grid-row::after {
+    clear: both;
+}
+
+.ms-Grid-col {
+    position: relative;
+    min-height: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+}
+
+[dir='ltr'] .ms-Grid-col {
+    float: left;
+}
+
+[dir='rtl'] .ms-Grid-col {
+    float: right;
+}
+
+.ms-Grid-col .ms-Grid {
+    padding: 0;
+}
+
+// Small Screens
+.ms-sm12 {
+    width: 100%;
+}
+
+.ms-sm11 {
+    width: 91.66666666666666%;
+}
+
+.ms-sm10 {
+    width: 83.33333333333334%;
+}
+
+.ms-sm9 {
+    width: 75%;
+}
+
+.ms-sm8 {
+    width: 66.66666666666666%;
+}
+
+.ms-sm7 {
+    width: 58.333333333333336%;
+}
+
+.ms-sm6 {
+    width: 50%;
+}
+
+.ms-sm5 {
+    width: 41.66666666666667%;
+}
+
+.ms-sm4 {
+    width: 33.33333333333333%;
+}
+
+.ms-sm3 {
+    width: 25%;
+}
+
+.ms-sm2 {
+    width: 16.666666666666664%;
+}
+
+.ms-sm1 {
+    width: 8.333333333333332%;
+}
+
+.flexContainer-50 {
+    display: flex;
+    height: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.textContainer-51 {
+    flex-grow: 1;
+}
+
+.label-53 {
+    margin-top: 0px;
+    margin-right: 4px;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    line-height: 100%;
+    font-weight: 600;
+}
+
+.bowtie-alert::before {
+    content: "\E935";
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star {
+  margin-top: -5px;
+  padding-bottom: 5px;
+}
+
+.gallery-dialog .rating-control .review-container .ms-Rating-star {
+  margin-top: 0px;
+  padding-bottom: 0px;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:focus {
+  outline: 1px solid rgba( 102, 102, 102 ,  1 );
+  outline: 1px solid rgba( var(--palette-neutral-60,102, 102, 102) ,  1 );
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+  color: #C0442E;
+}
+
+.gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+  color: #D2D2D2;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:hover, .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button:focus {
+    border: 0 !important;
+  }
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+    color: #C0442E;
+  }
+  .gallery-dialog .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+    color: #D2D2D2;
+  }
+}
+
+.gallery-dialog .review-container .rating-control .ms-Rating {
+  margin-top: 0px;
+  padding-bottom: 0px;
+}
+
+.reviews-row .ms-Grid-col.flag-table-container {
+    float: right;
+    padding-right: 6px;
+}

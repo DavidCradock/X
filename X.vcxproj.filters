@@ -56,22 +56,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="shaders\default.fs">
+    <None Include="shaders\default.frag">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\default.vs">
+    <None Include="shaders\default.vert">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\font.fs">
+    <None Include="shaders\font.frag">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\font.vs">
+    <None Include="shaders\font.vert">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\DRNE.fs">
+    <None Include="shaders\DRNE.frag">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\DRNE.vs">
+    <None Include="shaders\DRNE.vert">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

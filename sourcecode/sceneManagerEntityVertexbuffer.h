@@ -29,6 +29,8 @@ namespace X
 		std::string mstrTextureNameEmission;	// Name of the texture in the resource manager used to render this entity for emission
 		std::string mstrTextureNameNormalmap;	// Name of the texture in the resource manager used to render this entity for normal mapping
 		std::string mstrTextureNameRoughness;	// Name of the texture in the resource manager used to render this entity for roughness
+
+		float mfSpecularStrength;
 		
 	};
 }

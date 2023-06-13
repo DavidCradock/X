@@ -1,0 +1,16 @@
+.flag-control {
+  font-size: 14px;
+  color: rgba(0, 0, 0, .55);
+  color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+}
+
+.flag-control:focus {
+  color: rgba( 0, 69, 120 ,  1 );
+  color: rgba( var(--palette-primary-shade-30,0, 69, 120) ,  1 );
+}
+
+.flag-control:hover {
+  cursor: pointer;
+  color: rgba( 0, 69, 120 ,  1 );
+  color: rgba( var(--palette-primary-shade-30,0, 69, 120) ,  1 );
+}

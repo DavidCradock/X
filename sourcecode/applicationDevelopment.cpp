@@ -36,12 +36,17 @@ namespace X
 		pRM->addFont("arial_26", "fonts/arial_26");
 
 		// Scene manager
+		mSceneManagerSimple.mCamera.setModeOrbit();	// Use defaults
+		SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer("centre", "TEST", "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.5f, "textures/cube_Normal.png");
+//		pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
 		for (int i = 0; i < 1000; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "TEST", "textures/cube_BaseColor.png", "textures/cube_Roughness.png", "textures/cube_Normal.png");
+			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "TEST", "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.5f, "textures/cube_Normal.png");
 			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
 		}
+		mSceneManagerSimple.mvLightPoint0.mvPosition = glm::vec3(2.0f, 0.0f, 2.0f);
+		mSceneManagerSimple.mvLightDirectional.mvColour = glm::vec3(0.1f, 0.1f, 0.1f);
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -72,8 +77,10 @@ namespace X
 		fInc += timer.getSecondsPast() * kPi * 0.1f;
 
 		// Scene manager
-		mSceneManagerSimple.mCamera.setViewAsLookat(glm::vec3(sinf(fInc) * 25.0f, 10.0f, cosf(fInc) * 25.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//mSceneManagerSimple.mCamera.setViewAsLookat(glm::vec3(sinf(fInc) * 5.0f, 0.0f, cosf(fInc) * 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		
 		mSceneManagerSimple.render();
+		mSceneManagerSimple.mCamera.update();
 
 		// Setup a camera
 //		Camera camera;

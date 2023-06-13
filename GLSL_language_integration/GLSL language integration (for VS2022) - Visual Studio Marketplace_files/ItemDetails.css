@@ -1,0 +1,81 @@
+.item-details-control-root .ux-section-details .itemdetails-section-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  padding-bottom: 16px;
+}
+
+.item-details-control-root .ux-section-details .itemdetails-section-header.right {
+  padding: 0 0 5px 0;
+  margin: 0;
+}
+
+.item-details-control-root .ux-section-details .ux-section-details-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.item-details-control-root .ux-itemdetails-left {
+  vertical-align: top;
+  font-size: 14px;
+  padding-right: 20px;
+}
+
+.item-details-control-root .ux-itemdetails-right {
+  width: 34.45%;
+  vertical-align: top;
+  padding: 0 0 0 20px;
+}
+
+.item-details-control-root .ux-section-other {
+  margin-top: 16px;
+}
+
+.item-details-control-root .ux-section-h2 > h2 {
+  color: #5c2d91;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.download-dropbutton-container {
+  position: relative;
+  display: inline-block;
+}
+
+.download-dropbutton-arrow {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin: 0px 0px 2px 5px;
+}
+
+.download-dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 202px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 0;
+  margin: 5px 0px 0px 16px;
+  text-align: left;
+}
+
+.download-dropdown-content li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+.download-dropdown-content li:hover {
+  background-color: #f1f1f1;
+}
+
+.download-dropbutton-container:hover .download-dropdown-content {
+  display: block;
+}

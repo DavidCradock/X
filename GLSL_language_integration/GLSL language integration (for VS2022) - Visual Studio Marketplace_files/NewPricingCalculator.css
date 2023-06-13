@@ -1,0 +1,33 @@
+.calculator-container .currency-dropdown {
+  width: 200px;
+}
+
+.calculator-container .currency-container .currency-header {
+  margin-bottom: 10px;
+}
+
+.calculator-container .calculator-header {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.calculator-container .quantity-price {
+  display: flex;
+  margin-top: 20px;
+}
+
+.calculator-container .quantity-price .quantity-header {
+  margin-bottom: 10px;
+}
+
+.calculator-container .quantity-price .quantity-dropdown {
+  width: 90px;
+}
+
+.calculator-container .quantity-price .price-section {
+  margin-left: 60px;
+}
+
+.calculator-container .quantity-price .price-section .price-header {
+  margin-bottom: 10px;
+}

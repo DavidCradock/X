@@ -1,0 +1,100 @@
+.reviews-row {
+  border-collapse: collapse;
+  border-bottom:  1px solid;
+  border-bottom-color: rgba( 234, 234, 234 ,  1 );
+  border-bottom-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  border-width: 1px 0;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.reviews-row .review-container {
+  padding-right: 0px;
+  padding-left: 4px;
+}
+
+.reviews-row .rnr-user-image-column {
+  border-collapse: collapse;
+  padding-top: 5px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.reviews-row .rnr-user-image-column .rnr-user-image {
+  width: 44px;
+  height: 44px;
+}
+
+.reviews-row .ux-user-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.reviews-row .ux-updated-date {
+  font-size: 12px;
+  color: #666666;
+}
+
+.reviews-row .review-container .rating-control {
+  font-size: 11px;
+  padding-top: 1px;
+}
+
+.reviews-row .review-container .rating-control .ms-Rating-star {
+  margin-top: 0px;
+  padding-bottom: 0px;
+  outline: 0px;
+}
+
+.reviews-row .review-container .rating-control .ms-Rating-star .ms-Rating-button {
+  border: 0 !important;
+  outline: 0 !important;
+  padding: 0px;
+  height: 100%;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.reviews-row .striked::after {
+  position: absolute;
+  content: '';
+  top: 50%;
+  border-top: 1px solid;
+  left: 0px;
+  right: 0px;
+}
+
+.reviews-row .reply-action-link {
+  font-size: 12px;
+  height: 15px;
+}
+
+.reviews-row .read-more-container {
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.reviews-row .flag-table-container {
+  float: right;
+  padding-right: 6px;
+}
+
+.reviews-row .reply-readMore {
+  width: 100%;
+}
+
+.ms-Dialog-inner .reviews-row {
+  border: none;
+}
+
+.ms-Dialog-inner .reviews-row .rnr-user-image-column {
+  width: 12%;
+}
+
+.ms-Dialog-inner .reviews-row .rnr-review-column {
+  width: 88%;
+}
+
+.ms-Dialog-inner .reviews-row .read-more-container {
+  width: 370px;
+}

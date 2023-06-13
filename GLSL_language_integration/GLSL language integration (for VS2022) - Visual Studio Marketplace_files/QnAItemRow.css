@@ -1,0 +1,38 @@
+.qna-top-container .qna-question-row {
+  border-collapse: collapse;
+  border-bottom:  1px solid;
+  border-bottom-color: rgba( 234, 234, 234 ,  1 );
+  border-bottom-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  border-width: 1px 0;
+}
+
+.qna-top-container .qna-question-bottom-margin {
+  margin-bottom: 10px;
+}
+
+.qna-top-container .user-question-container {
+  border-collapse: collapse;
+  padding: 10px 5px 10px 10px;
+}
+
+.qna-top-container .seemore-seeless-links {
+  margin-top: 5px;
+}
+
+.qna-top-container .read-more-table-container {
+  width: 98%;
+}
+
+.qna-top-container .flag-table-container {
+  float: right;
+  vertical-align: top;
+}
+
+.qna-top-container .qna-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ms-Dialog-inner .user-reviews .read-more-container {
+  width: 370px;
+}

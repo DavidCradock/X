@@ -1,0 +1,43 @@
+.rnr-top-container .reviews-row .reply-row {
+  border-top:  1px solid;
+  border-top-color: rgba( 234, 234, 234 ,  1 );
+  border-top-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  padding-top: 5px;
+  margin-top: 10px;
+}
+
+.rnr-top-container .reviews-row .reply-row .publisher-image-column {
+  border-collapse: collapse;
+  text-align: center;
+  vertical-align: top;
+  padding-top: 3px;
+}
+
+.rnr-top-container .reviews-row .reply-row .publisher-image-column .publisher-image {
+  width: 44px;
+  height: 44px;
+}
+
+.rnr-top-container .reviews-row .reply-row .ux-publisher-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rnr-top-container .reviews-row .reply-row .ux-updated-date {
+  font-size: 12px;
+  color: #666666;
+}
+
+.rnr-top-container .reviews-row .reply-row .reply-container {
+  width: 100%;
+}
+
+.rnr-top-container .reviews-row .reply-row .read-more-container {
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.rnr-top-container .reviews-row .reply-row .edit-action-link {
+  font-size: 12px;
+  height: 15px;
+}

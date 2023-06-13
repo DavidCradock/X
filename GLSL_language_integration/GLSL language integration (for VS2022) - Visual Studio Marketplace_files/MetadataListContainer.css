@@ -1,0 +1,58 @@
+.meta-data-list-container .ux-section-meta-data-list .meta-data-list {
+  margin-top: 3px;
+}
+
+.meta-data-list-container a.meta-data-list-link:hover, .meta-data-list-container a.meta-data-list-link:focus {
+  background-color: #0078d4;
+  border: 1px solid #0078d4;
+  color: white;
+  cursor: pointer;
+}
+
+.meta-data-list-container .ux-section-meta-data-list > div:nth-last-child(1) {
+  padding-bottom: 16px;
+}
+
+.meta-data-list-container .ux-section-meta-data-list a,
+.meta-data-list-container .ux-section-meta-data-list span {
+  border: 1px solid #ddd;
+  padding: 4px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #333;
+  margin: 0 6px 4px 0;
+  display: inline-block;
+}
+
+.meta-data-list-container .ux-section-meta-data-list a:hover {
+  text-decoration: none;
+}
+
+.meta-data-list-container .ux-section-meta-data-list a.tag {
+  background-color: #eff1f3;
+  cursor: default;
+}
+
+.meta-data-list-container .ux-section-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  padding-bottom: 16px;
+}
+
+.meta-data-list-container .ux-section-header.right {
+  padding: 0 0 5px 0;
+  margin: 0;
+}
+
+.item-details-control-root .ux-table-metadata {
+  font-size: 12px;
+  color: #666;
+  padding: 0;
+  margin-top: 0px;
+  border-collapse: collapse;
+}
+
+.item-details-control-root .ux-table-metadata td {
+  padding: 4px 18px 4px 0;
+}

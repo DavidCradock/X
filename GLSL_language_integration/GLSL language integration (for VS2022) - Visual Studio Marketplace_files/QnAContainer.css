@@ -1,0 +1,89 @@
+.ux-section-details-tabs .qna-top-container {
+  width: 100%;
+}
+
+.qna-top-container {
+  width: 700px;
+  display: inline-block;
+  margin-bottom: 34px;
+}
+
+.qna-top-container .qna-header-container {
+  padding-left: 0px;
+}
+
+.qna-top-container button.ask-question-button {
+  float: right;
+}
+
+.qna-top-container .ask-question-button-container {
+  padding-right: 0px;
+}
+
+.qna-top-container .see-more-qna-section {
+  padding-right: 0px;
+}
+
+.qna-top-container .see-more-qna-section button {
+  float: right;
+  margin-top: 20px;
+}
+
+.qna-top-container .see-more-qna-section .qna-loading-more-error-message {
+  min-width: 700px;
+  margin-top: 20px;
+}
+
+.qna-top-container .see-more-qna-section .qna-loading-more-qna-container {
+  margin-top: 20px;
+}
+
+.qna-top-container .qna-container-row {
+  border-collapse: collapse;
+  border-bottom:  1px solid;
+  border-bottom-color: rgba( 234, 234, 234 ,  1 );
+  border-bottom-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  border-width: 1px 0;
+  padding-bottom: 10px;
+}
+
+.qna-top-container h2 {
+  display: block;
+  font-size: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.qna-top-container .no-questions-found-text {
+  font-size: 14px;
+}
+
+.qna-top-container .qna-loading-container {
+  margin-top: 20px;
+}
+
+.qna-top-container .qna-noitems-or-error-message {
+  min-width: 700px;
+  margin: 14px -8px 0 -8px;
+}
+
+.qna-top-container .qna-redirection-message-bar-container {
+  margin-top: 14px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: rgba( 244, 244, 244 ,  1 );
+  background-color: rgba( var(--palette-neutral-4,244, 244, 244) ,  1 );
+  color: rgba(0, 0, 0, .9);
+  color: var(--text-primary-color,rgba(0, 0, 0, .9));
+}
+
+.qna-top-container .qna-redirection-message-bar-container .qna-redirection-message-bar {
+  font-size: 14px;
+}
+
+.qna-top-container .qna-redirection-message-bar-container .qna-redirection-message-bar .qna-redirection-info-icon {
+  padding-left: 8px;
+  padding-right: 8px;
+  color: rgba(0, 0, 0, .9);
+  color: var(--text-primary-color,rgba(0, 0, 0, .9));
+}

@@ -1,0 +1,54 @@
+.price-control {
+  display: flex;
+}
+
+.price-control .quantity-field {
+  margin-bottom: 0px;
+}
+
+.price-control .quantity-field div {
+  height: 26px;
+}
+
+.price-control .inner-textfield {
+  width: 50px;
+  padding: 0px;
+  text-align: center;
+}
+
+.price-control .button-class {
+  background: rgba( 234, 234, 234 ,  1 );
+  background: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  width: 20px;
+  height: 26px;
+  border:  1px solid;
+  border-color: rgba( 200, 200, 200 ,  1 );
+  border-color: rgba( var(--palette-neutral-20,200, 200, 200) ,  1 );
+}
+
+.price-control .button-class span {
+  line-height: 20px;
+}
+
+.price-control .button-class i {
+  font-size: 10px;
+  color: black;
+  margin: 0;
+}
+
+.price-control .button-class:hover {
+  background: rgba( 218, 218, 218 ,  1 );
+  background: rgba( var(--palette-neutral-10,218, 218, 218) ,  1 );
+}
+
+.price-control .button-class.is-disabled {
+  background-color: rgba( 244, 244, 244 ,  1 );
+  background-color: rgba( var(--palette-neutral-4,244, 244, 244) ,  1 );
+  border-color: rgba( 244, 244, 244 ,  1 );
+  border-color: rgba( var(--palette-neutral-4,244, 244, 244) ,  1 );
+}
+
+.price-control .button-class.is-disabled i {
+  color: rgba( 200, 200, 200 ,  1 );
+  color: rgba( var(--palette-neutral-20,200, 200, 200) ,  1 );
+}

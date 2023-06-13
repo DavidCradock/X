@@ -1,0 +1,2 @@
+define("OfficeFabric/components/DetailsList/index",["require","exports","tslib","../../utilities/selection/index","../GroupedList/GroupedList.types","./DetailsList","./DetailsList.types","./DetailsRow","./DetailsRowCheck"],function(n,t,i,r,u,f,e,o,s){"use strict";Object.defineProperty(t,"__esModule",{value:!0});i.__exportStar(r,t);i.__exportStar(u,t);i.__exportStar(f,t);i.__exportStar(e,t);i.__exportStar(o,t);i.__exportStar(s,t)});
+

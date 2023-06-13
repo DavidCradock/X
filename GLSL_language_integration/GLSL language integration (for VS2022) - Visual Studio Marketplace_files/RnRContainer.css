@@ -1,0 +1,87 @@
+.rnr-top-container {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 34px;
+}
+
+.rnr-top-container .rnr-loading-container {
+  margin-top: 20px;
+}
+
+.rnr-top-container .user-reviews-section-header {
+  display: block;
+  font-size: 20px;
+  margin-top: 0.83em;
+  margin-bottom: 0.5em;
+  margin: 0px;
+  padding-left: 0px;
+}
+
+.rnr-top-container .rnr-container-row {
+  border-collapse: collapse;
+  border-bottom:  1px solid;
+  border-bottom-color: rgba( 234, 234, 234 ,  1 );
+  border-bottom-color: rgba( var(--palette-neutral-8,234, 234, 234) ,  1 );
+  border-width: 1px 0;
+  padding-bottom: 10px;
+}
+
+.rnr-top-container .rnr-container-row .average-rating {
+  padding-top: 10px;
+}
+
+.rnr-top-container .rnr-container-row .rating-count {
+  padding-top: 10px;
+  padding-left: 0px;
+}
+
+.rnr-top-container .rnr-container-row .write-review-button-container {
+  float: right;
+  padding-right: 0px;
+}
+
+.rnr-top-container .rnr-container-row .report-review-button-container {
+  float: right;
+  padding-right: 0px;
+}
+
+.rnr-top-container .rnr-container-row .organize-buttons {
+  display: inline;
+}
+
+.rnr-top-container .rnr-loading-more {
+  margin-top: 10px;
+}
+
+.rnr-top-container .see-more-button button {
+  float: right;
+  margin-top: 20px;
+}
+
+.rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button {
+  font-size: 11px;
+  line-height: 11px;
+}
+
+.rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+  color: #C0442E;
+}
+
+.rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+  color: #D2D2D2;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button {
+    border: 0 !important;
+  }
+  .rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button:hover, .rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button:focus {
+    border: 0 !important;
+  }
+  .rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-front {
+    color: #C0442E;
+  }
+  .rnr-top-container .rating-control .ms-Rating-star button.ms-Rating-button .ms-RatingStar-back {
+    color: #D2D2D2;
+  }
+}

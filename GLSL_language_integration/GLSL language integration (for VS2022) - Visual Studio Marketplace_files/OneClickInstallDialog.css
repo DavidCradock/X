@@ -1,0 +1,20 @@
+.ms-Dialog.gallery-dialog.oneclick-install-popup .ms-Dialog-main {
+  max-width: 425px;
+  width: 425px;
+}
+
+.ms-Dialog.gallery-dialog.oneclick-install-popup .ms-Dialog-main .ms-Dialog--lgHeader .ms-Dialog-title {
+  font-size: 21px;
+}
+
+.ms-Dialog.gallery-dialog.oneclick-install-popup .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-content {
+  margin-top: 15px;
+}
+
+.ms-Dialog.gallery-dialog.oneclick-install-popup .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-content .vscode-download-link {
+  margin-left: 5px;
+}
+
+.ms-Dialog.gallery-dialog.oneclick-install-popup .ms-Dialog-main .ms-Dialog-inner .ms-Dialog-content .ms-Checkbox {
+  margin-top: 20px;
+}

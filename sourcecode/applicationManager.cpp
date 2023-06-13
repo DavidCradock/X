@@ -218,9 +218,9 @@ namespace X
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		// Shaders
-		pRM->addShader("X:font", "shaders/font.vs", "shaders/font.fs");
-		pRM->addShader("X:default", "shaders/default.vs", "shaders/default.fs");
-		pRM->addShader("X:DRNE", "shaders/DRNE.vs", "shaders/DRNE.fs");
+		pRM->addShader("X:font", "shaders/font.vert", "shaders/font.frag");
+		pRM->addShader("X:default", "shaders/default.vert", "shaders/default.frag");
+		pRM->addShader("X:DRNE", "shaders/DRNE.vert", "shaders/DRNE.frag");
 
 		// Textures
 		pRM->addTexture2D("X:default_diffuse", "textures/default_diffuse.png");

@@ -185,12 +185,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="shaders\default.fs" />
-    <None Include="shaders\default.vs" />
-    <None Include="shaders\DRNE.fs" />
-    <None Include="shaders\DRNE.vs" />
-    <None Include="shaders\font.fs" />
-    <None Include="shaders\font.vs" />
+    <None Include="shaders\default.frag" />
+    <None Include="shaders\default.vert" />
+    <None Include="shaders\DRNE.frag" />
+    <None Include="shaders\DRNE.vert" />
+    <None Include="shaders\font.frag" />
+    <None Include="shaders\font.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\OpenGL\glcorearb.h" />

@@ -1,0 +1,2 @@
+define("OfficeFabric/components/GroupedList/GroupFooter",["require","exports","tslib","react","../../Utilities","./GroupSpacer","./GroupFooter.scss"],function(n,t,i,r,u,f,e){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=e,s=function(n){function t(){return n!==null&&n.apply(this,arguments)||this}return i.__extends(t,n),t.prototype.render=function(){var n=this.props,i=n.group,e=n.groupLevel,t=n.footerText;return i&&t?r.createElement("div",{className:u.css("ms-groupFooter",o.root)},f.GroupSpacer({count:e}),t):null},t}(u.BaseComponent);t.GroupFooter=s});
+

@@ -24,6 +24,8 @@ namespace X
 		SceneManagerLightDirectional mvLightDirectional;	// The directional light for this scene
 		SceneManagerLightPoint mvLightPoint0;				// The point light for this scene
 
+		
+
 		// Adds a new uniquely named vertex buffer entity to this scene amd returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
 		SceneManagerEntityVertexbuffer* addEntityVertexbuffer(
@@ -31,6 +33,7 @@ namespace X
 			const std::string& strVertexbufferName,								// The vertex buffer resource located in the ResourceManager used when rendering this entity
 			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
 			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
+			float fSpecularStrength = 0.5f,										// Specular strength
 			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
 			const std::string & strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);

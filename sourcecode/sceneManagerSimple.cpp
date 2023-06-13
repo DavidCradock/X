@@ -74,6 +74,9 @@ namespace X
 			// Set world matrix (Projection and View set above)
 			pShader->setMat4("matrixWorld", it->second->matrixWorld);
 
+			// Specular
+			pShader->setFloat("fSpecularStrength", it->second->mfSpecularStrength);
+
 			// Render the vertex buffer
 			pVB->draw(false);
 			it++;
@@ -93,6 +96,7 @@ namespace X
 		const std::string& strVertexbufferName,		// The vertex buffer resource located in the ResourceManager used when rendering this entity
 		const std::string& strTextureNameDiffuse,	// The texture resource located in the ResourceManager used for the diffuse colour
 		const std::string& strTextureNameRoughness,	// The texture resource located in the ResourceManager used for the roughness
+		float fSpecularStrength,					//
 		const std::string& strTextureNameNormal,	// The texture resource located in the ResourceManager used for the normal map
 		const std::string& strTextureNameEmission)	// The texture resource located in the ResourceManager used for the emission
 	{
@@ -109,6 +113,7 @@ namespace X
 		pNewEntity->mstrTextureNameEmission = strTextureNameEmission;
 		pNewEntity->mstrTextureNameNormalmap = strTextureNameNormal;
 		pNewEntity->mstrTextureNameRoughness = strTextureNameRoughness;
+		pNewEntity->mfSpecularStrength = fSpecularStrength;
 
 		// Place in the hashmap
 		mmapEnititiesVertexbuffer[strEntityName] = pNewEntity;

@@ -1,0 +1,116 @@
+.carousel-container {
+  position: relative;
+  margin: 0;
+}
+
+.carousel-wrapper, .carousel-wrapperHomePage {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-wrapper:hover .carousel-nav a, .carousel-wrapperHomePage:hover .carousel-nav a {
+  display: block;
+}
+
+.carousel {
+  position: absolute;
+  /* Carousel item */
+}
+
+.carousel .carousel-item {
+  float: left;
+  margin-right: 12.5px;
+  margin-top: 16px;
+  margin-left: 1px;
+}
+
+.carousel .carousel-item:nth-last-child(1) {
+  /*this is the first one so shift it to the left*/
+  margin-right: 0px;
+}
+
+.item-carousel.images .carousel .carousel-item {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+    The following style will change as we progess in making our view more close to the requirement
+*/
+.carousel-spinner {
+  position: absolute;
+  top: 45%;
+  left: 48.5%;
+  width: 36px;
+  height: 36px;
+  background: url("../../_content/big-progress.gif");
+  vertical-align: middle;
+  margin: auto;
+}
+
+.carousel-nav a {
+  font-size: 40px;
+  font-family: monospace;
+  font-weight: 100;
+  color: rgba(0, 90, 158, 1);
+  color: var(--communication-foreground,rgba(0, 90, 158, 1));
+  text-decoration: none;
+  padding: 2px 0 0 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.carousel-nav a:hover {
+  color: #000000;
+  background-color: #e2e1e1;
+  opacity: 1;
+  height: auto;
+  width: 38px;
+}
+
+.carousel-nav a .bowtie-icon.bowtie-chevron-left {
+  font-size: 38px;
+}
+
+.carousel-nav a .bowtie-icon.bowtie-chevron-right {
+  font-size: 38px;
+}
+
+.carousel-nav a.disabled {
+  color: #D5D5D5;
+}
+
+.carousel-nav a.disabled:hover {
+  color: #D5D5D5;
+}
+
+.carousel-nav .carousel-prev {
+  left: -40px;
+}
+
+.carousel-nav .carousel-next {
+  right: -40px;
+}
+
+.carousel-indicators {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.carousel-indicators .indicator {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  margin-right: 12px;
+  border: 1px solid;
+}
+
+.carousel-indicators .indicator.active, .carousel-indicators .indicator:hover {
+  background: rgba(0, 0, 0, 0.8);
+}

@@ -1,0 +1,40 @@
+.item-details-control-root .ux-section-media .item-carousel > div > div {
+  padding-bottom: 16px;
+}
+
+.item-details-control-root .ux-section-media .carousel-wrapper {
+  border: 1px solid #B0BEC5;
+  height: 247.5px;
+}
+
+.item-details-control-root .ux-section-media .item-carousel-container {
+  width: auto;
+}
+
+.item-details-control-root .ux-section-media .item-screenshot {
+  width: 370px;
+  height: 225px;
+}
+
+.item-details-control-root .item-carousel-container .carousel-nav {
+  display: none;
+}
+
+.item-details-control-root .item-carousel-container .carousel {
+  cursor: pointer;
+}
+
+.item-details-screenshot-popup {
+  position: fixed;
+}
+
+.item-details-screenshot-popup .img-screenshot {
+  min-height: 0px;
+  max-height: 80vh;
+  max-width: 80vw;
+}
+
+.item-details-screenshot-popup .ms-Dialog-main {
+  max-height: none;
+  max-width: none;
+}
