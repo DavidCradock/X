@@ -190,7 +190,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void ResourceVertexbuffer::addFromFile(const std::string& strGeometryFilename)
+	void ResourceVertexbuffer::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
@@ -225,6 +225,9 @@ namespace X
 		}
 
 		fclose(file);
+
+		if (bCallUpdate)
+			update();
 	}
 
 	void ResourceVertexbuffer::convertObj(const std::string filename)

@@ -14,17 +14,31 @@ namespace X
 	void ApplicationDevelopment::initOnce(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-	
-		// Create a vertex buffer
-		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("TEST");
-//		pVB->convertObj("obj/cube.obj");
-		pVB->addFromFile("geometry/cube.geom");
-		pVB->update();
-		
-		// Load in a texture
-		ResourceTexture2D* pTex0 = pRM->addTexture2D("textures/cube_BaseColor.png", "textures/cube_BaseColor.png", true);
-		ResourceTexture2D* pTex1 = pRM->addTexture2D("textures/cube_Roughness.png", "textures/cube_Roughness.png", true);
-		ResourceTexture2D* pTex2 = pRM->addTexture2D("textures/cube_Normal.png", "textures/cube_Normal.png", true);
+
+		//pVB->convertObj("geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
+
+		// Create needed vertex buffers
+		// Cube
+		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("cube");
+		pVB->addFromFile("geometry/cube.geom", true);
+		// Blob
+		pVB = pRM->addVertexbuffer("blob");
+		pVB->addFromFile("geometry/blob.geom", true);
+		// Point lights to show where they are
+		pVB = pRM->addVertexbuffer("icosphere_radius_0.01");
+		pVB->addFromFile("geometry/icosphere_radius_0.01.geom", true);
+
+		// Load in a textures
+		// Cubes
+		pRM->addTexture2D("textures/cube_BaseColor.png", "textures/cube_BaseColor.png", true);
+		pRM->addTexture2D("textures/cube_Roughness.png", "textures/cube_Roughness.png", true);
+		pRM->addTexture2D("textures/cube_Normal.png", "textures/cube_Normal.png", true);
+		// Blob
+		pRM->addTexture2D("textures/blob_diffuse.png", "textures/blob_diffuse.png", true);
+		pRM->addTexture2D("textures/blob_roughness.png", "textures/blob_roughness.png", true);
+		pRM->addTexture2D("textures/blob_normal.png", "textures/blob_normal.png", true);
+		// Point light entities
+		pRM->addTexture2D("textures/white.png", "textures/white.png", true);
 
 		// Create a framebuffer
 		ResourceFramebuffer* pFB = pRM->addFramebuffer("default", Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
@@ -37,16 +51,36 @@ namespace X
 
 		// Scene manager
 		mSceneManagerSimple.mCamera.setModeOrbit();	// Use defaults
-		SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer("centre", "TEST", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.5f, "textures/cube_Normal.png");
+		SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer("centre", "blob", 0.05f, "textures/blob_diffuse.png", "textures/blob_roughness.png", 0.5f, "textures/blob_normal.png");
 //		pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
 		for (int i = 0; i < 1000; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "TEST", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.5f, "textures/cube_Normal.png");
+			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.5f, "textures/cube_Normal.png");
 			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
 		}
-		mSceneManagerSimple.mvLightPoint0.mvPosition = glm::vec3(2.0f, 0.0f, 2.0f);
+		// Set point light settings
+		mSceneManagerSimple.miNumPointLights = 4;
+		mSceneManagerSimple.mvLightPoint[0].mvPosition = glm::vec3(2.0f, 2.0f, 2.0f);
+		mSceneManagerSimple.mvLightPoint[0].mvColour = glm::vec3(1.0f, 0.0f, 0.0f);
+		mSceneManagerSimple.mvLightPoint[1].mvPosition = glm::vec3(-2.0f, 2.0f, 2.0f);
+		mSceneManagerSimple.mvLightPoint[1].mvColour = glm::vec3(0.0f, 1.0f, 0.0f);
+		mSceneManagerSimple.mvLightPoint[2].mvPosition = glm::vec3(2.0f, -2.0f, 2.0f);
+		mSceneManagerSimple.mvLightPoint[2].mvColour = glm::vec3(0.0f, 0.0f, 1.0f);
+		mSceneManagerSimple.mvLightPoint[3].mvPosition = glm::vec3(2.0f, 2.0f, -2.0f);
+		mSceneManagerSimple.mvLightPoint[3].mvColour = glm::vec3(1.0f, 1.0f, 1.0f);
 		mSceneManagerSimple.mvLightDirectional.mvColour = glm::vec3(1.0f, 1.0f, 1.0f);
+		// Add icosphere_radius_0.01.geom to position of each light
+		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
+		{
+			std::string strEntity = "point_light_" + std::to_string(i);
+			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(
+				strEntity, // Enitity name
+				"icosphere_radius_0.01", // Vertex buffer name
+				0.05f, // Ambient strength
+				"textures/white.png", "textures/white.png", 0.5f, "X:default_normal", "textures/white.png");
+			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, mSceneManagerSimple.mvLightPoint[i].mvPosition);
+		}
 	}
 
 	void ApplicationDevelopment::onStart(void)

@@ -36,9 +36,12 @@ namespace X
 			// Create window
 			Window* pWindow = Window::getPointer();
 			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync");
-
+			
 			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
+			
+			// Set mouse cursor to be located in the centre of the window
+			pInputManager->mouse.setMousePos(pWindow->getWidth() / 2, pWindow->getHeight() / 2);
 
 			// Add default resources used in various places
 			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");

@@ -9,6 +9,7 @@ namespace X
 	SceneManagerSimple::SceneManagerSimple()
 	{
 		mCamera.setViewAsLookat(glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+		miNumPointLights = 3;
 	}
 
 	void SceneManagerSimple::render(void)
@@ -41,11 +42,44 @@ namespace X
 		pShader->setMat4("matrixProjection", mCamera.matrixProjection);
 		pShader->setMat4("matrixView", mCamera.matrixView);
 
-		// Set light uniforms
+		// Set directional light uniforms
 		pShader->setVec3("v3LightDirectionalColour", mvLightDirectional.mvColour);
 		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
-		pShader->setVec3("v3LightPointColour0", mvLightPoint0.mvColour);
-		pShader->setVec3("v3LightPointPosition0", mvLightPoint0.mvPosition);
+
+		// Set point light uniforms
+		pShader->setInt("iLightPointNumber", miNumPointLights);	// Number of point lights to use
+		if (miNumPointLights > 0)	// If at least 1 point light is to be used
+		{
+			// Set 1st point light settings
+			pShader->setVec3("pointLights[0].v3Colour", mvLightPoint[0].mvColour);
+			pShader->setVec3("pointLights[0].v3Position", mvLightPoint[0].mvPosition);
+			pShader->setFloat("pointLights[0].fSpecularAttenuationLinear", mvLightPoint[0].mfSpecularAttenuationLinear);
+			pShader->setFloat("pointLights[0].fSpecularAttenuationQuadratic", mvLightPoint[0].mfSpecularAttenuationQuadratic);
+			if (miNumPointLights > 1)	// If at least 2 point lights are to be used
+			{
+				// Set 2nd point light settings
+				pShader->setVec3("pointLights[1].v3Colour", mvLightPoint[1].mvColour);
+				pShader->setVec3("pointLights[1].v3Position", mvLightPoint[1].mvPosition);
+				pShader->setFloat("pointLights[1].fSpecularAttenuationLinear", mvLightPoint[1].mfSpecularAttenuationLinear);
+				pShader->setFloat("pointLights[1].fSpecularAttenuationQuadratic", mvLightPoint[1].mfSpecularAttenuationQuadratic);
+				if (miNumPointLights > 2)	// If at least 3 point lights are to be used
+				{
+					// Set 3rd point light settings
+					pShader->setVec3("pointLights[2].v3Colour", mvLightPoint[2].mvColour);
+					pShader->setVec3("pointLights[2].v3Position", mvLightPoint[2].mvPosition);
+					pShader->setFloat("pointLights[2].fSpecularAttenuationLinear", mvLightPoint[2].mfSpecularAttenuationLinear);
+					pShader->setFloat("pointLights[2].fSpecularAttenuationQuadratic", mvLightPoint[2].mfSpecularAttenuationQuadratic);
+					if (miNumPointLights > 3)	// If at least 4 point lights are to be used
+					{
+						// Set 4th point light settings
+						pShader->setVec3("pointLights[3].v3Colour", mvLightPoint[3].mvColour);
+						pShader->setVec3("pointLights[3].v3Position", mvLightPoint[3].mvPosition);
+						pShader->setFloat("pointLights[3].fSpecularAttenuationLinear", mvLightPoint[3].mfSpecularAttenuationLinear);
+						pShader->setFloat("pointLights[3].fSpecularAttenuationQuadratic", mvLightPoint[3].mfSpecularAttenuationQuadratic);
+					}
+				}
+			}
+		}
 
 		// Set camera uniforms
 		// Get the world matrix and then invert it, so it's actually in world space instead of reversed,

@@ -22,7 +22,8 @@ namespace X
 		Camera mCamera;
 
 		SceneManagerLightDirectional mvLightDirectional;	// The directional light for this scene
-		SceneManagerLightPoint mvLightPoint0;				// The point light for this scene
+		SceneManagerLightPoint mvLightPoint[4];				// The point lights for this scene
+		int miNumPointLights;								// The number of point lights to use. Can be between 0 and 4
 
 		
 

@@ -11,5 +11,7 @@ namespace X
 
 		glm::vec3 mvPosition;	// Position of the light, in world space
 		glm::vec3 mvColour;		// Colour of the light, defaults to white
+		float mfSpecularAttenuationLinear;		// Affects specular attenuation. See comments in .cpp file for more information.
+		float mfSpecularAttenuationQuadratic;	// Affects specular attenuation. See comments in .cpp file for more information.
 	};
 }

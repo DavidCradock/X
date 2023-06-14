@@ -50,7 +50,8 @@ namespace X
 		// some 3D modelling package such as Blender.
 		// The method will load in, convert and save out the stored geometry information into an efficient to load file which we use here
 		// to load the vertex information into memory.
-		void addFromFile(const std::string& strGeometryFilename);
+		// bCallUpdate, if set to true will call update(), saving us from having to do it, if we're done adding stuff.
+		void addFromFile(const std::string& strGeometryFilename, bool bCallUpdate = true);
 
 		// Return number of vertices which have been added so far.
 		inline size_t getNumVertices(void)
