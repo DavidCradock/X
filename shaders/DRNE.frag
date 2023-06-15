@@ -3,10 +3,11 @@
 out vec4 FragColour;    // Final output colour of fragment
 
 // Inputs from vertex shader
-in vec3 vec3VertexNormal;       // Vertex normal
+//in vec3 vec3VertexNormal;       // Vertex normal (Don't need this as using TBN)
 in vec4 vec4VertexColour;       // Vertex colour
 in vec2 vec2TextureCoordinate;  // Texture coordinates
 in vec3 vec3VertexPosWorld;     // Vertex position in world space (for lighting calculations)
+in mat3 matTBN;                 // Tangent/binormal/normal matrix
 
 // Texture samplers
 uniform sampler2D texture0_diffuse;     // Texture holding diffuse colour
@@ -63,12 +64,14 @@ void main()
 vec3 computeDirectionalLight(void)
 {
     // Normal/Bump mapping
-    // All we need to do is adjust the normal used in all the computation below
-    vec3 vNormal = vec3VertexNormal;
+    // We need to adjust the normal from normal space using the TBN matrix from the vertex shader, to world space
+//    vec3 vNormal = vec3VertexNormal;  // (Don't need this as using TBN)
+    // Get normal in tangent space from the bump/normal map and expand it 
     vec3 vNormalImage = vec3(texture(texture2_normal, vec2TextureCoordinate));  // Get normal from colour (will be in range of 0.0 to 1.0)
     vNormalImage *= 2.0;    // Range is now 0.0 to 2.0
     vNormalImage -= 1.0;    // Range is now -1.0 to 1.0
-    
+    // Multiply the normal from tangent space to world space
+    vec3 vNormal = normalize(matTBN * vNormalImage);
 
     vec3 lightDir = normalize(-v3LightDirectionalDirection);
     // Diffuse
@@ -89,8 +92,14 @@ vec3 computeDirectionalLight(void)
 vec3 computePositionalLight(int iLightNumber)
 {
     // Normal/Bump mapping
-    // All we need to do is adjust the normal used in all the computation below
-    vec3 vNormal = vec3VertexNormal;
+    // We need to adjust the normal from normal space using the TBN matrix from the vertex shader, to world space
+//    vec3 vNormal = vec3VertexNormal;  // (Don't need this as using TBN)
+    // Get normal in tangent space from the bump/normal map and expand it 
+    vec3 vNormalImage = vec3(texture(texture2_normal, vec2TextureCoordinate));  // Get normal from colour (will be in range of 0.0 to 1.0)
+    vNormalImage *= 2.0;    // Range is now 0.0 to 2.0
+    vNormalImage -= 1.0;    // Range is now -1.0 to 1.0
+    // Multiply the normal from tangent space to world space
+    vec3 vNormal = normalize(matTBN * vNormalImage);
 
     vec3 lightDir = normalize(pointLights[iLightNumber].v3Position - vec3VertexPosWorld);
     // Diffuse shading

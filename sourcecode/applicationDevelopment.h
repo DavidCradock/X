@@ -31,5 +31,6 @@ namespace X
 	private:
 		Timer timer;
 		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
+		void _initSceneManager(void);
 	};
 }

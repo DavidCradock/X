@@ -48,12 +48,41 @@ namespace X
 		indices.clear();
 	}
 
+	void ResourceVertexbuffer::_computeTangentsAndBinormals(void)
+	{
+		if (!vertices.size())
+			return;
+
+		// For each face
+		for (unsigned int iIndex = 0; iIndex < indices.size(); iIndex += 3)
+		{
+			// Calculate the face's edges and delta UV coordinates
+			glm::vec3 edge1 = vertices[indices[iIndex+1]].position - vertices[indices[iIndex]].position;
+			glm::vec3 edge2 = vertices[indices[iIndex+2]].position - vertices[indices[iIndex]].position;
+			glm::vec2 deltaUV1 = vertices[indices[iIndex+1]].texCoord - vertices[indices[iIndex]].texCoord;
+			glm::vec2 deltaUV2 = vertices[indices[iIndex+2]].texCoord - vertices[indices[iIndex]].texCoord;
+
+			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+			vertices[indices[iIndex]].tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+			vertices[indices[iIndex]].tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+			vertices[indices[iIndex]].tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+			vertices[indices[iIndex]].binormal.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+			vertices[indices[iIndex]].binormal.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+			vertices[indices[iIndex]].binormal.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+		}
+
+	}
+
 	void ResourceVertexbuffer::update(void)
 	{
 		if (!vertices.size())
 			return;
 		if (!indices.size())
 			return;
+
+		_computeTangentsAndBinormals();
 
 		if (!vertexBufferObject)
 			glGenBuffers(1, &vertexBufferObject);
@@ -111,6 +140,24 @@ namespace X
 			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
 			(void*)(10 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 		glEnableVertexAttribArray(3);
+
+		// Tangent
+		glVertexAttribPointer(4,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			3,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(12 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(4);
+
+		// Binormal
+		glVertexAttribPointer(5,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			3,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(15 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(5);
 
 		// Unbind stuff as we're done
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -316,7 +363,7 @@ namespace X
 		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
 		ThrowIfTrue(bool(err != 0), "ResourceVertexbuffer::convertObj() failed to open file " + filename + " for saving.");
 
-		// Loop through each face, generating and saving as we go
+		// Loop through each face
 		Vertex geomVertex;
 		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
 		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
@@ -328,6 +375,8 @@ namespace X
 			geomVertex.normal = vNormals[vIndicesNormals[i] - 1];		// Normal
 			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
 			geomVertex.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+			geomVertex.binormal = glm::vec3(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
+			geomVertex.tangent = glm::vec3(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
 			ThrowIfTrue(bool(0 == written), "ResourceVertexbuffer::convertObj() failed to write to file " + filename);
 		}

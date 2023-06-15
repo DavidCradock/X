@@ -36,7 +36,7 @@ namespace X
 
 		// Sets the camera mode to orbit a point in 3D world space
 		// Call update() once per program loop to update the view matrix with this mode in mind.
-		void setModeOrbit(glm::vec3 vOrbitPoint = glm::vec3(0.0f, 0.0f, 0.0f), float fMinDistanceFromPoint = 1.5f, float fCurrentDistanceFromPoint = 10.0f, float fMaxDistanceFromPoint = 100.0f, float fSensitivityX = 0.25f, float fSensitivityY = 0.25f, float fMouseSensitivityWheel = 0.25f);
+		void setModeOrbit(glm::vec3 vOrbitPoint = glm::vec3(0.0f, 0.0f, 0.0f), float fMinDistanceFromPoint = 1.5f, float fCurrentDistanceFromPoint = 10.0f, float fMaxDistanceFromPoint = 100.0f, float fSensitivityX = 0.005f, float fSensitivityY = 0.005f, float fMouseSensitivityWheel = 0.005f);
 
 		// Updates this camera
 		void update(void);

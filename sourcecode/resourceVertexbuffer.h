@@ -23,6 +23,8 @@ namespace X
 			glm::vec3 normal;		// Vertex normal
 			glm::vec4 colour;		// Vertex colour
 			glm::vec2 texCoord;		// Vertex texture coordinate
+			glm::vec3 tangent;		// Tangent vector for bump/normal mapping
+			glm::vec3 binormal;		// Binormal vector for bump/normal mapping
 		};
 
 		// Removes all previously added vertices
@@ -75,5 +77,9 @@ namespace X
 		unsigned int elementBufferObject;	// OpenGL element buffer object ID
 		std::vector<Vertex> vertices;		// Vector holding each unique vertex
 		std::vector<int> indices;			// Vector holding indicies to each unique vertex
+
+		// Compute tangents and binormals from currently added geometry.
+		// Called from update()
+		void _computeTangentsAndBinormals(void);
 	};
 }

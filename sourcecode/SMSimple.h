@@ -27,7 +27,7 @@ namespace X
 
 		
 
-		// Adds a new uniquely named vertex buffer entity to this scene amd returns a pointer to it if needed
+		// Adds a new uniquely named vertex buffer entity to this scene and returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
 		SceneManagerEntityVertexbuffer* addEntityVertexbuffer(
 			const std::string& strEntityName,									// The unique name of this entity
@@ -35,7 +35,7 @@ namespace X
 			float fAmbientStrength = 0.05f,										// Ambient strength
 			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
 			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
-			float fSpecularStrength = 0.5f,										// Specular strength
+			float fSpecularStrength = 0.25f,									// Specular strength
 			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
 			const std::string & strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);

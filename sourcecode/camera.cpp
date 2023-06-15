@@ -72,9 +72,9 @@ namespace X
 			InputManager* pInput = InputManager::getPointer();
 			modeOrbit.timer.update();
 			float fDeltaSec = modeOrbit.timer.getSecondsPast();
-			float fDeltaX = pInput->mouse.deltaX() * modeOrbit.fMouseSensitivityX * fDeltaSec;
-			float fDeltaY = pInput->mouse.deltaY() * modeOrbit.fMouseSensitivityY * fDeltaSec;
-			float fDeltaWheel = -pInput->mouse.deltaZ() * modeOrbit.fMouseSensitivityWheel * fDeltaSec;
+			float fDeltaX = pInput->mouse.deltaX() * modeOrbit.fMouseSensitivityX;
+			float fDeltaY = pInput->mouse.deltaY() * modeOrbit.fMouseSensitivityY;
+			float fDeltaWheel = -pInput->mouse.deltaZ() * modeOrbit.fMouseSensitivityWheel;
 
 			// Adjust angles
 			modeOrbit.fAngleY += fDeltaX;
