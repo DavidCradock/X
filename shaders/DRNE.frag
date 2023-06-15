@@ -62,13 +62,21 @@ void main()
 
 vec3 computeDirectionalLight(void)
 {
+    // Normal/Bump mapping
+    // All we need to do is adjust the normal used in all the computation below
+    vec3 vNormal = vec3VertexNormal;
+    vec3 vNormalImage = vec3(texture(texture2_normal, vec2TextureCoordinate));  // Get normal from colour (will be in range of 0.0 to 1.0)
+    vNormalImage *= 2.0;    // Range is now 0.0 to 2.0
+    vNormalImage -= 1.0;    // Range is now -1.0 to 1.0
+    
+
     vec3 lightDir = normalize(-v3LightDirectionalDirection);
     // Diffuse
     // Compute the angle (dot product) between the normal and light direction
     // Then use max() function, which keeps the value between 0 and 1
-    float diff = max(dot(vec3VertexNormal, lightDir), 0.0);
+    float diff = max(dot(vNormal, lightDir), 0.0);
     // Specular
-    vec3 reflectDir = reflect(-lightDir, vec3VertexNormal);
+    vec3 reflectDir = reflect(-lightDir, vNormal);
     vec3 viewDir = normalize(v3CameraPositionWorld - vec3VertexPosWorld);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), fSpecularStrength * 128.0);
     // Combine results
@@ -80,11 +88,15 @@ vec3 computeDirectionalLight(void)
 
 vec3 computePositionalLight(int iLightNumber)
 {
+    // Normal/Bump mapping
+    // All we need to do is adjust the normal used in all the computation below
+    vec3 vNormal = vec3VertexNormal;
+
     vec3 lightDir = normalize(pointLights[iLightNumber].v3Position - vec3VertexPosWorld);
     // Diffuse shading
-    float diff = max(dot(vec3VertexNormal, lightDir), 0.0);
+    float diff = max(dot(vNormal, lightDir), 0.0);
     // Specular shading
-    vec3 reflectDir = reflect(-lightDir, vec3VertexNormal);
+    vec3 reflectDir = reflect(-lightDir, vNormal);
     vec3 viewDir = normalize(v3CameraPositionWorld - vec3VertexPosWorld);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), fSpecularStrength * 128.0);
     // Specular attenuation

@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "sceneManagerLightPoint.h"
+#include "SMLightPoint.h"
 
 namespace X
 {

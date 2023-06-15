@@ -48,11 +48,11 @@
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\camera.cpp" />
     <ClCompile Include="sourcecode\resourceFont.cpp" />
-    <ClCompile Include="sourcecode\sceneManagerSimple.cpp" />
-    <ClCompile Include="sourcecode\sceneManagerEntityVertexbuffer.cpp" />
-    <ClCompile Include="sourcecode\sceneManagerEntityBase.cpp" />
-    <ClCompile Include="sourcecode\sceneManagerLightDirectional.cpp" />
-    <ClCompile Include="sourcecode\sceneManagerLightPoint.cpp" />
+    <ClCompile Include="sourcecode\SMSimple.cpp" />
+    <ClCompile Include="sourcecode\SMEntityVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\SMEntityBase.cpp" />
+    <ClCompile Include="sourcecode\SMLightDirectional.cpp" />
+    <ClCompile Include="sourcecode\SMLightPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -121,10 +121,10 @@
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
     <ClInclude Include="sourcecode\camera.h" />
     <ClInclude Include="sourcecode\resourceFont.h" />
-    <ClInclude Include="sourcecode\sceneManagerSimple.h" />
-    <ClInclude Include="sourcecode\sceneManagerEntityVertexbuffer.h" />
-    <ClInclude Include="sourcecode\sceneManagerEntityBase.h" />
-    <ClInclude Include="sourcecode\sceneManagerLightDirectional.h" />
-    <ClInclude Include="sourcecode\sceneManagerLightPoint.h" />
+    <ClInclude Include="sourcecode\SMSimple.h" />
+    <ClInclude Include="sourcecode\SMEntityVertexbuffer.h" />
+    <ClInclude Include="sourcecode\SMEntityBase.h" />
+    <ClInclude Include="sourcecode\SMLightDirectional.h" />
+    <ClInclude Include="sourcecode\SMLightPoint.h" />
   </ItemGroup>
 </Project>

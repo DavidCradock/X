@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "sceneManagerLightDirectional.h"
+#include "SMLightDirectional.h"
 
 namespace X
 {

@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "SceneManagerEntityBase.h"
+#include "SMEntityBase.h"
 
 namespace X
 {

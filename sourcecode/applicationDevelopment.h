@@ -2,7 +2,7 @@
 #include "PCH.h"
 #include "applicationBase.h"
 #include "timer.h"
-#include "sceneManagerSimple.h"
+#include "SMSimple.h"
 
 namespace X
 {

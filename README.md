@@ -7,6 +7,7 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio hit compile, done.
 ** TODO **
+- Add computation of bump/normal mapping stuff to vertex buffer (tangents/bitangents)
 - implement more stuff into Camera
 - implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
 - implement GUI (2D)

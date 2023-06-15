@@ -13,6 +13,8 @@ namespace X
 {
 	void ApplicationDevelopment::initOnce(void)
 	{
+		timer.setAveragedFPSRate(1);	// Once every X seconds
+
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		//pVB->convertObj("geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
@@ -98,53 +100,35 @@ namespace X
 
 		// Get resources
 		ResourceManager* pRM = ResourceManager::getPointer();		// Resource manager
-//		ResourceVertexbuffer* pVB = pRM->getVertexbuffer("TEST");	// Vertex buffer
-//		ResourceTexture2D* pTexDiffuse = pRM->getTexture2D("textures/cube_BaseColor.png");
-//		ResourceTexture2D* pTexRoughness = pRM->getTexture2D("textures/cube_Roughness.png");
-//		ResourceTexture2D* pTexNormal = pRM->getTexture2D("textures/cube_Normal.png");
-//		ResourceTexture2D* pTexEmission = pRM->getTexture2D("textures/cube_Normal.png");
-//		ResourceShader* pShader = pRM->getShader("X:DRNE");			// Shader
-//		ResourceFramebuffer* pFB = pRM->getFramebuffer("default");	// Framebuffer
 
 		// Timer delta
 		static float fInc = 0.0f;
 		fInc += timer.getSecondsPast() * kPi * 0.1f;
 
-		// Scene manager
-		//mSceneManagerSimple.mCamera.setViewAsLookat(glm::vec3(sinf(fInc) * 5.0f, 0.0f, cosf(fInc) * 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		
-		mSceneManagerSimple.render();
-		mSceneManagerSimple.mCamera.update();
-
-		// Setup a camera
-//		Camera camera;
-//		camera.setProjectionAsOrthographic(Window::getPointer()->getWidth(), Window::getPointer()->getHeight());
-//		camera.setProjectionAsPerspective(55.0f, (float)Window::getPointer()->getWidth(), (float)Window::getPointer()->getHeight(), 0.1f, 1000.0f);
-//		camera.setViewAsLookat(glm::vec3(sinf(fInc)*3.0f, 0.0f, cosf(fInc)*2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-		// Draw stuff
-//		pShader->bind();
-		// Set view/projection matrix
-//		pShader->setMat4("transform", camera.getViewProjectionMatrix());
-		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-//		pShader->setInt("texture0", 0);
-//		pShader->setInt("texture1", 1);
-		// Bind each texture to each sampler unit
-//		pTexDiffuse->bind(0);
-//		pTexRoughness->bind(1);
-		//pTexNormal->bind(2);
-//		glDisable(GL_BLEND);
-//		glEnable(GL_DEPTH_TEST);
-//		pVB->draw(false);
-//		pTexDiffuse->unbind(0);
-//		pTexRoughness->unbind(1);
-		//pTexNormal->unbind(2);
-//		pShader->unbind();
+//		mSceneManagerSimple.render();
+//		mSceneManagerSimple.mCamera.update();
 
 		// Render some text
 		std::string strFPS = "FPS: ";
 		strFPS += std::format("{:.2f}", timer.getFPSAveraged());
 		pRM->getFont("arial_26")->print(strFPS, 0, 0, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		// Temp render lots of text to benchmark and improve performance
+		// Framerate in before optimization: release build fullscreen= 950fps
+		// Framerate in after optimization:  release build fullscreen= 1100 before removing normal, 1140 after removing normal
+		std::string strLines;
+		strLines = "This is a line of text which contains about 280 characters to render. This is to test performance aka profiling with the hope of being able to increase performance slightly. I'm just trying to write some random stuff here to fill up the screen so we can really push the font resource.";
+
+		ResourceFont* pFont = pRM->getFont("arial_26");
+		int iDims[2];
+		iDims[0] = Window::getPointer()->getWidth();
+		iDims[1] = Window::getPointer()->getHeight();
+		int iYpos = 30;
+		for (int i = 0; i < 69; i++)
+		{
+			pFont->print(strLines, 100, iYpos, iDims[0], iDims[1]);
+			iYpos += 30;
+		}
 
 		// Escape key to exit
 		InputManager* pInputManager = InputManager::getPointer();

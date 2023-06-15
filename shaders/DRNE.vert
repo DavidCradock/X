@@ -9,8 +9,6 @@ out vec3 vec3VertexNormal;
 out vec4 vec4VertexColour;
 out vec2 vec2TextureCoordinate;
 
-// We're doing all the lighting calculations in world space
-// So we need to pass the vertex position in world space
 out vec3 vec3VertexPosWorld;
 
 uniform mat4 matrixProjection;

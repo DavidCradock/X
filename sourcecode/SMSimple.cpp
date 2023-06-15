@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "sceneManagerSimple.h"
+#include "SMSimple.h"
 #include "log.h"
 #include "resourceManager.h"
 #include "window.h"

@@ -1,8 +1,8 @@
 #pragma once
 #include "PCH.h"
-#include "sceneManagerLightDirectional.h"
-#include "sceneManagerLightPoint.h"
-#include "SceneManagerEntityVertexbuffer.h"
+#include "SMLightDirectional.h"
+#include "SMLightPoint.h"
+#include "SMEntityVertexbuffer.h"
 #include "camera.h"
 
 namespace X

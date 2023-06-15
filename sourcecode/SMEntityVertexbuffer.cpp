@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "SceneManagerEntityVertexbuffer.h"
+#include "SMEntityVertexbuffer.h"
 
 namespace X
 {

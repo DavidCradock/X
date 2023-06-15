@@ -49,7 +49,21 @@ namespace X
 		};
 		FontTypes fontTypes;
 		ResourceTexture2D* _mpResTexture;			// Texture holding each characters' image data
-		ResourceVertexbuffer* _mpResVertexbuffer;	// Vertexbuffer used to render the text
 		glm::mat4 _mmatProjection;					// Projection used when rendering the text
+
+	private:
+		// Vertex buffer members used for rendering each character
+		// A single vertex
+		struct Vertex
+		{
+			glm::vec3 position;		// Vertex position
+			glm::vec4 colour;		// Vertex colour
+			glm::vec2 texCoord;		// Vertex texture coordinate
+		};
+		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
+		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
+		unsigned int elementBufferObject;	// OpenGL element buffer object ID
+		std::vector<Vertex> vertices;		// Vector holding each unique vertex
+		std::vector<int> indices;			// Vector holding indicies to each unique vertex
 	};
 }
