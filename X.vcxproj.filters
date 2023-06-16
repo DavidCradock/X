@@ -118,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="sourcecode\frustum.cpp" />
     <ClCompile Include="sourcecode\plane.cpp" />
+    <ClCompile Include="sourcecode\resourceVertexbufferLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -131,6 +137,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\DRNE.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\line.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\line.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -245,5 +257,11 @@
     </ClInclude>
     <ClInclude Include="sourcecode\frustum.h" />
     <ClInclude Include="sourcecode\plane.h" />
+    <ClInclude Include="sourcecode\resourceVertexbufferLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

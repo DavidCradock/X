@@ -16,7 +16,7 @@ namespace X
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
-		//_initSceneManager();
+		_initSceneManager();
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 
@@ -50,8 +50,8 @@ namespace X
 		fInc += timer.getSecondsPast() * kPi * 0.1f;
 
 		// Update and render simple scene manager
-//		mSceneManagerSimple.mCamera.update();
-//		mSceneManagerSimple.render();
+		mSceneManagerSimple.mCamera.update();
+		mSceneManagerSimple.render();
 
 		// Render some text
 		std::string strFPS = "FPS: ";
@@ -92,6 +92,10 @@ namespace X
 		// Point lights to show where they are
 		pVB = pRM->addVertexbuffer("icosphere_radius_0.01");
 		pVB->addFromFile("geometry/icosphere_radius_0.01.geom", true);
+		// Ground plane
+		pVB = pRM->addVertexbuffer("groundplane");
+		pVB->addGroundplane(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
+		pVB->update();
 
 		// Load in a textures
 		// Cubes
@@ -99,27 +103,32 @@ namespace X
 		pRM->addTexture2D("textures/cube_Roughness.png", "textures/cube_Roughness.png", true);
 		pRM->addTexture2D("textures/cube_Normal.png", "textures/cube_Normal.png", true);
 		// Blob
-		pRM->addTexture2D("textures/blob_diffuse.png", "textures/blob_diffuse.png", true);
-		pRM->addTexture2D("textures/blob_roughness.png", "textures/blob_roughness.png", true);
-		pRM->addTexture2D("textures/blob_normal.png", "textures/blob_normal.png", true);
+//		pRM->addTexture2D("textures/blob_diffuse.png", "textures/blob_diffuse.png", true);
+//		pRM->addTexture2D("textures/blob_roughness.png", "textures/blob_roughness.png", true);
+//		pRM->addTexture2D("textures/blob_normal.png", "textures/blob_normal.png", true);
 		// Point light entities
-		pRM->addTexture2D("textures/white.png", "textures/white.png", true);
+		pRM->addTexture2D("textures/groundplane.png", "textures/groundplane.png", true);
 
 		// Scene manager
-
 		mSceneManagerSimple.mCamera.setModeOrbit();	// Use defaults
-		SceneManagerEntityVertexbuffer* pEnitity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
-		//pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
-		for (int i = 0; i < 1000; ++i)
+		SceneManagerEntityVertexbuffer* pEntity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
+		pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(0.0f, 0.5f, 0.0f));
+		for (int i = 0; i < 100; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
-			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(-25.0f, 25.0f), randf(-25.0f, 25.0f)));
+			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
+			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(0.5f, 0.5f), randf(-25.0f, 25.0f)));
 		}
+		// Ground plane
+		pEntity = mSceneManagerSimple.addEntityVertexbuffer("groundplane", "groundplane", 0.5f, "textures/groundplane.png", "X:default_roughness", 0.25f);
+
+		// Directional light settings
+		mSceneManagerSimple.mvLightDirectional.mvDirection = glm::vec3(0.0f, -1.0f, 0.0f);
+		mSceneManagerSimple.mvLightDirectional.mvColour = glm::vec3(0.5f, 0.5f, 0.5f);
 		// Set point light settings
-		mSceneManagerSimple.miNumPointLights = 0;
-		mSceneManagerSimple.mvLightPoint[0].mvPosition = glm::vec3(2.0f, 2.0f, 2.0f);
-		mSceneManagerSimple.mvLightPoint[0].mvColour = glm::vec3(1.0f, 0.0f, 0.0f);
+		mSceneManagerSimple.miNumPointLights = 1;
+		mSceneManagerSimple.mvLightPoint[0].mvPosition = glm::vec3(2.0f, 2.0f, 10.0f);
+		mSceneManagerSimple.mvLightPoint[0].mvColour = glm::vec3(0.7f, 0.7f, 0.5f);
 		mSceneManagerSimple.mvLightPoint[1].mvPosition = glm::vec3(-2.0f, 2.0f, 2.0f);
 		mSceneManagerSimple.mvLightPoint[1].mvColour = glm::vec3(0.0f, 1.0f, 0.0f);
 		mSceneManagerSimple.mvLightPoint[2].mvPosition = glm::vec3(2.0f, -2.0f, 2.0f);
@@ -131,12 +140,35 @@ namespace X
 		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
 		{
 			std::string strEntity = "point_light_" + std::to_string(i);
-			pEnitity = mSceneManagerSimple.addEntityVertexbuffer(
+			pEntity = mSceneManagerSimple.addEntityVertexbuffer(
 				strEntity, // Enitity name
 				"icosphere_radius_0.01", // Vertex buffer name
 				0.05f, // Ambient strength
-				"textures/white.png", "textures/white.png", 0.5f, "X:default_normal", "textures/white.png");
-			pEnitity->matrixWorld = glm::translate(pEnitity->matrixWorld, mSceneManagerSimple.mvLightPoint[i].mvPosition);
+				"X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
+			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, mSceneManagerSimple.mvLightPoint[i].mvPosition);
+		}
+
+		// Now we're done with adding vertexbuffer entities.
+		// Let's add some vertexbufferLine entities
+		ResourceVertexbufferLine* pVertexBufferLine = pRM->addVertexbufferLine("line_up");
+		ResourceVertexbufferLine::Vertex lineVertex;
+		lineVertex.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		lineVertex.texCoord.x = 0.0f;
+		lineVertex.texCoord.y = 0.0f;
+		lineVertex.position = glm::vec3(0.0f, 0.0f, 0.0f);
+		pVertexBufferLine->addLinePoint(lineVertex);
+		lineVertex.position = glm::vec3(0.0f, 1.0f, 0.0f);
+		pVertexBufferLine->addLinePoint(lineVertex);
+		pVertexBufferLine->update();
+
+		for (float fX = -50.0f; fX < 50.0f; fX += 5.0f)
+		{
+			for (float fZ = -50.0f; fZ < 50.0f; fZ += 5.0f)
+			{
+				std::string strEntityName = "line_" + std::to_string(fX) + ":" + std::to_string(fZ);
+				SceneManagerEntityVertexbufferLine* pEntityLine = mSceneManagerSimple.addEntityVertexbufferLine(strEntityName, "line_up", "X:default_white");
+				pEntityLine->matrixWorld = glm::translate(pEntityLine->matrixWorld, glm::vec3(fX, 0.0f, fZ));
+			}
 		}
 	}
 }

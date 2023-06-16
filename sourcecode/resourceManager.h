@@ -6,6 +6,7 @@
 #include "resourceShader.h"
 #include "resourceTexture2D.h"
 #include "resourceVertexbuffer.h"
+#include "resourceVertexbufferLine.h"
 
 namespace X
 {
@@ -14,8 +15,11 @@ namespace X
 	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
 	// X:font				// A shader used by the ResourceFont class to render text.
+	// X:line				// A shader used by the ResourceVertexbufferLine class to render lines.
 	// X:default			// A shader which has vertex position, colour, texture coordinates, normals and a diffuse texture
 	// X:diffuse_roughness	// A shader which has vertex position, colour, texture coordinates, normals, a diffuse texture and a roughness texture.
+	// X:default_white		// A texture which is tiny and white.
+	// X:default_particle	// A texture for use with rendering generic particals
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{
@@ -43,7 +47,6 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeFont(const std::string& strResourceName);
 
-
 		// Adds a new framebuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the framebuffer
@@ -59,7 +62,6 @@ namespace X
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		void removeFramebuffer(const std::string& strResourceName);
-
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -77,7 +79,6 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeShader(const std::string& strResourceName);
 
-
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
@@ -94,7 +95,6 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeTexture2D(const std::string& strResourceName);
 
-
 		// Adds a new vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		ResourceVertexbuffer* addVertexbuffer(const std::string& strResourceName);
@@ -110,6 +110,21 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeVertexbuffer(const std::string& strResourceName);
 
+		// Adds a new line vertex buffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		ResourceVertexbufferLine* addVertexbufferLine(const std::string& strResourceName);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		ResourceVertexbufferLine* getVertexbufferLine(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getVertexbufferLineExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		void removeVertexbufferLine(const std::string& strResourceName);
+
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
 		// The output file names (the font.fnt and font.tga files) are named based upon the strOutputBaseName.
@@ -123,11 +138,12 @@ namespace X
 		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
 
 	private:
-		std::map<std::string, ResourceFont*>			_mmapResFonts;			// A hash map holding each named font resource
-		std::map<std::string, ResourceFramebuffer*>		_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
-		std::map<std::string, ResourceShader*>			_mmapResShaders;		// A hash map holding each named shader resource
-		std::map<std::string, ResourceTexture2D*>		_mmapResTextures2D;		// A hash map holding each named 2D texture resource
-		std::map<std::string, ResourceVertexbuffer*>	_mmapResVertexbuffers;	// A hash map holding each named vertexbuffer resource
+		std::map<std::string, ResourceFont*>				_mmapResFonts;				// A hash map holding each named font resource
+		std::map<std::string, ResourceFramebuffer*>			_mmapResFramebuffers;		// A hash map holding each named framebuffer resource
+		std::map<std::string, ResourceShader*>				_mmapResShaders;			// A hash map holding each named shader resource
+		std::map<std::string, ResourceTexture2D*>			_mmapResTextures2D;			// A hash map holding each named 2D texture resource
+		std::map<std::string, ResourceVertexbuffer*>		_mmapResVertexbuffers;		// A hash map holding each named vertexbuffer resource
+		std::map<std::string, ResourceVertexbufferLine*>	_mmapResVertexbufferLines;	// A hash map holding each named vertexbuffer line resource
 	};
 
 }

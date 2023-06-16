@@ -237,6 +237,46 @@ namespace X
 		addVertex(vertex);
 	}
 
+	void ResourceVertexbuffer::addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateFrontLeft, const glm::vec2& textureCoordinateFrontRight, const glm::vec2& textureCoordinateBackRight, const glm::vec2& textureCoordinateBackLeft)
+	{
+		// Indicies
+		unsigned int iIndex = (unsigned int)vertices.size();
+		addIndex(iIndex);		// BL
+		addIndex(iIndex + 1);	// TL
+		addIndex(iIndex + 2);	// TR
+
+		addIndex(iIndex + 2);	// TR
+		addIndex(iIndex + 3);	// BR
+		addIndex(iIndex);		// BL
+
+		glm::vec2 vHalfDims = vDimensions;
+		vHalfDims *= 0.5f;
+
+		// Front left
+		Vertex vertex;	// Holds a vertex's data before adding to the vector
+		vertex.position.x = vPosition.x + vHalfDims.x;
+		vertex.position.y = vPosition.y;
+		vertex.position.z = vPosition.z + vHalfDims.y;
+		vertex.colour = colour;
+		vertex.texCoord = textureCoordinateFrontLeft;
+		addVertex(vertex);
+
+		// Back left
+		vertex.position.z = vPosition.z - vHalfDims.y;
+		vertex.texCoord = textureCoordinateBackLeft;
+		addVertex(vertex);
+
+		// Back right
+		vertex.position.x = vPosition.x - vHalfDims.x;
+		vertex.texCoord = textureCoordinateBackRight;
+		addVertex(vertex);
+
+		// Front right
+		vertex.position.z = vPosition.z + vHalfDims.x;
+		vertex.texCoord = textureCoordinateFrontRight;
+		addVertex(vertex);
+	}
+
 	void ResourceVertexbuffer::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;

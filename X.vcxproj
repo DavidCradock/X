@@ -170,8 +170,10 @@
     <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
     <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\resourceFont.cpp" />
+    <ClCompile Include="sourcecode\resourceVertexbufferLine.cpp" />
     <ClCompile Include="sourcecode\SMEntityVertexbuffer.cpp" />
     <ClCompile Include="sourcecode\SMEntityBase.cpp" />
+    <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp" />
     <ClCompile Include="sourcecode\SMLightDirectional.cpp" />
     <ClCompile Include="sourcecode\SMLightPoint.cpp" />
     <ClCompile Include="sourcecode\SMSimple.cpp" />
@@ -191,6 +193,8 @@
     <None Include="shaders\DRNE.vert" />
     <None Include="shaders\font.frag" />
     <None Include="shaders\font.vert" />
+    <None Include="shaders\line.frag" />
+    <None Include="shaders\line.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\OpenGL\glcorearb.h" />
@@ -222,8 +226,10 @@
     <ClInclude Include="sourcecode\resourceTexture2D.h" />
     <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
     <ClInclude Include="sourcecode\resourceFont.h" />
+    <ClInclude Include="sourcecode\resourceVertexbufferLine.h" />
     <ClInclude Include="sourcecode\SMEntityVertexbuffer.h" />
     <ClInclude Include="sourcecode\SMEntityBase.h" />
+    <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h" />
     <ClInclude Include="sourcecode\SMLightDirectional.h" />
     <ClInclude Include="sourcecode\SMLightPoint.h" />
     <ClInclude Include="sourcecode\SMSimple.h" />

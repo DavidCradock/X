@@ -18,8 +18,120 @@ namespace X
 		Window* pWindow = Window::getPointer();
 		mCamera.setProjectionAsPerspective(55.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
-		ResourceManager* pRM = ResourceManager::getPointer();	// Resource manager
-		ResourceShader* pShader = pRM->getShader("X:DRNE");		// Shader
+		// First render the vertex buffer entities
+		_renderVertexbufferEntities();
+
+		// Next render the vertex buffer line entities
+		_renderVertexbufferLineEntities();
+
+
+	}
+
+	SceneManagerEntityVertexbuffer* SceneManagerSimple::addEntityVertexbuffer(
+		const std::string& strEntityName,			// The unique name of this entity
+		const std::string& strVertexbufferName,		// The vertex buffer resource located in the ResourceManager used when rendering this entity
+		float fAmbientStrength,						//
+		const std::string& strTextureNameDiffuse,	// The texture resource located in the ResourceManager used for the diffuse colour
+		const std::string& strTextureNameRoughness,	// The texture resource located in the ResourceManager used for the roughness
+		float fSpecularStrength,					//
+		const std::string& strTextureNameNormal,	// The texture resource located in the ResourceManager used for the normal map
+		const std::string& strTextureNameEmission)	// The texture resource located in the ResourceManager used for the emission
+	{
+		// Make sure the entity doesn't already exist
+		ThrowIfTrue(getEntityVertexbufferExists(strEntityName), "SceneManagerSimple::addEntityVertexbuffer(" + strEntityName + ") failed. The named entity already exists.");
+
+		// Allocate the new entity
+		SceneManagerEntityVertexbuffer* pNewEntity = new SceneManagerEntityVertexbuffer;
+		ThrowIfFalse(pNewEntity, "SceneManagerSimple::addEntityVertexbuffer(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+
+		// Set passed values
+		pNewEntity->mstrVertexbufferName = strVertexbufferName;
+		pNewEntity->mstrTextureNameDiffuse = strTextureNameDiffuse;
+		pNewEntity->mstrTextureNameEmission = strTextureNameEmission;
+		pNewEntity->mstrTextureNameNormalmap = strTextureNameNormal;
+		pNewEntity->mstrTextureNameRoughness = strTextureNameRoughness;
+		pNewEntity->mfSpecularStrength = fSpecularStrength;
+		pNewEntity->mfAmbientStrength = fAmbientStrength;
+
+		// Place in the hashmap
+		mmapEntitiesVertexbuffer[strEntityName] = pNewEntity;
+		return pNewEntity;
+	}
+
+	bool SceneManagerSimple::getEntityVertexbufferExists(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.find(strEntityName);
+		return it != mmapEntitiesVertexbuffer.end();
+	}
+
+	void SceneManagerSimple::removeEntityVertexbuffer(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.find(strEntityName);
+		if (it == mmapEntitiesVertexbuffer.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		mmapEntitiesVertexbuffer.erase(it);
+	}
+
+	void SceneManagerSimple::removeAllEnititiesVertexbuffer(void)
+	{
+		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.begin();
+		while (it != mmapEntitiesVertexbuffer.end())
+		{
+			delete it->second;
+			it++;
+		}
+		mmapEntitiesVertexbuffer.clear();
+	}
+
+	SceneManagerEntityVertexbufferLine* SceneManagerSimple::addEntityVertexbufferLine(const std::string& strEntityName, const std::string& strVertexbufferName,	const std::string& strTextureName)
+	{
+		// Make sure the entity doesn't already exist
+		ThrowIfTrue(getEntityVertexbufferLineExists(strEntityName), "SceneManagerSimple::addEntityVertexbufferLine(" + strEntityName + ") failed. The named entity already exists.");
+
+		// Allocate the new entity
+		SceneManagerEntityVertexbufferLine* pNewEntity = new SceneManagerEntityVertexbufferLine;
+		ThrowIfFalse(pNewEntity, "SceneManagerSimple::addEntityVertexbufferLine(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+
+		// Set passed values
+		pNewEntity->mstrVertexbufferName = strVertexbufferName;
+		pNewEntity->mstrTextureName = strTextureName;
+
+		// Place in the hashmap
+		mmapEntitiesVertexbufferLine[strEntityName] = pNewEntity;
+		return pNewEntity;
+	}
+
+	bool SceneManagerSimple::getEntityVertexbufferLineExists(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbufferLine*>::iterator it = mmapEntitiesVertexbufferLine.find(strEntityName);
+		return it != mmapEntitiesVertexbufferLine.end();
+	}
+
+	void SceneManagerSimple::removeEntityVertexbufferLine(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbufferLine*>::iterator it = mmapEntitiesVertexbufferLine.find(strEntityName);
+		if (it == mmapEntitiesVertexbufferLine.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		mmapEntitiesVertexbufferLine.erase(it);
+	}
+
+	void SceneManagerSimple::removeAllEnititiesVertexbufferLine(void)
+	{
+		std::map<std::string, SceneManagerEntityVertexbufferLine*>::iterator it = mmapEntitiesVertexbufferLine.begin();
+		while (it != mmapEntitiesVertexbufferLine.end())
+		{
+			delete it->second;
+			it++;
+		}
+		mmapEntitiesVertexbufferLine.clear();
+	}
+
+	void SceneManagerSimple::_renderVertexbufferEntities(void)
+	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceShader* pShader = pRM->getShader("X:DRNE");		// Shader used to render the vertex buffer entities
 		ResourceVertexbuffer* pVB;
 		ResourceTexture2D* pTexDiffuse = 0;
 		ResourceTexture2D* pTexRoughness = 0;
@@ -27,7 +139,7 @@ namespace X
 		ResourceTexture2D* pTexEmission = 0;
 
 		pShader->bind();
-		
+
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0_diffuse", 0);
 		pShader->setInt("texture1_roughness", 1);
@@ -37,6 +149,10 @@ namespace X
 		// Set blending/depth testing
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
+
+		// Culling
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 
 		// Set projection and view matrixs from the camera
 		pShader->setMat4("matrixProjection", mCamera.matrixProjection);
@@ -89,8 +205,8 @@ namespace X
 		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
 		// Vertex buffer entities
-		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.begin();
-		while (it != mmapEnititiesVertexbuffer.end())
+		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.begin();
+		while (it != mmapEntitiesVertexbuffer.end())
 		{
 			// Get vertex buffer and textures used by each entity
 			pVB = pRM->getVertexbuffer(it->second->mstrVertexbufferName);
@@ -111,76 +227,70 @@ namespace X
 			// Ambient and specular uniforms
 			pShader->setFloat("fAmbientStrength", it->second->mfAmbientStrength);
 			pShader->setFloat("fSpecularStrength", it->second->mfSpecularStrength);
-			
+
 
 			// Render the vertex buffer
 			pVB->draw(false);
 			it++;
 		}
 
-		// Unbind everything
+		// Unbind everything (We check if not NULL, as perhaps, there are no entities added to scene manager, in which case, no texture will be retrieved above
 		if (pTexDiffuse)	pTexDiffuse->unbind(0);
 		if (pTexRoughness)	pTexRoughness->unbind(1);
 		if (pTexNormal)		pTexNormal->unbind(2);
 		if (pTexEmission)	pTexEmission->unbind(3);
-		
+
+		glDisable(GL_CULL_FACE);
+
 		pShader->unbind();
 	}
 
-	SceneManagerEntityVertexbuffer* SceneManagerSimple::addEntityVertexbuffer(
-		const std::string& strEntityName,			// The unique name of this entity
-		const std::string& strVertexbufferName,		// The vertex buffer resource located in the ResourceManager used when rendering this entity
-		float fAmbientStrength,						//
-		const std::string& strTextureNameDiffuse,	// The texture resource located in the ResourceManager used for the diffuse colour
-		const std::string& strTextureNameRoughness,	// The texture resource located in the ResourceManager used for the roughness
-		float fSpecularStrength,					//
-		const std::string& strTextureNameNormal,	// The texture resource located in the ResourceManager used for the normal map
-		const std::string& strTextureNameEmission)	// The texture resource located in the ResourceManager used for the emission
+	void SceneManagerSimple::_renderVertexbufferLineEntities(void)
 	{
-		// Make sure the entity doesn't already exist
-		ThrowIfTrue(getEntityVertexbufferExists(strEntityName), "SceneManagerSimple::addEntityVertexbuffer(" + strEntityName + ") failed. The named entity already exists.");
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
+		ResourceVertexbufferLine* pVB;
+		ResourceTexture2D* pTexColour = 0;
 
-		// Allocate the new entity
-		SceneManagerEntityVertexbuffer* pNewEntity = new SceneManagerEntityVertexbuffer;
-		ThrowIfFalse(pNewEntity, "SceneManagerSimple::addEntityVertexbuffer(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+		pShader->bind();
 
-		// Set passed values
-		pNewEntity->mstrVertexbufferName = strVertexbufferName;
-		pNewEntity->mstrTextureNameDiffuse = strTextureNameDiffuse;
-		pNewEntity->mstrTextureNameEmission = strTextureNameEmission;
-		pNewEntity->mstrTextureNameNormalmap = strTextureNameNormal;
-		pNewEntity->mstrTextureNameRoughness = strTextureNameRoughness;
-		pNewEntity->mfSpecularStrength = fSpecularStrength;
-		pNewEntity->mfAmbientStrength = fAmbientStrength;
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0_colour", 0);
 
-		// Place in the hashmap
-		mmapEnititiesVertexbuffer[strEntityName] = pNewEntity;
-		return pNewEntity;
-	}
+		// Set blending/depth testing
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 
-	bool SceneManagerSimple::getEntityVertexbufferExists(const std::string& strEntityName)
-	{
-		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.find(strEntityName);
-		return it != mmapEnititiesVertexbuffer.end();
-	}
+		// Culling
+		glDisable(GL_CULL_FACE);
+//		glCullFace(GL_BACK);
 
-	void SceneManagerSimple::removeEntityVertexbuffer(const std::string& strEntityName)
-	{
-		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.find(strEntityName);
-		if (it == mmapEnititiesVertexbuffer.end())
-			return;	// Doesn't exist.
-		delete it->second;
-		mmapEnititiesVertexbuffer.erase(it);
-	}
+		// Set projection and view matrixs from the camera
+		pShader->setMat4("matrixProjection", mCamera.matrixProjection);
+		pShader->setMat4("matrixView", mCamera.matrixView);
 
-	void SceneManagerSimple::removeAllEnititiesVertexbuffer(void)
-	{
-		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEnititiesVertexbuffer.begin();
-		while (it != mmapEnititiesVertexbuffer.end())
+		// Vertex buffer line entities
+		std::map<std::string, SceneManagerEntityVertexbufferLine*>::iterator it = mmapEntitiesVertexbufferLine.begin();
+		while (it != mmapEntitiesVertexbufferLine.end())
 		{
-			delete it->second;
+			// Get vertex buffer and textures used by each entity
+			pVB = pRM->getVertexbufferLine(it->second->mstrVertexbufferName);
+			pTexColour = pRM->getTexture2D(it->second->mstrTextureName);
+
+			// Bind texture to sampler unit
+			pTexColour->bind(0);
+
+			// Set world matrix (Projection and View set above)
+			pShader->setMat4("matrixWorld", it->second->matrixWorld);
+
+			// Render the vertex buffer
+			pVB->draw();
 			it++;
 		}
-		mmapEnititiesVertexbuffer.clear();
+
+		// Unbind everything (We check if not NULL, as perhaps, there are no entities added to scene manager, in which case, no texture will be retrieved above
+		if (pTexColour)	pTexColour->unbind(0);
+
+		pShader->unbind();
 	}
 }

@@ -218,13 +218,17 @@ namespace X
 
 	void ApplicationManager::addDefaultResources(void)
 	{
+		// When adding resources here, remember to add the resource to the comments at the top of ResourceManager class in resourceManager.h
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		// Shaders
 		pRM->addShader("X:font", "shaders/font.vert", "shaders/font.frag");
+		pRM->addShader("X:line", "shaders/line.vert", "shaders/line.frag");
 		pRM->addShader("X:DRNE", "shaders/DRNE.vert", "shaders/DRNE.frag");
 
 		// Textures
+		pRM->addTexture2D("X:default_particle", "textures/particle0.png");
+		pRM->addTexture2D("X:default_white", "textures/default_white.png");
 		pRM->addTexture2D("X:default_diffuse", "textures/default_diffuse.png");
 		pRM->addTexture2D("X:default_emission", "textures/default_emission.png");
 		pRM->addTexture2D("X:default_normal", "textures/default_normal.png");

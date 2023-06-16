@@ -48,6 +48,9 @@ namespace X
 		// Adds a bunch of vertices and indices which represent a 2D quad
 		void addQuad2D(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateBottomLeft = glm::vec2(0, 1), const glm::vec2& textureCoordinateBottomRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateTopRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateTopLeft = glm::vec2(0, 0));
 
+		// Adds a bunch of vertices and indices which represent a 3D quad pointing up along the Y axis
+		void addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateFrontLeft = glm::vec2(0, 1), const glm::vec2& textureCoordinateFrontRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateBackRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateBackLeft = glm::vec2(0, 0));
+
 		// Use the convertObj() method to generate a binary file from an .obj file exported from
 		// some 3D modelling package such as Blender.
 		// The method will load in, convert and save out the stored geometry information into an efficient to load file which we use here

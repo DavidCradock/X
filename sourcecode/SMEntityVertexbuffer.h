@@ -7,7 +7,7 @@ namespace X
 	// This is an entity which is inserted into the various scene managers.
 	// It's derived from the SceneManagerEntityBase class which holds
 	// an entity's position, rotation and scale within the scene manager. Along with various helper methods to move and rotate the thing.
-	// This entity holds the name of a vertex buffer, the name of the shader and texture names, each located inside the ResourceManager class.
+	// This entity holds the name of a vertex buffer and texture names, each located inside the ResourceManager class.
 	// We have default texture maps stored in the resource manager which are used if these texture strings are not set.
 	// They are added from the ApplicationManager::addDefaultResources() method.
 	// They are named "X:default_diffuse", "X:default_emission", "X:default_roughness" and "X:default_normal"

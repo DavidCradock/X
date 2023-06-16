@@ -47,6 +47,14 @@ namespace X
 			itVertexbuffer->second->onGLContextToBeDestroyed();
 			itVertexbuffer++;
 		}
+
+		// Vertexbuffer lines
+		std::map<std::string, ResourceVertexbufferLine*>::iterator itVertexbufferLine = _mmapResVertexbufferLines.begin();
+		while (itVertexbufferLine != _mmapResVertexbufferLines.end())
+		{
+			itVertexbufferLine->second->onGLContextToBeDestroyed();
+			itVertexbufferLine++;
+		}
 	}
 
 	void ResourceManager::onGLContextRecreated(void)
@@ -91,6 +99,14 @@ namespace X
 		{
 			itVertexbuffer->second->onGLContextCreated();
 			itVertexbuffer++;
+		}
+
+		// Vertexbuffer lines
+		std::map<std::string, ResourceVertexbufferLine*>::iterator itVertexbufferLine = _mmapResVertexbufferLines.begin();
+		while (itVertexbufferLine != _mmapResVertexbufferLines.end())
+		{
+			itVertexbufferLine->second->onGLContextCreated();
+			itVertexbufferLine++;
 		}
 	}
 
@@ -237,6 +253,35 @@ namespace X
 			return;	// Doesn't exist.
 		delete it->second;
 		_mmapResVertexbuffers.erase(it);
+	}
+
+	ResourceVertexbufferLine* ResourceManager::addVertexbufferLine(const std::string& strResourceName)
+	{
+		ResourceVertexbufferLine* pNewResource = new ResourceVertexbufferLine();
+		ThrowIfFalse(pNewResource, "ResourceManager::addVertexbufferLine(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexbufferLines[strResourceName] = pNewResource;
+		return pNewResource;
+	}
+
+	ResourceVertexbufferLine* ResourceManager::getVertexbufferLine(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceVertexbufferLine*>::iterator it = _mmapResVertexbufferLines.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexbufferLines.end(), "ResourceManager::getVertexbufferLine(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second;
+	}
+
+	bool ResourceManager::getVertexbufferLineExists(const std::string& strResourceName)
+	{
+		return _mmapResVertexbufferLines.find(strResourceName) != _mmapResVertexbufferLines.end();
+	}
+
+	void ResourceManager::removeVertexbufferLine(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceVertexbufferLine*>::iterator it = _mmapResVertexbufferLines.find(strResourceName);
+		if (it == _mmapResVertexbufferLines.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		_mmapResVertexbufferLines.erase(it);
 	}
 
 	void ResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
