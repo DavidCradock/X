@@ -21,11 +21,11 @@ namespace X
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		// Create some fonts using the resource manager
-//		pRM->buildFontFiles("fonts/arial", "arial", 26, true, false, false, false, false);
+//		pRM->buildFontFiles("fonts/tahoma", "tahoma", 100, true, false, false, false, false);
 
 		// Add some fonts
 		pRM->addFont("arial_26", "fonts/arial_26");
-
+		pRM->addFont("tahoma_100", "fonts/tahoma_100");
 
 	}
 
@@ -56,7 +56,16 @@ namespace X
 		// Render some text
 		std::string strFPS = "FPS: ";
 		strFPS += std::format("{:.2f}", timer.getFPSAveraged());
-		pRM->getFont("arial_26")->print(strFPS, 0, 0, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strFPS, 0, 0, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		// Render more text with various scaling values
+		float fYpos = 30.0f;
+		for (float fScale = 0.1f; fScale < 1.1f; fScale += 0.1f)
+		{
+			std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
+			pRM->getFont("tahoma_100")->print(strText, 0, fYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			fYpos += 100.0f * fScale;
+		}
 
 		// Escape key to exit
 		InputManager* pInputManager = InputManager::getPointer();

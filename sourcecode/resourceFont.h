@@ -21,16 +21,16 @@ namespace X
 		void onGLContextToBeDestroyed(void);
 
 		// Prints the given text as a single line
-		void print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		void print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		
 		// Prints the given text as a single line, centered at iPosX and iPosY
-		void printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		void printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
-		float getTextWidth(const std::string& strText);
+		float getTextWidth(const std::string& strText, float fFontScaling = 1.0f);
 
 		// Get the maximum height in pixels, of the font
-		float getTextHeight(void);
+		float getTextHeight(float fFontScaling = 1.0f);
 
 		// Each character description (width, height, offset etc)
 		struct CharDesc

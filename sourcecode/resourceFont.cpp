@@ -69,7 +69,7 @@ namespace X
 		}
 	}
 
-	void ResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, glm::vec4 colour)
+	void ResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
 	{
 		// Get shader used to render the text
 		ResourceManager* pResourceManager = ResourceManager::getPointer();
@@ -97,7 +97,7 @@ namespace X
 		char charIndex = 0;
 		glm::vec2 vPosition((float)iPosX, (float)iPosY);
 		glm::vec2 vDimensions;
-		vDimensions.y = fontTypes.fMaxCharHeight;
+		vDimensions.y = fontTypes.fMaxCharHeight * fFontScaling;
 		glm::vec2 tcBL, tcBR, tcTR, tcTL;
 
 		// Remove all geometry from vertex buffer
@@ -111,7 +111,7 @@ namespace X
 
 			// Compute everything for this character 
 			vPosition.x += fontTypes.charDesc[charIndex].fABCa;
-			vDimensions.x = fontTypes.charDesc[charIndex].fABCb;
+			vDimensions.x = fontTypes.charDesc[charIndex].fABCb * fFontScaling;
 			tcBL.x = fontTypes.charDesc[charIndex].vTexMin.x;
 			tcBL.y = fontTypes.charDesc[charIndex].vTexMin.y;
 			tcTR.x = fontTypes.charDesc[charIndex].vTexMax.x;
@@ -157,7 +157,7 @@ namespace X
 			vertex.texCoord = tcBR;
 			vertices.push_back(vertex);
 
-			vPosition.x += fontTypes.charDesc[charIndex].fABCb + fontTypes.charDesc[charIndex].fABCc;
+			vPosition.x += (fontTypes.charDesc[charIndex].fABCb + fontTypes.charDesc[charIndex].fABCc) * fFontScaling;
 		}
 		// Then finally upload to the GPU and draw everything.
 //		if (!vertices.size())	// No need to check both vertices and indices
@@ -233,15 +233,15 @@ namespace X
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void ResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, glm::vec4 colour)
+	void ResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
 	{
-		float fTextWidth = getTextWidth(strText);
+		float fTextWidth = getTextWidth(strText, fFontScaling);
 		iPosX -= int(fTextWidth * 0.5f);
-		iPosY -= int(getTextHeight() * 0.5f);
-		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, colour);
+		iPosY -= int(getTextHeight(fFontScaling) * 0.5f);
+		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
 	}
 
-	float ResourceFont::getTextWidth(const std::string& strText)
+	float ResourceFont::getTextWidth(const std::string& strText, float fFontScaling)
 	{
 		float fWidth = 0;
 		unsigned char ch;
@@ -252,11 +252,11 @@ namespace X
 			fWidth += fontTypes.charDesc[ch].fABCb;
 			fWidth += fontTypes.charDesc[ch].fABCc;
 		}
-		return fWidth;
+		return fWidth * fFontScaling;
 	}
 
-	float ResourceFont::getTextHeight(void)
+	float ResourceFont::getTextHeight(float fFontScaling)
 	{
-		return fontTypes.fMaxCharHeight;
+		return fontTypes.fMaxCharHeight * fFontScaling;
 	}
 }
