@@ -5,6 +5,7 @@
 #include "SMEntityVertexbuffer.h"
 #include "SMEntityVertexbufferLine.h"
 #include "camera.h"
+#include "SMMaterial.h"
 
 namespace X
 {
@@ -26,18 +27,44 @@ namespace X
 		SceneManagerLightPoint mvLightPoint[4];				// The point lights for this scene
 		int miNumPointLights;								// The number of point lights to use. Can be between 0 and 4
 
-		// Adds a new uniquely named vertex buffer entity to this scene and returns a pointer to it if needed
-		// If the named entity already exists, an exception occurs
-		SceneManagerEntityVertexbuffer* addEntityVertexbuffer(
-			const std::string& strEntityName,									// The unique name of this entity
-			const std::string& strVertexbufferName,								// The vertex buffer resource located in the ResourceManager used when rendering this entity
+		// Adds a new uniquely named material which the entity vertex buffers use to render theirselves with.
+		// If the named material already exists, an exception occurs.
+		SceneManagerMaterial* addMaterial(
+			const std::string strMaterialName,		// The unique name of this material
 			float fAmbientStrength = 0.05f,										// Ambient strength
 			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
 			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
 			float fSpecularStrength = 0.25f,									// Specular strength
 			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
-			const std::string & strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
+			const std::string& strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);
+		
+		// Returns a pointer to the named material
+		// If the named material doesn't exist, an exception occurs
+		SceneManagerMaterial* getMaterial(const std::string& strMaterialName);
+
+		// Returns whether the named material exists or not
+		bool getMaterialExists(const std::string& strMaterialName);
+
+		// Attempts to remove the named material from the scene manager
+		// If the material doesn't exist, this silently fails
+		void removeMaterial(const std::string& strMaterialName);
+
+		// Removes all materials
+		void removeAllMaterials(void);
+
+
+		// Adds a new uniquely named vertex buffer entity to this scene and returns a pointer to it if needed
+		// If the named entity already exists, an exception occurs
+		SceneManagerEntityVertexbuffer* addEntityVertexbuffer(
+			const std::string& strEntityName,				// The unique name of this entity
+			const std::string& strVertexbufferName,			// The vertex buffer resource located in the ResourceManager used when rendering this entity
+			const std::string& strMaterialName				// The material in the scene manager to use whilst rendering the entity
+		);
+
+		// Returns a pointer to the named vertex buffer entity.
+		// If the enitity doesn't exist, an exception occurs.
+		SceneManagerEntityVertexbuffer* getEntityVertexbuffer(const std::string& strEntityName);
 
 		// Returns whether the named vertex buffer entity exists or not
 		bool getEntityVertexbufferExists(const std::string& strEntityName);
@@ -57,6 +84,10 @@ namespace X
 			const std::string& strTextureName = "X:default_white"				// The texture resource located in the ResourceManager used for the colour
 		);
 
+		// Returns a pointer to the named vertex buffer line entity.
+		// If the enitity doesn't exist, an exception occurs.
+		SceneManagerEntityVertexbufferLine* getEntityVertexbufferLine(const std::string& strEntityName);
+
 		// Returns whether the named vertex buffer line entity exists or not
 		bool getEntityVertexbufferLineExists(const std::string& strEntityName);
 
@@ -70,6 +101,7 @@ namespace X
 	private:
 		std::map<std::string, SceneManagerEntityVertexbuffer*>		mmapEntitiesVertexbuffer;		// Each named vertex buffer entity in this scene.
 		std::map<std::string, SceneManagerEntityVertexbufferLine*>	mmapEntitiesVertexbufferLine;	// Each named vertex buffer line entity in this scene.
+		std::map<std::string, SceneManagerMaterial*>				mmapMaterials;					// Each named material in this scene.
 
 		// Renders the vertex buffer entities contained in this scene
 		void _renderVertexbufferEntities(void);

@@ -60,7 +60,13 @@ namespace X
 
 		// Render more text with various scaling values
 		float fYpos = 30.0f;
-		for (float fScale = 0.1f; fScale < 1.1f; fScale += 0.1f)
+		for (float fScale = 0.1f; fScale < 1.0f; fScale += 0.1f)
+		{
+			std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
+			pRM->getFont("tahoma_100")->print(strText, 0, fYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			fYpos += 100.0f * fScale;
+		}
+		for (float fScale = 1.0f; fScale < 3.5f; fScale += 0.5f)
 		{
 			std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
 			pRM->getFont("tahoma_100")->print(strText, 0, fYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -120,16 +126,22 @@ namespace X
 
 		// Scene manager
 		mSceneManagerSimple.mCamera.setModeOrbit();	// Use defaults
-		SceneManagerEntityVertexbuffer* pEntity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
+
+		// Create materials
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png", "X:default_emission");
+		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "textures/groundplane.png", "X:default_roughness", 0.25f);
+		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
+
+		SceneManagerEntityVertexbuffer* pEntity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", "mat_cubes");
 		pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(0.0f, 0.5f, 0.0f));
 		for (int i = 0; i < 100; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png");
+			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", "mat_cubes");
 			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(0.5f, 0.5f), randf(-25.0f, 25.0f)));
 		}
 		// Ground plane
-		pEntity = mSceneManagerSimple.addEntityVertexbuffer("groundplane", "groundplane", 0.5f, "textures/groundplane.png", "X:default_roughness", 0.25f);
+		pEntity = mSceneManagerSimple.addEntityVertexbuffer("groundplane", "groundplane", "mat_groundplane");
 
 		// Directional light settings
 		mSceneManagerSimple.mvLightDirectional.mvDirection = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -149,11 +161,7 @@ namespace X
 		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
 		{
 			std::string strEntity = "point_light_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityVertexbuffer(
-				strEntity, // Enitity name
-				"icosphere_radius_0.01", // Vertex buffer name
-				0.05f, // Ambient strength
-				"X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
+			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "icosphere_radius_0.01", "mat_white");
 			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, mSceneManagerSimple.mvLightPoint[i].mvPosition);
 		}
 

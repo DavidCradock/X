@@ -124,6 +124,9 @@
     <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\SMMaterial.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -261,6 +264,9 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMMaterial.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
   </ItemGroup>

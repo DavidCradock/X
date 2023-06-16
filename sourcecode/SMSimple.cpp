@@ -27,15 +27,73 @@ namespace X
 
 	}
 
+	SceneManagerMaterial* SceneManagerSimple::addMaterial(
+		const std::string strMaterialName,				// The unique name of this material
+		float fAmbientStrength,							// Ambient strength
+		const std::string& strTextureNameDiffuse,		// The texture resource located in the ResourceManager used for the diffuse colour
+		const std::string& strTextureNameRoughness,		// The texture resource located in the ResourceManager used for the roughness
+		float fSpecularStrength,						// Specular strength
+		const std::string& strTextureNameNormal,		// The texture resource located in the ResourceManager used for the normal map
+		const std::string& strTextureNameEmission		// The texture resource located in the ResourceManager used for the emission
+	)
+	{
+		// Make sure the entity doesn't already exist
+		ThrowIfTrue(getMaterialExists(strMaterialName), "SceneManagerSimple::addMaterial(" + strMaterialName + ") failed. The named material already exists.");
+
+		// Allocate the new entity
+		SceneManagerMaterial* pNewMaterial = new SceneManagerMaterial;
+		ThrowIfFalse(pNewMaterial, "SceneManagerSimple::addMaterial(" + strMaterialName + ") failed. Unable to allocate memory for the new material.");
+
+		// Set passed values
+		pNewMaterial->mstrTextureNameDiffuse = strTextureNameDiffuse;
+		pNewMaterial->mstrTextureNameEmission = strTextureNameEmission;
+		pNewMaterial->mstrTextureNameNormalmap = strTextureNameNormal;
+		pNewMaterial->mstrTextureNameRoughness = strTextureNameRoughness;
+		pNewMaterial->mfSpecularStrength = fSpecularStrength;
+		pNewMaterial->mfAmbientStrength = fAmbientStrength;
+
+		// Place in the hashmap
+		mmapMaterials[strMaterialName] = pNewMaterial;
+		return pNewMaterial;
+	}
+
+	SceneManagerMaterial* SceneManagerSimple::getMaterial(const std::string& strMaterialName)
+	{
+		std::map<std::string, SceneManagerMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		ThrowIfTrue(it == mmapMaterials.end(), "SceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
+		return it->second;
+	}
+
+	bool SceneManagerSimple::getMaterialExists(const std::string& strMaterialName)
+	{
+		std::map<std::string, SceneManagerMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		return it != mmapMaterials.end();
+	}
+
+	void SceneManagerSimple::removeMaterial(const std::string& strMaterialName)
+	{
+		std::map<std::string, SceneManagerMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		if (it == mmapMaterials.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		mmapMaterials.erase(it);
+	}
+
+	void SceneManagerSimple::removeAllMaterials(void)
+	{
+		std::map<std::string, SceneManagerMaterial*>::iterator it = mmapMaterials.begin();
+		while (it != mmapMaterials.end())
+		{
+			delete it->second;
+			it++;
+		}
+		mmapMaterials.clear();
+	}
+
 	SceneManagerEntityVertexbuffer* SceneManagerSimple::addEntityVertexbuffer(
 		const std::string& strEntityName,			// The unique name of this entity
 		const std::string& strVertexbufferName,		// The vertex buffer resource located in the ResourceManager used when rendering this entity
-		float fAmbientStrength,						//
-		const std::string& strTextureNameDiffuse,	// The texture resource located in the ResourceManager used for the diffuse colour
-		const std::string& strTextureNameRoughness,	// The texture resource located in the ResourceManager used for the roughness
-		float fSpecularStrength,					//
-		const std::string& strTextureNameNormal,	// The texture resource located in the ResourceManager used for the normal map
-		const std::string& strTextureNameEmission)	// The texture resource located in the ResourceManager used for the emission
+		const std::string& strMaterialName)			// Material name (added to scene manager) which this entity uses for rendering
 	{
 		// Make sure the entity doesn't already exist
 		ThrowIfTrue(getEntityVertexbufferExists(strEntityName), "SceneManagerSimple::addEntityVertexbuffer(" + strEntityName + ") failed. The named entity already exists.");
@@ -46,16 +104,18 @@ namespace X
 
 		// Set passed values
 		pNewEntity->mstrVertexbufferName = strVertexbufferName;
-		pNewEntity->mstrTextureNameDiffuse = strTextureNameDiffuse;
-		pNewEntity->mstrTextureNameEmission = strTextureNameEmission;
-		pNewEntity->mstrTextureNameNormalmap = strTextureNameNormal;
-		pNewEntity->mstrTextureNameRoughness = strTextureNameRoughness;
-		pNewEntity->mfSpecularStrength = fSpecularStrength;
-		pNewEntity->mfAmbientStrength = fAmbientStrength;
+		pNewEntity->mstrMaterialName = strMaterialName;
 
 		// Place in the hashmap
 		mmapEntitiesVertexbuffer[strEntityName] = pNewEntity;
 		return pNewEntity;
+	}
+
+	SceneManagerEntityVertexbuffer* SceneManagerSimple::getEntityVertexbuffer(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesVertexbuffer.end(), "SceneManagerSimple::getEntityVertexbuffer(" + strEntityName + ") failed. Entity doesn't exist.");
+		return it->second;
 	}
 
 	bool SceneManagerSimple::getEntityVertexbufferExists(const std::string& strEntityName)
@@ -100,6 +160,13 @@ namespace X
 		// Place in the hashmap
 		mmapEntitiesVertexbufferLine[strEntityName] = pNewEntity;
 		return pNewEntity;
+	}
+
+	SceneManagerEntityVertexbufferLine* SceneManagerSimple::getEntityVertexbufferLine(const std::string& strEntityName)
+	{
+		std::map<std::string, SceneManagerEntityVertexbufferLine*>::iterator it = mmapEntitiesVertexbufferLine.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesVertexbufferLine.end(), "SceneManagerSimple::getEntityVertexbufferLine(" + strEntityName + ") failed. Entity doesn't exist.");
+		return it->second;
 	}
 
 	bool SceneManagerSimple::getEntityVertexbufferLineExists(const std::string& strEntityName)
@@ -208,12 +275,15 @@ namespace X
 		std::map<std::string, SceneManagerEntityVertexbuffer*>::iterator it = mmapEntitiesVertexbuffer.begin();
 		while (it != mmapEntitiesVertexbuffer.end())
 		{
+			// Get entity material
+			SceneManagerMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
+
 			// Get vertex buffer and textures used by each entity
 			pVB = pRM->getVertexbuffer(it->second->mstrVertexbufferName);
-			pTexDiffuse = pRM->getTexture2D(it->second->mstrTextureNameDiffuse);
-			pTexRoughness = pRM->getTexture2D(it->second->mstrTextureNameRoughness);
-			pTexNormal = pRM->getTexture2D(it->second->mstrTextureNameNormalmap);
-			pTexEmission = pRM->getTexture2D(it->second->mstrTextureNameEmission);
+			pTexDiffuse = pRM->getTexture2D(pMaterial->mstrTextureNameDiffuse);
+			pTexRoughness = pRM->getTexture2D(pMaterial->mstrTextureNameRoughness);
+			pTexNormal = pRM->getTexture2D(pMaterial->mstrTextureNameNormalmap);
+			pTexEmission = pRM->getTexture2D(pMaterial->mstrTextureNameEmission);
 
 			// Bind each texture to each sampler unit
 			pTexDiffuse->bind(0);
@@ -225,9 +295,8 @@ namespace X
 			pShader->setMat4("matrixWorld", it->second->matrixWorld);
 
 			// Ambient and specular uniforms
-			pShader->setFloat("fAmbientStrength", it->second->mfAmbientStrength);
-			pShader->setFloat("fSpecularStrength", it->second->mfSpecularStrength);
-
+			pShader->setFloat("fAmbientStrength", pMaterial->mfAmbientStrength);
+			pShader->setFloat("fSpecularStrength", pMaterial->mfSpecularStrength);
 
 			// Render the vertex buffer
 			pVB->draw(false);

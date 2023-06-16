@@ -7,8 +7,7 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio hit compile, done.
 ** TODO **
-- Add vertex buffer resource for line rendering
-- Add scaling of fonts (Use large font and scale down, scaling up would look crappy) 
+- Add material, which holds textures used for vertex buffer so easier to sort
 - implement more stuff into Camera
 - implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
 - implement GUI (2D)

@@ -176,6 +176,7 @@
     <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp" />
     <ClCompile Include="sourcecode\SMLightDirectional.cpp" />
     <ClCompile Include="sourcecode\SMLightPoint.cpp" />
+    <ClCompile Include="sourcecode\SMMaterial.cpp" />
     <ClCompile Include="sourcecode\SMSimple.cpp" />
     <ClCompile Include="sourcecode\utilities.cpp" />
     <ClCompile Include="sourcecode\window.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h" />
     <ClInclude Include="sourcecode\SMLightDirectional.h" />
     <ClInclude Include="sourcecode\SMLightPoint.h" />
+    <ClInclude Include="sourcecode\SMMaterial.h" />
     <ClInclude Include="sourcecode\SMSimple.h" />
     <ClInclude Include="sourcecode\window.h" />
     <ClInclude Include="sourcecode\log.h" />
