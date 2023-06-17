@@ -1,6 +1,5 @@
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() called.
-0w:0d:0h:0m:00s : ApplicationManager::addApp(Development Application) called.
-0w:0d:0h:0m:00s : ApplicationManager::addApp(Game) called.
+0w:0d:0h:0m:00s : ApplicationManager::addApp(GUIThemeEditor) called.
 0w:0d:0h:0m:00s : Window::createWindow() called.
 0w:0d:0h:0m:00s : Window::createWindow() creating window.
 0w:0d:0h:0m:00s : Window::createWindow() obtaining window's device context.
@@ -18,14 +17,14 @@
 0w:0d:0h:0m:00s : setupOpenGLExtensions() complete.
 0w:0d:0h:0m:00s : ApplicationManager::mainLoop() adding default resources to ResourceManager.
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() calling Development Application's onStart()
-0w:0d:0h:0m:00s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:12s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:12s : Window::destroyWindow() called.
-0w:0d:0h:0m:12s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:12s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:12s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:12s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:12s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:12s : Window::destroyWindow() complete.
-0w:0d:0h:0m:12s : Total runtime: 12sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:06s : ApplicationManager::mainLoop() calling AppDevelopment's onStart()
+0w:0d:0h:0m:06s : ApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:14s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:14s : Window::destroyWindow() called.
+0w:0d:0h:0m:14s : Window::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:14s : Window::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:14s : Window::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:14s : Window::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:14s : Window::destroyWindow() unregistering window class.
+0w:0d:0h:0m:14s : Window::destroyWindow() complete.
+0w:0d:0h:0m:14s : Total runtime: 14sec 0min 0hr 0days 0weeks.

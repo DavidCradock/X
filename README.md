@@ -13,3 +13,6 @@
 - implement GUI (2D)
 - implement shadows
 - particle systems
+- Add in neural networks, steering behaviours, pathfinding
+- Add and profile sorting of scene by materials
+- add translation/ rotation/scale of base entities

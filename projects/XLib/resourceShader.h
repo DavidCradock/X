@@ -1,0 +1,49 @@
+#pragma once
+#include "PCH.h"
+#include "resourceBase.h"
+
+namespace X
+{
+	class ResourceShader : public ResourceBase
+	{
+	public:
+		ResourceShader(const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
+		~ResourceShader();
+
+		// Create all OpenGL context dependent objects when an OpenGL context exists.
+		void onGLContextCreated(void);
+
+		// Free all OpenGL context dependent objects before the OpenGL context is destroyed.
+		void onGLContextToBeDestroyed(void);
+
+		// Bind the shader
+		void bind(void);
+
+		// Unbind the shader
+		void unbind(void);
+
+		// Set uniform (call after bind())
+		void setBool(const std::string& name, bool value);
+
+		// Set uniform (call after bind())
+		// Usefull for telling OpenGL which sampler unit belongs to which uniform sampler2D name in the fragment program
+		// Example...
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		// pShader->setInt("texture0", 0);
+		// pShader->setInt("texture1", 1);
+		void setInt(const std::string& name, int value);
+
+		// Set uniform (call after bind())
+		void setFloat(const std::string& name, float value);
+
+		// Set named matrix (call after bind())
+		void setMat4(const std::string& name, const glm::mat4& matrix);
+
+		// Set uniform vec3 (call after bind())
+		void setVec3(const std::string& name, const glm::vec3& vec3);
+
+		std::string _mstrVertexShaderFilename;
+		std::string _mstrFragmentShaderFilename;
+		unsigned int _muiProgramID;
+	};
+}

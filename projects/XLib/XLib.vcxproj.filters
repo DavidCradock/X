@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Applications">
+      <UniqueIdentifier>{aea42c93-5f37-4179-af72-32dae8e9f6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{925a94a3-1d89-4be9-a9b0-b72317b2955e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{9f37bd66-2429-485d-a2d2-ea8b86a54c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{6a3d61fa-510f-4117-a486-b79c23572887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9f69bee0-2b3a-4a56-ae3a-44a32520e4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneManager">
+      <UniqueIdentifier>{725ff4ea-dae3-4fe6-a608-5dea63553f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{fb10734b-bd47-4dda-a5df-55d06f057a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{7b60c26f-e31f-4d2c-aaa2-4e840cc74c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{a946d6b2-3490-4f8f-a6d8-730875098b38}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="frustum.h" />
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="plane.h" />
+    <ClInclude Include="renderQueue.h" />
+    <ClInclude Include="applicationManager.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="applicationBase.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="applicationGUIThemeEditor.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="openGLExtensions.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputJoystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputKeyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputMouse.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="SMCamera.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityBase.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityVertexbuffer.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityVertexbufferLine.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMLightDirectional.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMLightPoint.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMMaterial.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMSimple.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="audioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFramebuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceShader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2D.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceVertexbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceVertexbufferLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="X.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="OpenGL\glcorearb.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\glext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\khrplatform.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\wgl.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\wglext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceBase.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="frustum.cpp" />
+    <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="plane.cpp" />
+    <ClCompile Include="renderQueue.cpp" />
+    <ClCompile Include="applicationBase.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="applicationGUIThemeEditor.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="applicationManager.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="openGLExtensions.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputJoystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputKeyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputMouse.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="SMCamera.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityBase.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityVertexbuffer.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityVertexbufferLine.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMLightDirectional.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMLightPoint.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMMaterial.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMSimple.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="audioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFramebuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceShader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2D.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexbuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexbufferLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

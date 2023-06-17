@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="applicationBase.h" />
+    <ClInclude Include="applicationGUIThemeEditor.h" />
+    <ClInclude Include="applicationManager.h" />
+    <ClInclude Include="audioManager.h" />
+    <ClInclude Include="SMCamera.h" />
+    <ClInclude Include="frustum.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="inputJoystick.h" />
+    <ClInclude Include="inputKeyboard.h" />
+    <ClInclude Include="inputMouse.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="openGLExtensions.h" />
+    <ClInclude Include="OpenGL\glcorearb.h" />
+    <ClInclude Include="OpenGL\glext.h" />
+    <ClInclude Include="OpenGL\khrplatform.h" />
+    <ClInclude Include="OpenGL\wgl.h" />
+    <ClInclude Include="OpenGL\wglext.h" />
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="plane.h" />
+    <ClInclude Include="renderQueue.h" />
+    <ClInclude Include="resourceBase.h" />
+    <ClInclude Include="resourceFont.h" />
+    <ClInclude Include="resourceFramebuffer.h" />
+    <ClInclude Include="resourceManager.h" />
+    <ClInclude Include="resourceShader.h" />
+    <ClInclude Include="resourceTexture2D.h" />
+    <ClInclude Include="resourceVertexbuffer.h" />
+    <ClInclude Include="resourceVertexbufferLine.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="SMEntityBase.h" />
+    <ClInclude Include="SMEntityVertexbuffer.h" />
+    <ClInclude Include="SMEntityVertexbufferLine.h" />
+    <ClInclude Include="SMLightDirectional.h" />
+    <ClInclude Include="SMLightPoint.h" />
+    <ClInclude Include="SMMaterial.h" />
+    <ClInclude Include="SMSimple.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="utilities.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="X.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="applicationBase.cpp" />
+    <ClCompile Include="applicationGUIThemeEditor.cpp" />
+    <ClCompile Include="applicationManager.cpp" />
+    <ClCompile Include="audioManager.cpp" />
+    <ClCompile Include="SMCamera.cpp" />
+    <ClCompile Include="frustum.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="input.cpp" />
+    <ClCompile Include="inputJoystick.cpp" />
+    <ClCompile Include="inputKeyboard.cpp" />
+    <ClCompile Include="inputMouse.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="openGLExtensions.cpp" />
+    <ClCompile Include="PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="plane.cpp" />
+    <ClCompile Include="renderQueue.cpp" />
+    <ClCompile Include="resourceFont.cpp" />
+    <ClCompile Include="resourceFramebuffer.cpp" />
+    <ClCompile Include="resourceManager.cpp" />
+    <ClCompile Include="resourceShader.cpp" />
+    <ClCompile Include="resourceTexture2D.cpp" />
+    <ClCompile Include="resourceVertexbuffer.cpp" />
+    <ClCompile Include="resourceVertexbufferLine.cpp" />
+    <ClCompile Include="SMEntityBase.cpp" />
+    <ClCompile Include="SMEntityVertexbuffer.cpp" />
+    <ClCompile Include="SMEntityVertexbufferLine.cpp" />
+    <ClCompile Include="SMLightDirectional.cpp" />
+    <ClCompile Include="SMLightPoint.cpp" />
+    <ClCompile Include="SMMaterial.cpp" />
+    <ClCompile Include="SMSimple.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{4e0ae536-4aea-4c4a-af8d-f2b9e692d359}</ProjectGuid>
+    <RootNamespace>XLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
