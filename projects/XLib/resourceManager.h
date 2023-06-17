@@ -5,8 +5,8 @@
 #include "resourceFramebuffer.h"
 #include "resourceShader.h"
 #include "resourceTexture2D.h"
-#include "resourceVertexbuffer.h"
-#include "resourceVertexbufferLine.h"
+#include "resourceTriangle.h"
+#include "resourceLine.h"
 
 namespace X
 {
@@ -96,35 +96,35 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		void removeTexture2D(const std::string& strResourceName);
 
-		// Adds a new vertex buffer object to the manager.
+		// Adds a new triangle object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		ResourceVertexbuffer* addVertexbuffer(const std::string& strResourceName);
+		ResourceTriangle* addTriangle(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceVertexbuffer* getVertexbuffer(const std::string& strResourceName);
+		ResourceTriangle* getTriangle(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getVertexbufferExists(const std::string& strResourceName);
+		bool getTriangleExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
-		void removeVertexbuffer(const std::string& strResourceName);
+		void removeTriangle(const std::string& strResourceName);
 
 		// Adds a new line vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		ResourceVertexbufferLine* addVertexbufferLine(const std::string& strResourceName);
+		ResourceLine* addLine(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceVertexbufferLine* getVertexbufferLine(const std::string& strResourceName);
+		ResourceLine* getLine(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getVertexbufferLineExists(const std::string& strResourceName);
+		bool getLineExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
-		void removeVertexbufferLine(const std::string& strResourceName);
+		void removeLine(const std::string& strResourceName);
 
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
@@ -139,12 +139,12 @@ namespace X
 		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
 
 	private:
-		std::map<std::string, ResourceFont*>				_mmapResFonts;				// A hash map holding each named font resource
-		std::map<std::string, ResourceFramebuffer*>			_mmapResFramebuffers;		// A hash map holding each named framebuffer resource
-		std::map<std::string, ResourceShader*>				_mmapResShaders;			// A hash map holding each named shader resource
-		std::map<std::string, ResourceTexture2D*>			_mmapResTextures2D;			// A hash map holding each named 2D texture resource
-		std::map<std::string, ResourceVertexbuffer*>		_mmapResVertexbuffers;		// A hash map holding each named vertexbuffer resource
-		std::map<std::string, ResourceVertexbufferLine*>	_mmapResVertexbufferLines;	// A hash map holding each named vertexbuffer line resource
+		std::map<std::string, ResourceFont*>		_mmapResFonts;			// A hash map holding each named font resource
+		std::map<std::string, ResourceFramebuffer*>	_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
+		std::map<std::string, ResourceShader*>		_mmapResShaders;		// A hash map holding each named shader resource
+		std::map<std::string, ResourceTexture2D*>	_mmapResTextures2D;		// A hash map holding each named 2D texture resource
+		std::map<std::string, ResourceTriangle*>	_mmapResTriangles;		// A hash map holding each named triangle resource
+		std::map<std::string, ResourceLine*>		_mmapResLines;			// A hash map holding each named line resource
 	};
 
 }

@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexbufferLine.h"
+#include "resourceLine.h"
 #include "log.h"
 
 namespace X
 {
 
-	ResourceVertexbufferLine::ResourceVertexbufferLine()
+	ResourceLine::ResourceLine()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -14,17 +14,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	ResourceVertexbufferLine::~ResourceVertexbufferLine()
+	ResourceLine::~ResourceLine()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceVertexbufferLine::onGLContextCreated(void)
+	void ResourceLine::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void ResourceVertexbufferLine::onGLContextToBeDestroyed(void)
+	void ResourceLine::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -43,14 +43,14 @@ namespace X
 		}
 	}
 
-	void ResourceVertexbufferLine::removeGeom(void)
+	void ResourceLine::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 		muiIndex = 0;
 	}
 
-	void ResourceVertexbufferLine::update(void)
+	void ResourceLine::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -111,7 +111,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void ResourceVertexbufferLine::draw(void)
+	void ResourceLine::draw(void)
 	{
 		if (!vertexArrayObject)
 			return;
@@ -133,7 +133,7 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void ResourceVertexbufferLine::addLinePoint(const Vertex& newVertex)
+	void ResourceLine::addLinePoint(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 		indices.push_back(muiIndex);

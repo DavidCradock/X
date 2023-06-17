@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SceneManagerMaterial::SceneManagerMaterial()
+	SMMaterial::SMMaterial()
 	{
 		mstrTextureNameDiffuse = "X:default_diffuse";
 		mstrTextureNameEmission = "X:default_emission";

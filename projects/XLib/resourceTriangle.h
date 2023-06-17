@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class ResourceVertexbuffer : public ResourceBase
+	class ResourceTriangle : public ResourceBase
 	{
 	public:
-		ResourceVertexbuffer();
-		~ResourceVertexbuffer();
+		ResourceTriangle();
+		~ResourceTriangle();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

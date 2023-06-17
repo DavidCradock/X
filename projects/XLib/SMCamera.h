@@ -9,10 +9,10 @@ namespace X
 	// We can simply use the various methods to set the view and projection matrixs, access them directly or we can use a camera mode
 	// A camera mode is set with a call to one of the various setMode??() methods and then call update() once per program loop to compute 
 	// the view matrix depending upon which mode is currently set
-	class Camera
+	class SMCamera
 	{
 	public:
-		Camera();
+		SMCamera();
 
 		// Sets the projection matrix of the camera as orthogonal
 		// The parameters are the dimensions of whatever we're rendering to.

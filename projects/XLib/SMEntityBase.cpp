@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SceneManagerEntityBase::SceneManagerEntityBase()
+	SMEntityBase::SMEntityBase()
 	{
 		matrixWorld = glm::mat4(1.0f);
 	}

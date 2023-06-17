@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SceneManagerLightDirectional::SceneManagerLightDirectional()
+	SMLightDirectional::SMLightDirectional()
 	{
 		mvDirection.x = 0.5f;
 		mvDirection.y = 0.5f;

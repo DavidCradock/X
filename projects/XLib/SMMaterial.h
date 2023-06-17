@@ -15,10 +15,10 @@ namespace X
 	// If emission texture name is not set, we use the default tiny black texture, which equates to zero emission or turning it off.
 	// If normal texture name is not set, we use the default tiny flat normal map, which equates to turning off bump mapping
 	// If roughness texture name is not set, we use the default tiny black texture, which equates to medium (0.5f) roughness
-	class SceneManagerMaterial
+	class SMMaterial
 	{
 	public:
-		SceneManagerMaterial();
+		SMMaterial();
 
 		// Texture names used for this material
 		std::string mstrTextureNameDiffuse;		// Name of the texture in the resource manager used for this material. Diffuse colour

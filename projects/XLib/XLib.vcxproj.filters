@@ -86,10 +86,10 @@
     <ClInclude Include="SMEntityBase.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SMEntityVertexbuffer.h">
+    <ClInclude Include="SMEntityTriangle.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SMEntityVertexbufferLine.h">
+    <ClInclude Include="SMEntityLine.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="SMLightDirectional.h">
@@ -122,10 +122,10 @@
     <ClInclude Include="resourceTexture2D.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceVertexbuffer.h">
+    <ClInclude Include="resourceTriangle.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceVertexbufferLine.h">
+    <ClInclude Include="resourceLine.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="X.h" />
@@ -200,10 +200,10 @@
     <ClCompile Include="SMEntityBase.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SMEntityVertexbuffer.cpp">
+    <ClCompile Include="SMEntityTriangle.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SMEntityVertexbufferLine.cpp">
+    <ClCompile Include="SMEntityLine.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="SMLightDirectional.cpp">
@@ -236,10 +236,10 @@
     <ClCompile Include="resourceTexture2D.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceVertexbuffer.cpp">
+    <ClCompile Include="resourceTriangle.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceVertexbufferLine.cpp">
+    <ClCompile Include="resourceLine.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>

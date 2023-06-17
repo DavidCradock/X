@@ -7,11 +7,11 @@ namespace X
 	// Line strip vertex buffer used for rendering lines
 	// We need to add at least 2 vertices, they will form the first line and then
 	// each vertex added after those will form an additional line using the new vertex and the previous one.
-	class ResourceVertexbufferLine : public ResourceBase
+	class ResourceLine : public ResourceBase
 	{
 	public:
-		ResourceVertexbufferLine();
-		~ResourceVertexbufferLine();
+		ResourceLine();
+		~ResourceLine();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SceneManagerLightPoint::SceneManagerLightPoint()
+	SMLightPoint::SMLightPoint()
 	{
 		mvPosition.x = 0.0f;
 		mvPosition.y = 0.0f;

@@ -12,13 +12,13 @@ namespace X
 	// They are added from the ApplicationManager::addDefaultResources() method.
 	// It is named "X:default_white"
 	// This is usefull if we do not need to use them.
-	class SceneManagerEntityVertexbufferLine : public SceneManagerEntityBase
+	class SMEntityLine : public SMEntityBase
 	{
 	public:
-		SceneManagerEntityVertexbufferLine();
+		SMEntityLine();
 
-		std::string mstrVertexbufferName;	// Name of the vertex buffer in the resource manager used to render this entity
-		std::string mstrTextureName;		// Name of the texture in the resource manager used to render this entity for colour
+		std::string mstrLineName;		// Name of the line resource in the resource manager used to render this entity
+		std::string mstrTextureName;	// Name of the texture in the resource manager used to render this entity for colour
 		
 	};
 }

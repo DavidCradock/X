@@ -2,7 +2,7 @@
 #include "PCH.h"
 #include "resourceBase.h"
 #include "resourceTexture2D.h"
-#include "resourceVertexbuffer.h"
+//#include "resourceTriangle.h"
 
 namespace X
 {

@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexbuffer.h"
+#include "resourceTriangle.h"
 #include "log.h"
 
 namespace X
 {
 
-	ResourceVertexbuffer::ResourceVertexbuffer()
+	ResourceTriangle::ResourceTriangle()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	ResourceVertexbuffer::~ResourceVertexbuffer()
+	ResourceTriangle::~ResourceTriangle()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceVertexbuffer::onGLContextCreated(void)
+	void ResourceTriangle::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void ResourceVertexbuffer::onGLContextToBeDestroyed(void)
+	void ResourceTriangle::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void ResourceVertexbuffer::removeGeom(void)
+	void ResourceTriangle::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 	}
 
-	void ResourceVertexbuffer::_computeTangentsAndBinormals(void)
+	void ResourceTriangle::_computeTangentsAndBinormals(void)
 	{
 		if (!vertices.size())
 			return;
@@ -75,7 +75,7 @@ namespace X
 
 	}
 
-	void ResourceVertexbuffer::update(void)
+	void ResourceTriangle::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -165,7 +165,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void ResourceVertexbuffer::draw(bool bWireframeMode)
+	void ResourceTriangle::draw(bool bWireframeMode)
 	{
 		if (!vertexArrayObject)
 			return;
@@ -190,17 +190,17 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void ResourceVertexbuffer::addVertex(const Vertex& newVertex)
+	void ResourceTriangle::addVertex(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 	}
 
-	void ResourceVertexbuffer::addIndex(int newIndex)
+	void ResourceTriangle::addIndex(int newIndex)
 	{
 		indices.push_back(newIndex);
 	}
 
-	void ResourceVertexbuffer::addQuad2D(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateBottomLeft, const glm::vec2& textureCoordinateBottomRight, const glm::vec2& textureCoordinateTopRight, const glm::vec2& textureCoordinateTopLeft)
+	void ResourceTriangle::addQuad2D(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateBottomLeft, const glm::vec2& textureCoordinateBottomRight, const glm::vec2& textureCoordinateTopRight, const glm::vec2& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -237,7 +237,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void ResourceVertexbuffer::addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateFrontLeft, const glm::vec2& textureCoordinateFrontRight, const glm::vec2& textureCoordinateBackRight, const glm::vec2& textureCoordinateBackLeft)
+	void ResourceTriangle::addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateFrontLeft, const glm::vec2& textureCoordinateFrontRight, const glm::vec2& textureCoordinateBackRight, const glm::vec2& textureCoordinateBackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -277,18 +277,18 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void ResourceVertexbuffer::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
+	void ResourceTriangle::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
 
 		err = fopen_s(&file, strGeometryFilename.c_str(), "r+b");
-		ThrowIfTrue(bool(err != 0), "ResourceVertexbuffer::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
+		ThrowIfTrue(bool(err != 0), "ResourceTriangle::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
 
 		// Read in number of vertices
 		unsigned int iNumVertices = 0;
 		size_t read = fread(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == read), "ResourceVertexbuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(bool(0 == read), "ResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
 
 		// Read in a vertex at a time, adding one at a time..
 		/*
@@ -296,7 +296,7 @@ namespace X
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
 			read = fread(&vertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == read), "ResourceVertexbuffer::addFromFile() failed to read from file " + strGeometryFilename);
+			ThrowIfTrue(bool(0 == read), "ResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
 			addVertex(vertex);
 			addIndex(i);
 		}
@@ -304,7 +304,7 @@ namespace X
 		// Load in all vertex data
 		vertices.resize(iNumVertices);
 		indices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "ResourceVertexbuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "ResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
 		vertices.resize(iNumVertices);
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
@@ -317,7 +317,7 @@ namespace X
 			update();
 	}
 
-	void ResourceVertexbuffer::convertObj(const std::string filename)
+	void ResourceTriangle::convertObj(const std::string filename)
 	{
 		// Used to temporarily hold each line of data from file
 		glm::vec3 vertex;
@@ -336,7 +336,7 @@ namespace X
 		FILE* file = 0;
 		errno_t err;
 		err = fopen_s(&file, filename.c_str(), "r");
-		ThrowIfTrue(bool(err != 0), "ResourceVertexbuffer::convertObj() failed to open file " + filename);
+		ThrowIfTrue(bool(err != 0), "ResourceTriangle::convertObj() failed to open file " + filename);
 
 		char strLine[255] = { 0 };
 		char ch = 0;
@@ -401,13 +401,13 @@ namespace X
 		}
 		strOutputFilename += "geom";
 		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
-		ThrowIfTrue(bool(err != 0), "ResourceVertexbuffer::convertObj() failed to open file " + filename + " for saving.");
+		ThrowIfTrue(bool(err != 0), "ResourceTriangle::convertObj() failed to open file " + filename + " for saving.");
 
 		// Loop through each face
 		Vertex geomVertex;
 		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
 		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == written), "ResourceVertexbuffer::convertObj() failed to write to file " + filename);
+		ThrowIfTrue(bool(0 == written), "ResourceTriangle::convertObj() failed to write to file " + filename);
 
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
@@ -418,7 +418,7 @@ namespace X
 			geomVertex.binormal = glm::vec3(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			geomVertex.tangent = glm::vec3(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == written), "ResourceVertexbuffer::convertObj() failed to write to file " + filename);
+			ThrowIfTrue(bool(0 == written), "ResourceTriangle::convertObj() failed to write to file " + filename);
 		}
 		fclose(file);
 	}

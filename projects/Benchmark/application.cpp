@@ -87,21 +87,21 @@ namespace X
 		//vb.convertObj("data/DevApp/geometry/blob.obj");	// Convert .obj file to .geom file
 		//vb.convertObj("data/DevApp/geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
 
-		// Create needed vertex buffers
+		// Create needed triangles
 		ResourceManager* pRM = ResourceManager::getPointer();
 		// Cube
-		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("cube");
-		pVB->addFromFile("data/DevApp/geometry/cube.geom", true);
+		ResourceTriangle* pTri = pRM->addTriangle("cube");
+		pTri->addFromFile("data/DevApp/geometry/cube.geom", true);
 		// Blob
-		pVB = pRM->addVertexbuffer("blob");
-		pVB->addFromFile("data/DevApp/geometry/blob.geom", true);
+		pTri = pRM->addTriangle("blob");
+		pTri->addFromFile("data/DevApp/geometry/blob.geom", true);
 		// Point lights to show where they are
-		pVB = pRM->addVertexbuffer("icosphere_radius_0.01");
-		pVB->addFromFile("data/DevApp/geometry/icosphere_radius_0.01.geom", true);
+		pTri = pRM->addTriangle("icosphere_radius_0.01");
+		pTri->addFromFile("data/DevApp/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
-		pVB = pRM->addVertexbuffer("groundplane");
-		pVB->addGroundplane(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
-		pVB->update();
+		pTri = pRM->addTriangle("groundplane");
+		pTri->addGroundplane(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
+		pTri->update();
 
 		// Load in a textures
 		// Cubes
@@ -123,16 +123,16 @@ namespace X
 		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "data/DevApp/textures/groundplane.png", "X:default_roughness", 0.25f);
 		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
 
-		SceneManagerEntityVertexbuffer* pEntity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", "mat_cubes");
+		SMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
 		pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(0.0f, 0.5f, 0.0f));
 		for (int i = 0; i < 100; ++i)
 		{
 			std::string strEntity = "entity_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "cube", "mat_cubes");
+			pEntity = mSceneManagerSimple.addEntityTriangle(strEntity, "cube", "mat_cubes");
 			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, glm::vec3(randf(-25.0f, 25.0f), randf(0.5f, 0.5f), randf(-25.0f, 25.0f)));
 		}
 		// Ground plane
-		pEntity = mSceneManagerSimple.addEntityVertexbuffer("groundplane", "groundplane", "mat_groundplane");
+		pEntity = mSceneManagerSimple.addEntityTriangle("groundplane", "groundplane", "mat_groundplane");
 
 		// Directional light settings
 		mSceneManagerSimple.mvLightDirectional.mvDirection = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -152,14 +152,14 @@ namespace X
 		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
 		{
 			std::string strEntity = "point_light_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityVertexbuffer(strEntity, "icosphere_radius_0.01", "mat_white");
+			pEntity = mSceneManagerSimple.addEntityTriangle(strEntity, "icosphere_radius_0.01", "mat_white");
 			pEntity->matrixWorld = glm::translate(pEntity->matrixWorld, mSceneManagerSimple.mvLightPoint[i].mvPosition);
 		}
 
-		// Now we're done with adding vertexbuffer entities.
-		// Let's add some vertexbufferLine entities
-		ResourceVertexbufferLine* pVertexBufferLine = pRM->addVertexbufferLine("line_up");
-		ResourceVertexbufferLine::Vertex lineVertex;
+		// Now we're done with adding triangle entities.
+		// Let's add some line entities
+		ResourceLine* pVertexBufferLine = pRM->addLine("line_up");
+		ResourceLine::Vertex lineVertex;
 		lineVertex.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		lineVertex.texCoord.x = 0.0f;
 		lineVertex.texCoord.y = 0.0f;
@@ -174,7 +174,7 @@ namespace X
 			for (float fZ = -50.0f; fZ < 50.0f; fZ += 5.0f)
 			{
 				std::string strEntityName = "line_" + std::to_string(fX) + ":" + std::to_string(fZ);
-				SceneManagerEntityVertexbufferLine* pEntityLine = mSceneManagerSimple.addEntityVertexbufferLine(strEntityName, "line_up", "X:default_white");
+				SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine(strEntityName, "line_up", "X:default_white");
 				pEntityLine->matrixWorld = glm::translate(pEntityLine->matrixWorld, glm::vec3(fX, 0.0f, fZ));
 			}
 		}

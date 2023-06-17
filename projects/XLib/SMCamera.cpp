@@ -7,17 +7,17 @@
 
 namespace X
 {
-	Camera::Camera()
+	SMCamera::SMCamera()
 	{
 		mMode = Mode::None;
 	}
 
-	void Camera::setProjectionAsOrthographic(float fWidth, float fHeight)
+	void SMCamera::setProjectionAsOrthographic(float fWidth, float fHeight)
 	{
 		matrixProjection = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
 	}
 
-	void Camera::setProjectionAsPerspective(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
+	void SMCamera::setProjectionAsPerspective(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
 	{
 		if (fWidth < 0.0f || fHeight < 0.0f)
 		{
@@ -28,22 +28,22 @@ namespace X
 		matrixProjection = glm::perspective(glm::radians(fFOVdegrees), fWidth / fHeight, fZNear, fZFar);
 	}
 
-	void Camera::setViewAsIdentity(void)
+	void SMCamera::setViewAsIdentity(void)
 	{
 		matrixView = glm::mat4();
 	}
 
-	void Camera::setViewAsLookat(glm::vec3 vCameraPosition, glm::vec3 vCameraTargetPosition, glm::vec3 vUpVector)
+	void SMCamera::setViewAsLookat(glm::vec3 vCameraPosition, glm::vec3 vCameraTargetPosition, glm::vec3 vUpVector)
 	{
 		matrixView = glm::lookAt(vCameraPosition, vCameraTargetPosition, vUpVector);
 	}
 
-	glm::mat4 Camera::getViewProjectionMatrix(void)
+	glm::mat4 SMCamera::getViewProjectionMatrix(void)
 	{
 		return matrixProjection * matrixView;	// Other way around?
 	}
 
-	void Camera::setModeOrbit(glm::vec3 vOrbitPoint, float fMinDistanceFromPoint, float fCurrentDistanceFromPoint, float fMaxDistanceFromPoint, float fSensitivityX, float fSensitivityY, float fMouseSensitivityWheel)
+	void SMCamera::setModeOrbit(glm::vec3 vOrbitPoint, float fMinDistanceFromPoint, float fCurrentDistanceFromPoint, float fMaxDistanceFromPoint, float fSensitivityX, float fSensitivityY, float fMouseSensitivityWheel)
 	{
 		// Set mode of camera
 		mMode = Mode::Orbit;
@@ -60,7 +60,7 @@ namespace X
 		modeOrbit.fMouseSensitivityWheel = fMouseSensitivityWheel;
 	}
 
-	void Camera::update(void)
+	void SMCamera::update(void)
 	{
 		if (Mode::None == mMode)
 		{

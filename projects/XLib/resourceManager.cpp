@@ -45,20 +45,20 @@ namespace X
 			itTextures2D++;
 		}
 
-		// Vertexbuffers
-		std::map<std::string, ResourceVertexbuffer*>::iterator itVertexbuffer = _mmapResVertexbuffers.begin();
-		while (itVertexbuffer != _mmapResVertexbuffers.end())
+		// Triangle
+		std::map<std::string, ResourceTriangle*>::iterator itResourceTriangles = _mmapResTriangles.begin();
+		while (itResourceTriangles != _mmapResTriangles.end())
 		{
-			itVertexbuffer->second->onGLContextToBeDestroyed();
-			itVertexbuffer++;
+			itResourceTriangles->second->onGLContextToBeDestroyed();
+			itResourceTriangles++;
 		}
 
-		// Vertexbuffer lines
-		std::map<std::string, ResourceVertexbufferLine*>::iterator itVertexbufferLine = _mmapResVertexbufferLines.begin();
-		while (itVertexbufferLine != _mmapResVertexbufferLines.end())
+		// Line
+		std::map<std::string, ResourceLine*>::iterator itLine = _mmapResLines.begin();
+		while (itLine != _mmapResLines.end())
 		{
-			itVertexbufferLine->second->onGLContextToBeDestroyed();
-			itVertexbufferLine++;
+			itLine->second->onGLContextToBeDestroyed();
+			itLine++;
 		}
 	}
 
@@ -98,20 +98,20 @@ namespace X
 			itTextures2D++;
 		}
 
-		// Vertexbuffers
-		std::map<std::string, ResourceVertexbuffer*>::iterator itVertexbuffer = _mmapResVertexbuffers.begin();
-		while (itVertexbuffer != _mmapResVertexbuffers.end())
+		// Triangle
+		std::map<std::string, ResourceTriangle*>::iterator itResourceTriangles = _mmapResTriangles.begin();
+		while (itResourceTriangles != _mmapResTriangles.end())
 		{
-			itVertexbuffer->second->onGLContextCreated();
-			itVertexbuffer++;
+			itResourceTriangles->second->onGLContextCreated();
+			itResourceTriangles++;
 		}
 
-		// Vertexbuffer lines
-		std::map<std::string, ResourceVertexbufferLine*>::iterator itVertexbufferLine = _mmapResVertexbufferLines.begin();
-		while (itVertexbufferLine != _mmapResVertexbufferLines.end())
+		// Lines
+		std::map<std::string, ResourceLine*>::iterator itLine = _mmapResLines.begin();
+		while (itLine != _mmapResLines.end())
 		{
-			itVertexbufferLine->second->onGLContextCreated();
-			itVertexbufferLine++;
+			itLine->second->onGLContextCreated();
+			itLine++;
 		}
 	}
 
@@ -231,62 +231,62 @@ namespace X
 		_mmapResTextures2D.erase(it);
 	}
 
-	ResourceVertexbuffer* ResourceManager::addVertexbuffer(const std::string& strResourceName)
+	ResourceTriangle* ResourceManager::addTriangle(const std::string& strResourceName)
 	{
-		ResourceVertexbuffer* pNewResource = new ResourceVertexbuffer();
-		ThrowIfFalse(pNewResource, "ResourceManager::addVertexbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResVertexbuffers[strResourceName] = pNewResource;
+		ResourceTriangle* pNewResource = new ResourceTriangle();
+		ThrowIfFalse(pNewResource, "ResourceManager::addTriangle(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResTriangles[strResourceName] = pNewResource;
 		return pNewResource;
 	}
 
-	ResourceVertexbuffer* ResourceManager::getVertexbuffer(const std::string& strResourceName)
+	ResourceTriangle* ResourceManager::getTriangle(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceVertexbuffer*>::iterator it = _mmapResVertexbuffers.find(strResourceName);
-		ThrowIfTrue(it == _mmapResVertexbuffers.end(), "ResourceManager::getVertexbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		std::map<std::string, ResourceTriangle*>::iterator it = _mmapResTriangles.find(strResourceName);
+		ThrowIfTrue(it == _mmapResTriangles.end(), "ResourceManager::getTriangle(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second;
 	}
 
-	bool ResourceManager::getVertexbufferExists(const std::string& strResourceName)
+	bool ResourceManager::getTriangleExists(const std::string& strResourceName)
 	{
-		return _mmapResVertexbuffers.find(strResourceName) != _mmapResVertexbuffers.end();
+		return _mmapResTriangles.find(strResourceName) != _mmapResTriangles.end();
 	}
 
-	void ResourceManager::removeVertexbuffer(const std::string& strResourceName)
+	void ResourceManager::removeTriangle(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceVertexbuffer*>::iterator it = _mmapResVertexbuffers.find(strResourceName);
-		if (it == _mmapResVertexbuffers.end())
+		std::map<std::string, ResourceTriangle*>::iterator it = _mmapResTriangles.find(strResourceName);
+		if (it == _mmapResTriangles.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		_mmapResVertexbuffers.erase(it);
+		_mmapResTriangles.erase(it);
 	}
 
-	ResourceVertexbufferLine* ResourceManager::addVertexbufferLine(const std::string& strResourceName)
+	ResourceLine* ResourceManager::addLine(const std::string& strResourceName)
 	{
-		ResourceVertexbufferLine* pNewResource = new ResourceVertexbufferLine();
-		ThrowIfFalse(pNewResource, "ResourceManager::addVertexbufferLine(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResVertexbufferLines[strResourceName] = pNewResource;
+		ResourceLine* pNewResource = new ResourceLine();
+		ThrowIfFalse(pNewResource, "ResourceManager::addLine(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResLines[strResourceName] = pNewResource;
 		return pNewResource;
 	}
 
-	ResourceVertexbufferLine* ResourceManager::getVertexbufferLine(const std::string& strResourceName)
+	ResourceLine* ResourceManager::getLine(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceVertexbufferLine*>::iterator it = _mmapResVertexbufferLines.find(strResourceName);
-		ThrowIfTrue(it == _mmapResVertexbufferLines.end(), "ResourceManager::getVertexbufferLine(" + strResourceName + ") failed. Named resource doesn't exist.");
+		std::map<std::string, ResourceLine*>::iterator it = _mmapResLines.find(strResourceName);
+		ThrowIfTrue(it == _mmapResLines.end(), "ResourceManager::getLine(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second;
 	}
 
-	bool ResourceManager::getVertexbufferLineExists(const std::string& strResourceName)
+	bool ResourceManager::getLineExists(const std::string& strResourceName)
 	{
-		return _mmapResVertexbufferLines.find(strResourceName) != _mmapResVertexbufferLines.end();
+		return _mmapResLines.find(strResourceName) != _mmapResLines.end();
 	}
 
-	void ResourceManager::removeVertexbufferLine(const std::string& strResourceName)
+	void ResourceManager::removeLine(const std::string& strResourceName)
 	{
-		std::map<std::string, ResourceVertexbufferLine*>::iterator it = _mmapResVertexbufferLines.find(strResourceName);
-		if (it == _mmapResVertexbufferLines.end())
+		std::map<std::string, ResourceLine*>::iterator it = _mmapResLines.find(strResourceName);
+		if (it == _mmapResLines.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		_mmapResVertexbufferLines.erase(it);
+		_mmapResLines.erase(it);
 	}
 
 	void ResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)

@@ -2,8 +2,8 @@
 #include "PCH.h"
 #include "SMLightDirectional.h"
 #include "SMLightPoint.h"
-#include "SMEntityVertexbuffer.h"
-#include "SMEntityVertexbufferLine.h"
+#include "SMEntityTriangle.h"
+#include "SMEntityLine.h"
 #include "SMCamera.h"
 #include "SMMaterial.h"
 
@@ -21,15 +21,15 @@ namespace X
 		// Render all the entities in this scene
 		void render(void);
 
-		Camera mCamera;	// The scene manager's camera
+		SMCamera mCamera;	// The scene manager's camera
 
-		SceneManagerLightDirectional mvLightDirectional;	// The directional light for this scene
-		SceneManagerLightPoint mvLightPoint[4];				// The point lights for this scene
-		int miNumPointLights;								// The number of point lights to use. Can be between 0 and 4
+		SMLightDirectional mvLightDirectional;	// The directional light for this scene
+		SMLightPoint mvLightPoint[4];			// The point lights for this scene
+		int miNumPointLights;					// The number of point lights to use. Can be between 0 and 4
 
 		// Adds a new uniquely named material which the entity vertex buffers use to render theirselves with.
 		// If the named material already exists, an exception occurs.
-		SceneManagerMaterial* addMaterial(
+		SMMaterial* addMaterial(
 			const std::string strMaterialName,		// The unique name of this material
 			float fAmbientStrength = 0.05f,										// Ambient strength
 			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
@@ -41,7 +41,7 @@ namespace X
 		
 		// Returns a pointer to the named material
 		// If the named material doesn't exist, an exception occurs
-		SceneManagerMaterial* getMaterial(const std::string& strMaterialName);
+		SMMaterial* getMaterial(const std::string& strMaterialName);
 
 		// Returns whether the named material exists or not
 		bool getMaterialExists(const std::string& strMaterialName);
@@ -54,59 +54,59 @@ namespace X
 		void removeAllMaterials(void);
 
 
-		// Adds a new uniquely named vertex buffer entity to this scene and returns a pointer to it if needed
+		// Adds a new uniquely named triangle entity to this scene and returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
-		SceneManagerEntityVertexbuffer* addEntityVertexbuffer(
+		SMEntityTriangle* addEntityTriangle(
 			const std::string& strEntityName,				// The unique name of this entity
-			const std::string& strVertexbufferName,			// The vertex buffer resource located in the ResourceManager used when rendering this entity
+			const std::string& strTriangleName,				// The triangle resource located in the ResourceManager used when rendering this entity
 			const std::string& strMaterialName				// The material in the scene manager to use whilst rendering the entity
 		);
 
-		// Returns a pointer to the named vertex buffer entity.
+		// Returns a pointer to the named triangle entity.
 		// If the enitity doesn't exist, an exception occurs.
-		SceneManagerEntityVertexbuffer* getEntityVertexbuffer(const std::string& strEntityName);
+		SMEntityTriangle* getEntityTriangle(const std::string& strEntityName);
 
-		// Returns whether the named vertex buffer entity exists or not
-		bool getEntityVertexbufferExists(const std::string& strEntityName);
+		// Returns whether the named triangle entity exists or not
+		bool getEntityTriangleExists(const std::string& strEntityName);
 
 		// Attempts to remove the named entity from the scene
 		// If the entity doesn't exist, this silently fails
-		void removeEntityVertexbuffer(const std::string& strEntityName);
+		void removeEntityTriangle(const std::string& strEntityName);
 
-		// Removes all entites of type vertex buffer
-		void removeAllEnititiesVertexbuffer(void);
+		// Removes all entites of type triangle
+		void removeAllEnititiesTriangle(void);
 
-		// Adds a new uniquely named vertex buffer line entity to this scene and returns a pointer to it if needed
+		// Adds a new uniquely named line entity to this scene and returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
-		SceneManagerEntityVertexbufferLine* addEntityVertexbufferLine(
-			const std::string& strEntityName,									// The unique name of this entity
-			const std::string& strVertexbufferName,								// The vertex buffer resource located in the ResourceManager used when rendering this entity
-			const std::string& strTextureName = "X:default_white"				// The texture resource located in the ResourceManager used for the colour
+		SMEntityLine* addEntityLine(
+			const std::string& strEntityName,						// The unique name of this entity
+			const std::string& strLineName,							// The line resource located in the ResourceManager used when rendering this entity
+			const std::string& strTextureName = "X:default_white"		// The texture resource located in the ResourceManager used for the colour
 		);
 
-		// Returns a pointer to the named vertex buffer line entity.
+		// Returns a pointer to the named line entity.
 		// If the enitity doesn't exist, an exception occurs.
-		SceneManagerEntityVertexbufferLine* getEntityVertexbufferLine(const std::string& strEntityName);
+		SMEntityLine* getEntityLine(const std::string& strEntityName);
 
-		// Returns whether the named vertex buffer line entity exists or not
-		bool getEntityVertexbufferLineExists(const std::string& strEntityName);
+		// Returns whether the named line entity exists or not
+		bool getEntityLineExists(const std::string& strEntityName);
 
 		// Attempts to remove the named entity from the scene
 		// If the entity doesn't exist, this silently fails
-		void removeEntityVertexbufferLine(const std::string& strEntityName);
+		void removeEntityLine(const std::string& strEntityName);
 
-		// Removes all entites of type vertex buffer
-		void removeAllEnititiesVertexbufferLine(void);
+		// Removes all entites of type line
+		void removeAllEntitiesLine(void);
 
 	private:
-		std::map<std::string, SceneManagerEntityVertexbuffer*>		mmapEntitiesVertexbuffer;		// Each named vertex buffer entity in this scene.
-		std::map<std::string, SceneManagerEntityVertexbufferLine*>	mmapEntitiesVertexbufferLine;	// Each named vertex buffer line entity in this scene.
-		std::map<std::string, SceneManagerMaterial*>				mmapMaterials;					// Each named material in this scene.
+		std::map<std::string, SMEntityTriangle*>	mmapEntitiesTriangles;	// Each named triangle entity in this scene.
+		std::map<std::string, SMEntityLine*>		mmapEntitiesLine;		// Each named line entity in this scene.
+		std::map<std::string, SMMaterial*>			mmapMaterials;			// Each named material in this scene.
 
-		// Renders the vertex buffer entities contained in this scene
-		void _renderVertexbufferEntities(void);
+		// Renders the triangle entities contained in this scene
+		void _renderTriangleEntities(void);
 
-		// Renders the vertex buffer line entities contained in this scene
-		void _renderVertexbufferLineEntities(void);
+		// Renders the line entities contained in this scene
+		void _renderLineEntities(void);
 	};
 }
