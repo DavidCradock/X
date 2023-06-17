@@ -1,44 +1,35 @@
-#include "PCH.h"
-#include "applicationDevelopment.h"
-#include "audioManager.h"
-#include "log.h"
-#include "utilities.h"
-#include "input.h"
-#include "window.h"
-#include "resourceManager.h"
-#include "camera.h"
-
+#include "application.h"
 
 namespace X
 {
-	void ApplicationDevelopment::initOnce(void)
+	void Application::initOnce(void)
 	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
 		_initSceneManager();
 
-		ResourceManager* pRM = ResourceManager::getPointer();
-
 		// Create some fonts using the resource manager
-		pRM->buildFontFiles("fonts/tahoma", "tahoma", 200, true, false, false, false, false);
+		pRM->buildFontFiles("data/DevApp/fonts/tahoma", "tahoma", 200, true, false, false, false, false);
 
 		// Add some fonts
-		pRM->addFont("arial_26", "fonts/arial_26");
-		pRM->addFont("tahoma_200", "fonts/tahoma_200");
+		pRM->addFont("arial_26", "data/DevApp/fonts/arial_26");
+		pRM->addFont("tahoma_200", "data/DevApp/fonts/tahoma_200");
 
 	}
 
-	void ApplicationDevelopment::onStart(void)
+	void Application::onStart(void)
 	{
 	}
 
-	void ApplicationDevelopment::onStop(void)
+	void Application::onStop(void)
 	{
 
 	}
 
-	bool ApplicationDevelopment::onUpdate(void)
+	bool Application::onUpdate(void)
 	{
 		timer.update();
 
@@ -88,25 +79,25 @@ namespace X
 		return true;
 	}
 
-	void ApplicationDevelopment::_initSceneManager(void)
+	void Application::_initSceneManager(void)
 	{
 		// Convert and create geom files
 		//ResourceVertexbuffer vb;
-		//vb.convertObj("geometry/cube.obj");	// Convert .obj file to .geom file
-		//vb.convertObj("geometry/blob.obj");	// Convert .obj file to .geom file
-		//vb.convertObj("geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
+		//vb.convertObj("data/DevApp/geometry/cube.obj");	// Convert .obj file to .geom file
+		//vb.convertObj("data/DevApp/geometry/blob.obj");	// Convert .obj file to .geom file
+		//vb.convertObj("data/DevApp/geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
 
 		// Create needed vertex buffers
 		ResourceManager* pRM = ResourceManager::getPointer();
 		// Cube
 		ResourceVertexbuffer* pVB = pRM->addVertexbuffer("cube");
-		pVB->addFromFile("geometry/cube.geom", true);
+		pVB->addFromFile("data/DevApp/geometry/cube.geom", true);
 		// Blob
 		pVB = pRM->addVertexbuffer("blob");
-		pVB->addFromFile("geometry/blob.geom", true);
+		pVB->addFromFile("data/DevApp/geometry/blob.geom", true);
 		// Point lights to show where they are
 		pVB = pRM->addVertexbuffer("icosphere_radius_0.01");
-		pVB->addFromFile("geometry/icosphere_radius_0.01.geom", true);
+		pVB->addFromFile("data/DevApp/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
 		pVB = pRM->addVertexbuffer("groundplane");
 		pVB->addGroundplane(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
@@ -114,22 +105,22 @@ namespace X
 
 		// Load in a textures
 		// Cubes
-		pRM->addTexture2D("textures/cube_BaseColor.png", "textures/cube_BaseColor.png", true);
-		pRM->addTexture2D("textures/cube_Roughness.png", "textures/cube_Roughness.png", true);
-		pRM->addTexture2D("textures/cube_Normal.png", "textures/cube_Normal.png", true);
+		pRM->addTexture2D("data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_BaseColor.png", true);
+		pRM->addTexture2D("data/DevApp/textures/cube_Roughness.png", "data/DevApp/textures/cube_Roughness.png", true);
+		pRM->addTexture2D("data/DevApp/textures/cube_Normal.png", "data/DevApp/textures/cube_Normal.png", true);
 		// Blob
-//		pRM->addTexture2D("textures/blob_diffuse.png", "textures/blob_diffuse.png", true);
-//		pRM->addTexture2D("textures/blob_roughness.png", "textures/blob_roughness.png", true);
-//		pRM->addTexture2D("textures/blob_normal.png", "textures/blob_normal.png", true);
+//		pRM->addTexture2D("data/DevApp/textures/blob_diffuse.png", "data/DevApp/textures/blob_diffuse.png", true);
+//		pRM->addTexture2D("data/DevApp/textures/blob_roughness.png", "data/DevApp/textures/blob_roughness.png", true);
+//		pRM->addTexture2D("data/DevApp/textures/blob_normal.png", "data/DevApp/textures/blob_normal.png", true);
 		// Point light entities
-		pRM->addTexture2D("textures/groundplane.png", "textures/groundplane.png", true);
+		pRM->addTexture2D("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
 
 		// Scene manager
 		mSceneManagerSimple.mCamera.setModeOrbit();	// Use defaults
 
 		// Create materials
-		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "textures/cube_BaseColor.png", "textures/cube_Roughness.png", 0.25f, "textures/cube_Normal.png", "X:default_emission");
-		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "textures/groundplane.png", "X:default_roughness", 0.25f);
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.25f, "data/DevApp/textures/cube_Normal.png", "X:default_emission");
+		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "data/DevApp/textures/groundplane.png", "X:default_roughness", 0.25f);
 		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
 
 		SceneManagerEntityVertexbuffer* pEntity = mSceneManagerSimple.addEntityVertexbuffer("centre", "cube", "mat_cubes");

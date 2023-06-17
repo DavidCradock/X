@@ -1,11 +1,10 @@
 #pragma once
-#include "PCH.h"
-#include "applicationBase.h"
+#include "../XLib/X.h"
 
 namespace X
 {
 	// 
-	class ApplicationGame : public ApplicationBase
+	class Application : public ApplicationBase
 	{
 	public:
 		// Override this if you need it, by default, it does nothing.
@@ -27,6 +26,8 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-
+		Timer timer;
+		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
+		void _initSceneManager(void);
 	};
 }
