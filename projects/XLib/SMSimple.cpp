@@ -10,6 +10,14 @@ namespace X
 	{
 		mCamera.setViewAsLookat(glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 		miNumPointLights = 0;
+
+		// Shadow map stuff
+		mbShadowsCastFromDirectionalLight = true;
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 100.0f);
+		glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 90.0f, 0.0f),	// Eye
+			glm::vec3(0.0f, 0.0f, 0.0f),	// Target
+			glm::vec3(0.0f, 1.0f, 0.0f));	// Up
+		mmatShadowsDirectionalLightViewProj = lightProjection * lightView;
 	}
 
 	void SceneManagerSimple::render(void)
@@ -18,10 +26,14 @@ namespace X
 		Window* pWindow = Window::getPointer();
 		mCamera.setProjectionAsPerspective(65.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
-		// First render the triangle entities
+		// Render depth map for directional light
+		if (mbShadowsCastFromDirectionalLight)
+			_renderDepthmapForDirectionalLight();
+
+		// Render the triangle entities
 		_renderTriangleEntities();
 
-		// Next render the line entities
+		// Render the line entities
 		_renderLineEntities();
 
 
@@ -198,7 +210,7 @@ namespace X
 	void SceneManagerSimple::_renderTriangleEntities(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:DRNE");		// Shader used to render the vertex buffer entities
+		ResourceShader* pShader = pRM->getShader("X:shader_DRNE");		// Shader used to render the vertex buffer entities
 		ResourceTriangle* pResTri;
 		ResourceTexture2D* pTexDiffuse = 0;
 		ResourceTexture2D* pTexRoughness = 0;
@@ -317,7 +329,7 @@ namespace X
 	void SceneManagerSimple::_renderLineEntities(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
+		ResourceShader* pShader = pRM->getShader("X:shader_line");		// Shader used to render the vertex buffer line entities
 		ResourceLine* pLine;
 		ResourceTexture2D* pTexColour = 0;
 
@@ -361,5 +373,10 @@ namespace X
 		if (pTexColour)	pTexColour->unbind(0);
 
 		pShader->unbind();
+	}
+
+	void SceneManagerSimple::_renderDepthmapForDirectionalLight(void)
+	{
+
 	}
 }

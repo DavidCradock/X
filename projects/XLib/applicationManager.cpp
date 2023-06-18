@@ -219,19 +219,19 @@ namespace X
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		// Shaders
-		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
-		pRM->addShader("X:line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
-		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
-
+		pRM->addShader("X:shader_font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
+		pRM->addShader("X:shader_line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
+		pRM->addShader("X:shader_DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
+		pRM->addShader("X:shader_shaderdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
 		// Textures
-		pRM->addTexture2D("X:default_particle", "data/X/textures/particle0.png");
-		pRM->addTexture2D("X:default_white", "data/X/textures/default_white.png");
-		pRM->addTexture2D("X:default_diffuse", "data/X/textures/default_diffuse.png");
-		pRM->addTexture2D("X:default_emission", "data/X/textures/default_emission.png");
-		pRM->addTexture2D("X:default_normal", "data/X/textures/default_normal.png");
-		pRM->addTexture2D("X:default_roughness", "data/X/textures/default_roughness.png");
+		pRM->addTexture2D("X:texture_default_particle", "data/X/textures/particle0.png");
+		pRM->addTexture2D("X:texture_default_white", "data/X/textures/default_white.png");
+		pRM->addTexture2D("X:texture_default_diffuse", "data/X/textures/default_diffuse.png");
+		pRM->addTexture2D("X:texture_default_emission", "data/X/textures/default_emission.png");
+		pRM->addTexture2D("X:texture_default_normal", "data/X/textures/default_normal.png");
+		pRM->addTexture2D("X:texture_default_roughness", "data/X/textures/default_roughness.png");
 
 		// Depth buffers
-		pRM->addDepthbuffer("X:shadow_depthbuffer", 1024, 1024);
+		pRM->addDepthbuffer("X:depthbuffer_shadows", 1024, 1024);
 	}
 }

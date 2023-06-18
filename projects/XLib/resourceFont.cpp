@@ -73,7 +73,7 @@ namespace X
 	{
 		// Get shader used to render the text
 		ResourceManager* pResourceManager = ResourceManager::getPointer();
-		ResourceShader* pShader = pResourceManager->getShader("X:font");
+		ResourceShader* pShader = pResourceManager->getShader("X:shader_font");
 		
 		// Setup the projection matrix as orthographic
 		_mmatProjection = glm::ortho(0.0f, float(iRenderTargetWidth), float(iRenderTargetHeight), 0.0f, -1.0f, 1.0f);

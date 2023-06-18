@@ -96,6 +96,14 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\data\X\shaders\DRNE.frag" />
+    <None Include="..\..\data\X\shaders\DRNE.vert" />
+    <None Include="..\..\data\X\shaders\font.frag" />
+    <None Include="..\..\data\X\shaders\font.vert" />
+    <None Include="..\..\data\X\shaders\line.frag" />
+    <None Include="..\..\data\X\shaders\line.vert" />
+    <None Include="..\..\data\X\shaders\shadow_depthmap.frag" />
+    <None Include="..\..\data\X\shaders\shadow_depthmap.vert" />
     <None Include="..\..\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

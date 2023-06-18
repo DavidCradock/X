@@ -15,17 +15,17 @@ namespace X
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:font				// A shader used by the ResourceFont class to render text.
-	// X:line				// A shader used by the ResourceLine class to render lines.
-	// X:DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures.
-	// X:default_white		// A texture which is tiny and white.
-	// X:default_particle	// A texture for use with rendering generic particles
-	// X:default_diffuse	// A texture which is grey for diffuse, used if not set
-	// default_emission		// A texture which is black for emiision, used if not set
-	// default_normal		// A texture which is a flat normal map, used if not set
-	// default_roughness	// A texture which is grey for roughnessm used if not set
-	// X:shadow_depthbuffer	// A depth buffer which is used by scene managers to render shadows
-
+	// X:shader_font				// A shader used by the ResourceFont class to render text.
+	// X:shader_line				// A shader used by the ResourceLine class to render lines.
+	// X:shader_DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures.
+	// X:shader_shaderdepthmap		// A shader used by the scene manager to render the depth map used for rendering shadows
+	// X:texture_default_particle	// A texture for use with rendering generic particles
+	// X:texture_default_white		// A texture which is tiny and white.
+	// X:texture_default_diffuse	// A texture which is grey for diffuse, used if not set
+	// X:texture_default_emission	// A texture which is black for emiision, used if not set
+	// X:texture_default_normal		// A texture which is a flat normal map, used if not set
+	// X:texture_default_roughness	// A texture which is grey for roughnessm used if not set
+	// X:depthbuffer_shadows		// A depth buffer which is used by scene managers to render shadows
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{

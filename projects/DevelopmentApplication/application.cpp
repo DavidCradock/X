@@ -226,9 +226,9 @@ namespace X
 		pRM->addTexture2D("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
 
 		// Create materials
-		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.25f, "data/DevApp/textures/cube_Normal.png", "X:default_emission");
-		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "data/DevApp/textures/groundplane.png", "X:default_roughness", 0.25f);
-		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.25f, "data/DevApp/textures/cube_Normal.png", "X:texture_default_emission");
+		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "data/DevApp/textures/groundplane.png", "X:texture_default_roughness", 0.25f);
+		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:texture_default_white", "X:texture_default_white", 0.5f, "X:texture_default_normal", "X:texture_default_white");
 
 		SMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
 		pEntity->setWorldPosition(glm::vec3(0.0f, 0.5f, 0.0f));
@@ -289,7 +289,7 @@ namespace X
 		lineVertex.position = glm::vec3(0.0f, 0.0f, 1.0f);		pLine->addLinePoint(lineVertex);
 		pLine->update();
 
-		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:default_white");
+		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:texture_default_white");
 		pEntityLine->setWorldPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 
 	}

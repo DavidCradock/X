@@ -5,10 +5,10 @@ namespace X
 {
 	SMMaterial::SMMaterial()
 	{
-		mstrTextureNameDiffuse = "X:default_diffuse";
-		mstrTextureNameEmission = "X:default_emission";
-		mstrTextureNameNormalmap = "X:default_normal";
-		mstrTextureNameRoughness = "X:default_roughness";
+		mstrTextureNameDiffuse = "X:texture_default_diffuse";
+		mstrTextureNameEmission = "X:texture_default_emission";
+		mstrTextureNameNormalmap = "X:texture_default_normal";
+		mstrTextureNameRoughness = "X:texture_default_roughness";
 		mfSpecularStrength = 0.5f;
 		mfAmbientStrength = 0.05f;
 	}

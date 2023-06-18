@@ -27,16 +27,20 @@ namespace X
 		SMLightPoint mvLightPoint[4];			// The point lights for this scene
 		int miNumPointLights;					// The number of point lights to use. Can be between 0 and 4
 
+		// Variables used for rendering the depth map for the directional light
+		bool mbShadowsCastFromDirectionalLight;			// Whether to cast shadows from the directional light
+		glm::mat4 mmatShadowsDirectionalLightViewProj;	// The view projection matrix for the directional light
+
 		// Adds a new uniquely named material which the entity vertex buffers use to render theirselves with.
 		// If the named material already exists, an exception occurs.
 		SMMaterial* addMaterial(
 			const std::string strMaterialName,		// The unique name of this material
 			float fAmbientStrength = 0.05f,										// Ambient strength
-			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
-			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
+			const std::string& strTextureNameDiffuse = "X:texture_default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
+			const std::string& strTextureNameRoughness = "X:texture_default_roughness",	// The texture resource located in the ResourceManager used for the roughness
 			float fSpecularStrength = 0.15f,									// Specular strength
-			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
-			const std::string& strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
+			const std::string& strTextureNameNormal = "X:texture_default_normal",		// The texture resource located in the ResourceManager used for the normal map
+			const std::string& strTextureNameEmission = "X:texture_default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);
 		
 		// Returns a pointer to the named material
@@ -102,6 +106,9 @@ namespace X
 		std::map<std::string, SMEntityTriangle*>	mmapEntitiesTriangles;	// Each named triangle entity in this scene.
 		std::map<std::string, SMEntityLine*>		mmapEntitiesLine;		// Each named line entity in this scene.
 		std::map<std::string, SMMaterial*>			mmapMaterials;			// Each named material in this scene.
+
+		// Renders the shadow depth map for the directional light
+		void _renderDepthmapForDirectionalLight(void);
 
 		// Renders the triangle entities contained in this scene
 		void _renderTriangleEntities(void);
