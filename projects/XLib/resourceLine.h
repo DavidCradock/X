@@ -7,6 +7,8 @@ namespace X
 	// Line strip vertex buffer used for rendering lines
 	// We need to add at least 2 vertices, they will form the first line and then
 	// each vertex added after those will form an additional line using the new vertex and the previous one.
+	// That's the default mode, but we can call setDrawModeAsLineList() in which case, each pair of added vertices
+	// then represent a single line.
 	class ResourceLine : public ResourceBase
 	{
 	public:
@@ -39,6 +41,12 @@ namespace X
 		// If there's no vertex data, this silently fails.
 		void draw(void);
 
+		// Sets drawing of each added vertex as a strip of lines where each additional vertex draws an additional line (This is the default mode)
+		void setDrawModeAsLineStrip(void);
+
+		// Sets drawing of each pair of added vertices as a single line.
+		void setDrawModeAsLineList(void);
+
 		// Add a new vertex and index, saving us from having to call addVertex and addIndex individually
 		void addLinePoint(const Vertex& newVertex);
 
@@ -63,5 +71,6 @@ namespace X
 		std::vector<int> indices;			// Vector holding indicies to each unique vertex
 
 		unsigned int muiIndex;				// Used by addLinePoint to keep track of indicies
+		unsigned int muiLineMode;			// Holds either GL_LINE_STRIP or GL_LINES
 	};
 }

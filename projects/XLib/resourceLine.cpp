@@ -12,6 +12,7 @@ namespace X
 		elementBufferObject = 0;
 		muiIndex = 0;
 		//onGLContextCreated();
+		muiLineMode = GL_LINE_STRIP;
 	}
 
 	ResourceLine::~ResourceLine()
@@ -126,7 +127,7 @@ namespace X
 
 		glBindVertexArray(vertexArrayObject);
 		glDrawElements(
-			GL_LINE_STRIP,				// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
+			muiLineMode,				// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
 			(GLsizei)indices.size(),	// Count. Specifies the number of elements to be rendered.
 			GL_UNSIGNED_INT,			// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
 			0);							// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
@@ -138,5 +139,15 @@ namespace X
 		vertices.push_back(newVertex);
 		indices.push_back(muiIndex);
 		muiIndex++;
+	}
+
+	void ResourceLine::setDrawModeAsLineStrip(void)
+	{
+		muiLineMode = GL_LINE_STRIP;
+	}
+	
+	void ResourceLine::setDrawModeAsLineList(void)
+	{
+		muiLineMode = GL_LINES;
 	}
 }

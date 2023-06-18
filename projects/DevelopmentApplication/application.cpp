@@ -158,16 +158,27 @@ namespace X
 
 		// Now we're done with adding triangle entities.
 		// Let's add some line entities
-		ResourceLine* pVertexBufferLine = pRM->addLine("line_up");
+		ResourceLine* pLine = pRM->addLine("line_up");
 		ResourceLine::Vertex lineVertex;
 		lineVertex.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		lineVertex.texCoord.x = 0.0f;
 		lineVertex.texCoord.y = 0.0f;
 		lineVertex.position = glm::vec3(0.0f, 0.0f, 0.0f);
-		pVertexBufferLine->addLinePoint(lineVertex);
+		pLine->addLinePoint(lineVertex);
 		lineVertex.position = glm::vec3(0.0f, 1.0f, 0.0f);
-		pVertexBufferLine->addLinePoint(lineVertex);
-		pVertexBufferLine->update();
+		pLine->addLinePoint(lineVertex);
+		pLine->addLinePoint(lineVertex);
+		ResourceLine::Vertex lineVertex1;
+		lineVertex1.colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		lineVertex1.texCoord.x = 0.0f;
+		lineVertex1.texCoord.y = 0.0f;
+		lineVertex1.position = glm::vec3(0.25f, 0.75f, 0.0f);
+		pLine->addLinePoint(lineVertex1);
+		pLine->addLinePoint(lineVertex);
+		lineVertex1.position = glm::vec3(-0.25f, 0.75f, 0.0f);
+		pLine->addLinePoint(lineVertex1);
+		pLine->setDrawModeAsLineList();
+		pLine->update();
 
 		for (float fX = -50.0f; fX < 50.0f; fX += 5.0f)
 		{

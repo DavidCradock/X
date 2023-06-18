@@ -7,7 +7,6 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio, hit compile, done.
 ** TODO **
-- In resourceLines, make it so we can setAsLineStrip and setAsLineList
 - Add quaternions and position to SMEntityBase along with helper functions to move stuff etc.
 - Add ResourceDepthbuffer and modify ResourceManager to have those.
 - Add new shader to render the entities in the scene manager to a depth buffer, for shadow rendering.
