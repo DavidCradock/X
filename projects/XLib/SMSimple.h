@@ -34,7 +34,7 @@ namespace X
 			float fAmbientStrength = 0.05f,										// Ambient strength
 			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
 			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
-			float fSpecularStrength = 0.25f,									// Specular strength
+			float fSpecularStrength = 0.15f,									// Specular strength
 			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
 			const std::string& strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);

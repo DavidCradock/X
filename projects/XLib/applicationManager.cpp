@@ -213,7 +213,9 @@ namespace X
 
 	void ApplicationManager::addDefaultResources(void)
 	{
+		// NOTE:
 		// When adding resources here, remember to add the resource to the comments at the top of ResourceManager class in resourceManager.h
+
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		// Shaders
@@ -228,5 +230,8 @@ namespace X
 		pRM->addTexture2D("X:default_emission", "data/X/textures/default_emission.png");
 		pRM->addTexture2D("X:default_normal", "data/X/textures/default_normal.png");
 		pRM->addTexture2D("X:default_roughness", "data/X/textures/default_roughness.png");
+
+		// Depth buffers
+		pRM->addDepthbuffer("X:shadow_depthbuffer", 1024, 1024);
 	}
 }

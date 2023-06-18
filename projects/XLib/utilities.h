@@ -167,4 +167,8 @@ namespace X
 		float fZeroToOne = (float)rand() / float(RAND_MAX + 1.0);
 		return fMin + (fMax - fMin) * fZeroToOne;
 	}
+
+	// Given two vectors, returns the rotation quaternion needed to rotate v1 to match v2
+	glm::quat rotationBetweenVectors(glm::vec3 v1, glm::vec3 v2);
+
 }

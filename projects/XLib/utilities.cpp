@@ -203,4 +203,28 @@ namespace X
 			fBlue = 1.0f - ((fHueAmount - 300.0f) / 60.0f);
 		}
 	}
+
+	glm::quat rotationBetweenVectors(glm::vec3 v1, glm::vec3 v2)
+	{
+		v1 = normalize(v1);
+		v2 = normalize(v2);
+
+		float cosTheta = dot(v1, v2);
+		glm::vec3 rotationAxis;
+
+		// Special case when both vectors are in opposite directions
+		// There is no "ideal" rotation axis, so guess one. Any will do as long as it's perpendicular to v1
+		if (cosTheta < -1 + 0.001f)
+		{	
+			rotationAxis = glm::cross(glm::vec3(0.0f, 0.0f, 1.0f), v1);
+			if (glm::length2(rotationAxis) < 0.01) // They were parallel
+				rotationAxis = glm::cross(glm::vec3(1.0f, 0.0f, 0.0f), v1);
+			rotationAxis = normalize(rotationAxis);
+			return glm::angleAxis(glm::radians(180.0f), rotationAxis);
+		}
+		rotationAxis = cross(v1, v2);
+		float s = sqrt((1 + cosTheta) * 2);
+		float invs = 1 / s;
+		return glm::quat(s * 0.5f, rotationAxis.x * invs, rotationAxis.y * invs, rotationAxis.z * invs);
+	}
 }

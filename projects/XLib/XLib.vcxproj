@@ -15,6 +15,7 @@
     <ClInclude Include="applicationGUIThemeEditor.h" />
     <ClInclude Include="applicationManager.h" />
     <ClInclude Include="audioManager.h" />
+    <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
     <ClInclude Include="image.h" />
@@ -60,6 +61,7 @@
     <ClCompile Include="applicationGUIThemeEditor.cpp" />
     <ClCompile Include="applicationManager.cpp" />
     <ClCompile Include="audioManager.cpp" />
+    <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />
     <ClCompile Include="image.cpp" />

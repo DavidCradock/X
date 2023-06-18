@@ -26,8 +26,5 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-		Timer timer;
-		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
-		void _initSceneManager(void);
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+#include "resourceDepthbuffer.h"
 #include "resourceFont.h"
 #include "resourceFramebuffer.h"
 #include "resourceShader.h"
@@ -15,11 +16,16 @@ namespace X
 	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
 	// X:font				// A shader used by the ResourceFont class to render text.
-	// X:line				// A shader used by the ResourceVertexbufferLine class to render lines.
-	// X:default			// A shader which has vertex position, colour, texture coordinates, normals and a diffuse texture
-	// X:diffuse_roughness	// A shader which has vertex position, colour, texture coordinates, normals, a diffuse texture and a roughness texture.
+	// X:line				// A shader used by the ResourceLine class to render lines.
+	// X:DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures.
 	// X:default_white		// A texture which is tiny and white.
-	// X:default_particle	// A texture for use with rendering generic particals
+	// X:default_particle	// A texture for use with rendering generic particles
+	// X:default_diffuse	// A texture which is grey for diffuse, used if not set
+	// default_emission		// A texture which is black for emiision, used if not set
+	// default_normal		// A texture which is a flat normal map, used if not set
+	// default_roughness	// A texture which is grey for roughnessm used if not set
+	// X:shadow_depthbuffer	// A depth buffer which is used by scene managers to render shadows
+
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{
@@ -63,6 +69,22 @@ namespace X
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		void removeFramebuffer(const std::string& strResourceName);
+
+		// Adds a new depthbuffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// uiWidth and uiHeight are the dimensions of the depthbuffer
+		ResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		ResourceDepthbuffer* getDepthbuffer(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getDepthbufferExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		void removeDepthbuffer(const std::string& strResourceName);
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -128,9 +150,9 @@ namespace X
 
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
-		// The output file names (the font.fnt and font.tga files) are named based upon the strOutputBaseName.
-		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.tga
-		// strOutputBaseName is the base filename used to create the two filenames for the .fnt and .tga file names
+		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.
+		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.png
+		// strOutputBaseName is the base filename used to create the two filenames for the .fnt and .png file names
 		// strFontName is the name of the font which is installed on the operating system which is used to generate the font
 		// iFontHeight is the size of the font
 		// bAntialiased is whether to perform antialiasing when generating the font's character images.
@@ -140,6 +162,7 @@ namespace X
 
 	private:
 		std::map<std::string, ResourceFont*>		_mmapResFonts;			// A hash map holding each named font resource
+		std::map<std::string, ResourceDepthbuffer*>	_mmapResDepthbuffers;	// A hash map holding each named depthbuffer resource
 		std::map<std::string, ResourceFramebuffer*>	_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
 		std::map<std::string, ResourceShader*>		_mmapResShaders;		// A hash map holding each named shader resource
 		std::map<std::string, ResourceTexture2D*>	_mmapResTextures2D;		// A hash map holding each named 2D texture resource

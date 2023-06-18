@@ -9,14 +9,14 @@ namespace X
 	SceneManagerSimple::SceneManagerSimple()
 	{
 		mCamera.setViewAsLookat(glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-		miNumPointLights = 3;
+		miNumPointLights = 0;
 	}
 
 	void SceneManagerSimple::render(void)
 	{
 		// Camera
 		Window* pWindow = Window::getPointer();
-		mCamera.setProjectionAsPerspective(55.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
+		mCamera.setProjectionAsPerspective(65.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
 		// First render the triangle entities
 		_renderTriangleEntities();
@@ -292,7 +292,7 @@ namespace X
 			pTexEmission->bind(3);
 
 			// Set world matrix (Projection and View set above)
-			pShader->setMat4("matrixWorld", it->second->matrixWorld);
+			pShader->setMat4("matrixWorld", it->second->getWorldMatrix());
 
 			// Ambient and specular uniforms
 			pShader->setFloat("fAmbientStrength", pMaterial->mfAmbientStrength);
@@ -350,7 +350,7 @@ namespace X
 			pTexColour->bind(0);
 
 			// Set world matrix (Projection and View set above)
-			pShader->setMat4("matrixWorld", it->second->matrixWorld);
+			pShader->setMat4("matrixWorld", it->second->getWorldMatrix());
 
 			// Render the vertex buffer
 			pLine->draw();

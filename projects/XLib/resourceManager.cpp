@@ -21,6 +21,14 @@ namespace X
 			itFont++;
 		}
 
+		// Depthbuffers
+		std::map<std::string, ResourceDepthbuffer*>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
+		while (itDepthbuffer != _mmapResDepthbuffers.end())
+		{
+			itDepthbuffer->second->onGLContextToBeDestroyed();
+			itDepthbuffer++;
+		}
+
 		// Framebuffers
 		std::map<std::string, ResourceFramebuffer*>::iterator itFramebuffer = _mmapResFramebuffers.begin();
 		while (itFramebuffer != _mmapResFramebuffers.end())
@@ -72,6 +80,14 @@ namespace X
 		{
 			itFont->second->onGLContextCreated();
 			itFont++;
+		}
+
+		// Depthbuffers
+		std::map<std::string, ResourceDepthbuffer*>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
+		while (itDepthbuffer != _mmapResDepthbuffers.end())
+		{
+			itDepthbuffer->second->onGLContextCreated();
+			itDepthbuffer++;
 		}
 
 		// Framebuffers
@@ -171,6 +187,35 @@ namespace X
 			return;	// Doesn't exist.
 		delete it->second;
 		_mmapResFramebuffers.erase(it);
+	}
+
+	ResourceDepthbuffer* ResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	{
+		ResourceDepthbuffer* pNewResource = new ResourceDepthbuffer(uiWidth, uiHeight);
+		ThrowIfFalse(pNewResource, "ResourceManager::addDepthbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResDepthbuffers[strResourceName] = pNewResource;
+		return pNewResource;
+	}
+
+	ResourceDepthbuffer* ResourceManager::getDepthbuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceDepthbuffer*>::iterator it = _mmapResDepthbuffers.find(strResourceName);
+		ThrowIfTrue(it == _mmapResDepthbuffers.end(), "ResourceManager::getDepthbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second;
+	}
+
+	bool ResourceManager::getDepthbufferExists(const std::string& strResourceName)
+	{
+		return _mmapResDepthbuffers.find(strResourceName) != _mmapResDepthbuffers.end();
+	}
+
+	void ResourceManager::removeDepthbuffer(const std::string& strResourceName)
+	{
+		std::map<std::string, ResourceDepthbuffer*>::iterator it = _mmapResDepthbuffers.find(strResourceName);
+		if (it == _mmapResDepthbuffers.end())
+			return;	// Doesn't exist.
+		delete it->second;
+		_mmapResDepthbuffers.erase(it);
 	}
 
 	ResourceShader* ResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)

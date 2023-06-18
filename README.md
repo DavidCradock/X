@@ -8,7 +8,6 @@
 - Load the X.sln file into Visual studio, hit compile, done.
 ** TODO **
 - Add quaternions and position to SMEntityBase along with helper functions to move stuff etc.
-- Add ResourceDepthbuffer and modify ResourceManager to have those.
 - Add new shader to render the entities in the scene manager to a depth buffer, for shadow rendering.
 - Also add shader to render entities which use shadow’s depth map.
 - Add a bool to scene manager to toggle rendering of shadows and set the SM’s render method to render correct stuff.

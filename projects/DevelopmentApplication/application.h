@@ -28,6 +28,7 @@ namespace X
 	private:
 		Timer timer;
 		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
+		glm::vec3 _mvEntityRot[100];
 		void _initSceneManager(void);
 	};
 }

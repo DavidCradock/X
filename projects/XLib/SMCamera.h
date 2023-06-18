@@ -36,7 +36,26 @@ namespace X
 
 		// Sets the camera mode to orbit a point in 3D world space
 		// Call update() once per program loop to update the view matrix with this mode in mind.
-		void setModeOrbit(glm::vec3 vOrbitPoint = glm::vec3(0.0f, 0.0f, 0.0f), float fMinDistanceFromPoint = 1.5f, float fCurrentDistanceFromPoint = 10.0f, float fMaxDistanceFromPoint = 100.0f, float fSensitivityX = 0.005f, float fSensitivityY = 0.005f, float fMouseSensitivityWheel = 0.005f);
+		void setModeOrbit(
+			glm::vec3 vOrbitPoint = glm::vec3(0.0f, 0.0f, 0.0f),
+			float fMinDistanceFromPoint = 1.5f,
+			float fCurrentDistanceFromPoint = 10.0f,
+			float fMaxDistanceFromPoint = 100.0f,
+			float fSensitivityX = 0.005f,
+			float fSensitivityY = 0.005f,
+			float fMouseSensitivityWheel = 0.005f,
+			bool bLimitYupToPositive = false);
+
+		// Sets the camera mode to FPS
+		// Call update() once per program loop to update the view matrix with this mode in mind.
+		void setModeFPS(
+			glm::vec3 vInitialPosition = glm::vec3(0.0f, 1.0f, 0.0f),
+			float fSensitivityX = 0.5f,
+			float fSensitivityY = 0.2f,
+			float fSensitivityTranslateForward = 1.0f,
+			float fSensitivityTranslateStrafe = 1.0f,
+			float fSensitivityTranslateUp = 1.0f,
+			float fMultiplierShiftKey = 10.0f);
 
 		// Updates this camera
 		void update(void);
@@ -46,6 +65,7 @@ namespace X
 
 		enum Mode
 		{
+			FPS,
 			Orbit,
 			None
 		};
@@ -62,11 +82,38 @@ namespace X
 			float fMouseSensitivityWheel;	// Sensitivity of mouse for mouse wheel
 
 			// Variables/objects used to compute view matrix
-			float fCurrentDistanceFromPoint;// Current distance the camera is from the point
-			Timer timer;					// Timer used for time delta
-			float fAngleY;					// Angle around Y axis
-			float fAngleUp;					// Angle up/down
+			float fCurrentDistanceFromPoint;	// Current distance the camera is from the point
+			Timer timer;						// Timer used for time delta
+			float fAngleY;						// Angle around Y axis
+			float fAngleUp;						// Angle up/down
+			bool bLimitYupToPositive;			// Does what it says on the tin
 		};
 		ModeOrbit modeOrbit;
+		
+		// Called from update if mode is set to orbit
+		void _updateModeOrbit(void);
+
+		// Holds variable used for FPS mode
+		struct ModeFPS
+		{
+			glm::vec3 v3Position;				// Position in world space of the camera
+			glm::vec3 v3Forward;				// Forward vector
+			glm::vec3 v3Right;					// Right vector
+			glm::vec3 v3Up;						// Up vector
+			float fMouseSensitivityX;			// Sensitivity of mouse along it's X axis
+			float fMouseSensitivityY;			// Sensitivity of mouse along it's Y axis
+			float fSensitivityTranslateForward;	// Movement speed for WS keys
+			float fSensitivityTranslateStrafe;	// Movement speed for AD keys
+			float fSensitivityTranslateUp;		// Movement speed for RF keys
+			float fMultiplierShiftKey;			// Multiplier of movement speed when shift key is held down
+			Timer timer;						// Timer used for time delta
+			// Variables used to calculate pitch/yaw
+			float fYaw;							// Rotation around Y axis
+			float fPitch;						// Rotation around right vector
+		};
+		ModeFPS modeFPS;
+
+		// Called from update if mode is set to FPS
+		void _updateModeFPS(void);
 	};
 }

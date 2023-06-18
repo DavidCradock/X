@@ -149,6 +149,9 @@
     <ClInclude Include="resourceBase.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="resourceDepthbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -240,6 +243,9 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="resourceLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceDepthbuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
