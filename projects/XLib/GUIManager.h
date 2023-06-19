@@ -7,14 +7,14 @@ namespace X
 	// It works on the concept of a container, which holds various GUI widgets and can be set to act as a moveable window or not.
 	// 
 	// Containers:
-	// A container by default is simple an empty, err, container used to add various widgets to such as buttons.
+	// A container by default is simply an empty, err, container used to add various widgets to such as buttons.
 	// A container can be set to be a window which can be dragged around the screen, closed and minimized with z-order supoort.
 	// If a container is set as a window, it has dimensions. Width and height. When setting a container's dimensions, the dimensions
 	// given are the area inside the container where widgets may be added, not including the container's borders.
 	// Again, if set as a window, it may or may not have a close, minimize, maximize button and title bar text.
 	// 
 	// Widgets:
-	// A container hold widgets. Widgets include buttons, static text, editable text boxes, text boxes with vertical scroll bar,
+	// A container holds widgets. Widgets include buttons, static text, editable text boxes, text boxes with vertical scroll bar,
 	// generic buttons using the theme, image buttons which use a custom set image, progress bars, static images, animated images, 
 	// frame buffer boxes which render the contents of a framebuffer (Scene managers render to framebuffers and these can be used),
 	// draggable images/framebuffers which can be dragged between "draggable storage" widgets, line graphs, expandable menus with
@@ -34,7 +34,7 @@ namespace X
 	// there are helper functions which create various "tooltip templates" such as "just text" or "left aligned text box with right animated image".
 	// 
 	// Rendering features:
-	// We have colour and transparency, background blur normal maps for lighting effects such as the mouse being a light source and glow.
+	// We have colour and transparency, background blur, normal maps for lighting effects such as the mouse being a light source and glow.
 	// 
 	// Audio features:
 	// Only one feature, we can playback sounds when things get clicked, dropped, closed etc.
@@ -57,7 +57,7 @@ namespace X
 	// Scaling:
 	// We have implemented text scaling which works quite well when using a ResourceFont which has been created from a large font (such as a size
 	// of around 200 or so) and this text scales down quite well. But as we know, scaling bitmap images up to a larger size introduces
-	// bluriness, so when creating fonts for the GUI to use, create them huge as the GUI only allows scaling down in size of text.
+	// bluriness, so when creating fonts for the GUI to use, create them huge as to maintain decent appearence.
 	// Do the same for each of the required images (colour/normal/blur/etc). Make them larger than needed for optimal appearance.
 	// The GUI does allow scaling up however, but it's best to make the images and fonts large enough, for say an 8k display. At least this way,
 	// we have some future proofing.
