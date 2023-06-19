@@ -13,8 +13,9 @@ namespace X
 
 		// Shadow map stuff
 		mbShadowsCastFromDirectionalLight = true;
-		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 100.0f);
-		glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 90.0f, 0.0f),	// Eye
+		glm::mat4 lightProjection = glm::ortho(0.0f, 1024.0f, 0.0f, 1024.0f, 1.0f, 100.0f);
+		glm::mat4 lightView = glm::lookAt(
+			glm::vec3(0.0f, 50.0f, 0.0f),	// Eye
 			glm::vec3(0.0f, 0.0f, 0.0f),	// Target
 			glm::vec3(0.0f, 1.0f, 0.0f));	// Up
 		mmatShadowsDirectionalLightViewProj = lightProjection * lightView;
@@ -35,8 +36,6 @@ namespace X
 
 		// Render the line entities
 		_renderLineEntities();
-
-
 	}
 
 	SMMaterial* SceneManagerSimple::addMaterial(
@@ -283,7 +282,7 @@ namespace X
 		glm::vec3 cameraWorldPos = matViewInverse * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
-		// Vertex buffer entities
+		// Triangle entities
 		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
@@ -377,6 +376,47 @@ namespace X
 
 	void SceneManagerSimple::_renderDepthmapForDirectionalLight(void)
 	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceShader* pShader = pRM->getShader("X:shader_shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
+		pShader->bind();
+		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+		pDepthbuffer->bindAsRenderTarget();
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glViewport(0, 0, 1024, 1024);
 
+		ResourceTriangle* pResTri;
+
+		// Set blending/depth testing
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		// Culling
+		glDisable(GL_CULL_FACE);
+//		glCullFace(GL_BACK);
+
+		// Set projection and view matrixs from the directional light
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.0f);
+		glm::mat4 lightView = glm::lookAt(
+			glm::vec3(-2.0f, 4.0f, -1.0f),	// Eye
+			glm::vec3(0.0f, 0.0f, 0.0f),	// Target
+			glm::vec3(0.0f, 1.0f, 0.0f));	// Up
+		mmatShadowsDirectionalLightViewProj = lightProjection * lightView;
+		pShader->setMat4("lightSpace", mmatShadowsDirectionalLightViewProj);
+
+		// Triangle entities
+		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
+		while (it != mmapEntitiesTriangles.end())
+		{
+			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
+			pShader->setMat4("model", it->second->getWorldMatrix());
+			pResTri->draw(false);
+			it++;
+		}
+		glDisable(GL_CULL_FACE);
+		pShader->unbind();
+		pDepthbuffer->unbindAsRenderTarget();
+		// Reset viewport
+		Window* pWindow = Window::getPointer();
+		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
 	}
 }

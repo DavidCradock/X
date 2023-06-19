@@ -18,6 +18,9 @@ namespace X
 		pRM->addFont("arial_26", "data/DevApp/fonts/arial_26");
 //		pRM->addFont("tahoma_200", "data/DevApp/fonts/tahoma_200");
 
+		// Temporary debug triangle 2D quad for showing depth buffer from shadowmap
+		pRM->addTriangle("DEBUG_QUAD");
+		pRM->addFramebuffer("DEBUG_FB", 1024, 1024);
 	}
 
 	void Application::onStart(void)
@@ -37,14 +40,35 @@ namespace X
 
 		// Timer delta
 		timer.update();
-		static float fInc = 0.0f;
-		fInc += timer.getSecondsPast() * kPi * 0.001f;
 
 		// Update and render simple scene manager
 		
 		//mSceneManagerSimple.mCamera.modeOrbit.v3OrbitPoint = pEntityLine
 		mSceneManagerSimple.render();
 		mSceneManagerSimple.mCamera.update();
+		
+		// Render the debug shadow map onto the screen
+		ResourceTriangle *pTri = pRM->getTriangle("DEBUG_QUAD");
+		pTri->removeGeom();
+		Window* pWindow = Window::getPointer();
+		pTri->addQuad2D(glm::vec2(pWindow->getWidth() - 1024, 0), glm::vec2(1024, 1024));
+		pTri->update();
+		ResourceShader* pShader = pRM->getShader("X:shader_depthbuffer_debug");
+		glm::mat4 matrixProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
+		pShader->bind();
+		pShader->setMat4("transform", matrixProjection);
+		ResourceDepthbuffer* pTex = pRM->getDepthbuffer("X:depthbuffer_shadows");
+		pTex->bindAsTexture(0);
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		pTri->draw();
+		pShader->unbind();
+		pTex->unbindTexture(0);
+		glDisable(GL_BLEND);
+
+
+
+		float fInc = timer.getSecondsPast();
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");
@@ -102,9 +126,9 @@ namespace X
 		for (int i = 0; i < 100; ++i)
 		{
 			// Temp rotation
-			_mvEntityRot[i].x += float(i) * fInc;
-			_mvEntityRot[i].y += float(i) * fInc;
-			_mvEntityRot[i].z += float(i) * fInc;
+			_mvEntityRot[i].x += float(i) * timer.getSecondsPast();
+			_mvEntityRot[i].y += float(i) * timer.getSecondsPast();
+			_mvEntityRot[i].z += float(i) * timer.getSecondsPast();
 
 			std::string strEntity = "entity_" + std::to_string(i);
 			SMEntityTriangle* pEntity = mSceneManagerSimple.getEntityTriangle(strEntity);

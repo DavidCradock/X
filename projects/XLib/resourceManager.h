@@ -18,7 +18,9 @@ namespace X
 	// X:shader_font				// A shader used by the ResourceFont class to render text.
 	// X:shader_line				// A shader used by the ResourceLine class to render lines.
 	// X:shader_DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures.
-	// X:shader_shaderdepthmap		// A shader used by the scene manager to render the depth map used for rendering shadows
+	// X:shader_pos_col_tex			// A shader which accepts vertex position, colour and texture coodinates
+	// X:shader_depthbuffer_debug	// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
+	// X:shader_shadowdepthmap		// A shader used by the scene manager to render the depth map used for rendering shadows
 	// X:texture_default_particle	// A texture for use with rendering generic particles
 	// X:texture_default_white		// A texture which is tiny and white.
 	// X:texture_default_diffuse	// A texture which is grey for diffuse, used if not set

@@ -20,9 +20,9 @@ namespace X
 		struct Vertex
 		{
 			glm::vec3 position;		// Vertex position
-			glm::vec3 normal;		// Vertex normal
 			glm::vec4 colour;		// Vertex colour
 			glm::vec2 texCoord;		// Vertex texture coordinate
+			glm::vec3 normal;		// Vertex normal
 			glm::vec3 tangent;		// Tangent vector for bump/normal mapping
 			glm::vec3 binormal;		// Binormal vector for bump/normal mapping
 		};

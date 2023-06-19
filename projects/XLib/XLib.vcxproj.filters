@@ -275,5 +275,17 @@
     <None Include="..\..\data\X\shaders\shadow_depthmap.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\data\X\shaders\pos_col_tex.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\pos_col_tex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

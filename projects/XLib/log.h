@@ -25,6 +25,7 @@ namespace X
 	#define ThrowIfFalse(x, y)							\
 	{                                                   \
 		if(!x){											\
+			__debugbreak();								\
 			throw Exception(y, __FILE__, __LINE__);}	\
 	}
 	#endif
@@ -33,6 +34,7 @@ namespace X
 	#define ThrowIfTrue(x, y)                           \
 	{                                                   \
 		if(x){											\
+			__debugbreak();								\
 			throw Exception(y, __FILE__, __LINE__);}	\
 	}
 	#endif

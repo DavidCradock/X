@@ -222,7 +222,9 @@ namespace X
 		pRM->addShader("X:shader_font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
 		pRM->addShader("X:shader_line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
 		pRM->addShader("X:shader_DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
-		pRM->addShader("X:shader_shaderdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
+		pRM->addShader("X:shader_pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
+		pRM->addShader("X:shader_depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
+		pRM->addShader("X:shader_shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
 		// Textures
 		pRM->addTexture2D("X:texture_default_particle", "data/X/textures/particle0.png");
 		pRM->addTexture2D("X:texture_default_white", "data/X/textures/default_white.png");
