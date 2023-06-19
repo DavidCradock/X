@@ -17,7 +17,8 @@ namespace X
 	// There are several resources added upon initialisation which are used by various classes these are...
 	// X:shader_font				// A shader used by the ResourceFont class to render text.
 	// X:shader_line				// A shader used by the ResourceLine class to render lines.
-	// X:shader_DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures.
+	// X:shader_DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
+	// X:shader_DRNE_noshadows		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
 	// X:shader_pos_col_tex			// A shader which accepts vertex position, colour and texture coodinates
 	// X:shader_depthbuffer_debug	// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 	// X:shader_shadowdepthmap		// A shader used by the scene manager to render the depth map used for rendering shadows
@@ -28,6 +29,8 @@ namespace X
 	// X:texture_default_normal		// A texture which is a flat normal map, used if not set
 	// X:texture_default_roughness	// A texture which is grey for roughnessm used if not set
 	// X:depthbuffer_shadows		// A depth buffer which is used by scene managers to render shadows
+	// X:triangle_debug				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
+	// X:framebuffer_scenemanager;	// A framebuffer which the scene managers use to render to by default.
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{

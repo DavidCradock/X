@@ -30,7 +30,7 @@ namespace X
 
 			// Create window
 			Window* pWindow = Window::getPointer();
-			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync");
+			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle shadows.");
 			
 			// Get pointer to input manager
 			InputManager* pInputManager = InputManager::getPointer();
@@ -56,10 +56,22 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
 
+			ResourceManager* pRM = ResourceManager::getPointer();
+
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())
 			{
 				mTimer.update();
+
+				// Get the default scenemanager framebuffer and resize to size of window if needed
+				ResourceFramebuffer *pFB = pRM->getFramebuffer("X:framebuffer_scenemanager");
+				int iWindowDims[2];
+				iWindowDims[0] = pWindow->getWidth();
+				iWindowDims[1] = pWindow->getHeight();
+				if ((int)pFB->getWidth() != iWindowDims[0] || (int)pFB->getHeight() != iWindowDims[1])
+				{
+					pFB->resize(iWindowDims[0], iWindowDims[1]);
+				}
 
 				// Clear the backbuffer
 				pWindow->clearBackbuffer();
@@ -222,6 +234,7 @@ namespace X
 		pRM->addShader("X:shader_font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
 		pRM->addShader("X:shader_line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
 		pRM->addShader("X:shader_DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
+		pRM->addShader("X:shader_DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag");
 		pRM->addShader("X:shader_pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
 		pRM->addShader("X:shader_depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
 		pRM->addShader("X:shader_shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
@@ -234,6 +247,12 @@ namespace X
 		pRM->addTexture2D("X:texture_default_roughness", "data/X/textures/default_roughness.png");
 
 		// Depth buffers
-		pRM->addDepthbuffer("X:depthbuffer_shadows", 1024, 1024);
+		pRM->addDepthbuffer("X:depthbuffer_shadows", 2048, 2048);
+
+		// Triangle resources
+		pRM->addTriangle("X:triangle_debug");
+
+		// Framebuffers
+		pRM->addFramebuffer("X:framebuffer_scenemanager", 512, 512);	// Dims are set each program loop to match the window's dimensions
 	}
 }

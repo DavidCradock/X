@@ -152,6 +152,9 @@
     <ClInclude Include="resourceDepthbuffer.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -248,6 +251,9 @@
     <ClCompile Include="resourceDepthbuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
@@ -285,6 +291,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

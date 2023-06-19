@@ -50,6 +50,8 @@ namespace X
 		// Call update() once per program loop to update the view matrix with this mode in mind.
 		void setModeFPS(
 			glm::vec3 vInitialPosition = glm::vec3(0.0f, 1.0f, 0.0f),
+			float fInitialYawDegrees = 0.0f,
+			float fInitialPitchDegrees = 0.0f,
 			float fSensitivityX = 0.5f,
 			float fSensitivityY = 0.2f,
 			float fSensitivityTranslateForward = 1.0f,

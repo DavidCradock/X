@@ -2,6 +2,8 @@
 #include "resourceFramebuffer.h"
 #include "openGLExtensions.h"
 #include "log.h"
+#include "resourceManager.h"
+#include "window.h"
 
 namespace X
 {
@@ -65,14 +67,22 @@ namespace X
 		}
 	}
 
-	void ResourceFramebuffer::bindAsRenderTarget(void)
+	void ResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, _muiFramebufferID);
+		if (bClearbuffer)
+		{
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+		glViewport(0, 0, _muiWidth, _muiHeight);
 	}
 
 	void ResourceFramebuffer::unbindAsRenderTarget(void)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		Window* pWnd = Window::getPointer();
+		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 	}
 
 	void ResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit)
@@ -137,5 +147,48 @@ namespace X
 			break;
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	unsigned int ResourceFramebuffer::getWidth(void)
+	{
+		return _muiWidth;
+	}
+
+	unsigned int ResourceFramebuffer::getHeight(void)
+	{
+		return _muiHeight;
+	}
+
+	void ResourceFramebuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
+	{
+		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "ResourceFramebuffer::resize() given a dimension of size zero.");
+		onGLContextToBeDestroyed();
+		_muiWidth = uiNewWidth;
+		_muiHeight = uiNewHeight;
+		onGLContextCreated();
+	}
+
+	void ResourceFramebuffer::renderToBackbuffer(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
+	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceTriangle* pTri = pRM->getTriangle("X:triangle_debug");
+		ResourceShader* pShader = pRM->getShader("X:shader_pos_col_tex");
+		Window* pWindow = Window::getPointer();
+
+		// Setup triangle geometry
+		pTri->removeGeom();
+		pTri->addQuad2D(glm::vec2(float(uiPosX), float(uiPosY)), glm::vec2(float(uiWidth), float(uiHeight)),
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),	// Colour
+			glm::vec2(0, 0), glm::vec2(1, 0), glm::vec2(1, 1), glm::vec2(0, 1));	// Texture coordinates
+		pTri->update();
+
+		glm::mat4 matrixProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
+		pShader->bind();
+		pShader->setMat4("transform", matrixProjection);
+		bindAsTexture(0);
+		glDisable(GL_DEPTH_TEST);
+		pTri->draw();
+		pShader->unbind();
+		unbindTexture(0);
 	}
 }

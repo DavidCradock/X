@@ -152,7 +152,7 @@ namespace X
 		*/
 	}
 
-	void SMCamera::setModeFPS(glm::vec3 vInitialPosition, float fSensitivityX, float fSensitivityY, float fSensitivityTranslateForward, float fSensitivityTranslateStrafe, float fSensitivityTranslateUp, float fMultiplierShiftKey)
+	void SMCamera::setModeFPS(glm::vec3 vInitialPosition, float fInitialYawDegrees, float fInitialPitchDegrees, float fSensitivityX, float fSensitivityY, float fSensitivityTranslateForward, float fSensitivityTranslateStrafe, float fSensitivityTranslateUp, float fMultiplierShiftKey)
 	{
 		// Set mode of camera
 		mMode = Mode::FPS;
@@ -167,8 +167,8 @@ namespace X
 		modeFPS.v3Up = glm::vec3(0.0f, 1.0f, 0.0f);
 		modeFPS.v3Right = glm::normalize(glm::cross(modeFPS.v3Up, modeFPS.v3Forward));
 		modeFPS.v3Up = glm::normalize(glm::cross(modeFPS.v3Forward, modeFPS.v3Right));
-		modeFPS.fYaw = 0.0f;
-		modeFPS.fPitch = 0.0f;
+		modeFPS.fYaw = fInitialYawDegrees;
+		modeFPS.fPitch = fInitialPitchDegrees;
 	}
 
 	void SMCamera::_updateModeFPS(void)
@@ -227,6 +227,7 @@ namespace X
 		setViewAsLookat(modeFPS.v3Position, v3LookatTarget, modeFPS.v3Up);
 
 		// Debug text
+		/*
 		ResourceManager* pRM = ResourceManager::getPointer();
 		ResourceFont* pFont = pRM->getFont("arial_26");
 		int iYpos = (int)pFont->getTextHeight();
@@ -250,6 +251,6 @@ namespace X
 		// modeFPS.fPitch and modeFPS.fYaw
 		strDebug = "modeFPS.fPitch: " + std::format("{:.2f}", modeFPS.fPitch) += " modeFPS.fYaw: " + std::format("{:.2f}", modeFPS.fYaw);
 		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
-
+		*/
 	}
 }

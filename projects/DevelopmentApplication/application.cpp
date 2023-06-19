@@ -20,7 +20,6 @@ namespace X
 
 		// Temporary debug triangle 2D quad for showing depth buffer from shadowmap
 		pRM->addTriangle("DEBUG_QUAD");
-		pRM->addFramebuffer("DEBUG_FB", 1024, 1024);
 	}
 
 	void Application::onStart(void)
@@ -41,32 +40,19 @@ namespace X
 		// Timer delta
 		timer.update();
 
-		// Update and render simple scene manager
-		
-		//mSceneManagerSimple.mCamera.modeOrbit.v3OrbitPoint = pEntityLine
-		mSceneManagerSimple.render();
+		// Update and render scene manager to a framebuffer
 		mSceneManagerSimple.mCamera.update();
+		mSceneManagerSimple.render();
 		
-		// Render the debug shadow map onto the screen
-		ResourceTriangle *pTri = pRM->getTriangle("DEBUG_QUAD");
-		pTri->removeGeom();
+
+		// Now render the framebuffer onto the backbuffer
+		ResourceFramebuffer *pFB = pRM->getFramebuffer("X:framebuffer_scenemanager");
 		Window* pWindow = Window::getPointer();
-		pTri->addQuad2D(glm::vec2(pWindow->getWidth() - 1024, 0), glm::vec2(1024, 1024));
-		pTri->update();
-		ResourceShader* pShader = pRM->getShader("X:shader_depthbuffer_debug");
-		glm::mat4 matrixProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
-		pShader->bind();
-		pShader->setMat4("transform", matrixProjection);
-		ResourceDepthbuffer* pTex = pRM->getDepthbuffer("X:depthbuffer_shadows");
-		pTex->bindAsTexture(0);
-		glEnable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
-		pTri->draw();
-		pShader->unbind();
-		pTex->unbindTexture(0);
-		glDisable(GL_BLEND);
+		pFB->renderToBackbuffer(0, 0, pWindow->getWidth(), pWindow->getHeight());
 
-
+		// Render the debug shadow map onto the screen
+//		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+//		pDepthbuffer->renderToBackbuffer(pWindow->getWidth() - 512, 0, 512, 512);
 
 		float fInc = timer.getSecondsPast();
 
@@ -135,7 +121,6 @@ namespace X
 			pEntity->setRotation(_mvEntityRot[i].x, _mvEntityRot[i].y, _mvEntityRot[i].z);
 		}
 
-
 		// Render some text
 		std::string strTXT = "FPS: ";
 		strTXT += std::format("{:.2f}", timer.getFPSAveraged());
@@ -143,7 +128,6 @@ namespace X
 		int iYpos = 0;
 		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		iYpos += (int)pFont->getTextHeight();
-		iYpos = 200;
 
 		// Render some debug text
 		// Position
@@ -179,6 +163,9 @@ namespace X
 				}
 		*/
 
+		// Toggle shadows
+		if (pInputManager->key.once(KC_F3))
+			mSceneManagerSimple.setShadowsEnabled(!mSceneManagerSimple.getShadowsEnabled());
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))
 			return false;
@@ -207,7 +194,9 @@ namespace X
 //			true);							// Limit Y angle to > 0.0f
 
 		mSceneManagerSimple.mCamera.setModeFPS(
-		glm::vec3(0.0f, 5.0f, 5.0f),	// Initial position
+		glm::vec3(0.0f, 5.0f, -5.0f),	// Initial position
+		90.0f,	// Initial yaw in degrees
+		-25.0f,	// Initial pitch in degrees
 		0.5f,	// Mouse X sensitivity
 		0.2f,	// Mouse Y sensitivity
 		1.0f,	// WS sensitivity
@@ -215,47 +204,40 @@ namespace X
 		1.0f,	// RF sensitivity
 		10.0f);	// Shift key multiplier
 
-		// Convert and create geom files
-		//ResourceVertexbuffer vb;
-		//vb.convertObj("data/DevApp/geometry/cube.obj");	// Convert .obj file to .geom file
-		//vb.convertObj("data/DevApp/geometry/blob.obj");	// Convert .obj file to .geom file
-		//vb.convertObj("data/DevApp/geometry/icosphere_radius_0.01.obj");	// Convert .obj file to .geom file
-
 		// Create needed triangles
 		ResourceManager* pRM = ResourceManager::getPointer();
 		// Cube
 		ResourceTriangle* pTri = pRM->addTriangle("cube");
 		pTri->addFromFile("data/DevApp/geometry/cube.geom", true);
-		// Blob
-//		pTri = pRM->addTriangle("blob");
-//		pTri->addFromFile("data/DevApp/geometry/blob.geom", true);
 		// Point lights to show where they are
 		pTri = pRM->addTriangle("icosphere_radius_0.01");
 		pTri->addFromFile("data/DevApp/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
 		pTri = pRM->addTriangle("groundplane");
-		pTri->addGroundplane(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
-		pTri->update();
+		pTri->addFromFile("data/DevApp/geometry/ground_plane_200x200x1.geom", true);
 
 		// Load in a textures
 		// Cubes
 		pRM->addTexture2D("data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_BaseColor.png", true);
 		pRM->addTexture2D("data/DevApp/textures/cube_Roughness.png", "data/DevApp/textures/cube_Roughness.png", true);
 		pRM->addTexture2D("data/DevApp/textures/cube_Normal.png", "data/DevApp/textures/cube_Normal.png", true);
-		// Blob
-//		pRM->addTexture2D("data/DevApp/textures/blob_diffuse.png", "data/DevApp/textures/blob_diffuse.png", true);
-//		pRM->addTexture2D("data/DevApp/textures/blob_roughness.png", "data/DevApp/textures/blob_roughness.png", true);
-//		pRM->addTexture2D("data/DevApp/textures/blob_normal.png", "data/DevApp/textures/blob_normal.png", true);
 		// Point light entities
 		pRM->addTexture2D("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
 
 		// Create materials
-		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.25f, "data/DevApp/textures/cube_Normal.png", "X:texture_default_emission");
-		mSceneManagerSimple.addMaterial("mat_groundplane", 0.5f, "data/DevApp/textures/groundplane.png", "X:texture_default_roughness", 0.25f);
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.75f, "data/DevApp/textures/cube_Normal.png", "X:texture_default_emission");
 		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:texture_default_white", "X:texture_default_white", 0.5f, "X:texture_default_normal", "X:texture_default_white");
+		mSceneManagerSimple.addMaterial(
+			"mat_groundplane",						// Material name
+			0.25f,									// Ambient strength
+			"data/DevApp/textures/groundplane.png",	// Diffuse texture
+			"X:texture_default_roughness",			// Roughness texture (grey)
+			1.0f,									// Specular strength
+			"X:texture_default_normal",				// Normal texture (float)
+			"X:texture_default_emission");			// Emission texture (black)
 
 		SMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
-		pEntity->setWorldPosition(glm::vec3(0.0f, 0.5f, 0.0f));
+		pEntity->setWorldPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 
 		for (int i = 0; i < 100; ++i)
 		{
@@ -266,15 +248,17 @@ namespace X
 
 			std::string strEntity = "entity_" + std::to_string(i);
 			pEntity = mSceneManagerSimple.addEntityTriangle(strEntity, "cube", "mat_cubes");
-			pEntity->setWorldPosition(glm::vec3(randf(-49.0f, 49.0f), 1.5f, randf(-49.0f, 49.0f)));
+			pEntity->setWorldPosition(glm::vec3(randf(-19.0f, 19.0f), 0.5f, randf(-19.0f, 19.0f)));
 			pEntity->setRotation(_mvEntityRot[i].x, _mvEntityRot[i].y, _mvEntityRot[i].z);
 		}
 		// Ground plane
 		pEntity = mSceneManagerSimple.addEntityTriangle("groundplane", "groundplane", "mat_groundplane");
 
 		// Directional light settings
-		mSceneManagerSimple.mvLightDirectional.mvDirection = glm::vec3(0.0f, -1.0f, 0.0f);
-		mSceneManagerSimple.mvLightDirectional.mvColour = glm::vec3(0.5f, 0.5f, 0.5f);
+		mSceneManagerSimple.setDirectionalLightColour(glm::vec3(1, 1, 1));
+		mSceneManagerSimple.setDirectionalLightDir(glm::vec3(1, -1, 1));
+		mSceneManagerSimple.setDirectionalLightProjection();
+
 		// Set point light settings
 		mSceneManagerSimple.miNumPointLights = 0;
 		mSceneManagerSimple.mvLightPoint[0].mvPosition = glm::vec3(2.0f, 2.0f, 10.0f);
@@ -285,7 +269,6 @@ namespace X
 		mSceneManagerSimple.mvLightPoint[2].mvColour = glm::vec3(0.0f, 0.0f, 1.0f);
 		mSceneManagerSimple.mvLightPoint[3].mvPosition = glm::vec3(2.0f, 2.0f, -2.0f);
 		mSceneManagerSimple.mvLightPoint[3].mvColour = glm::vec3(1.0f, 1.0f, 1.0f);
-		mSceneManagerSimple.mvLightDirectional.mvColour = glm::vec3(1.0f, 1.0f, 1.0f);
 		// Add icosphere_radius_0.01.geom to position of each light
 		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
 		{
@@ -315,6 +298,5 @@ namespace X
 
 		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:texture_default_white");
 		pEntityLine->setWorldPosition(glm::vec3(0.0f, 1.0f, 0.0f));
-
 	}
 }

@@ -1,4 +1,4 @@
-// DRNE.vert
+// DRNE_noshadows.vert
 // Diffuse Roughness Normal Emission
 #version 330 core
 layout (location = 0) in vec3 aPos;
@@ -15,13 +15,11 @@ out VS_OUT
     vec2 vec2TextureCoordinate;
     mat3 matTBN;
     vec3 vec3VertexPosWorld;
-    vec4 FragPosLightSpace;
 } vs_out;
 
 uniform mat4 matrixProjection;
 uniform mat4 matrixView;
 uniform mat4 matrixWorld;
-uniform mat4 matrixLightViewProjection; // Matrix used when rendering scene to depth buffer from light position
 
 void main()
 {
@@ -48,6 +46,4 @@ void main()
     vs_out.vec4VertexColour = aColour;                                 // Vertex colour
     vs_out.vec2TextureCoordinate = aTexCoord;                          // Vertex texture coordinates
     vs_out.vec3VertexPosWorld = vec3(matrixWorld * vec4(aPos, 1.0));   // Vertex position in world space
-
-    vs_out.FragPosLightSpace = matrixLightViewProjection * vec4(vs_out.vec3VertexPosWorld, 1.0);    // Fragment position in lightspace
 }   

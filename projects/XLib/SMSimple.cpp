@@ -10,18 +10,13 @@ namespace X
 	{
 		mCamera.setViewAsLookat(glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 		miNumPointLights = 0;
-
-		// Shadow map stuff
 		mbShadowsCastFromDirectionalLight = true;
-		glm::mat4 lightProjection = glm::ortho(0.0f, 1024.0f, 0.0f, 1024.0f, 1.0f, 100.0f);
-		glm::mat4 lightView = glm::lookAt(
-			glm::vec3(0.0f, 50.0f, 0.0f),	// Eye
-			glm::vec3(0.0f, 0.0f, 0.0f),	// Target
-			glm::vec3(0.0f, 1.0f, 0.0f));	// Up
-		mmatShadowsDirectionalLightViewProj = lightProjection * lightView;
+		setDirectionalLightProjection(30.0f, 30.0f, 5.0f, 100.0f, glm::vec3(10.0f, 10.0f, 10.0f));
+		setDirectionalLightColour(glm::vec3(1.0f, 1.0f, 1.0f));
+		setDirectionalLightDir(glm::vec3(1.0f, -1.0f, 1.0f));
 	}
 
-	void SceneManagerSimple::render(void)
+	void SceneManagerSimple::render(const std::string strFramebufferToRenderTo)
 	{
 		// Camera
 		Window* pWindow = Window::getPointer();
@@ -31,11 +26,19 @@ namespace X
 		if (mbShadowsCastFromDirectionalLight)
 			_renderDepthmapForDirectionalLight();
 
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceFramebuffer* pFramebuffer = pRM->getFramebuffer(strFramebufferToRenderTo);
+
+		pFramebuffer->bindAsRenderTarget();
+		
+
 		// Render the triangle entities
 		_renderTriangleEntities();
 
 		// Render the line entities
 		_renderLineEntities();
+
+		pFramebuffer->unbindAsRenderTarget();
 	}
 
 	SMMaterial* SceneManagerSimple::addMaterial(
@@ -209,7 +212,12 @@ namespace X
 	void SceneManagerSimple::_renderTriangleEntities(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:shader_DRNE");		// Shader used to render the vertex buffer entities
+		ResourceShader* pShader;
+		if (mbShadowsCastFromDirectionalLight)
+			pShader = pRM->getShader("X:shader_DRNE");
+		else
+			pShader = pRM->getShader("X:shader_DRNE_noshadows");
+
 		ResourceTriangle* pResTri;
 		ResourceTexture2D* pTexDiffuse = 0;
 		ResourceTexture2D* pTexRoughness = 0;
@@ -239,6 +247,15 @@ namespace X
 		// Set directional light uniforms
 		pShader->setVec3("v3LightDirectionalColour", mvLightDirectional.mvColour);
 		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
+
+		// If we're rendering shadows, using the DRNE shader, set additional stuff for that
+		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+		if (mbShadowsCastFromDirectionalLight)
+		{
+			pShader->setMat4("matrixLightViewProjection", mmatShadowsDirectionalLightViewProj);
+			pShader->setInt("texture4_depthmap", 4);
+			pDepthbuffer->bindAsTexture(4);
+		}
 
 		// Set point light uniforms
 		pShader->setInt("iLightPointNumber", miNumPointLights);	// Number of point lights to use
@@ -320,8 +337,13 @@ namespace X
 		if (pTexNormal)		pTexNormal->unbind(2);
 		if (pTexEmission)	pTexEmission->unbind(3);
 
-		glDisable(GL_CULL_FACE);
+		
+		if (mbShadowsCastFromDirectionalLight)
+		{
+			pDepthbuffer->unbindTexture(4);
+		}
 
+		glDisable(GL_CULL_FACE);
 		pShader->unbind();
 	}
 
@@ -343,7 +365,6 @@ namespace X
 
 		// Culling
 		glDisable(GL_CULL_FACE);
-//		glCullFace(GL_BACK);
 
 		// Set projection and view matrixs from the camera
 		pShader->setMat4("matrixProjection", mCamera.matrixProjection);
@@ -370,7 +391,6 @@ namespace X
 
 		// Unbind everything (We check if not NULL, as perhaps, there are no entities added to scene manager, in which case, no texture will be retrieved above
 		if (pTexColour)	pTexColour->unbind(0);
-
 		pShader->unbind();
 	}
 
@@ -382,28 +402,26 @@ namespace X
 		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
 		pDepthbuffer->bindAsRenderTarget();
 		glClear(GL_DEPTH_BUFFER_BIT);
-		glViewport(0, 0, 1024, 1024);
-
-		ResourceTriangle* pResTri;
+		glViewport(0, 0, pDepthbuffer->getWidth(), pDepthbuffer->getHeight());
 
 		// Set blending/depth testing
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
 		// Culling
-		glDisable(GL_CULL_FACE);
-//		glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 
-		// Set projection and view matrixs from the directional light
-		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.0f);
+		glm::vec3 vLightTarget = _mv3DirectionLightPosition + mvLightDirectional.mvDirection;
 		glm::mat4 lightView = glm::lookAt(
-			glm::vec3(-2.0f, 4.0f, -1.0f),	// Eye
-			glm::vec3(0.0f, 0.0f, 0.0f),	// Target
+			glm::vec3(_mv3DirectionLightPosition.x, _mv3DirectionLightPosition.y, _mv3DirectionLightPosition.z),	// Eye
+			vLightTarget,	// Target
 			glm::vec3(0.0f, 1.0f, 0.0f));	// Up
-		mmatShadowsDirectionalLightViewProj = lightProjection * lightView;
+		mmatShadowsDirectionalLightViewProj = _mmatDirectionallightProjection * lightView;
 		pShader->setMat4("lightSpace", mmatShadowsDirectionalLightViewProj);
 
 		// Triangle entities
+		ResourceTriangle* pResTri;
 		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
@@ -412,11 +430,39 @@ namespace X
 			pResTri->draw(false);
 			it++;
 		}
+		glCullFace(GL_BACK);
 		glDisable(GL_CULL_FACE);
 		pShader->unbind();
 		pDepthbuffer->unbindAsRenderTarget();
 		// Reset viewport
 		Window* pWindow = Window::getPointer();
 		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
+	}
+
+	void SceneManagerSimple::setShadowsEnabled(bool bShadowsEnabled)
+	{
+		mbShadowsCastFromDirectionalLight = bShadowsEnabled;
+	}
+
+	bool SceneManagerSimple::getShadowsEnabled(void)
+	{
+		return mbShadowsCastFromDirectionalLight;
+	}
+
+	void SceneManagerSimple::setDirectionalLightProjection(float fProjMatWidth, float fProjMatHeight, float fProjMatNear, float fProjMatFar, glm::vec3 v3LightPosition)
+	{
+		_mmatDirectionallightProjection = glm::ortho(-fProjMatWidth, fProjMatWidth, -fProjMatHeight, fProjMatHeight, fProjMatNear, fProjMatFar);
+		_mv3DirectionLightPosition = v3LightPosition;
+	}
+
+	void SceneManagerSimple::setDirectionalLightDir(glm::vec3 vDirection)
+	{
+		mvLightDirectional.mvDirection = glm::normalize(vDirection);
+	}
+
+	void SceneManagerSimple::setDirectionalLightColour(glm::vec3 vColour)
+	{
+		mvLightDirectional.mvColour = vColour;
+
 	}
 }

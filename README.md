@@ -8,15 +8,9 @@
 - Load the X.sln file into Visual studio, hit compile, done.
 ** TODO **
 - Add quaternions and position to SMEntityBase along with helper functions to move stuff etc.
-- Add new shader to render the entities in the scene manager to a depth buffer, for shadow rendering.
-- Also add shader to render entities which use shadow’s depth map.
-- Add a bool to scene manager to toggle rendering of shadows and set the SM’s render method to render correct stuff.
-- All this good stuff has to be renderered to a frame buffer so that gui can blur itself over the top of what is already renderered. So we need to add a default frame buffer X:default_framebuffer..
-- Modify scenemanager's render method to accept a name of a framebuffer to render to and then within that method, bind that framebuffer as render target, render everything, unbind render target. Also allow passing empty name to just render to back buffer.
 - implement more stuff into Camera
 - implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
 - implement GUI (2D)
-- implement shadows
 - particle systems
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
