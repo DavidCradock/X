@@ -1,27 +1,30 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+
 namespace X
 {
 	// Here's where we go for everything GUI related.
 	// It works on the concept of a container, which holds various GUI widgets and can be set to act as a moveable window or not.
 	// 
 	// Containers:
-	// A container by default is simply an empty, err, container used to add various widgets to such as buttons.
+	// A container by default is simply an empty, err, container used to add various widgets to, such as buttons.
 	// A container can be set to be a window which can be dragged around the screen, closed and minimized with z-order supoort.
 	// If a container is set as a window, it has dimensions. Width and height. When setting a container's dimensions, the dimensions
-	// given are the area inside the container where widgets may be added, not including the container's borders.
-	// Again, if set as a window, it may or may not have a close, minimize, maximize button and title bar text.
-	// 
+	// given, are the area inside the container where widgets may be added, not including the container's borders.
+	// If set as a window, it may or may not have a close, minimize, maximize button and title bar text.
+	// Containers can also have tabs, which enable a container to switch between a sub container which has it's own set of widgets.
+	//
 	// Widgets:
-	// A container holds widgets. Widgets include buttons, static text, editable text boxes, text boxes with vertical scroll bar,
-	// generic buttons using the theme, image buttons which use a custom set image, progress bars, static images, animated images, 
+	// A container holds widgets. Widgets include buttons, image buttons which use a custom set image, static text, editable text boxes,
+	// text boxes with vertical scroll bar, progress bars, static images, animated images, 
 	// frame buffer boxes which render the contents of a framebuffer (Scene managers render to framebuffers and these can be used),
-	// draggable images/framebuffers which can be dragged between "draggable storage" widgets, line graphs, expandable menus with
+	// draggable images/framebuffers which can be dragged between "draggable dock" widgets, line graphs, expandable menus with
 	// support for holding widgets such as buttons, text and images, for each item in the menu. We also have taskbars.
 	// We also have sliders which may be horizontal or vertical, have some text next to them to show the value they represent and
 	// can also have "notches" whereby when the draggable tab is moved, can "snap" to one of these notches.
-	//
+	// I may also add more such as a colour selection widget.
+	// 
 	// Taskbars:
 	// A taskbar is a container with special, automatically controlled behaviour.
 	// They hold minimized windows and may contain additional widgets which you may add yourself. Ideas include static text which

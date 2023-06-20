@@ -152,7 +152,64 @@
     <ClInclude Include="resourceDepthbuffer.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GUIButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIButtonImage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContainer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableDock.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableItem.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageFB.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageAnimated.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILineGraph.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
     <ClInclude Include="GUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIMenu.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIProgressbar.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISlider.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITab.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITaskbar.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIText.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextScroll.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITheme.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITabContainer.h">
       <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -251,7 +308,64 @@
     <ClCompile Include="resourceDepthbuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="GUIButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButtonImage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContainer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableDock.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableItem.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageFB.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageAnimated.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILineGraph.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
     <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIMenu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIProgressBar.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISlider.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITab.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITaskbar.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIText.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextEdit.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextScroll.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITheme.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITabContainer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
