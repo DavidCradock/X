@@ -118,38 +118,39 @@ namespace X
 		inline void getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a);
 
 		// Swap red and blue colour components around
+		// If this image contains no data, an exception occurs.
 		void swapRedAndBlue(void);
 
 		// Flip the image vertically
+		// If this image contains no data, an exception occurs.
 		void flipVertically(void);
 
 		// Inverts the colours of the image, AKA new colour = 255 - current colour
-		// returns false if no image data exists 
-		bool invert(bool bInvertColour = true, bool bInvertAlpha = false);
+		// If this image contains no data, an exception occurs.
+		void invert(bool bInvertColour = true, bool bInvertAlpha = false);
 
 		// Converts the image's RGB components to greyscale, simply finding mean average of RGB components
-		// Returns false if no image data exists
-		bool greyscaleSimple(void);
+		// If this image contains no data, an exception occurs.
+		void greyscaleSimple(void);
 
 		// Converts the image's RGB components to greyscale, taking into consideration the average human's eye sensitivity to the individual RGB components.
 		// If default params are not used (They approximate the average human's eye sensitivity), they should be of unit length.
-		// returns false if no image data exists 
-		bool greyscale(float fRedSensitivity = 0.299f,
-			float fGreenSensitivity = 0.587f,
-			float fBlueSensitivity = 0.144f);
+		// If this image contains no data, an exception occurs.
+		void greyscale(float fRedSensitivity = 0.299f, float fGreenSensitivity = 0.587f, float fBlueSensitivity = 0.144f);
 
 		// Adjusts brightness of colour components
 		// Accepted range for iAmount can be between -255 to +255 which would make entire image totally black or white.
-		// returns false if no image data exists 
-		bool adjustBrightness(int iAmount);
+		// If this image contains no data, an exception occurs.
+		void adjustBrightness(int iAmount);
 
 		// Adjusts contrast of the colour components
-		// Accepted range for iAmount is between -100 and +100 \n
-		// returns false if no image data exists.	
-		bool adjustContrast(int iAmount);
+		// Accepted range for iAmount is between -100 and +100
+		// If this image contains no data, an exception occurs.
+		void adjustContrast(int iAmount);
 
 		// Copies this image into the one given
 		// Silently fails if both this image and the one parsed are actually the same objects, or there is no image data to copy.
+		// If this image contains no data, an exception occurs.
 		// The destinationImage is totally replaced. 
 		void copyTo(Image& destImage) const;
 
@@ -163,22 +164,42 @@ namespace X
 		// iSrcHeight The height of the region to copy from the source image
 		// iDestPosX The bottom left position within the destination image to copy to
 		// iDestPosY The bottom left position within the destination image to copy to
+		// If this image or the destination image contain no data, an exception occurs.
 		void copyRectTo(Image& destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY);
 
+		// Copies the contents of this image into the outputImage and gives the output image a border and sets the pixels around that
+		// border to be the same as the ones in this image's edge pixels, thereby making the output image have dimensions which are +2 of this one.
+		// This is typically used to simply calculating of stuff without having to take into consideration, edge cases.
+		// If this image contains no data, an exception occurs.
+		void copyToAddBorder(Image& outputImage);
+
 		// Rotates the image 90 degrees clockwise
+		// If this image contains no data, an exception occurs.
 		void rotateClockwise(void);
 
-		// Edge detection
-		// This detects edges of this image and sets the image reference given to hold an image of equal dimensions with values of 255 for RGBA where edges were detected, else values of 0.
+		// Edge detection.
+		// Given a colour value which represents the "background colour" of the image, this detects where the pixels in the image are next to this
+		// colour and sets the outputImage as white where the other coloured pixels meet this "background colour"
+		// I wish I could place images here in the code, as it'd be much easier to show what this does with images.
 		// Edges are detected by using the given colour value which should represent the colour of the image's background
+		// If this image contains no data, or doesn't have at least 3 channels, an exception occurs.
 		void edgeDetect(Image& outputImage, unsigned char r, unsigned char g, unsigned char b);
 
 		// Removes the alpha channel of the image, leaving the RGB components
+		// If this image contains no data, or doesn't have 4 channels, an exception occurs.
 		void removeAlphaChannel(void);
 
 		// Copies the alpha channel to each of the RGB components
+		// If this image contains no data, or doesn't have 4 channels, an exception occurs.
 		void copyAlphaChannelToRGB(void);
 
+		// Computes a normal map used for normal mapping from this image and stores the result in outputImage
+		// This image should be a heightmap, where each pixel represents the height of a surface. White being max height, black being the lowest.
+		// However, this image first creates a copy of itself in memory, then calls greyscaleSimple() on that to ensure proper computation of the normals.
+		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally.
+		// If this image contains no data, an exception occurs.
+		void normalmap(Image& outputImage, float fScale = 1.0f);
+		
 	private:
 		unsigned char* pData;
 		unsigned int dataSize;
@@ -187,7 +208,7 @@ namespace X
 		int numChannels;
 
 		// Used by edgeDetect()
-		inline bool isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b);
+		inline bool _isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b);
 
 	};
 
@@ -256,7 +277,7 @@ namespace X
 		}
 	}
 
-	inline bool Image::isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
+	inline bool Image::_isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
 	{
 		// Don't check edge pixels of image
 		if (iPosX == 0)
@@ -279,7 +300,6 @@ namespace X
 					return false;
 
 		// If we get here, the center pixel is not the same as the mask colour
-
 
 		// Get bordering pixels of center pixel
 		// If they are the same as the mask, then it's an edge

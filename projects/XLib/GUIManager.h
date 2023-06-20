@@ -1,6 +1,26 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+#include "GUIBaseObject.h"
+#include "GUIButton.h"
+#include "GUIButtonImage.h"
+#include "GUIContainer.h"
+#include "GUIDraggableDock.h"
+#include "GUIDraggableItem.h"
+#include "GUIImageFB.h"
+#include "GUIImage.h"
+#include "GUIImageAnimated.h"
+#include "GUILineGraph.h"
+#include "GUIMenu.h"
+#include "GUIProgressBar.h"
+#include "GUISlider.h"
+#include "GUITab.h"
+#include "GUITabContainer.h"
+#include "GUITaskbar.h"
+#include "GUIText.h"
+#include "GUITextEdit.h"
+#include "GUITextScroll.h"
+#include "GUITheme.h"
 
 namespace X
 {
@@ -81,6 +101,62 @@ namespace X
 	class GUIManager : public Singleton<GUIManager>
 	{
 	public:
+		GUIManager();
 
+		// Adds a new theme for use by the GUI and returns a pointer to it
+		// If the named theme already exists, a pointer to that theme is returned.
+		GUITheme* addTheme(const std::string& strName);
+
+		// Returns a pointer to a named theme.
+		// If the named object doesn't exist, an exception occurs.
+		GUITheme* getTheme(const std::string& strName);
+
+		// Returns true if the named theme exists
+		bool getThemeExists(const std::string& strName);
+
+		// Removes the named theme.
+		// If the named object doesn't exist, this silently fails.
+		void removeTheme(const std::string& strName);
+
+		// Removes all themes.
+		void removeAllThemes(void);
+
+		// Returns the number of themes
+		int getNumberOfThemes(void);
+
+		// Returns the name of a theme at the specified index.
+		// If an invalid index is given, an exception occurs.
+		std::string getThemeName(int iIndex);
+
+		// Sets all GUI objects to use the named theme.
+		void setThemeForAll(const std::string& strName);
+
+		// Adds a new container and returns a pointer to it
+		// If the named container already exists, a pointer to that object is returned.
+		GUIContainer* addContainer(const std::string& strName);
+
+		// Returns a pointer to a named container.
+		// If the named container doesn't exist, an exception occurs.
+		GUIContainer* getContainer(const std::string& strName);
+
+		// Returns true if the named container exists
+		bool getContainerExists(const std::string& strName);
+
+		// Removes the named container.
+		// If the named container doesn't exist, this silently fails.
+		void removeContainer(const std::string& strName);
+
+		// Removes all containers.
+		void removeAllContainers(void);
+
+		// Returns the number of containers
+		int getNumberOfContainers(void);
+
+		// Returns the name of a container at the specified index.
+		// If an invalid index is given, an exception occurs.
+		std::string getContainerName(int iIndex);
+	private:
+		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
+		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
 	};
 }

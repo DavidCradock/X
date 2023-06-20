@@ -6,7 +6,7 @@
 #include "resourceManager.h"
 
 // Include each application
-#include "applicationGUIThemeEditor.h"
+
 
 namespace X
 {
@@ -22,11 +22,11 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() called.");
 
 			// Create objects to each of the application classes which inherit from ApplicationBase
-			ApplicationGUIThemeEditor* pAppGUIThemeEditor = new ApplicationGUIThemeEditor;
-			ThrowIfTrue(0 == pAppGUIThemeEditor, "ApplicationManager::mainLoop() failed to allocate ApplicationGUIThemeEditor.");
+//			ApplicationGUIThemeEditor* pAppGUIThemeEditor = new ApplicationGUIThemeEditor;
+//			ThrowIfTrue(0 == pAppGUIThemeEditor, "ApplicationManager::mainLoop() failed to allocate ApplicationGUIThemeEditor.");
 
 			// Add each application to this manager
-			addApp("GUIThemeEditor", pAppGUIThemeEditor);
+//			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
 			// Create window
 			Window* pWindow = Window::getPointer();

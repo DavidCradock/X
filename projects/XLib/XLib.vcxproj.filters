@@ -44,9 +44,6 @@
     <ClInclude Include="applicationBase.h">
       <Filter>Applications</Filter>
     </ClInclude>
-    <ClInclude Include="applicationGUIThemeEditor.h">
-      <Filter>Applications</Filter>
-    </ClInclude>
     <ClInclude Include="image.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -212,6 +209,9 @@
     <ClInclude Include="GUITabContainer.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="GUIBaseObject.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -219,9 +219,6 @@
     <ClCompile Include="plane.cpp" />
     <ClCompile Include="renderQueue.cpp" />
     <ClCompile Include="applicationBase.cpp">
-      <Filter>Applications</Filter>
-    </ClCompile>
-    <ClCompile Include="applicationGUIThemeEditor.cpp">
       <Filter>Applications</Filter>
     </ClCompile>
     <ClCompile Include="applicationManager.cpp">
@@ -366,6 +363,9 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUITabContainer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIBaseObject.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>

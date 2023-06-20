@@ -229,7 +229,7 @@ namespace X
 		pData = pNewImageStartAddress;	// Make image data point to the new data
 	}
 
-	bool Image::invert(bool bInvertColour, bool bInvertAlpha)
+	void Image::invert(bool bInvertColour, bool bInvertAlpha)
 	{
 		ThrowIfTrue(!pData, "Image::invert() failed. Image not yet created.");
 
@@ -256,10 +256,9 @@ namespace X
 				i += numChannels;
 			}
 		}
-		return true;
 	}
 
-	bool Image::greyscaleSimple(void)
+	void Image::greyscaleSimple(void)
 	{
 		ThrowIfTrue(!pData, "Image::greyscaleSimple() failed. Image not yet created.");
 
@@ -279,11 +278,10 @@ namespace X
 			pData[i+2] = cTmp;
 			i += numChannels;
 		}
-		return true;
 	}
 
 
-	bool Image::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
+	void Image::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
 	{
 		ThrowIfTrue(!pData, "Image::greyscale() failed. Image not yet created.");
 
@@ -304,10 +302,9 @@ namespace X
 			pData[i+2] = cTmp;
 			i += numChannels;
 		}
-		return true;
 	}
 
-	bool Image::adjustBrightness(int iAmount)
+	void Image::adjustBrightness(int iAmount)
 	{
 		ThrowIfTrue(!pData, "Image::adjustBrightness() failed. Image not yet created.");
 
@@ -328,10 +325,9 @@ namespace X
 			pData[i+2] = unsigned char(iCol);
 			i += numChannels;
 		}
-		return true;
 	}
 
-	bool Image::adjustContrast(int iAmount)
+	void Image::adjustContrast(int iAmount)
 	{
 		ThrowIfTrue(!pData, "Image::adjustContrast() failed. Image not yet created.");
 
@@ -373,7 +369,6 @@ namespace X
 
 			i += numChannels;
 		}
-		return true;
 	}
 
 	void Image::copyTo(Image &destImage) const
@@ -383,7 +378,6 @@ namespace X
 		// If destination image is the same as this one, do nothing
 		if (destImage.pData == this->pData)
 			return;
-
 
 		destImage.free();
 		destImage.createBlank(width, height, numChannels);
@@ -457,6 +451,46 @@ namespace X
 		}
 	}
 
+	void Image::copyToAddBorder(Image& outputImage)
+	{
+		ThrowIfTrue(!pData, "Image::copyToAddBorder() failed. Image data doesn't exist.");
+
+		// Compute new larger dimensions and create the larger image
+		int newWidth = width + 2;
+		int newHeight = height + 2;
+		outputImage.createBlank(newWidth, newHeight, numChannels);
+
+		// Copy this image to the centre of the larger image
+		copyRectTo(outputImage, 0, 0, width, height, 1, 1);
+
+		// Now copy the edges of this image to the destination image
+		unsigned char r, g, b, a;
+		int heightOfOutputImageMinusOne = newHeight - 1;
+		// Top and bottom edges
+		for (int iX = 0; iX < width; iX++)
+		{
+			// Top pixel row
+			getPixel(iX, 0, r, g, b, a);
+			outputImage.setPixel(iX + 1, 0, r, g, b, a);
+
+			// Bottom pixel row
+			getPixel(iX, height - 1, r, g, b, a);
+			outputImage.setPixel(iX + 1, heightOfOutputImageMinusOne, r, g, b, a);
+		}
+		int widthOfOutputImageMinusOne = newWidth - 1;
+		// Left and right edges
+		for (int iY = 0; iY < height; iY++)
+		{
+			// Left pixel column
+			getPixel(0, iY, r, g, b, a);
+			outputImage.setPixel(0, iY + 1, r, g, b, a);
+
+			// Right pixel column
+			getPixel(width - 1, iY, r, g, b, a);
+			outputImage.setPixel(widthOfOutputImageMinusOne, iY + 1, r, g, b, a);
+		}
+	}
+
 	void Image::rotateClockwise(void)
 	{
 		Image oldImage;
@@ -486,6 +520,9 @@ namespace X
 
 	void Image::edgeDetect(Image &outputImage, unsigned char r, unsigned char g, unsigned char b)
 	{
+		ThrowIfTrue(!pData, "Image::edgeDetect() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels < 3, "Image::edgeDetect() failed. Some image data exists, but doesn't have enough colour channels.");
+
 		outputImage.createBlank(width, height, 4);
 		int iX = 0;
 		int iY = 0;
@@ -493,7 +530,7 @@ namespace X
 		{
 			while (iY < (int)height)
 			{
-				if (isPixelEdge(iX, iY, r, g, b))
+				if (_isPixelEdge(iX, iY, r, g, b))
 					outputImage.setPixel(iX, iY, 255, 255, 255, 255);
 				else
 					outputImage.setPixel(iX, iY, 0, 0, 0, 0);
@@ -541,6 +578,70 @@ namespace X
 			pData[iIndex+1] = pData[iIndex+3];	// Green
 			pData[iIndex+2] = pData[iIndex+3];	// Blue
 			iIndex+=4;
+		}
+	}
+
+	void Image::normalmap(Image& outputImage, float fScale)
+	{
+		ThrowIfTrue(!pData, "Image::normalmap() failed. Image data doesn't exist.");
+
+		clamp(fScale, 0.0f, 1.0f);
+
+		// Copy this image into a new one so this is left unaffected.
+		// This uses the copyToAddBorder() method which adds a border and copies the edge pixels to the new pixels in the border.
+		// This makes it so we don't have to mess around with edge cases.
+		Image imageGreyscale;
+		copyToAddBorder(imageGreyscale);
+
+		// Greyscale the image
+		imageGreyscale.greyscaleSimple();
+
+		// Create output image with the same size as this one
+		outputImage.createBlank(width, height, 3);
+
+		// Now loop through greyscale image, computing each normal and storing in the output image.
+		unsigned char r[3], g[3], b[3], a;
+		float fX, fY, fZ;
+		float fLength;
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				// we add +1 to imageGreyscale pixel positions as it has a border
+
+				// Get height values of centre and surrounding pixels
+				imageGreyscale.getPixel(x + 1, y + 1, r[0], g[0], b[0], a);	// Current pixel
+				imageGreyscale.getPixel(x, y + 1, r[1], g[1], b[1], a);		// Left pixel
+				imageGreyscale.getPixel(x + 1, y + 2, r[2], g[2], b[2], a);	// Above pixel
+				
+				fX = float(r[1] - r[0]) / 255.0f;	// Convert to -1.0f to 1.0f
+				fY = float(r[2] - r[0]) / 255.0f;	// ....
+				fZ = fScale;
+
+				// Compute length of vector and normalize
+				fLength = sqrt((fX * fX) + (fY * fY) + (fZ * fZ));
+				if (areFloatsEqual(fLength, 0.0f))	// If length is nearly zero, just set as up vector
+				{
+					fX = 0.0f;
+					fY = 0.0f;
+					fZ = 1.0f;
+				}
+				else
+				{
+					fX = fX / fLength;
+					fY = fY / fLength;
+					fZ = fZ / fLength;
+				}
+
+				// Convert from -1, +1 to 0, 255
+				fX += 1.0f;	fX *= 127.0f;
+				fY += 1.0f;	fY *= 127.0f;
+				fZ += 1.0f;	fZ *= 127.0f;
+				r[0] = unsigned char(fX);
+				g[0] = unsigned char(fY);
+				b[0] = unsigned char(fZ);
+				outputImage.setPixel(x, y, r[0], g[0], b[0], a);
+			}
 		}
 	}
 }

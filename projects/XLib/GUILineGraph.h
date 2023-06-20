@@ -1,9 +1,10 @@
 #pragma once
 #include "PCH.h"
+#include "GUIBaseObject.h"
 
 namespace X
 {
-	class GUILineGraph
+	class GUILineGraph : public GUIBaseObject
 	{
 	public:
 

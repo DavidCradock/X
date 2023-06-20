@@ -12,9 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="applicationBase.h" />
-    <ClInclude Include="applicationGUIThemeEditor.h" />
     <ClInclude Include="applicationManager.h" />
     <ClInclude Include="audioManager.h" />
+    <ClInclude Include="GUIBaseObject.h" />
     <ClInclude Include="GUIButton.h" />
     <ClInclude Include="GUIButtonImage.h" />
     <ClInclude Include="GUIContainer.h" />
@@ -78,9 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="applicationBase.cpp" />
-    <ClCompile Include="applicationGUIThemeEditor.cpp" />
     <ClCompile Include="applicationManager.cpp" />
     <ClCompile Include="audioManager.cpp" />
+    <ClCompile Include="GUIBaseObject.cpp" />
     <ClCompile Include="GUIButton.cpp" />
     <ClCompile Include="GUIButtonImage.cpp" />
     <ClCompile Include="GUIContainer.cpp" />

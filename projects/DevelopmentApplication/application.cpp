@@ -4,6 +4,12 @@ namespace X
 {
 	void Application::initOnce(void)
 	{
+		Image image;
+		image.load("data/DevApp/images/temp.png");
+		Image image2;
+		image.normalmap(image2, 1.0f);
+		image2.saveAsJPG("data/DevApp/images/temp2_normal.jpg");
+
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		timer.setAveragedFPSRate(1);	// Once every X seconds
@@ -19,7 +25,7 @@ namespace X
 //		pRM->addFont("tahoma_200", "data/DevApp/fonts/tahoma_200");
 
 		// Temporary debug triangle 2D quad for showing depth buffer from shadowmap
-		pRM->addTriangle("DEBUG_QUAD");
+//		pRM->addTriangle("DEBUG_QUAD");
 	}
 
 	void Application::onStart(void)
@@ -41,7 +47,7 @@ namespace X
 		timer.update();
 
 		// Update and render scene manager to a framebuffer
-		mSceneManagerSimple.mCamera.update();
+//		mSceneManagerSimple.mCamera.update();
 		mSceneManagerSimple.render();
 		
 
@@ -131,21 +137,21 @@ namespace X
 
 		// Render some debug text
 		// Position
-		glm::vec3 vPos = pEntityLine->getWorldPosition();
-		strTXT = "Line entity getWorldPosition: AD: " + std::format("{:.4f}", vPos.x) + ", RF: " + std::format("{:.4f}", vPos.y) + ", WS: " + std::format("{:.4f}", vPos.z);
-		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
-		iYpos += (int)pFont->getTextHeight();
+//		glm::vec3 vPos = pEntityLine->getWorldPosition();
+//		strTXT = "Line entity getWorldPosition: AD: " + std::format("{:.4f}", vPos.x) + ", RF: " + std::format("{:.4f}", vPos.y) + ", WS: " + std::format("{:.4f}", vPos.z);
+//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		iYpos += (int)pFont->getTextHeight();
 
 		// Scale
-		glm::vec3 vScale = pEntityLine->getScale();
-		strTXT = "Line entity getScale: TG: " + std::format("{:.4f}", vScale.x) + ", " + std::format("{:.4f}", vScale.y) + ", " + std::format("{:.4f}", vScale.z);
-		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
-		iYpos += (int)pFont->getTextHeight();
+//		glm::vec3 vScale = pEntityLine->getScale();
+//		strTXT = "Line entity getScale: TG: " + std::format("{:.4f}", vScale.x) + ", " + std::format("{:.4f}", vScale.y) + ", " + std::format("{:.4f}", vScale.z);
+//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		iYpos += (int)pFont->getTextHeight();
 
 		// Rotation
-		strTXT = "Line entity rotation YHUJIK";
-		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
-		iYpos += (int)pFont->getTextHeight();
+//		strTXT = "Line entity rotation YHUJIK";
+//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		iYpos += (int)pFont->getTextHeight();
 
 		/*		// Render more text with various scaling values
 				float fYpos = 30.0f;

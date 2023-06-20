@@ -1,9 +1,10 @@
 #pragma once
 #include "PCH.h"
+#include "GUIBaseObject.h"
 
 namespace X
 {
-	class GUIText
+	class GUIText : public GUIBaseObject
 	{
 	public:
 
