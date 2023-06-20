@@ -165,8 +165,8 @@ namespace X
 	void ResourceDepthbuffer::renderToBackbuffer(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:triangle_debug");
-		ResourceShader* pShader = pRM->getShader("X:shader_depthbuffer_debug");
+		ResourceTriangle* pTri = pRM->getTriangle("X:debug");
+		ResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
 		Window* pWindow = Window::getPointer();
 		
 		// Setup triangle geometry

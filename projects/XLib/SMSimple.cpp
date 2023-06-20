@@ -214,9 +214,9 @@ namespace X
 		ResourceManager* pRM = ResourceManager::getPointer();
 		ResourceShader* pShader;
 		if (mbShadowsCastFromDirectionalLight)
-			pShader = pRM->getShader("X:shader_DRNE");
+			pShader = pRM->getShader("X:DRNE");
 		else
-			pShader = pRM->getShader("X:shader_DRNE_noshadows");
+			pShader = pRM->getShader("X:DRNE_noshadows");
 
 		ResourceTriangle* pResTri;
 		ResourceTexture2D* pTexDiffuse = 0;
@@ -249,7 +249,7 @@ namespace X
 		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
 
 		// If we're rendering shadows, using the DRNE shader, set additional stuff for that
-		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 		if (mbShadowsCastFromDirectionalLight)
 		{
 			pShader->setMat4("matrixLightViewProjection", mmatShadowsDirectionalLightViewProj);
@@ -350,7 +350,7 @@ namespace X
 	void SceneManagerSimple::_renderLineEntities(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:shader_line");		// Shader used to render the vertex buffer line entities
+		ResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
 		ResourceLine* pLine;
 		ResourceTexture2D* pTexColour = 0;
 
@@ -397,9 +397,9 @@ namespace X
 	void SceneManagerSimple::_renderDepthmapForDirectionalLight(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:shader_shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
+		ResourceShader* pShader = pRM->getShader("X:shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
 		pShader->bind();
-		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 		pDepthbuffer->bindAsRenderTarget();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, pDepthbuffer->getWidth(), pDepthbuffer->getHeight());

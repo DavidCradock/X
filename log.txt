@@ -18,12 +18,12 @@
 0w:0d:0h:0m:00s : ApplicationManager::callAllApps_initOnce() called.
 0w:0d:0h:0m:02s : ApplicationManager::mainLoop() calling AppDevelopment's onStart()
 0w:0d:0h:0m:02s : ApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:04s : ApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:04s : Window::destroyWindow() called.
-0w:0d:0h:0m:04s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:04s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:04s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:04s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:04s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:04s : Window::destroyWindow() complete.
-0w:0d:0h:0m:04s : Total runtime: 4sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:29s : ApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:29s : Window::destroyWindow() called.
+0w:0d:0h:0m:29s : Window::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:29s : Window::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:29s : Window::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:29s : Window::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:29s : Window::destroyWindow() unregistering window class.
+0w:0d:0h:0m:29s : Window::destroyWindow() complete.
+0w:0d:0h:0m:29s : Total runtime: 29sec 0min 0hr 0days 0weeks.

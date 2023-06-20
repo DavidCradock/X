@@ -624,7 +624,7 @@ namespace X
 				{
 					fX = 0.0f;
 					fY = 0.0f;
-					fZ = 1.0f;
+					fZ = fScale;
 				}
 				else
 				{

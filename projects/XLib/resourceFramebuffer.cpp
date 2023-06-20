@@ -171,8 +171,8 @@ namespace X
 	void ResourceFramebuffer::renderToBackbuffer(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:triangle_debug");
-		ResourceShader* pShader = pRM->getShader("X:shader_pos_col_tex");
+		ResourceTriangle* pTri = pRM->getTriangle("X:debug");
+		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 		Window* pWindow = Window::getPointer();
 
 		// Setup triangle geometry

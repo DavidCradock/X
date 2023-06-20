@@ -8,7 +8,7 @@ namespace X
 	// It also holds some other variables such as specular and ambient strength.
 	// We have default texture maps stored in the resource manager which are used if these texture strings are not set.
 	// They are added from the ApplicationManager::addDefaultResources() method.
-	// They are named "X:texture_default_diffuse", "X:texture_default_emission", "X:texture_default_roughness" and "X:texture_default_normal"
+	// They are named "X:default_diffuse", "X:default_emission", "X:default_roughness" and "X:default_normal"
 	// This is usefull if we do not need to use them.
 	// Examples...
 	// if diffuse texture name is not set, we use the default tiny greyscale texture.

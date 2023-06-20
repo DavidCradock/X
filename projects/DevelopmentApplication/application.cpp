@@ -52,12 +52,12 @@ namespace X
 		
 
 		// Now render the framebuffer onto the backbuffer
-		ResourceFramebuffer *pFB = pRM->getFramebuffer("X:framebuffer_scenemanager");
+		ResourceFramebuffer *pFB = pRM->getFramebuffer("X:scenemanager");
 		Window* pWindow = Window::getPointer();
 		pFB->renderToBackbuffer(0, 0, pWindow->getWidth(), pWindow->getHeight());
 
 		// Render the debug shadow map onto the screen
-//		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:depthbuffer_shadows");
+//		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 //		pDepthbuffer->renderToBackbuffer(pWindow->getWidth() - 512, 0, 512, 512);
 
 		float fInc = timer.getSecondsPast();
@@ -231,16 +231,16 @@ namespace X
 		pRM->addTexture2D("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
 
 		// Create materials
-		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.75f, "data/DevApp/textures/cube_Normal.png", "X:texture_default_emission");
-		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:texture_default_white", "X:texture_default_white", 0.5f, "X:texture_default_normal", "X:texture_default_white");
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.75f, "data/DevApp/textures/cube_Normal.png", "X:default_emission");
+		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
 		mSceneManagerSimple.addMaterial(
 			"mat_groundplane",						// Material name
 			0.25f,									// Ambient strength
 			"data/DevApp/textures/groundplane.png",	// Diffuse texture
-			"X:texture_default_roughness",			// Roughness texture (grey)
+			"X:default_roughness",					// Roughness texture (grey)
 			1.0f,									// Specular strength
-			"X:texture_default_normal",				// Normal texture (float)
-			"X:texture_default_emission");			// Emission texture (black)
+			"X:default_normal",						// Normal texture (float)
+			"X:default_emission");					// Emission texture (black)
 
 		SMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
 		pEntity->setWorldPosition(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -302,7 +302,7 @@ namespace X
 		lineVertex.position = glm::vec3(0.0f, 0.0f, 1.0f);		pLine->addLinePoint(lineVertex);
 		pLine->update();
 
-		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:texture_default_white");
+		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:default_white");
 		pEntityLine->setWorldPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 }

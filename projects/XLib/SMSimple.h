@@ -23,10 +23,10 @@ namespace X
 
 		// Render all the entities in this scene to a framebuffer
 		// After rendering to a framebuffer, we can render the framebuffer to the back buffer to actually see it with something like this...
-		// ResourceFramebuffer* pFB = pRM->getFramebuffer("X:framebuffer_scenemanager");
+		// ResourceFramebuffer* pFB = pRM->getFramebuffer("X:scenemanager");
 		// Window* pWindow = Window::getPointer();
 		// pFB->renderToBackbuffer(0.0f, 0.0f, pWindow->getWidth(), pWindow->getHeight());
-		void render(const std::string strFramebufferToRenderTo = "X:framebuffer_scenemanager");
+		void render(const std::string strFramebufferToRenderTo = "X:scenemanager");
 
 		SMCamera mCamera;						// The scene manager's camera
 		
@@ -37,12 +37,12 @@ namespace X
 		// If the named material already exists, an exception occurs.
 		SMMaterial* addMaterial(
 			const std::string strMaterialName,		// The unique name of this material
-			float fAmbientStrength = 0.05f,												// Ambient strength
-			const std::string& strTextureNameDiffuse = "X:texture_default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
-			const std::string& strTextureNameRoughness = "X:texture_default_roughness",	// The texture resource located in the ResourceManager used for the roughness
-			float fSpecularStrength = 0.5f,												// Specular strength
-			const std::string& strTextureNameNormal = "X:texture_default_normal",		// The texture resource located in the ResourceManager used for the normal map
-			const std::string& strTextureNameEmission = "X:texture_default_emission"	// The texture resource located in the ResourceManager used for the emission
+			float fAmbientStrength = 0.05f,										// Ambient strength
+			const std::string& strTextureNameDiffuse = "X:default_diffuse",		// The texture resource located in the ResourceManager used for the diffuse colour
+			const std::string& strTextureNameRoughness = "X:default_roughness",	// The texture resource located in the ResourceManager used for the roughness
+			float fSpecularStrength = 0.5f,										// Specular strength
+			const std::string& strTextureNameNormal = "X:default_normal",		// The texture resource located in the ResourceManager used for the normal map
+			const std::string& strTextureNameEmission = "X:default_emission"	// The texture resource located in the ResourceManager used for the emission
 		);
 		
 		// Returns a pointer to the named material
