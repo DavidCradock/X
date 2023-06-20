@@ -54,7 +54,7 @@ namespace X
 		// Now render the framebuffer onto the backbuffer
 		ResourceFramebuffer *pFB = pRM->getFramebuffer("X:scenemanager");
 		Window* pWindow = Window::getPointer();
-		pFB->renderToBackbuffer(0, 0, pWindow->getWidth(), pWindow->getHeight());
+		pFB->renderTo2DQuad(0, 0, pWindow->getWidth(), pWindow->getHeight());
 
 		// Render the debug shadow map onto the screen
 //		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");

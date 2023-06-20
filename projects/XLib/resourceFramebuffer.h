@@ -41,8 +41,8 @@ namespace X
 		// Sets frame buffer to new dimensions
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
 
-		// Renders the contents of this buffer to the backbuffer
-		void renderToBackbuffer(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight);
+		// Renders the contents of this buffer to a 2D quad with specified position and dimensions
+		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight);
 	private:
 		unsigned int _muiWidth;
 		unsigned int _muiHeight;

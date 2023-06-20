@@ -162,7 +162,7 @@ namespace X
 		onGLContextCreated();
 	}
 
-	void ResourceDepthbuffer::renderToBackbuffer(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
+	void ResourceDepthbuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
 		ResourceTriangle* pTri = pRM->getTriangle("X:debug");

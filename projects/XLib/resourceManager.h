@@ -30,7 +30,7 @@ namespace X
 	// X:default_roughness	// A texture which is grey for roughnessm used if not set
 	// X:shadows			// A depth buffer which is used by scene managers to render shadows
 	// X:debug				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
-	// X:scenemanager;		// A framebuffer which the scene managers use to render to by default.
+	// X:scenemanager		// A framebuffer which the scene managers use to render to by default.
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{
