@@ -97,6 +97,40 @@ namespace X
 		return true;
 	}
 
+	void stringToLowercase(std::string& str)
+	{
+		std::transform(str.begin(), str.end(), str.begin(),	[](unsigned char c) { return std::tolower(c); });
+	}
+
+	std::string addFilenameExtension(const std::string& strFilenameExtension, const std::string& strFilename)
+	{
+		// Make sure valid values given.
+		ThrowIfTrue(0 == strFilenameExtension.length(), "addFilenameExtension() failed. Given extension name of zero length.");
+		ThrowIfTrue(0 == strFilename.length(), "addFilenameExtension() failed. Given file name of zero length.");
+
+		// Append "." to extension if needed
+		std::string strExt = strFilenameExtension;
+		if (strExt.c_str()[0] != '.')
+		{
+			std::string::iterator itBegin = strExt.begin();
+			strExt.insert(itBegin, '.');
+		}
+		std::string strFile = strFilename;
+		// Find last position of "." in given file name and remove everything after it
+		auto const pos = strFile.find_last_of('.');
+		if (pos != std::string::npos)	// If "." found
+		{
+			// Remove "." and all following text
+			strFile.erase(pos, strFile.length() - pos);
+		}
+		// Append extension to filename
+		strFile.append(strExt);
+
+		// Make all lowercase
+		stringToLowercase(strFile);
+		return strFile;
+	}
+
 	bool convertFileToHeader(const std::string &strFilename, const std::string &strArrayName, unsigned int uiNumElementsPerRow)
 	{
 		FILE* fs = NULL;  // Source file

@@ -51,6 +51,15 @@ namespace X
 	// Returns true if the given disk filename exists.
 	bool getFileExists(const std::string& strFilename);
 
+	// Converts the given string to lowercase
+	void stringToLowercase(std::string& str);
+
+	// Takes the given filename and filename extension and adds the given filename extension to the end of the given filename and returns the result.
+	// The returned filename is all lowercase.
+	// The filename extension may or may not have the "." at the beginning. If it doesn't exist, it is added.
+	// If passed strings are of zero length, an exception occurs.
+	std::string addFilenameExtension(const std::string& strFilenameExtension, const std::string& strFilename);
+
 	// Converts the contents of a file into an array, stored inside a text header file, for inclusion of external files, inside the executable of a program
 	bool convertFileToHeader(const std::string &strFilename, const std::string &strArrayName = "data", unsigned int iNumElementsPerRow = 20);
 

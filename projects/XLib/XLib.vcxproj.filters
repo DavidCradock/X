@@ -212,6 +212,9 @@
     <ClInclude Include="GUIBaseObject.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="GUIColour.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -366,6 +369,9 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIBaseObject.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIColour.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>

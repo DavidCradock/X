@@ -103,6 +103,12 @@ namespace X
 	public:
 		GUIManager();
 
+		// Scaling of the GUI is set with a single float value. Values should be 1.0f, 0.5f, 0.25f, 0.125f for optimal appearance, but can be set to any value.
+		void setScale(float fScalingValue);
+
+		// Returns the currently set scaling value of the entire GUI
+		float getScale(void);
+
 		// Adds a new theme for use by the GUI and returns a pointer to it
 		// If the named theme already exists, a pointer to that theme is returned.
 		GUITheme* addTheme(const std::string& strName);
@@ -156,6 +162,7 @@ namespace X
 		// If an invalid index is given, an exception occurs.
 		std::string getContainerName(int iIndex);
 	private:
+		float _mfScale;												// Scaling value used for GUI scaling.
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
 		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
 	};

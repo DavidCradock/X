@@ -17,6 +17,7 @@
     <ClInclude Include="GUIBaseObject.h" />
     <ClInclude Include="GUIButton.h" />
     <ClInclude Include="GUIButtonImage.h" />
+    <ClInclude Include="GUIColour.h" />
     <ClInclude Include="GUIContainer.h" />
     <ClInclude Include="GUIDraggableDock.h" />
     <ClInclude Include="GUIDraggableItem.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="GUIBaseObject.cpp" />
     <ClCompile Include="GUIButton.cpp" />
     <ClCompile Include="GUIButtonImage.cpp" />
+    <ClCompile Include="GUIColour.cpp" />
     <ClCompile Include="GUIContainer.cpp" />
     <ClCompile Include="GUIDraggableDock.cpp" />
     <ClCompile Include="GUIDraggableItem.cpp" />

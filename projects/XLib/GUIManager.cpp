@@ -6,7 +6,17 @@ namespace X
 {
 	GUIManager::GUIManager()
 	{
+		_mfScale = 1.0f;
+	}
 
+	void GUIManager::setScale(float fScalingValue)
+	{
+		_mfScale = fScalingValue;
+	}
+
+	float GUIManager::getScale(void)
+	{
+		return _mfScale;
 	}
 
 	GUITheme* GUIManager::addTheme(const std::string& strName)

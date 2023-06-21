@@ -4,11 +4,10 @@ namespace X
 {
 	void Application::initOnce(void)
 	{
-		Image image;
-		image.load("data/DevApp/images/temp.png");
-		Image image2;
-		image.normalmap(image2, 1.0f);
-		image2.saveAsJPG("data/DevApp/images/temp2_normal.jpg");
+		GUITheme theme;
+		theme.save("data/X/GUI/default");
+		GUITheme theme2;
+		theme2.load("data/X/GUI/default");
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 

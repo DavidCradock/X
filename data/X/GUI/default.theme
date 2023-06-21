@@ -1,0 +1,13 @@
+data/x/gui/default.theme
+ThemeName: Default theme
+
+Images
+ContainerBlur: data/X/GUI/default/container_blur.png
+ContainerColour: data/X/GUI/default/container_colour.png
+ContainerGlow: data/X/GUI/default/container_glow.png
+ContainerNormal: data/X/GUI/default/container_normal.png
+Reflection: data/X/GUI/default/reflection.png
+
+Colours
+containerTitlebarTextInFocus: 1.000000 1.000000 1.000000 1.000000
+containerTitlebarTextNotInFocus: 0.900000 0.900000 0.900000 0.900000
