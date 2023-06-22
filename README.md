@@ -15,3 +15,4 @@
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
 - add translation/ rotation/scale of base entities
+- In resource manager, when adding stuff, we need to check if the stuff already exists or not and we need to add times each resource has been added

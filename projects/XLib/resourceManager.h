@@ -46,6 +46,7 @@ namespace X
 		// Adds a new font object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strFontFilename is the base name of the pair of files used to hold the font data
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceFont* addFont(const std::string& strResourceName, const std::string& strFontFilename);
 
 		// Returns a pointer to an existing resource
@@ -57,11 +58,13 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFont(const std::string& strResourceName);
 
 		// Adds a new framebuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the framebuffer
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceFramebuffer* addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
 
 		// Returns a pointer to an existing resource
@@ -73,11 +76,13 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFramebuffer(const std::string& strResourceName);
 
 		// Adds a new depthbuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the depthbuffer
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
 
 		// Returns a pointer to an existing resource
@@ -89,11 +94,13 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeDepthbuffer(const std::string& strResourceName);
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strVertexProgramFilename and strFragmentProgramFilename are the names of the two files which hold the vertex and fragment code.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceShader* addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
 
 		// Returns a pointer to an existing resource
@@ -105,11 +112,13 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeShader(const std::string& strResourceName);
 
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceTexture2D* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
 
 		// Returns a pointer to an existing resource
@@ -121,10 +130,12 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2D(const std::string& strResourceName);
 
 		// Adds a new triangle object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceTriangle* addTriangle(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
@@ -136,10 +147,12 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTriangle(const std::string& strResourceName);
 
 		// Adds a new line vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		ResourceLine* addLine(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
@@ -151,6 +164,7 @@ namespace X
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeLine(const std::string& strResourceName);
 
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
@@ -166,13 +180,54 @@ namespace X
 		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
 
 	private:
-		std::map<std::string, ResourceFont*>		_mmapResFonts;			// A hash map holding each named font resource
-		std::map<std::string, ResourceDepthbuffer*>	_mmapResDepthbuffers;	// A hash map holding each named depthbuffer resource
-		std::map<std::string, ResourceFramebuffer*>	_mmapResFramebuffers;	// A hash map holding each named framebuffer resource
-		std::map<std::string, ResourceShader*>		_mmapResShaders;		// A hash map holding each named shader resource
-		std::map<std::string, ResourceTexture2D*>	_mmapResTextures2D;		// A hash map holding each named 2D texture resource
-		std::map<std::string, ResourceTriangle*>	_mmapResTriangles;		// A hash map holding each named triangle resource
-		std::map<std::string, ResourceLine*>		_mmapResLines;			// A hash map holding each named line resource
+		struct SResourceFont
+		{
+			ResourceFont* pResource;	// Pointer to the resource
+			unsigned int uiCount;		// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceFont> _mmapResFonts;
+
+		struct SResourceDepthbuffer
+		{
+			ResourceDepthbuffer* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceDepthbuffer>	_mmapResDepthbuffers;
+
+		struct SResourceFramebuffer
+		{
+			ResourceFramebuffer* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
+
+		struct SResourceShader
+		{
+			ResourceShader* pResource;	// Pointer to the resource
+			unsigned int uiCount;		// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceShader> _mmapResShaders;
+
+		struct SResourceTexture2D
+		{
+			ResourceTexture2D* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceTexture2D> _mmapResTextures2D;
+
+		struct SResourceTriangle
+		{
+			ResourceTriangle* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceTriangle> _mmapResTriangles;
+
+		struct SResourceLine
+		{
+			ResourceLine* pResource;	// Pointer to the resource
+			unsigned int uiCount;		// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceLine> _mmapResLines;
 	};
 
 }
