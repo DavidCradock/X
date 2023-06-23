@@ -2,6 +2,7 @@
 #include "GUITheme.h"
 #include "utilities.h"
 #include "log.h"
+#include "resourceManager.h"
 
 namespace X
 {
@@ -94,6 +95,26 @@ namespace X
 		// Make sure there were no errors
 		ThrowIfTrue(file.fail(), "GUITheme::save(" + filename + ") failed whilst saving file.");
 		file.close();
+	}
+
+	void GUITheme::loadTextures(void)
+	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		pRM->addTexture2D(mImages.containerBlur, mImages.containerBlur);
+		pRM->addTexture2D(mImages.containerColour, mImages.containerColour);
+		pRM->addTexture2D(mImages.containerGlow, mImages.containerGlow);
+		pRM->addTexture2D(mImages.containerNormal, mImages.containerNormal);
+		pRM->addTexture2D(mImages.reflection, mImages.reflection);
+	}
+
+	void GUITheme::unloadTextures(void)
+	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		pRM->removeTexture2D(mImages.containerBlur);
+		pRM->removeTexture2D(mImages.containerColour);
+		pRM->removeTexture2D(mImages.containerGlow);
+		pRM->removeTexture2D(mImages.containerNormal);
+		pRM->removeTexture2D(mImages.reflection);
 	}
 
 	std::string GUITheme::_colourToString(GUIColour& colour)

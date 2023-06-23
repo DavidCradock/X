@@ -146,6 +146,8 @@
     <None Include="..\..\data\X\shaders\DRNE_noshadows.vert" />
     <None Include="..\..\data\X\shaders\font.frag" />
     <None Include="..\..\data\X\shaders\font.vert" />
+    <None Include="..\..\data\X\shaders\gui.frag" />
+    <None Include="..\..\data\X\shaders\gui.vert" />
     <None Include="..\..\data\X\shaders\line.frag" />
     <None Include="..\..\data\X\shaders\line.vert" />
     <None Include="..\..\data\X\shaders\pos_col_tex.frag" />

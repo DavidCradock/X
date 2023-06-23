@@ -21,6 +21,7 @@
 #include "GUITextEdit.h"
 #include "GUITextScroll.h"
 #include "GUITheme.h"
+#include "timer.h"
 
 namespace X
 {
@@ -64,6 +65,7 @@ namespace X
 	// 
 	// Themes:
 	// Each of the widgets and containers(if set as a window) use a default theme, more themes can be created and switched between.
+	// Themes may be set per container.
 	// A theme is quite complex, but is designed so that it loads fast.
 	// Each theme needs the following images...
 	// colour:		RGBA. This holds the RGB colour as well as the alpha channel for transparency.
@@ -94,14 +96,13 @@ namespace X
 	// A great use of this is with text which is quite demanding and if the text doesn't change, there's no point rendering it each frame update.
 	// As themes contain many images per widget and there are many widgets, there are many images/textures to deal with.
 	// When creating a theme, we keep things simple for us by creating a theme from many individual images.
-	// Having many individual images is slow for rendering, so when creating a theme, the GUI code organises everything into a tidy package which
-	// is both fast to load and fast to render. All colour images are stored in a single texture, all normal images in a single texture etc.
-	// This way, when rendering stuff (except fonts), we only have to bind one set of textures.
-	// 
 	class GUIManager : public Singleton<GUIManager>
 	{
 	public:
 		GUIManager();
+
+		// Updates and renders the GUI
+		void render(void);
 
 		// Scaling of the GUI is set with a single float value. Values should be 1.0f, 0.5f, 0.25f, 0.125f for optimal appearance, but can be set to any value.
 		void setScale(float fScalingValue);
@@ -161,9 +162,15 @@ namespace X
 		// Returns the name of a container at the specified index.
 		// If an invalid index is given, an exception occurs.
 		std::string getContainerName(int iIndex);
+
+		// Moves the named container's ZOrder so that it at the top/in front
+		// If the named container doesn't exist, this does nothing.
+		void moveContainerToFront(const std::string& strContainerName);
 	private:
 		float _mfScale;												// Scaling value used for GUI scaling.
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
 		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
+		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
+		Timer mTimer;												// Timer object used for time based stuff.
 	};
 }

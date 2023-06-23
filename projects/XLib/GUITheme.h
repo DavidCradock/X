@@ -7,6 +7,7 @@ namespace X
 	// This class holds all settings for a single GUI theme.
 	// They are created and accessed by the GUIManager.
 	// Each of the widgets and containers(if set as a window) use a default theme, more themes can be created and switched between.
+	// Themes may be set per container.
 	// A theme is quite complex, but is designed so that it loads fast.
 	// Each theme needs the following images...
 	// colour:		This holds the RGB colour as well as the alpha channel for transparency.
@@ -35,6 +36,14 @@ namespace X
 		// The filename is saved with the ".theme" extension. If it isn't at the end of the given filename, it is added.
 		// If the file couldn't be opened, an exception occurs.
 		void save(const std::string& strFilename);
+
+		// Adds the theme's currently set textures into ResourceManager so that they're ready to use.
+		// If you need to change any of the theme's texture names, please call unloadTextures() before doing so.
+		void loadTextures(void);
+
+		// Removes the theme's currently set textures out of the ResourceManager.
+		// If you need to change any of the theme's texture names, please call this method before doing so.
+		void unloadTextures(void);
 
 		std::string mstrThemeName;		// Holds the name of the theme.
 

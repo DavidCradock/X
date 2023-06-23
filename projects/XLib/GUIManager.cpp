@@ -1,12 +1,93 @@
 #include "PCH.h"
 #include "GUIManager.h"
 #include "log.h"
+#include "input.h"
+#include "window.h"
+#include "resourceManager.h"
 
 namespace X
 {
 	GUIManager::GUIManager()
 	{
 		_mfScale = 1.0f;
+		// Add default theme
+		GUITheme *pTheme = addTheme("default");
+		pTheme->loadTextures();
+
+	}
+
+	void GUIManager::render(void)
+	{
+		InputManager* pInput = InputManager::getPointer();
+
+		// Update the timer object
+		mTimer.update();
+
+		// Update each container
+		// Go through each container, starting with the one at the front first
+		GUIContainer* pContainer;
+		std::list<std::string>::iterator it = _mlistContainerZOrder.end();
+		bool bMouseIsOverContainerWhichIsAboveThisOne = false;
+		
+		// Holds the name of a container which wishes to be moved on top
+		// We store this and then after we've gone through all containers, move it to the top, to prevent messing with the list whilst updating
+		std::string strWindowWantsToBePlacedInFront;
+		while (it != _mlistContainerZOrder.begin())
+		{
+			it--;
+			pContainer = getContainer(*it);
+
+			if (pContainer->update(bMouseIsOverContainerWhichIsAboveThisOne))
+			{
+				// If clicked upon and mouse over this container, mark as wanting to be placed on top
+				if (pInput->mouse.leftButDown())
+				{
+					strWindowWantsToBePlacedInFront = *it;
+				}
+				bMouseIsOverContainerWhichIsAboveThisOne = true;
+			}
+		}
+		
+		// Move container that has been clicked upon to the front
+		if (strWindowWantsToBePlacedInFront.length())
+		{
+			moveContainerToFront(strWindowWantsToBePlacedInFront);
+		}
+
+		// Render each container
+		
+		// Make sure the GUI framebuffer is the correct size
+		Window* pWindow = Window::getPointer();
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceFramebuffer* pFB = pRM->getFramebuffer("X:gui");
+		if (pFB->getWidth() != (int)pWindow->getWidth() || pFB->getHeight() != (int)pWindow->getHeight())
+		{
+			pFB->resize((unsigned int)pWindow->getWidth(), (unsigned int)pWindow->getHeight());
+		}
+
+		// Bind framebuffer as target
+		pFB->bindAsRenderTarget(true);
+
+		// Go through each container, starting with the one at the back first
+		it = _mlistContainerZOrder.begin();
+		while (it != _mlistContainerZOrder.end())
+		{
+			pContainer = getContainer(*it);
+			
+			// Render the container
+			pContainer->render();
+			
+			it++;
+		}
+
+		// Unbind framebuffer
+		pFB->unbindAsRenderTarget();
+
+		// Render the GUI framebuffer to the backbuffer
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+//		pFB->renderTo2DQuad(0, 0, (unsigned int)pWindow->getWidth(), (unsigned int)pWindow->getHeight());
+		glDisable(GL_BLEND);
 	}
 
 	void GUIManager::setScale(float fScalingValue)
@@ -92,6 +173,9 @@ namespace X
 
 	GUIContainer* GUIManager::addContainer(const std::string& strName)
 	{
+		// Add container name to the Z order list
+		_mlistContainerZOrder.push_back(strName);
+
 		// Attempt to find by name
 		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
 		// If it already exists, return a pointer to that.
@@ -122,6 +206,13 @@ namespace X
 
 	void GUIManager::removeContainer(const std::string& strName)
 	{
+		// Remove container name from the Z order list
+		std::list<std::string>::iterator itlist = std::find(_mlistContainerZOrder.begin(), _mlistContainerZOrder.end(), strName);
+		if (itlist != _mlistContainerZOrder.end())
+		{
+			_mlistContainerZOrder.erase(itlist);
+		}
+
 		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
 		if (it == _mmapContainers.end())
 			return;	// Doesn't exist.
@@ -131,6 +222,9 @@ namespace X
 
 	void GUIManager::removeAllContainers(void)
 	{
+		// Clear the list holding Zordering
+		_mlistContainerZOrder.clear();
+
 		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.begin();
 		while (it != _mmapContainers.end())
 		{
@@ -153,5 +247,15 @@ namespace X
 		while (iCount < iIndex)
 			it++;
 		return it->first;
+	}
+
+	void GUIManager::moveContainerToFront(const std::string& strContainerName)
+	{
+		std::list<std::string>::iterator itlist = std::find(_mlistContainerZOrder.begin(), _mlistContainerZOrder.end(), strContainerName);
+		if (itlist != _mlistContainerZOrder.end())
+		{
+			_mlistContainerZOrder.erase(itlist);
+			_mlistContainerZOrder.push_back(strContainerName);
+		}
 	}
 }

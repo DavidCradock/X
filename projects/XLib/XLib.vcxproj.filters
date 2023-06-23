@@ -419,5 +419,11 @@
     <None Include="..\..\data\X\shaders\DRNE_noshadows.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\data\X\shaders\gui.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\gui.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

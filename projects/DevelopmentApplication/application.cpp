@@ -9,6 +9,10 @@ namespace X
 		GUITheme theme2;
 		theme2.load("data/X/GUI/default");
 
+		GUIManager* pGUI = GUIManager::getPointer();
+		pGUI->addContainer("Container1");
+		pGUI->addContainer("Container2");
+
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		timer.setAveragedFPSRate(1);	// Once every X seconds
@@ -49,6 +53,7 @@ namespace X
 //		mSceneManagerSimple.mCamera.update();
 		mSceneManagerSimple.render();
 		
+		
 
 		// Now render the framebuffer onto the backbuffer
 		ResourceFramebuffer *pFB = pRM->getFramebuffer("X:scenemanager");
@@ -58,6 +63,10 @@ namespace X
 		// Render the debug shadow map onto the screen
 //		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 //		pDepthbuffer->renderToBackbuffer(pWindow->getWidth() - 512, 0, 512, 512);
+
+		// Update and render the GUI
+		GUIManager* pGUI = GUIManager::getPointer();
+		pGUI->render();
 
 		float fInc = timer.getSecondsPast();
 

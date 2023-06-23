@@ -238,6 +238,8 @@ namespace X
 		pRM->addShader("X:pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
 		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
 		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
+		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag");
+
 		// Textures
 		pRM->addTexture2D("X:default_particle", "data/X/textures/particle0.png");
 		pRM->addTexture2D("X:default_white", "data/X/textures/default_white.png");
@@ -251,8 +253,10 @@ namespace X
 
 		// Triangle resources
 		pRM->addTriangle("X:debug");
+		pRM->addTriangle("X:gui");
 
 		// Framebuffers
 		pRM->addFramebuffer("X:scenemanager", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer("X:gui", 512, 512);				// Dims are set each program loop to match the window's dimensions
 	}
 }
