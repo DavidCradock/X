@@ -23,6 +23,8 @@ namespace X
 	{
 		Image image;
 		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
+		mvDimensions.x = (float)image.getWidth();
+		mvDimensions.y = (float)image.getHeight();
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

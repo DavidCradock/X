@@ -30,5 +30,6 @@ namespace X
 		std::string _mstrImageFilename;
 		unsigned int _muiTextureID;
 		bool _mbFlipYaxis;	// Whether to flip the image data in during loading or not.
+		glm::vec2 mvDimensions;	// Dimensions of the texture
 	};
 }

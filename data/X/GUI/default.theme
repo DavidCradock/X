@@ -11,3 +11,9 @@ Reflection: data/X/GUI/default/reflection.png
 Colours
 containerTitlebarTextInFocus: 1.000000 1.000000 1.000000 1.000000
 containerTitlebarTextNotInFocus: 0.900000 0.900000 0.900000 0.900000
+
+Effects
+blurAmount: 0.500000
+glowAmount: 0.500000
+normalAmount: 0.500000
+reflectionAmount: 0.500000

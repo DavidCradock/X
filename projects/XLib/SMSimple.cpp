@@ -16,8 +16,13 @@ namespace X
 		setDirectionalLightDir(glm::vec3(1.0f, -1.0f, 1.0f));
 	}
 
-	void SceneManagerSimple::render(const std::string strFramebufferToRenderTo)
+	void SceneManagerSimple::render(const std::string strFramebufferToRenderTo, bool bResizeFramebufferToWindowDims)
 	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		// The application manager has X:backbuffer_FB set to render target, so unbind this first
+		ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+		pBGFB->unbindAsRenderTarget();
+
 		// Camera
 		Window* pWindow = Window::getPointer();
 		mCamera.setProjectionAsPerspective(65.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
@@ -26,11 +31,9 @@ namespace X
 		if (mbShadowsCastFromDirectionalLight)
 			_renderDepthmapForDirectionalLight();
 
-		ResourceManager* pRM = ResourceManager::getPointer();
+		// Bind the framebuffer we're rendering to
 		ResourceFramebuffer* pFramebuffer = pRM->getFramebuffer(strFramebufferToRenderTo);
-
-		pFramebuffer->bindAsRenderTarget();
-		
+		pFramebuffer->bindAsRenderTarget(true, bResizeFramebufferToWindowDims);
 
 		// Render the triangle entities
 		_renderTriangleEntities();
@@ -39,6 +42,9 @@ namespace X
 		_renderLineEntities();
 
 		pFramebuffer->unbindAsRenderTarget();
+
+		// Now re-set the X:backbuffer_FB framebuffer to be the render target again
+		pBGFB->bindAsRenderTarget(false, false);
 	}
 
 	SMMaterial* SceneManagerSimple::addMaterial(

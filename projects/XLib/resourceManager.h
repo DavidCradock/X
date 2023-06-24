@@ -15,25 +15,24 @@ namespace X
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:font				// A shader used by the ResourceFont class to render text.
-	// X:line				// A shader used by the ResourceLine class to render lines.
-	// X:DRNE				// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
-	// X:DRNE_noshadows		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
-	// X:pos_col_tex		// A shader which accepts vertex position, colour and texture coodinates
-	// X:depthbuffer_debug	// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
-	// X:shadowdepthmap		// A shader used by the scene manager to render the depth map used for rendering shadows
-	// X:gui				// A shader used by the GUI to render everything.
-	// X:default_particle	// A texture for use with rendering generic particles
-	// X:default_white		// A texture which is tiny and white.
-	// X:default_diffuse	// A texture which is grey for diffuse, used if not set
-	// X:default_emission	// A texture which is black for emiision, used if not set
-	// X:default_normal		// A texture which is a flat normal map, used if not set
-	// X:default_roughness	// A texture which is grey for roughnessm used if not set
-	// X:shadows			// A depth buffer which is used by scene managers to render shadows
-	// X:debug				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
-	// X:gui				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for the GUI
-	// X:scenemanager		// A framebuffer which the scene managers use to render to by default.
-	// X:gui				// A framebuffer which the GUI uses to render itself to.
+	// X:font					// A shader used by the ResourceFont class to render text.
+	// X:line					// A shader used by the ResourceLine class to render lines.
+	// X:DRNE					// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
+	// X:DRNE_noshadows			// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
+	// X:pos_col_tex			// A shader which accepts vertex position, colour and texture coodinates
+	// X:depthbuffer_debug		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
+	// X:shadowdepthmap			// A shader used by the scene manager to render the depth map used for rendering shadows
+	// X:gui					// A shader used by the GUI to render everything.
+	// X:default_particle		// A texture for use with rendering generic particles
+	// X:default_white			// A texture which is tiny and white.
+	// X:default_diffuse		// A texture which is grey for diffuse, used if not set
+	// X:default_emission		// A texture which is black for emiision, used if not set
+	// X:default_normal			// A texture which is a flat normal map, used if not set
+	// X:default_roughness		// A texture which is grey for roughnessm used if not set
+	// X:shadows				// A depth buffer which is used by scene managers to render shadows
+	// X:debug					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
+	// X:gui					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for the GUI
+	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// They are loaded by the ApplicationManager class in it's mainLoop() method
 	class ResourceManager : public Singleton<ResourceManager>
 	{

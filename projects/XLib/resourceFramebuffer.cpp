@@ -67,9 +67,21 @@ namespace X
 		}
 	}
 
-	void ResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer)
+	void ResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions)
 	{
+		if (bResizeToWindowDimensions)
+		{
+			Window* pWindow = Window::getPointer();
+			unsigned int iWindowWidth = (unsigned int)pWindow->getWidth();
+			unsigned int iWindowHeight = (unsigned int)pWindow->getHeight();
+			if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
+			{
+				resize(iWindowWidth, iWindowHeight);
+			}
+		}
+
 		glBindFramebuffer(GL_FRAMEBUFFER, _muiFramebufferID);
+		
 		if (bClearbuffer)
 		{
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

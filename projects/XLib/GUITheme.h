@@ -66,6 +66,10 @@ namespace X
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 
+		float mfBlurAmount;			// 1.0f = max blur, 0.0f = none
+		float mfGlowAmount;			// 1.0f = max glow, 0.0f = none
+		float mfNormalAmount;		// 1.0f = max normal, 0.0f = none
+		float mfReflectionAmount;	// 1.0f = max reflection, 0.0f = none
 	private:
 		// Converts the stored values of the given colour, to text. Used for writing out to a file.
 		std::string _colourToString(GUIColour& colour);

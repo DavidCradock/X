@@ -102,7 +102,7 @@ namespace X
 		GUIManager();
 
 		// Updates and renders the GUI
-		void render(void);
+		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer_FB");
 
 		// Scaling of the GUI is set with a single float value. Values should be 1.0f, 0.5f, 0.25f, 0.125f for optimal appearance, but can be set to any value.
 		void setScale(float fScalingValue);
@@ -166,11 +166,18 @@ namespace X
 		// Moves the named container's ZOrder so that it at the top/in front
 		// If the named container doesn't exist, this does nothing.
 		void moveContainerToFront(const std::string& strContainerName);
+
+		// Returns true is a window is being moved
+		bool getWindowBeingMoved(void);
+
+		// Sets whether a window is being moved 
+		void setWindowBeingMoved(bool bWindowBeingMoved);
 	private:
 		float _mfScale;												// Scaling value used for GUI scaling.
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
 		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
 		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
 		Timer mTimer;												// Timer object used for time based stuff.
+		bool _mbWindowBeingMoved;									// This is used to prevent multiple windows being moved
 	};
 }

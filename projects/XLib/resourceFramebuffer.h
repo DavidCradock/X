@@ -18,7 +18,8 @@ namespace X
 
 		// Bind this framebuffer object so that all render operations use this as the target.
 		// Also clears the render target by default and sets viewport to match render target
-		void bindAsRenderTarget(bool bClearbuffer = true);
+		// May also detect current dimensions and resize to the Window's dims.
+		void bindAsRenderTarget(bool bClearbuffer = true, bool bResizeToWindowDimensions = false);
 
 		// Unbind the framebuffer object so that all render operations use the window's backbuffer as the target.
 		// Also calls glViewport to reset to the window's dimensions

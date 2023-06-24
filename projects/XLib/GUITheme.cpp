@@ -21,6 +21,10 @@ namespace X
 		mColours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.containerTitlebarTextNotInFocus.set(0.9f, 0.9f, 0.9f, 0.9f);
 
+		mfBlurAmount = 0.5f;
+		mfGlowAmount = 0.5f;
+		mfNormalAmount = 0.5f;
+		mfReflectionAmount = 0.5f;
 	}
 
 	void GUITheme::load(const std::string& strFilename)
@@ -58,6 +62,15 @@ namespace X
 		getline(file, strLine);	//"\nColours\n"
 		_colourReadValues(file, mColours.containerTitlebarTextInFocus);
 		_colourReadValues(file, mColours.containerTitlebarTextNotInFocus);
+		getline(file, strLine);	// End of line
+
+		getline(file, strLine);	// Empty line
+
+		getline(file, strLine);	//"\nEffects\n"
+		file >> strWord;	space = file.get();	file >> mfBlurAmount;
+		file >> strWord;	space = file.get();	file >> mfGlowAmount;
+		file >> strWord;	space = file.get();	file >> mfNormalAmount;
+		file >> strWord;	space = file.get();	file >> mfReflectionAmount;
 
 		ThrowIfTrue(file.fail(), "GUITheme::load(" + filename + ") failed whilst loading file.");
 		file.close();
@@ -91,6 +104,12 @@ namespace X
 		file << "\nColours\n";
 		file << "containerTitlebarTextInFocus: " + _colourToString(mColours.containerTitlebarTextInFocus) + "\n";
 		file << "containerTitlebarTextNotInFocus: " + _colourToString(mColours.containerTitlebarTextNotInFocus) + "\n";
+
+		file << "\nEffects\n";
+		file << "blurAmount: " + std::to_string(mfBlurAmount) + "\n";
+		file << "glowAmount: " + std::to_string(mfGlowAmount) + "\n";
+		file << "normalAmount: " + std::to_string(mfNormalAmount) + "\n";
+		file << "reflectionAmount: " + std::to_string(mfReflectionAmount) + "\n";
 
 		// Make sure there were no errors
 		ThrowIfTrue(file.fail(), "GUITheme::save(" + filename + ") failed whilst saving file.");

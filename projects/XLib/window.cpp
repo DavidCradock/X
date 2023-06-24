@@ -23,8 +23,8 @@ namespace X
 		mWindowClass = WNDCLASS{};
 		mbVsyncEnabled = true;
 		mbWindowFullscreen = false;
-		miWindowWidth = 640;
-		miWindowHeight = 480;
+		muiWindowWidth = 640;
+		muiWindowHeight = 480;
 		mv4ClearColour = glm::vec4(0.05f, 0.05f, 0.05f, 0.5f);
 	}
 
@@ -74,19 +74,19 @@ namespace X
 		EnumDisplaySettings(NULL,	// Current device which this thread is running on
 			ENUM_CURRENT_SETTINGS,
 			&dmCurrent);
-		miWindowWidth = dmCurrent.dmPelsWidth;
-		miWindowHeight = dmCurrent.dmPelsHeight;
+		muiWindowWidth = (unsigned int)dmCurrent.dmPelsWidth;
+		muiWindowHeight = (unsigned int)dmCurrent.dmPelsHeight;
 		// If we're in windowed mode, reduce the size a little
 		if (!mbWindowFullscreen)
 		{
-			miWindowWidth -= int(float(miWindowWidth) * 0.2f);
-			miWindowHeight -= int(float(miWindowHeight) * 0.2f);
+			muiWindowWidth -= unsigned int(float(muiWindowWidth) * 0.2f);
+			muiWindowHeight -= unsigned int(float(muiWindowHeight) * 0.2f);
 		}
 
 		// Get a RECT to hold actual dimensions of the window so that, depending upon our set style,
 		// the actual renderable area will be the size we request as the borders and such usually overlap a 
 		// portion of the renderable area.
-		RECT R = { 0, 0, miWindowWidth, miWindowHeight };
+		RECT R = { 0, 0, (LONG)muiWindowWidth, (LONG)muiWindowHeight };
 		AdjustWindowRectEx(&R, dwStyle, false, dwExtendedStyle);
 		int width = R.right - R.left;
 		int height = R.bottom - R.top;
@@ -195,7 +195,7 @@ namespace X
 
 		// Resize the OpenGL viewport
 		pLog->add("Window::createWindow() resizing OpenGL viewport.");
-		_resizeOpenGLViewport(miWindowWidth, miWindowHeight);
+		_resizeOpenGLViewport(muiWindowWidth, muiWindowHeight);
 
 		pLog->add("Window::createWindow() has created the window.");
 
@@ -323,7 +323,7 @@ namespace X
 
 		// Update the input manager
 		InputManager* pInputManager = InputManager::getPointer();
-		pInputManager->update(mbWindowFullscreen, miWindowWidth, miWindowHeight);
+		pInputManager->update(mbWindowFullscreen, muiWindowWidth, muiWindowHeight);
 		return true;
 	}
 
@@ -352,14 +352,14 @@ namespace X
 		SetWindowTextW(mhWindowHandle, StringToWString(strText).c_str());
 	}
 
-	int Window::getWidth(void)
+	unsigned int Window::getWidth(void)
 	{
-		return miWindowWidth;
+		return muiWindowWidth;
 	}
 
-	int Window::getHeight(void)
+	unsigned int Window::getHeight(void)
 	{
-		return miWindowHeight;
+		return muiWindowHeight;
 	}
 
 	bool Window::getFullscreen(void)
@@ -372,18 +372,18 @@ namespace X
 		return mbVsyncEnabled;
 	}
 
-	void Window::_resizeOpenGLViewport(int iNewWidth, int iNewHeight)
+	void Window::_resizeOpenGLViewport(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
-		Log::getPointer()->add("Window::_resizeOpenGLViewport( " + std::to_string(iNewWidth) + ", " + std::to_string(iNewHeight) + ") called.");
-		if (iNewWidth < 1)
-			iNewWidth = 1;
-		if (iNewHeight < 1)
-			iNewHeight = 1;
+		Log::getPointer()->add("Window::_resizeOpenGLViewport( " + std::to_string(uiNewWidth) + ", " + std::to_string(uiNewHeight) + ") called.");
+		if (uiNewWidth < 1)
+			uiNewWidth = 1;
+		if (uiNewHeight < 1)
+			uiNewHeight = 1;
 
 		// Set OpenGL viewport size
-		glViewport(0, 0, iNewWidth, iNewHeight);
-		miWindowWidth = iNewWidth;
-		miWindowHeight = iNewHeight;
+		glViewport(0, 0, uiNewWidth, uiNewHeight);
+		muiWindowWidth = uiNewWidth;
+		muiWindowHeight = uiNewHeight;
 	}
 
 	void Window::clearBackbuffer(void)
@@ -416,5 +416,13 @@ namespace X
 		// Now call the method which recreates all resources to the GPU which require an OpenGL context, putting everything back again to the original state.
 		pResMan->onGLContextRecreated();
 
+	}
+
+	glm::vec2 Window::getDimensions(void)
+	{
+		glm::vec2 vDims;
+		vDims.x = float(muiWindowWidth);
+		vDims.y = float(muiWindowHeight);
+		return vDims;
 	}
 }

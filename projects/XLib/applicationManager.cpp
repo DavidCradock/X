@@ -4,6 +4,7 @@
 #include "window.h"
 #include "input.h"
 #include "resourceManager.h"
+#include "GUIManager.h"
 
 // Include each application
 
@@ -57,29 +58,36 @@ namespace X
 			mTimer.update();
 
 			ResourceManager* pRM = ResourceManager::getPointer();
+			ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+			GUIManager* pGUI = GUIManager::getPointer();
 
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())
 			{
 				mTimer.update();
 
-				// Get the default scenemanager framebuffer and resize to size of window if needed
-				ResourceFramebuffer *pFB = pRM->getFramebuffer("X:scenemanager");
-				int iWindowDims[2];
-				iWindowDims[0] = pWindow->getWidth();
-				iWindowDims[1] = pWindow->getHeight();
-				if ((int)pFB->getWidth() != iWindowDims[0] || (int)pFB->getHeight() != iWindowDims[1])
-				{
-					pFB->resize(iWindowDims[0], iWindowDims[1]);
-				}
-
 				// Clear the backbuffer
 				pWindow->clearBackbuffer();
+
+				// Bind the X:backbuffer_FB to render target
+				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
 
 				if (!callCurrentApp_onUpdate())
 				{
 					break;	// Application wants to close
 				}
+
+				// Update and render the GUI to the "X:backbuffer_FB" framebuffer, using the "X:backbuffer_FB" as the sample source
+				pGUI->render("X:backbuffer_FB");
+
+				// Unbind the X:backbuffer_FB and render to the back buffer
+				pBGFB->unbindAsRenderTarget();
+				
+				// Now render the "X:backbuffer_FB" to the backbuffer
+				glEnable(GL_BLEND);
+				glDisable(GL_DEPTH_TEST);
+				pBGFB->renderTo2DQuad(0, 0, pWindow->getWidth(), pWindow->getHeight());
+				glDisable(GL_BLEND);
 
 				// Swap buffers
 				pWindow->swapBuffers();
@@ -256,7 +264,6 @@ namespace X
 		pRM->addTriangle("X:gui");
 
 		// Framebuffers
-		pRM->addFramebuffer("X:scenemanager", 512, 512);	// Dims are set each program loop to match the window's dimensions
-		pRM->addFramebuffer("X:gui", 512, 512);				// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
 	}
 }

@@ -13,10 +13,11 @@ namespace X
 		// Add default theme
 		GUITheme *pTheme = addTheme("default");
 		pTheme->loadTextures();
+		_mbWindowBeingMoved = false;
 
 	}
 
-	void GUIManager::render(void)
+	void GUIManager::render(const std::string& strFramebufferToSampleFrom)
 	{
 		InputManager* pInput = InputManager::getPointer();
 
@@ -55,38 +56,20 @@ namespace X
 		}
 
 		// Render each container
-		
-		// Make sure the GUI framebuffer is the correct size
-		Window* pWindow = Window::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceFramebuffer* pFB = pRM->getFramebuffer("X:gui");
-		if (pFB->getWidth() != (int)pWindow->getWidth() || pFB->getHeight() != (int)pWindow->getHeight())
-		{
-			pFB->resize((unsigned int)pWindow->getWidth(), (unsigned int)pWindow->getHeight());
-		}
-
-		// Bind framebuffer as target
-		pFB->bindAsRenderTarget(true);
 
 		// Go through each container, starting with the one at the back first
 		it = _mlistContainerZOrder.begin();
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 		while (it != _mlistContainerZOrder.end())
 		{
 			pContainer = getContainer(*it);
 			
 			// Render the container
-			pContainer->render();
+			pContainer->render(strFramebufferToSampleFrom);
 			
 			it++;
 		}
-
-		// Unbind framebuffer
-		pFB->unbindAsRenderTarget();
-
-		// Render the GUI framebuffer to the backbuffer
-		glEnable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
-//		pFB->renderTo2DQuad(0, 0, (unsigned int)pWindow->getWidth(), (unsigned int)pWindow->getHeight());
 		glDisable(GL_BLEND);
 	}
 
@@ -257,5 +240,16 @@ namespace X
 			_mlistContainerZOrder.erase(itlist);
 			_mlistContainerZOrder.push_back(strContainerName);
 		}
+	}
+
+
+	bool GUIManager::getWindowBeingMoved(void)
+	{
+		return _mbWindowBeingMoved;
+	}
+
+	void GUIManager::setWindowBeingMoved(bool bWindowBeingMoved)
+	{
+		_mbWindowBeingMoved = bWindowBeingMoved;
 	}
 }

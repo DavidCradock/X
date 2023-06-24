@@ -36,10 +36,10 @@ namespace X
 		void setText(const std::string& strText);
 
 		// Returns window's width
-		int getWidth(void);
+		unsigned int getWidth(void);
 
 		// Returns window's height
-		int getHeight(void);
+		unsigned int getHeight(void);
 
 		// Returns whether the window is fullscreen or not
 		bool getFullscreen(void);
@@ -68,13 +68,16 @@ namespace X
 		// This is done from within this method by calling each of the various managers' _onOpenGLContextLost() methods to store which objects are currently loaded
 		// and then the window and OpenGL context is re-created and then a call to each of the various managers' _onOpenGLContextRestored() methods which re-load/create the resources again.
 		void toggleFullscreen(void);
+
+		// Returns window dimensions as a glm::vec2
+		glm::vec2 getDimensions(void);
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle
 		HWND mhWindowHandle;			// Window handle
 		std::string mstrWindowTitle;	// Window's title text
-		int miWindowWidth;				// Width of window
-		int miWindowHeight;				// Height of window
+		unsigned int muiWindowWidth;		// Width of window
+		unsigned int muiWindowHeight;	// Height of window
 		bool mbWindowFullscreen;		// Fullscreen or windowed
 		bool mbVsyncEnabled;			// Vsync enabled or not
 		glm::vec4 mv4ClearColour;		// The clear colour set by setClearColour();
@@ -82,6 +85,6 @@ namespace X
 		HDC mhDeviceContext;			// Device context for the window
 
 		// Resize the window's OpenGL viewport
-		void _resizeOpenGLViewport(int iNewWidth, int iNewHeight);
+		void _resizeOpenGLViewport(unsigned int iNewWidth, unsigned int iNewHeight);
 	};
 }

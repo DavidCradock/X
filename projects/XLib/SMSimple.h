@@ -22,11 +22,7 @@ namespace X
 		SceneManagerSimple();
 
 		// Render all the entities in this scene to a framebuffer
-		// After rendering to a framebuffer, we can render the framebuffer to the back buffer to actually see it with something like this...
-		// ResourceFramebuffer* pFB = pRM->getFramebuffer("X:scenemanager");
-		// Window* pWindow = Window::getPointer();
-		// pFB->renderToBackbuffer(0.0f, 0.0f, pWindow->getWidth(), pWindow->getHeight());
-		void render(const std::string strFramebufferToRenderTo = "X:scenemanager");
+		void render(const std::string strFramebufferToRenderTo = "X:backbuffer_FB", bool bResizeFramebufferToWindowDims = false);
 
 		SMCamera mCamera;						// The scene manager's camera
 		
