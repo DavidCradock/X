@@ -103,4 +103,16 @@ namespace X
 		mTC.right.BR.y = point3;
 		mTC.right.TL.y = point6;
 	}
+
+	void GUIBaseObject::setPosition(float fPosX, float fPosY)
+	{
+		mfPositionX = fPosX;
+		mfPositionY = fPosY;
+	}
+
+	void GUIBaseObject::setDimensions(float fWidth, float fHeight)
+	{
+		mfWidth = fWidth;
+		mfHeight = fHeight;
+	}
 }

@@ -4,6 +4,8 @@
 #include "resourceManager.h"
 #include "GUIManager.h"
 #include "window.h"
+#include "log.h"
+#include "GUITheme.h"
 
 namespace X
 {
@@ -12,11 +14,20 @@ namespace X
 		mstrThemename = "default";
 		mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
+		_mbVisible = true;
+		GUIColour col = GUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
+		_mvTextColour.r = col.red;
+		_mvTextColour.g = col.green;
+		_mvTextColour.b = col.blue;
+		_mvTextColour.a = col.alpha;
 	}
 
 	// Containers are rendered in order of ZOrder, with the back most being rendered first
 	void GUIContainer::render(const std::string& strFramebufferToSampleFrom)
 	{
+		if (!_mbVisible)
+			return;
+
 		// Get required resources needed to render
 		GUIManager* pGUI = GUIManager::getPointer();
 		ResourceManager* pRM = ResourceManager::getPointer();
@@ -24,7 +35,7 @@ namespace X
 		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		ResourceShader* pShader = pRM->getShader("X:gui");
 		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		
+		InputManager* pInput = InputManager::getPointer();
 
 		pShader->bind();
 		
@@ -33,35 +44,36 @@ namespace X
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_blur", 0);
-		pShader->setInt("texture1_colour", 1);
-		pShader->setInt("texture2_glow", 2);
-		pShader->setInt("texture3_normal", 3);
-		pShader->setInt("texture4_reflection", 4);
-		pShader->setInt("texture5_background", 5);
+		pShader->setInt("texture0_colour", 0);
+		pShader->setInt("texture1_normal", 1);
+		pShader->setInt("texture2_reflection", 2);
+		pShader->setInt("texture3_background", 3);
 		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
-		pShader->setFloat("fGlowAmount", pTheme->mfGlowAmount);
 		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
 		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
+		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
+
+		// Set mouse position, inverting Y position
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		pShader->setVec2("v2MousePos", vMousePos);
 		
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 
 		if (mbContainerIsWindow)
 		{
 			// Get textures and background sample framebuffer
-			ResourceTexture2D* pTexBlur = pRM->getTexture2D(pTheme->mImages.containerBlur);
 			ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerColour);
-			ResourceTexture2D* pTexGlow = pRM->getTexture2D(pTheme->mImages.containerGlow);
 			ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerNormal);
 			ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 			ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 			// Bind textures
-			pTexBlur->bind(0);
-			pTexColour->bind(1);
-			pTexGlow->bind(2);
-			pTexNormal->bind(3);
-			pTexReflection->bind(4);
-			pFBSample->bindAsTexture(5);
+			pTexColour->bind(0);
+			pTexNormal->bind(1);
+			pTexReflection->bind(2);
+			pFBSample->bindAsTexture(3);
 
 			// Render the container centre
 			pTri->removeGeom();
@@ -158,17 +170,63 @@ namespace X
 			pTri->update();
 			pTri->draw();
 
-			// Unbind textures
-			pTexBlur->unbindAll();
+			pTexColour->unbindAll();	// Unbind textures
+			pShader->unbind();	// Unbind the GUI shader
+			glDisable(GL_BLEND);
+
+			// Container title
+			int iRTDims[2];
+			iRTDims[0] = int(pWindow->getWidth());
+			iRTDims[1] = int(pWindow->getHeight());
+			ResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
+			pFont->print(mstrTitleText,
+				int(mfPositionX) + pTheme->mOffsets.containerTitlebarText.iOffsetX,
+				int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
+				iRTDims[0], iRTDims[1],
+				1.0f,
+				_mvTextColour);
+		}
+		
+		// Render each button
+		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->render(this, strFramebufferToSampleFrom);
+			itButton++;
 		}
 
-		pShader->unbind();
+		// Render each text
+		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			itText->second->render(this);
+			itText++;
+		}
+
+		// Render each text edit
+		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->render(this, strFramebufferToSampleFrom);
+			itTextEdit++;
+		}
+
+		// Render each sliders
+		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		while (itSlider != _mmapSliders.end())
+		{
+			itSlider->second->render(this, strFramebufferToSampleFrom);
+			itSlider++;
+		}
 
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
 	bool GUIContainer::update(bool bMouseIsOverContainerWhichIsAboveThisOne)
 	{
+		if (!_mbVisible)
+			return false;
+
 		ResourceManager* pRM = ResourceManager::getPointer();
 		GUIManager* pGUI = GUIManager::getPointer();
 		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
@@ -217,10 +275,32 @@ namespace X
 			{
 				if (pInput->mouse.leftButDown())
 				{
-					if (!pGUI->getWindowBeingMoved())
+					// Set colour of all other containers
+					std::map<std::string, GUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();
+					while (itCont != pGUI->_mmapContainers.end())
 					{
-						_mbWindowBeingMoved = true;
-						pGUI->setWindowBeingMoved(true);
+						itCont->second->_mvTextColour = glm::vec4(
+							pTheme->mColours.containerTitlebarTextNotInFocus.red,
+							pTheme->mColours.containerTitlebarTextNotInFocus.green,
+							pTheme->mColours.containerTitlebarTextNotInFocus.blue,
+							pTheme->mColours.containerTitlebarTextNotInFocus.alpha);
+						itCont++;
+					}
+					// Set colour of titlebar text
+					_mvTextColour = glm::vec4(
+						pTheme->mColours.containerTitlebarTextInFocus.red,
+						pTheme->mColours.containerTitlebarTextInFocus.green,
+						pTheme->mColours.containerTitlebarTextInFocus.blue,
+						pTheme->mColours.containerTitlebarTextInFocus.alpha);
+					
+					// Only move window if mouse is over titlebar
+					if (vMousePos.y > mfPositionY - vTexDimsDiv3.y && vMousePos.y < mfPositionY)
+					{
+						if (!pGUI->getWindowBeingMoved())
+						{
+							_mbWindowBeingMoved = true;
+							pGUI->setWindowBeingMoved(true);
+						}
 					}
 				}
 			}
@@ -258,11 +338,179 @@ namespace X
 				mfPositionX = vWindowDims.x - mfWidth - vTexDimsDiv3.x;
 			if (mfPositionY < vTexDimsDiv3.x)
 				mfPositionY = vTexDimsDiv3.x;
-			else if (mfPositionY + mfWidth + vTexDimsDiv3.y > vWindowDims.y)
+			else if (mfPositionY + mfHeight + vTexDimsDiv3.y >= vWindowDims.y)
 				mfPositionY = vWindowDims.y - mfHeight - vTexDimsDiv3.y;
 
 		}
 
+		// Now update each of the widgets
+		// Compute whether container is accepting mouse clicks or not
+		bool bContainerAcceptingMouseClicks = bMouseOver;
+		if (_mbWindowBeingMoved)
+			bContainerAcceptingMouseClicks = false;
+
+		// Buttons
+		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->update(this, bContainerAcceptingMouseClicks);
+			itButton++;
+		}
+
+		// Text (We don't need to update anything
+
+		// Text edit
+		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->update(this, bContainerAcceptingMouseClicks);
+			itTextEdit++;
+		}
+
+		// Sliders
+		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		while (itSlider != _mmapSliders.end())
+		{
+			itSlider->second->update(this, bContainerAcceptingMouseClicks);
+			itSlider++;
+		}
+
 		return bMouseOver;
+	}
+
+	GUIButton* GUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it != _mmapButtons.end(), "GUIContainer::addButton(" + strName + ") failed. The named object already exists.");
+		GUIButton* pNewRes = new GUIButton;
+		ThrowIfFalse(pNewRes, "GUIContainer::addButton(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->mstrText = strText;
+		_mmapButtons[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUIButton* GUIContainer::getButton(const std::string& strName)
+	{
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it == _mmapButtons.end(), "GUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeButton(const std::string& strName)
+	{
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		if (it == _mmapButtons.end())
+			return;
+		delete it->second;
+		_mmapButtons.erase(it);
+	}
+
+	GUIText* GUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it != _mmapTexts.end(), "GUIContainer::addText(" + strName + ") failed. The named object already exists.");
+		GUIText* pNewRes = new GUIText;
+		ThrowIfFalse(pNewRes, "GUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mstrText = strText;
+		_mmapTexts[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUIText* GUIContainer::getText(const std::string& strName)
+	{
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it == _mmapTexts.end(), "GUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeText(const std::string& strName)
+	{
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		if (it == _mmapTexts.end())
+			return;
+		delete it->second;
+		_mmapTexts.erase(it);
+	}
+
+	void GUIContainer::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool GUIContainer::getVisible(void)
+	{
+		return _mbVisible;
+	}
+
+	GUITextEdit* GUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		ThrowIfTrue(it != _mmapTextEdits.end(), "GUIContainer::addTextEdit(" + strName + ") failed. The named object already exists.");
+		GUITextEdit* pNewRes = new GUITextEdit;
+		ThrowIfFalse(pNewRes, "GUIContainer::addTextEdit(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->mstrText = strText;
+		_mmapTextEdits[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUITextEdit* GUIContainer::getTextEdit(const std::string& strName)
+	{
+		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		ThrowIfTrue(it == _mmapTextEdits.end(), "GUIContainer::getTextEdit(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeTextEdit(const std::string& strName)
+	{
+		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		if (it == _mmapTextEdits.end())
+			return;
+		delete it->second;
+		_mmapTextEdits.erase(it);
+	}
+
+	GUISlider* GUIContainer::addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
+	{
+		// If resource already exists
+		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
+		ThrowIfTrue(it != _mmapSliders.end(), "GUIContainer::addSlider(" + strName + ") failed. The named object already exists.");
+		GUISlider* pNewRes = new GUISlider;
+		ThrowIfFalse(pNewRes, "GUIContainer::addSlider(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mfTabRatio = fTabRatio;
+		_mmapSliders[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUISlider* GUIContainer::getSlider(const std::string& strName)
+	{
+		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
+		ThrowIfTrue(it == _mmapSliders.end(), "GUIContainer::getSlider(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeSlider(const std::string& strName)
+	{
+		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
+		if (it == _mmapSliders.end())
+			return;
+		delete it->second;
+		_mmapSliders.erase(it);
 	}
 }

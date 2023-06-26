@@ -70,10 +70,6 @@ namespace X
 	// Each theme needs the following images...
 	// colour:		RGBA. This holds the RGB colour as well as the alpha channel for transparency.
 	// normal:		RGB. This holds a normal map used for lighting effects.
-	// blur:		RGB, but only R is used. This holds the amount to blur the background (If a scenemanager renders to the default framebuffer,
-	//				this will be used as the background) in the R channel.
-	// glow:		RGBA. For when a widget has the mouse over, a semi transparent image will fade in over the top.
-	//
 	// reflection:	RGB. This is simply an image (or perhaps a framebuffer) which moves as the widgets move (due to their parent container being moved)
 	// 
 	// As well as the above images, there are other settings which may be modified such as text colour for various widget states (for example,
@@ -99,6 +95,7 @@ namespace X
 	class GUIManager : public Singleton<GUIManager>
 	{
 	public:
+		friend class GUIContainer;
 		GUIManager();
 
 		// Updates and renders the GUI
@@ -172,6 +169,13 @@ namespace X
 
 		// Sets whether a window is being moved 
 		void setWindowBeingMoved(bool bWindowBeingMoved);
+
+		// Sets overall volume of the audio playback for the GUI
+		// Clamped between 0.0f and 1.0f
+		void setAudioVol(float fVol = 1.0f);
+
+		// Returns overall volume of the audio playback for the GUI
+		float getAudioVol(void);
 	private:
 		float _mfScale;												// Scaling value used for GUI scaling.
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
@@ -179,5 +183,6 @@ namespace X
 		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
 		Timer mTimer;												// Timer object used for time based stuff.
 		bool _mbWindowBeingMoved;									// This is used to prevent multiple windows being moved
+		float _mfAudioVol;											// Audio volume 0-1 range
 	};
 }

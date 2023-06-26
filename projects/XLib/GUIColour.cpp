@@ -20,4 +20,14 @@ namespace X
 		blue = fBlue;
 		alpha = fAlpha;
 	}
+
+	glm::vec4 GUIColour::get(void)
+	{
+		glm::vec4 col;
+		col.r = red;
+		col.g = green;
+		col.b = blue;
+		col.a = alpha;
+		return col;
+	}
 }

@@ -14,6 +14,8 @@ namespace X
 		// Clamps the values in the range of 0.0f and 1.0f
 		void set(float fRed, float fGreen, float fBlue, float fAlpha);
 
+		// Returns the colour as glm::vec4
+		glm::vec4 get(void);
 		float red;		// Red colour between 0.0f and 1.0f
 		float green;	// Green colour between 0.0f and 1.0f
 		float blue;		// Blue colour between 0.0f and 1.0f

@@ -4,19 +4,48 @@ namespace X
 {
 	void Application::initOnce(void)
 	{
+		
+		Image img;
+		Image normal;
+		img.load("data/X/gui/default/slider_tab_height.png");
+		img.normalmap(normal, 0.5f);
+		normal.saveAsPNG("data/X/gui/default/slider_tab_normal.png");
+
+		img.load("data/X/gui/default/slider_back_height.png");
+		img.normalmap(normal, 0.5f);
+		normal.saveAsPNG("data/X/gui/default/slider_back_normal.png");
+		
+
+//		ResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
+
 		GUITheme theme;
 		theme.save("data/X/GUI/default");
 		GUITheme theme2;
 		theme2.load("data/X/GUI/default");
 
+		Window* pWindow = Window::getPointer();
+		
 		GUIManager* pGUI = GUIManager::getPointer();
 		GUIContainer* pContainer1 = pGUI->addContainer("Container1");
 		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer1->mfPositionX = 412.0f;
 		pContainer1->mfPositionY = 412.0f;
-		pContainer2->mfPositionX = 512.0f;
-		pContainer2->mfPositionY = 512.0f;
+		pContainer2->setDimensions(320, 240);
+		pContainer2->setPosition((float)pWindow->getWidth()/2 - 160, (float)pWindow->getHeight()/2 - 120);
+		pContainer2->addText("TEXT", 0, 5, "Here's some text.");
+		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
+//		pContainer1->addButton("close", pContainer1->mfWidth - 4, -22, 8, 8, "X");
 
+		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 30, 100, 26, "EditMe!");
+		pTextEdit->setIntegerInputOnly(false);
+
+		GUISlider* pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL", 0, 200, 300, 20, 0.2f);
+		pSlider = pContainer2->addSlider("SLIDER_VERTICAL", 300, 0, 16, 100, 0.2f);
+		pContainer2->addText("sliderHoriz", 50, 120, "Slider");
+		pContainer2->addText("sliderVert", 50, 150, "Slider");
+
+		pContainer2->addText("dot1", 0, 170, ".");
+		pContainer2->addText("dot2", 300, 170, ".");
 		ResourceManager* pRM = ResourceManager::getPointer();
 
 		timer.setAveragedFPSRate(1);	// Once every X seconds
@@ -62,6 +91,17 @@ namespace X
 //		pDepthbuffer->renderToBackbuffer(pWindow->getWidth() - 512, 0, 512, 512);
 
 		float fInc = timer.getSecondsPast();
+
+		// GUI button clicks
+		GUIManager* pGUIMan = GUIManager::getPointer();
+		GUIContainer* pCont = pGUIMan->getContainer("Container1");
+		GUIButton* pButton = pCont->getButton("Close");
+		if (pButton->getClicked())
+			pCont->setVisible(false);
+
+		pCont = pGUIMan->getContainer("Container2");
+		pCont->getText("sliderHoriz")->mstrText = std::to_string(pCont->getSlider("SLIDER_HORIZONTAL")->getTabPos());
+		pCont->getText("sliderVert")->mstrText = std::to_string(pCont->getSlider("SLIDER_VERTICAL")->getTabPos());
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");

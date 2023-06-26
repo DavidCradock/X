@@ -39,6 +39,9 @@ namespace X
 		// Set named matrix (call after bind())
 		void setMat4(const std::string& name, const glm::mat4& matrix);
 
+		// Set uniform vec2 (call after bind())
+		void setVec2(const std::string& name, const glm::vec2& vec2);
+
 		// Set uniform vec3 (call after bind())
 		void setVec3(const std::string& name, const glm::vec3& vec3);
 

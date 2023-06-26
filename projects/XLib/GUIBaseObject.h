@@ -9,6 +9,12 @@ namespace X
 	public:
 		GUIBaseObject();
 
+		// Set position of object
+		void setPosition(float fPosX, float fPosY);
+		
+		// Set dimensions of object
+		void setDimensions(float fWidth, float fHeight);
+
 		float mfPositionX;	// Top left position of object along X axis
 		float mfPositionY;	// Top left position of object along Y axis
 		float mfWidth;		// Width of the object along X axis

@@ -2,18 +2,53 @@ data/x/gui/default.theme
 ThemeName: Default theme
 
 Images
-ContainerBlur: data/X/GUI/default/container_blur.png
 ContainerColour: data/X/GUI/default/container_colour.png
-ContainerGlow: data/X/GUI/default/container_glow.png
 ContainerNormal: data/X/GUI/default/container_normal.png
+ButtonColour: data/X/GUI/default/button_colour.png
+ButtonNormal: data/X/GUI/default/button_normal.png
 Reflection: data/X/GUI/default/reflection.png
+TextEditColour: data/X/GUI/default/textedit_colour.png
+TextEditNormal: data/X/GUI/default/textedit_normal.png
+SliderBackColour: data/X/GUI/default/slider_back_colour.png
+SliderBackNormal: data/X/GUI/default/slider_back_normal.png
+SliderTabColour: data/X/GUI/default/slider_tab_colour.png
+SliderTabNormal: data/X/GUI/default/slider_tab_normal.png
+
+Fonts
+containerTitle: data/X/fonts/ultimateserial-medium-regular_20
+button: data/X/fonts/ultimateserial-medium-regular_20
+text: data/X/fonts/ultimateserial-medium-regular_20
+textEdit: data/X/fonts/ultimateserial-medium-regular_20
 
 Colours
 containerTitlebarTextInFocus: 1.000000 1.000000 1.000000 1.000000
-containerTitlebarTextNotInFocus: 0.900000 0.900000 0.900000 0.900000
+containerTitlebarTextNotInFocus: 0.900000 0.900000 0.900000 0.500000
+buttonTextDown: 1.000000 1.000000 1.000000 1.000000
+buttonTextOver: 1.000000 1.000000 1.000000 0.750000
+buttonTextUp: 1.000000 1.000000 1.000000 0.500000
+text: 1.000000 1.000000 1.000000 0.750000
+textEditActive: 1.000000 1.000000 1.000000 1.000000
+textEditInactive: 1.000000 1.000000 1.000000 0.750000
+textEditInactive: 1.000000 1.000000 1.000000 0.500000
+textEditInactive: 1.000000 1.000000 1.000000 1.000000
 
-Effects
-blurAmount: 0.500000
-glowAmount: 0.500000
-normalAmount: 0.500000
-reflectionAmount: 0.500000
+Floats
+blurAmount: 1.000000
+normalAmount: 0.100000
+reflectionAmount: 0.025000
+mouseCursorDistance: 50.000000
+buttonTextFadeSpeed: 5.000000
+textEditCursorFlashSpeed: 4.000000
+sliderTabFadeSpeed: 5.000000
+
+Offsets
+ContainerTitlebarText: 1 10
+TextEditText: 1 1
+
+Audio
+buttonClickedName: data/X/gui/default/click.wav
+buttonClickedVolPitch: 0.800000 1.000000textEditTextAddName: data/X/gui/default/click.wav
+textEditTextAddVolPitch: 0.800000 1.000000textEditBackspaceName: data/X/gui/default/click.wav
+textEditBackspaceVolPitch: 0.200000 1.000000textEditReturnName: data/X/gui/default/click.wav
+textEditReturnVolPitch: 0.800000 1.000000textEditActivateName: data/X/gui/default/click.wav
+textEditActivateVolPitch: 0.800000 1.000000

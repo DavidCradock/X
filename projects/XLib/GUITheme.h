@@ -12,11 +12,7 @@ namespace X
 	// Each theme needs the following images...
 	// colour:		This holds the RGB colour as well as the alpha channel for transparency.
 	// normal:		This holds a normal map used for lighting effects.
-	// blur:		This holds the amount to blur the background (If a scenemanager renders to the default framebuffer, this will be used as the
-	//				background) in the R channel.
-	// glow:		For when a widget has the mouse over, a semi transparent image will fade in over the top.
-	//
-	// reflection: This is simply an image (or perhaps a framebuffer) which moves as the widgets move (due to their parent container being moved)
+	// reflection:  This is simply an image (or perhaps a framebuffer) which moves as the widgets move (due to their parent container being moved)
 	// 
 	// As well as the above images, there are other settings which may be modified such as text colour for various widget states (for example,
 	// a button's up/over/down/clicked states.
@@ -45,36 +41,141 @@ namespace X
 		// If you need to change any of the theme's texture names, please call this method before doing so.
 		void unloadTextures(void);
 
+		// Adds the theme's currently set fonts into ResourceManager so that they're ready to use.
+		// If you need to change any of the theme's font names, please call unloadFonts() before doing so.
+		void addFontsToManager(void);
+
+		// Removes the theme's currently set fonts out of the ResourceManager.
+		// If you need to change any of the theme's font names, please call this method before doing so.
+		void removeFontsFromManager(void);
+
+		// Adds the theme's currently set audio into AudioManager so that they're ready to use.
+		// If you need to change any of the theme's audio names, please call unloadAudio() before doing so.
+		void addAudioToManager(void);
+
+		// Removes the theme's currently set audio out of the AudioManager.
+		// If you need to change any of the theme's audio names, please call this method before doing so.
+		void removeAudioFromManager(void);
+
 		std::string mstrThemeName;		// Holds the name of the theme.
 
 		// Structure to hold the names of all the images used for this theme
 		struct Images
 		{
-			std::string containerBlur;		// The image name holding the blur data for a container
 			std::string containerColour;	// The image name holding the colour data for a container
-			std::string containerGlow;		// The image name holding the glow data for a container
 			std::string containerNormal;	// The image name holding the normal data for a container
+			std::string buttonColour;		// The image name holding the colour data for a button
+			std::string buttonNormal;		// The image name holding the normal data for a button
 			std::string reflection;			// The image name holding the reflection data for the GUI.
+			std::string textEditColour;
+			std::string textEditNormal;
+			std::string sliderBackColour;
+			std::string sliderBackNormal;
+			std::string sliderTabColour;
+			std::string sliderTabNormal;
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
+
+		// Structure to hold the names of all the fonts used by this theme
+		struct Fonts
+		{
+			std::string containerTitle;	// GUIContainer font
+			std::string button;			// GUIButton font
+			std::string text;			// GUIText font
+			std::string textEdit;
+		};
+		Fonts mFonts;
 
 		// Structure to hold colours used for this theme
 		struct Colours
 		{
 			GUIColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is set to be a window and is in focus.
 			GUIColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is set to be a window and is not in focus.
+			GUIColour buttonTextDown;					// Colour of a button's text when mouse is over and clicked
+			GUIColour buttonTextOver;					// Colour of a button's text when mouse is over
+			GUIColour buttonTextUp;						// Colour of a button's text when mouse is not over
+			GUIColour text;								// GUIText font colour
+			GUIColour textEditInactive;
+			GUIColour textEditActive;
+			GUIColour sliderTabOver;
+			GUIColour sliderTabNotOver;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 
-		float mfBlurAmount;			// 1.0f = max blur, 0.0f = none
-		float mfGlowAmount;			// 1.0f = max glow, 0.0f = none
-		float mfNormalAmount;		// 1.0f = max normal, 0.0f = none
-		float mfReflectionAmount;	// 1.0f = max reflection, 0.0f = none
-	private:
-		// Converts the stored values of the given colour, to text. Used for writing out to a file.
-		std::string _colourToString(GUIColour& colour);
+		// Offsets of various items
+		struct Offset
+		{
+			int iOffsetX;
+			int iOffsetY;
+		};
+		struct Offsets
+		{
+			Offset containerTitlebarText;
+			Offset textEditText;
+		};
+		Offsets mOffsets;
 
-		// Given an ifstream and a colour, reads in the RGBA values. Used to read from a file
-		void _colourReadValues(std::ifstream& stream, GUIColour &colour);
+		// Audio samples
+		struct AudioSampleInfo
+		{
+			std::string strSampleName;
+			float fVolume;
+			float fPitch;
+		};
+		struct Audio
+		{
+			AudioSampleInfo buttonClicked;
+			AudioSampleInfo textEditTextAdd;
+			AudioSampleInfo textEditBackspace;
+			AudioSampleInfo textEditReturn;
+			AudioSampleInfo textEditActivate;
+		};
+		Audio mAudio;
+
+		// Floats
+		float mfBlurAmount;				// 1.0f = max blur, 0.0f = none
+		float mfNormalAmount;			// 1.0f = max normal, 0.0f = none
+		float mfReflectionAmount;		// 1.0f = max reflection, 0.0f = none
+		float mfMouseCursorDistance;	// Distance the mouse cursor is the fragments when computing the bump mapping
+		float mfButtonTextFadeSpeed;	// Rate at which button text colours interpolate between
+		float mfTextEditFlashSpeed;		// Rate at which the additional character that flashes when a text edit is active.
+		float mfSliderTabFadeSpeed;		// Rate at which slider's tab colours interpolate between
+
+	private:
+		// Writes out image info
+		void _writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename);
+
+		// Reads in image info
+		void _readImageInfo(std::ifstream& stream, std::string& strImagename);
+
+		// Writes out font info
+		void _writeFontInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strFontname);
+
+		// Reads in font info
+		void _readFontInfo(std::ifstream& stream, std::string& strFontname);
+
+		// Writes out colour info
+		void _writeColourInfo(std::ofstream& stream, const std::string& strDescription, const GUIColour& colour);
+
+		// Reads in colour info
+		void _readColourInfo(std::ifstream& stream, GUIColour& colour);
+
+		// Writes out offset info
+		void _writeOffsetInfo(std::ofstream& stream, const std::string& strDescription, const Offset& offset);
+
+		// Reads in offset info
+		void _readOffsetInfo(std::ifstream& stream, Offset& offset);
+
+		// Writes out AudioSampleInfo
+		void _writeAudioSampleInfo(std::ofstream& stream, const std::string& strDescription, const AudioSampleInfo& asi);
+
+		// Reads in AudioSampleInfo
+		void _readAudioSampleInfo(std::ifstream& stream, AudioSampleInfo& asi);
+
+		// Writes out float info
+		void _writeFloatInfo(std::ofstream& stream, const std::string& strDescription, const float& fValue);
+
+		// Reads in float info
+		void _readFloatInfo(std::ifstream& stream, float& fValue);
 	};
 }

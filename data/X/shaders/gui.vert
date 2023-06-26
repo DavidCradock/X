@@ -7,7 +7,7 @@ layout (location = 2) in vec2 aTexCoord;
 
 out vec4 colour;
 out vec2 texCoordVertex;        // Vertex texture coordinate
-out vec2 texCoordBackground;    // Background texture coordinate for sampling the background texture
+//out vec2 texCoordBackground;    // Background texture coordinate for sampling the background texture
 
 uniform mat4 transform;
 
@@ -16,6 +16,6 @@ void main()
     gl_Position = transform * vec4(aPos, 1.0f);
     colour = aColour;
     texCoordVertex = aTexCoord;
-    texCoordBackground.x = aPos.x;
-    texCoordBackground.y = aPos.y;
+//    texCoordBackground = aTexCoord;
+
 }   

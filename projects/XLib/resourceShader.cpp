@@ -139,6 +139,11 @@ namespace X
         glUniformMatrix4fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
+    void ResourceShader::setVec2(const std::string& name, const glm::vec2& vec2)
+    {
+        glUniform2fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec2[0]);
+    }
+
     void ResourceShader::setVec3(const std::string& name, const glm::vec3& vec3)
     {
         glUniform3fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec3[0]);

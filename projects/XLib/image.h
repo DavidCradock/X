@@ -196,7 +196,7 @@ namespace X
 		// Computes a normal map used for normal mapping from this image and stores the result in outputImage
 		// This image should be a heightmap, where each pixel represents the height of a surface. White being max height, black being the lowest.
 		// However, this image first creates a copy of itself in memory, then calls greyscaleSimple() on that to ensure proper computation of the normals.
-		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally.
+		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally. Lower values increase the effect
 		// If this image contains no data, an exception occurs.
 		void normalmap(Image& outputImage, float fScale = 1.0f);
 		

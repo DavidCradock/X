@@ -4,6 +4,7 @@
 #include "input.h"
 #include "window.h"
 #include "resourceManager.h"
+#include "audioManager.h"
 
 namespace X
 {
@@ -13,6 +14,11 @@ namespace X
 		// Add default theme
 		GUITheme *pTheme = addTheme("default");
 		pTheme->loadTextures();
+		pTheme->addFontsToManager();
+
+		AudioManager::getPointer()->addNewSampleGroup("gui");
+		pTheme->addAudioToManager();
+		setAudioVol(1.0f);
 		_mbWindowBeingMoved = false;
 
 	}
@@ -59,8 +65,7 @@ namespace X
 
 		// Go through each container, starting with the one at the back first
 		it = _mlistContainerZOrder.begin();
-		glEnable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
+		
 		while (it != _mlistContainerZOrder.end())
 		{
 			pContainer = getContainer(*it);
@@ -70,7 +75,7 @@ namespace X
 			
 			it++;
 		}
-		glDisable(GL_BLEND);
+		
 	}
 
 	void GUIManager::setScale(float fScalingValue)
@@ -165,9 +170,11 @@ namespace X
 		if (it != _mmapContainers.end())
 			return it->second;
 
-		// Allocate the new theme
+		// Allocate the new object
 		GUIContainer* pNew = new GUIContainer;
 		ThrowIfFalse(pNew, "GUIManager::addContainer(" + strName + ") failed. Unable to allocate memory for the new container.");
+
+		pNew->mstrTitleText = strName;
 
 		// Place in the hashmap
 		_mmapContainers[strName] = pNew;
@@ -251,5 +258,16 @@ namespace X
 	void GUIManager::setWindowBeingMoved(bool bWindowBeingMoved)
 	{
 		_mbWindowBeingMoved = bWindowBeingMoved;
+	}
+
+	void GUIManager::setAudioVol(float fVol)
+	{
+		clamp(fVol, 0.0f, 1.0f);
+		_mfAudioVol = fVol;
+	}
+
+	float GUIManager::getAudioVol(void)
+	{
+		return _mfAudioVol;
 	}
 }
