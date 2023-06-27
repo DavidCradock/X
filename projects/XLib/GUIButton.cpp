@@ -54,8 +54,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.buttonColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.buttonNormal);
+		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.buttonBGColour);
+		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.buttonBGNormal);
 		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
@@ -209,7 +209,7 @@ namespace X
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
 		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
-		ResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.buttonColour);
+		ResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.buttonBGColour);
 		glm::vec2 vTexDimsDiv3 = pColourTex->mvDimensions * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

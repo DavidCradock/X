@@ -5,6 +5,7 @@
 #include "GUIText.h"
 #include "GUITextEdit.h"
 #include "GUISlider.h"
+#include "GUILineGraph.h"
 
 namespace X
 {
@@ -73,7 +74,7 @@ namespace X
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
 		// If the width is greater than height, it is set as a horizontal slider, else vertical.
 		// fTabRatio is a value which is multiplied by the width/height(Depending on orientation) of the slider's dims, to obtain tab dimensions
-		GUISlider* addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio = 0.1f);
+		GUISlider* addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio = 0.05f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
@@ -83,16 +84,34 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeSlider(const std::string& strName);
 
+		// Add line graph to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		GUILineGraph* addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUILineGraph* getLineGraph(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeLineGraph(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		
-		std::map<std::string, GUIButton*> _mmapButtons;		// Hashmap for each added button
-		std::map<std::string, GUIText*> _mmapTexts;			// Hashmap for each added text
-		std::map<std::string, GUITextEdit*> _mmapTextEdits;	// Hashmap for each added text edit
-		std::map<std::string, GUISlider*> _mmapSliders;		// Hashmap for each added slider
+		std::map<std::string, GUIButton*> _mmapButtons;			// Hashmap for each added button
+		std::map<std::string, GUIText*> _mmapTexts;				// Hashmap for each added text
+		std::map<std::string, GUITextEdit*> _mmapTextEdits;		// Hashmap for each added text edit
+		std::map<std::string, GUISlider*> _mmapSliders;			// Hashmap for each added slider
+		std::map<std::string, GUILineGraph*> _mmapLineGraphs;	// Hashmap for each added line graph
 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
+
+		// Called from render() to render this container
+		void _renderContainer(const std::string& strFramebufferToSampleFrom);
+
 	};
 }

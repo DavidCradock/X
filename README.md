@@ -15,4 +15,9 @@
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
 - add translation/rotation/scale of base entities
-
+- Decide whether all the GUI widgets/objects render their 9 borders either...
+INSIDE the position + dims, so that the TOTAL gui area is equal to their set dims
+OUTSIDE the position + dims, so that the TOTAL gui area is MORE THAN the set dims
+I think the first option is best because...
+When changing themes, the GUI layout is consistent
+- Create a "render 9 images" method inside the GUIBaseObject class, removing from all widgets that do this themselves.

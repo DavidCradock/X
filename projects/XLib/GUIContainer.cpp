@@ -22,171 +22,14 @@ namespace X
 		_mvTextColour.a = col.alpha;
 	}
 
-	// Containers are rendered in order of ZOrder, with the back most being rendered first
 	void GUIContainer::render(const std::string& strFramebufferToSampleFrom)
 	{
 		if (!_mbVisible)
 			return;
 
-		// Get required resources needed to render
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		InputManager* pInput = InputManager::getPointer();
-
-		pShader->bind();
-		
-		// Setup the projection matrix as orthographic
-		glm::mat4 matProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
-		pShader->setMat4("transform", matProjection);
-
-		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_colour", 0);
-		pShader->setInt("texture1_normal", 1);
-		pShader->setInt("texture2_reflection", 2);
-		pShader->setInt("texture3_background", 3);
-		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
-		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
-		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
-		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
-
-		// Set mouse position, inverting Y position
-		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
-		pShader->setVec2("v2MousePos", vMousePos);
-		
-		glEnable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
-
-		if (mbContainerIsWindow)
-		{
-			// Get textures and background sample framebuffer
-			ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerColour);
-			ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerNormal);
-			ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-			ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
-
-			// Bind textures
-			pTexColour->bind(0);
-			pTexNormal->bind(1);
-			pTexReflection->bind(2);
-			pFBSample->bindAsTexture(3);
-
-			// Render the container centre
-			pTri->removeGeom();
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX, mfPositionY),	// Position
-				glm::vec2(mfWidth, mfHeight),			// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-				mTC.centre.BL,
-				mTC.centre.BR,
-				mTC.centre.TR,
-				mTC.centre.TL);
-
-			// Render the left edge
-			glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY),	// Position
-				glm::vec2(vTexDimsDiv3.x, mfHeight),					// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
-				mTC.left.BL,
-				mTC.left.BR,
-				mTC.left.TR,
-				mTC.left.TL);
-
-			// Render the right edge
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX + mfWidth, mfPositionY),	// Position
-				glm::vec2(vTexDimsDiv3.x, mfHeight),			// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
-				mTC.right.BL,
-				mTC.right.BR,
-				mTC.right.TR,
-				mTC.right.TL);
-
-			// Render the top edge
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX, mfPositionY - vTexDimsDiv3.y),	// Position
-				glm::vec2(mfWidth, vTexDimsDiv3.y),						// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
-				mTC.top.BL,
-				mTC.top.BR,
-				mTC.top.TR,
-				mTC.top.TL);
-
-			// Render the bottom edge
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX, mfPositionY + mfHeight),		// Position
-				glm::vec2(mfWidth, vTexDimsDiv3.y),					// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),					// Vertex colour
-				mTC.bottom.BL,
-				mTC.bottom.BR,
-				mTC.bottom.TR,
-				mTC.bottom.TL);
-
-			// Render the top left corner
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY - vTexDimsDiv3.y),	// Position
-				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
-				mTC.topLeft.BL,
-				mTC.topLeft.BR,
-				mTC.topLeft.TR,
-				mTC.topLeft.TL);
-
-			// Render the top right corner
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX + mfWidth, mfPositionY - vTexDimsDiv3.y),	// Position
-				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),						// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),								// Vertex colour
-				mTC.topRight.BL,
-				mTC.topRight.BR,
-				mTC.topRight.TR,
-				mTC.topRight.TL);
-
-			// Render the bottom left corner
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY + mfHeight),	// Position
-				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),							// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),									// Vertex colour
-				mTC.bottomLeft.BL,
-				mTC.bottomLeft.BR,
-				mTC.bottomLeft.TR,
-				mTC.bottomLeft.TL);
-
-			// Render the bottom right corner
-			pTri->addQuad2D(
-				glm::vec2(mfPositionX + mfWidth, mfPositionY + mfHeight),	// Position
-				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),					// Dimensions
-				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
-				mTC.bottomRight.BL,
-				mTC.bottomRight.BR,
-				mTC.bottomRight.TR,
-				mTC.bottomRight.TL);
-
-			pTri->update();
-			pTri->draw();
-
-			pTexColour->unbindAll();	// Unbind textures
-			pShader->unbind();	// Unbind the GUI shader
-			glDisable(GL_BLEND);
-
-			// Container title
-			int iRTDims[2];
-			iRTDims[0] = int(pWindow->getWidth());
-			iRTDims[1] = int(pWindow->getHeight());
-			ResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
-			pFont->print(mstrTitleText,
-				int(mfPositionX) + pTheme->mOffsets.containerTitlebarText.iOffsetX,
-				int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
-				iRTDims[0], iRTDims[1],
-				1.0f,
-				_mvTextColour);
-		}
-		
+		// Render this container (If it's set as a window)
+		_renderContainer(strFramebufferToSampleFrom);
+	
 		// Render each button
 		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
@@ -219,6 +62,14 @@ namespace X
 			itSlider++;
 		}
 
+		// Render each line graph
+		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->render(this, strFramebufferToSampleFrom);
+			itLineGraph++;
+		}
+
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -235,9 +86,7 @@ namespace X
 
 		InputManager* pInput = InputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-
-		
-		glm::vec2 vTexDimsDiv3 = pRM->getTexture2D(pTheme->mImages.containerColour)->mvDimensions * 0.3333333f;
+		glm::vec2 vTexDimsDiv3 = pRM->getTexture2D(pTheme->mImages.containerBGColour)->mvDimensions * 0.3333333f;
 
 		// Determine whether mouse cursor is over this container
 		bool bMouseOver = false;
@@ -330,7 +179,7 @@ namespace X
 		if (mbContainerIsWindow)
 		{
 			// Get a texture so we can determine dimensions
-			ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerColour);
+			ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
 			glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
 			if (mfPositionX < vTexDimsDiv3.x)
 				mfPositionX = vTexDimsDiv3.x;
@@ -375,6 +224,15 @@ namespace X
 			itSlider++;
 		}
 
+		// LineGraphs
+		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->update(this, bContainerAcceptingMouseClicks);
+			itLineGraph++;
+		}
+
+		
 		return bMouseOver;
 	}
 
@@ -450,6 +308,171 @@ namespace X
 		return _mbVisible;
 	}
 
+	void GUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
+	{
+		if (!_mbVisible)
+			return;
+
+		if (!mbContainerIsWindow)
+			return;	// No point rendering anything
+
+		// Get required resources needed to render
+		GUIManager* pGUI = GUIManager::getPointer();
+		ResourceManager* pRM = ResourceManager::getPointer();
+		Window* pWindow = Window::getPointer();
+		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		ResourceShader* pShader = pRM->getShader("X:gui");
+		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
+		InputManager* pInput = InputManager::getPointer();
+
+		pShader->bind();
+
+		// Setup the projection matrix as orthographic
+		glm::mat4 matProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
+		pShader->setMat4("transform", matProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0_colour", 0);
+		pShader->setInt("texture1_normal", 1);
+		pShader->setInt("texture2_reflection", 2);
+		pShader->setInt("texture3_background", 3);
+		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
+		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
+		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
+		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
+
+		// Set mouse position, inverting Y position
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		pShader->setVec2("v2MousePos", vMousePos);
+
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+
+		// Get textures and background sample framebuffer
+		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
+		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerBGNormal);
+		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+
+		// Bind textures
+		pTexColour->bind(0);
+		pTexNormal->bind(1);
+		pTexReflection->bind(2);
+		pFBSample->bindAsTexture(3);
+
+		// Render the container centre
+		pTri->removeGeom();
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX, mfPositionY),	// Position
+			glm::vec2(mfWidth, mfHeight),			// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
+			mTC.centre.BL,
+			mTC.centre.BR,
+			mTC.centre.TR,
+			mTC.centre.TL);
+
+		// Render the left edge
+		glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY),	// Position
+			glm::vec2(vTexDimsDiv3.x, mfHeight),					// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
+			mTC.left.BL,
+			mTC.left.BR,
+			mTC.left.TR,
+			mTC.left.TL);
+
+		// Render the right edge
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX + mfWidth, mfPositionY),	// Position
+			glm::vec2(vTexDimsDiv3.x, mfHeight),			// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
+			mTC.right.BL,
+			mTC.right.BR,
+			mTC.right.TR,
+			mTC.right.TL);
+
+		// Render the top edge
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX, mfPositionY - vTexDimsDiv3.y),	// Position
+			glm::vec2(mfWidth, vTexDimsDiv3.y),						// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
+			mTC.top.BL,
+			mTC.top.BR,
+			mTC.top.TR,
+			mTC.top.TL);
+
+		// Render the bottom edge
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX, mfPositionY + mfHeight),		// Position
+			glm::vec2(mfWidth, vTexDimsDiv3.y),					// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),					// Vertex colour
+			mTC.bottom.BL,
+			mTC.bottom.BR,
+			mTC.bottom.TR,
+			mTC.bottom.TL);
+
+		// Render the top left corner
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY - vTexDimsDiv3.y),	// Position
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+			mTC.topLeft.BL,
+			mTC.topLeft.BR,
+			mTC.topLeft.TR,
+			mTC.topLeft.TL);
+
+		// Render the top right corner
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX + mfWidth, mfPositionY - vTexDimsDiv3.y),	// Position
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),						// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),								// Vertex colour
+			mTC.topRight.BL,
+			mTC.topRight.BR,
+			mTC.topRight.TR,
+			mTC.topRight.TL);
+
+		// Render the bottom left corner
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX - vTexDimsDiv3.x, mfPositionY + mfHeight),	// Position
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),							// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),									// Vertex colour
+			mTC.bottomLeft.BL,
+			mTC.bottomLeft.BR,
+			mTC.bottomLeft.TR,
+			mTC.bottomLeft.TL);
+
+		// Render the bottom right corner
+		pTri->addQuad2D(
+			glm::vec2(mfPositionX + mfWidth, mfPositionY + mfHeight),	// Position
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),					// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+			mTC.bottomRight.BL,
+			mTC.bottomRight.BR,
+			mTC.bottomRight.TR,
+			mTC.bottomRight.TL);
+
+		pTri->update();
+		pTri->draw();
+
+		pTexColour->unbindAll();	// Unbind textures
+		pShader->unbind();	// Unbind the GUI shader
+		glDisable(GL_BLEND);
+
+		// Container title
+		int iRTDims[2];
+		iRTDims[0] = int(pWindow->getWidth());
+		iRTDims[1] = int(pWindow->getHeight());
+		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
+		pFont->print(mstrTitleText,
+			int(mfPositionX) + pTheme->mOffsets.containerTitlebarText.iOffsetX,
+			int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
+			iRTDims[0], iRTDims[1],
+			1.0f,
+			_mvTextColour);
+	}
+
 	GUITextEdit* GUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
@@ -512,5 +535,36 @@ namespace X
 			return;
 		delete it->second;
 		_mmapSliders.erase(it);
+	}
+
+	GUILineGraph* GUIContainer::addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		ThrowIfTrue(it != _mmapLineGraphs.end(), "GUIContainer::addLineGraph(" + strName + ") failed. The named object already exists.");
+		GUILineGraph* pNewRes = new GUILineGraph;
+		ThrowIfFalse(pNewRes, "GUIContainer::addLineGraph(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		_mmapLineGraphs[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUILineGraph* GUIContainer::getLineGraph(const std::string& strName)
+	{
+		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		ThrowIfTrue(it == _mmapLineGraphs.end(), "GUIContainer::getLineGraph(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeLineGraph(const std::string& strName)
+	{
+		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		if (it == _mmapLineGraphs.end())
+			return;
+		delete it->second;
+		_mmapLineGraphs.erase(it);
 	}
 }

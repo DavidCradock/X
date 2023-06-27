@@ -56,8 +56,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.textEditColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.textEditNormal);
+		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
+		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.textEditBGNormal);
 		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
@@ -247,7 +247,7 @@ namespace X
 			_mfAddFlashingCursor -= 2.0f;
 
 		
-		ResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditColour);
+		ResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsDiv3 = pColourTex->mvDimensions * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
@@ -344,6 +344,10 @@ namespace X
 							mstrText += strNewChar;
 							pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
 						}
+						else
+						{
+							pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
+						}
 					}
 					if (pInput->key.repeat(KC_SPACE))
 					{
@@ -351,6 +355,10 @@ namespace X
 						{
 							mstrText += " ";
 							pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
+						}
+						else
+						{
+							pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(pGUIMan->getAudioVol()* pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
 						}
 					}
 				}

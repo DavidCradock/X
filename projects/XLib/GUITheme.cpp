@@ -12,17 +12,19 @@ namespace X
 		mstrThemeName = "Default theme";
 
 		// Images
-		mImages.containerColour = "data/X/GUI/default/container_colour.png";
-		mImages.containerNormal = "data/X/GUI/default/container_normal.png";
-		mImages.buttonColour = "data/X/GUI/default/button_colour.png";
-		mImages.buttonNormal = "data/X/GUI/default/button_normal.png";
+		mImages.containerBGColour = "data/X/GUI/default/containerBGcolour.png";
+		mImages.containerBGNormal = "data/X/GUI/default/containerBGnormal.png";
+		mImages.buttonBGColour = "data/X/GUI/default/buttonBGcolour.png";
+		mImages.buttonBGNormal = "data/X/GUI/default/buttonBGnormal.png";
 		mImages.reflection = "data/X/GUI/default/reflection.png";
-		mImages.textEditColour = "data/X/GUI/default/textedit_colour.png";
-		mImages.textEditNormal = "data/X/GUI/default/textedit_normal.png";
-		mImages.sliderBackColour = "data/X/GUI/default/slider_back_colour.png";
-		mImages.sliderBackNormal = "data/X/GUI/default/slider_back_normal.png";
+		mImages.textEditBGColour = "data/X/GUI/default/texteditBGcolour.png";
+		mImages.textEditBGNormal = "data/X/GUI/default/texteditBGnormal.png";
+		mImages.sliderBGColour = "data/X/GUI/default/sliderBGcolour.png";
+		mImages.sliderBGNormal = "data/X/GUI/default/sliderBGnormal.png";
 		mImages.sliderTabColour = "data/X/GUI/default/slider_tab_colour.png";
 		mImages.sliderTabNormal = "data/X/GUI/default/slider_tab_normal.png";
+		mImages.lineGraphBGColour = "data/X/GUI/default/linegraphBGcolour.png";
+		mImages.lineGraphBGNormal = "data/X/GUI/default/linegraphBGnormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/ultimateserial-medium-regular_20";
@@ -58,11 +60,13 @@ namespace X
 		mOffsets.textEditText.iOffsetY = 1;
 
 		// Audio
-		mAudio.buttonClicked.strSampleName = "data/X/gui/default/click.wav";			mAudio.buttonClicked.fPitch = 1.0f;		mAudio.buttonClicked.fVolume = 0.8f;
-		mAudio.textEditTextAdd.strSampleName = "data/X/gui/default/click2.wav";			mAudio.textEditTextAdd.fPitch = 1.0f;	mAudio.textEditTextAdd.fVolume = 0.8f;
-		mAudio.textEditBackspace.strSampleName = "data/X/gui/default/backspace.wav";	mAudio.textEditBackspace.fPitch = 1.0f;	mAudio.textEditBackspace.fVolume = 0.2f;
-		mAudio.textEditReturn.strSampleName = "data/X/gui/default/return.wav";			mAudio.textEditReturn.fPitch = 1.0f;	mAudio.textEditReturn.fVolume = 0.8f;
-		mAudio.textEditActivate.strSampleName = "data/X/gui/default/activate.wav";		mAudio.textEditActivate.fPitch = 1.0f;	mAudio.textEditActivate.fVolume = 0.8f;
+		mAudio.buttonClicked.strSampleName = "data/X/gui/default/click.wav";			mAudio.buttonClicked.fPitch = 1.0f;				mAudio.buttonClicked.fVolume = 0.8f;
+		mAudio.textEditTextAdd.strSampleName = "data/X/gui/default/click2.wav";			mAudio.textEditTextAdd.fPitch = 1.0f;			mAudio.textEditTextAdd.fVolume = 0.8f;
+		mAudio.textEditBackspace.strSampleName = "data/X/gui/default/backspace.wav";	mAudio.textEditBackspace.fPitch = 1.0f;			mAudio.textEditBackspace.fVolume = 0.2f;
+		mAudio.textEditReturn.strSampleName = "data/X/gui/default/return.wav";			mAudio.textEditReturn.fPitch = 1.0f;			mAudio.textEditReturn.fVolume = 0.8f;
+		mAudio.textEditActivate.strSampleName = "data/X/gui/default/activate.wav";		mAudio.textEditActivate.fPitch = 1.0f;			mAudio.textEditActivate.fVolume = 0.8f;
+		mAudio.textEditNoMoreCharSpace.strSampleName = "data/X/gui/default/error.wav";	mAudio.textEditNoMoreCharSpace.fPitch = 1.0f;	mAudio.textEditNoMoreCharSpace.fVolume = 0.2f;
+		
 	}
 
 	void GUITheme::load(const std::string& strFilename)
@@ -89,17 +93,19 @@ namespace X
 		// Images
 		getline(file, strLine);	// Empty line
 		getline(file, strLine);	//"\nImages\n"
-		_readImageInfo(file, mImages.containerColour);
-		_readImageInfo(file, mImages.containerNormal);
-		_readImageInfo(file, mImages.buttonColour);
-		_readImageInfo(file, mImages.buttonNormal);
+		_readImageInfo(file, mImages.containerBGColour);
+		_readImageInfo(file, mImages.containerBGNormal);
+		_readImageInfo(file, mImages.buttonBGColour);
+		_readImageInfo(file, mImages.buttonBGNormal);
 		_readImageInfo(file, mImages.reflection);
-		_readImageInfo(file, mImages.textEditColour);
-		_readImageInfo(file, mImages.textEditNormal);
-		_readImageInfo(file, mImages.sliderBackColour);
-		_readImageInfo(file, mImages.sliderBackNormal);
+		_readImageInfo(file, mImages.textEditBGColour);
+		_readImageInfo(file, mImages.textEditBGNormal);
+		_readImageInfo(file, mImages.sliderBGColour);
+		_readImageInfo(file, mImages.sliderBGNormal);
 		_readImageInfo(file, mImages.sliderTabColour);
 		_readImageInfo(file, mImages.sliderTabNormal);
+		_readImageInfo(file, mImages.lineGraphBGColour);
+		_readImageInfo(file, mImages.lineGraphBGNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -151,7 +157,8 @@ namespace X
 		_readAudioSampleInfo(file, mAudio.textEditBackspace);
 		_readAudioSampleInfo(file, mAudio.textEditReturn);
 		_readAudioSampleInfo(file, mAudio.textEditActivate);
-
+		_readAudioSampleInfo(file, mAudio.textEditNoMoreCharSpace);
+		
 		ThrowIfTrue(file.fail(), "GUITheme::load(" + filename + ") failed whilst loading file.");
 		file.close();
 	}
@@ -174,17 +181,19 @@ namespace X
 
 		// Images
 		file << "\nImages\n";
-		_writeImageInfo(file, "ContainerColour", mImages.containerColour);
-		_writeImageInfo(file, "ContainerNormal", mImages.containerNormal);
-		_writeImageInfo(file, "ButtonColour", mImages.buttonColour);
-		_writeImageInfo(file, "ButtonNormal", mImages.buttonNormal);
+		_writeImageInfo(file, "ContainerBGColour", mImages.containerBGColour);
+		_writeImageInfo(file, "ContainerBGNormal", mImages.containerBGNormal);
+		_writeImageInfo(file, "ButtonBGColour", mImages.buttonBGColour);
+		_writeImageInfo(file, "ButtonBGNormal", mImages.buttonBGNormal);
 		_writeImageInfo(file, "Reflection", mImages.reflection);
-		_writeImageInfo(file, "TextEditColour", mImages.textEditColour);
-		_writeImageInfo(file, "TextEditNormal", mImages.textEditNormal);
-		_writeImageInfo(file, "SliderBackColour", mImages.sliderBackColour);
-		_writeImageInfo(file, "SliderBackNormal", mImages.sliderBackNormal);
+		_writeImageInfo(file, "TextEditBGColour", mImages.textEditBGColour);
+		_writeImageInfo(file, "TextEditBGNormal", mImages.textEditBGNormal);
+		_writeImageInfo(file, "SliderBGColour", mImages.sliderBGColour);
+		_writeImageInfo(file, "SliderBGNormal", mImages.sliderBGNormal);
 		_writeImageInfo(file, "SliderTabColour", mImages.sliderTabColour);
 		_writeImageInfo(file, "SliderTabNormal", mImages.sliderTabNormal);
+		_writeImageInfo(file, "LineGraphBGColour", mImages.lineGraphBGColour);
+		_writeImageInfo(file, "LineGraphBGNormal", mImages.lineGraphBGNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -228,7 +237,8 @@ namespace X
 		_writeAudioSampleInfo(file, "textEditBackspace", mAudio.textEditBackspace);
 		_writeAudioSampleInfo(file, "textEditReturn", mAudio.textEditReturn);
 		_writeAudioSampleInfo(file, "textEditActivate", mAudio.textEditActivate);
-
+		_writeAudioSampleInfo(file, "textEditNoMoreCharSpace", mAudio.textEditNoMoreCharSpace);
+		
 		// Make sure there were no errors
 		ThrowIfTrue(file.fail(), "GUITheme::save(" + filename + ") failed whilst saving file.");
 		file.close();
@@ -237,33 +247,37 @@ namespace X
 	void GUITheme::loadTextures(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		pRM->addTexture2D(mImages.containerColour, mImages.containerColour);
-		pRM->addTexture2D(mImages.containerNormal, mImages.containerNormal);
-		pRM->addTexture2D(mImages.buttonColour, mImages.buttonColour);
-		pRM->addTexture2D(mImages.buttonNormal, mImages.buttonNormal);
+		pRM->addTexture2D(mImages.containerBGColour, mImages.containerBGColour);
+		pRM->addTexture2D(mImages.containerBGNormal, mImages.containerBGNormal);
+		pRM->addTexture2D(mImages.buttonBGColour, mImages.buttonBGColour);
+		pRM->addTexture2D(mImages.buttonBGNormal, mImages.buttonBGNormal);
 		pRM->addTexture2D(mImages.reflection, mImages.reflection);
-		pRM->addTexture2D(mImages.textEditColour, mImages.textEditColour);
-		pRM->addTexture2D(mImages.textEditNormal, mImages.textEditNormal);
-		pRM->addTexture2D(mImages.sliderBackColour, mImages.sliderBackColour);
-		pRM->addTexture2D(mImages.sliderBackNormal, mImages.sliderBackNormal);
+		pRM->addTexture2D(mImages.textEditBGColour, mImages.textEditBGColour);
+		pRM->addTexture2D(mImages.textEditBGNormal, mImages.textEditBGNormal);
+		pRM->addTexture2D(mImages.sliderBGColour, mImages.sliderBGColour);
+		pRM->addTexture2D(mImages.sliderBGNormal, mImages.sliderBGNormal);
 		pRM->addTexture2D(mImages.sliderTabColour, mImages.sliderTabColour);
 		pRM->addTexture2D(mImages.sliderTabNormal, mImages.sliderTabNormal);
+		pRM->addTexture2D(mImages.lineGraphBGColour, mImages.lineGraphBGColour);
+		pRM->addTexture2D(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
 	}
 
 	void GUITheme::unloadTextures(void)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
-		pRM->removeTexture2D(mImages.containerColour);
-		pRM->removeTexture2D(mImages.containerNormal);
-		pRM->removeTexture2D(mImages.buttonColour);
-		pRM->removeTexture2D(mImages.buttonNormal);
+		pRM->removeTexture2D(mImages.containerBGColour);
+		pRM->removeTexture2D(mImages.containerBGNormal);
+		pRM->removeTexture2D(mImages.buttonBGColour);
+		pRM->removeTexture2D(mImages.buttonBGNormal);
 		pRM->removeTexture2D(mImages.reflection);
-		pRM->removeTexture2D(mImages.textEditColour);
-		pRM->removeTexture2D(mImages.textEditNormal);
-		pRM->removeTexture2D(mImages.sliderBackColour);
-		pRM->removeTexture2D(mImages.sliderBackNormal);
+		pRM->removeTexture2D(mImages.textEditBGColour);
+		pRM->removeTexture2D(mImages.textEditBGNormal);
+		pRM->removeTexture2D(mImages.sliderBGColour);
+		pRM->removeTexture2D(mImages.sliderBGNormal);
 		pRM->removeTexture2D(mImages.sliderTabColour);
 		pRM->removeTexture2D(mImages.sliderTabNormal);
+		pRM->removeTexture2D(mImages.lineGraphBGColour);
+		pRM->removeTexture2D(mImages.lineGraphBGNormal);
 	}
 
 	void GUITheme::addFontsToManager(void)
@@ -287,11 +301,12 @@ namespace X
 	void GUITheme::addAudioToManager(void)
 	{
 		AudioManager* pAM = AudioManager::getPointer();
-		pAM->addSample(mAudio.buttonClicked.strSampleName, "gui");		pAM->addEmitter(mAudio.buttonClicked.strSampleName, mAudio.buttonClicked.strSampleName, 4, "gui");
-		pAM->addSample(mAudio.textEditTextAdd.strSampleName, "gui");	pAM->addEmitter(mAudio.textEditTextAdd.strSampleName, mAudio.textEditTextAdd.strSampleName, 4, "gui");
-		pAM->addSample(mAudio.textEditBackspace.strSampleName, "gui");	pAM->addEmitter(mAudio.textEditBackspace.strSampleName, mAudio.textEditBackspace.strSampleName, 4, "gui");
-		pAM->addSample(mAudio.textEditReturn.strSampleName, "gui");		pAM->addEmitter(mAudio.textEditReturn.strSampleName, mAudio.textEditReturn.strSampleName, 4, "gui");
-		pAM->addSample(mAudio.textEditActivate.strSampleName, "gui");	pAM->addEmitter(mAudio.textEditActivate.strSampleName, mAudio.textEditActivate.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.buttonClicked.strSampleName, "gui");				pAM->addEmitter(mAudio.buttonClicked.strSampleName, mAudio.buttonClicked.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.textEditTextAdd.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditTextAdd.strSampleName, mAudio.textEditTextAdd.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.textEditBackspace.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditBackspace.strSampleName, mAudio.textEditBackspace.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.textEditReturn.strSampleName, "gui");				pAM->addEmitter(mAudio.textEditReturn.strSampleName, mAudio.textEditReturn.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.textEditActivate.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditActivate.strSampleName, mAudio.textEditActivate.strSampleName, 4, "gui");
+		pAM->addSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	pAM->addEmitter(mAudio.textEditNoMoreCharSpace.strSampleName, mAudio.textEditNoMoreCharSpace.strSampleName, 4, "gui");
 		
 		pAM->loadSampleGroup("gui");
 	}
@@ -300,11 +315,13 @@ namespace X
 	{
 		AudioManager* pAM = AudioManager::getPointer();
 		pAM->unloadSampleGroup("gui");
-		pAM->removeSample(mAudio.buttonClicked.strSampleName, "gui");		pAM->removeEmitter(mAudio.buttonClicked.strSampleName);
-		pAM->removeSample(mAudio.textEditTextAdd.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditTextAdd.strSampleName);
-		pAM->removeSample(mAudio.textEditBackspace.strSampleName, "gui");	pAM->removeEmitter(mAudio.textEditBackspace.strSampleName);
-		pAM->removeSample(mAudio.textEditReturn.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditReturn.strSampleName);
-		pAM->removeSample(mAudio.textEditActivate.strSampleName, "gui");	pAM->removeEmitter(mAudio.textEditActivate.strSampleName);
+		pAM->removeSample(mAudio.buttonClicked.strSampleName, "gui");			pAM->removeEmitter(mAudio.buttonClicked.strSampleName);
+		pAM->removeSample(mAudio.textEditTextAdd.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditTextAdd.strSampleName);
+		pAM->removeSample(mAudio.textEditBackspace.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditBackspace.strSampleName);
+		pAM->removeSample(mAudio.textEditReturn.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditReturn.strSampleName);
+		pAM->removeSample(mAudio.textEditActivate.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditActivate.strSampleName);
+		pAM->removeSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	pAM->removeEmitter(mAudio.textEditNoMoreCharSpace.strSampleName);
+		
 	}
 
 	void GUITheme::_writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename)

@@ -5,15 +5,15 @@ namespace X
 	void Application::initOnce(void)
 	{
 		
-		Image img;
-		Image normal;
-		img.load("data/X/gui/default/slider_tab_height.png");
-		img.normalmap(normal, 0.5f);
-		normal.saveAsPNG("data/X/gui/default/slider_tab_normal.png");
+//		Image img;
+//		Image normal;
+//		img.load("data/X/gui/default/linegraphBGheight.png");
+//		img.normalmap(normal, 0.5f);
+//		normal.saveAsPNG("data/X/gui/default/linegraphBGnormal.png");
 
-		img.load("data/X/gui/default/slider_back_height.png");
-		img.normalmap(normal, 0.5f);
-		normal.saveAsPNG("data/X/gui/default/slider_back_normal.png");
+//		img.load("data/X/gui/default/sliderBGheight.png");
+//		img.normalmap(normal, 0.5f);
+//		normal.saveAsPNG("data/X/gui/default/sliderBGnormal.png");
 		
 
 //		ResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
@@ -26,35 +26,44 @@ namespace X
 		Window* pWindow = Window::getPointer();
 		
 		GUIManager* pGUI = GUIManager::getPointer();
+
+		// Small container window with close button
 		GUIContainer* pContainer1 = pGUI->addContainer("Container1");
-		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer1->mfPositionX = 412.0f;
 		pContainer1->mfPositionY = 412.0f;
+		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
+		
+		// Main testing container
+		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer2->setDimensions(1024, 768);
 		pContainer2->setPosition((float)pWindow->getWidth() / 2 - 512, (float)pWindow->getHeight() / 2 - (768 / 2));
-		pContainer2->addText("TEXT", 0, 5, "Here's some text.");
-		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
-//		pContainer1->addButton("close", pContainer1->mfWidth - 4, -22, 8, 8, "X");
-
-		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 30, 100, 26, "EditMe!");
+		for (int iYpos = 15; iYpos < 750; iYpos += 30)
+		{
+			std::string strTextName = "Text_" + std::to_string(iYpos);
+			if (iYpos != 15)
+				pContainer2->addText(strTextName, 0, iYpos, "|");
+			else
+				pContainer2->addText(strTextName, 0, iYpos, "| <- X = zero");
+			strTextName = "TextRight_" + std::to_string(iYpos);
+			if (iYpos != 15)
+				pContainer2->addText(strTextName, 900, iYpos, "|");
+			else
+				pContainer2->addText(strTextName, 900, iYpos, "| <- X = 900");
+		}
+		
+		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 45, 900, 26, "EditMe!12345678901234567890123456789012344567890XXXXXXXXXXXXXXXXXXXXXXXXXXX:)");
+		pTextEdit->setMaxChars(4096);
 		pTextEdit->setIntegerInputOnly(false);
+		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
+		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 20, 0.1f);
+		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 0, 190, 900, 240);
 
-		GUISlider* pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL", 0, 200, 300, 20, 0.01f);
-		pSlider = pContainer2->addSlider("SLIDER_VERTICAL", 800, 0, 16, 100, 0.01f);
-		pContainer2->addText("sliderHoriz", 50, 120, "Slider");
-		pContainer2->addText("sliderVert", 50, 150, "Slider");
+
+
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 
-		pContainer2->addSlider("SLIDER_HORIZONTAL2", 0, 300, 800, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL3", 0, 350, 800, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL4", 0, 400, 400, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL5", 0, 450, 400, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL6", 0, 500, 200, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL7", 0, 550, 200, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL8", 0, 600, 100, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_HORIZONTAL9", 0, 650, 100, 40, 0.01f);
-		pContainer2->addSlider("SLIDER_VERTICAL2", 900, 0, 32, 300, 0.01f);
+
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
@@ -106,9 +115,6 @@ namespace X
 		if (pButton->getClicked())
 			pCont->setVisible(false);
 
-		pCont = pGUIMan->getContainer("Container2");
-		pCont->getText("sliderHoriz")->mstrText = std::to_string(pCont->getSlider("SLIDER_HORIZONTAL")->getTabPos());
-		pCont->getText("sliderVert")->mstrText = std::to_string(pCont->getSlider("SLIDER_VERTICAL")->getTabPos());
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");

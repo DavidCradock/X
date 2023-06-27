@@ -62,17 +62,19 @@ namespace X
 		// Structure to hold the names of all the images used for this theme
 		struct Images
 		{
-			std::string containerColour;	// The image name holding the colour data for a container
-			std::string containerNormal;	// The image name holding the normal data for a container
-			std::string buttonColour;		// The image name holding the colour data for a button
-			std::string buttonNormal;		// The image name holding the normal data for a button
+			std::string containerBGColour;	// The image name holding the colour data for a container
+			std::string containerBGNormal;	// The image name holding the normal data for a container
+			std::string buttonBGColour;		// The image name holding the colour data for a button
+			std::string buttonBGNormal;		// The image name holding the normal data for a button
 			std::string reflection;			// The image name holding the reflection data for the GUI.
-			std::string textEditColour;
-			std::string textEditNormal;
-			std::string sliderBackColour;
-			std::string sliderBackNormal;
+			std::string textEditBGColour;
+			std::string textEditBGNormal;
+			std::string sliderBGColour;
+			std::string sliderBGNormal;
 			std::string sliderTabColour;
 			std::string sliderTabNormal;
+			std::string lineGraphBGColour;
+			std::string lineGraphBGNormal;
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
 
@@ -129,6 +131,7 @@ namespace X
 			AudioSampleInfo textEditBackspace;
 			AudioSampleInfo textEditReturn;
 			AudioSampleInfo textEditActivate;
+			AudioSampleInfo textEditNoMoreCharSpace;
 		};
 		Audio mAudio;
 

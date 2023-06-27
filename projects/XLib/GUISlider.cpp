@@ -54,8 +54,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderBackColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderBackNormal);
+		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderBGColour);
+		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderBGNormal);
 		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 

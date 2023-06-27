@@ -15,6 +15,14 @@ namespace X
 		// Set dimensions of object
 		void setDimensions(float fWidth, float fHeight);
 
+		// Renders the four edges, four corners and centre quad which make up an object's background
+		void renderBackground(
+			void* pParentContainer,							// Pointer to the object's parent container
+			const std::string& strFramebufferToSampleFrom,	// The framebuffer to use as background when sampling (Given to GUIManager::render() and passed down)
+			const std::string& strObjectColourTextureName,	// The name of the object's background colour texture
+			const std::string& strObjectNormalTextureName	// The name of the object's background normal texture
+			);		
+
 		float mfPositionX;	// Top left position of object along X axis
 		float mfPositionY;	// Top left position of object along Y axis
 		float mfWidth;		// Width of the object along X axis

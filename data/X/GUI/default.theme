@@ -2,17 +2,19 @@ data/x/gui/default.theme
 ThemeName: Default theme
 
 Images
-ContainerColour: data/X/GUI/default/container_colour.png
-ContainerNormal: data/X/GUI/default/container_normal.png
-ButtonColour: data/X/GUI/default/button_colour.png
-ButtonNormal: data/X/GUI/default/button_normal.png
+ContainerBGColour: data/X/GUI/default/containerBGcolour.png
+ContainerBGNormal: data/X/GUI/default/containerBGnormal.png
+ButtonBGColour: data/X/GUI/default/buttonBGcolour.png
+ButtonBGNormal: data/X/GUI/default/buttonBGnormal.png
 Reflection: data/X/GUI/default/reflection.png
-TextEditColour: data/X/GUI/default/textedit_colour.png
-TextEditNormal: data/X/GUI/default/textedit_normal.png
-SliderBackColour: data/X/GUI/default/slider_back_colour.png
-SliderBackNormal: data/X/GUI/default/slider_back_normal.png
+TextEditBGColour: data/X/GUI/default/texteditBGcolour.png
+TextEditBGNormal: data/X/GUI/default/texteditBGnormal.png
+SliderBGColour: data/X/GUI/default/sliderBGcolour.png
+SliderBGNormal: data/X/GUI/default/sliderBGnormal.png
 SliderTabColour: data/X/GUI/default/slider_tab_colour.png
 SliderTabNormal: data/X/GUI/default/slider_tab_normal.png
+LineGraphBGColour: data/X/GUI/default/linegraphBGcolour.png
+LineGraphBGNormal: data/X/GUI/default/linegraphBGnormal.png
 
 Fonts
 containerTitle: data/X/fonts/ultimateserial-medium-regular_20
@@ -51,4 +53,5 @@ buttonClickedVolPitch: 0.800000 1.000000textEditTextAddName: data/X/gui/default/
 textEditTextAddVolPitch: 0.800000 1.000000textEditBackspaceName: data/X/gui/default/click.wav
 textEditBackspaceVolPitch: 0.200000 1.000000textEditReturnName: data/X/gui/default/click.wav
 textEditReturnVolPitch: 0.800000 1.000000textEditActivateName: data/X/gui/default/click.wav
-textEditActivateVolPitch: 0.800000 1.000000
+textEditActivateVolPitch: 0.800000 1.000000textEditNoMoreCharSpaceName: data/X/gui/default/click.wav
+textEditNoMoreCharSpaceVolPitch: 0.200000 1.000000
