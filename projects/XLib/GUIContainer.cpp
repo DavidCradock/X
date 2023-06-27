@@ -273,7 +273,7 @@ namespace X
 			// Dragging of window?
 			if (mbContainerIsWindow)
 			{
-				if (pInput->mouse.leftButDown())
+				if (pInput->mouse.leftButtonOnce())
 				{
 					// Set colour of all other containers
 					std::map<std::string, GUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();

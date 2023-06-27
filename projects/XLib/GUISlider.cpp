@@ -67,25 +67,27 @@ namespace X
 
 		// Render the slider centre
 		glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
+		float fSliderPosX = pContainer->mfPositionX + mfPositionX;
+		float fSliderPosY = pContainer->mfPositionY + mfPositionY;
 		pTri->removeGeom();
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,		// Position X
-				pContainer->mfPositionY + mfPositionY),	// Position Y
-			glm::vec2(mfWidth, mfHeight),									// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),								// Vertex colour
+				fSliderPosX,						// Position X
+				fSliderPosY),						// Position Y
+			glm::vec2(mfWidth, mfHeight),			// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
 			mTC.centre.BL,
 			mTC.centre.BR,
 			mTC.centre.TR,
 			mTC.centre.TL);
-/*
+
 		// Render the left edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,						// Position X
-				pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, mfHeight),							// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),								// Vertex colour
+				fSliderPosX - vTexDimsDiv3.x,		// Position X
+				fSliderPosY),						// Position Y
+			glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
 			mTC.left.BL,
 			mTC.left.BR,
 			mTC.left.TR,
@@ -94,10 +96,10 @@ namespace X
 		// Render the right edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + mfWidth + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y),			// Position Y
-			glm::vec2(vTexDimsDiv3.x, mfHeight),									// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				fSliderPosX + mfWidth,				// Position X
+				fSliderPosY),						// Position Y
+			glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
 			mTC.right.BL,
 			mTC.right.BR,
 			mTC.right.TR,
@@ -106,10 +108,10 @@ namespace X
 		// Render the top edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY),					// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),							// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+				fSliderPosX,						// Position X
+				fSliderPosY - vTexDimsDiv3.y),		// Position Y
+			glm::vec2(mfWidth, vTexDimsDiv3.y),		// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
 			mTC.top.BL,
 			mTC.top.BR,
 			mTC.top.TR,
@@ -118,10 +120,10 @@ namespace X
 		// Render the bottom edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x,				// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),										// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				fSliderPosX,						// Position X
+				fSliderPosY + mfHeight),			// Position Y
+			glm::vec2(mfWidth, vTexDimsDiv3.y),		// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
 			mTC.bottom.BL,
 			mTC.bottom.BR,
 			mTC.bottom.TR,
@@ -130,8 +132,8 @@ namespace X
 		// Render the top left corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,	// Position X
-				pContainer->mfPositionY + mfPositionY),	// Position Y
+				fSliderPosX - vTexDimsDiv3.x,			// Position X
+				fSliderPosY - vTexDimsDiv3.y),			// Position Y
 			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
 			mTC.topLeft.BL,
@@ -142,10 +144,10 @@ namespace X
 		// Render the top right corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + mfWidth + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY),								// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				fSliderPosX + mfWidth,					// Position X
+				fSliderPosY - vTexDimsDiv3.y),			// Position Y
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
 			mTC.topRight.BL,
 			mTC.topRight.BR,
 			mTC.topRight.TR,
@@ -154,10 +156,10 @@ namespace X
 		// Render the bottom left corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,								// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				fSliderPosX - vTexDimsDiv3.x,			// Position X
+				fSliderPosY + mfHeight),				// Position Y
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
 			mTC.bottomLeft.BL,
 			mTC.bottomLeft.BR,
 			mTC.bottomLeft.TR,
@@ -166,15 +168,15 @@ namespace X
 		// Render the bottom right corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + mfWidth + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				fSliderPosX + mfWidth,					// Position X
+				fSliderPosY + mfHeight),				// Position Y
+			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
 			mTC.bottomRight.BL,
 			mTC.bottomRight.BR,
 			mTC.bottomRight.TR,
 			mTC.bottomRight.TL);
-*/
+
 		pTri->update();
 		pTri->draw();
 
@@ -187,37 +189,28 @@ namespace X
 		pTexColour->bind(0);
 		pTexNormal->bind(1);
 
-		// Compute slider orientation
-		bool bOrientationIsHorizontal = false;
-		if (mfWidth > mfHeight)
-		{
-			bOrientationIsHorizontal = true;
-		}
-
-		// Compute tab position based upon _mfSliderPosition and orientation
 		vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
 
-
-		if (bOrientationIsHorizontal)
+		if (_mbOrientationIsHorizontal)
 		{
 			// Render the slider tab centre
 			pTri->removeGeom();
 			pTri->addQuad2D(
 				glm::vec2(
 					_mfTabPos[0],							// Position X
-					_mfTabPos[1]),						// Position Y
+					_mfTabPos[1]),							// Position Y
 				glm::vec2(_mfTabDims[0], _mfTabDims[1]),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+				_mTabColour.get(),							// Vertex colour
 				mTC.centre.BL,
 				mTC.centre.BR,
 				mTC.centre.TR,
 				mTC.centre.TL);
-/*
+
 			// Render the left edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,		// Position X
-					fTabPos[1]),						// Position Y
+					_mfTabPos[0] - vTexDimsDiv3.x,		// Position X
+					_mfTabPos[1]),						// Position Y
 				glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
 				_mTabColour.get(),						// Vertex colour
 				mTC.left.BL,
@@ -228,8 +221,8 @@ namespace X
 			// Render the right edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],			// Position X
-					fTabPos[1]),						// Position Y
+					_mfTabPos[0] + _mfTabDims[0],		// Position X
+					_mfTabPos[1]),						// Position Y
 				glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
 				_mTabColour.get(),						// Vertex colour
 				mTC.right.BL,
@@ -240,10 +233,10 @@ namespace X
 			// Render the top edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],							// Position X
-					fTabPos[1] - vTexDimsDiv3.y),		// Position Y
-				glm::vec2(fTabDims[0], vTexDimsDiv3.y),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
+				glm::vec2(_mfTabDims[0], vTexDimsDiv3.y),	// Dimensions
+				_mTabColour.get(),							// Vertex colour
 				mTC.top.BL,
 				mTC.top.BR,
 				mTC.top.TR,
@@ -252,9 +245,9 @@ namespace X
 			// Render the bottom edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],								// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
-				glm::vec2(fTabDims[0], vTexDimsDiv3.y),		// Dimensions
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
+				glm::vec2(_mfTabDims[0], vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottom.BL,
 				mTC.bottom.BR,
@@ -264,8 +257,8 @@ namespace X
 			// Render the top left corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,			// Position X
-					fTabPos[1] - vTexDimsDiv3.y),			// Position Y
+					_mfTabPos[0] - vTexDimsDiv3.x,			// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.topLeft.BL,
@@ -276,8 +269,8 @@ namespace X
 			// Render the top right corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],				// Position X
-					fTabPos[1] - vTexDimsDiv3.y),			// Position Y
+					_mfTabPos[0] + _mfTabDims[0],			// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.topRight.BL,
@@ -288,8 +281,8 @@ namespace X
 			// Render the bottom left corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,			// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
+					_mfTabPos[0] - vTexDimsDiv3.x,			// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottomLeft.BL,
@@ -300,15 +293,14 @@ namespace X
 			// Render the bottom right corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],				// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
+					_mfTabPos[0] + _mfTabDims[0],			// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottomRight.BL,
 				mTC.bottomRight.BR,
 				mTC.bottomRight.TR,
 				mTC.bottomRight.TL);
-*/
 		}
 		else  // Vertical
 		{
@@ -317,21 +309,21 @@ namespace X
 			pTri->addQuad2D(
 				glm::vec2(
 					_mfTabPos[0],							// Position X
-					_mfTabPos[1]),						// Position Y
+					_mfTabPos[1]),							// Position Y
 				glm::vec2(_mfTabDims[0], _mfTabDims[1]),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+				_mTabColour.get(),							// Vertex colour
 				mTC.centre.BL,
 				mTC.centre.BR,
 				mTC.centre.TR,
 				mTC.centre.TL);
-/*
+
 			// Render the left edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,		// Position X
-					fTabPos[1]),						// Position Y
-				glm::vec2(vTexDimsDiv3.x, fTabDims[1]),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+					_mfTabPos[0] - vTexDimsDiv3.x,			// Position X
+					_mfTabPos[1]),							// Position Y
+				glm::vec2(vTexDimsDiv3.x, _mfTabDims[1]),	// Dimensions
+				_mTabColour.get(),							// Vertex colour
 				mTC.left.BL,
 				mTC.left.BR,
 				mTC.left.TR,
@@ -340,10 +332,10 @@ namespace X
 			// Render the right edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],			// Position X
-					fTabPos[1]),						// Position Y
-				glm::vec2(vTexDimsDiv3.x, fTabDims[1]),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+					_mfTabPos[0] + _mfTabDims[0],			// Position X
+					_mfTabPos[1]),							// Position Y
+				glm::vec2(vTexDimsDiv3.x, _mfTabDims[1]),	// Dimensions
+				_mTabColour.get(),							// Vertex colour
 				mTC.right.BL,
 				mTC.right.BR,
 				mTC.right.TR,
@@ -352,10 +344,10 @@ namespace X
 			// Render the top edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],							// Position X
-					fTabPos[1] - vTexDimsDiv3.y),		// Position Y
-				glm::vec2(fTabDims[0], vTexDimsDiv3.y),	// Dimensions
-				_mTabColour.get(),						// Vertex colour
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
+				glm::vec2(_mfTabDims[0], vTexDimsDiv3.y),	// Dimensions
+				_mTabColour.get(),							// Vertex colour
 				mTC.top.BL,
 				mTC.top.BR,
 				mTC.top.TR,
@@ -364,9 +356,9 @@ namespace X
 			// Render the bottom edge
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],								// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
-				glm::vec2(fTabDims[0], vTexDimsDiv3.y),		// Dimensions
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
+				glm::vec2(_mfTabDims[0], vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottom.BL,
 				mTC.bottom.BR,
@@ -376,8 +368,8 @@ namespace X
 			// Render the top left corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,			// Position X
-					fTabPos[1] - vTexDimsDiv3.y),			// Position Y
+					_mfTabPos[0] - vTexDimsDiv3.x,			// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.topLeft.BL,
@@ -388,8 +380,8 @@ namespace X
 			// Render the top right corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],				// Position X
-					fTabPos[1] - vTexDimsDiv3.y),			// Position Y
+					_mfTabPos[0] + _mfTabDims[0],			// Position X
+					_mfTabPos[1] - vTexDimsDiv3.y),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.topRight.BL,
@@ -400,8 +392,8 @@ namespace X
 			// Render the bottom left corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] - vTexDimsDiv3.x,			// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
+					_mfTabPos[0] - vTexDimsDiv3.x,			// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottomLeft.BL,
@@ -412,15 +404,14 @@ namespace X
 			// Render the bottom right corner
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0] + fTabDims[0],				// Position X
-					fTabPos[1] + fTabDims[1]),				// Position Y
+					_mfTabPos[0] + _mfTabDims[0],			// Position X
+					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
 				glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
 				_mTabColour.get(),							// Vertex colour
 				mTC.bottomRight.BL,
 				mTC.bottomRight.BR,
 				mTC.bottomRight.TR,
 				mTC.bottomRight.TL);
-*/
 		}
 		pTri->update();
 		pTri->draw();
@@ -444,18 +435,17 @@ namespace X
 			fSecondsPast = 0.1f;
 		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
 		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
-		glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
-
+		glm::vec2 vSliderTabTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
 
 		// Compute slider orientation
-		bool bOrientationIsHorizontal = false;
+		_mbOrientationIsHorizontal = false;
 		if (mfWidth > mfHeight)
 		{
-			bOrientationIsHorizontal = true;
+			_mbOrientationIsHorizontal = true;
 		}
 
 		// Compute tab dims
-		if (bOrientationIsHorizontal)
+		if (_mbOrientationIsHorizontal)
 		{
 			_mfTabDims[0] = _mfTabRatio * mfWidth;
 			_mfTabDims[1] = mfHeight;
@@ -466,44 +456,48 @@ namespace X
 			_mfTabDims[1] = _mfTabRatio * mfHeight;
 		}
 
-		// Compute tab position based upon _mfSliderPosition and orientation
-		if (bOrientationIsHorizontal)
+		// Compute tab position
+		if (_mbOrientationIsHorizontal)
 		{
-			_mfTabPos[0] = pContainer->mfPositionX + mfPositionX + (_mfSliderPosition * mfWidth) - (_mfTabDims[0] * 0.5f);
+			float fTabTotalMovementAmount = mfWidth - _mfTabDims[0];
+			float fCentrePosOfSlider = pContainer->mfPositionX + mfPositionX + (mfWidth * 0.5f) - (_mfTabDims[0] * 0.5f);
 
-			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
-			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
-			fScale *= 2.0f; // // 1.0f to - 1.0f
-			fScale *= _mfTabDims[0] - (vTexDimsDiv3.x * 2.0f);
-			_mfTabPos[0] += fScale;// + vTexDimsDiv3.x;
+			// Convert _mfSliderPosition from 0 to 1 to -0.5 to 0.5f
+			float fTabOffset = _mfSliderPosition - 0.5f;
 
-			_mfTabPos[1] = pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y;
+			// Position offset
+			fTabOffset *= fTabTotalMovementAmount;
+
+			_mfTabPos[0] = fCentrePosOfSlider + fTabOffset;
+			_mfTabPos[1] = pContainer->mfPositionY + mfPositionY;
 		}
-		else
+		else // Vertical
 		{
-			_mfTabPos[0] = pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x;
-			_mfTabPos[1] = pContainer->mfPositionY + mfPositionY + (_mfSliderPosition * mfHeight) - (_mfTabDims[1] * 0.5f);
+			float fTabTotalMovementAmount = mfHeight - _mfTabDims[1];
+			float fCentrePosOfSlider = pContainer->mfPositionY + mfPositionY + (mfHeight * 0.5f) - (_mfTabDims[1] * 0.5f);
 
-			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
-			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
-			fScale *= 2.0f; // // 1.0f to - 1.0f
-			fScale *= _mfTabDims[1] - (vTexDimsDiv3.y * 2.0f);
-			_mfTabPos[1] += fScale;// +vTexDimsDiv3.y;
+			// Convert _mfSliderPosition from 0 to 1 to -0.5 to 0.5f
+			float fTabOffset = _mfSliderPosition - 0.5f;
 
+			// Position offset
+			fTabOffset *= fTabTotalMovementAmount;
+
+			_mfTabPos[0] = pContainer->mfPositionX + mfPositionX;
+			_mfTabPos[1] = fCentrePosOfSlider + fTabOffset;
 		}
 
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
 			// Determine if mouse cursor is over
-			if (vMousePos.x > _mfTabPos[0] - vTexDimsDiv3.x)
-				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + (vTexDimsDiv3.x * 2.0f))
+			if (vMousePos.x > _mfTabPos[0] - vSliderTabTexDimsDiv3.x)
+				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + vSliderTabTexDimsDiv3.x)
 					if (vMousePos.y > _mfTabPos[1])
-						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + (vTexDimsDiv3.y * 2.0f))
+						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + vSliderTabTexDimsDiv3.y)
 							bMouseOver = true;
 			if (bMouseOver)
 			{
-				if (pInput->mouse.leftButDown())
+				if (pInput->mouse.leftButtonOnce())
 				{
 					_mbTabBeingMoved = true;
 				}
@@ -519,13 +513,19 @@ namespace X
 					// As tab position is in range of 0-1, we need to compute movement based upon mouse delta and slider dims
 					glm::vec2 vMouseDelta = pInput->mouse.getMouseDeltaGUI();
 					float fTabPosOffset = 0;
-					if (bOrientationIsHorizontal)
+					if (_mbOrientationIsHorizontal)
 					{
-						fTabPosOffset += vMouseDelta.x / mfWidth;
+						float fTabTotalMovementAmount = mfWidth - _mfTabDims[0];
+						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
+							fTabTotalMovementAmount = 0.0001f;
+						fTabPosOffset += vMouseDelta.x * (1.0f / fTabTotalMovementAmount);
 					}
 					else
 					{
-						fTabPosOffset += vMouseDelta.y / mfHeight;
+						float fTabTotalMovementAmount = mfHeight - _mfTabDims[2];
+						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
+							fTabTotalMovementAmount = 0.0001f;
+						fTabPosOffset += vMouseDelta.y * (1.0f / fTabTotalMovementAmount);
 					}
 					_mfSliderPosition += fTabPosOffset;
 					clamp(_mfSliderPosition, 0.0f, 1.0f);
@@ -592,25 +592,29 @@ namespace X
 		}
 		// Store colour
 		_mTabColour.set(fCol[0], fCol[1], fCol[2], fCol[3]);
-
-
 	}
 
 	void GUISlider::setTabPos(float fPos)
 	{
 		clamp(fPos, 0.0f, 1.0f);
 		_mfSliderPosition = fPos;
-
 	}
 
 	float GUISlider::getTabPos(void)
 	{
-		return _mfSliderPosition;
+		if (_mbOrientationIsHorizontal)
+			return _mfSliderPosition;
+		else
+			return 1.0f - _mfSliderPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
 	}
 
 	void GUISlider::setTabRatio(float fRatio)
 	{
-		clamp(fRatio, 0.1f, 1.0f);
+		// Must be less than 1, otherwise the tab can be same width/height as the slider
+		// and if this occurs, we could get a divide by zero error in the update method with the following code...
+		//float fTabTotalMovementAmount = mfWidth - _mfTabDims[0];
+		//fTabPosOffset += vMouseDelta.x * (1.0f / fTabTotalMovementAmount);
+		clamp(fRatio, 0.001f, 0.9999f);
 		_mfTabRatio = fRatio;
 	}
 }

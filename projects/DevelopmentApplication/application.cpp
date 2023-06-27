@@ -30,8 +30,8 @@ namespace X
 		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer1->mfPositionX = 412.0f;
 		pContainer1->mfPositionY = 412.0f;
-		pContainer2->setDimensions(640, 480);
-		pContainer2->setPosition((float)pWindow->getWidth()/2 - 320, (float)pWindow->getHeight()/2 - 240);
+		pContainer2->setDimensions(1024, 768);
+		pContainer2->setPosition((float)pWindow->getWidth() / 2 - 512, (float)pWindow->getHeight() / 2 - (768 / 2));
 		pContainer2->addText("TEXT", 0, 5, "Here's some text.");
 		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
 //		pContainer1->addButton("close", pContainer1->mfWidth - 4, -22, 8, 8, "X");
@@ -39,18 +39,22 @@ namespace X
 		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 30, 100, 26, "EditMe!");
 		pTextEdit->setIntegerInputOnly(false);
 
-		GUISlider* pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL", 0, 200, 300, 20, 0.2f);
-		pSlider = pContainer2->addSlider("SLIDER_VERTICAL", 300, 0, 16, 100, 0.2f);
+		GUISlider* pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL", 0, 200, 300, 20, 0.01f);
+		pSlider = pContainer2->addSlider("SLIDER_VERTICAL", 800, 0, 16, 100, 0.01f);
 		pContainer2->addText("sliderHoriz", 50, 120, "Slider");
 		pContainer2->addText("sliderVert", 50, 150, "Slider");
 
-		pContainer2->addText("dot1", 0, 170, ".");
-		pContainer2->addText("dot2", 300, 170, ".");
 		ResourceManager* pRM = ResourceManager::getPointer();
 
-		pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL2", 0, 300, 600, 40, 0.5f);
-		pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL3", 0, 400, 600, 40, 0.2f);
-		pSlider = pContainer2->addSlider("SLIDER_VERTICAL2", 400, 0, 32, 300, 0.2f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL2", 0, 300, 800, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL3", 0, 350, 800, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL4", 0, 400, 400, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL5", 0, 450, 400, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL6", 0, 500, 200, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL7", 0, 550, 200, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL8", 0, 600, 100, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_HORIZONTAL9", 0, 650, 100, 40, 0.01f);
+		pContainer2->addSlider("SLIDER_VERTICAL2", 900, 0, 32, 300, 0.01f);
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager

@@ -263,7 +263,7 @@ namespace X
 			// Mouse clicking on or off to activate/deactivate
 			if (bMouseOver)
 			{
-				if (pInput->mouse.leftButDown())
+				if (pInput->mouse.leftButtonOnce())
 				{
 					if (_mState != state::active)
 					{
