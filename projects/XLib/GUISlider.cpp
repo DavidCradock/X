@@ -194,46 +194,9 @@ namespace X
 			bOrientationIsHorizontal = true;
 		}
 
-		// Compute tab dimensions based upon orientation and _mfTabRatio
-		float fTabDims[2];
-		if (bOrientationIsHorizontal)
-		{
-			fTabDims[0] = _mfTabRatio * mfWidth;
-			fTabDims[1] = mfHeight;
-		}
-		else
-		{
-			fTabDims[0] = mfWidth;
-			fTabDims[1] = _mfTabRatio * mfHeight;
-		}
-
 		// Compute tab position based upon _mfSliderPosition and orientation
 		vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
-		float fTabPos[2];
-		if (bOrientationIsHorizontal)
-		{
-			fTabPos[0] = pContainer->mfPositionX + mfPositionX + (_mfSliderPosition * mfWidth) - (fTabDims[0] * 0.5f);
 
-			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
-			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
-			fScale *= 2.0f; // // 1.0f to - 1.0f
-			fScale *= fTabDims[0] - (vTexDimsDiv3.x * 2.0f);
-			fTabPos[0] += fScale;// + vTexDimsDiv3.x;
-
-			fTabPos[1] = pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y;
-		}
-		else
-		{
-			fTabPos[0] = pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x;
-			fTabPos[1] = pContainer->mfPositionY + mfPositionY + (_mfSliderPosition * mfHeight) - (fTabDims[1] * 0.5f);
-
-			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
-			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
-			fScale *= 2.0f; // // 1.0f to - 1.0f
-			fScale *= fTabDims[1] - (vTexDimsDiv3.y * 2.0f);
-			fTabPos[1] += fScale;// +vTexDimsDiv3.y;
-
-		}
 
 		if (bOrientationIsHorizontal)
 		{
@@ -241,9 +204,9 @@ namespace X
 			pTri->removeGeom();
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],							// Position X
-					fTabPos[1]),						// Position Y
-				glm::vec2(fTabDims[0], fTabDims[1]),	// Dimensions
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1]),						// Position Y
+				glm::vec2(_mfTabDims[0], _mfTabDims[1]),	// Dimensions
 				_mTabColour.get(),						// Vertex colour
 				mTC.centre.BL,
 				mTC.centre.BR,
@@ -353,9 +316,9 @@ namespace X
 			pTri->removeGeom();
 			pTri->addQuad2D(
 				glm::vec2(
-					fTabPos[0],							// Position X
-					fTabPos[1]),						// Position Y
-				glm::vec2(fTabDims[0], fTabDims[1]),	// Dimensions
+					_mfTabPos[0],							// Position X
+					_mfTabPos[1]),						// Position Y
+				glm::vec2(_mfTabDims[0], _mfTabDims[1]),	// Dimensions
 				_mTabColour.get(),						// Vertex colour
 				mTC.centre.BL,
 				mTC.centre.BR,
@@ -491,40 +454,52 @@ namespace X
 			bOrientationIsHorizontal = true;
 		}
 
-		// Compute tab dimensions based upon orientation and _mfTabRatio
-		float fTabDims[2];
+		// Compute tab dims
 		if (bOrientationIsHorizontal)
 		{
-			fTabDims[0] = _mfTabRatio * mfWidth;
-			fTabDims[1] = mfHeight;
+			_mfTabDims[0] = _mfTabRatio * mfWidth;
+			_mfTabDims[1] = mfHeight;
 		}
 		else
 		{
-			fTabDims[0] = mfWidth;
-			fTabDims[1] = _mfTabRatio * mfHeight;
+			_mfTabDims[0] = mfWidth;
+			_mfTabDims[1] = _mfTabRatio * mfHeight;
 		}
 
 		// Compute tab position based upon _mfSliderPosition and orientation
-		float fTabPos[2];
 		if (bOrientationIsHorizontal)
 		{
-			fTabPos[0] = pContainer->mfPositionX + mfPositionX + (_mfSliderPosition * mfWidth) - (fTabDims[0] * 0.25f);
-			fTabPos[1] = pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y;
+			_mfTabPos[0] = pContainer->mfPositionX + mfPositionX + (_mfSliderPosition * mfWidth) - (_mfTabDims[0] * 0.5f);
+
+			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
+			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
+			fScale *= 2.0f; // // 1.0f to - 1.0f
+			fScale *= _mfTabDims[0] - (vTexDimsDiv3.x * 2.0f);
+			_mfTabPos[0] += fScale;// + vTexDimsDiv3.x;
+
+			_mfTabPos[1] = pContainer->mfPositionY + mfPositionY + vTexDimsDiv3.y;
 		}
 		else
 		{
-			fTabPos[0] = pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x;
-			fTabPos[1] = pContainer->mfPositionY + mfPositionY + (_mfSliderPosition * mfHeight) - (fTabDims[1] * 0.25f);
+			_mfTabPos[0] = pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x;
+			_mfTabPos[1] = pContainer->mfPositionY + mfPositionY + (_mfSliderPosition * mfHeight) - (_mfTabDims[1] * 0.5f);
+
+			// We need to offset the tab position slightly so that it doesn't go over the edge due to tab dims
+			float fScale = 0.5f - _mfSliderPosition;	// 0.5 to -0.5
+			fScale *= 2.0f; // // 1.0f to - 1.0f
+			fScale *= _mfTabDims[1] - (vTexDimsDiv3.y * 2.0f);
+			_mfTabPos[1] += fScale;// +vTexDimsDiv3.y;
+
 		}
 
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
 			// Determine if mouse cursor is over
-			if (vMousePos.x > fTabPos[0] - vTexDimsDiv3.x)
-				if (vMousePos.x < fTabPos[0] + fTabDims[0] + (vTexDimsDiv3.x * 2.0f))
-					if (vMousePos.y > fTabPos[1])
-						if (vMousePos.y < fTabPos[1] + fTabDims[1] + (vTexDimsDiv3.y * 2.0f))
+			if (vMousePos.x > _mfTabPos[0] - vTexDimsDiv3.x)
+				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + (vTexDimsDiv3.x * 2.0f))
+					if (vMousePos.y > _mfTabPos[1])
+						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + (vTexDimsDiv3.y * 2.0f))
 							bMouseOver = true;
 			if (bMouseOver)
 			{

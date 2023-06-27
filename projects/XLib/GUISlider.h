@@ -33,5 +33,8 @@ namespace X
 		float _mfTabRatio;			// Multiplied by slider dims(depending upon orientation) to obtain tab dimensions
 		GUIColour _mTabColour;		// For fading between over/not over colours of tab
 		bool _mbTabBeingMoved;		// Whether the tab is being moved or not
+
+		float _mfTabPos[2];			// Computed in update() and used in render(). Tab position
+		float _mfTabDims[2];		// Computed in update() and used in render(). Tab dimensions
 	};
 }

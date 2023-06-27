@@ -30,8 +30,8 @@ namespace X
 		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer1->mfPositionX = 412.0f;
 		pContainer1->mfPositionY = 412.0f;
-		pContainer2->setDimensions(320, 240);
-		pContainer2->setPosition((float)pWindow->getWidth()/2 - 160, (float)pWindow->getHeight()/2 - 120);
+		pContainer2->setDimensions(640, 480);
+		pContainer2->setPosition((float)pWindow->getWidth()/2 - 320, (float)pWindow->getHeight()/2 - 240);
 		pContainer2->addText("TEXT", 0, 5, "Here's some text.");
 		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
 //		pContainer1->addButton("close", pContainer1->mfWidth - 4, -22, 8, 8, "X");
@@ -48,6 +48,9 @@ namespace X
 		pContainer2->addText("dot2", 300, 170, ".");
 		ResourceManager* pRM = ResourceManager::getPointer();
 
+		pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL2", 0, 300, 600, 40, 0.5f);
+		pSlider = pContainer2->addSlider("SLIDER_HORIZONTAL3", 0, 400, 600, 40, 0.2f);
+		pSlider = pContainer2->addSlider("SLIDER_VERTICAL2", 400, 0, 32, 300, 0.2f);
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
