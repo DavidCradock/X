@@ -37,29 +37,18 @@ namespace X
 		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
 		pContainer2->setDimensions(1024, 768);
 		pContainer2->setPosition((float)pWindow->getWidth() / 2 - 512, (float)pWindow->getHeight() / 2 - (768 / 2));
-		for (int iYpos = 15; iYpos < 750; iYpos += 30)
-		{
-			std::string strTextName = "Text_" + std::to_string(iYpos);
-			if (iYpos != 15)
-				pContainer2->addText(strTextName, 0, iYpos, "|");
-			else
-				pContainer2->addText(strTextName, 0, iYpos, "| <- X = zero");
-			strTextName = "TextRight_" + std::to_string(iYpos);
-			if (iYpos != 15)
-				pContainer2->addText(strTextName, 900, iYpos, "|");
-			else
-				pContainer2->addText(strTextName, 900, iYpos, "| <- X = 900");
-		}
-		
+	
 		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 45, 900, 38, "EditMe!12345678901234567890123456789012344567890XXXXXXXXXXXXXXXXXXXXXXXXXXX:)");
 		pTextEdit->setMaxChars(80);
 		pTextEdit->setIntegerInputOnly(false);
 		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
 		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 30, 0.1f);
 		GUISlider* pSliderV = pContainer2->addSlider("SliderV", 900, 100, 30, 500, 0.1f);
-		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 0, 190, 900, 240);
-
-
+		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 50, 200, 850, 240);
+		GUIColour col;
+		pLineGraph->addDataset("FPS", col);
+		pContainer2->addText("FPS_MAX", 10, 180, "MAX");
+		pContainer2->addText("FPS_MIN", 10, 440, "MIN");
 
 
 		ResourceManager* pRM = ResourceManager::getPointer();
@@ -116,6 +105,23 @@ namespace X
 		if (pButton->getClicked())
 			pCont->setVisible(false);
 
+		// Update FPS linegraph
+		static float fTimeToAddNewValue = 0.0f;
+		fTimeToAddNewValue += fInc;
+		if (fTimeToAddNewValue >= 0.01f)
+		{
+			fTimeToAddNewValue = 0.0f;
+			pCont = pGUIMan->getContainer("Container2");
+			GUILineGraph* pLineGraph = pCont->getLineGraph("FPS");
+			GUILineGraphDataSet* pDataSet = pLineGraph->getDataset("FPS");
+			pDataSet->addValue(timer.getFPS());
+			while (pDataSet->getNumValues() > 1024)
+				pDataSet->removeValue();
+
+			// Update MIN/MAX text
+			pCont->getText("FPS_MAX")->mstrText = "MAX: " + std::to_string(pLineGraph->getDataset("FPS")->getHighestValue());
+			pCont->getText("FPS_MIN")->mstrText = "MIN: " + std::to_string(pLineGraph->getDataset("FPS")->getLowestValue());
+		}
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");

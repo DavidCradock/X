@@ -265,5 +265,8 @@ namespace X
 
 		// Framebuffers
 		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+
+		// Line vertex buffers
+		pRM->addLine("X:gui");
 	}
 }

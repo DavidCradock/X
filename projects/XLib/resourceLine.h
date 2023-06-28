@@ -39,6 +39,7 @@ namespace X
 
 		// Binds the vertexArrayObject and calls glDrawElements()
 		// If there's no vertex data, this silently fails.
+		// Don't forget to call update() if you've added vertex data
 		void draw(void);
 
 		// Sets drawing of each added vertex as a strip of lines where each additional vertex draws an additional line (This is the default mode)

@@ -4,9 +4,56 @@
 #include "resourceManager.h"
 #include "window.h"
 #include "input.h"
+#include "log.h"
 
 namespace X
 {
+	void GUILineGraphDataSet::addValue(float fValue)
+	{
+		values.push_back(fValue);
+	}
+
+	void GUILineGraphDataSet::removeValue(void)
+	{
+		if (values.size())
+		{
+			std::vector<float>::iterator it = values.begin();
+			it = values.erase(it);
+		}
+	}
+
+	unsigned int GUILineGraphDataSet::getNumValues(void)
+	{
+		return (unsigned int)values.size();
+	}
+
+	float GUILineGraphDataSet::getHighestValue(void)
+	{
+		if (!values.size())
+			return 0.0f;
+
+		float fResult = -9999999.0f;
+		for (int i = 0; i < (int)values.size(); ++i)
+		{
+			if (fResult < values[i])
+				fResult = values[i];
+		}
+		return fResult;
+	}
+
+	float GUILineGraphDataSet::getLowestValue(void)
+	{
+		if (!values.size())
+			return 0.0f;
+		float fResult = 9999999.0f;
+		for (int i = 0; i < (int)values.size(); ++i)
+		{
+			if (fResult > values[i])
+				fResult = values[i];
+		}
+		return fResult;
+	}
+
 	void GUILineGraph::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
@@ -14,171 +61,103 @@ namespace X
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal);
 
-		/*
 		// Get required resources needed to render
-		GUIManager* pGUI = GUIManager::getPointer();
 		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceLine* pLine = pRM->getLine("X:gui");
+		ResourceShader* pShader = pRM->getShader("X:line");
 		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
-		InputManager* pInput = InputManager::getPointer();
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		glm::mat4 matProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
-		pShader->setMat4("transform", matProjection);
+		glm::mat4 matIdentity(1.0f);
 
+		pShader->setMat4("matrixWorld", matIdentity);
+		pShader->setMat4("matrixView", matIdentity);
+		pShader->setMat4("matrixProjection", matProjection);
+		
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0_colour", 0);
-		pShader->setInt("texture1_normal", 1);
-		pShader->setInt("texture2_reflection", 2);
-		pShader->setInt("texture3_background", 3);
-		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
-		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
-		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
-		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
-
-		// Set mouse position, inverting Y position
-		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
-		pShader->setVec2("v2MousePos", vMousePos);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderBackColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderBackNormal);
-		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		ResourceTexture2D* pTexColour = pRM->getTexture2D("X:default_white");
+		ResourceTexture2D* pTexBG = pRM->getTexture2D(pTheme->mImages.lineGraphBGColour);
+		glm::vec2 vTexDimsPoint3 = pTexBG->mvDimensions * 0.3333333f;
+		glm::vec2 vTexDimsPoint6 = pTexBG->mvDimensions * 0.6666666f;
 
 		// Bind textures
 		pTexColour->bind(0);
-		pTexNormal->bind(1);
-		pTexReflection->bind(2);
-		pFBSample->bindAsTexture(3);
 
-		// Render the linegraph centre
-		glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
-		float fPosX = pContainer->mfPositionX + mfPositionX;
-		float fPosY = pContainer->mfPositionY + mfPositionY;
-		pTri->removeGeom();
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX,								// Position X
-				fPosY),								// Position Y
-			glm::vec2(mfWidth, mfHeight),			// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-			mTC.centre.BL,
-			mTC.centre.BR,
-			mTC.centre.TR,
-			mTC.centre.TL);
+		// First compute max number of entries and highest/lowest values
+		float fLowestValue = 999999999.0f;
+		float fHighestValue = -999999999.0f;
+		unsigned int iMaxNumEntries = 0;
 
-		// Render the left edge
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX - vTexDimsDiv3.x,				// Position X
-				fPosY),								// Position Y
-			glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-			mTC.left.BL,
-			mTC.left.BR,
-			mTC.left.TR,
-			mTC.left.TL);
+		// For each data set
+		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
+		while (it != _mmapDataSets.end())
+		{
+			// Get largest amount of entries of all data sets
+			unsigned int iCurrentSetSize = (unsigned int)it->second->values.size();
+			if (iCurrentSetSize > iMaxNumEntries)
+				iMaxNumEntries = iCurrentSetSize;
 
-		// Render the right edge
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX + mfWidth,					// Position X
-				fPosY),								// Position Y
-			glm::vec2(vTexDimsDiv3.x, mfHeight),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-			mTC.right.BL,
-			mTC.right.BR,
-			mTC.right.TR,
-			mTC.right.TL);
+			// Determine max and min values stored in all data sets
+			for (unsigned int i = 0; i < it->second->values.size(); ++i)
+			{
+				if (it->second->values[i] < fLowestValue)
+					fLowestValue = it->second->values[i];
+				if (it->second->values[i] > fHighestValue)
+					fHighestValue = it->second->values[i];
+			}
+			it++;
+		}
 
-		// Render the top edge
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX,								// Position X
-				fPosY - vTexDimsDiv3.y),			// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),		// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-			mTC.top.BL,
-			mTC.top.BR,
-			mTC.top.TR,
-			mTC.top.TL);
+		// Only render if data exists
+		if (iMaxNumEntries > 0)
+		{
+			// Now we have maximum number of entries and highest/lowest values of the values within each dataset
+			// vPosMulti is used to determine position of each line segment...
+			glm::vec2 vPosMulti;
+			vPosMulti.x = (mfWidth - vTexDimsPoint6.x) / (0.01f + iMaxNumEntries);
+			vPosMulti.y = (mfHeight - vTexDimsPoint6.y) / (0.01f + (fHighestValue - fLowestValue));
+			float fAbsLowestVal = (float)abs(fLowestValue);
 
-		// Render the bottom edge
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX,								// Position X
-				fPosY + mfHeight),					// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),		// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
-			mTC.bottom.BL,
-			mTC.bottom.BR,
-			mTC.bottom.TR,
-			mTC.bottom.TL);
+			pLine->removeGeom();
+			pLine->setDrawModeAsLineStrip();
+			ResourceLine::Vertex vert;
 
-		// Render the top left corner
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX - vTexDimsDiv3.x,					// Position X
-				fPosY - vTexDimsDiv3.y),				// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
-			mTC.topLeft.BL,
-			mTC.topLeft.BR,
-			mTC.topLeft.TR,
-			mTC.topLeft.TL);
+			// For each data set (line)
+			it = _mmapDataSets.begin();
+			glm::vec3 vPosBL(pContainer->mfPositionX + mfPositionX + vTexDimsPoint3.x, pContainer->mfPositionY + mfPositionY + mfHeight - vTexDimsPoint3.y, 0.0f);	// Bottom left corner of widget
+			vert.position.z = 0.0f;
 
-		// Render the top right corner
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX + mfWidth,						// Position X
-				fPosY - vTexDimsDiv3.y),				// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
-			mTC.topRight.BL,
-			mTC.topRight.BR,
-			mTC.topRight.TR,
-			mTC.topRight.TL);
+			while (it != _mmapDataSets.end())
+			{
+				// For each entry within this data set
+				vert.colour = it->second->colour.get();
 
-		// Render the bottom left corner
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX - vTexDimsDiv3.x,					// Position X
-				fPosY + mfHeight),						// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
-			mTC.bottomLeft.BL,
-			mTC.bottomLeft.BR,
-			mTC.bottomLeft.TR,
-			mTC.bottomLeft.TL);
+				for (int iEntry = 0; iEntry < (int)it->second->getNumValues(); ++iEntry)
+				{
+					vert.position = vPosBL;
+					vert.position.x += float(iEntry) * vPosMulti.x;
+					vert.position.y -= (it->second->values[iEntry] - fAbsLowestVal) * vPosMulti.y;
+					pLine->addLinePoint(vert);
+				}
+				it++;
+			}
 
-		// Render the bottom right corner
-		pTri->addQuad2D(
-			glm::vec2(
-				fPosX + mfWidth,						// Position X
-				fPosY + mfHeight),						// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
-			mTC.bottomRight.BL,
-			mTC.bottomRight.BR,
-			mTC.bottomRight.TR,
-			mTC.bottomRight.TL);
+			pLine->update();
+			pLine->draw();
+		}
 
-		pTri->update();
-		pTri->draw();
-
-		pTexColour->unbindAll();	// Unbind textures
-		pShader->unbind();			// Unbind the GUI shader
+		pTexColour->unbind(0);	// Unbind texture
+		pShader->unbind();		// Unbind the shader
 		glDisable(GL_BLEND);
-		*/
 	}
 
 	void GUILineGraph::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
@@ -189,6 +168,46 @@ namespace X
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
+	}
 
+	GUILineGraphDataSet* GUILineGraph::addDataset(const std::string& strName, const GUIColour& cCol)
+	{
+		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		ThrowIfTrue(it != _mmapDataSets.end(), "GUILineGraph::addDataSet(" + strName + ") failed. The named data set already exists.");
+		GUILineGraphDataSet* pNew = new GUILineGraphDataSet;
+		ThrowIfFalse(pNew, "GUILineGraph::addDataSet(" + strName + ") failed. Unable to allocate memory for new data set.");
+		_mmapDataSets[strName] = pNew;
+		return pNew;
+	}
+
+	GUILineGraphDataSet* GUILineGraph::getDataset(const std::string& strName)
+	{
+		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		ThrowIfTrue(it == _mmapDataSets.end(), "GUILineGraph::getDataset(" + strName + ") failed. The named data set doesn't exist.");
+		return it->second;
+	}
+
+	void GUILineGraph::removeDataset(const std::string& strName)
+	{
+		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		if (it == _mmapDataSets.end())
+			return;
+		delete it->second;
+		_mmapDataSets.erase(it);
+	}
+
+	unsigned int GUILineGraph::getNumDatasets(void)
+	{
+		return (unsigned int)_mmapDataSets.size();
+	}
+
+	std::string GUILineGraph::getDatasetName(unsigned int iIndex)
+	{
+		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapDataSets.size(), "GUILineGraph::getDatasetName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
+		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
+		unsigned int iCount = 0;
+		while (iCount < iIndex)
+			it++;
+		return it->first;
 	}
 }
