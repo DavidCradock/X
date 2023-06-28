@@ -27,7 +27,7 @@
     <ClInclude Include="GUILineGraph.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="GUIMenu.h" />
-    <ClInclude Include="GUIProgressbar.h" />
+    <ClInclude Include="GUIProgressBar.h" />
     <ClInclude Include="GUISlider.h" />
     <ClInclude Include="GUITab.h" />
     <ClInclude Include="GUITabContainer.h" />

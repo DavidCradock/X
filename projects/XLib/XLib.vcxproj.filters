@@ -182,7 +182,7 @@
     <ClInclude Include="GUIMenu.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIProgressbar.h">
+    <ClInclude Include="GUIProgressBar.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUISlider.h">
