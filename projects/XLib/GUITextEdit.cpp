@@ -158,7 +158,7 @@ namespace X
 		// Now add/remove characters to the text based on keyboard input
 		if (state::active == _mState)
 		{
-			if (pInput->key.pressed(KC_RETURN) || pInput->key.once(KC_NUMPADENTER))
+			if (pInput->key.once(KC_RETURN) || pInput->key.once(KC_NUMPADENTER))
 			{
 				_mState = state::inactive;
 				pAudio->getEmitter(pTheme->mAudio.textEditReturn.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditReturn.fVolume, pTheme->mAudio.textEditReturn.fPitch);

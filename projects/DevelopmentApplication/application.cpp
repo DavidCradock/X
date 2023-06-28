@@ -55,7 +55,8 @@ namespace X
 		pTextEdit->setMaxChars(80);
 		pTextEdit->setIntegerInputOnly(false);
 		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
-		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 20, 0.1f);
+		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 30, 0.1f);
+		GUISlider* pSliderV = pContainer2->addSlider("SliderV", 900, 100, 30, 500, 0.1f);
 		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 0, 190, 900, 240);
 
 
