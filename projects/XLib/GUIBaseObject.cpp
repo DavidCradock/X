@@ -209,13 +209,13 @@ namespace X
 			mTC.right.BR,
 			mTC.right.TR,
 			mTC.right.TL);
-		/*
+
 		// Render the top edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY),					// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),							// Dimensions
+				vPos.x + vTexDimsPoint3.x,								// Position X
+				vPos.y),												// Position Y
+			glm::vec2(mfWidth - vTexDimsPoint6.x, vTexDimsPoint3.y),	// Dimensions
 			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
 			mTC.top.BL,
 			mTC.top.BR,
@@ -225,10 +225,10 @@ namespace X
 		// Render the bottom edge
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + vTexDimsDiv3.x,					// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),		// Position Y
-			glm::vec2(mfWidth, vTexDimsDiv3.y),											// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),											// Vertex colour
+				vPos.x + vTexDimsPoint3.x,								// Position X
+				vPos.y + mfHeight - vTexDimsPoint3.y),					// Position Y
+			glm::vec2(mfWidth - vTexDimsPoint6.x, vTexDimsPoint3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
 			mTC.bottom.BL,
 			mTC.bottom.BR,
 			mTC.bottom.TR,
@@ -237,10 +237,10 @@ namespace X
 		// Render the top left corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,	// Position X
-				pContainer->mfPositionY + mfPositionY),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),			// Vertex colour
+				vPos.x,										// Position X
+				vPos.y),									// Position Y
+			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
 			mTC.topLeft.BL,
 			mTC.topLeft.BR,
 			mTC.topLeft.TR,
@@ -249,10 +249,10 @@ namespace X
 		// Render the top right corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + mfWidth + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY),								// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				vPos.x + mfWidth - vTexDimsPoint3.x,		// Position X
+				vPos.y),									// Position Y
+			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
 			mTC.topRight.BL,
 			mTC.topRight.BR,
 			mTC.topRight.TR,
@@ -261,10 +261,10 @@ namespace X
 		// Render the bottom left corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX,								// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				vPos.x,										// Position X
+				vPos.y + mfHeight - vTexDimsPoint3.y),		// Position Y
+			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
 			mTC.bottomLeft.BL,
 			mTC.bottomLeft.BR,
 			mTC.bottomLeft.TR,
@@ -273,15 +273,15 @@ namespace X
 		// Render the bottom right corner
 		pTri->addQuad2D(
 			glm::vec2(
-				pContainer->mfPositionX + mfPositionX + mfWidth + vTexDimsDiv3.x,	// Position X
-				pContainer->mfPositionY + mfPositionY + mfHeight + vTexDimsDiv3.y),	// Position Y
-			glm::vec2(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
+				vPos.x + mfWidth - vTexDimsPoint3.x,		// Position X
+				vPos.y + mfHeight - vTexDimsPoint3.y),		// Position Y
+			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
 			mTC.bottomRight.BL,
 			mTC.bottomRight.BR,
 			mTC.bottomRight.TR,
 			mTC.bottomRight.TL);
-			*/
+
 		pTri->update();
 		pTri->draw();
 

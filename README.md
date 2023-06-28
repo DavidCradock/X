@@ -22,3 +22,4 @@ I think the first option is best because...
 When changing themes, the GUI layout is consistent
 - Create a "renderBGimages" method inside the GUIBaseObject class, removing from all widgets that do this themselves for consistency reasons.
 - Then set each widget I've coded so far to use this new method (A pain for slider for sure, but worth it)
+- Implemented GUIBaseObject::renderBackground() method and have set GUILineGraph, GUI TextEdit and GUIButton to use it. Just GUISlider left to modify now.

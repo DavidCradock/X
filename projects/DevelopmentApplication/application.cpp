@@ -51,8 +51,8 @@ namespace X
 				pContainer2->addText(strTextName, 900, iYpos, "| <- X = 900");
 		}
 		
-		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 45, 900, 26, "EditMe!12345678901234567890123456789012344567890XXXXXXXXXXXXXXXXXXXXXXXXXXX:)");
-		pTextEdit->setMaxChars(4096);
+		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 45, 900, 38, "EditMe!12345678901234567890123456789012344567890XXXXXXXXXXXXXXXXXXXXXXXXXXX:)");
+		pTextEdit->setMaxChars(80);
 		pTextEdit->setIntegerInputOnly(false);
 		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
 		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 20, 0.1f);
