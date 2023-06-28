@@ -396,7 +396,7 @@ namespace X
 	void GUITheme::_writeAudioSampleInfo(std::ofstream& stream, const std::string& strDescription, const AudioSampleInfo& asi)
 	{
 		stream << strDescription + "Name: " + mAudio.buttonClicked.strSampleName + "\n";
-		stream << strDescription + "VolPitch: " << std::to_string(asi.fVolume) + " " + std::to_string(asi.fPitch);
+		stream << strDescription + "VolPitch: " << std::to_string(asi.fVolume) + " " + std::to_string(asi.fPitch) + "\n";
 	}
 
 	void GUITheme::_readAudioSampleInfo(std::ifstream& stream, AudioSampleInfo& asi)

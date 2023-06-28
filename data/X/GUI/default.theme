@@ -49,9 +49,14 @@ TextEditText: 1 1
 
 Audio
 buttonClickedName: data/X/gui/default/click.wav
-buttonClickedVolPitch: 0.800000 1.000000textEditTextAddName: data/X/gui/default/click.wav
-textEditTextAddVolPitch: 0.800000 1.000000textEditBackspaceName: data/X/gui/default/click.wav
-textEditBackspaceVolPitch: 0.200000 1.000000textEditReturnName: data/X/gui/default/click.wav
-textEditReturnVolPitch: 0.800000 1.000000textEditActivateName: data/X/gui/default/click.wav
-textEditActivateVolPitch: 0.800000 1.000000textEditNoMoreCharSpaceName: data/X/gui/default/click.wav
+buttonClickedVolPitch: 0.800000 1.000000
+textEditTextAddName: data/X/gui/default/click.wav
+textEditTextAddVolPitch: 0.800000 1.000000
+textEditBackspaceName: data/X/gui/default/click.wav
+textEditBackspaceVolPitch: 0.200000 1.000000
+textEditReturnName: data/X/gui/default/click.wav
+textEditReturnVolPitch: 0.800000 1.000000
+textEditActivateName: data/X/gui/default/click.wav
+textEditActivateVolPitch: 0.800000 1.000000
+textEditNoMoreCharSpaceName: data/X/gui/default/click.wav
 textEditNoMoreCharSpaceVolPitch: 0.200000 1.000000

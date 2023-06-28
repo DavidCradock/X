@@ -20,4 +20,5 @@ INSIDE the position + dims, so that the TOTAL gui area is equal to their set dim
 OUTSIDE the position + dims, so that the TOTAL gui area is MORE THAN the set dims
 I think the first option is best because...
 When changing themes, the GUI layout is consistent
-- Create a "render 9 images" method inside the GUIBaseObject class, removing from all widgets that do this themselves.
+- Create a "renderBGimages" method inside the GUIBaseObject class, removing from all widgets that do this themselves for consistency reasons.
+- Then set each widget I've coded so far to use this new method (A pain for slider for sure, but worth it)
