@@ -221,6 +221,9 @@
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="resourceTexture2DAnimation.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -382,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DAnimation.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

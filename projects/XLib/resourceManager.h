@@ -8,6 +8,7 @@
 #include "resourceTexture2D.h"
 #include "resourceTriangle.h"
 #include "resourceLine.h"
+#include "resourceTexture2DAnimation.h"
 
 namespace X
 {
@@ -170,6 +171,25 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeLine(const std::string& strResourceName);
 
+		// Adds a new texture2D animation object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the frames of animation.
+		// Each image must be the same dimensions, otherwise an exception occurs
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		ResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		ResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getTexture2DAnimationExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeTexture2DAnimation(const std::string& strResourceName);
+
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
 		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.
@@ -231,6 +251,13 @@ namespace X
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceLine> _mmapResLines;
+
+		struct SResourceTexture2DAnimation
+		{
+			ResourceTexture2DAnimation* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceTexture2DAnimation> _mmapResTextures2DAnimation;
 	};
 
 }

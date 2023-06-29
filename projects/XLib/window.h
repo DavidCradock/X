@@ -71,6 +71,9 @@ namespace X
 
 		// Returns window dimensions as a glm::vec2
 		glm::vec2 getDimensions(void);
+
+		// Returns the maximum texture size supported by the OpenGL drivers
+		int getMaxTextureSize(void);
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle

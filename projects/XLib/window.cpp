@@ -425,4 +425,11 @@ namespace X
 		vDims.y = float(muiWindowHeight);
 		return vDims;
 	}
+
+	int Window::getMaxTextureSize(void)
+	{
+		int value;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &value);
+		return value;
+	}
 }

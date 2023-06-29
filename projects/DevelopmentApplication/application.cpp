@@ -23,7 +23,7 @@ namespace X
 		theme2.load("data/X/GUI/default");
 
 		Window* pWindow = Window::getPointer();
-		
+		pWindow->getMaxTextureSize();
 		GUIManager* pGUI = GUIManager::getPointer();
 
 		// Small container window with close button

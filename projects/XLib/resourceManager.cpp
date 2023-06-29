@@ -432,6 +432,49 @@ namespace X
 		_mmapResLines.erase(it);
 	}
 
+	ResourceTexture2DAnimation* ResourceManager::addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
+	{
+		// If resource already exists
+		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
+		if (it != _mmapResTextures2DAnimation.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceTexture2DAnimation newRes;
+		newRes.uiCount = 1;
+		newRes.pResource = new ResourceTexture2DAnimation(vecStrImageFilenames, bFlipYaxis);
+		ThrowIfFalse(newRes.pResource, "ResourceManager::addTexture2DAnimation(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResTextures2DAnimation[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	ResourceTexture2DAnimation* ResourceManager::getTexture2DAnimation(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
+		ThrowIfTrue(it == _mmapResTextures2DAnimation.end(), "ResourceManager::getTexture2DAnimation(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool ResourceManager::getTexture2DAnimationExists(const std::string& strResourceName)
+	{
+		return _mmapResTextures2DAnimation.find(strResourceName) != _mmapResTextures2DAnimation.end();
+	}
+
+	void ResourceManager::removeTexture2DAnimation(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
+		if (it == _mmapResTextures2DAnimation.end())
+			return;	// Doesn't exist.
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResTextures2DAnimation.erase(it);
+	}
+
 	void ResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
