@@ -6,6 +6,7 @@
 - Download the source as a zip and extract somewhere.
 - Download and install Visual studio
 - Load the X.sln file into Visual studio, hit compile, done.
+
 ** TODO **
 - Add quaternions and position to SMEntityBase along with helper functions to move stuff etc.
 - implement more stuff into Camera
@@ -28,3 +29,4 @@
 - Implement Tab and TabContainer to GUI.
 - Implement Taskbar to GUI.
 - Create 2D sprite rendering
+- Rewrite joy part of input
