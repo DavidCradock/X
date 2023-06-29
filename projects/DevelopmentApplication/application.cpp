@@ -4,18 +4,17 @@ namespace X
 {
 	void Application::initOnce(void)
 	{
-		
+/*
 		Image img;
 		Image normal;
-		img.load("data/X/gui/default/tooltipBGheight.png");
+		img.load("data/X/gui/default/progressBarBGheight.png");
 		img.normalmap(normal, 0.5f);
-		normal.saveAsPNG("data/X/gui/default/tooltipBGnormal.png");
+		normal.saveAsPNG("data/X/gui/default//progressBarBGnormal.png");
 
-//		img.load("data/X/gui/default/sliderBGheight.png");
-//		img.normalmap(normal, 0.5f);
-//		normal.saveAsPNG("data/X/gui/default/sliderBGnormal.png");
-		
-
+		img.load("data/X/gui/default/progressBarFillerheight.png");
+		img.normalmap(normal, 0.5f);
+		normal.saveAsPNG("data/X/gui/default/progressBarFillernormal.png");
+*/	
 //		ResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
 
 		GUITheme theme;
@@ -42,14 +41,16 @@ namespace X
 		pTextEdit->setMaxChars(80);
 		pTextEdit->setIntegerInputOnly(false);
 		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
-		GUISlider* pSlider = pContainer2->addSlider("Slider", 0, 150, 900, 30, 0.1f);
+		
 		GUISlider* pSliderV = pContainer2->addSlider("SliderV", 900, 100, 30, 500, 0.1f);
 		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 50, 200, 850, 240);
 		GUIColour col;
 		pLineGraph->addDataset("FPS", col);
 		pContainer2->addText("FPS_MAX", 10, 180, "MAX");
 		pContainer2->addText("FPS_MIN", 10, 440, "MIN");
-
+		GUISlider* pSlider = pContainer2->addSlider("Slider", 10, 470, 200, 30, 0.1f);
+		pContainer2->addProgressBar("ProgressH", 10, 500, 400, 60);
+		pContainer2->addProgressBar("ProgressV", 500, 500, 60, 200);
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 
@@ -122,6 +123,12 @@ namespace X
 			pCont->getText("FPS_MAX")->mstrText = "MAX: " + std::to_string(pLineGraph->getDataset("FPS")->getHighestValue());
 			pCont->getText("FPS_MIN")->mstrText = "MIN: " + std::to_string(pLineGraph->getDataset("FPS")->getLowestValue());
 		}
+
+		// Update progress bars
+		pCont = pGUIMan->getContainer("Container2");
+		GUISlider* pSlider = pCont->getSlider("Slider");
+		pCont->getProgressBar("ProgressH")->setProgress(pSlider->getTabPos());
+		pCont->getProgressBar("ProgressV")->setProgress(pSlider->getTabPos());
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");

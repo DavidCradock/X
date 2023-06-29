@@ -70,6 +70,14 @@ namespace X
 			itLineGraph++;
 		}
 
+		// Render each progress bar
+		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		while (itProgressBar != _mmapProgressBars.end())
+		{
+			itProgressBar->second->render(this, strFramebufferToSampleFrom);
+			itProgressBar++;
+		}
+
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -232,7 +240,14 @@ namespace X
 			itLineGraph++;
 		}
 
-		
+		// Progress bars
+		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		while (itProgressBar != _mmapProgressBars.end())
+		{
+			itProgressBar->second->update(this, bContainerAcceptingMouseClicks);
+			itProgressBar++;
+		}
+
 		return bMouseOver;
 	}
 
@@ -566,5 +581,36 @@ namespace X
 			return;
 		delete it->second;
 		_mmapLineGraphs.erase(it);
+	}
+
+	GUIProgressBar* GUIContainer::addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		ThrowIfTrue(it != _mmapProgressBars.end(), "GUIContainer::addProgressBar(" + strName + ") failed. The named object already exists.");
+		GUIProgressBar* pNewRes = new GUIProgressBar;
+		ThrowIfFalse(pNewRes, "GUIContainer::addProgressBar(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		_mmapProgressBars[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUIProgressBar* GUIContainer::getProgressBar(const std::string& strName)
+	{
+		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		ThrowIfTrue(it == _mmapProgressBars.end(), "GUIContainer::getProgressBar(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeProgressBar(const std::string& strName)
+	{
+		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		if (it == _mmapProgressBars.end())
+			return;
+		delete it->second;
+		_mmapProgressBars.erase(it);
 	}
 }

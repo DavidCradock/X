@@ -77,6 +77,10 @@ namespace X
 			std::string lineGraphBGNormal;
 			std::string tooltipBGColour;
 			std::string tooltipBGNormal;
+			std::string progressBarBGColour;
+			std::string progressBarBGNormal;
+			std::string progressBarFillerColour;
+			std::string progressBarFillerNormal;
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
 
@@ -103,6 +107,7 @@ namespace X
 			GUIColour textEditActive;
 			GUIColour sliderTabOver;
 			GUIColour sliderTabNotOver;
+			GUIColour progressBarFiller;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 

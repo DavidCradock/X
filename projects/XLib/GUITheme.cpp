@@ -27,6 +27,10 @@ namespace X
 		mImages.lineGraphBGNormal = "data/X/GUI/default/linegraphBGnormal.png";
 		mImages.tooltipBGColour = "data/X/GUI/default/tooltipBGcolour.png";
 		mImages.tooltipBGNormal = "data/X/GUI/default/tooltipBGnormal.png";
+		mImages.progressBarBGColour = "data/X/GUI/default/progressBarBGcolour.png";
+		mImages.progressBarBGNormal = "data/X/GUI/default/progressBarBGnormal.png";
+		mImages.progressBarFillerColour = "data/X/GUI/default/progressBarFillercolour.png";
+		mImages.progressBarFillerNormal = "data/X/GUI/default/progressBarFillernormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/ultimateserial-medium-regular_20";
@@ -45,6 +49,7 @@ namespace X
 		mColours.textEditInactive.set(1.0f, 1.0f, 1.0f, 0.75f);
 		mColours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		mColours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
 
 		// Floats
 		mfBlurAmount = 1.0f;
@@ -110,6 +115,10 @@ namespace X
 		_readImageInfo(file, mImages.lineGraphBGNormal);
 		_readImageInfo(file, mImages.tooltipBGColour);
 		_readImageInfo(file, mImages.tooltipBGNormal);
+		_readImageInfo(file, mImages.progressBarBGColour);
+		_readImageInfo(file, mImages.progressBarBGNormal);
+		_readImageInfo(file, mImages.progressBarFillerColour);
+		_readImageInfo(file, mImages.progressBarFillerNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -132,6 +141,7 @@ namespace X
 		_readColourInfo(file, mColours.textEditInactive);
 		_readColourInfo(file, mColours.sliderTabNotOver);
 		_readColourInfo(file, mColours.sliderTabOver);
+		_readColourInfo(file, mColours.progressBarFiller);
 
 		// Floats
 		getline(file, strLine);	// End of line
@@ -198,8 +208,12 @@ namespace X
 		_writeImageInfo(file, "SliderTabNormal", mImages.sliderTabNormal);
 		_writeImageInfo(file, "LineGraphBGColour", mImages.lineGraphBGColour);
 		_writeImageInfo(file, "LineGraphBGNormal", mImages.lineGraphBGNormal);
-		_writeImageInfo(file, "TooltipBGNormal", mImages.tooltipBGColour);
+		_writeImageInfo(file, "TooltipBGColour", mImages.tooltipBGColour);
 		_writeImageInfo(file, "TooltipBGNormal", mImages.tooltipBGNormal);
+		_writeImageInfo(file, "ProgressBarBGColour", mImages.progressBarBGColour);
+		_writeImageInfo(file, "ProgressBarBGNormal", mImages.progressBarBGNormal);
+		_writeImageInfo(file, "ProgressBarFillerColour", mImages.progressBarFillerColour);
+		_writeImageInfo(file, "ProgressBarFillerNormal", mImages.progressBarFillerNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -220,6 +234,7 @@ namespace X
 		_writeColourInfo(file, "textEditInactive", mColours.textEditInactive);
 		_writeColourInfo(file, "textEditInactive", mColours.sliderTabNotOver);
 		_writeColourInfo(file, "textEditInactive", mColours.sliderTabOver);
+		_writeColourInfo(file, "progreebarFiller", mColours.progressBarFiller);
 
 		// Floats
 		file << "\nFloats\n";
@@ -268,6 +283,10 @@ namespace X
 		pRM->addTexture2D(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
 		pRM->addTexture2D(mImages.tooltipBGColour, mImages.tooltipBGColour);
 		pRM->addTexture2D(mImages.tooltipBGNormal, mImages.tooltipBGNormal);
+		pRM->addTexture2D(mImages.progressBarBGColour, mImages.progressBarBGColour);
+		pRM->addTexture2D(mImages.progressBarBGNormal, mImages.progressBarBGNormal);
+		pRM->addTexture2D(mImages.progressBarFillerColour, mImages.progressBarFillerColour);
+		pRM->addTexture2D(mImages.progressBarFillerNormal, mImages.progressBarFillerNormal);
 	}
 
 	void GUITheme::unloadTextures(void)
@@ -288,6 +307,10 @@ namespace X
 		pRM->removeTexture2D(mImages.lineGraphBGNormal);
 		pRM->removeTexture2D(mImages.tooltipBGColour);
 		pRM->removeTexture2D(mImages.tooltipBGNormal);
+		pRM->removeTexture2D(mImages.progressBarBGColour);
+		pRM->removeTexture2D(mImages.progressBarBGNormal);
+		pRM->removeTexture2D(mImages.progressBarFillerColour);
+		pRM->removeTexture2D(mImages.progressBarFillerNormal);
 	}
 
 	void GUITheme::addFontsToManager(void)

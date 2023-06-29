@@ -6,6 +6,7 @@
 #include "GUITextEdit.h"
 #include "GUISlider.h"
 #include "GUILineGraph.h"
+#include "GUIProgressBar.h"
 
 namespace X
 {
@@ -97,15 +98,29 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeLineGraph(const std::string& strName);
 
+		// Add progress bar to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		GUIProgressBar* addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUIProgressBar* getProgressBar(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeProgressBar(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		
-		std::map<std::string, GUIButton*> _mmapButtons;			// Hashmap for each added button
-		std::map<std::string, GUIText*> _mmapTexts;				// Hashmap for each added text
-		std::map<std::string, GUITextEdit*> _mmapTextEdits;		// Hashmap for each added text edit
-		std::map<std::string, GUISlider*> _mmapSliders;			// Hashmap for each added slider
-		std::map<std::string, GUILineGraph*> _mmapLineGraphs;	// Hashmap for each added line graph
+		std::map<std::string, GUIButton*> _mmapButtons;				// Hashmap for each added button
+		std::map<std::string, GUIText*> _mmapTexts;					// Hashmap for each added text
+		std::map<std::string, GUITextEdit*> _mmapTextEdits;			// Hashmap for each added text edit
+		std::map<std::string, GUISlider*> _mmapSliders;				// Hashmap for each added slider
+		std::map<std::string, GUILineGraph*> _mmapLineGraphs;		// Hashmap for each added line graph
+		std::map<std::string, GUIProgressBar*> _mmapProgressBars;	// Hashmap for each added progress bar
 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
