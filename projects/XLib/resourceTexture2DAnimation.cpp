@@ -126,48 +126,55 @@ namespace X
 		glActiveTexture(GL_TEXTURE0);	glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void ResourceTexture2DAnimation::_packImagesIntoLargeTextures(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
+	void ResourceTexture2DAnimation::_packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		// Make sure the vector is valid
-		ThrowIfTrue(0 == vecStrImageFilenames.size(), "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Given vector of strings with no data.");
+		ThrowIfTrue(0 == vecStrImageFilenames.size(), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Given vector of strings has no data.");
 
 		// Load first image in the vector and determine dimensions
 		Image image;
 		int iImageWidth, iImageHeight, iImageChannels;
-		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Unable to determind dimensions of first image.");
+		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to determined dimensions of first image.");
 
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
 		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
-		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Image size is greated than maximum texture size supported by gfx hardware.");
+		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
-		// Compute maximum number of image we can fit along the XY axis of the largest of textures
-		int iMaxTexturesAlongX = iMaxTextureDims / iImageWidth;
-		int iMaxTexturesAlongY = iMaxTextureDims / iImageHeight;
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
-		int iLargeTextureWidthNeeded = 0;
-		int iLargeTextureHeightNeeded = 0;
-		int iNumberLargeTexturesNeeded = 1;
-		std::vector<Image*> vImages;
+		std::vector<Image*> vImages;	// Holds each individual image
+
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
 		{
 			// Create new image and store in vImages
 			Image* pNewImage = new Image;
-			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Unable to allocate memory for image " + vecStrImageFilenames[iImage] + ".");
+			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to allocate memory for image " + vecStrImageFilenames[iImage] + ".");
 			vImages.push_back(pNewImage);
 
 			// Load in the image
-			ThrowIfFalse(vImages[iImage]->load(vecStrImageFilenames[iImage], bFlipYaxis), "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Unable to load image " + vecStrImageFilenames[iImage] + " in.");
+			ThrowIfFalse(vImages[iImage]->load(vecStrImageFilenames[iImage], bFlipYaxis), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to load image " + vecStrImageFilenames[iImage] + " in.");
 
 			// Make sure it's the same dimensions as the first image
-			ThrowIfTrue((int)vImages[iImage]->getWidth() != iImageWidth || (int)vImages[iImage]->getHeight() != iImageHeight, "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Image " + vecStrImageFilenames[iImage] + " has different dimensions from first image.");
+			ThrowIfTrue((int)vImages[iImage]->getWidth() != iImageWidth || (int)vImages[iImage]->getHeight() != iImageHeight, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different dimensions of first image.");
 
 			// Make sure the number of channels is the same as the first image
-			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "ResourceTexture2DAnimation::_packImagesIntoLargeTextures() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
+			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
 
 			// Compute dimensions of large textures and number
-			iLargeTextureWidthNeeded += iImageWidth;
+			
 		}
+
+		// Now that we know required number of large textures and each of their dimensions
+		// Compute texture coordinates, texture number for each animFrame and copy each individual image into the correct position of correct large image
+		AnimationFrame animFrame;		// Holds current animation frame data
+		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
+		{
+			animFrame.vTCMin.x = 0.1f;
+
+			// Add computed animation frame data to final vector
+			_mvAnimationFrames.push_back(animFrame);
+		}
+
 
 		// Free all temporary images
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)

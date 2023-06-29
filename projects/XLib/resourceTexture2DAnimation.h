@@ -47,7 +47,7 @@ namespace X
 		// Called during construction to load in each of the images contained in the constructor's vecStrImageFilenames
 		// This fits as many images into a single texture, then if another is needed, fits the next batch of images into that and so on.
 		// It also computes and stores the texture number and texture coordinates for each animation frame.
-		void _packImagesIntoLargeTextures(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis);
+		void _packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis);
 		
 		struct AnimationFrame
 		{
