@@ -36,6 +36,7 @@
     <ClInclude Include="GUITextEdit.h" />
     <ClInclude Include="GUITextScroll.h" />
     <ClInclude Include="GUITheme.h" />
+    <ClInclude Include="GUITooltip.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="GUITextEdit.cpp" />
     <ClCompile Include="GUITextScroll.cpp" />
     <ClCompile Include="GUITheme.cpp" />
+    <ClCompile Include="GUITooltip.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />

@@ -5,11 +5,11 @@ namespace X
 	void Application::initOnce(void)
 	{
 		
-//		Image img;
-//		Image normal;
-//		img.load("data/X/gui/default/linegraphBGheight.png");
-//		img.normalmap(normal, 0.5f);
-//		normal.saveAsPNG("data/X/gui/default/linegraphBGnormal.png");
+		Image img;
+		Image normal;
+		img.load("data/X/gui/default/tooltipBGheight.png");
+		img.normalmap(normal, 0.5f);
+		normal.saveAsPNG("data/X/gui/default/tooltipBGnormal.png");
 
 //		img.load("data/X/gui/default/sliderBGheight.png");
 //		img.normalmap(normal, 0.5f);

@@ -75,6 +75,8 @@ namespace X
 			std::string sliderTabNormal;
 			std::string lineGraphBGColour;
 			std::string lineGraphBGNormal;
+			std::string tooltipBGColour;
+			std::string tooltipBGNormal;
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
 

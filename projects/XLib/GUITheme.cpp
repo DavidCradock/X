@@ -25,6 +25,8 @@ namespace X
 		mImages.sliderTabNormal = "data/X/GUI/default/slider_tab_normal.png";
 		mImages.lineGraphBGColour = "data/X/GUI/default/linegraphBGcolour.png";
 		mImages.lineGraphBGNormal = "data/X/GUI/default/linegraphBGnormal.png";
+		mImages.tooltipBGColour = "data/X/GUI/default/tooltipBGcolour.png";
+		mImages.tooltipBGNormal = "data/X/GUI/default/tooltipBGnormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/ultimateserial-medium-regular_20";
@@ -106,6 +108,8 @@ namespace X
 		_readImageInfo(file, mImages.sliderTabNormal);
 		_readImageInfo(file, mImages.lineGraphBGColour);
 		_readImageInfo(file, mImages.lineGraphBGNormal);
+		_readImageInfo(file, mImages.tooltipBGColour);
+		_readImageInfo(file, mImages.tooltipBGNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -194,6 +198,8 @@ namespace X
 		_writeImageInfo(file, "SliderTabNormal", mImages.sliderTabNormal);
 		_writeImageInfo(file, "LineGraphBGColour", mImages.lineGraphBGColour);
 		_writeImageInfo(file, "LineGraphBGNormal", mImages.lineGraphBGNormal);
+		_writeImageInfo(file, "TooltipBGNormal", mImages.tooltipBGColour);
+		_writeImageInfo(file, "TooltipBGNormal", mImages.tooltipBGNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -260,6 +266,8 @@ namespace X
 		pRM->addTexture2D(mImages.sliderTabNormal, mImages.sliderTabNormal);
 		pRM->addTexture2D(mImages.lineGraphBGColour, mImages.lineGraphBGColour);
 		pRM->addTexture2D(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
+		pRM->addTexture2D(mImages.tooltipBGColour, mImages.tooltipBGColour);
+		pRM->addTexture2D(mImages.tooltipBGNormal, mImages.tooltipBGNormal);
 	}
 
 	void GUITheme::unloadTextures(void)
@@ -278,6 +286,8 @@ namespace X
 		pRM->removeTexture2D(mImages.sliderTabNormal);
 		pRM->removeTexture2D(mImages.lineGraphBGColour);
 		pRM->removeTexture2D(mImages.lineGraphBGNormal);
+		pRM->removeTexture2D(mImages.tooltipBGColour);
+		pRM->removeTexture2D(mImages.tooltipBGNormal);
 	}
 
 	void GUITheme::addFontsToManager(void)
