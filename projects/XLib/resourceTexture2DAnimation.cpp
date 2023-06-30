@@ -147,9 +147,20 @@ namespace X
 		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
+		// Compute total number of textures needed and their dimensions
+//		int iMaxNumImagesAlongX = iMaxTextureDims / iImageWidth;
+//		int iMaxNumImagesAlongY = iMaxTextureDims / iImageHeight;
+//		int iMaxNumImagesPerLargeImage = iMaxNumImagesAlongX * iMaxNumImagesAlongY;
+//		int iTotalNumberOfImages = vecStrImageFilenames.size();
+		
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
 		std::vector<Image*> vImages;	// Holds each individual image
-
+		AnimationFrame animFrame;		// Holds texture number and positions (positions are converted to texture coordinates when we know large image dimensions)
+		animFrame.uiTextureNumber = 0;
+		animFrame.vTCMin = glm::vec2(0.0f, 0.0f);
+		animFrame.vTCMax = glm::vec2((float)iImageWidth, (float)iImageHeight);
+		glm::vec2 vMaxLargeImageDims;
+		glm::vec2 vCurLargeImageDims = glm::vec2(0.0f, (float)iImageHeight);
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
 		{
 			// Create new image and store in vImages
@@ -167,18 +178,71 @@ namespace X
 			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
 
 			// Compute dimensions of large textures and number
-			
-		}
+			// If this new image fits within iMaxTextureDims
+			if (animFrame.vTCMax.x <= iMaxTextureDims)
+			{
+				// Add animation frame with current image positions in pixels
+				_mvAnimationFrames.push_back(animFrame);
+				animFrame.vTCMin.x += (float)iImageWidth;
+				animFrame.vTCMax.x += (float)iImageWidth;
+				vCurLargeImageDims.x += (float)iImageWidth;
+			}
+			else
+			{
+				// Move to next Y postion in large image
+				animFrame.vTCMin.x = 0.0f;
+				animFrame.vTCMax.x = (float)iImageWidth;
+				animFrame.vTCMin.y += (float)iImageHeight;
+				animFrame.vTCMax.y += (float)iImageHeight;
+				
 
-		// Now that we know required number of large textures and each of their dimensions
-		// Compute texture coordinates, texture number for each animFrame and copy each individual image into the correct position of correct large image
-		AnimationFrame animFrame;		// Holds current animation frame data
+				// If animation with new current positions on new row fits within iMaxTextureDims
+				if (animFrame.vTCMax.y <= iMaxTextureDims)
+				{
+					// Add animation frame with current image positions in pixels
+					_mvAnimationFrames.push_back(animFrame);
+
+					// Move position to next image
+					animFrame.vTCMin.x += (float)iImageWidth;
+					animFrame.vTCMax.x += (float)iImageWidth;
+					vCurLargeImageDims.y += (float)iImageHeight;
+				}
+				else // We need a new large image
+				{
+					animFrame.vTCMin.x = 0.0f;
+					animFrame.vTCMax.x = (float)iImageWidth;
+					animFrame.vTCMin.y = 0.0f;
+					animFrame.vTCMax.y = (float)iImageHeight;
+					animFrame.uiTextureNumber++;
+
+					vMaxLargeImageDims = vCurLargeImageDims;
+					vCurLargeImageDims = glm::vec2(0.0f, (float)iImageHeight);
+				}
+			}
+		}
+		// animFrame.uiTextureNumber now holds the total number of images needed - 1
+		// vMaxLargeImageDims now holds the largest image dims needed
+		// vCurLargeImageDims now holds the last image's dims needed
+		
+		// Create each of the large images
+		Image img;
+		int iNumImages = _mvAnimationFrames[_mvAnimationFrames.size() - 1].uiTextureNumber + 1;
+		for (int iLargeImage = 0; iLargeImage < iNumImages - 1; iLargeImage++)
+		{
+			_mvLargeImages.push_back(img);
+			_mvLargeImages[iLargeImage].createBlank(vMaxLargeImageDims.x, vMaxLargeImageDims.y, iImageChannels);
+		}
+		_mvLargeImages.push_back(img);
+		_mvLargeImages[iNumImages - 1].createBlank(vCurLargeImageDims.x, vCurLargeImageDims.y, iImageChannels);
+
+
+		// Convert stored values in animFrame to texture coordinates (0-1) and
+		// copy each individual image into the correct position of correct large image
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
 		{
+			_mvAnimationFrames[iImage].uiTextureNumber
 			animFrame.vTCMin.x = 0.1f;
 
-			// Add computed animation frame data to final vector
-			_mvAnimationFrames.push_back(animFrame);
 		}
 
 

@@ -85,6 +85,14 @@ namespace X
 			itImage->second->render(this, strFramebufferToSampleFrom);
 			itImage++;
 		}
+
+		// Render each animated image
+		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		while (itImageAnimated != _mmapImageAnimateds.end())
+		{
+			itImageAnimated->second->render(this, strFramebufferToSampleFrom);
+			itImageAnimated++;
+		}
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -221,7 +229,7 @@ namespace X
 			itButton++;
 		}
 
-		// Text (We don't need to update anything
+		// Text (We don't need to update anything)
 
 		// Text edit
 		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
@@ -255,14 +263,15 @@ namespace X
 			itProgressBar++;
 		}
 
-		// Images
-// NOTHING TO UPDATE
-//		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
-//		while (itImage != _mmapImages.end())
-//		{
-//			itImage->second->update(this, bContainerAcceptingMouseClicks);
-//			itImage++;
-//		}
+		// Images (We don't need to update anything)
+
+		// Images animated
+		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		while (itImageAnimated != _mmapImageAnimateds.end())
+		{
+			itImageAnimated->second->update(this, bContainerAcceptingMouseClicks);
+			itImageAnimated++;
+		}
 
 		return bMouseOver;
 	}
@@ -676,6 +685,54 @@ namespace X
 
 		delete it->second;
 		_mmapImages.erase(it);
+	}
+
+	GUIImageAnimated* GUIContainer::addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		ThrowIfTrue(it != _mmapImageAnimateds.end(), "GUIContainer::addImageAnimated(" + strName + ") failed. The named object already exists.");
+		GUIImageAnimated* pNewRes = new GUIImageAnimated;
+		ThrowIfFalse(pNewRes, "GUIContainer::addImageAnimated(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrResourceTexture2DAnimationName = strName;
+		_mmapImageAnimateds[strName] = pNewRes;
+
+		// Add ResourceTexture2DAnimation to the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		ResourceTexture2DAnimation* pTex = pResMan->addTexture2DAnimation(strName, vecStrImageFilenames);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = pTex->mvDimensions.x;
+		if (fHeight < 0)
+			pNewRes->mfHeight = pTex->mvDimensions.y;
+
+		return pNewRes;
+	}
+
+	GUIImageAnimated* GUIContainer::getImageAnimated(const std::string& strName)
+	{
+		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		ThrowIfTrue(it == _mmapImageAnimateds.end(), "GUIContainer::getImageAnimated(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeImageAnimated(const std::string& strName)
+	{
+		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		if (it == _mmapImageAnimateds.end())
+			return;
+
+		// Remove ResourceTexture2DAnimation from the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		pResMan->removeTexture2DAnimation(it->second->_mstrResourceTexture2DAnimationName);
+
+		delete it->second;
+		_mmapImageAnimateds.erase(it);
 	}
 
 }
