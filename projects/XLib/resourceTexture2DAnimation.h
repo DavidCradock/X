@@ -30,7 +30,8 @@ namespace X
 
 		// Binds the texture to the given texture unit
 		// uiTextureUnit should be between 0-7
-		void bind(unsigned int uiTextureUnit = 0);
+		// uiFrameNumber should be a valid frame number otherwise an exception occurs
+		void bind(unsigned int uiTextureUnit = 0, unsigned int uiFrameNumber = 0);
 
 		// Unbinds texturing for the specified texture unit
 		// uiTextureUnit should be between 0-7
@@ -38,6 +39,9 @@ namespace X
 
 		// Unbind all texture units
 		void unbindAll(void);
+
+		// Return total number of frames
+		unsigned int getNumFrames(void);
 
 		unsigned int _muiTextureID;
 		bool _mbFlipYaxis;		// Whether to flip the image data in during loading or not.

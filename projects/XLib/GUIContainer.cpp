@@ -78,6 +78,13 @@ namespace X
 			itProgressBar++;
 		}
 
+		// Render each image
+		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			itImage->second->render(this, strFramebufferToSampleFrom);
+			itImage++;
+		}
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -248,69 +255,16 @@ namespace X
 			itProgressBar++;
 		}
 
+		// Images
+// NOTHING TO UPDATE
+//		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+//		while (itImage != _mmapImages.end())
+//		{
+//			itImage->second->update(this, bContainerAcceptingMouseClicks);
+//			itImage++;
+//		}
+
 		return bMouseOver;
-	}
-
-	GUIButton* GUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
-	{
-		// If resource already exists
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
-		ThrowIfTrue(it != _mmapButtons.end(), "GUIContainer::addButton(" + strName + ") failed. The named object already exists.");
-		GUIButton* pNewRes = new GUIButton;
-		ThrowIfFalse(pNewRes, "GUIContainer::addButton(" + strName + ") failed. Could not allocate memory for the new object.");
-		pNewRes->mfPositionX = fPosX;
-		pNewRes->mfPositionY = fPosY;
-		pNewRes->mfWidth = fWidth;
-		pNewRes->mfHeight = fHeight;
-		pNewRes->mstrText = strText;
-		_mmapButtons[strName] = pNewRes;
-		return pNewRes;
-	}
-
-	GUIButton* GUIContainer::getButton(const std::string& strName)
-	{
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
-		ThrowIfTrue(it == _mmapButtons.end(), "GUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
-		return it->second;
-	}
-
-	void GUIContainer::removeButton(const std::string& strName)
-	{
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
-		if (it == _mmapButtons.end())
-			return;
-		delete it->second;
-		_mmapButtons.erase(it);
-	}
-
-	GUIText* GUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
-	{
-		// If resource already exists
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
-		ThrowIfTrue(it != _mmapTexts.end(), "GUIContainer::addText(" + strName + ") failed. The named object already exists.");
-		GUIText* pNewRes = new GUIText;
-		ThrowIfFalse(pNewRes, "GUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
-		pNewRes->mfPositionX = fPosX;
-		pNewRes->mfPositionY = fPosY;
-		pNewRes->mstrText = strText;
-		_mmapTexts[strName] = pNewRes;
-		return pNewRes;
-	}
-
-	GUIText* GUIContainer::getText(const std::string& strName)
-	{
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
-		ThrowIfTrue(it == _mmapTexts.end(), "GUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
-		return it->second;
-	}
-
-	void GUIContainer::removeText(const std::string& strName)
-	{
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
-		if (it == _mmapTexts.end())
-			return;
-		delete it->second;
-		_mmapTexts.erase(it);
 	}
 
 	void GUIContainer::setVisible(bool bVisible)
@@ -488,6 +442,68 @@ namespace X
 			_mvTextColour);
 	}
 
+	GUIButton* GUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it != _mmapButtons.end(), "GUIContainer::addButton(" + strName + ") failed. The named object already exists.");
+		GUIButton* pNewRes = new GUIButton;
+		ThrowIfFalse(pNewRes, "GUIContainer::addButton(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->mstrText = strText;
+		_mmapButtons[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUIButton* GUIContainer::getButton(const std::string& strName)
+	{
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it == _mmapButtons.end(), "GUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeButton(const std::string& strName)
+	{
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		if (it == _mmapButtons.end())
+			return;
+		delete it->second;
+		_mmapButtons.erase(it);
+	}
+
+	GUIText* GUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it != _mmapTexts.end(), "GUIContainer::addText(" + strName + ") failed. The named object already exists.");
+		GUIText* pNewRes = new GUIText;
+		ThrowIfFalse(pNewRes, "GUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mstrText = strText;
+		_mmapTexts[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUIText* GUIContainer::getText(const std::string& strName)
+	{
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it == _mmapTexts.end(), "GUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeText(const std::string& strName)
+	{
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		if (it == _mmapTexts.end())
+			return;
+		delete it->second;
+		_mmapTexts.erase(it);
+	}
+
 	GUITextEdit* GUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
@@ -613,4 +629,53 @@ namespace X
 		delete it->second;
 		_mmapProgressBars.erase(it);
 	}
+
+	GUIImage* GUIContainer::addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
+		ThrowIfTrue(it != _mmapImages.end(), "GUIContainer::addImage(" + strName + ") failed. The named object already exists.");
+		GUIImage* pNewRes = new GUIImage;
+		ThrowIfFalse(pNewRes, "GUIContainer::addImage(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrTexturename = strImageFilename;
+		_mmapImages[strName] = pNewRes;
+
+		// Add strImageFilename to the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		ResourceTexture2D *pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = pTex->mvDimensions.x;
+		if (fHeight < 0)
+			pNewRes->mfHeight = pTex->mvDimensions.y;
+
+		return pNewRes;
+	}
+
+	GUIImage* GUIContainer::getImage(const std::string& strName)
+	{
+		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
+		ThrowIfTrue(it == _mmapImages.end(), "GUIContainer::getImage(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeImage(const std::string& strName)
+	{
+		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
+		if (it == _mmapImages.end())
+			return;
+
+		// Remove _mstrImageFilename from the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		pResMan->removeTexture2D(it->second->_mstrTexturename);
+
+		delete it->second;
+		_mmapImages.erase(it);
+	}
+
 }

@@ -32,29 +32,37 @@ namespace X
 		pContainer1->mfPositionY = 412.0f;
 		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
 		
-		// Main testing container
-		GUIContainer* pContainer2 = pGUI->addContainer("Container2");
+		// Container Preview
+		GUIContainer* pContainer2 = pGUI->addContainer("ContainerPreview");
 		pContainer2->setDimensions(1024, 768);
+		// Centre position of container
 		pContainer2->setPosition((float)pWindow->getWidth() / 2 - 512, (float)pWindow->getHeight() / 2 - (768 / 2));
 	
-		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TEXTEDIT", 0, 45, 900, 38, "EditMe!12345678901234567890123456789012344567890XXXXXXXXXXXXXXXXXXXXXXXXXXX:)");
-		pTextEdit->setMaxChars(80);
+		// Add each widget and static text naming the widget type
+		// Text edit
+		pContainer2->addText("Text0", 0, 10, "GUITextEdit:");
+		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TextEdit", 140, 0, 100, 40, "TextEdit");
+		pTextEdit->setMaxChars(16);
 		pTextEdit->setIntegerInputOnly(false);
-		GUIButton* pButton = pContainer2->addButton("Button", 0, 90, 900, 30, "A really wide button!");
-		
-		GUISlider* pSliderV = pContainer2->addSlider("SliderV", 900, 100, 30, 500, 0.1f);
-		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 50, 200, 850, 240);
+		// Button
+		pContainer2->addText("Text1", 0, 60, "GUIButton:");
+		GUIButton* pButton = pContainer2->addButton("Button", 140, 60, 100, 30, "A button.");
+		// Line graph
+		pContainer2->addText("Text2", 0, 100, "GUILineGraph:");
 		GUIColour col;
+		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 140, 90, 200, 50);
 		pLineGraph->addDataset("FPS", col);
-		pContainer2->addText("FPS_MAX", 10, 180, "MAX");
-		pContainer2->addText("FPS_MIN", 10, 440, "MIN");
-		GUISlider* pSlider = pContainer2->addSlider("Slider", 10, 470, 200, 30, 0.1f);
-		pContainer2->addProgressBar("ProgressH", 10, 500, 400, 60);
-		pContainer2->addProgressBar("ProgressV", 500, 500, 60, 200);
+		// Slider
+		pContainer2->addText("Text3", 0, 160, "GUISlider H:");
+		pContainer2->addSlider("SliderH", 140, 160, 200, 30, 0.1f);
+		// Progress bar
+		pContainer2->addText("Text4", 0, 200, "GUIProgress H:");
+		pContainer2->addProgressBar("ProgressH", 140, 200, 200, 30);
+		// Image
+		pContainer2->addImage("Image", 140, 240, "data/DevApp/textures/image_test.png", -1, -1);
+
 
 		ResourceManager* pRM = ResourceManager::getPointer();
-
-
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
@@ -109,26 +117,21 @@ namespace X
 		// Update FPS linegraph
 		static float fTimeToAddNewValue = 0.0f;
 		fTimeToAddNewValue += fInc;
-		if (fTimeToAddNewValue >= 0.01f)
+		if (fTimeToAddNewValue >= 0.1f)
 		{
 			fTimeToAddNewValue = 0.0f;
-			pCont = pGUIMan->getContainer("Container2");
+			pCont = pGUIMan->getContainer("ContainerPreview");
 			GUILineGraph* pLineGraph = pCont->getLineGraph("FPS");
 			GUILineGraphDataSet* pDataSet = pLineGraph->getDataset("FPS");
 			pDataSet->addValue(timer.getFPS());
-			while (pDataSet->getNumValues() > 1024)
+			while (pDataSet->getNumValues() > 200)
 				pDataSet->removeValue();
-
-			// Update MIN/MAX text
-			pCont->getText("FPS_MAX")->mstrText = "MAX: " + std::to_string(pLineGraph->getDataset("FPS")->getHighestValue());
-			pCont->getText("FPS_MIN")->mstrText = "MIN: " + std::to_string(pLineGraph->getDataset("FPS")->getLowestValue());
 		}
 
 		// Update progress bars
-		pCont = pGUIMan->getContainer("Container2");
-		GUISlider* pSlider = pCont->getSlider("Slider");
+		pCont = pGUIMan->getContainer("ContainerPreview");
+		GUISlider* pSlider = pCont->getSlider("SliderH");
 		pCont->getProgressBar("ProgressH")->setProgress(pSlider->getTabPos());
-		pCont->getProgressBar("ProgressV")->setProgress(pSlider->getTabPos());
 
 		// Update line entity
 		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");

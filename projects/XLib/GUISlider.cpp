@@ -403,7 +403,7 @@ namespace X
 					}
 					else
 					{
-						float fTabTotalMovementAmount = mfHeight - _mfTabDims[2];
+						float fTabTotalMovementAmount = mfHeight - _mfTabDims[1];
 						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
 							fTabTotalMovementAmount = 0.0001f;
 						fTabPosOffset += vMouseDelta.y * (1.0f / fTabTotalMovementAmount);

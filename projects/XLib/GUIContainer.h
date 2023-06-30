@@ -7,6 +7,8 @@
 #include "GUISlider.h"
 #include "GUILineGraph.h"
 #include "GUIProgressBar.h"
+#include "GUIImage.h"
+#include "GUIImageAnimated.h"
 
 namespace X
 {
@@ -111,6 +113,23 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeProgressBar(const std::string& strName);
 
+		// Add static image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		// strImageFilename is the name of a file used to create a ResourceTexture2D resource added to ResourceManager.
+		// An image is simply that. It is not clickable. If you want an image which is clickable, use the GUIButtonImage widget
+		// If strImageFilename couldn't be loaded, an exception occurs
+		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
+		GUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUIImage* getImage(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeImage(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
@@ -121,6 +140,7 @@ namespace X
 		std::map<std::string, GUISlider*> _mmapSliders;				// Hashmap for each added slider
 		std::map<std::string, GUILineGraph*> _mmapLineGraphs;		// Hashmap for each added line graph
 		std::map<std::string, GUIProgressBar*> _mmapProgressBars;	// Hashmap for each added progress bar
+		std::map<std::string, GUIImage*> _mmapImages;				// Hashmap for each added image
 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not

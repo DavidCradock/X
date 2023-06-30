@@ -13,7 +13,7 @@ namespace X
 		_mbFlipYaxis = bFlipYaxis;
 
 		// Upon construction, we need to load each image in and store inside large textures.
-		_packImagesIntoLargeTextures(vecStrImageFilenames, bFlipYaxis);
+		_packImagesIntoLargeImages(vecStrImageFilenames, bFlipYaxis);
 
 		onGLContextCreated();
 	}
@@ -50,8 +50,10 @@ namespace X
 		_muiTextureID = 0;
 	}
 
-	void ResourceTexture2DAnimation::bind(unsigned int uiTextureUnit)
+	void ResourceTexture2DAnimation::bind(unsigned int uiTextureUnit, unsigned int uiFrameNumber)
 	{
+		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "ResourceTexture2DAnimation::bind() given invalid frame number.");
+
 		switch (uiTextureUnit)
 		{
 		case 0:
@@ -126,6 +128,11 @@ namespace X
 		glActiveTexture(GL_TEXTURE0);	glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	unsigned int ResourceTexture2DAnimation::getNumFrames(void)
+	{
+		return unsigned int(_mvAnimationFrames.size());
+	}
+
 	void ResourceTexture2DAnimation::_packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		// Make sure the vector is valid
@@ -139,7 +146,6 @@ namespace X
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
 		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
-
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
 		std::vector<Image*> vImages;	// Holds each individual image
@@ -183,4 +189,6 @@ namespace X
 		}
 
 	}
+
+
 }
