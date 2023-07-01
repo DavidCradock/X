@@ -68,6 +68,14 @@ namespace X
 			itLine->second.pResource->onGLContextToBeDestroyed();
 			itLine++;
 		}
+
+		// Texture animated
+		std::map<std::string, SResourceTexture2DAnimation>::iterator itTextureAnim = _mmapResTextures2DAnimation.begin();
+		while (itTextureAnim != _mmapResTextures2DAnimation.end())
+		{
+			itTextureAnim->second.pResource->onGLContextToBeDestroyed();
+			itTextureAnim++;
+		}
 	}
 
 	void ResourceManager::onGLContextRecreated(void)
@@ -128,6 +136,14 @@ namespace X
 		{
 			itLine->second.pResource->onGLContextCreated();
 			itLine++;
+		}
+
+		// Texture animated
+		std::map<std::string, SResourceTexture2DAnimation>::iterator itTextureAnim = _mmapResTextures2DAnimation.begin();
+		while (itTextureAnim != _mmapResTextures2DAnimation.end())
+		{
+			itTextureAnim->second.pResource->onGLContextCreated();
+			itTextureAnim++;
 		}
 	}
 

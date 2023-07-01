@@ -28,7 +28,7 @@ namespace X
 		// Free all OpenGL context dependent objects before the OpenGL context is destroyed.
 		void onGLContextToBeDestroyed(void);
 
-		// Binds the texture to the given texture unit
+		// Binds the correct large texture to the given texture unit, depending upon given frame number
 		// uiTextureUnit should be between 0-7
 		// uiFrameNumber should be a valid frame number otherwise an exception occurs
 		void bind(unsigned int uiTextureUnit = 0, unsigned int uiFrameNumber = 0);
@@ -43,9 +43,12 @@ namespace X
 		// Return total number of frames
 		unsigned int getNumFrames(void);
 
-		unsigned int _muiTextureID;
+		// Sets passed vecs to hold min and max texture coordinates within large texture for the specified frame number
+		// If an invalid frame number is given, an exception occurs.
+		void getTextureCoords(unsigned int uiFrameNumber, glm::vec2& vTCMin, glm::vec2& vTCMax);
+
 		bool _mbFlipYaxis;		// Whether to flip the image data in during loading or not.
-		glm::vec2 mvDimensions;	// Dimensions of the texture
+		glm::vec2 mvDimensions;	// Dimensions of a single texture
 	private:
 
 		// Called during construction to load in each of the images contained in the constructor's vecStrImageFilenames
@@ -61,6 +64,6 @@ namespace X
 		};
 		std::vector<AnimationFrame> _mvAnimationFrames;	// Stores information for each animation frame (texture coordinates and which large texture it's located in)
 		std::vector<unsigned int> _mvLargeTextureIDs;	// OpenGL texture ID for each generated large texture holding the smaller images.
-		std::vector<Image> _mvLargeImages;				// The images holding multiple images, used for generating the OpenGL texture/s.
+		std::vector<Image*> _mvLargeImages;				// The images holding multiple images, used for generating the OpenGL texture/s.
 	};
 }

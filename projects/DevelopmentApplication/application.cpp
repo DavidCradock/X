@@ -60,7 +60,9 @@ namespace X
 		pContainer2->addProgressBar("ProgressH", 140, 200, 200, 30);
 		// Image
 		pContainer2->addImage("Image", 140, 240, "data/DevApp/textures/image_test.png", -1, -1);
-
+		// Animatated image
+		std::vector<std::string> vImageFilenames = getFilesInDir("data/DevApp/textures/anim_test_320x140x180/", false);
+		pContainer2->addImageAnimated("AnimatedImage", 140, 500, vImageFilenames, -1.0f, -1.0f);
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 		timer.setAveragedFPSRate(1);	// Once every X seconds

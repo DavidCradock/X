@@ -9,7 +9,6 @@ namespace X
 
 	ResourceTexture2DAnimation::ResourceTexture2DAnimation(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
-		_muiTextureID = 0;
 		_mbFlipYaxis = bFlipYaxis;
 
 		// Upon construction, we need to load each image in and store inside large textures.
@@ -25,29 +24,34 @@ namespace X
 
 	void ResourceTexture2DAnimation::onGLContextCreated(void)
 	{
-		Image image;
-//		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "ResourceTexture2DAnimation::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
-		mvDimensions.x = (float)image.getWidth();
-		mvDimensions.y = (float)image.getHeight();
-		glGenTextures(1, &_muiTextureID);
-		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		// For each of the large images, create a texture
+		for (int i = 0; i < _mvLargeTextureIDs.size(); i++)
+		{
+//			mvDimensions.x = (float)_mvLargeImages[i]->getWidth();
+//			mvDimensions.y = (float)_mvLargeImages[i]->getHeight();
+			glGenTextures(1, &_mvLargeTextureIDs[i]);
+			glBindTexture(GL_TEXTURE_2D, _mvLargeTextureIDs[i]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		if (3==image.getNumChannels())
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getData());
-		else  // We'll assume 4
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
-
-		glGenerateMipmap(GL_TEXTURE_2D);
+			if (3 == _mvLargeImages[i]->getNumChannels())
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _mvLargeImages[i]->getWidth(), _mvLargeImages[i]->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, _mvLargeImages[i]->getData());
+			else  // We'll assume 4
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _mvLargeImages[i]->getWidth(), _mvLargeImages[i]->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, _mvLargeImages[i]->getData());
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
 	}
 
 	void ResourceTexture2DAnimation::onGLContextToBeDestroyed(void)
 	{
-		glDeleteTextures(1, &_muiTextureID);
-		_muiTextureID = 0;
+		// For each of the large images, delete texture
+		for (int i = 0; i < _mvLargeTextureIDs.size(); i++)
+		{
+			glDeleteTextures(1, &_mvLargeTextureIDs[i]);
+			_mvLargeTextureIDs[i] = 0;
+		}
 	}
 
 	void ResourceTexture2DAnimation::bind(unsigned int uiTextureUnit, unsigned int uiFrameNumber)
@@ -81,7 +85,7 @@ namespace X
 			glActiveTexture(GL_TEXTURE7);
 			break;
 		}
-		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
+		glBindTexture(GL_TEXTURE_2D, _mvLargeTextureIDs[_mvAnimationFrames[uiFrameNumber].uiTextureNumber]);
 	}
 
 	void ResourceTexture2DAnimation::unbind(unsigned int uiTextureUnit)
@@ -133,6 +137,13 @@ namespace X
 		return unsigned int(_mvAnimationFrames.size());
 	}
 
+	void ResourceTexture2DAnimation::getTextureCoords(unsigned int uiFrameNumber, glm::vec2& vTCMin, glm::vec2& vTCMax)
+	{
+		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "ResourceTexture2DAnimation::getTextureCoords() given invalid frame number.");
+		vTCMin = _mvAnimationFrames[uiFrameNumber].vTCMin;
+		vTCMax = _mvAnimationFrames[uiFrameNumber].vTCMax;
+	}
+
 	void ResourceTexture2DAnimation::_packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		// Make sure the vector is valid
@@ -143,24 +154,25 @@ namespace X
 		int iImageWidth, iImageHeight, iImageChannels;
 		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to determined dimensions of first image.");
 
+		// Set dimensions of a single texture
+		mvDimensions.x = (float)iImageWidth;
+		mvDimensions.y = (float)iImageHeight;
+
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
 		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
+		iMaxTextureDims = 700;	// TEMP pretend max size is small
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
-		// Compute total number of textures needed and their dimensions
-//		int iMaxNumImagesAlongX = iMaxTextureDims / iImageWidth;
-//		int iMaxNumImagesAlongY = iMaxTextureDims / iImageHeight;
-//		int iMaxNumImagesPerLargeImage = iMaxNumImagesAlongX * iMaxNumImagesAlongY;
-//		int iTotalNumberOfImages = vecStrImageFilenames.size();
-		
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
 		std::vector<Image*> vImages;	// Holds each individual image
 		AnimationFrame animFrame;		// Holds texture number and positions (positions are converted to texture coordinates when we know large image dimensions)
 		animFrame.uiTextureNumber = 0;
 		animFrame.vTCMin = glm::vec2(0.0f, 0.0f);
 		animFrame.vTCMax = glm::vec2((float)iImageWidth, (float)iImageHeight);
-		glm::vec2 vMaxLargeImageDims;
-		glm::vec2 vCurLargeImageDims = glm::vec2(0.0f, (float)iImageHeight);
+		std::vector<glm::vec2> vecLargeImageDims;
+		vecLargeImageDims.push_back(glm::vec2(0, (float)iImageHeight));
+		int iCurLargeTex = 0;
+
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
 		{
 			// Create new image and store in vImages
@@ -177,35 +189,32 @@ namespace X
 			// Make sure the number of channels is the same as the first image
 			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
 
-			// Compute dimensions of large textures and number
 			// If this new image fits within iMaxTextureDims
 			if (animFrame.vTCMax.x <= iMaxTextureDims)
 			{
 				// Add animation frame with current image positions in pixels
 				_mvAnimationFrames.push_back(animFrame);
+				vecLargeImageDims[iCurLargeTex].x = animFrame.vTCMax.x;
 				animFrame.vTCMin.x += (float)iImageWidth;
 				animFrame.vTCMax.x += (float)iImageWidth;
-				vCurLargeImageDims.x += (float)iImageWidth;
 			}
-			else
+			else // Doesn't fit along X 
 			{
-				// Move to next Y postion in large image
+				// Move to next Y position in large image
 				animFrame.vTCMin.x = 0.0f;
 				animFrame.vTCMax.x = (float)iImageWidth;
 				animFrame.vTCMin.y += (float)iImageHeight;
 				animFrame.vTCMax.y += (float)iImageHeight;
 				
-
 				// If animation with new current positions on new row fits within iMaxTextureDims
 				if (animFrame.vTCMax.y <= iMaxTextureDims)
 				{
 					// Add animation frame with current image positions in pixels
 					_mvAnimationFrames.push_back(animFrame);
-
+					vecLargeImageDims[iCurLargeTex].y = animFrame.vTCMax.y;
 					// Move position to next image
 					animFrame.vTCMin.x += (float)iImageWidth;
 					animFrame.vTCMax.x += (float)iImageWidth;
-					vCurLargeImageDims.y += (float)iImageHeight;
 				}
 				else // We need a new large image
 				{
@@ -214,9 +223,9 @@ namespace X
 					animFrame.vTCMin.y = 0.0f;
 					animFrame.vTCMax.y = (float)iImageHeight;
 					animFrame.uiTextureNumber++;
-
-					vMaxLargeImageDims = vCurLargeImageDims;
-					vCurLargeImageDims = glm::vec2(0.0f, (float)iImageHeight);
+					_mvAnimationFrames.push_back(animFrame);
+					vecLargeImageDims.push_back(glm::vec2((float)iImageWidth, (float)iImageHeight));
+					iCurLargeTex++;
 				}
 			}
 		}
@@ -225,26 +234,37 @@ namespace X
 		// vCurLargeImageDims now holds the last image's dims needed
 		
 		// Create each of the large images
-		Image img;
-		int iNumImages = _mvAnimationFrames[_mvAnimationFrames.size() - 1].uiTextureNumber + 1;
-		for (int iLargeImage = 0; iLargeImage < iNumImages - 1; iLargeImage++)
+		int iNumImages = (int)vecLargeImageDims.size();
+		for (int iLargeImage = 0; iLargeImage < iNumImages; iLargeImage++)
 		{
-			_mvLargeImages.push_back(img);
-			_mvLargeImages[iLargeImage].createBlank(vMaxLargeImageDims.x, vMaxLargeImageDims.y, iImageChannels);
+			Image* pNewImage = new Image;
+			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed to allocated memory for large image.");
+			_mvLargeImages.push_back(pNewImage);
+			_mvLargeImages[iLargeImage]->createBlank((unsigned int)vecLargeImageDims[iLargeImage].x, (unsigned int)vecLargeImageDims[iLargeImage].y, (unsigned short)iImageChannels);
 		}
-		_mvLargeImages.push_back(img);
-		_mvLargeImages[iNumImages - 1].createBlank(vCurLargeImageDims.x, vCurLargeImageDims.y, iImageChannels);
-
 
 		// Convert stored values in animFrame to texture coordinates (0-1) and
 		// copy each individual image into the correct position of correct large image
-		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
+		for (unsigned int iImage = 0; iImage < _mvAnimationFrames.size(); iImage++)
 		{
-			_mvAnimationFrames[iImage].uiTextureNumber
-			animFrame.vTCMin.x = 0.1f;
+			// Copy small image into large image
+			vImages[iImage]->copyRectTo(
+				*_mvLargeImages[_mvAnimationFrames[iImage].uiTextureNumber],
+				0, 0,
+				iImageWidth, iImageHeight,
+				(int)_mvAnimationFrames[iImage].vTCMin.x,
+				(int)_mvAnimationFrames[iImage].vTCMin.y);
 
+			// Now convert pixel positions into texture coordinates
+			glm::vec2 v2TexelSize;
+			v2TexelSize.x = 1.0f / _mvLargeImages[_mvAnimationFrames[iImage].uiTextureNumber]->getWidth();
+			v2TexelSize.y = 1.0f / _mvLargeImages[_mvAnimationFrames[iImage].uiTextureNumber]->getHeight();
+
+			_mvAnimationFrames[iImage].vTCMin.x *= v2TexelSize.x;
+			_mvAnimationFrames[iImage].vTCMin.y *= v2TexelSize.y;
+			_mvAnimationFrames[iImage].vTCMax.x *= v2TexelSize.x;
+			_mvAnimationFrames[iImage].vTCMax.y *= v2TexelSize.y;
 		}
-
 
 		// Free all temporary images
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
@@ -252,7 +272,10 @@ namespace X
 			delete vImages[iImage];
 		}
 
+		// Create texture IDs for each of the large images
+		for (int i = 0; i < _mvLargeImages.size(); i++)
+		{
+			_mvLargeTextureIDs.push_back(0);
+		}
 	}
-
-
 }

@@ -6,7 +6,13 @@
 
 namespace X
 {
-	void GUIImage::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	GUIImageAnimated::GUIImageAnimated()
+	{
+		_mfFramesPerSecond = 60.0f;
+		_mfCurrentFrame = 0.0f;
+	}
+
+	void GUIImageAnimated::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 
@@ -32,7 +38,11 @@ namespace X
 		ResourceTexture2DAnimation* pTexColour = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
 
 		// Bind textures
-		pTexColour->bind(0, 0);
+		pTexColour->bind(0, (int)_mfCurrentFrame);
+
+		// Get texture coordinates for current frame
+		glm::vec2 vTCMin, vTCMax;
+		pTexColour->getTextureCoords((int)_mfCurrentFrame, vTCMin, vTCMax);
 
 		// Render the image
 		pTri->removeGeom();
@@ -40,10 +50,10 @@ namespace X
 			glm::vec2(pContainer->mfPositionX + mfPositionX, pContainer->mfPositionY + mfPositionY),	// Position
 			glm::vec2(mfWidth, mfHeight),			// Dimensions
 			mColour.get(),							// Vertex colour
-			glm::vec2(0.0f, 1.0f),
-			glm::vec2(1.0f, 1.0f),
-			glm::vec2(1.0f, 0.0f),
-			glm::vec2(0.0f, 0.0f));
+			glm::vec2(vTCMin.x, vTCMax.y),
+			glm::vec2(vTCMax.x, vTCMax.y),
+			glm::vec2(vTCMax.x, vTCMin.y),
+			glm::vec2(vTCMin.x, vTCMin.y));
 
 		pTri->update();
 		pTri->draw();
@@ -54,9 +64,21 @@ namespace X
 
 	}
 
-	void GUIImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void GUIImageAnimated::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceTexture2DAnimation* pTex = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
 
+		_mTimer.update();
+		float fSecPast = _mTimer.getSecondsPast();
+		_mfCurrentFrame += fSecPast * _mfFramesPerSecond;
+		float fNumFrames = (float)pTex->getNumFrames();
+		while (_mfCurrentFrame >= fNumFrames)
+			_mfCurrentFrame -= fNumFrames;
 	}
 
+	void GUIImageAnimated::setFramesPerSecond(float fFramesPerSecond)
+	{
+		_mfFramesPerSecond = fFramesPerSecond;
+	}
 }
