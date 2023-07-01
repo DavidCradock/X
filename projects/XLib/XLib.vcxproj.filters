@@ -35,6 +35,9 @@
     <Filter Include="2D">
       <UniqueIdentifier>{30930f28-af09-48c8-986b-b056a207f254}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\TODO">
+      <UniqueIdentifier>{29a893ac-a9c1-4364-9d18-2414c52e6e7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frustum.h" />
@@ -161,15 +164,6 @@
     <ClInclude Include="GUIContainer.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIDraggableDock.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIDraggableItem.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIImageFB.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIImage.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -182,19 +176,10 @@
     <ClInclude Include="GUIManager.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIMenu.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIProgressBar.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUISlider.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITab.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITaskbar.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIText.h">
@@ -203,13 +188,7 @@
     <ClInclude Include="GUITextEdit.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUITextScroll.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUITheme.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITabContainer.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIBaseObject.h">
@@ -218,11 +197,35 @@
     <ClInclude Include="GUIColour.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUITooltip.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="resourceTexture2DAnimation.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableDock.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableItem.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageFB.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIMenu.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITab.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITabContainer.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITaskbar.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextScroll.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITooltip.h">
+      <Filter>GUI\TODO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,15 +329,6 @@
     <ClCompile Include="GUIContainer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIDraggableDock.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIDraggableItem.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIImageFB.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUIImage.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -347,19 +341,10 @@
     <ClCompile Include="GUIManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIMenu.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUIProgressBar.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUISlider.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITab.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITaskbar.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIText.cpp">
@@ -368,13 +353,7 @@
     <ClCompile Include="GUITextEdit.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUITextScroll.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUITheme.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITabContainer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIBaseObject.cpp">
@@ -383,11 +362,35 @@
     <ClCompile Include="GUIColour.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUITooltip.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="resourceTexture2DAnimation.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableDock.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableItem.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageFB.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIMenu.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITab.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITabContainer.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITaskbar.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextScroll.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITooltip.cpp">
+      <Filter>GUI\TODO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
