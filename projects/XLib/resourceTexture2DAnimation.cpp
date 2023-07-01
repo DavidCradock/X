@@ -27,8 +27,6 @@ namespace X
 		// For each of the large images, create a texture
 		for (int i = 0; i < _mvLargeTextureIDs.size(); i++)
 		{
-//			mvDimensions.x = (float)_mvLargeImages[i]->getWidth();
-//			mvDimensions.y = (float)_mvLargeImages[i]->getHeight();
 			glGenTextures(1, &_mvLargeTextureIDs[i]);
 			glBindTexture(GL_TEXTURE_2D, _mvLargeTextureIDs[i]);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -160,7 +158,6 @@ namespace X
 
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
 		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
-		iMaxTextureDims = 700;	// TEMP pretend max size is small
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
@@ -194,7 +191,8 @@ namespace X
 			{
 				// Add animation frame with current image positions in pixels
 				_mvAnimationFrames.push_back(animFrame);
-				vecLargeImageDims[iCurLargeTex].x = animFrame.vTCMax.x;
+				if (vecLargeImageDims[iCurLargeTex].x < animFrame.vTCMax.x)
+					vecLargeImageDims[iCurLargeTex].x = animFrame.vTCMax.x;
 				animFrame.vTCMin.x += (float)iImageWidth;
 				animFrame.vTCMax.x += (float)iImageWidth;
 			}
@@ -276,6 +274,10 @@ namespace X
 		for (int i = 0; i < _mvLargeImages.size(); i++)
 		{
 			_mvLargeTextureIDs.push_back(0);
+
+			// TEMP Save each large image
+//			std::string strName = "Image_" + std::to_string(i) + ".png";
+//			_mvLargeImages[i]->saveAsPNG(strName);
 		}
 	}
 }
