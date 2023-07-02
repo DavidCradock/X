@@ -261,4 +261,47 @@ namespace X
 		float invs = 1 / s;
 		return glm::quat(s * 0.5f, rotationAxis.x * invs, rotationAxis.y * invs, rotationAxis.z * invs);
 	}
+
+	void getMemInfo(SMemInfo& memInfo)
+	{
+		SecureZeroMemory(&memInfo, sizeof(SMemInfo));
+
+		HANDLE hAppProcess = GetCurrentProcess();
+		if (!hAppProcess)	// Found application process handle?
+			return;
+
+		// Retreive and store process mem usage
+		PROCESS_MEMORY_COUNTERS_EX pmc;
+		if (GetProcessMemoryInfo(hAppProcess, (PPROCESS_MEMORY_COUNTERS)&pmc, sizeof(PROCESS_MEMORY_COUNTERS_EX)))
+		{
+			memInfo.proc.iPageFaultCount = (unsigned int)pmc.PageFaultCount;
+			memInfo.proc.iPagefileUsage = (unsigned int)pmc.PagefileUsage;
+			memInfo.proc.iPeakPagefileUsage = (unsigned int)pmc.PeakPagefileUsage;
+			memInfo.proc.iPeakWorkingSetSize = (unsigned int)pmc.PeakWorkingSetSize;
+			memInfo.proc.iQuotaNonPagedPoolUsage = (unsigned int)pmc.QuotaNonPagedPoolUsage;
+			memInfo.proc.iQuotaPagedPoolUsage = (unsigned int)pmc.QuotaPagedPoolUsage;
+			memInfo.proc.iQuotaPeakNonPagedPoolUsage = (unsigned int)pmc.QuotaPeakNonPagedPoolUsage;
+			memInfo.proc.iQuotaPeakPagedPoolUsage = (unsigned int)pmc.QuotaPeakPagedPoolUsage;
+			memInfo.proc.iWorkingSetSize = (unsigned int)pmc.WorkingSetSize;
+			memInfo.proc.iPrivateWorkingSet = (unsigned int)pmc.PeakWorkingSetSize;
+		}
+
+		PERFORMACE_INFORMATION pin;
+		if (GetPerformanceInfo(&pin, sizeof(PERFORMACE_INFORMATION)))
+		{
+			memInfo.os.iCommitLimit = (unsigned int)pin.CommitLimit;
+			memInfo.os.iCommitPeak = (unsigned int)pin.CommitPeak;
+			memInfo.os.iCommitTotal = (unsigned int)pin.CommitTotal;
+			memInfo.os.iHandleCount = (unsigned int)pin.HandleCount;
+			memInfo.os.iKernelNonpaged = (unsigned int)pin.KernelNonpaged;
+			memInfo.os.iKernelPaged = (unsigned int)pin.KernelPaged;
+			memInfo.os.iKernelTotal = (unsigned int)pin.KernelTotal;
+			memInfo.os.iPageSize = (unsigned int)pin.PageSize;
+			memInfo.os.iPhysicalAvailable = (unsigned int)pin.PhysicalAvailable;
+			memInfo.os.iPhysicalTotal = (unsigned int)pin.PhysicalTotal;
+			memInfo.os.iProcessCount = (unsigned int)pin.ProcessCount;
+			memInfo.os.iSystemCache = (unsigned int)pin.SystemCache;
+			memInfo.os.iThreadCount = (unsigned int)pin.ThreadCount;
+		}
+	}
 }

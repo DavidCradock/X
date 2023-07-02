@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <vector>
 #include <windows.h>
+#include <psapi.h>		// For GetProcessMemoryInfo() in utilities.h (Needs to be included after windows.h
 
 // Modern  multithreading basics
 #include <mutex>

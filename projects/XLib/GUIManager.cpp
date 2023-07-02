@@ -5,6 +5,7 @@
 #include "window.h"
 #include "resourceManager.h"
 #include "audioManager.h"
+#include "utilities.h"
 
 namespace X
 {
@@ -277,20 +278,23 @@ namespace X
 	void GUIManager::_createDefaultContainers(void)
 	{
 		GUIContainer* pCont = addContainer("X:Default:Statistics");
-		pCont->setDimensions(450.0f, 240.0f);
+		pCont->setDimensions(450.0f, 480.0f);
 		pCont->setPosition(0.0f, 0.0f);
 		pCont->setVisible(false);
 		pCont->mstrTitleText = "Statistics";
 
-		GUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 240);
+		GUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 120);
 		GUIColour col;
-		col.set(1.0f, 1.0f, 1.0f, 1.0f);	pLineGraph->addDataset("FPS", col);
-		col.set(1.0f, 1.0f, 1.0f, 0.5f);	pLineGraph->addDataset("FPSAVR", col);
+		col.set(1.0f, 1.0f, 1.0f, 0.5f);	pLineGraph->addDataset("FPS", col);
+		col.set(1.0f, 1.0f, 1.0f, 1.0f);	pLineGraph->addDataset("FPSAVR", col);
 		pCont->addText("Text_FPSMax", 330, 0, "FPSMax: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
-		pCont->addText("Text_FPSMin", 330, 240, "FPSMin: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
-		pCont->addText("Text_FPS", 330, 100, "FPS: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
-		pCont->addText("Text_FPSAVR", 330, 140, "FPSAVR: ")->setColour(false, 1.0f, 1.0f, 1.0f, 0.5f);
+		pCont->addText("Text_FPSMin", 330, 120, "FPSMin: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
+		pCont->addText("Text_FPS", 330, 100, "FPS: ")->setColour(false, 1.0f, 1.0f, 1.0f, 0.5f);
+		pCont->addText("Text_FPSAVR", 330, 140, "FPSAVR: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
 		_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
+
+		pCont->addText("Text_Mem1", 0, 160, "");
+		pCont->addText("Text_Mem2", 0, 180, "");
 	}
 
 	void GUIManager::_updateDefaultContainers(void)
@@ -315,9 +319,9 @@ namespace X
 				pDataSetFPS->addValue(_mTimer.getFPS());
 				pDataSetFPSAVR->addValue(_mTimer.getFPSAveraged());
 
-				while (pDataSetFPS->getNumValues() > 320)
+				while (pDataSetFPS->getNumValues() > 160)
 					pDataSetFPS->removeValue();
-				while (pDataSetFPSAVR->getNumValues() > 320)
+				while (pDataSetFPSAVR->getNumValues() > 160)
 					pDataSetFPSAVR->removeValue();
 
 				// Set min and max text
@@ -342,15 +346,21 @@ namespace X
 
 				// Set Text_FPSMin position
 				float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
-				pText->mfPositionY = 240.0f - fTextHeight;
+				pText->mfPositionY = 120.0f - fTextHeight;
 
 				// Set text values
 				pText = pCont->getText("Text_FPS");
 				pText->mstrText = "FPS: " + std::to_string((int)_mTimer.getFPS());
-				pText->mfPositionY = 120.0f - fTextHeight * 2.0f;
+				pText->mfPositionY = 60.0f - (fTextHeight * 1.0f);
 				pText = pCont->getText("Text_FPSAVR");
 				pText->mstrText = "FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged());
-				pText->mfPositionY = 120.0f - fTextHeight;
+				pText->mfPositionY = 60.0f - (fTextHeight * 0.0f);
+
+				// Memory text
+				SMemInfo memInfo;
+				getMemInfo(memInfo);
+				pCont->getText("Text_Mem1")->mstrText = "MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB";
+				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateWorkingSet: " + std::to_string((((memInfo.proc.iWorkingSetSize - memInfo.proc.iPrivateWorkingSet) / 1024) / 1024)) + "MB";
 			}
 		}
 	}

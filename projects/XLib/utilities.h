@@ -180,4 +180,45 @@ namespace X
 	// Given two vectors, returns the rotation quaternion needed to rotate v1 to match v2
 	glm::quat rotationBetweenVectors(glm::vec3 v1, glm::vec3 v2);
 
+	// Holds system memory information which is set by getMemInfo()
+	struct SMemInfo
+	{
+		// Holds process memory usage 
+		struct SMemProcess
+		{
+			unsigned int iPageFaultCount;				// The number of page faults.
+			unsigned int iPeakWorkingSetSize;			// The peak working set size. 
+			unsigned int iWorkingSetSize;				// The current working set size. 
+			unsigned int iQuotaPeakPagedPoolUsage;		// The peak paged pool usage. 
+			unsigned int iQuotaPagedPoolUsage;			// The current paged pool usage. 
+			unsigned int iQuotaPeakNonPagedPoolUsage;	// The peak nonpaged pool usage. 
+			unsigned int iQuotaNonPagedPoolUsage;		// The current nonpaged pool usage. 
+			unsigned int iPagefileUsage;				// The current pagefile usage. 
+			unsigned int iPeakPagefileUsage;			// The peak pagefile usage.
+			unsigned int iPrivateWorkingSet;			// This is what's shown in the taskmanager for each process (in bytes)
+		};
+
+		// Holds OS memory usage
+		struct SMemOS
+		{
+			unsigned int iCommitTotal;			// Total number of pages committed by the system. 
+			unsigned int iCommitLimit;			// Current maximum number of page commits that can be performed by the system. This number can change if memory is added or deleted, or if pagefiles have grown, shrunk, or been added. 
+			unsigned int iCommitPeak;			// Maximum number of page commit totals that have occurred since the last reboot. 
+			unsigned int iPhysicalTotal;		// Total amount, in pages, of physical memory. 
+			unsigned int iPhysicalAvailable;	// Amount, in pages, of physical memory available to user processes. 
+			unsigned int iSystemCache;			// Total amount, in pages, of system cache memory. 
+			unsigned int iKernelTotal;			// Total amount, in pages, of the sum of the paged and nonpaged kernel pools. 
+			unsigned int iKernelPaged;			// Total amount, in pages, of the paged kernel pool. 
+			unsigned int iKernelNonpaged;		// Total amount, in pages, of the nonpaged kernel pool. 
+			unsigned int iPageSize;				// Size, in bytes, of a page. 
+			unsigned int iHandleCount;			// Total number of open handles. 
+			unsigned int iProcessCount;			// Total number of processes. 
+			unsigned int iThreadCount;			// Total number of threads. 
+		};
+		SMemProcess proc;		// Process information
+		SMemOS os;				// Operating system information
+	};
+
+	// Places memory information about the process and system into the given SMemInfo structure
+	void getMemInfo(SMemInfo& memInfo);
 }
