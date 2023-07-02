@@ -360,7 +360,7 @@ namespace X
 				SMemInfo memInfo;
 				getMemInfo(memInfo);
 				pCont->getText("Text_Mem1")->mstrText = "MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB";
-				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateWorkingSet: " + std::to_string((((memInfo.proc.iWorkingSetSize - memInfo.proc.iPrivateWorkingSet) / 1024) / 1024)) + "MB";
+				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateWorkingSet: " + std::to_string((((memInfo.proc.iPrivateWorkingSet) / 1024) / 1024)) + "MB";
 			}
 		}
 	}
