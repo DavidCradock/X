@@ -84,6 +84,9 @@ namespace X
 	// we have some future proofing.
 	// Scaling of the GUI is set with a single float value. Values should be 1.0f, 0.5f, 0.25f, 0.125f for optimal appearance, but can be set to
 	// any value.
+	//
+	// There are also some default containers which can be shown (hidden by default) and they are named as follows...
+	// X:Default:Statistics		// This shows FPS counter, also as a graph
 	// 
 	// Implementation details:
 	// Containers are Z sorted and rendered one at a time, along with their widgets.
@@ -96,6 +99,7 @@ namespace X
 	{
 	public:
 		friend class GUIContainer;
+		friend class ApplicationManager;
 		GUIManager();
 
 		// Updates and renders the GUI
@@ -181,8 +185,23 @@ namespace X
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
 		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
 		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
-		Timer mTimer;												// Timer object used for time based stuff.
+		Timer _mTimer;												// Timer object used for time based stuff.
 		bool _mbWindowBeingMoved;									// This is used to prevent multiple windows being moved
 		float _mfAudioVol;											// Audio volume 0-1 range
+
+		// Creates the default containers which are hidden by default
+		// Called from ApplicationManager mainloop
+		void _createDefaultContainers(void);
+
+		// Updates the default containers if they are shown
+		// Called from render
+		void _updateDefaultContainers(void);
+
+		struct SDefaultContainerStatistics
+		{
+			float fAddValueToLinegraphDataset;
+		};
+		SDefaultContainerStatistics _mDefContStatistics;
+
 	};
 }

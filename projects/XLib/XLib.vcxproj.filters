@@ -225,6 +225,9 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIButtonImage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageDepthbuffer.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
   </ItemGroup>
@@ -390,6 +393,9 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIButtonImage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageDepthbuffer.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
   </ItemGroup>

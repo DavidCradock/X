@@ -67,7 +67,11 @@ namespace X
 			"data/DevApp/textures/buttonImageUp.png",
 			"data/DevApp/textures/buttonImageOver.png",
 			"data/DevApp/textures/buttonImageDown.png", -1.0f, -1.0f);
+		// Depth buffer
+		pContainer2->addImageDepthbuffer("DepthBuffer", 150, 480, "X:shadows", 200, 200);
 
+		// Show "X:Default:Statistics" container
+		pGUI->getContainer("X:Default:Statistics")->setVisible(true);
 
 
 

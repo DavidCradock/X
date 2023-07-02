@@ -20,7 +20,6 @@ namespace X
 		pTheme->addAudioToManager();
 		setAudioVol(1.0f);
 		_mbWindowBeingMoved = false;
-
 	}
 
 	void GUIManager::render(const std::string& strFramebufferToSampleFrom)
@@ -28,7 +27,7 @@ namespace X
 		InputManager* pInput = InputManager::getPointer();
 
 		// Update the timer object
-		mTimer.update();
+		_mTimer.update();
 
 		// Update each container
 		// Go through each container, starting with the one at the front first
@@ -76,6 +75,8 @@ namespace X
 			it++;
 		}
 		
+		// Update the default containers if they are shown
+		_updateDefaultContainers();
 	}
 
 	void GUIManager::setScale(float fScalingValue)
@@ -252,7 +253,6 @@ namespace X
 		}
 	}
 
-
 	bool GUIManager::getWindowBeingMoved(void)
 	{
 		return _mbWindowBeingMoved;
@@ -272,5 +272,86 @@ namespace X
 	float GUIManager::getAudioVol(void)
 	{
 		return _mfAudioVol;
+	}
+
+	void GUIManager::_createDefaultContainers(void)
+	{
+		GUIContainer* pCont = addContainer("X:Default:Statistics");
+		pCont->setDimensions(450.0f, 240.0f);
+		pCont->setPosition(0.0f, 0.0f);
+		pCont->setVisible(false);
+		pCont->mstrTitleText = "Statistics";
+
+		GUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 240);
+		GUIColour col;
+		col.set(1.0f, 1.0f, 1.0f, 1.0f);	pLineGraph->addDataset("FPS", col);
+		col.set(1.0f, 1.0f, 1.0f, 0.5f);	pLineGraph->addDataset("FPSAVR", col);
+		pCont->addText("Text_FPSMax", 330, 0, "FPSMax: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
+		pCont->addText("Text_FPSMin", 330, 240, "FPSMin: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
+		pCont->addText("Text_FPS", 330, 100, "FPS: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
+		pCont->addText("Text_FPSAVR", 330, 140, "FPSAVR: ")->setColour(false, 1.0f, 1.0f, 1.0f, 0.5f);
+		_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
+	}
+
+	void GUIManager::_updateDefaultContainers(void)
+	{
+		GUIManager* pGUIMan = GUIManager::getPointer();
+		GUIContainer* pCont = getContainer("X:Default:Statistics");
+		GUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
+		ResourceManager* pRM = ResourceManager::getPointer();
+
+		if (pCont->getVisible())
+		{
+			GUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
+			
+			// Add new value to linegraph data set
+			_mDefContStatistics.fAddValueToLinegraphDataset += _mTimer.getSecondsPast();
+			if (_mDefContStatistics.fAddValueToLinegraphDataset >= 0.1f)
+			{
+				_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
+				GUILineGraphDataSet* pDataSetFPS = pLineGraph->getDataset("FPS");
+				GUILineGraphDataSet* pDataSetFPSAVR = pLineGraph->getDataset("FPSAVR");
+
+				pDataSetFPS->addValue(_mTimer.getFPS());
+				pDataSetFPSAVR->addValue(_mTimer.getFPSAveraged());
+
+				while (pDataSetFPS->getNumValues() > 320)
+					pDataSetFPS->removeValue();
+				while (pDataSetFPSAVR->getNumValues() > 320)
+					pDataSetFPSAVR->removeValue();
+
+				// Set min and max text
+				float fMaxFPS = pDataSetFPS->getHighestValue();
+				float fMaxFPSAVR = pDataSetFPSAVR->getHighestValue();
+				float fMax = fMaxFPS;
+				if (fMax < fMaxFPSAVR)
+					fMax = fMaxFPSAVR;
+
+				std::string str = "FPSMax: " + std::to_string((int)fMax);
+				pCont->getText("Text_FPSMax")->mstrText = str;
+
+				float fMinFPS = pDataSetFPS->getLowestValue();
+				float fMinFPSAVR = pDataSetFPSAVR->getLowestValue();
+				float fMin = fMinFPS;
+				if (fMin < fMinFPSAVR)
+					fMin = fMinFPSAVR;
+
+				str = "FPSMin: " + std::to_string((int)fMin);
+				GUIText* pText = pCont->getText("Text_FPSMin");
+				pText->mstrText = str;
+
+				// Set Text_FPSMin position
+				float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
+				pText->mfPositionY = 240.0f - fTextHeight;
+
+				// Set text values
+				pText = pCont->getText("Text_FPS");
+				pText->mstrText = "FPS: " + std::to_string((int)_mTimer.getFPS());
+				pText->mfPositionY = 120.0f - fTextHeight * 2.0f;
+				pText = pCont->getText("Text_FPSAVR");
+				pText->mstrText = "FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged());
+				pText->mfPositionY = 120.0f - fTextHeight;
+			}
+		}
 	}
 }

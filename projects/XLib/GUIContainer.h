@@ -12,6 +12,7 @@
 #include "GUIImageFramebuffer.h"
 #include "GUITextScroll.h"
 #include "GUIButtonImage.h"
+#include "GUIImageDepthbuffer.h"
 
 namespace X
 {
@@ -201,6 +202,21 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeButtonImage(const std::string& strName);
 
+		// Add depthbuffer image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		// strDBname is the name of the ResourceDepthbuffer object resource added to ResourceManager.
+		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the depth buffer.
+		GUIImageDepthbuffer* addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth = -1.0f, float fHeight = -1.0f);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeImageDepthbuffer(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
@@ -217,7 +233,7 @@ namespace X
 		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
 		std::map<std::string, GUITextScroll*> _mmapTextScrolls;					// Hashmap for each added text scroll
 		std::map<std::string, GUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
-
+		std::map<std::string, GUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 

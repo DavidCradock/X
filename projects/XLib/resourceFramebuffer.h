@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "resourceBase.h"
+#include "image.h"
 
 namespace X
 {
@@ -44,6 +45,10 @@ namespace X
 
 		// Renders the contents of this buffer to a 2D quad with specified position and dimensions
 		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight);
+
+		bool mbNeedsUpdating;	// This is set to true when onGLContextToBeDestroyed() has been called
+								// Set the top of GUITextScroll::render() for where and how this is used.
+								// It's a flag that's only used by the GUI objects which need to know if the FB needs updating again.
 	private:
 		unsigned int _muiWidth;
 		unsigned int _muiHeight;

@@ -43,6 +43,10 @@ namespace X
 			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");
 			addDefaultResources();
 
+			// Initialise GUI
+			GUIManager* pGUI = GUIManager::getPointer();
+			pGUI->_createDefaultContainers();
+
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
 
@@ -59,7 +63,7 @@ namespace X
 
 			ResourceManager* pRM = ResourceManager::getPointer();
 			ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
-			GUIManager* pGUI = GUIManager::getPointer();
+			
 
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())

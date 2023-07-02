@@ -141,18 +141,22 @@ namespace X
 				// For each entry within this data set
 				vert.colour = it->second->colour.get();
 
+				pLine->removeGeom();
+
 				for (int iEntry = 0; iEntry < (int)it->second->getNumValues(); ++iEntry)
 				{
 					vert.position = vPosBL;
 					vert.position.x += float(iEntry) * vPosMulti.x;
 					vert.position.y -= (it->second->values[iEntry] - fAbsLowestVal) * vPosMulti.y;
+					
 					pLine->addLinePoint(vert);
 				}
 				it++;
+				pLine->update();
+				pLine->draw();
 			}
 
-			pLine->update();
-			pLine->draw();
+			
 		}
 
 		pTexColour->unbind(0);	// Unbind texture
@@ -176,6 +180,7 @@ namespace X
 		ThrowIfTrue(it != _mmapDataSets.end(), "GUILineGraph::addDataSet(" + strName + ") failed. The named data set already exists.");
 		GUILineGraphDataSet* pNew = new GUILineGraphDataSet;
 		ThrowIfFalse(pNew, "GUILineGraph::addDataSet(" + strName + ") failed. Unable to allocate memory for new data set.");
+		pNew->colour = cCol;
 		_mmapDataSets[strName] = pNew;
 		return pNew;
 	}

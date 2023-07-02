@@ -20,13 +20,21 @@ namespace X
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textScrollBGNormal);
-		
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);
+
+		// Does the frame buffer need updating (Like when the OpenGL context has been lost)
+		if (pTexColour->mbNeedsUpdating)
+		{
+			pTexColour->mbNeedsUpdating = false;
+			_mbFBNeedsUpdating = true;
+		}
 		// Update the framebuffer if needed
 		if (_mbFBNeedsUpdating)
 			_renderFramebuffer(pParentContainer);
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
+		
 		Window* pWindow = Window::getPointer();
 		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
@@ -43,9 +51,6 @@ namespace X
 
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
-
-		// Get textures
-		ResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);
 
 		glm::vec2 vBGdims = pRM->getTexture2D(pTheme->mImages.textScrollBGColour)->mvDimensions;
 		glm::vec2 vBGDimsPoint3 = vBGdims * 0.3333333f;

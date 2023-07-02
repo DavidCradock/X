@@ -118,6 +118,13 @@ namespace X
 			itButtonImage++;
 		}
 
+		// Images depth buffer
+		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		while (itImageDB != _mmapImageDepthbuffers.end())
+		{
+			itImageDB->second->render(this, strFramebufferToSampleFrom);
+			itImageDB++;
+		}
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -321,6 +328,15 @@ namespace X
 			itButtonImage->second->update(this, bContainerAcceptingMouseClicks);
 			itButtonImage++;
 		}
+
+		// Images depth buffer
+		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		while (itImageDB != _mmapImageDepthbuffers.end())
+		{
+			itImageDB->second->update(this, bContainerAcceptingMouseClicks);
+			itImageDB++;
+		}
+
 		return bMouseOver;
 	}
 
@@ -931,5 +947,49 @@ namespace X
 
 		delete it->second;
 		_mmapButtonImages.erase(it);
+	}
+
+	GUIImageDepthbuffer* GUIContainer::addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		ThrowIfTrue(it != _mmapImageDepthbuffers.end(), "GUIContainer::addImageDepthbuffer(" + strName + ") failed. The named object already exists.");
+		GUIImageDepthbuffer* pNewRes = new GUIImageDepthbuffer;
+		ThrowIfFalse(pNewRes, "GUIContainer::addImageDepthbuffer(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrDBname = strDBname;
+		_mmapImageDepthbuffers[strName] = pNewRes;
+
+		// Get ResourceFramebuffer from the resource manager to set size of this object
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		ResourceDepthbuffer* pDB = pResMan->getDepthbuffer(strDBname);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = (float)pDB->getWidth();
+		if (fHeight < 0)
+			pNewRes->mfHeight = (float)pDB->getHeight();
+
+		return pNewRes;
+	}
+
+	GUIImageDepthbuffer* GUIContainer::getImageDepthbuffer(const std::string& strName)
+	{
+		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		ThrowIfTrue(it == _mmapImageDepthbuffers.end(), "GUIContainer::getImageDepthbuffer(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeImageDepthbuffer(const std::string& strName)
+	{
+		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		if (it == _mmapImageDepthbuffers.end())
+			return;
+
+		delete it->second;
+		_mmapImageDepthbuffers.erase(it);
 	}
 }

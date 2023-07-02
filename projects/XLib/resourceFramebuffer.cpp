@@ -15,6 +15,7 @@ namespace X
 		_muiFramebufferID = 0;
 		_muiTextureID = 0;
 		_muiRenderbufferID = 0;
+		mbNeedsUpdating = false;
 		onGLContextCreated();
 	}
 
@@ -44,12 +45,15 @@ namespace X
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _muiRenderbufferID);
 
 		ThrowIfTrue(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, "ResourceFramebuffer::onGLContextCreated() failed to create a complete framebuffer.");
+		
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 
 	void ResourceFramebuffer::onGLContextToBeDestroyed(void)
 	{
+		mbNeedsUpdating = true;
+
 		if (0 != _muiTextureID)
 		{
 			glDeleteTextures(1, &_muiTextureID);
@@ -179,6 +183,7 @@ namespace X
 		onGLContextToBeDestroyed();
 		_muiWidth = uiNewWidth;
 		_muiHeight = uiNewHeight;
+
 		onGLContextCreated();
 	}
 
