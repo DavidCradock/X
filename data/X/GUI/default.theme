@@ -23,6 +23,8 @@ ProgressBarFillerColour: data/X/GUI/default/progressBarFillercolour.png
 ProgressBarFillerNormal: data/X/GUI/default/progressBarFillernormal.png
 TextScrollBGColour: data/X/GUI/default/textscrollBGcolour.png
 TextScrollBGNormal: data/X/GUI/default/textscrollBGnormal.png
+ButtonImageBGColour: data/X/GUI/default/buttonImageBGcolour.png
+ButtonImageBGNormal: data/X/GUI/default/buttonImageBGnormal.png
 
 Fonts
 containerTitle: data/X/fonts/ultimateserial-medium-regular_20
@@ -43,6 +45,9 @@ textEditInactive: 1.000000 1.000000 1.000000 0.750000
 textEditInactive: 1.000000 1.000000 1.000000 0.500000
 textEditInactive: 1.000000 1.000000 1.000000 1.000000
 progreebarFiller: 1.000000 1.000000 1.000000 1.000000
+buttonImageDown: 1.000000 1.000000 1.000000 1.000000
+buttonImageOver: 1.000000 1.000000 1.000000 0.750000
+buttonImageUp: 1.000000 1.000000 1.000000 0.500000
 
 Floats
 blurAmount: 1.000000
@@ -53,6 +58,7 @@ buttonTextFadeSpeed: 5.000000
 textEditCursorFlashSpeed: 4.000000
 sliderTabFadeSpeed: 5.000000
 textScrollSliderWidth: 20.000000
+buttonImageFadeSpeed: 5.000000
 
 Offsets
 ContainerTitlebarText: 1 10
@@ -71,3 +77,5 @@ textEditActivateName: data/X/gui/default/click.wav
 textEditActivateVolPitch: 0.800000 1.000000
 textEditNoMoreCharSpaceName: data/X/gui/default/click.wav
 textEditNoMoreCharSpaceVolPitch: 0.200000 1.000000
+buttonImageClickedName: data/X/gui/default/click.wav
+buttonImageClickedVolPitch: 0.800000 1.000000

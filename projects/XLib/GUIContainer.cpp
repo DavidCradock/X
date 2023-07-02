@@ -110,6 +110,14 @@ namespace X
 			itTextScroll++;
 		}
 
+		// Render each of the button images
+		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->render(this, strFramebufferToSampleFrom);
+			itButtonImage++;
+		}
+
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -306,7 +314,13 @@ namespace X
 			itTextScroll++;
 		}
 
-
+		// Button images
+		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->update(this, bContainerAcceptingMouseClicks);
+			itButtonImage++;
+		}
 		return bMouseOver;
 	}
 
@@ -865,4 +879,57 @@ namespace X
 		_mmapTextScrolls.erase(it);
 	}
 
+	GUIButtonImage* GUIContainer::addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		ThrowIfTrue(it != _mmapButtonImages.end(), "GUIContainer::addButtonImage(" + strName + ") failed. The named object already exists.");
+		GUIButtonImage* pNewRes = new GUIButtonImage;
+		ThrowIfFalse(pNewRes, "GUIContainer::addButtonImage(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrTextureDown = strImageFilenameDown;
+		pNewRes->_mstrTextureOver = strImageFilenameOver;
+		pNewRes->_mstrTextureUp = strImageFilenameUp;
+		_mmapButtonImages[strName] = pNewRes;
+
+		// Add images to the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		ResourceTexture2D* pTex = pResMan->addTexture2D(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
+		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureOver, pNewRes->_mstrTextureOver);
+		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureUp, pNewRes->_mstrTextureUp);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = pTex->mvDimensions.x;
+		if (fHeight < 0)
+			pNewRes->mfHeight = pTex->mvDimensions.y;
+
+		return pNewRes;
+	}
+
+	GUIButtonImage* GUIContainer::getButtonImage(const std::string& strName)
+	{
+		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		ThrowIfTrue(it == _mmapButtonImages.end(), "GUIContainer::getButtonImage(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeButtonImage(const std::string& strName)
+	{
+		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		if (it == _mmapButtonImages.end())
+			return;
+
+		// Remove images from the resource manager
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		pResMan->removeTexture2D(it->second->_mstrTextureDown);
+		pResMan->removeTexture2D(it->second->_mstrTextureOver);
+		pResMan->removeTexture2D(it->second->_mstrTextureUp);
+
+		delete it->second;
+		_mmapButtonImages.erase(it);
+	}
 }

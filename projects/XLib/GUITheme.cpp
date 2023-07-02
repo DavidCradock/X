@@ -33,6 +33,8 @@ namespace X
 		mImages.progressBarFillerNormal = "data/X/GUI/default/progressBarFillernormal.png";
 		mImages.textScrollBGColour = "data/X/GUI/default/textscrollBGcolour.png";
 		mImages.textScrollBGNormal = "data/X/GUI/default/textscrollBGnormal.png";
+		mImages.buttonImageBGColour = "data/X/GUI/default/buttonImageBGcolour.png";
+		mImages.buttonImageBGNormal = "data/X/GUI/default/buttonImageBGnormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/ultimateserial-medium-regular_20";
@@ -53,6 +55,9 @@ namespace X
 		mColours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		mColours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 0.75f);
+		mColours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 0.5f);
 
 		// Floats
 		mfBlurAmount = 1.0f;
@@ -63,6 +68,7 @@ namespace X
 		mfTextEditFlashSpeed = 4.0f;
 		mfSliderTabFadeSpeed = 5.0f;
 		mfTextScrollSliderWidth = 20.0f;
+		mfButtonImageTextFadeSpeed = 5.0f;
 
 		// Offsets
 		mOffsets.containerTitlebarText.iOffsetX = 1;
@@ -77,7 +83,7 @@ namespace X
 		mAudio.textEditReturn.strSampleName = "data/X/gui/default/return.wav";			mAudio.textEditReturn.fPitch = 1.0f;			mAudio.textEditReturn.fVolume = 0.8f;
 		mAudio.textEditActivate.strSampleName = "data/X/gui/default/activate.wav";		mAudio.textEditActivate.fPitch = 1.0f;			mAudio.textEditActivate.fVolume = 0.8f;
 		mAudio.textEditNoMoreCharSpace.strSampleName = "data/X/gui/default/error.wav";	mAudio.textEditNoMoreCharSpace.fPitch = 1.0f;	mAudio.textEditNoMoreCharSpace.fVolume = 0.2f;
-		
+		mAudio.buttonImageClicked.strSampleName = "data/X/gui/default/click3.wav";		mAudio.buttonImageClicked.fPitch = 1.0f;		mAudio.buttonImageClicked.fVolume = 0.8f;
 	}
 
 	void GUITheme::load(const std::string& strFilename)
@@ -125,6 +131,8 @@ namespace X
 		_readImageInfo(file, mImages.progressBarFillerNormal);
 		_readImageInfo(file, mImages.textScrollBGColour);
 		_readImageInfo(file, mImages.textScrollBGNormal);
+		_readImageInfo(file, mImages.buttonImageBGColour);
+		_readImageInfo(file, mImages.buttonImageBGNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -149,6 +157,9 @@ namespace X
 		_readColourInfo(file, mColours.sliderTabNotOver);
 		_readColourInfo(file, mColours.sliderTabOver);
 		_readColourInfo(file, mColours.progressBarFiller);
+		_readColourInfo(file, mColours.buttonImageDown);
+		_readColourInfo(file, mColours.buttonImageOver);
+		_readColourInfo(file, mColours.buttonImageUp);
 
 		// Floats
 		getline(file, strLine);	// End of line
@@ -162,6 +173,7 @@ namespace X
 		_readFloatInfo(file, mfTextEditFlashSpeed);
 		_readFloatInfo(file, mfSliderTabFadeSpeed);
 		_readFloatInfo(file, mfTextScrollSliderWidth);
+		_readFloatInfo(file, mfButtonImageTextFadeSpeed);
 
 		// Offsets
 		getline(file, strLine);	// End of line
@@ -180,7 +192,8 @@ namespace X
 		_readAudioSampleInfo(file, mAudio.textEditReturn);
 		_readAudioSampleInfo(file, mAudio.textEditActivate);
 		_readAudioSampleInfo(file, mAudio.textEditNoMoreCharSpace);
-		
+		_readAudioSampleInfo(file, mAudio.buttonImageClicked);
+
 		ThrowIfTrue(file.fail(), "GUITheme::load(" + filename + ") failed whilst loading file.");
 		file.close();
 	}
@@ -224,6 +237,8 @@ namespace X
 		_writeImageInfo(file, "ProgressBarFillerNormal", mImages.progressBarFillerNormal);
 		_writeImageInfo(file, "TextScrollBGColour", mImages.textScrollBGColour);
 		_writeImageInfo(file, "TextScrollBGNormal", mImages.textScrollBGNormal);
+		_writeImageInfo(file, "ButtonImageBGColour", mImages.buttonImageBGColour);
+		_writeImageInfo(file, "ButtonImageBGNormal", mImages.buttonImageBGNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -246,6 +261,9 @@ namespace X
 		_writeColourInfo(file, "textEditInactive", mColours.sliderTabNotOver);
 		_writeColourInfo(file, "textEditInactive", mColours.sliderTabOver);
 		_writeColourInfo(file, "progreebarFiller", mColours.progressBarFiller);
+		_writeColourInfo(file, "buttonImageDown", mColours.buttonImageDown);
+		_writeColourInfo(file, "buttonImageOver", mColours.buttonImageOver);
+		_writeColourInfo(file, "buttonImageUp", mColours.buttonImageUp);
 
 		// Floats
 		file << "\nFloats\n";
@@ -257,7 +275,8 @@ namespace X
 		_writeFloatInfo(file, "textEditCursorFlashSpeed", mfTextEditFlashSpeed);
 		_writeFloatInfo(file, "sliderTabFadeSpeed", mfSliderTabFadeSpeed);
 		_writeFloatInfo(file, "textScrollSliderWidth", mfTextScrollSliderWidth);
-
+		_writeFloatInfo(file, "buttonImageFadeSpeed", mfButtonImageTextFadeSpeed);
+		
 		// Offsets
 		file << "\nOffsets\n";
 		_writeOffsetInfo(file, "ContainerTitlebarText", mOffsets.containerTitlebarText);
@@ -271,7 +290,8 @@ namespace X
 		_writeAudioSampleInfo(file, "textEditReturn", mAudio.textEditReturn);
 		_writeAudioSampleInfo(file, "textEditActivate", mAudio.textEditActivate);
 		_writeAudioSampleInfo(file, "textEditNoMoreCharSpace", mAudio.textEditNoMoreCharSpace);
-		
+		_writeAudioSampleInfo(file, "buttonImageClicked", mAudio.buttonImageClicked);
+
 		// Make sure there were no errors
 		ThrowIfTrue(file.fail(), "GUITheme::save(" + filename + ") failed whilst saving file.");
 		file.close();
@@ -301,6 +321,8 @@ namespace X
 		pRM->addTexture2D(mImages.progressBarFillerNormal, mImages.progressBarFillerNormal);
 		pRM->addTexture2D(mImages.textScrollBGColour, mImages.textScrollBGColour);
 		pRM->addTexture2D(mImages.textScrollBGNormal, mImages.textScrollBGNormal);
+		pRM->addTexture2D(mImages.buttonImageBGColour, mImages.buttonImageBGColour);
+		pRM->addTexture2D(mImages.buttonImageBGNormal, mImages.buttonImageBGNormal);
 	}
 
 	void GUITheme::unloadTextures(void)
@@ -327,6 +349,8 @@ namespace X
 		pRM->removeTexture2D(mImages.progressBarFillerNormal);
 		pRM->removeTexture2D(mImages.textScrollBGColour);
 		pRM->removeTexture2D(mImages.textScrollBGNormal);
+		pRM->removeTexture2D(mImages.buttonImageBGColour);
+		pRM->removeTexture2D(mImages.buttonImageBGNormal);
 	}
 
 	void GUITheme::addFontsToManager(void)
@@ -358,7 +382,8 @@ namespace X
 		pAM->addSample(mAudio.textEditReturn.strSampleName, "gui");				pAM->addEmitter(mAudio.textEditReturn.strSampleName, mAudio.textEditReturn.strSampleName, 4, "gui");
 		pAM->addSample(mAudio.textEditActivate.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditActivate.strSampleName, mAudio.textEditActivate.strSampleName, 4, "gui");
 		pAM->addSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	pAM->addEmitter(mAudio.textEditNoMoreCharSpace.strSampleName, mAudio.textEditNoMoreCharSpace.strSampleName, 4, "gui");
-		
+		pAM->addSample(mAudio.buttonImageClicked.strSampleName, "gui");			pAM->addEmitter(mAudio.buttonImageClicked.strSampleName, mAudio.buttonImageClicked.strSampleName, 4, "gui");
+
 		pAM->loadSampleGroup("gui");
 	}
 
@@ -372,7 +397,7 @@ namespace X
 		pAM->removeSample(mAudio.textEditReturn.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditReturn.strSampleName);
 		pAM->removeSample(mAudio.textEditActivate.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditActivate.strSampleName);
 		pAM->removeSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	pAM->removeEmitter(mAudio.textEditNoMoreCharSpace.strSampleName);
-		
+		pAM->removeSample(mAudio.buttonImageClicked.strSampleName, "gui");		pAM->removeEmitter(mAudio.buttonImageClicked.strSampleName);
 	}
 
 	void GUITheme::_writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename)

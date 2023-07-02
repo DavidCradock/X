@@ -41,28 +41,32 @@ namespace X
 		// Add each widget and static text naming the widget type
 		// Text edit
 		pContainer2->addText("Text0", 0, 10, "GUITextEdit:");
-		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TextEdit", 140, 0, 100, 40, "TextEdit");
+		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TextEdit", 150, 0, 100, 40, "TextEdit");
 		pTextEdit->setMaxChars(16);
 		pTextEdit->setIntegerInputOnly(false);
 		// Button
 		pContainer2->addText("Text1", 0, 60, "GUIButton:");
-		GUIButton* pButton = pContainer2->addButton("Button", 140, 60, 100, 30, "A button.");
+		GUIButton* pButton = pContainer2->addButton("Button", 150, 60, 100, 30, "A button.");
 		// Line graph
 		pContainer2->addText("Text2", 0, 100, "GUILineGraph:");
 		GUIColour col;
-		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 140, 90, 200, 50);
+		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 150, 90, 200, 50);
 		pLineGraph->addDataset("FPS", col);
 		// Slider
 		pContainer2->addText("Text3", 0, 160, "GUISlider H:");
-		pContainer2->addSlider("SliderH", 140, 160, 200, 30, 0.1f);
+		pContainer2->addSlider("SliderH", 150, 160, 200, 30, 0.1f);
 		// Progress bar
 		pContainer2->addText("Text4", 0, 200, "GUIProgress H:");
-		pContainer2->addProgressBar("ProgressH", 140, 200, 200, 30);
+		pContainer2->addProgressBar("ProgressH", 150, 200, 200, 30);
 		// TextScroll
 		pContainer2->addText("Text5", 0, 240, "GUITextScroll:");
-		pContainer2->addText("Text6", 0, 260, "Debug:");
-//		pContainer2->addTextScroll("TextScroll", 140, 240, 200, 200, "What if we add loads and loads and loads and loads of text here? Let's do a number sequence... 1 2 3 4 5 6 7 8 9 10. Hello. LONGWORDGOESHERE_DOESN'TIT This is a GUITextScroll object. Let's just use this sentence to add some more text yeah? It contains lots of text which is rendered to a framebuffer object to speed up rendering when the thing isn't being interacted with. 1 2 3 4 5 6 7 8 9 0 1 2");
-		pContainer2->addTextScroll("TextScroll", 140, 240, 200, 200, "1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3");
+		pContainer2->addTextScroll("TextScroll", 150, 240, 200, 200, "What if we add loads and loads and loads and loads of text here? Let's do a number sequence... 1 2 3 4 5 6 7 8 9 10. Hello. LONGWORDGOESHERE_DOESN'TIT This is a GUITextScroll object. Let's just use this sentence to add some more text yeah? It contains lots of text which is rendered to a framebuffer object to speed up rendering when the thing isn't being interacted with. 1 2 3 4 5 6 7 8 9 0 1 2");
+		// Button image
+		pContainer2->addText("Text6", 0, 450, "GUIButtonImage:");
+		pContainer2->addButtonImage("ButtonImage", 150, 450,
+			"data/DevApp/textures/buttonImageUp.png",
+			"data/DevApp/textures/buttonImageOver.png",
+			"data/DevApp/textures/buttonImageDown.png", -1.0f, -1.0f);
 
 
 

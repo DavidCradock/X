@@ -158,9 +158,6 @@
     <ClInclude Include="GUIButton.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIButtonImage.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContainer.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="GUITextScroll.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIButtonImage.h">
+      <Filter>GUI\TODO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +323,6 @@
     <ClCompile Include="GUIButton.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIButtonImage.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContainer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -391,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="GUITextScroll.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButtonImage.cpp">
+      <Filter>GUI\TODO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

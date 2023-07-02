@@ -83,6 +83,8 @@ namespace X
 			std::string progressBarFillerNormal;
 			std::string textScrollBGColour;
 			std::string textScrollBGNormal;
+			std::string buttonImageBGColour;
+			std::string buttonImageBGNormal;
 
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
@@ -112,6 +114,9 @@ namespace X
 			GUIColour sliderTabOver;
 			GUIColour sliderTabNotOver;
 			GUIColour progressBarFiller;
+			GUIColour buttonImageDown;
+			GUIColour buttonImageOver;
+			GUIColour buttonImageUp;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 
@@ -143,19 +148,20 @@ namespace X
 			AudioSampleInfo textEditReturn;
 			AudioSampleInfo textEditActivate;
 			AudioSampleInfo textEditNoMoreCharSpace;
+			AudioSampleInfo buttonImageClicked;
 		};
 		Audio mAudio;
 
 		// Floats
-		float mfBlurAmount;				// 1.0f = max blur, 0.0f = none
-		float mfNormalAmount;			// 1.0f = max normal, 0.0f = none
-		float mfReflectionAmount;		// 1.0f = max reflection, 0.0f = none
-		float mfMouseCursorDistance;	// Distance the mouse cursor is the fragments when computing the bump mapping
-		float mfButtonTextFadeSpeed;	// Rate at which button text colours interpolate between
-		float mfTextEditFlashSpeed;		// Rate at which the additional character that flashes when a text edit is active.
-		float mfSliderTabFadeSpeed;		// Rate at which slider's tab colours interpolate between
-		float mfTextScrollSliderWidth;	// Width of a GUITextScroll object's vertical slider.
-
+		float mfBlurAmount;					// 1.0f = max blur, 0.0f = none
+		float mfNormalAmount;				// 1.0f = max normal, 0.0f = none
+		float mfReflectionAmount;			// 1.0f = max reflection, 0.0f = none
+		float mfMouseCursorDistance;		// Distance the mouse cursor is the fragments when computing the bump mapping
+		float mfButtonTextFadeSpeed;		// Rate at which button text colours interpolate between
+		float mfTextEditFlashSpeed;			// Rate at which the additional character that flashes when a text edit is active.
+		float mfSliderTabFadeSpeed;			// Rate at which slider's tab colours interpolate between
+		float mfTextScrollSliderWidth;		// Width of a GUITextScroll object's vertical slider.
+		float mfButtonImageTextFadeSpeed;	// Rate at which button image colours interpolate between
 	private:
 		// Writes out image info
 		void _writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename);

@@ -148,21 +148,14 @@ namespace X
 		float fTextPosY = fSliderPos * fTotalMovement;
 		fTextPosY *= -0.5f;
 
-		GUIContainer* pContainer2 = GUIManager::getPointer()->getContainer("ContainerPreview");
-		pContainer2->getText("Text6")->mstrText = "Debug: " + std::to_string(fSliderPos);
-
 		// Prevent divide by zero
 		float fTabRatio = 1;
 		if (iTextTotalHeight > 0)
 			fTabRatio = mfHeight / float(iTextTotalHeight);
 		_mSlider.setTabRatio(fTabRatio);
 
-		
-
 		pFont->printInRect(true, _mstrText, 0, (int)fTextPosY, (int)pFB->getWidth(), (int)pFB->getHeight(), vstrLines, iTextTotalHeight, 1.0f, _mTextColour.get());
-
 		pFB->unbindAsRenderTarget();
-
 		_mbFBNeedsUpdating = false;
 
 		// Remember to re-bind the GUI framebuffer back again
