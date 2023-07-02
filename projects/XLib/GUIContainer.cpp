@@ -93,6 +93,14 @@ namespace X
 			itImageAnimated->second->render(this, strFramebufferToSampleFrom);
 			itImageAnimated++;
 		}
+
+		// Images framebuffer
+		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		while (itImageFB != _mmapImageFramebuffers.end())
+		{
+			itImageFB->second->render(this, strFramebufferToSampleFrom);
+			itImageFB++;
+		}
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -271,6 +279,14 @@ namespace X
 		{
 			itImageAnimated->second->update(this, bContainerAcceptingMouseClicks);
 			itImageAnimated++;
+		}
+
+		// Images framebuffer
+		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		while (itImageFB != _mmapImageFramebuffers.end())
+		{
+			itImageFB->second->update(this, bContainerAcceptingMouseClicks);
+			itImageFB++;
 		}
 
 		return bMouseOver;
@@ -733,6 +749,50 @@ namespace X
 
 		delete it->second;
 		_mmapImageAnimateds.erase(it);
+	}
+
+	GUIImageFramebuffer* GUIContainer::addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		ThrowIfTrue(it != _mmapImageFramebuffers.end(), "GUIContainer::addImageFramebuffer(" + strName + ") failed. The named object already exists.");
+		GUIImageFramebuffer* pNewRes = new GUIImageFramebuffer;
+		ThrowIfFalse(pNewRes, "GUIContainer::addImageFramebuffer(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrFBname = strFBname;
+		_mmapImageFramebuffers[strName] = pNewRes;
+
+		// Get ResourceFramebuffer from the resource manager to set size of this object
+		ResourceManager* pResMan = ResourceManager::getPointer();
+		ResourceFramebuffer* pFB = pResMan->getFramebuffer(strFBname);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = (float)pFB->getWidth();
+		if (fHeight < 0)
+			pNewRes->mfHeight = (float)pFB->getHeight();
+
+		return pNewRes;
+	}
+
+	GUIImageFramebuffer* GUIContainer::getImageFramebuffer(const std::string& strName)
+	{
+		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		ThrowIfTrue(it == _mmapImageFramebuffers.end(), "GUIContainer::getImageFramebuffer(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeImageFramebuffer(const std::string& strName)
+	{
+		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		if (it == _mmapImageFramebuffers.end())
+			return;
+
+		delete it->second;
+		_mmapImageFramebuffers.erase(it);
 	}
 
 }

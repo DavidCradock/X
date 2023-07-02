@@ -206,7 +206,7 @@
     <ClInclude Include="GUIDraggableItem.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
-    <ClInclude Include="GUIImageFB.h">
+    <ClInclude Include="GUIImageFramebuffer.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
     <ClInclude Include="GUIMenu.h">
@@ -371,7 +371,7 @@
     <ClCompile Include="GUIDraggableItem.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
-    <ClCompile Include="GUIImageFB.cpp">
+    <ClCompile Include="GUIImageFramebuffer.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
     <ClCompile Include="GUIMenu.cpp">

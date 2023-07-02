@@ -9,6 +9,7 @@
 #include "GUIProgressBar.h"
 #include "GUIImage.h"
 #include "GUIImageAnimated.h"
+#include "GUIImageFramebuffer.h"
 
 namespace X
 {
@@ -148,18 +149,34 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageAnimated(const std::string& strName);
 
+		// Add framebuffer image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		// strFBname is the name of the ResourceFramebuffer object resource added to ResourceManager.
+		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the frame buffer.
+		GUIImageFramebuffer* addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth = -1.0f, float fHeight = -1.0f);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeImageFramebuffer(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		
-		std::map<std::string, GUIButton*> _mmapButtons;					// Hashmap for each added button
-		std::map<std::string, GUIText*> _mmapTexts;						// Hashmap for each added text
-		std::map<std::string, GUITextEdit*> _mmapTextEdits;				// Hashmap for each added text edit
-		std::map<std::string, GUISlider*> _mmapSliders;					// Hashmap for each added slider
-		std::map<std::string, GUILineGraph*> _mmapLineGraphs;			// Hashmap for each added line graph
-		std::map<std::string, GUIProgressBar*> _mmapProgressBars;		// Hashmap for each added progress bar
-		std::map<std::string, GUIImage*> _mmapImages;					// Hashmap for each added image
-		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;	// Hashmap for each added image animated
+		std::map<std::string, GUIButton*> _mmapButtons;							// Hashmap for each added button
+		std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
+		std::map<std::string, GUITextEdit*> _mmapTextEdits;						// Hashmap for each added text edit
+		std::map<std::string, GUISlider*> _mmapSliders;							// Hashmap for each added slider
+		std::map<std::string, GUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		std::map<std::string, GUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
+		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not

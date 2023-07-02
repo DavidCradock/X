@@ -7,7 +7,7 @@
 #include "GUIContainer.h"
 #include "GUIDraggableDock.h"
 #include "GUIDraggableItem.h"
-#include "GUIImageFB.h"
+#include "GUIImageFramebuffer.h"
 #include "GUIImage.h"
 #include "GUIImageAnimated.h"
 #include "GUILineGraph.h"

@@ -59,6 +59,7 @@ namespace X
 		pContainer2->addText("Text4", 0, 200, "GUIProgress H:");
 		pContainer2->addProgressBar("ProgressH", 140, 200, 200, 30);
 		
+		pContainer2->addImageFramebuffer("FB", 140, 400, "X:backbuffer_FB", 640, 360);
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 		timer.setAveragedFPSRate(1);	// Once every X seconds

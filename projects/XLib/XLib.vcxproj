@@ -21,7 +21,7 @@
     <ClInclude Include="GUIContainer.h" />
     <ClInclude Include="GUIDraggableDock.h" />
     <ClInclude Include="GUIDraggableItem.h" />
-    <ClInclude Include="GUIImageFB.h" />
+    <ClInclude Include="GUIImageFramebuffer.h" />
     <ClInclude Include="GUIImage.h" />
     <ClInclude Include="GUIImageAnimated.h" />
     <ClInclude Include="GUILineGraph.h" />
@@ -90,7 +90,7 @@
     <ClCompile Include="GUIContainer.cpp" />
     <ClCompile Include="GUIDraggableDock.cpp" />
     <ClCompile Include="GUIDraggableItem.cpp" />
-    <ClCompile Include="GUIImageFB.cpp" />
+    <ClCompile Include="GUIImageFramebuffer.cpp" />
     <ClCompile Include="GUIImage.cpp" />
     <ClCompile Include="GUIImageAnimated.cpp" />
     <ClCompile Include="GUILineGraph.cpp" />

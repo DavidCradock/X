@@ -228,8 +228,6 @@ namespace X
 			}
 		}
 		// animFrame.uiTextureNumber now holds the total number of images needed - 1
-		// vMaxLargeImageDims now holds the largest image dims needed
-		// vCurLargeImageDims now holds the last image's dims needed
 		
 		// Create each of the large images
 		int iNumImages = (int)vecLargeImageDims.size();
