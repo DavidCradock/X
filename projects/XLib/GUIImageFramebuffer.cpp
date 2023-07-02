@@ -25,7 +25,7 @@ namespace X
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0", 0);
 
-		glEnable(GL_BLEND);
+		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
@@ -50,7 +50,7 @@ namespace X
 
 		pTexColour->unbindTexture();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader
-		glDisable(GL_BLEND);
+//		glDisable(GL_BLEND);
 
 	}
 

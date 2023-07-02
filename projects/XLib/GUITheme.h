@@ -81,6 +81,9 @@ namespace X
 			std::string progressBarBGNormal;
 			std::string progressBarFillerColour;
 			std::string progressBarFillerNormal;
+			std::string textScrollBGColour;
+			std::string textScrollBGNormal;
+
 		};
 		Images mImages;		// Holds the names of each image file used by the theme.
 
@@ -91,6 +94,7 @@ namespace X
 			std::string button;			// GUIButton font
 			std::string text;			// GUIText font
 			std::string textEdit;
+			std::string textScroll;
 		};
 		Fonts mFonts;
 
@@ -150,6 +154,7 @@ namespace X
 		float mfButtonTextFadeSpeed;	// Rate at which button text colours interpolate between
 		float mfTextEditFlashSpeed;		// Rate at which the additional character that flashes when a text edit is active.
 		float mfSliderTabFadeSpeed;		// Rate at which slider's tab colours interpolate between
+		float mfTextScrollSliderWidth;	// Width of a GUITextScroll object's vertical slider.
 
 	private:
 		// Writes out image info

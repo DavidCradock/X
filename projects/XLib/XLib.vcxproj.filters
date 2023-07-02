@@ -206,9 +206,6 @@
     <ClInclude Include="GUIDraggableItem.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
-    <ClInclude Include="GUIImageFramebuffer.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
     <ClInclude Include="GUIMenu.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
@@ -221,11 +218,14 @@
     <ClInclude Include="GUITaskbar.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
-    <ClInclude Include="GUITextScroll.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageFramebuffer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextScroll.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +371,6 @@
     <ClCompile Include="GUIDraggableItem.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
-    <ClCompile Include="GUIImageFramebuffer.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
     <ClCompile Include="GUIMenu.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
@@ -386,11 +383,14 @@
     <ClCompile Include="GUITaskbar.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
-    <ClCompile Include="GUITextScroll.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageFramebuffer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextScroll.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -241,6 +241,42 @@ namespace X
 		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
 	}
 
+	void ResourceFont::printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int& iTotalRenderedHeight, float fFontScaling, glm::vec4 colour)
+	{
+		std::stringstream ss(strText);
+		std::string strNextWord;
+		char delim = ' ';
+		std::string strLineWhichFits;	// Current line of text which fits
+		std::string strLineWithWord;
+		int iTextLineOffset = (int)getTextHeight(fFontScaling);
+		int iTextYoffset = iPosY;
+		while (std::getline(ss, strNextWord, delim))
+		{
+			strLineWithWord = strLineWhichFits + strNextWord + " ";
+			float fWidthWithWord = getTextWidth(strLineWithWord, fFontScaling);
+			if (fWidthWithWord <= (float)iRenderTargetWidth)
+			{
+				strLineWhichFits += strNextWord + " ";
+			}
+			else
+			{
+				vstrTextLines.push_back(strLineWhichFits);
+				if (bRenderText)
+					print(vstrTextLines[vstrTextLines.size() - 1], iPosX, iPosY + iTextYoffset, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
+				iTextYoffset += iTextLineOffset;
+				strLineWhichFits.clear();
+				strLineWhichFits += strNextWord + " ";
+			}
+		}
+		if (strLineWhichFits.length())
+		{
+			vstrTextLines.push_back(strLineWhichFits);
+			if (bRenderText)
+				print(vstrTextLines[vstrTextLines.size() - 1], iPosX, iPosY + iTextYoffset, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
+		}
+		iTotalRenderedHeight = iTextYoffset + iTextLineOffset;
+	}
+
 	float ResourceFont::getTextWidth(const std::string& strText, float fFontScaling)
 	{
 		float fWidth = 0;

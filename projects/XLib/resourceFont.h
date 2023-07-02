@@ -25,6 +25,12 @@ namespace X
 		// Prints the given text as a single line, centered at iPosX and iPosY
 		void printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
+		// Prints the given text as multiple lines to fit inside the given render target width and height.
+		// If bRenderText is true, the text is rendered, else only the following values are computed...
+		// Also sets the passed std::vector<std::string>& vstrTextLines to contain each line of text.
+		// Also sets the passed int &iTotalRenderedHeight to hold the total amount of Y pixels the text takes up which may be larger than iRenderTargetHeight;
+		void printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int &iTotalRenderedHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
 		float getTextWidth(const std::string& strText, float fFontScaling = 1.0f);
 

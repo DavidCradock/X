@@ -21,11 +21,14 @@ ProgressBarBGColour: data/X/GUI/default/progressBarBGcolour.png
 ProgressBarBGNormal: data/X/GUI/default/progressBarBGnormal.png
 ProgressBarFillerColour: data/X/GUI/default/progressBarFillercolour.png
 ProgressBarFillerNormal: data/X/GUI/default/progressBarFillernormal.png
+TextScrollBGColour: data/X/GUI/default/textscrollBGcolour.png
+TextScrollBGNormal: data/X/GUI/default/textscrollBGnormal.png
 
 Fonts
 containerTitle: data/X/fonts/ultimateserial-medium-regular_20
 button: data/X/fonts/ultimateserial-medium-regular_20
 text: data/X/fonts/ultimateserial-medium-regular_20
+textEdit: data/X/fonts/ultimateserial-medium-regular_20
 textEdit: data/X/fonts/ultimateserial-medium-regular_20
 
 Colours
@@ -49,6 +52,7 @@ mouseCursorDistance: 50.000000
 buttonTextFadeSpeed: 5.000000
 textEditCursorFlashSpeed: 4.000000
 sliderTabFadeSpeed: 5.000000
+textScrollSliderWidth: 20.000000
 
 Offsets
 ContainerTitlebarText: 1 10

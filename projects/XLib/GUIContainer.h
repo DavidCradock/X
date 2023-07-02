@@ -10,11 +10,13 @@
 #include "GUIImage.h"
 #include "GUIImageAnimated.h"
 #include "GUIImageFramebuffer.h"
+#include "GUITextScroll.h"
 
 namespace X
 {
 	class GUIContainer : public GUIBaseObject
 	{
+		friend class GUIManager;
 	public:
 		GUIContainer();
 
@@ -33,6 +35,9 @@ namespace X
 
 		// Returns whether this container is visible or not
 		bool getVisible(void);
+
+		// Returns the name of this container which is set upon construction from the GUIManager::addContainer() method
+		const std::string& getName(void);
 
 		// Add a button to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -164,10 +169,26 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageFramebuffer(const std::string& strName);
 
+		// Add text scroll object to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		// Please note: The name should be unique for all text scroll objects added to this container as it is used to create the unique framebuffer resource.
+		// If the name is not unique, an exception occurs.
+		GUITextScroll* addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		GUITextScroll* getTextScroll(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeTextScroll(const std::string& strName);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
-		
+		std::string _mstrName;		// The name of the container, used to generate unique names for resources
+
 		std::map<std::string, GUIButton*> _mmapButtons;							// Hashmap for each added button
 		std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
 		std::map<std::string, GUITextEdit*> _mmapTextEdits;						// Hashmap for each added text edit
@@ -177,6 +198,7 @@ namespace X
 		std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
 		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
 		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
+		std::map<std::string, GUITextScroll*> _mmapTextScrolls;					// Hashmap for each eadded text scroll
 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not

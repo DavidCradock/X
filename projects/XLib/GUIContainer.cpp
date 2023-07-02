@@ -101,6 +101,15 @@ namespace X
 			itImageFB->second->render(this, strFramebufferToSampleFrom);
 			itImageFB++;
 		}
+
+		// Render each text scroll object
+		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		while (itTextScroll != _mmapTextScrolls.end())
+		{
+			itTextScroll->second->render(this, strFramebufferToSampleFrom);
+			itTextScroll++;
+		}
+
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
@@ -289,6 +298,15 @@ namespace X
 			itImageFB++;
 		}
 
+		// Text scroll objects
+		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		while (itTextScroll != _mmapTextScrolls.end())
+		{
+			itTextScroll->second->update(this, bContainerAcceptingMouseClicks);
+			itTextScroll++;
+		}
+
+
 		return bMouseOver;
 	}
 
@@ -300,6 +318,11 @@ namespace X
 	bool GUIContainer::getVisible(void)
 	{
 		return _mbVisible;
+	}
+
+	const std::string& GUIContainer::getName(void)
+	{
+		return _mstrName;
 	}
 
 	void GUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
@@ -793,6 +816,53 @@ namespace X
 
 		delete it->second;
 		_mmapImageFramebuffers.erase(it);
+	}
+
+	GUITextScroll* GUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	{
+		// If resource already exists
+		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		ThrowIfTrue(it != _mmapTextScrolls.end(), "GUIContainer::addTextScroll(" + strName + ") failed. The named object already exists.");
+		GUITextScroll* pNewRes = new GUITextScroll;
+		ThrowIfFalse(pNewRes, "GUIContainer::addTextScroll(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrText = strText;
+		// Create name of framebuffer
+		pNewRes->_mstrFBName = "GUITextScrollFB_" + _mstrName + "_" + strName;
+
+		// Check to see if the framebuffer resource name already exists
+		ResourceManager* pRM = ResourceManager::getPointer();
+		ThrowIfTrue(pRM->getFramebufferExists(pNewRes->_mstrFBName), "GUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
+
+		// Create framebuffer in ResourceManager
+		pRM->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fWidth), unsigned int(fHeight));
+
+		_mmapTextScrolls[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	GUITextScroll* GUIContainer::getTextScroll(const std::string& strName)
+	{
+		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		ThrowIfTrue(it == _mmapTextScrolls.end(), "GUIContainer::getTextScroll(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void GUIContainer::removeTextScroll(const std::string& strName)
+	{
+		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		if (it == _mmapTextScrolls.end())
+			return;
+
+		// Remove framebuffer resource from resource manager
+		ResourceManager* pRM = ResourceManager::getPointer();
+		pRM->removeFramebuffer(it->second->_mstrFBName);
+
+		delete it->second;
+		_mmapTextScrolls.erase(it);
 	}
 
 }

@@ -95,6 +95,8 @@ namespace X
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		Window* pWnd = Window::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
+		glFlush();
+		glFinish();
 	}
 
 	void ResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit)

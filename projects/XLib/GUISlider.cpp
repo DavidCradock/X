@@ -14,6 +14,7 @@ namespace X
 		_mfSliderPosition = 0.5f;
 		_mTabColour.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mbTabBeingMoved = false;
+		_mfTabRatio = 0.5f;
 	}
 
 	void GUISlider::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)

@@ -176,6 +176,9 @@ namespace X
 
 		pNew->mstrTitleText = strName;
 
+		// Store name of container inside the container, as it's used to create unique names for things such as the framebuffers used by the GUITextScroll object.
+		pNew->_mstrName;	
+
 		// Place in the hashmap
 		_mmapContainers[strName] = pNew;
 		return pNew;

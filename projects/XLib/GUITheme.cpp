@@ -31,12 +31,15 @@ namespace X
 		mImages.progressBarBGNormal = "data/X/GUI/default/progressBarBGnormal.png";
 		mImages.progressBarFillerColour = "data/X/GUI/default/progressBarFillercolour.png";
 		mImages.progressBarFillerNormal = "data/X/GUI/default/progressBarFillernormal.png";
+		mImages.textScrollBGColour = "data/X/GUI/default/textscrollBGcolour.png";
+		mImages.textScrollBGNormal = "data/X/GUI/default/textscrollBGnormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/ultimateserial-medium-regular_20";
 		mFonts.button = "data/X/fonts/ultimateserial-medium-regular_20";
 		mFonts.text = "data/X/fonts/ultimateserial-medium-regular_20";
 		mFonts.textEdit = "data/X/fonts/ultimateserial-medium-regular_20";
+		mFonts.textScroll = "data/X/fonts/ultimateserial-medium-regular_20";
 
 		// Colours
 		mColours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -59,6 +62,7 @@ namespace X
 		mfButtonTextFadeSpeed = 5.0f;
 		mfTextEditFlashSpeed = 4.0f;
 		mfSliderTabFadeSpeed = 5.0f;
+		mfTextScrollSliderWidth = 20.0f;
 
 		// Offsets
 		mOffsets.containerTitlebarText.iOffsetX = 1;
@@ -119,6 +123,8 @@ namespace X
 		_readImageInfo(file, mImages.progressBarBGNormal);
 		_readImageInfo(file, mImages.progressBarFillerColour);
 		_readImageInfo(file, mImages.progressBarFillerNormal);
+		_readImageInfo(file, mImages.textScrollBGColour);
+		_readImageInfo(file, mImages.textScrollBGNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -127,6 +133,7 @@ namespace X
 		_readFontInfo(file, mFonts.button);
 		_readFontInfo(file, mFonts.text);
 		_readFontInfo(file, mFonts.textEdit);
+		_readFontInfo(file, mFonts.textScroll);
 
 		// Colours
 		getline(file, strLine);	// Empty line
@@ -154,7 +161,8 @@ namespace X
 		_readFloatInfo(file, mfButtonTextFadeSpeed);
 		_readFloatInfo(file, mfTextEditFlashSpeed);
 		_readFloatInfo(file, mfSliderTabFadeSpeed);
-		
+		_readFloatInfo(file, mfTextScrollSliderWidth);
+
 		// Offsets
 		getline(file, strLine);	// End of line
 		getline(file, strLine);	// Empty line
@@ -214,6 +222,8 @@ namespace X
 		_writeImageInfo(file, "ProgressBarBGNormal", mImages.progressBarBGNormal);
 		_writeImageInfo(file, "ProgressBarFillerColour", mImages.progressBarFillerColour);
 		_writeImageInfo(file, "ProgressBarFillerNormal", mImages.progressBarFillerNormal);
+		_writeImageInfo(file, "TextScrollBGColour", mImages.textScrollBGColour);
+		_writeImageInfo(file, "TextScrollBGNormal", mImages.textScrollBGNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -221,6 +231,7 @@ namespace X
 		_writeFontInfo(file, "button", mFonts.button);
 		_writeFontInfo(file, "text", mFonts.text);
 		_writeFontInfo(file, "textEdit", mFonts.textEdit);
+		_writeFontInfo(file, "textEdit", mFonts.textScroll);
 
 		// Colours
 		file << "\nColours\n";
@@ -245,7 +256,8 @@ namespace X
 		_writeFloatInfo(file, "buttonTextFadeSpeed", mfButtonTextFadeSpeed);
 		_writeFloatInfo(file, "textEditCursorFlashSpeed", mfTextEditFlashSpeed);
 		_writeFloatInfo(file, "sliderTabFadeSpeed", mfSliderTabFadeSpeed);
-		
+		_writeFloatInfo(file, "textScrollSliderWidth", mfTextScrollSliderWidth);
+
 		// Offsets
 		file << "\nOffsets\n";
 		_writeOffsetInfo(file, "ContainerTitlebarText", mOffsets.containerTitlebarText);
@@ -287,6 +299,8 @@ namespace X
 		pRM->addTexture2D(mImages.progressBarBGNormal, mImages.progressBarBGNormal);
 		pRM->addTexture2D(mImages.progressBarFillerColour, mImages.progressBarFillerColour);
 		pRM->addTexture2D(mImages.progressBarFillerNormal, mImages.progressBarFillerNormal);
+		pRM->addTexture2D(mImages.textScrollBGColour, mImages.textScrollBGColour);
+		pRM->addTexture2D(mImages.textScrollBGNormal, mImages.textScrollBGNormal);
 	}
 
 	void GUITheme::unloadTextures(void)
@@ -311,6 +325,8 @@ namespace X
 		pRM->removeTexture2D(mImages.progressBarBGNormal);
 		pRM->removeTexture2D(mImages.progressBarFillerColour);
 		pRM->removeTexture2D(mImages.progressBarFillerNormal);
+		pRM->removeTexture2D(mImages.textScrollBGColour);
+		pRM->removeTexture2D(mImages.textScrollBGNormal);
 	}
 
 	void GUITheme::addFontsToManager(void)
@@ -320,6 +336,7 @@ namespace X
 		pRM->addFont(mFonts.button, mFonts.button);
 		pRM->addFont(mFonts.text, mFonts.text);
 		pRM->addFont(mFonts.textEdit, mFonts.textEdit);
+		pRM->addFont(mFonts.textScroll, mFonts.textScroll);
 	}
 
 	void GUITheme::removeFontsFromManager(void)
@@ -329,6 +346,7 @@ namespace X
 		pRM->removeFont(mFonts.button);
 		pRM->removeFont(mFonts.text);
 		pRM->removeFont(mFonts.textEdit);
+		pRM->removeFont(mFonts.textScroll);
 	}
 
 	void GUITheme::addAudioToManager(void)

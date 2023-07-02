@@ -4,17 +4,17 @@ namespace X
 {
 	void Application::initOnce(void)
 	{
-/*
-		Image img;
-		Image normal;
-		img.load("data/X/gui/default/progressBarBGheight.png");
-		img.normalmap(normal, 0.5f);
-		normal.saveAsPNG("data/X/gui/default//progressBarBGnormal.png");
 
-		img.load("data/X/gui/default/progressBarFillerheight.png");
-		img.normalmap(normal, 0.5f);
-		normal.saveAsPNG("data/X/gui/default/progressBarFillernormal.png");
-*/	
+//		Image img;
+//		Image normal;
+//		img.load("data/X/gui/default/textscrollBGheight.png");
+//		img.normalmap(normal, 0.5f);
+//		normal.saveAsPNG("data/X/gui/default/textscrollBGnormal.png");
+
+//		img.load("data/X/gui/default/progressBarFillerheight.png");
+//		img.normalmap(normal, 0.5f);
+//		normal.saveAsPNG("data/X/gui/default/progressBarFillernormal.png");
+	
 //		ResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
 
 		GUITheme theme;
@@ -58,8 +58,16 @@ namespace X
 		// Progress bar
 		pContainer2->addText("Text4", 0, 200, "GUIProgress H:");
 		pContainer2->addProgressBar("ProgressH", 140, 200, 200, 30);
-		
-		pContainer2->addImageFramebuffer("FB", 140, 400, "X:backbuffer_FB", 640, 360);
+		// TextScroll
+		pContainer2->addText("Text5", 0, 240, "GUITextScroll:");
+		pContainer2->addText("Text6", 0, 260, "Debug:");
+//		pContainer2->addTextScroll("TextScroll", 140, 240, 200, 200, "What if we add loads and loads and loads and loads of text here? Let's do a number sequence... 1 2 3 4 5 6 7 8 9 10. Hello. LONGWORDGOESHERE_DOESN'TIT This is a GUITextScroll object. Let's just use this sentence to add some more text yeah? It contains lots of text which is rendered to a framebuffer object to speed up rendering when the thing isn't being interacted with. 1 2 3 4 5 6 7 8 9 0 1 2");
+		pContainer2->addTextScroll("TextScroll", 140, 240, 200, 200, "1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3");
+
+
+
+
+//		pContainer2->addImageFramebuffer("FB", 140, 400, "X:backbuffer_FB", 640, 360);
 
 		ResourceManager* pRM = ResourceManager::getPointer();
 		timer.setAveragedFPSRate(1);	// Once every X seconds
