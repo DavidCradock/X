@@ -6,7 +6,7 @@
 namespace X
 {
 	// Renders text using data stored in a pair of font files created from this class's buildFontFiles() method.
-	// Requires a shader from the ResourceManager called "X:font" which is loaded during startup. (See ApplicationManager::mainLoop())
+	// Requires a shader from the ResourceManager called "X:font" which is loaded during startup. (See SCApplicationManager::mainLoop())
 	class ResourceFont : public ResourceBase
 	{
 	public:

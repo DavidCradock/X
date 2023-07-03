@@ -4,11 +4,11 @@
 namespace X
 {
 	// Base class to derive application classes from
-	class ApplicationBase
+	class CApplicationBase
 	{
 	public:
 		// Initialises running time to zero
-		ApplicationBase();
+		CApplicationBase();
 
 		// Override this if you need it, by default, it does nothing (Virtual method).
 		// This method is called only once upon initialisation after window and other stuff has been initialised
@@ -31,7 +31,7 @@ namespace X
 		// return false here if the application wants to close.
 		virtual bool onUpdate(void) = 0;
 	
-		float mfApplicationSecondsRunning;	// Number of seconds the application has been running. Updated by ApplicationManager
+		float mfApplicationSecondsRunning;	// Number of seconds the application has been running. Updated by SCApplicationManager
 	protected:
 	};
 }

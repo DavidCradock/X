@@ -21,7 +21,7 @@ namespace X
 
 	void ResourceTexture2D::onGLContextCreated(void)
 	{
-		Image image;
+		CImage image;
 		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
 		mvDimensions.x = (float)image.getWidth();
 		mvDimensions.y = (float)image.getHeight();

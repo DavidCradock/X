@@ -2,20 +2,20 @@
 
 namespace X
 {
-	void Application::initOnce(void)
+	void CApplication::initOnce(void)
 	{
 	}
 
-	void Application::onStart(void)
+	void CApplication::onStart(void)
 	{
 	}
 
-	void Application::onStop(void)
+	void CApplication::onStop(void)
 	{
 
 	}
 
-	bool Application::onUpdate(void)
+	bool CApplication::onUpdate(void)
 	{
 		// Escape key to exit
 		InputManager* pInputManager = InputManager::getPointer();

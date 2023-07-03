@@ -3,8 +3,8 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {
-	X::Application* pApplication = new X::Application;
-	X::ApplicationManager* pAppManager = X::ApplicationManager::getPointer();
+	X::CApplication* pApplication = new X::CApplication;
+	X::SCApplicationManager* pAppManager = X::SCApplicationManager::getPointer();
 	pAppManager->addApp("AppDevelopment", pApplication);
 	pAppManager->mainLoop();
 	return 0;

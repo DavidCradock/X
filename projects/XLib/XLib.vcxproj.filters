@@ -230,6 +230,21 @@
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="2DManager.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DLayer.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntity.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DImageData.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DPhysicsData.h">
+      <Filter>2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="frustum.cpp" />
@@ -397,6 +412,21 @@
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="2DManager.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DLayer.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntity.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DImageData.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DPhysicsData.cpp">
+      <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

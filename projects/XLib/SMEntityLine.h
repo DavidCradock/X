@@ -9,7 +9,7 @@ namespace X
 	// an entity's position, rotation and scale within the scene manager. Along with various helper methods to move and rotate the thing.
 	// This entity holds the name of a vertex buffer line and texture names, each located inside the ResourceManager class.
 	// We have a default texture map stored in the resource manager which are used if the texture string is not set.
-	// They are added from the ApplicationManager::addDefaultResources() method.
+	// They are added from the SCApplicationManager::addDefaultResources() method.
 	// It is named "X:default_white"
 	// This is usefull if we do not need to use them.
 	class SMEntityLine : public SMEntityBase

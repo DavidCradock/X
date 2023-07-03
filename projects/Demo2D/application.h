@@ -4,7 +4,7 @@
 namespace X
 {
 	// 
-	class Application : public ApplicationBase
+	class CApplication : public CApplicationBase
 	{
 	public:
 		// Override this if you need it, by default, it does nothing.

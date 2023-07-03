@@ -4,19 +4,19 @@
 
 namespace X
 {
-	Image::Image()
+	CImage::CImage()
 	{
 		pData = 0;
 		dataSize = 0;
 		free();
 	}
 
-	Image::~Image()
+	CImage::~CImage()
 	{
 		free();
 	}
 
-	void Image::free(void)
+	void CImage::free(void)
 	{
 		if (pData)
 		{
@@ -27,20 +27,20 @@ namespace X
 		width = height = numChannels = 0;
 	}
 
-	void Image::createBlank(unsigned int iWidth, unsigned int iHeight, unsigned short iNumChannels)
+	void CImage::createBlank(unsigned int iWidth, unsigned int iHeight, unsigned short iNumChannels)
 	{
 		free();
-		ThrowIfTrue(iWidth < 1, "Image::createBlank() failed as given width < 1.");
-		ThrowIfTrue(iHeight < 1, "Image::createBlank() failed as given height < 1.");
-		ThrowIfTrue(iNumChannels < 3, "Image::createBlank() failed as given number of channels < 1. (Only 3 or 4 is valid)");
-		ThrowIfTrue(iNumChannels > 4, "Image::createBlank() failed as given number of channels > 4. (Only 3 or 4 is valid)");
+		ThrowIfTrue(iWidth < 1, "CImage::createBlank() failed as given width < 1.");
+		ThrowIfTrue(iHeight < 1, "CImage::createBlank() failed as given height < 1.");
+		ThrowIfTrue(iNumChannels < 3, "CImage::createBlank() failed as given number of channels < 1. (Only 3 or 4 is valid)");
+		ThrowIfTrue(iNumChannels > 4, "CImage::createBlank() failed as given number of channels > 4. (Only 3 or 4 is valid)");
 
 		width = iWidth;
 		height = iHeight;
 		numChannels = iNumChannels;
 		dataSize = width * height * numChannels;
 		pData = new unsigned char[dataSize];
-		ThrowIfTrue(!pData, "Image::createBlank() failed to allocate memory.");
+		ThrowIfTrue(!pData, "CImage::createBlank() failed to allocate memory.");
 
 		// Zero out the new memory all to zero
 		for (unsigned int i = 0; i < dataSize; ++i)
@@ -49,7 +49,7 @@ namespace X
 		}
 	}
 
-	bool Image::load(const std::string& strFilename, bool bFlipForOpenGL)
+	bool CImage::load(const std::string& strFilename, bool bFlipForOpenGL)
 	{
 		free();
 		stbi_set_flip_vertically_on_load(bFlipForOpenGL);
@@ -96,7 +96,7 @@ namespace X
 		return true;
 	}
 
-	bool Image::loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount)
+	bool CImage::loadInfo(const std::string& strFilename, int& iWidth, int& iHeight, int& componentCount)
 	{
 		// To query the width, height and component count of an image without having to
 		// decode the full file, you can use the stbi_info family of functions:
@@ -108,37 +108,37 @@ namespace X
 		return (bool)stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
 
-	void Image::saveAsBMP(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsBMP(const std::string& strFilename, bool bFlipOnSave)
 	{
-		ThrowIfTrue(!pData, "Image::saveAsBMP() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::saveAsBMP() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsBMP() failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsBMP() failed. Image failed to be written.");
 	}
 
-	void Image::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
+	void CImage::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
 	{
-		ThrowIfTrue(!pData, "Image::saveAsJPG() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::saveAsJPG() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "Image::saveAsJPG() failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "CImage::saveAsJPG() failed. Image failed to be written.");
 	}
 
-	void Image::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
 	{
-		ThrowIfTrue(!pData, "Image::saveAsPNG() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::saveAsPNG() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "Image::saveAsPNG failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "CImage::saveAsPNG failed. Image failed to be written.");
 	}
 
-	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
 	{
-		ThrowIfTrue(!pData, "Image::saveAsTGA() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::saveAsTGA() failed. Image not yet created.");
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "Image::saveAsTGA() failed. Image failed to be written.");
+		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsTGA() failed. Image failed to be written.");
 	}
 
-	void Image::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
+	void CImage::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
 	{
-		ThrowIfTrue(!pData, "Image::fill() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::fill() failed. Image not yet created.");
 
 		unsigned int i = 0;
 
@@ -168,7 +168,7 @@ namespace X
 		}
 	}
 
-	bool Image::getDimsArePowerOfTwo(void)
+	bool CImage::getDimsArePowerOfTwo(void)
 	{
 		int iX = 1;
 		int iY = 1;
@@ -181,9 +181,9 @@ namespace X
 		return true;
 	}
 
-	void Image::swapRedAndBlue(void)
+	void CImage::swapRedAndBlue(void)
 	{
-		ThrowIfTrue(!pData, "Image::swapRedAndBlue() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::swapRedAndBlue() failed. Image not yet created.");
 
 		unsigned int i = 0;
 		int i2;
@@ -198,9 +198,9 @@ namespace X
 		}
 	}
 
-	void Image::flipVertically(void)
+	void CImage::flipVertically(void)
 	{
-		ThrowIfTrue(!pData, "Image::flipVertically() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::flipVertically() failed. Image not yet created.");
 
 		// Size of a row
 		unsigned int iRowSize = width * numChannels;
@@ -208,7 +208,7 @@ namespace X
 		// Allocate new flipped image
 		unsigned char *pNewImageStartAddress = new unsigned char[dataSize];
 		unsigned char *pNewImage = pNewImageStartAddress;
-		ThrowIfTrue(0==pNewImage, "Image::flipVertically() failed to allocate memory.");
+		ThrowIfTrue(0==pNewImage, "CImage::flipVertically() failed to allocate memory.");
 
 		// Get pointer to current image
 		unsigned char *pOldImage = pData;
@@ -229,9 +229,9 @@ namespace X
 		pData = pNewImageStartAddress;	// Make image data point to the new data
 	}
 
-	void Image::invert(bool bInvertColour, bool bInvertAlpha)
+	void CImage::invert(bool bInvertColour, bool bInvertAlpha)
 	{
-		ThrowIfTrue(!pData, "Image::invert() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::invert() failed. Image not yet created.");
 
 		unsigned int i = 0;
 		int iIndex;
@@ -258,9 +258,9 @@ namespace X
 		}
 	}
 
-	void Image::greyscaleSimple(void)
+	void CImage::greyscaleSimple(void)
 	{
-		ThrowIfTrue(!pData, "Image::greyscaleSimple() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::greyscaleSimple() failed. Image not yet created.");
 
 		unsigned int i = 0;
 		float f1Over3 = 1.0f / 3.0f;
@@ -281,9 +281,9 @@ namespace X
 	}
 
 
-	void Image::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
+	void CImage::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
 	{
-		ThrowIfTrue(!pData, "Image::greyscale() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::greyscale() failed. Image not yet created.");
 
 		glm::vec3 vCol(fRedSensitivity, fGreenSensitivity, fBlueSensitivity);
 
@@ -304,9 +304,9 @@ namespace X
 		}
 	}
 
-	void Image::adjustBrightness(int iAmount)
+	void CImage::adjustBrightness(int iAmount)
 	{
-		ThrowIfTrue(!pData, "Image::adjustBrightness() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::adjustBrightness() failed. Image not yet created.");
 
 		unsigned int i = 0;
 		int iCol;
@@ -327,9 +327,9 @@ namespace X
 		}
 	}
 
-	void Image::adjustContrast(int iAmount)
+	void CImage::adjustContrast(int iAmount)
 	{
-		ThrowIfTrue(!pData, "Image::adjustContrast() failed. Image not yet created.");
+		ThrowIfTrue(!pData, "CImage::adjustContrast() failed. Image not yet created.");
 
 		clamp(iAmount, -100, 100);
 		double dPixel;
@@ -371,9 +371,9 @@ namespace X
 		}
 	}
 
-	void Image::copyTo(Image &destImage) const
+	void CImage::copyTo(CImage &destImage) const
 	{
-		ThrowIfTrue(!pData, "Image::copyTo() failed. Source image not yet created.");
+		ThrowIfTrue(!pData, "CImage::copyTo() failed. Source image not yet created.");
 
 		// If destination image is the same as this one, do nothing
 		if (destImage.pData == this->pData)
@@ -384,11 +384,11 @@ namespace X
 		memcpy(destImage.pData, pData, sizeof(unsigned char) * dataSize);
 	}
 
-	void Image::copyRectTo(Image &destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY)
+	void CImage::copyRectTo(CImage &destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY)
 	{
 		// Check that both images have data
-		ThrowIfTrue(!pData, "Image::copyRectTo() failed. Source image not yet created.");
-		ThrowIfTrue(!destImage.pData, "Image::copyRectTo() failed. Destination image not yet created.");
+		ThrowIfTrue(!pData, "CImage::copyRectTo() failed. Source image not yet created.");
+		ThrowIfTrue(!destImage.pData, "CImage::copyRectTo() failed. Destination image not yet created.");
 
 		// Compute source rect
 		int iSrcLeft = iSrcPosX;
@@ -451,9 +451,9 @@ namespace X
 		}
 	}
 
-	void Image::copyToAddBorder(Image& outputImage)
+	void CImage::copyToAddBorder(CImage& outputImage)
 	{
-		ThrowIfTrue(!pData, "Image::copyToAddBorder() failed. Image data doesn't exist.");
+		ThrowIfTrue(!pData, "CImage::copyToAddBorder() failed. Image data doesn't exist.");
 
 		// Compute new larger dimensions and create the larger image
 		int newWidth = width + 2;
@@ -491,9 +491,9 @@ namespace X
 		}
 	}
 
-	void Image::rotateClockwise(void)
+	void CImage::rotateClockwise(void)
 	{
-		Image oldImage;
+		CImage oldImage;
 		copyTo(oldImage);
 
 		unsigned char col[4];
@@ -518,10 +518,10 @@ namespace X
 		}
 	}
 
-	void Image::edgeDetect(Image &outputImage, unsigned char r, unsigned char g, unsigned char b)
+	void CImage::edgeDetect(CImage &outputImage, unsigned char r, unsigned char g, unsigned char b)
 	{
-		ThrowIfTrue(!pData, "Image::edgeDetect() failed. Image data doesn't exist.");
-		ThrowIfTrue(numChannels < 3, "Image::edgeDetect() failed. Some image data exists, but doesn't have enough colour channels.");
+		ThrowIfTrue(!pData, "CImage::edgeDetect() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels < 3, "CImage::edgeDetect() failed. Some image data exists, but doesn't have enough colour channels.");
 
 		outputImage.createBlank(width, height, 4);
 		int iX = 0;
@@ -541,13 +541,13 @@ namespace X
 		}
 	}
 
-	void Image::removeAlphaChannel(void)
+	void CImage::removeAlphaChannel(void)
 	{
-		ThrowIfTrue(!pData, "Image::removeAlphaChannel() failed. Image data doesn't exist.");
-		ThrowIfTrue(numChannels != 4, "Image::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+		ThrowIfTrue(!pData, "CImage::removeAlphaChannel() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels != 4, "CImage::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		// Copy this image to a new tmp image
-		Image old;
+		CImage old;
 		copyTo(old);
 
 		// Recreate this one, but with 3 channels
@@ -566,10 +566,10 @@ namespace X
 		}
 	}
 
-	void Image::copyAlphaChannelToRGB(void)
+	void CImage::copyAlphaChannelToRGB(void)
 	{
-		ThrowIfTrue(!pData, "Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
-		ThrowIfTrue(numChannels != 4, "Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+		ThrowIfTrue(!pData, "CImage::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
+		ThrowIfTrue(numChannels != 4, "CImage::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		unsigned int iIndex = 0;
 		while (iIndex < dataSize)
@@ -581,16 +581,16 @@ namespace X
 		}
 	}
 
-	void Image::normalmap(Image& outputImage, float fScale)
+	void CImage::normalmap(CImage& outputImage, float fScale)
 	{
-		ThrowIfTrue(!pData, "Image::normalmap() failed. Image data doesn't exist.");
+		ThrowIfTrue(!pData, "CImage::normalmap() failed. Image data doesn't exist.");
 
 		clamp(fScale, 0.0f, 1.0f);
 
 		// Copy this image into a new one so this is left unaffected.
 		// This uses the copyToAddBorder() method which adds a border and copies the edge pixels to the new pixels in the border.
 		// This makes it so we don't have to mess around with edge cases.
-		Image imageGreyscale;
+		CImage imageGreyscale;
 		copyToAddBorder(imageGreyscale);
 
 		// Greyscale the image

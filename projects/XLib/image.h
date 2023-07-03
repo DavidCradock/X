@@ -14,11 +14,11 @@ namespace X
 	// HDR(radiance rgbE format)
 	// PIC(Softimage PIC)
 	// PNM(PPM and PGM binary only)
-	class Image
+	class CImage
 	{
 	public:
-		Image();
-		~Image();
+		CImage();
+		~CImage();
 
 		// Free image and memory
 		void free(void);
@@ -152,7 +152,7 @@ namespace X
 		// Silently fails if both this image and the one parsed are actually the same objects, or there is no image data to copy.
 		// If this image contains no data, an exception occurs.
 		// The destinationImage is totally replaced. 
-		void copyTo(Image& destImage) const;
+		void copyTo(CImage& destImage) const;
 
 		// Copies a rectangular region from this object, into the one given.
 		// Automatic clipping is done so that if the source region doesn't fit into destination, it will be clipped.
@@ -165,13 +165,13 @@ namespace X
 		// iDestPosX The bottom left position within the destination image to copy to
 		// iDestPosY The bottom left position within the destination image to copy to
 		// If this image or the destination image contain no data, an exception occurs.
-		void copyRectTo(Image& destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY);
+		void copyRectTo(CImage& destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY);
 
 		// Copies the contents of this image into the outputImage and gives the output image a border and sets the pixels around that
 		// border to be the same as the ones in this image's edge pixels, thereby making the output image have dimensions which are +2 of this one.
 		// This is typically used to simply calculating of stuff without having to take into consideration, edge cases.
 		// If this image contains no data, an exception occurs.
-		void copyToAddBorder(Image& outputImage);
+		void copyToAddBorder(CImage& outputImage);
 
 		// Rotates the image 90 degrees clockwise
 		// If this image contains no data, an exception occurs.
@@ -183,7 +183,7 @@ namespace X
 		// I wish I could place images here in the code, as it'd be much easier to show what this does with images.
 		// Edges are detected by using the given colour value which should represent the colour of the image's background
 		// If this image contains no data, or doesn't have at least 3 channels, an exception occurs.
-		void edgeDetect(Image& outputImage, unsigned char r, unsigned char g, unsigned char b);
+		void edgeDetect(CImage& outputImage, unsigned char r, unsigned char g, unsigned char b);
 
 		// Removes the alpha channel of the image, leaving the RGB components
 		// If this image contains no data, or doesn't have 4 channels, an exception occurs.
@@ -198,7 +198,7 @@ namespace X
 		// However, this image first creates a copy of itself in memory, then calls greyscaleSimple() on that to ensure proper computation of the normals.
 		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally. Lower values increase the effect
 		// If this image contains no data, an exception occurs.
-		void normalmap(Image& outputImage, float fScale = 1.0f);
+		void normalmap(CImage& outputImage, float fScale = 1.0f);
 		
 	private:
 		unsigned char* pData;
@@ -221,7 +221,7 @@ namespace X
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 
-	inline void Image::setPixel(int iX, int iY, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	inline void CImage::setPixel(int iX, int iY, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 	{
 		if (iX >= width)
 			return;
@@ -249,7 +249,7 @@ namespace X
 		}
 	}
 
-	inline void Image::getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a)
+	inline void CImage::getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a)
 	{
 		if (iX >= width)
 			return;
@@ -277,7 +277,7 @@ namespace X
 		}
 	}
 
-	inline bool Image::_isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
+	inline bool CImage::_isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
 	{
 		// Don't check edge pixels of image
 		if (iPosX == 0)

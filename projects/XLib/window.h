@@ -16,7 +16,7 @@ namespace X
 		void createWindow(std::string strWindowTitle);
 
 		// Updates the window by checking messages, should be called each program loop
-		// Is called from ApplicationManager::mainLoop()
+		// Is called from SCApplicationManager::mainLoop()
 		// Returns false if the window wants to close
 		bool checkMessages(void);
 

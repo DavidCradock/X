@@ -2,11 +2,11 @@
 
 namespace X
 {
-	void Application::initOnce(void)
+	void CApplication::initOnce(void)
 	{
 
-//		Image img;
-//		Image normal;
+//		CImage img;
+//		CImage normal;
 //		img.load("data/X/gui/default/textscrollBGheight.png");
 //		img.normalmap(normal, 0.5f);
 //		normal.saveAsPNG("data/X/gui/default/textscrollBGnormal.png");
@@ -98,16 +98,16 @@ namespace X
 //		pRM->addTriangle("DEBUG_QUAD");
 	}
 
-	void Application::onStart(void)
+	void CApplication::onStart(void)
 	{
 	}
 
-	void Application::onStop(void)
+	void CApplication::onStop(void)
 	{
 
 	}
 
-	bool Application::onUpdate(void)
+	bool CApplication::onUpdate(void)
 	{
 		// Get pointers to needed managers
 		InputManager* pInputManager = InputManager::getPointer();
@@ -276,7 +276,7 @@ namespace X
 		return true;
 	}
 
-	void Application::_initSceneManager(void)
+	void CApplication::_initSceneManager(void)
 	{
 		// Set camera mode
 //		mSceneManagerSimple.mCamera.setModeOrbit(

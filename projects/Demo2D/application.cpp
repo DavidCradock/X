@@ -2,26 +2,25 @@
 
 namespace X
 {
-	void Application::initOnce(void)
+	void CApplication::initOnce(void)
 	{
 		// Set window title bar text
 		Window::getPointer()->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 
 		// Show frame rate statistics
 		GUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
-
 	}
 
-	void Application::onStart(void)
+	void CApplication::onStart(void)
 	{
 	}
 
-	void Application::onStop(void)
+	void CApplication::onStop(void)
 	{
 
 	}
 
-	bool Application::onUpdate(void)
+	bool CApplication::onUpdate(void)
 	{
 		InputManager* pInputManager = InputManager::getPointer();
 

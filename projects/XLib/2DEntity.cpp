@@ -1,0 +1,7 @@
+#include "PCH.h"
+#include "2DEntity.h"
+
+namespace X
+{
+
+}

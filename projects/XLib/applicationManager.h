@@ -6,24 +6,24 @@
 
 namespace X
 {
-	// Application manager class to handle all apps which are derived from ApplicationBase found in "applicationBase.h"
+	// Application manager class to handle all apps which are derived from CApplicationBase found in "applicationBase.h"
 	// By default, the current application to be run each loop is the AppDevelopment application
-	// This can be changed by calling ApplicationManager::getPointer()->switchToApp("YourApplicationName");
+	// This can be changed by calling SCApplicationManager::getPointer()->switchToApp("YourApplicationName");
 	// The purpose of this manager is so that we can write tools, editors and be able to switch between them.
 	// It also helps me to test the resource loading/unloading which each app uses to make sure everything is
 	// being intialised/shutdown properly.
 	// It's also nice to have the entire codebase's management handled within.
-	class ApplicationManager : public Singleton<ApplicationManager>
+	class SCApplicationManager : public Singleton<SCApplicationManager>
 	{
 	public:
 		// This is the main loop of the entire program, call this from WinMain.
 		// This creates each of the applications, adds them to this manager and performs initialisation, updating and shutdown
 		void mainLoop(void);
 
-		// Add a new application class object pointer derived from the ApplicationBase class to the manager
+		// Add a new application class object pointer derived from the CApplicationBase class to the manager
 		// If the name of the application already exists, an exception occurs.
 		// The first time this is called, that application is set as currently active.
-		void addApp(const std::string& applicationName, ApplicationBase* pTheApplication);
+		void addApp(const std::string& applicationName, CApplicationBase* pTheApplication);
 
 		// Return the number of applications added to this manager
 		size_t getNumApps(void) { return mApplications.size(); }
@@ -58,7 +58,7 @@ namespace X
 		// Adds default required resources to the resource manager, called during startup from mainLoop
 		void addDefaultResources(void);
 
-		std::map<std::string, ApplicationBase*> mApplications;	// Hash map which holds each named application
+		std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
 		std::string mstrCurrentApp;								// Application name of the current application.
 		Timer mTimer;											// Used to update application running time.
 	};

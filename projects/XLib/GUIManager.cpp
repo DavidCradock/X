@@ -17,7 +17,7 @@ namespace X
 		pTheme->loadTextures();
 		pTheme->addFontsToManager();
 
-		AudioManager::getPointer()->addNewSampleGroup("gui");
+		SCAudioManager::getPointer()->addNewSampleGroup("gui");
 		pTheme->addAudioToManager();
 		setAudioVol(1.0f);
 		_mbWindowBeingMoved = false;

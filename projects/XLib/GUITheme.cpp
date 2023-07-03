@@ -57,6 +57,7 @@ namespace X
 		mColours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 0.75f);
 		mColours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 0.5f);
+		mColours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
 
 		// Floats
 		mfNormalAmount = 0.1f;
@@ -158,6 +159,7 @@ namespace X
 		_readColourInfo(file, mColours.buttonImageDown);
 		_readColourInfo(file, mColours.buttonImageOver);
 		_readColourInfo(file, mColours.buttonImageUp);
+		_readColourInfo(file, mColours.tooltipText);
 
 		// Floats
 		getline(file, strLine);	// End of line
@@ -261,6 +263,7 @@ namespace X
 		_writeColourInfo(file, "buttonImageDown", mColours.buttonImageDown);
 		_writeColourInfo(file, "buttonImageOver", mColours.buttonImageOver);
 		_writeColourInfo(file, "buttonImageUp", mColours.buttonImageUp);
+		_writeColourInfo(file, "buttonImageUp", mColours.tooltipText);
 
 		// Floats
 		file << "\nFloats\n";
@@ -370,7 +373,7 @@ namespace X
 
 	void GUITheme::addAudioToManager(void)
 	{
-		AudioManager* pAM = AudioManager::getPointer();
+		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->addSample(mAudio.buttonClicked.strSampleName, "gui");				pAM->addEmitter(mAudio.buttonClicked.strSampleName, mAudio.buttonClicked.strSampleName, 4, "gui");
 		pAM->addSample(mAudio.textEditTextAdd.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditTextAdd.strSampleName, mAudio.textEditTextAdd.strSampleName, 4, "gui");
 		pAM->addSample(mAudio.textEditBackspace.strSampleName, "gui");			pAM->addEmitter(mAudio.textEditBackspace.strSampleName, mAudio.textEditBackspace.strSampleName, 4, "gui");
@@ -384,7 +387,7 @@ namespace X
 
 	void GUITheme::removeAudioFromManager(void)
 	{
-		AudioManager* pAM = AudioManager::getPointer();
+		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->unloadSampleGroup("gui");
 		pAM->removeSample(mAudio.buttonClicked.strSampleName, "gui");			pAM->removeEmitter(mAudio.buttonClicked.strSampleName);
 		pAM->removeSample(mAudio.textEditTextAdd.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditTextAdd.strSampleName);

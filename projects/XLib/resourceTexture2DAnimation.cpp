@@ -148,7 +148,7 @@ namespace X
 		ThrowIfTrue(0 == vecStrImageFilenames.size(), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Given vector of strings has no data.");
 
 		// Load first image in the vector and determine dimensions
-		Image image;
+		CImage image;
 		int iImageWidth, iImageHeight, iImageChannels;
 		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to determined dimensions of first image.");
 
@@ -161,7 +161,7 @@ namespace X
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
-		std::vector<Image*> vImages;	// Holds each individual image
+		std::vector<CImage*> vImages;	// Holds each individual image
 		AnimationFrame animFrame;		// Holds texture number and positions (positions are converted to texture coordinates when we know large image dimensions)
 		animFrame.uiTextureNumber = 0;
 		animFrame.vTCMin = glm::vec2(0.0f, 0.0f);
@@ -173,7 +173,7 @@ namespace X
 		for (unsigned int iImage = 0; iImage < vecStrImageFilenames.size(); iImage++)
 		{
 			// Create new image and store in vImages
-			Image* pNewImage = new Image;
+			CImage* pNewImage = new CImage;
 			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to allocate memory for image " + vecStrImageFilenames[iImage] + ".");
 			vImages.push_back(pNewImage);
 
@@ -233,7 +233,7 @@ namespace X
 		int iNumImages = (int)vecLargeImageDims.size();
 		for (int iLargeImage = 0; iLargeImage < iNumImages; iLargeImage++)
 		{
-			Image* pNewImage = new Image;
+			CImage* pNewImage = new CImage;
 			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed to allocated memory for large image.");
 			_mvLargeImages.push_back(pNewImage);
 			_mvLargeImages[iLargeImage]->createBlank((unsigned int)vecLargeImageDims[iLargeImage].x, (unsigned int)vecLargeImageDims[iLargeImage].y, (unsigned short)iImageChannels);
@@ -277,5 +277,10 @@ namespace X
 //			std::string strName = "Image_" + std::to_string(i) + ".png";
 //			_mvLargeImages[i]->saveAsPNG(strName);
 		}
+	}
+
+	unsigned int ResourceTexture2DAnimation::getNumPackedTextures(void)
+	{
+		return (unsigned int)_mvLargeTextureIDs.size();
 	}
 }

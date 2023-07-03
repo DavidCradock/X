@@ -5,13 +5,13 @@
 namespace X
 {
 	// An audio sample containing sample data used for playback via audio emitters
-	class AudioSample
+	class CAudioSample
 	{
-		friend class AudioManager;
-		friend class AudioEmitter;
+		friend class SCAudioManager;
+		friend class CAudioEmitter;
 	public:
-		AudioSample();
-		~AudioSample();
+		CAudioSample();
+		~CAudioSample();
 
 		// Loads the resource so it's ready for use.
 		// Used by the manager
@@ -37,11 +37,11 @@ namespace X
 	};
 
 	// An audio emitter which emits sounds from loaded audio samples
-	class AudioEmitter
+	class CAudioEmitter
 	{
 	public:
-		AudioEmitter(WAVEFORMATEXTENSIBLE &wfx, unsigned int iMaxSimultaneousInstances = 8);
-		~AudioEmitter();
+		CAudioEmitter(WAVEFORMATEXTENSIBLE &wfx, unsigned int iMaxSimultaneousInstances = 8);
+		~CAudioEmitter();
 
 		// Plays an instance for this emitter using given values
 		// If the sample isn't currently loaded, this silently fails
@@ -92,21 +92,21 @@ namespace X
 	// Audio sample data is stored inside groups
 	// By default, a group named "default" is created for storage of audio samples upon construction.
 	// Get a pointer to the audio manager...
-	// AudioManager *pAudioManager = AudioManager::getPointer();
+	// SCAudioManager *pAudioManager = SCAudioManager::getPointer();
 	// Add a new sample to the "default" group
 	// pAudioManager->addSample("audio/fart.wav", "default");
 	// // Add more samples if needed and then call..
 	// pAudioManager->loadSampleGroup("default");	// Load all audio data, so it's ready for use
 	// Create an emitter which will be used to playback a sample.
 	// Emitters are "linked" to a single sample, they can only play that one sample
-	// AudioEmitter *pAudioEmitter = pAudioManager->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
+	// CAudioEmitter *pAudioEmitter = pAudioManager->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
 	// Now we can playback the sample with...
 	// pAudioEmitter->play(1.0f, 1.0f, false);	// Where parameters are volume, playback speed and whether to loop the sample or not
-	class AudioManager : public Singleton<AudioManager>
+	class SCAudioManager : public Singleton<SCAudioManager>
 	{
 	public:
-		friend class AudioEmitter;
-		AudioManager();
+		friend class CAudioEmitter;
+		SCAudioManager();
 
 		// Return the number of sample resource groups which currently exist in the manager
 		unsigned int getNumSampleGroups(void);
@@ -154,12 +154,12 @@ namespace X
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
 		// strNewResourceName is used to refer to the sample data by name and is also the filename holding the sample's sample data
-		AudioSample* addSample(const std::string& strNewResourceName, const std::string& strGroupName = "default");
+		CAudioSample* addSample(const std::string& strNewResourceName, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named sample resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs
 		// Also, if the resource is in the unloaded state, it is loaded here
-		AudioSample* getSample(const std::string& strResourceName, const std::string& strGroupName = "default");
+		CAudioSample* getSample(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Returns true if the named sample resource exists in the named group, else false
 		bool getExistsSample(const std::string& strResourceName, const std::string& strGroupName = "default");
@@ -179,7 +179,7 @@ namespace X
 		// Adds an emitter which we use to playback the named sample.
 		// If the named sample doesn't exist, an exception occurs
 		// If the named emitter already exists, an exception occurs
-		AudioEmitter* addEmitter(const std::string& strEmitterName, const std::string& strSampleName, unsigned int iMaxSimultaneousInstances = 8, const std::string& strSampleGroupname = "default");
+		CAudioEmitter* addEmitter(const std::string& strEmitterName, const std::string& strSampleName, unsigned int iMaxSimultaneousInstances = 8, const std::string& strSampleGroupname = "default");
 
 		// Removes the named emitter and stops playback
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
@@ -190,13 +190,13 @@ namespace X
 
 		// Returns a pointer to the named emitter
 		// If the named emitter doesn't exist, an exception occurs
-		AudioEmitter* getEmitter(const std::string& strEmitterName);
+		CAudioEmitter* getEmitter(const std::string& strEmitterName);
 	private:
 
 		// A resource and various variables needed by the manager for each resource
 		struct ResourceSample
 		{
-			AudioSample* pResource;			// Pointer to the resource
+			CAudioSample* pResource;			// Pointer to the resource
 			unsigned int uiReferenceCount;	// How many times the resource has been added/removed
 			bool bLoaded;					// Whether the resource is loaded or not
 		};
@@ -211,7 +211,7 @@ namespace X
 		IXAudio2* mpXAudio2;						// Main XAudio2 interface
 		IXAudio2MasteringVoice* mpMasterVoice;		// Mastering voice
 
-		std::map<std::string, AudioEmitter*> _mmapEmitters;		// Holds each named emitter
+		std::map<std::string, CAudioEmitter*> _mmapEmitters;		// Holds each named emitter
 	};
 
 }

@@ -4,20 +4,20 @@
 
 namespace X
 {
-	ApplicationBase::ApplicationBase()
+	CApplicationBase::CApplicationBase()
 	{
 		mfApplicationSecondsRunning = 0.0f;
 	}
 
-	void ApplicationBase::initOnce(void)
+	void CApplicationBase::initOnce(void)
 	{
 	}
 
-	void ApplicationBase::onStart(void)
+	void CApplicationBase::onStart(void)
 	{
 	}
 
-	void ApplicationBase::onStop(void)
+	void CApplicationBase::onStop(void)
 	{
 	}
 }

@@ -11,7 +11,7 @@
 
 namespace X
 {
-	void ApplicationManager::mainLoop(void)
+	void SCApplicationManager::mainLoop(void)
 	{
 		try
 		{
@@ -20,11 +20,11 @@ namespace X
 			// Clear the log file
 			Log* pLog = Log::getPointer();
 			pLog->clear();
-			pLog->add("ApplicationManager::mainLoop() called.");
+			pLog->add("SCApplicationManager::mainLoop() called.");
 
-			// Create objects to each of the application classes which inherit from ApplicationBase
+			// Create objects to each of the application classes which inherit from CApplicationBase
 //			ApplicationGUIThemeEditor* pAppGUIThemeEditor = new ApplicationGUIThemeEditor;
-//			ThrowIfTrue(0 == pAppGUIThemeEditor, "ApplicationManager::mainLoop() failed to allocate ApplicationGUIThemeEditor.");
+//			ThrowIfTrue(0 == pAppGUIThemeEditor, "SCApplicationManager::mainLoop() failed to allocate ApplicationGUIThemeEditor.");
 
 			// Add each application to this manager
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
@@ -40,7 +40,7 @@ namespace X
 			pInputManager->mouse.setMousePos(pWindow->getWidth() / 2, pWindow->getHeight() / 2);
 
 			// Add default resources used in various places
-			pLog->add("ApplicationManager::mainLoop() adding default resources to ResourceManager.");
+			pLog->add("SCApplicationManager::mainLoop() adding default resources to ResourceManager.");
 			addDefaultResources();
 
 			// Initialise GUI
@@ -51,14 +51,14 @@ namespace X
 			callAllApps_initOnce();
 
 			// Call currently set application's onStart method
-			std::string strLog = "ApplicationManager::mainLoop() calling " + mstrCurrentApp + "'s onStart()";
+			std::string strLog = "SCApplicationManager::mainLoop() calling " + mstrCurrentApp + "'s onStart()";
 			pLog->add(strLog);
-			std::map<std::string, ApplicationBase*>::iterator it = mApplications.find(mstrCurrentApp);
-			ThrowIfTrue(it == mApplications.end(), "ApplicationManager::mainLoop() unable to find the current application called " + mstrCurrentApp);
+			std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(mstrCurrentApp);
+			ThrowIfTrue(it == mApplications.end(), "SCApplicationManager::mainLoop() unable to find the current application called " + mstrCurrentApp);
 			it->second->onStart();
 
 			// Enter main loop...
-			pLog->add("ApplicationManager::mainLoop() is entering main loop...");
+			pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
 
 			ResourceManager* pRM = ResourceManager::getPointer();
@@ -97,7 +97,7 @@ namespace X
 			}
 
 			// Last current app's onStop method
-			pLog->add("ApplicationManager::mainLoop() is shutting down...");
+			pLog->add("SCApplicationManager::mainLoop() is shutting down...");
 			it = mApplications.find(mstrCurrentApp);
 			ThrowIfTrue(it == mApplications.end(), "unable to find the current application called " + mstrCurrentApp);
 			it->second->onStop();
@@ -115,15 +115,15 @@ namespace X
 		Log::getPointer()->add("Total runtime: " + mTimer.getClock());
 	}
 
-	void ApplicationManager::addApp(const std::string& applicationName, ApplicationBase* pTheApplication)
+	void SCApplicationManager::addApp(const std::string& applicationName, CApplicationBase* pTheApplication)
 	{
 		Log *pLog = Log::getPointer();
-		std::string strLog = "ApplicationManager::addApp(" + applicationName + ") called.";
+		std::string strLog = "SCApplicationManager::addApp(" + applicationName + ") called.";
 		Log::getPointer()->add(strLog);
 
 		// Make sure it doesn't already exist
-		std::map<std::string, ApplicationBase*>::iterator it = mApplications.find(applicationName);
-		ThrowIfTrue(it != mApplications.end(), "ApplicationManager::addApp(" + applicationName + " failed. The application name already exists");
+		std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(applicationName);
+		ThrowIfTrue(it != mApplications.end(), "SCApplicationManager::addApp(" + applicationName + " failed. The application name already exists");
 
 		// If we get here, we can add it
 		mApplications[applicationName] = pTheApplication;
@@ -135,15 +135,15 @@ namespace X
 		}
 	}
 
-	const std::string& ApplicationManager::getAppName(unsigned int index)
+	const std::string& SCApplicationManager::getAppName(unsigned int index)
 	{
 		Log* pLog = Log::getPointer();
-		std::string strLog = "ApplicationManager::getAppName() with index " + std::to_string(index) + " called.";
+		std::string strLog = "SCApplicationManager::getAppName() with index " + std::to_string(index) + " called.";
 		Log::getPointer()->add(strLog);
 
-		ThrowIfTrue(index >= mApplications.size(), "ApplicationManager::getAppName(" + std::to_string(index) + ") failed. Invalid index given, maximum number of added applications is " + std::to_string(mApplications.size()));
+		ThrowIfTrue(index >= mApplications.size(), "SCApplicationManager::getAppName(" + std::to_string(index) + ") failed. Invalid index given, maximum number of added applications is " + std::to_string(mApplications.size()));
 
-		std::map<std::string, ApplicationBase*>::iterator it = mApplications.begin();
+		std::map<std::string, CApplicationBase*>::iterator it = mApplications.begin();
 		for (unsigned int i = 0; i < index; ++i)
 		{
 			it++;
@@ -151,19 +151,19 @@ namespace X
 		return it->first;
 	}
 
-	void ApplicationManager::switchToApp(const std::string& applicationToSwitchTo)
+	void SCApplicationManager::switchToApp(const std::string& applicationToSwitchTo)
 	{
 		Log* pLog = Log::getPointer();
-		std::string strLog = "ApplicationManager::switchToApp(" + applicationToSwitchTo + " called.";
+		std::string strLog = "SCApplicationManager::switchToApp(" + applicationToSwitchTo + " called.";
 		Log::getPointer()->add(strLog);
 
 		// Attempt to find the application we're trying to switch to
-		std::map<std::string, ApplicationBase*>::iterator itNewApp = mApplications.find(applicationToSwitchTo);
-		ThrowIfTrue(itNewApp == mApplications.end(), "ApplicationManager::switchToApp(\"" + applicationToSwitchTo + "\") failed. Application by given name doesn't exist.");
+		std::map<std::string, CApplicationBase*>::iterator itNewApp = mApplications.find(applicationToSwitchTo);
+		ThrowIfTrue(itNewApp == mApplications.end(), "SCApplicationManager::switchToApp(\"" + applicationToSwitchTo + "\") failed. Application by given name doesn't exist.");
 
 		// Attempt to find the application that's currently set as current
-		std::map<std::string, ApplicationBase*>::iterator itOldApp = mApplications.find(mstrCurrentApp);
-		ThrowIfTrue(itOldApp == mApplications.end(), "ApplicationManager::switchToApp(" + applicationToSwitchTo + " failed. Prior to changing to the new application, the old application called " + mstrCurrentApp + " doesn't exist which is mental!");
+		std::map<std::string, CApplicationBase*>::iterator itOldApp = mApplications.find(mstrCurrentApp);
+		ThrowIfTrue(itOldApp == mApplications.end(), "SCApplicationManager::switchToApp(" + applicationToSwitchTo + " failed. Prior to changing to the new application, the old application called " + mstrCurrentApp + " doesn't exist which is mental!");
 
 		// Change current app name and call the various methods for each
 		mstrCurrentApp = applicationToSwitchTo;
@@ -171,17 +171,17 @@ namespace X
 		itNewApp->second->onStart();
 	}
 
-	void ApplicationManager::switchToNextApp(void)
+	void SCApplicationManager::switchToNextApp(void)
 	{
 		Log* pLog = Log::getPointer();
-		std::string strLog = "ApplicationManager::SwitchToNextApp() called.";
+		std::string strLog = "SCApplicationManager::SwitchToNextApp() called.";
 		Log::getPointer()->add(strLog);
 
 		// If no apps are currently set
-		ThrowIfTrue(0 == mstrCurrentApp.size(), "ApplicationManager::switchToNextApp() failed. There is no currently set application name.");
+		ThrowIfTrue(0 == mstrCurrentApp.size(), "SCApplicationManager::switchToNextApp() failed. There is no currently set application name.");
 
 		// If only one app exists
-		ThrowIfTrue(1 == mApplications.size(), "ApplicationManager::switchToNextApp() failed. There is only one application which exists.");
+		ThrowIfTrue(1 == mApplications.size(), "SCApplicationManager::switchToNextApp() failed. There is only one application which exists.");
 
 		// Find index of current application
 		int indexOfCurrentApp = -1;
@@ -193,7 +193,7 @@ namespace X
 				break;
 			}
 		}
-		ThrowIfTrue(-1 == indexOfCurrentApp, "ApplicationManager::switchToNextApp() failed. Unable to find currently set application.");
+		ThrowIfTrue(-1 == indexOfCurrentApp, "SCApplicationManager::switchToNextApp() failed. Unable to find currently set application.");
 
 		// Determine index of next app (wrap around)
 		int indexOfNextApp = indexOfCurrentApp + 1;
@@ -202,13 +202,13 @@ namespace X
 		switchToApp(getAppName(indexOfNextApp));
 	}
 
-	void ApplicationManager::callAllApps_initOnce(void)
+	void SCApplicationManager::callAllApps_initOnce(void)
 	{
 		Log* pLog = Log::getPointer();
-		std::string strLog = "ApplicationManager::callAllApps_initOnce() called.";
+		std::string strLog = "SCApplicationManager::callAllApps_initOnce() called.";
 		Log::getPointer()->add(strLog);
 
-		std::map<std::string, ApplicationBase*>::iterator it = mApplications.begin();
+		std::map<std::string, CApplicationBase*>::iterator it = mApplications.begin();
 		while (it != mApplications.end())
 		{
 			it->second->initOnce();
@@ -216,25 +216,25 @@ namespace X
 		}
 	}
 
-	bool ApplicationManager::callCurrentApp_onUpdate(void)
+	bool SCApplicationManager::callCurrentApp_onUpdate(void)
 	{
 		mTimer.update();	// For application runtime
-		std::map<std::string, ApplicationBase*>::iterator it = mApplications.find(mstrCurrentApp);
-		ThrowIfTrue(it == mApplications.end(), "ApplicationManager::callCurrentApp_onUpdate(" + mstrCurrentApp + " failed. Unable to find the named application");
+		std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(mstrCurrentApp);
+		ThrowIfTrue(it == mApplications.end(), "SCApplicationManager::callCurrentApp_onUpdate(" + mstrCurrentApp + " failed. Unable to find the named application");
 
 		// Update application runtime
 		it->second->mfApplicationSecondsRunning += mTimer.getSecondsPast();
 		return it->second->onUpdate();
 	}
 
-	float ApplicationManager::getApplicationRuntime(const std::string& applicationName)
+	float SCApplicationManager::getApplicationRuntime(const std::string& applicationName)
 	{
-		std::map<std::string, ApplicationBase*>::iterator it = mApplications.find(applicationName);
-		ThrowIfTrue(it == mApplications.end(), "ApplicationManager::getApplicationRuntime(" + applicationName + " failed. Unable to find the named application");
+		std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(applicationName);
+		ThrowIfTrue(it == mApplications.end(), "SCApplicationManager::getApplicationRuntime(" + applicationName + " failed. Unable to find the named application");
 		return it->second->mfApplicationSecondsRunning;
 	}
 
-	void ApplicationManager::addDefaultResources(void)
+	void SCApplicationManager::addDefaultResources(void)
 	{
 		// NOTE:
 		// When adding resources here, remember to add the resource to the comments at the top of ResourceManager class in resourceManager.h

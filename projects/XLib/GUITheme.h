@@ -49,11 +49,11 @@ namespace X
 		// If you need to change any of the theme's font names, please call this method before doing so.
 		void removeFontsFromManager(void);
 
-		// Adds the theme's currently set audio into AudioManager so that they're ready to use.
+		// Adds the theme's currently set audio into SCAudioManager so that they're ready to use.
 		// If you need to change any of the theme's audio names, please call unloadAudio() before doing so.
 		void addAudioToManager(void);
 
-		// Removes the theme's currently set audio out of the AudioManager.
+		// Removes the theme's currently set audio out of the SCAudioManager.
 		// If you need to change any of the theme's audio names, please call this method before doing so.
 		void removeAudioFromManager(void);
 
@@ -116,6 +116,7 @@ namespace X
 			GUIColour buttonImageDown;
 			GUIColour buttonImageOver;
 			GUIColour buttonImageUp;
+			GUIColour tooltipText;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 

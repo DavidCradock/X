@@ -100,7 +100,7 @@ namespace X
 	{
 	public:
 		friend class GUIContainer;
-		friend class ApplicationManager;
+		friend class SCApplicationManager;
 		GUIManager();
 
 		// Updates and renders the GUI
@@ -207,7 +207,7 @@ namespace X
 		float _mfAudioVol;											// Audio volume 0-1 range
 
 		// Creates the default containers which are hidden by default
-		// Called from ApplicationManager mainloop
+		// Called from SCApplicationManager mainloop
 		void _createDefaultContainers(void);
 
 		// Updates the default containers if they are shown

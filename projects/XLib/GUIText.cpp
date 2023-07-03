@@ -64,7 +64,7 @@ namespace X
 		GUIColour col;
 		if (_mbUseThemeColour)
 		{
-			col = pTheme->mColours.text;
+			col = pTheme->mColours.tooltipText;
 		}
 		else
 		{

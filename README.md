@@ -26,3 +26,4 @@ Current progress...
 - Implement Taskbar to GUI.
 - Create 2D sprite rendering
 - Rewrite joy part of input
+- Refactor code so all singleton classes start with SC and all other classes with C

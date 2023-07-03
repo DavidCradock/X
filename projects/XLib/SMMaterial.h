@@ -7,7 +7,7 @@ namespace X
 	// This holds the texture names used by this material, each located inside the ResourceManager class.
 	// It also holds some other variables such as specular and ambient strength.
 	// We have default texture maps stored in the resource manager which are used if these texture strings are not set.
-	// They are added from the ApplicationManager::addDefaultResources() method.
+	// They are added from the SCApplicationManager::addDefaultResources() method.
 	// They are named "X:default_diffuse", "X:default_emission", "X:default_roughness" and "X:default_normal"
 	// This is usefull if we do not need to use them.
 	// Examples...

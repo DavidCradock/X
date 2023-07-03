@@ -36,7 +36,7 @@ namespace X
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the tooltips are rendered to
 	// X:gui					// A line vertex buffer resource used by the GUI when rendering lines
-	// They are loaded by ApplicationManager::addDefaultResources()
+	// They are loaded by SCApplicationManager::addDefaultResources()
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:

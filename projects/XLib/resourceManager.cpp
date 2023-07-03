@@ -654,8 +654,8 @@ namespace X
 		}
 		GdiFlush();
 
-		// Create Image object from DIBsection ready to save to disk
-		Image imgOut;
+		// Create CImage object from DIBsection ready to save to disk
+		CImage imgOut;
 		imgOut.createBlank((unsigned int)vFinalTextureDims.x, (unsigned int)vFinalTextureDims.y, 4);
 
 		// Compute filenames for the texture

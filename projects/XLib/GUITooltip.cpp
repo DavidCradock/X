@@ -339,7 +339,7 @@ namespace X
 			itProgressBar++;
 		}
 
-		// Image
+		// CImage
 		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
 		{

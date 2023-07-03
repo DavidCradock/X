@@ -11,6 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2DEntity.h" />
+    <ClInclude Include="2DImageData.h" />
+    <ClInclude Include="2DLayer.h" />
+    <ClInclude Include="2DManager.h" />
+    <ClInclude Include="2DPhysicsData.h" />
     <ClInclude Include="applicationBase.h" />
     <ClInclude Include="applicationManager.h" />
     <ClInclude Include="audioManager.h" />
@@ -81,6 +86,11 @@
     <ClInclude Include="X.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="2DEntity.cpp" />
+    <ClCompile Include="2DImageData.cpp" />
+    <ClCompile Include="2DLayer.cpp" />
+    <ClCompile Include="2DManager.cpp" />
+    <ClCompile Include="2DPhysicsData.cpp" />
     <ClCompile Include="applicationBase.cpp" />
     <ClCompile Include="applicationManager.cpp" />
     <ClCompile Include="audioManager.cpp" />

@@ -163,7 +163,7 @@ namespace X
 			if (!pInput->mouse.leftButDown())
 			{
 				_mbClicked = true;
-				AudioManager::getPointer()->getEmitter(pTheme->mAudio.buttonClicked.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.buttonClicked.fVolume, pTheme->mAudio.buttonClicked.fPitch);
+				SCAudioManager::getPointer()->getEmitter(pTheme->mAudio.buttonClicked.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.buttonClicked.fVolume, pTheme->mAudio.buttonClicked.fPitch);
 			}
 		}
 		// Store current state to detect mouse clicks

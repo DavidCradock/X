@@ -93,7 +93,7 @@ namespace X
 		ResourceManager* pResMan = ResourceManager::getPointer();
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
-		AudioManager* pAudio = AudioManager::getPointer();
+		SCAudioManager* pAudio = SCAudioManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();

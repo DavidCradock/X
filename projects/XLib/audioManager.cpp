@@ -4,20 +4,20 @@
 
 namespace X
 {
-	AudioSample::AudioSample(void)
+	CAudioSample::CAudioSample(void)
 	{
 		buffer.pAudioData = nullptr;
 	}
 
-	AudioSample::~AudioSample(void)
+	CAudioSample::~CAudioSample(void)
 	{
 		unload();
 	}
 
-	void AudioSample::load(void)
+	void CAudioSample::load(void)
 	{
 		// Make sure filename has non-zero size
-		ThrowIfFalse(bool(_mstrAudioFilename.size() > 0), "AudioResource::load() failed as filename of the audio sample data has zero size.");
+		ThrowIfFalse(bool(_mstrAudioFilename.size() > 0), "CAudioSample::load() failed as filename of the audio sample data has zero size.");
 		// Open the file
 		HANDLE hFile = CreateFile(
 			StringToWString(_mstrAudioFilename).c_str(),
@@ -28,9 +28,9 @@ namespace X
 			0,
 			NULL);
 
-		ThrowIfTrue(INVALID_HANDLE_VALUE == hFile, "AudioSample::load() failed. Invalid file handle.");
+		ThrowIfTrue(INVALID_HANDLE_VALUE == hFile, "CAudioSample::load() failed. Invalid file handle.");
 
-		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "AudioSample::load() failed. Invalid set file pointer.");
+		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "CAudioSample::load() failed. Invalid set file pointer.");
 
 		// Locate the 'RIFF' chunk in the audio file, and check the file type.
 		DWORD dwChunkSize;
@@ -39,7 +39,7 @@ namespace X
 		_findChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
 		DWORD filetype;
 		_readChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
-		ThrowIfTrue(filetype != fourccWAVE, "AudioSample::load() failed. File type is not wave.");
+		ThrowIfTrue(filetype != fourccWAVE, "CAudioSample::load() failed. File type is not wave.");
 
 		// Locate the 'fmt ' chunk, and copy its contents into a WAVEFORMATEXTENSIBLE structure.
 		_findChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
@@ -57,10 +57,10 @@ namespace X
 		buffer.Flags = XAUDIO2_END_OF_STREAM;   // tell the source voice not to expect any data after this buffer
 	}
 
-	void AudioSample::loadFormat(void)
+	void CAudioSample::loadFormat(void)
 	{
 		// Make sure filename has non-zero size
-		ThrowIfFalse(bool(_mstrAudioFilename.size() > 0), "AudioResource::loadFormat() failed as filename of the audio sample data has zero size.");
+		ThrowIfFalse(bool(_mstrAudioFilename.size() > 0), "CAudioSample::loadFormat() failed as filename of the audio sample data has zero size.");
 		// Open the file
 		HANDLE hFile = CreateFile(
 			StringToWString(_mstrAudioFilename).c_str(),
@@ -71,8 +71,8 @@ namespace X
 			0,
 			NULL);
 
-		ThrowIfTrue(INVALID_HANDLE_VALUE == hFile, "AudioSample::loadFormat() failed. Invalid file handle.");
-		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "AudioSample::loadFormat() failed. Invalid set file pointer.");
+		ThrowIfTrue(INVALID_HANDLE_VALUE == hFile, "CAudioSample::loadFormat() failed. Invalid file handle.");
+		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "CAudioSample::loadFormat() failed. Invalid set file pointer.");
 
 		// Locate the 'RIFF' chunk in the audio file, and check the file type.
 		DWORD dwChunkSize;
@@ -81,14 +81,14 @@ namespace X
 		_findChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
 		DWORD filetype;
 		_readChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
-		ThrowIfTrue(filetype != fourccWAVE, "AudioSample::loadFormat() failed. File type is not wave.");
+		ThrowIfTrue(filetype != fourccWAVE, "CAudioSample::loadFormat() failed. File type is not wave.");
 
 		// Locate the 'fmt ' chunk, and copy its contents into a WAVEFORMATEXTENSIBLE structure.
 		_findChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
 		_readChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
 	}
 
-	void AudioSample::unload(void)
+	void CAudioSample::unload(void)
 	{
 		if (buffer.pAudioData != nullptr)
 		{
@@ -97,11 +97,11 @@ namespace X
 		}
 	}
 
-	HRESULT AudioSample::_findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
+	HRESULT CAudioSample::_findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 	{
 		Log* pLog = Log::getPointer();
 		HRESULT hr = S_OK;
-		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "AudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
+		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "CAudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
 		DWORD dwChunkType;
 		DWORD dwChunkDataSize;
 		DWORD dwRIFFDataSize = 0;
@@ -111,19 +111,19 @@ namespace X
 		while (hr == S_OK)
 		{
 			DWORD dwRead;
-			ThrowIfTrue(0 == ReadFile(hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL), "AudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
+			ThrowIfTrue(0 == ReadFile(hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL), "CAudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 
-			ThrowIfTrue(0 == ReadFile(hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL), "AudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
+			ThrowIfTrue(0 == ReadFile(hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL), "CAudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 
 			switch (dwChunkType)
 			{
 			case fourccRIFF:
 				dwRIFFDataSize = dwChunkDataSize;
 				dwChunkDataSize = 4;
-				ThrowIfTrue(0 == ReadFile(hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL), "AudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
+				ThrowIfTrue(0 == ReadFile(hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL), "CAudioSample::_findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 				break;
 			default:
-				ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, dwChunkDataSize, NULL, FILE_CURRENT), "AudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
+				ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, dwChunkDataSize, NULL, FILE_CURRENT), "CAudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
 			}
 
 			dwOffset += sizeof(DWORD) * 2;
@@ -136,23 +136,23 @@ namespace X
 			}
 
 			dwOffset += dwChunkDataSize;
-			ThrowIfTrue(bytesRead >= dwRIFFDataSize, "AudioSample::_findChunk() failed. bytesRead >= dwRIFFDataSize."); //return S_FALSE;
+			ThrowIfTrue(bytesRead >= dwRIFFDataSize, "CAudioSample::_findChunk() failed. bytesRead >= dwRIFFDataSize."); //return S_FALSE;
 		}
 		return S_OK;
 	}
 
-	HRESULT AudioSample::_readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
+	HRESULT CAudioSample::_readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
 	{
 		HRESULT hr = S_OK;
-		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, bufferoffset, NULL, FILE_BEGIN), "AudioSample::_readChunkData() failed. Invalid set file pointer.");//return HRESULT_FROM_WIN32(GetLastError());
+		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, bufferoffset, NULL, FILE_BEGIN), "CAudioSample::_readChunkData() failed. Invalid set file pointer.");//return HRESULT_FROM_WIN32(GetLastError());
 		DWORD dwRead;
-		ThrowIfTrue(0 == ReadFile(hFile, buffer, buffersize, &dwRead, NULL), "AudioSample::_readChunkData() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
+		ThrowIfTrue(0 == ReadFile(hFile, buffer, buffersize, &dwRead, NULL), "CAudioSample::_readChunkData() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 		return hr;
 	}
 
-	AudioEmitter::AudioEmitter(WAVEFORMATEXTENSIBLE& wfx, unsigned int iMaxSimultaneousInstances)
+	CAudioEmitter::CAudioEmitter(WAVEFORMATEXTENSIBLE& wfx, unsigned int iMaxSimultaneousInstances)
 	{
-		ThrowIfTrue(0 == iMaxSimultaneousInstances, "AudioEmitter::AudioEmitter() given 0 iMaxSimultaneousInstances,");
+		ThrowIfTrue(0 == iMaxSimultaneousInstances, "CAudioEmitter::CAudioEmitter() given 0 iMaxSimultaneousInstances,");
 		_muiMaxSimultaneousInstances = iMaxSimultaneousInstances;
 		_muiVecVoicesIndex = 0;
 		// Create voices for the audio emitter
@@ -162,13 +162,13 @@ namespace X
 			IXAudio2SourceVoice* pVoice;
 			// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
 			// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
-			ThrowIfTrue(FAILED(hr = AudioManager::getPointer()->mpXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&wfx)), "AudioEmitter::AudioEmitter() failed to create source voice.");
+			ThrowIfTrue(FAILED(hr = SCAudioManager::getPointer()->mpXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&wfx)), "CAudioEmitter::CAudioEmitter() failed to create source voice.");
 			_mvecVoices.push_back(pVoice);
 		}
 
 	}
 
-	AudioEmitter::~AudioEmitter()
+	CAudioEmitter::~CAudioEmitter()
 	{
 		stopAll();	// Stop playback of all voices for this emitter
 		for (int iVoice = 0; iVoice < _mvecVoices.size(); iVoice++)
@@ -177,13 +177,13 @@ namespace X
 		}
 	}
 
-	void AudioEmitter::play(float fVolume, float fPlaybackSpeed, bool bLoop)
+	void CAudioEmitter::play(float fVolume, float fPlaybackSpeed, bool bLoop)
 	{
 		// Find the sample which this emitter uses
-		AudioManager* pAudioManager = AudioManager::getPointer();
+		SCAudioManager* pAudioManager = SCAudioManager::getPointer();
 		if (!pAudioManager->getExistsSample(_mstrSampleName, _mstrSampleGroupname))
 		{
-			std::string strErr("AudioEmitter::play() failed as it's set sample of ");
+			std::string strErr("CAudioEmitter::play() failed as it's set sample of ");
 			strErr += _mstrSampleName + " in group " + _mstrSampleGroupname + " doesn't exist in the audio manager.";
 			ThrowIfTrue(1, strErr);
 		}
@@ -197,7 +197,7 @@ namespace X
 		pSourceVoice->FlushSourceBuffers();
 
 		// Get pointer to the audio sample
-		AudioSample* pAudioSample = AudioManager::getPointer()->getSample(_mstrSampleName, _mstrSampleGroupname);
+		CAudioSample* pAudioSample = SCAudioManager::getPointer()->getSample(_mstrSampleName, _mstrSampleGroupname);
 
 		// Set the sample's loop variables
 		if (bLoop)	// Loop the thing?
@@ -214,14 +214,14 @@ namespace X
 		}
 		HRESULT hr;
 		hr = pSourceVoice->SubmitSourceBuffer(&pAudioSample->buffer);
-		ThrowIfTrue(FAILED(hr), "AudioEmitter::play() failed. Error submitting source buffer.");
+		ThrowIfTrue(FAILED(hr), "CAudioEmitter::play() failed. Error submitting source buffer.");
 
 		// Set voice volume, pan and frequency
 		pSourceVoice->SetVolume(fVolume);
 		pSourceVoice->SetFrequencyRatio(fPlaybackSpeed);
 
 		hr = pSourceVoice->Start(0);
-		ThrowIfTrue(FAILED(hr), "AudioEmitter::play() failed during call to pSourceVoice->Start()");
+		ThrowIfTrue(FAILED(hr), "CAudioEmitter::play() failed during call to pSourceVoice->Start()");
 
 		// Deal with voice index
 		_muiVecVoicesIndex++;
@@ -229,24 +229,24 @@ namespace X
 			_muiVecVoicesIndex = 0;
 	}
 
-	void AudioEmitter::stopAll(void)
+	void CAudioEmitter::stopAll(void)
 	{
 		HRESULT hr;
 		for (int iVoice = 0; iVoice < _mvecVoices.size(); iVoice++)
 		{
 			hr = _mvecVoices[iVoice]->Stop();	// Stop playback of this voice
-			ThrowIfTrue(FAILED(hr), "AudioEmitter::stopAll() failed. Error calling IXAudio2SourceVoice->Stop().");
+			ThrowIfTrue(FAILED(hr), "CAudioEmitter::stopAll() failed. Error calling IXAudio2SourceVoice->Stop().");
 			hr = _mvecVoices[iVoice]->FlushSourceBuffers();
-			ThrowIfTrue(FAILED(hr), "AudioEmitter::stopAll() failed. Error calling IXAudio2SourceVoice->FlushSourceBuffers().");
+			ThrowIfTrue(FAILED(hr), "CAudioEmitter::stopAll() failed. Error calling IXAudio2SourceVoice->FlushSourceBuffers().");
 		}
 	}
 
-	void AudioEmitter::stop(unsigned int uiIndex)
+	void CAudioEmitter::stop(unsigned int uiIndex)
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
 		{
-			std::string strErr("AudioEmitter::stop(");
+			std::string strErr("CAudioEmitter::stop(");
 			strErr += std::to_string(uiIndex);
 			strErr += ") failed as given index has to be less than ";
 			strErr += std::to_string(_muiMaxSimultaneousInstances);
@@ -255,12 +255,12 @@ namespace X
 
 		HRESULT hr;
 		hr = _mvecVoices[uiIndex]->Stop();	// Stop playback of this voice
-		ThrowIfTrue(FAILED(hr), "AudioEmitter::stop() failed. Error calling IXAudio2SourceVoice->Stop().");
+		ThrowIfTrue(FAILED(hr), "CAudioEmitter::stop() failed. Error calling IXAudio2SourceVoice->Stop().");
 		hr = _mvecVoices[uiIndex]->FlushSourceBuffers();
-		ThrowIfTrue(FAILED(hr), "AudioEmitter::stop() failed. Error calling IXAudio2SourceVoice->FlushSourceBuffers().");
+		ThrowIfTrue(FAILED(hr), "CAudioEmitter::stop() failed. Error calling IXAudio2SourceVoice->FlushSourceBuffers().");
 	}
 
-	unsigned int AudioEmitter::getNumVoicesPlaying(void)
+	unsigned int CAudioEmitter::getNumVoicesPlaying(void)
 	{
 		unsigned int iNumberVoicesPlaying = 0;
 		XAUDIO2_VOICE_STATE state;
@@ -273,12 +273,12 @@ namespace X
 		return iNumberVoicesPlaying;
 	}
 
-	void AudioEmitter::setVolume(unsigned int uiIndex, float fVolume)
+	void CAudioEmitter::setVolume(unsigned int uiIndex, float fVolume)
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
 		{
-			std::string strErr("AudioEmitter::setVolume(");
+			std::string strErr("CAudioEmitter::setVolume(");
 			strErr += std::to_string(uiIndex);
 			strErr += ") failed as given index has to be less than ";
 			strErr += std::to_string(_muiMaxSimultaneousInstances);
@@ -287,12 +287,12 @@ namespace X
 		_mvecVoices[uiIndex]->SetVolume(fVolume);
 	}
 
-	float AudioEmitter::getVolume(unsigned int uiIndex)
+	float CAudioEmitter::getVolume(unsigned int uiIndex)
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
 		{
-			std::string strErr("AudioEmitter::getVolume(");
+			std::string strErr("CAudioEmitter::getVolume(");
 			strErr += std::to_string(uiIndex);
 			strErr += ") failed as given index has to be less than ";
 			strErr += std::to_string(_muiMaxSimultaneousInstances);
@@ -303,12 +303,12 @@ namespace X
 		return fVolume;
 	}
 
-	void AudioEmitter::setFrequency(unsigned int uiIndex, float fFrequency)
+	void CAudioEmitter::setFrequency(unsigned int uiIndex, float fFrequency)
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
 		{
-			std::string strErr("AudioEmitter::setFrequency(");
+			std::string strErr("CAudioEmitter::setFrequency(");
 			strErr += std::to_string(uiIndex);
 			strErr += ") failed as given index has to be less than ";
 			strErr += std::to_string(_muiMaxSimultaneousInstances);
@@ -317,12 +317,12 @@ namespace X
 		_mvecVoices[uiIndex]->SetFrequencyRatio(fFrequency);
 	}
 
-	float AudioEmitter::getFrequency(unsigned int uiIndex)
+	float CAudioEmitter::getFrequency(unsigned int uiIndex)
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
 		{
-			std::string strErr("AudioEmitter::getFrequency(");
+			std::string strErr("CAudioEmitter::getFrequency(");
 			strErr += std::to_string(uiIndex);
 			strErr += ") failed as given index has to be less than ";
 			strErr += std::to_string(_muiMaxSimultaneousInstances);
@@ -333,37 +333,37 @@ namespace X
 		return fFrequency;
 	}
 
-	AudioManager::AudioManager()
+	SCAudioManager::SCAudioManager()
 	{
 		Log* pLog = Log::getPointer();
-		pLog->add("AudioManager constructor called.");
-		pLog->add("AudioManager initialising COM.");
+		pLog->add("SCAudioManager constructor called.");
+		pLog->add("SCAudioManager initialising COM.");
 		HRESULT hr;
 		hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-		ThrowIfTrue(FAILED(hr), "AudioManager() failed to initialise COM.");
+		ThrowIfTrue(FAILED(hr), "SCAudioManager() failed to initialise COM.");
 
-		pLog->add("AudioManager creating XAudio2 engine instance.");
+		pLog->add("SCAudioManager creating XAudio2 engine instance.");
 		mpXAudio2 = nullptr;
-		ThrowIfTrue(FAILED(hr = XAudio2Create(&mpXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR)), "AudioManager() failed to create instance of the XAudio2 engine.");
+		ThrowIfTrue(FAILED(hr = XAudio2Create(&mpXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR)), "SCAudioManager() failed to create instance of the XAudio2 engine.");
 
-		pLog->add("AudioManager creating mastering voice.");
+		pLog->add("SCAudioManager creating mastering voice.");
 		mpMasterVoice = nullptr;
-		ThrowIfTrue(FAILED(hr = mpXAudio2->CreateMasteringVoice(&mpMasterVoice)), "AudioManager() failed to create mastering voice.");
+		ThrowIfTrue(FAILED(hr = mpXAudio2->CreateMasteringVoice(&mpMasterVoice)), "SCAudioManager() failed to create mastering voice.");
 
 		addNewSampleGroup("default");
-		pLog->add("AudioManager initialisation complete.");
+		pLog->add("SCAudioManager initialisation complete.");
 	}
 
-	unsigned int AudioManager::getNumSampleGroups(void)
+	unsigned int SCAudioManager::getNumSampleGroups(void)
 	{
 		return (unsigned int)mmapGroup.size();
 	}
 
-	unsigned int AudioManager::getNumSamplesInGroup(const std::string& strGroupName)
+	unsigned int SCAudioManager::getNumSamplesInGroup(const std::string& strGroupName)
 	{
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::getNumSamplesInGroup(\"");
+			std::string err("SCAudioManager::getNumSamplesInGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -372,11 +372,11 @@ namespace X
 		return (unsigned int)itg->second->mmapResource.size();;
 	}
 
-	unsigned int AudioManager::getNumSamplesInGroupLoaded(const std::string& strGroupName)
+	unsigned int SCAudioManager::getNumSamplesInGroupLoaded(const std::string& strGroupName)
 	{
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::getNumSamplesInGroupLoaded(\"");
+			std::string err("SCAudioManager::getNumSamplesInGroupLoaded(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -394,11 +394,11 @@ namespace X
 		return iResLoadedTotal;
 	}
 
-	const std::string& AudioManager::getSampleGroupName(unsigned int iGroupIndex)
+	const std::string& SCAudioManager::getSampleGroupName(unsigned int iGroupIndex)
 	{
 		if (iGroupIndex >= mmapGroup.size())
 		{
-			std::string err("AudioManager::getSampleGroupName(");
+			std::string err("SCAudioManager::getSampleGroupName(");
 
 			err.append(std::to_string(iGroupIndex));
 			err.append(") failed. Invalid index given. Number of groups is ");
@@ -415,7 +415,7 @@ namespace X
 		return itg->first;
 	}
 
-	void AudioManager::addNewSampleGroup(const std::string& strNewGroupName)
+	void SCAudioManager::addNewSampleGroup(const std::string& strNewGroupName)
 	{
 		if (sampleGroupExists(strNewGroupName))
 		{
@@ -425,7 +425,7 @@ namespace X
 		mmapGroup[strNewGroupName] = pNewGroup;
 	}
 
-	bool AudioManager::sampleGroupExists(const std::string& strGroupName)
+	bool SCAudioManager::sampleGroupExists(const std::string& strGroupName)
 	{
 		std::map<std::string, Group*>::iterator it = mmapGroup.find(strGroupName);
 		if (it == mmapGroup.end())
@@ -433,12 +433,12 @@ namespace X
 		return true;
 	}
 
-	void AudioManager::loadSampleGroup(const std::string& strGroupName)
+	void SCAudioManager::loadSampleGroup(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::loadSampleGroup(\"");
+			std::string err("SCAudioManager::loadSampleGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -460,12 +460,12 @@ namespace X
 		}
 	}
 
-	void AudioManager::loadSampleGroupSingle(const std::string& strGroupName)
+	void SCAudioManager::loadSampleGroupSingle(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::loadSampleGroupSingle(\"");
+			std::string err("SCAudioManager::loadSampleGroupSingle(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -488,12 +488,12 @@ namespace X
 		}
 	}
 
-	void AudioManager::unloadSampleGroup(const std::string& strGroupName)
+	void SCAudioManager::unloadSampleGroup(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::unloadSampleGroup(\"");
+			std::string err("SCAudioManager::unloadSampleGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -515,12 +515,12 @@ namespace X
 		}
 	}
 
-	AudioSample* AudioManager::addSample(const std::string& strNewResourceName, const std::string& strGroupName)
+	CAudioSample* SCAudioManager::addSample(const std::string& strNewResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::addSample(\"");
+			std::string err("SCAudioManager::addSample(\"");
 			err.append(strNewResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -541,7 +541,7 @@ namespace X
 
 		// If we get here, we have got to create, then add the resource to the existing named group
 		ResourceSample* pNewRes = new ResourceSample;
-		pNewRes->pResource = new AudioSample();
+		pNewRes->pResource = new CAudioSample();
 		pNewRes->pResource->_mstrAudioFilename = strNewResourceName;
 		pNewRes->uiReferenceCount = 1;
 		pNewRes->bLoaded = false;
@@ -554,12 +554,12 @@ namespace X
 		return pNewRes->pResource;
 	}
 
-	AudioSample* AudioManager::getSample(const std::string& strResourceName, const std::string& strGroupName)
+	CAudioSample* SCAudioManager::getSample(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::getSample(\"");
+			std::string err("SCAudioManager::getSample(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -574,7 +574,7 @@ namespace X
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
 		if (itg->second->mmapResource.end() == it)
 		{
-			std::string err("AudioManager::getSample(\"");
+			std::string err("SCAudioManager::getSample(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -595,7 +595,7 @@ namespace X
 		return it->second->pResource;
 	}
 
-	bool AudioManager::getExistsSample(const std::string& strResourceName, const std::string& strGroupName)
+	bool SCAudioManager::getExistsSample(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 		if (itg == mmapGroup.end())
@@ -606,7 +606,7 @@ namespace X
 		return true;
 	}
 
-	bool AudioManager::getSampleLoaded(const std::string& strResourceName, const std::string& strGroupName)
+	bool SCAudioManager::getSampleLoaded(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
 		if (itg == mmapGroup.end())
@@ -617,12 +617,12 @@ namespace X
 		return it->second->bLoaded;
 	}
 
-	void AudioManager::removeSample(const std::string& strResourceName, const std::string& strGroupName)
+	void SCAudioManager::removeSample(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!sampleGroupExists(strGroupName))
 		{
-			std::string err("AudioManager::removeSample(\"");
+			std::string err("SCAudioManager::removeSample(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -637,7 +637,7 @@ namespace X
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
 		if (itg->second->mmapResource.end() == it)
 		{
-			std::string err("AudioManager::removeSample(\"");
+			std::string err("SCAudioManager::removeSample(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -667,17 +667,17 @@ namespace X
 		}
 	}
 
-	unsigned int AudioManager::getMemoryUsage(void)
+	unsigned int SCAudioManager::getMemoryUsage(void)
 	{
 		XAUDIO2_PERFORMANCE_DATA pPerformanceData;// = 0;
 		mpXAudio2->GetPerformanceData(&pPerformanceData);
 		return pPerformanceData.MemoryUsageInBytes;
 	}
 
-	AudioEmitter* AudioManager::addEmitter(const std::string& strEmitterName, const std::string& strSampleName, unsigned int iMaxSimultaneousInstances, const std::string& strSampleGroupname)
+	CAudioEmitter* SCAudioManager::addEmitter(const std::string& strEmitterName, const std::string& strSampleName, unsigned int iMaxSimultaneousInstances, const std::string& strSampleGroupname)
 	{
 		// Make sure the named sample exists
-		std::string strErr("AudioManager::addEmitter(");
+		std::string strErr("SCAudioManager::addEmitter(");
 		strErr += strEmitterName + ", " + strSampleName + ", " + std::to_string(iMaxSimultaneousInstances) + ", " + strSampleGroupname + ") ";
 		// Make sure the named group exists
 		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strSampleGroupname);
@@ -697,14 +697,14 @@ namespace X
 		// Make sure the emitter doesn't currently exist
 		if (getExistsEmitter(strEmitterName))
 		{
-			std::string strErr("AudioManager::addEmitter() failed as the named of emitter of ");
+			std::string strErr("SCAudioManager::addEmitter() failed as the named of emitter of ");
 			strErr += strEmitterName;
 			strErr += " already exists.";
 			ThrowIfTrue(1, strErr);
 		}
 		// Create the new emitter object
-		AudioEmitter* pNewEmitter = new AudioEmitter(it->second->pResource->wfx, iMaxSimultaneousInstances);
-		ThrowIfFalse(pNewEmitter, "AudioManager::addEmitter() failed to allocate memory for the new emitter");
+		CAudioEmitter* pNewEmitter = new CAudioEmitter(it->second->pResource->wfx, iMaxSimultaneousInstances);
+		ThrowIfFalse(pNewEmitter, "SCAudioManager::addEmitter() failed to allocate memory for the new emitter");
 
 		// Store the sample's name and group within the emitter as emitters only work with their set sample data
 		pNewEmitter->_mstrSampleName = strSampleName;
@@ -715,12 +715,12 @@ namespace X
 		return pNewEmitter;
 	}
 
-	void AudioManager::removeEmitter(const std::string& strEmitterName)
+	void SCAudioManager::removeEmitter(const std::string& strEmitterName)
 	{
-		std::map<std::string, AudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
+		std::map<std::string, CAudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
 		if (it == _mmapEmitters.end())
 		{
-			std::string strErr("AudioManager::removeEmitter(");
+			std::string strErr("SCAudioManager::removeEmitter(");
 			strErr += strEmitterName;
 			strErr += ") failed as the named emitter doesn't exist.";
 			ThrowIfTrue(1, strErr);
@@ -729,20 +729,20 @@ namespace X
 		_mmapEmitters.erase(it);
 	}
 
-	bool AudioManager::getExistsEmitter(const std::string& strEmitterName)
+	bool SCAudioManager::getExistsEmitter(const std::string& strEmitterName)
 	{
-		std::map<std::string, AudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
+		std::map<std::string, CAudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
 		if (it == _mmapEmitters.end())
 			return false;
 		return true;
 	}
 
-	AudioEmitter* AudioManager::getEmitter(const std::string& strEmitterName)
+	CAudioEmitter* SCAudioManager::getEmitter(const std::string& strEmitterName)
 	{
-		std::map<std::string, AudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
+		std::map<std::string, CAudioEmitter*>::iterator it = _mmapEmitters.find(strEmitterName);
 		if (it == _mmapEmitters.end())
 		{
-			std::string strErr("AudioManager::getEmitter(");
+			std::string strErr("SCAudioManager::getEmitter(");
 			strErr += strEmitterName;
 			strErr += ") failed as the named emitter doesn't exist.";
 			ThrowIfTrue(1, strErr);
