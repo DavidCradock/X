@@ -3,12 +3,20 @@
 #include "GUIManager.h"
 #include "resourceManager.h"
 #include "window.h"
+#include "GUITooltip.h"
+#include "input.h"
 
 namespace X
 {
 	GUIText::GUIText()
 	{
 		_mbUseThemeColour = true;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUIText::~GUIText()
+	{
+		delete mpTooltip;
 	}
 
 	void GUIText::render(void* pParentContainer)
@@ -41,6 +49,28 @@ namespace X
 			1.0f,	// Scaling
 			col.get());	// Colour
 	}
+
+	// Called from GUIContainer to update this object
+	void GUIText::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	{
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+	}
+
 
 	void GUIText::setColour(bool bUseDefaultThemeColour, float fRed, float fGreen, float fBlue, float fAlpha)
 	{

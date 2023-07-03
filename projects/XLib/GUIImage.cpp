@@ -3,9 +3,21 @@
 #include "GUIManager.h"
 #include "resourceManager.h"
 #include "window.h"
+#include "input.h"
+#include "GUITooltip.h"
 
 namespace X
 {
+	GUIImage::GUIImage()
+	{
+		mpTooltip = new GUITooltip;
+	}
+
+	GUIImage::~GUIImage()
+	{
+		delete mpTooltip;
+	}
+
 	void GUIImage::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
@@ -56,6 +68,22 @@ namespace X
 
 	void GUIImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
 
 	}
 

@@ -275,15 +275,15 @@ namespace X
 		if (GetProcessMemoryInfo(hAppProcess, (PPROCESS_MEMORY_COUNTERS)&pmc, sizeof(PROCESS_MEMORY_COUNTERS_EX)))
 		{
 			memInfo.proc.iPageFaultCount = (unsigned int)pmc.PageFaultCount;
-			memInfo.proc.iPagefileUsage = (unsigned int)pmc.PagefileUsage;
-			memInfo.proc.iPeakPagefileUsage = (unsigned int)pmc.PeakPagefileUsage;
 			memInfo.proc.iPeakWorkingSetSize = (unsigned int)pmc.PeakWorkingSetSize;
-			memInfo.proc.iQuotaNonPagedPoolUsage = (unsigned int)pmc.QuotaNonPagedPoolUsage;
+			memInfo.proc.iWorkingSetSize = (unsigned int)pmc.WorkingSetSize;
+			memInfo.proc.iQuotaPeakPagedPoolUsage = (unsigned int)pmc.QuotaPeakPagedPoolUsage;
 			memInfo.proc.iQuotaPagedPoolUsage = (unsigned int)pmc.QuotaPagedPoolUsage;
 			memInfo.proc.iQuotaPeakNonPagedPoolUsage = (unsigned int)pmc.QuotaPeakNonPagedPoolUsage;
-			memInfo.proc.iQuotaPeakPagedPoolUsage = (unsigned int)pmc.QuotaPeakPagedPoolUsage;
-			memInfo.proc.iWorkingSetSize = (unsigned int)pmc.WorkingSetSize;
-			memInfo.proc.iPrivateWorkingSet = (unsigned int)pmc.PeakWorkingSetSize;
+			memInfo.proc.iQuotaNonPagedPoolUsage = (unsigned int)pmc.QuotaNonPagedPoolUsage;
+			memInfo.proc.iPagefileUsage = (unsigned int)pmc.PagefileUsage;
+			memInfo.proc.iPeakPagefileUsage = (unsigned int)pmc.PeakPagefileUsage;
+			memInfo.proc.iPrivateUsage = (unsigned int)pmc.PrivateUsage;
 		}
 
 		PERFORMACE_INFORMATION pin;

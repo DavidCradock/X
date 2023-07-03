@@ -47,6 +47,9 @@ namespace X
 		// Button
 		pContainer2->addText("Text1", 0, 60, "GUIButton:");
 		GUIButton* pButton = pContainer2->addButton("Button", 150, 60, 100, 30, "A button.");
+		GUITooltip* pTT = (GUITooltip*)pButton->mpTooltip;
+		pTT->addText("t", 1, 1, "sds");
+
 		// Line graph
 		pContainer2->addText("Text2", 0, 100, "GUILineGraph:");
 		GUIColour col;

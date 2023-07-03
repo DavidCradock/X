@@ -8,6 +8,7 @@ namespace X
 	{
 	public:
 		GUIProgressBar();
+		~GUIProgressBar();
 
 		// Called from GUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
@@ -21,6 +22,11 @@ namespace X
 		// Gets progress 0-1 range
 		float getProgress(void);
 
+		// The tooltip for this object.
+		// By default, it is disabled. Use this object to enable and setup the tooltip
+		// We've had to set this as a void pointer due to header inclusion restrictions.
+		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		void* mpTooltip;
 	private:
 		float _mfProgress;	// 0-1 position of progress bar
 		bool _mbOrientationIsHorizontal;// Computed in update() and used in render(). Orientation based on dimensions

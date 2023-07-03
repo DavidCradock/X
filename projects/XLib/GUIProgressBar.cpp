@@ -5,12 +5,19 @@
 #include "utilities.h"
 #include "window.h"
 #include "input.h"
+#include "GUITooltip.h"
 
 namespace X
 {
 	GUIProgressBar::GUIProgressBar()
 	{
 		_mfProgress = 0.5f;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUIProgressBar::~GUIProgressBar()
+	{
+		delete mpTooltip;
 	}
 
 	void GUIProgressBar::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -322,6 +329,23 @@ namespace X
 		{
 			_mbOrientationIsHorizontal = true;
 		}
+
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
 	}
 
 	void GUIProgressBar::setProgress(float fPos)

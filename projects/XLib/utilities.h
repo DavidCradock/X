@@ -195,7 +195,7 @@ namespace X
 			unsigned int iQuotaNonPagedPoolUsage;		// The current nonpaged pool usage. 
 			unsigned int iPagefileUsage;				// The current pagefile usage. 
 			unsigned int iPeakPagefileUsage;			// The peak pagefile usage.
-			unsigned int iPrivateWorkingSet;			// This is what's shown in the taskmanager for each process (in bytes)
+			unsigned int iPrivateUsage;					// Same as PagefileUsage. The Commit Charge value in bytes for this process. Commit Charge is the total amount of private memory that the memory manager has committed for a running process.
 		};
 
 		// Holds OS memory usage

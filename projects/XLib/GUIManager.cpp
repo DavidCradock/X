@@ -75,8 +75,19 @@ namespace X
 			
 			it++;
 		}
+
+		// Render tooltips
+		// Go through each container, starting with the one at the back first
+		it = _mlistContainerZOrder.begin();
+		while (it != _mlistContainerZOrder.end())
+		{
+			pContainer = getContainer(*it);
+			pContainer->renderTooltips(strFramebufferToSampleFrom);
+			it++;
+		}
 		
 		// Update the default containers if they are shown
+		// The default containers are statistics etc
 		_updateDefaultContainers();
 	}
 
@@ -360,7 +371,7 @@ namespace X
 				SMemInfo memInfo;
 				getMemInfo(memInfo);
 				pCont->getText("Text_Mem1")->mstrText = "MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB";
-				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateWorkingSet: " + std::to_string((((memInfo.proc.iPrivateWorkingSet) / 1024) / 1024)) + "MB";
+				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB";
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 #include "resourceManager.h"
 #include "window.h"
 #include "input.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -12,6 +13,12 @@ namespace X
 		_mbFBNeedsUpdating = true;
 		_mfPreviousSliderTabPos = -1.0f;
 		_mSlider.setTabPos(0.0f);
+		mpTooltip = new GUITooltip;
+	}
+
+	GUITextScroll::~GUITextScroll()
+	{
+		delete mpTooltip;
 	}
 
 	void GUITextScroll::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -100,6 +107,22 @@ namespace X
 			_mfPreviousSliderTabPos = fSliderTabPos;
 			_mbFBNeedsUpdating = true;
 		}
+
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
 	}
 
 	void GUITextScroll::setText(const std::string& strText)

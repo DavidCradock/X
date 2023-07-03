@@ -6,6 +6,7 @@
 #include "input.h"
 #include "audioManager.h"
 #include "utilities.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -15,6 +16,12 @@ namespace X
 		_mTabColour.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUISlider::~GUISlider()
+	{
+		delete mpTooltip;
 	}
 
 	void GUISlider::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -474,6 +481,10 @@ namespace X
 		}
 		// Store colour
 		_mTabColour.set(fCol[0], fCol[1], fCol[2], fCol[3]);
+
+		// Update this object's tooltip
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
 	}
 
 	void GUISlider::setTabPos(float fPos)

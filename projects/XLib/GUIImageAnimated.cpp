@@ -3,6 +3,8 @@
 #include "GUIManager.h"
 #include "resourceManager.h"
 #include "window.h"
+#include "input.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -10,6 +12,12 @@ namespace X
 	{
 		_mfFramesPerSecond = 60.0f;
 		_mfCurrentFrame = 0.0f;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUIImageAnimated::~GUIImageAnimated()
+	{
+		delete mpTooltip;
 	}
 
 	void GUIImageAnimated::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -75,6 +83,24 @@ namespace X
 		float fNumFrames = (float)pTex->getNumFrames();
 		while (_mfCurrentFrame >= fNumFrames)
 			_mfCurrentFrame -= fNumFrames;
+
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+
 	}
 
 	void GUIImageAnimated::setFramesPerSecond(float fFramesPerSecond)

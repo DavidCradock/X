@@ -5,6 +5,7 @@
 #include "window.h"
 #include "input.h"
 #include "audioManager.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -14,6 +15,12 @@ namespace X
 		_mState = state::up;
 		_mStatePrevious = state::up;
 		_mbClicked = false;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUIButton::~GUIButton()
+	{
+		delete mpTooltip;
 	}
 
 	void GUIButton::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -168,6 +175,14 @@ namespace X
 		}
 		// Store current state to detect mouse clicks
 		_mStatePrevious = _mState;
+
+		// Update this object's tooltip
+		bool bMouseOverForTT = false;
+		if (state::over == _mState || state::down == _mState)
+			bMouseOverForTT = true;
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+
 	}
 
 	bool GUIButton::getClicked(void)

@@ -22,6 +22,7 @@
 #include "GUITextScroll.h"
 #include "GUITheme.h"
 #include "timer.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -29,11 +30,11 @@ namespace X
 	// It works on the concept of a container, which holds various GUI widgets and can be set to act as a moveable window or not.
 	// 
 	// Containers:
-	// A container by default is simply an empty, err, container used to add various widgets to, such as buttons.
+	// A container by default is simply an empty container used to add various widgets to, such as buttons.
 	// A container can be set to be a window which can be dragged around the screen, closed and minimized with z-order supoort.
 	// If a container is set as a window, it has dimensions. Width and height. When setting a container's dimensions, the dimensions
 	// given, are the area inside the container where widgets may be added, not including the container's borders.
-	// If set as a window, it may or may not have a close, minimize, maximize button and title bar text.
+	// If set as a window, it may or may not have title bar text.
 	// Containers can also have tabs, which enable a container to switch between a sub container which has it's own set of widgets.
 	//
 	// Widgets:
@@ -42,8 +43,7 @@ namespace X
 	// frame buffer boxes which render the contents of a framebuffer (Scene managers render to framebuffers and these can be used),
 	// draggable images/framebuffers which can be dragged between "draggable dock" widgets, line graphs, expandable menus with
 	// support for holding widgets such as buttons, text and images, for each item in the menu. We also have taskbars.
-	// We also have sliders which may be horizontal or vertical, have some text next to them to show the value they represent and
-	// can also have "notches" whereby when the draggable tab is moved, can "snap" to one of these notches.
+	// We also have sliders which may be horizontal or vertical.
 	// I may also add more such as a colour selection widget.
 	// 
 	// Taskbars:
@@ -58,7 +58,7 @@ namespace X
 	// there are helper functions which create various "tooltip templates" such as "just text" or "left aligned text box with right animated image".
 	// 
 	// Rendering features:
-	// We have colour and transparency, background blur, normal maps for lighting effects such as the mouse being a light source and glow.
+	// We have colour and transparency, and normal maps for lighting effects such as the mouse being a light source and glow.
 	// 
 	// Audio features:
 	// Only one feature, we can playback sounds when things get clicked, dropped, closed etc.

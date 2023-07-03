@@ -14,6 +14,10 @@ namespace X
 		std::vector<float> values;		// Each of the values stored in this data set
 		GUIColour colour;				// The colour used to render this data set as a line on a graph
 
+		// The tooltip for this object.
+		// By default, it is disabled. Use this object to enable and setup the tooltip
+		void* mpTooltip;
+
 		// Add new value to the data set
 		void addValue(float fValue);
 
@@ -38,6 +42,8 @@ namespace X
 	class GUILineGraph : public GUIBaseObject
 	{
 	public:
+		GUILineGraph();
+		~GUILineGraph();
 
 		// Called from GUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
@@ -64,6 +70,12 @@ namespace X
 		// Returns the name of the data set at given index.
 		// If given index is invalid, an exception occurs
 		std::string getDatasetName(unsigned int iIndex);
+
+		// The tooltip for this object.
+		// By default, it is disabled. Use this object to enable and setup the tooltip
+		// We've had to set this as a void pointer due to header inclusion restrictions.
+		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		void* mpTooltip;
 	private:
 		Timer _mTimer;
 		std::map<std::string, GUILineGraphDataSet*> _mmapDataSets;	// Hashmap holding each data set

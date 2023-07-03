@@ -5,6 +5,7 @@
 #include "window.h"
 #include "input.h"
 #include "audioManager.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -16,6 +17,12 @@ namespace X
 		_mbIntegerInputOnly = false;
 		_mbWasActiveEnterPressed = false;
 		_mfuncOnEnterPressed = NULL;
+		mpTooltip = new GUITooltip;
+	}
+
+	GUITextEdit::~GUITextEdit()
+	{
+		delete mpTooltip;
 	}
 
 	void GUITextEdit::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -213,6 +220,10 @@ namespace X
 				}
 			}
 		}
+
+		// Update this object's tooltip
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
 	}
 	
 	void GUITextEdit::setMaxChars(unsigned int iMaxChars)

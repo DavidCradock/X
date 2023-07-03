@@ -25,6 +25,10 @@ namespace X
 		// Render this container and each of it's objects
 		void render(const std::string& strFramebufferToSampleFrom);
 
+		// Called from GUIManager::render to render this container's tooltips
+		// They are rendered after all containers have had render() called, to prevent tooltips from being rendered underneath anything
+		void renderTooltips(const std::string& strFramebufferToSampleFrom);
+
 		// Updates this container, returning true if the mouse is over this container.
 		// Will only return true if the mouse isn't over a previously updated container.
 		bool update(bool bMouseIsOverContainerWhichIsAboveThisOne);

@@ -5,6 +5,7 @@
 #include "window.h"
 #include "input.h"
 #include "log.h"
+#include "GUITooltip.h"
 
 namespace X
 {
@@ -52,6 +53,16 @@ namespace X
 				fResult = values[i];
 		}
 		return fResult;
+	}
+
+	GUILineGraph::GUILineGraph()
+	{
+		mpTooltip = new GUITooltip;
+	}
+
+	GUILineGraph::~GUILineGraph()
+	{
+		delete mpTooltip;
 	}
 
 	void GUILineGraph::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -166,12 +177,25 @@ namespace X
 
 	void GUILineGraph::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-
 		_mTimer.update();
-		float fSecondsPast = _mTimer.getSecondsPast();
-		if (fSecondsPast > 0.1f)
-			fSecondsPast = 0.1f;
+
+		// Update this object's tooltip
+		InputManager* pInput = InputManager::getPointer();
+		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		bool bMouseOver = false;
+		if (bParentContainerAcceptingMouseClicks)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > pContainer->mfPositionX + mfPositionX)
+				if (vMousePos.x < pContainer->mfPositionX + mfPositionX + mfWidth)
+					if (vMousePos.y > pContainer->mfPositionY + mfPositionY)
+						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
+							bMouseOver = true;
+		}
+		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+
 	}
 
 	GUILineGraphDataSet* GUILineGraph::addDataset(const std::string& strName, const GUIColour& cCol)

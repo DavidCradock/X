@@ -127,6 +127,119 @@ namespace X
 		}
 	}
 
+	void GUIContainer::renderTooltips(const std::string& strFramebufferToSampleFrom)
+	{
+		GUITooltip* pTT;
+
+		// Render each button's tooltips
+		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			pTT = (GUITooltip*)itButton->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itButton++;
+		}
+
+		// Render each text's tooltip
+		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			pTT = (GUITooltip*)itText->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itText++;
+		}
+
+		// Render each text edit's tooltip
+		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			pTT = (GUITooltip*)itTextEdit->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itTextEdit++;
+		}
+
+		// Render each slider's tooltip
+		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		while (itSlider != _mmapSliders.end())
+		{
+			pTT = (GUITooltip*)itSlider->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itSlider++;
+		}
+
+		// Render each line graph's tooltip
+		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			pTT = (GUITooltip*)itLineGraph->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itLineGraph++;
+		}
+
+		// Render each progress bar's tooltip
+		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		while (itProgressBar != _mmapProgressBars.end())
+		{
+			pTT = (GUITooltip*)itProgressBar->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itProgressBar++;
+		}
+
+		// Render each image's tooltip
+		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			pTT = (GUITooltip*)itImage->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itImage++;
+		}
+
+		// Render each animated image's tooltip
+		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		while (itImageAnimated != _mmapImageAnimateds.end())
+		{
+			pTT = (GUITooltip*)itImageAnimated->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itImageAnimated++;
+		}
+
+		// Images framebuffer's tooltip
+		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		while (itImageFB != _mmapImageFramebuffers.end())
+		{
+			pTT = (GUITooltip*)itImageFB->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itImageFB++;
+		}
+
+		// Render each text scroll object's tooltip
+		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		while (itTextScroll != _mmapTextScrolls.end())
+		{
+			pTT = (GUITooltip*)itTextScroll->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itTextScroll++;
+		}
+
+		// Render each of the button images's tooltip
+		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			pTT = (GUITooltip*)itButtonImage->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itButtonImage++;
+		}
+
+		// Images depth buffer's tooltip
+		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		while (itImageDB != _mmapImageDepthbuffers.end())
+		{
+			pTT = (GUITooltip*)itImageDB->second->mpTooltip;
+			pTT->render(this, strFramebufferToSampleFrom);
+			itImageDB++;
+		}
+	}
+
 	// Containers are updated in order of ZOrder, with the front most being updated first
 	bool GUIContainer::update(bool bMouseIsOverContainerWhichIsAboveThisOne)
 	{
@@ -261,7 +374,13 @@ namespace X
 			itButton++;
 		}
 
-		// Text (We don't need to update anything)
+		// Text
+		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			itText->second->update(this, bContainerAcceptingMouseClicks);
+			itText++;
+		}
 
 		// Text edit
 		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();

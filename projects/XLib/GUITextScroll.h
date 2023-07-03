@@ -11,6 +11,7 @@ namespace X
 		friend class GUIContainer;
 	public:
 		GUITextScroll();
+		~GUITextScroll();
 
 		// Called from GUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
@@ -26,6 +27,11 @@ namespace X
 		// If there's a lot of text, please don't call this each program loop willy-nilly, thanks :)
 		void setTextColour(float fRed, float fGreen, float fBlue, float fAlpha);
 
+		// The tooltip for this object.
+		// By default, it is disabled. Use this object to enable and setup the tooltip
+		// We've had to set this as a void pointer due to header inclusion restrictions.
+		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		void* mpTooltip;
 	private:
 		std::string _mstrFBName;	// Name of framebuffer in ResourceManager used for rendering this objects text to.
 		bool _mbFBNeedsUpdating;	// Flag to re-render the frame buffer containing the text if needed.

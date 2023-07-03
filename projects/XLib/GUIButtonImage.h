@@ -10,6 +10,7 @@ namespace X
 	public:
 		friend class GUIContainer;
 		GUIButtonImage();
+		~GUIButtonImage();
 
 		// Called from GUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
@@ -20,6 +21,11 @@ namespace X
 		// Returns true if the button was clicked upon
 		bool getClicked(void);
 
+		// The tooltip for this object.
+		// By default, it is disabled. Use this object to enable and setup the tooltip
+		// We've had to set this as a void pointer due to header inclusion restrictions.
+		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		void* mpTooltip;
 	private:
 		std::string _mstrTextureDown;	// The down state image to be rendered on top of this button
 		std::string _mstrTextureOver;	// The over state image to be rendered on top of this button
