@@ -291,8 +291,8 @@ namespace X
 	void GUIManager::_createDefaultContainers(void)
 	{
 		GUIContainer* pCont = addContainer("X:Default:Statistics");
-		pCont->setDimensions(450.0f, 480.0f);
-		pCont->setPosition(0.0f, 0.0f);
+		pCont->setDimensions(450.0f, 210.0f);
+		pCont->setPosition(100000.0f, 0.0f);
 		pCont->setVisible(false);
 		pCont->mstrTitleText = "Statistics";
 
@@ -306,8 +306,13 @@ namespace X
 		pCont->addText("Text_FPSAVR", 330, 140, "FPSAVR: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
 		_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
 
-		pCont->addText("Text_Mem1", 0, 160, "");
-		pCont->addText("Text_Mem2", 0, 180, "");
+		pCont->addText("Text_Mem1", 0, 140, "");
+		pCont->addText("Text_Mem2", 0, 160, "");
+
+		// Close button
+		pCont->addButton("Close", 225 - 50, 190, 100, 30, "Close");
+		GUITooltip* pTT = (GUITooltip*)pCont->getButton("Close")->mpTooltip;
+		pTT->setAsText("Close window.");
 	}
 
 	void GUIManager::_updateDefaultContainers(void)
@@ -375,6 +380,11 @@ namespace X
 				pCont->getText("Text_Mem1")->mstrText = "MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB";
 				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB";
 			}
+
+			// Close button
+			GUIButton* pButton = pCont->getButton("Close");
+			if (pButton->getClicked())
+				pCont->setVisible(false);
 		}
 	}
 

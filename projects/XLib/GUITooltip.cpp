@@ -772,4 +772,10 @@ namespace X
 		_mbEnabled = true;
 		addText("Text", 0, 0, strText);
 	}
+
+	void GUITooltip::resetFade(void)
+	{
+		_mfTooltipDelay = 0.0f;	// Reset delay
+		_mColour.alpha = 0.0f;	// Reset fade alpha
+	}
 }

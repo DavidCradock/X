@@ -15,6 +15,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Benchmark", "projects\Bench
 		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo2D", "projects\Demo2D\Demo2D.vcxproj", "{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +38,10 @@ Global
 		{61CF46D3-7775-423F-8282-BDAE365A944D}.Debug|x64.Build.0 = Debug|x64
 		{61CF46D3-7775-423F-8282-BDAE365A944D}.Release|x64.ActiveCfg = Release|x64
 		{61CF46D3-7775-423F-8282-BDAE365A944D}.Release|x64.Build.0 = Release|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Debug|x64.ActiveCfg = Debug|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Debug|x64.Build.0 = Debug|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.ActiveCfg = Release|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

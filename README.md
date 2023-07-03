@@ -19,7 +19,6 @@ Current progress...
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
 - add translation/rotation/scale of base entities
-- Implement Tooltips to GUI.
 - Implement DraggableDock to GUI.
 - Implement DraggableItem to GUI.
 - Implement Menu to GUI.

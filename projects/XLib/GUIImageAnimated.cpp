@@ -24,7 +24,7 @@ namespace X
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 
-		// Get required resources needed to render the tab
+		// Get required resources needed to render
 		ResourceManager* pRM = ResourceManager::getPointer();
 		Window* pWindow = Window::getPointer();
 		ResourceTriangle* pTri = pRM->getTriangle("X:gui");

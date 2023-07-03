@@ -167,6 +167,9 @@ namespace X
 		// Removes all objects from this tooltip
 		void removeAll(void);
 
+		// Resets all fade values back to non-visible
+		void resetFade(void);
+
 	private:
 		Timer _mTimer;			// Timer object used for timebased stuff
 		bool _mbEnabled;		// Whether this tooltip is enabled or not

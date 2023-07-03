@@ -215,9 +215,6 @@
     <ClInclude Include="GUITaskbar.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
-    <ClInclude Include="GUITooltip.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
     <ClInclude Include="GUIImageFramebuffer.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -228,6 +225,9 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIImageDepthbuffer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -383,9 +383,6 @@
     <ClCompile Include="GUITaskbar.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
-    <ClCompile Include="GUITooltip.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
     <ClCompile Include="GUIImageFramebuffer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -396,6 +393,9 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIImageDepthbuffer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>

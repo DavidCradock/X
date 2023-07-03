@@ -419,7 +419,13 @@ namespace X
 			itProgressBar++;
 		}
 
-		// Images (We don't need to update anything)
+		// Images
+		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			itImage->second->update(this, bContainerAcceptingMouseClicks);
+			itImage++;
+		}
 
 		// Images animated
 		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
@@ -467,6 +473,116 @@ namespace X
 	void GUIContainer::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+
+		// If set to invisible, we need to reset all tooltips for this container
+		GUITooltip* pTT;
+		// Buttons
+		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			pTT = (GUITooltip*)itButton->second->mpTooltip;
+			pTT->resetFade();
+			itButton++;
+		}
+
+		// Text
+		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			pTT = (GUITooltip*)itText->second->mpTooltip;
+			pTT->resetFade();
+			itText++;
+		}
+
+		// Text edit
+		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			pTT = (GUITooltip*)itTextEdit->second->mpTooltip;
+			pTT->resetFade();
+			itTextEdit++;
+		}
+
+		// Sliders
+		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		while (itSlider != _mmapSliders.end())
+		{
+			pTT = (GUITooltip*)itSlider->second->mpTooltip;
+			pTT->resetFade();
+			itSlider++;
+		}
+
+		// LineGraphs
+		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			pTT = (GUITooltip*)itLineGraph->second->mpTooltip;
+			pTT->resetFade();
+			itLineGraph++;
+		}
+
+		// Progress bars
+		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		while (itProgressBar != _mmapProgressBars.end())
+		{
+			pTT = (GUITooltip*)itProgressBar->second->mpTooltip;
+			pTT->resetFade();
+			itProgressBar++;
+		}
+
+		// Images
+		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			pTT = (GUITooltip*)itImage->second->mpTooltip;
+			pTT->resetFade();
+			itImage++;
+		}
+
+		// Images animated
+		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		while (itImageAnimated != _mmapImageAnimateds.end())
+		{
+			pTT = (GUITooltip*)itImageAnimated->second->mpTooltip;
+			pTT->resetFade();
+			itImageAnimated++;
+		}
+
+		// Images framebuffer
+		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		while (itImageFB != _mmapImageFramebuffers.end())
+		{
+			pTT = (GUITooltip*)itImageFB->second->mpTooltip;
+			pTT->resetFade();
+			itImageFB++;
+		}
+
+		// Text scroll objects
+		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		while (itTextScroll != _mmapTextScrolls.end())
+		{
+			pTT = (GUITooltip*)itTextScroll->second->mpTooltip;
+			pTT->resetFade();
+			itTextScroll++;
+		}
+
+		// Button images
+		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			pTT = (GUITooltip*)itButtonImage->second->mpTooltip;
+			pTT->resetFade();
+			itButtonImage++;
+		}
+
+		// Images depth buffer
+		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		while (itImageDB != _mmapImageDepthbuffers.end())
+		{
+			pTT = (GUITooltip*)itImageDB->second->mpTooltip;
+			pTT->resetFade();
+			itImageDB++;
+		}
 	}
 
 	bool GUIContainer::getVisible(void)
