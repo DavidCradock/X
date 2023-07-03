@@ -22,6 +22,11 @@ namespace X
 		_mvTextColour.a = col.alpha;
 	}
 
+	GUIContainer::~GUIContainer()
+	{
+		removeAll();
+	}
+
 	void GUIContainer::render(const std::string& strFramebufferToSampleFrom)
 	{
 		if (!_mbVisible)
@@ -502,7 +507,6 @@ namespace X
 		pShader->setInt("texture1_normal", 1);
 		pShader->setInt("texture2_reflection", 2);
 		pShader->setInt("texture3_background", 3);
-		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
 		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
 		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
@@ -671,6 +675,17 @@ namespace X
 		_mmapButtons.erase(it);
 	}
 
+	void GUIContainer::removeAllButtons(void)
+	{
+		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.begin();
+		while (it != _mmapButtons.end())
+		{
+			delete it->second;
+			_mmapButtons.erase(it);
+			it = _mmapButtons.begin();
+		}
+	}
+
 	GUIText* GUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
 	{
 		// If resource already exists
@@ -699,6 +714,17 @@ namespace X
 			return;
 		delete it->second;
 		_mmapTexts.erase(it);
+	}
+
+	void GUIContainer::removeAllText(void)
+	{
+		std::map<std::string, GUIText*>::iterator it = _mmapTexts.begin();
+		while (it != _mmapTexts.end())
+		{
+			delete it->second;
+			_mmapTexts.erase(it);
+			it = _mmapTexts.begin();
+		}
 	}
 
 	GUITextEdit* GUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
@@ -733,6 +759,17 @@ namespace X
 		_mmapTextEdits.erase(it);
 	}
 
+	void GUIContainer::removeAllTextEdits(void)
+	{
+		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.begin();
+		while (it != _mmapTextEdits.end())
+		{
+			delete it->second;
+			_mmapTextEdits.erase(it);
+			it = _mmapTextEdits.begin();
+		}
+	}
+
 	GUISlider* GUIContainer::addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
 	{
 		// If resource already exists
@@ -763,6 +800,17 @@ namespace X
 			return;
 		delete it->second;
 		_mmapSliders.erase(it);
+	}
+
+	void GUIContainer::removeAllSliders(void)
+	{
+		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.begin();
+		while (it != _mmapSliders.end())
+		{
+			delete it->second;
+			_mmapSliders.erase(it);
+			it = _mmapSliders.begin();
+		}
 	}
 
 	GUILineGraph* GUIContainer::addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
@@ -796,6 +844,17 @@ namespace X
 		_mmapLineGraphs.erase(it);
 	}
 
+	void GUIContainer::removeAllLineGraphs(void)
+	{
+		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.begin();
+		while (it != _mmapLineGraphs.end())
+		{
+			delete it->second;
+			_mmapLineGraphs.erase(it);
+			it = _mmapLineGraphs.begin();
+		}
+	}
+
 	GUIProgressBar* GUIContainer::addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -825,6 +884,17 @@ namespace X
 			return;
 		delete it->second;
 		_mmapProgressBars.erase(it);
+	}
+
+	void GUIContainer::removeAllProgressBars(void)
+	{
+		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.begin();
+		while (it != _mmapProgressBars.end())
+		{
+			delete it->second;
+			_mmapProgressBars.erase(it);
+			it = _mmapProgressBars.begin();
+		}
 	}
 
 	GUIImage* GUIContainer::addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth, float fHeight)
@@ -875,6 +945,17 @@ namespace X
 		_mmapImages.erase(it);
 	}
 
+	void GUIContainer::removeAllImages(void)
+	{
+		std::map<std::string, GUIImage*>::iterator it = _mmapImages.begin();
+		while (it != _mmapImages.end())
+		{
+			delete it->second;
+			_mmapImages.erase(it);
+			it = _mmapImages.begin();
+		}
+	}
+
 	GUIImageAnimated* GUIContainer::addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -923,6 +1004,17 @@ namespace X
 		_mmapImageAnimateds.erase(it);
 	}
 
+	void GUIContainer::removeAllImageAnimateds(void)
+	{
+		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.begin();
+		while (it != _mmapImageAnimateds.end())
+		{
+			delete it->second;
+			_mmapImageAnimateds.erase(it);
+			it = _mmapImageAnimateds.begin();
+		}
+	}
+
 	GUIImageFramebuffer* GUIContainer::addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -965,6 +1057,17 @@ namespace X
 
 		delete it->second;
 		_mmapImageFramebuffers.erase(it);
+	}
+
+	void GUIContainer::removeAllImageFramebuffers(void)
+	{
+		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.begin();
+		while (it != _mmapImageFramebuffers.end())
+		{
+			delete it->second;
+			_mmapImageFramebuffers.erase(it);
+			it = _mmapImageFramebuffers.begin();
+		}
 	}
 
 	GUITextScroll* GUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
@@ -1012,6 +1115,17 @@ namespace X
 
 		delete it->second;
 		_mmapTextScrolls.erase(it);
+	}
+
+	void GUIContainer::removeAllTextScrolls(void)
+	{
+		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.begin();
+		while (it != _mmapTextScrolls.end())
+		{
+			delete it->second;
+			_mmapTextScrolls.erase(it);
+			it = _mmapTextScrolls.begin();
+		}
 	}
 
 	GUIButtonImage* GUIContainer::addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth, float fHeight)
@@ -1068,6 +1182,17 @@ namespace X
 		_mmapButtonImages.erase(it);
 	}
 
+	void GUIContainer::removeAllButtonImages(void)
+	{
+		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.begin();
+		while (it != _mmapButtonImages.end())
+		{
+			delete it->second;
+			_mmapButtonImages.erase(it);
+			it = _mmapButtonImages.begin();
+		}
+	}
+
 	GUIImageDepthbuffer* GUIContainer::addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -1110,5 +1235,32 @@ namespace X
 
 		delete it->second;
 		_mmapImageDepthbuffers.erase(it);
+	}
+
+	void GUIContainer::removeAllImageDepthbuffers(void)
+	{
+		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.begin();
+		while (it != _mmapImageDepthbuffers.end())
+		{
+			delete it->second;
+			_mmapImageDepthbuffers.erase(it);
+			it = _mmapImageDepthbuffers.begin();
+		}
+	}
+
+	void GUIContainer::removeAll(void)
+	{
+		removeAllButtons();
+		removeAllText();
+		removeAllTextEdits();
+		removeAllSliders();
+		removeAllLineGraphs();
+		removeAllProgressBars();
+		removeAllImages();
+		removeAllImageAnimateds();
+		removeAllImageFramebuffers();
+		removeAllTextScrolls();
+		removeAllButtonImages();
+		removeAllImageDepthbuffers();
 	}
 }

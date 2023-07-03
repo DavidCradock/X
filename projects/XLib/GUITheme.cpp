@@ -26,7 +26,6 @@ namespace X
 		mImages.lineGraphBGColour = "data/X/GUI/default/linegraphBGcolour.png";
 		mImages.lineGraphBGNormal = "data/X/GUI/default/linegraphBGnormal.png";
 		mImages.tooltipBGColour = "data/X/GUI/default/tooltipBGcolour.png";
-		mImages.tooltipBGNormal = "data/X/GUI/default/tooltipBGnormal.png";
 		mImages.progressBarBGColour = "data/X/GUI/default/progressBarBGcolour.png";
 		mImages.progressBarBGNormal = "data/X/GUI/default/progressBarBGnormal.png";
 		mImages.progressBarFillerColour = "data/X/GUI/default/progressBarFillercolour.png";
@@ -60,7 +59,6 @@ namespace X
 		mColours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 0.5f);
 
 		// Floats
-		mfBlurAmount = 1.0f;
 		mfNormalAmount = 0.1f;
 		mfReflectionAmount = 0.025f;
 		mfMouseCursorDistance = 50.0f;
@@ -69,6 +67,7 @@ namespace X
 		mfSliderTabFadeSpeed = 5.0f;
 		mfTextScrollSliderWidth = 20.0f;
 		mfButtonImageTextFadeSpeed = 5.0f;
+		mfTooltipFadeSpeed = 2.0f;
 
 		// Offsets
 		mOffsets.containerTitlebarText.iOffsetX = 1;
@@ -124,7 +123,6 @@ namespace X
 		_readImageInfo(file, mImages.lineGraphBGColour);
 		_readImageInfo(file, mImages.lineGraphBGNormal);
 		_readImageInfo(file, mImages.tooltipBGColour);
-		_readImageInfo(file, mImages.tooltipBGNormal);
 		_readImageInfo(file, mImages.progressBarBGColour);
 		_readImageInfo(file, mImages.progressBarBGNormal);
 		_readImageInfo(file, mImages.progressBarFillerColour);
@@ -165,7 +163,6 @@ namespace X
 		getline(file, strLine);	// End of line
 		getline(file, strLine);	// Empty line
 		getline(file, strLine);	//"\nEffects\n"
-		_readFloatInfo(file, mfBlurAmount);
 		_readFloatInfo(file, mfNormalAmount);
 		_readFloatInfo(file, mfReflectionAmount);
 		_readFloatInfo(file, mfMouseCursorDistance);
@@ -174,6 +171,7 @@ namespace X
 		_readFloatInfo(file, mfSliderTabFadeSpeed);
 		_readFloatInfo(file, mfTextScrollSliderWidth);
 		_readFloatInfo(file, mfButtonImageTextFadeSpeed);
+		_readFloatInfo(file, mfTooltipFadeSpeed);
 
 		// Offsets
 		getline(file, strLine);	// End of line
@@ -230,7 +228,6 @@ namespace X
 		_writeImageInfo(file, "LineGraphBGColour", mImages.lineGraphBGColour);
 		_writeImageInfo(file, "LineGraphBGNormal", mImages.lineGraphBGNormal);
 		_writeImageInfo(file, "TooltipBGColour", mImages.tooltipBGColour);
-		_writeImageInfo(file, "TooltipBGNormal", mImages.tooltipBGNormal);
 		_writeImageInfo(file, "ProgressBarBGColour", mImages.progressBarBGColour);
 		_writeImageInfo(file, "ProgressBarBGNormal", mImages.progressBarBGNormal);
 		_writeImageInfo(file, "ProgressBarFillerColour", mImages.progressBarFillerColour);
@@ -267,7 +264,6 @@ namespace X
 
 		// Floats
 		file << "\nFloats\n";
-		_writeFloatInfo(file, "blurAmount", mfBlurAmount);
 		_writeFloatInfo(file, "normalAmount", mfNormalAmount);
 		_writeFloatInfo(file, "reflectionAmount", mfReflectionAmount);
 		_writeFloatInfo(file, "mouseCursorDistance", mfMouseCursorDistance);
@@ -276,6 +272,7 @@ namespace X
 		_writeFloatInfo(file, "sliderTabFadeSpeed", mfSliderTabFadeSpeed);
 		_writeFloatInfo(file, "textScrollSliderWidth", mfTextScrollSliderWidth);
 		_writeFloatInfo(file, "buttonImageFadeSpeed", mfButtonImageTextFadeSpeed);
+		_writeFloatInfo(file, "tooltipFadeSpeed", mfTooltipFadeSpeed);
 		
 		// Offsets
 		file << "\nOffsets\n";
@@ -314,7 +311,6 @@ namespace X
 		pRM->addTexture2D(mImages.lineGraphBGColour, mImages.lineGraphBGColour);
 		pRM->addTexture2D(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
 		pRM->addTexture2D(mImages.tooltipBGColour, mImages.tooltipBGColour);
-		pRM->addTexture2D(mImages.tooltipBGNormal, mImages.tooltipBGNormal);
 		pRM->addTexture2D(mImages.progressBarBGColour, mImages.progressBarBGColour);
 		pRM->addTexture2D(mImages.progressBarBGNormal, mImages.progressBarBGNormal);
 		pRM->addTexture2D(mImages.progressBarFillerColour, mImages.progressBarFillerColour);
@@ -342,7 +338,6 @@ namespace X
 		pRM->removeTexture2D(mImages.lineGraphBGColour);
 		pRM->removeTexture2D(mImages.lineGraphBGNormal);
 		pRM->removeTexture2D(mImages.tooltipBGColour);
-		pRM->removeTexture2D(mImages.tooltipBGNormal);
 		pRM->removeTexture2D(mImages.progressBarBGColour);
 		pRM->removeTexture2D(mImages.progressBarBGNormal);
 		pRM->removeTexture2D(mImages.progressBarFillerColour);

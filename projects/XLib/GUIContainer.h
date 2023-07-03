@@ -21,6 +21,7 @@ namespace X
 		friend class GUIManager;
 	public:
 		GUIContainer();
+		~GUIContainer();
 
 		// Render this container and each of it's objects
 		void render(const std::string& strFramebufferToSampleFrom);
@@ -58,6 +59,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeButton(const std::string& strName);
 
+		// Removes all buttons from this container
+		void removeAllButtons(void);
+
 		// Add text to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -71,6 +75,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeText(const std::string& strName);
 
+		// Removes all text from this container
+		void removeAllText(void);
+
 		// Add text edit to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -83,6 +90,9 @@ namespace X
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
 		void removeTextEdit(const std::string& strName);
+
+		// Removes all text edits from this container
+		void removeAllTextEdits(void);
 
 		// Add slider to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -99,6 +109,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeSlider(const std::string& strName);
 
+		// Removes all sliders from this container
+		void removeAllSliders(void);
+
 		// Add line graph to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -112,6 +125,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeLineGraph(const std::string& strName);
 
+		// Removes all line graphs from this container
+		void removeAllLineGraphs(void);
+
 		// Add progress bar to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -124,6 +140,9 @@ namespace X
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
 		void removeProgressBar(const std::string& strName);
+
+		// Removes all progress bars from this container
+		void removeAllProgressBars(void);
 
 		// Add static image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -141,6 +160,9 @@ namespace X
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
 		void removeImage(const std::string& strName);
+
+		// Removes all images from this container
+		void removeAllImages(void);
 
 		// Add animated image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -160,6 +182,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageAnimated(const std::string& strName);
 
+		// Removes all animated images from this container
+		void removeAllImageAnimateds(void);
+
 		// Add framebuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -175,6 +200,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageFramebuffer(const std::string& strName);
 
+		// Removes all image framebuffers from this container
+		void removeAllImageFramebuffers(void);
+
 		// Add text scroll object to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -189,6 +217,9 @@ namespace X
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
 		void removeTextScroll(const std::string& strName);
+
+		// Removes all text scrolls from this container
+		void removeAllTextScrolls(void);
 
 		// Add button image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -206,6 +237,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeButtonImage(const std::string& strName);
 
+		// Removes all button images from this container
+		void removeAllButtonImages(void);
+
 		// Add depthbuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -220,6 +254,12 @@ namespace X
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
 		void removeImageDepthbuffer(const std::string& strName);
+
+		// Removes all image depthbuffers from this container
+		void removeAllImageDepthbuffers(void);
+
+		// Removes all objects from this container
+		void removeAll(void);
 
 		std::string mstrTitleText;	// Title text
 	private:

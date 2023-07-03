@@ -22,7 +22,6 @@ namespace X
 	void GUIText::render(void* pParentContainer)
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		// Get required resources needed to render
 		GUIManager* pGUI = GUIManager::getPointer();
 		ResourceManager* pRM = ResourceManager::getPointer();
 		Window* pWindow = Window::getPointer();
@@ -31,7 +30,7 @@ namespace X
 		int iRTDims[2];
 		iRTDims[0] = int(pWindow->getWidth());
 		iRTDims[1] = int(pWindow->getHeight());
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.button);
+		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
 		GUIColour col;
 		if (_mbUseThemeColour)
@@ -45,6 +44,35 @@ namespace X
 		pFont->print(mstrText,			// The text
 			int(pContainer->mfPositionX + mfPositionX),		// X position
 			int(pContainer->mfPositionY + mfPositionY),		// Y position
+			iRTDims[0], iRTDims[1],	// Render target dims
+			1.0f,	// Scaling
+			col.get());	// Colour
+	}
+
+	void GUIText::renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight)
+	{
+		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		GUIManager* pGUI = GUIManager::getPointer();
+		ResourceManager* pRM = ResourceManager::getPointer();
+		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
+
+		int iRTDims[2];
+		iRTDims[0] = int(uiTooltipFramebufferWidth);
+		iRTDims[1] = int(uiTooltipFramebufferHeight);
+		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+
+		GUIColour col;
+		if (_mbUseThemeColour)
+		{
+			col = pTheme->mColours.text;
+		}
+		else
+		{
+			col = _mColour;
+		}
+		pFont->print(mstrText,		// The text
+			int(mfPositionX),		// X position
+			int(mfPositionY),		// Y position
 			iRTDims[0], iRTDims[1],	// Render target dims
 			1.0f,	// Scaling
 			col.get());	// Colour

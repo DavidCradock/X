@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "resourceBase.h"
 #include "image.h"
+#include "GUIColour.h"
 
 namespace X
 {
@@ -41,10 +42,11 @@ namespace X
 		unsigned int getHeight(void);
 
 		// Sets frame buffer to new dimensions
+		// If the new dimensions are the same as the current ones, this simply returns
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
 
 		// Renders the contents of this buffer to a 2D quad with specified position and dimensions
-		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight);
+		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, GUIColour colour = GUIColour());
 
 		bool mbNeedsUpdating;	// This is set to true when onGLContextToBeDestroyed() has been called
 								// Set the top of GUITextScroll::render() for where and how this is used.

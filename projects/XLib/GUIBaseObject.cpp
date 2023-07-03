@@ -10,7 +10,7 @@ namespace X
 	GUIBaseObject::GUIBaseObject()
 	{
 		mfPositionX = mfPositionY = 0.0f;
-		mfWidth = mfHeight = 128.0f;
+		mfWidth = mfHeight = 32.0f;
 
 		// Compute texture coordinates for the nine components of a GUI object/widget
 		// Compute texture coordinates for each of the 9 components
@@ -123,7 +123,8 @@ namespace X
 	void GUIBaseObject::renderBackground(void* pParentContainer,	// Pointer to the object's parent container
 		const std::string& strFramebufferToSampleFrom,				// The framebuffer to use as background when sampling (Given to GUIManager::render() and passed down)
 		const std::string& strObjectColourTextureName,				// The name of the object's background colour texture
-		const std::string& strObjectNormalTextureName)				// The name of the object's background normal texture
+		const std::string& strObjectNormalTextureName,				// The name of the object's background normal texture
+		GUIColour& colour)											// Colour
 	{
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 
@@ -147,7 +148,6 @@ namespace X
 		pShader->setInt("texture1_normal", 1);
 		pShader->setInt("texture2_reflection", 2);
 		pShader->setInt("texture3_background", 3);
-		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
 		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
 		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
@@ -182,7 +182,7 @@ namespace X
 		pTri->removeGeom();
 		pTri->addQuad2D(vPos + vTexDimsPoint3,									// Position
 			glm::vec2(mfWidth - vTexDimsPoint6.x, mfHeight - vTexDimsPoint6.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+			colour.get(),
 			mTC.centre.BL,
 			mTC.centre.BR,
 			mTC.centre.TR,
@@ -193,7 +193,7 @@ namespace X
 			glm::vec2(vPos.x,											// Position X
 				vPos.y + vTexDimsPoint3.y),								// Position Y
 			glm::vec2(vTexDimsPoint3.x, mfHeight - vTexDimsPoint6.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+			colour.get(),
 			mTC.left.BL,
 			mTC.left.BR,
 			mTC.left.TR,
@@ -204,7 +204,7 @@ namespace X
 			glm::vec2(vPos.x + mfWidth - vTexDimsPoint3.x,				// Position X
 				vPos.y + vTexDimsPoint3.y),								// Position Y
 			glm::vec2(vTexDimsPoint3.x, mfHeight - vTexDimsPoint6.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+			colour.get(),
 			mTC.right.BL,
 			mTC.right.BR,
 			mTC.right.TR,
@@ -216,7 +216,7 @@ namespace X
 				vPos.x + vTexDimsPoint3.x,								// Position X
 				vPos.y),												// Position Y
 			glm::vec2(mfWidth - vTexDimsPoint6.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+			colour.get(),
 			mTC.top.BL,
 			mTC.top.BR,
 			mTC.top.TR,
@@ -228,7 +228,7 @@ namespace X
 				vPos.x + vTexDimsPoint3.x,								// Position X
 				vPos.y + mfHeight - vTexDimsPoint3.y),					// Position Y
 			glm::vec2(mfWidth - vTexDimsPoint6.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
+			colour.get(),
 			mTC.bottom.BL,
 			mTC.bottom.BR,
 			mTC.bottom.TR,
@@ -240,7 +240,7 @@ namespace X
 				vPos.x,										// Position X
 				vPos.y),									// Position Y
 			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
+			colour.get(),
 			mTC.topLeft.BL,
 			mTC.topLeft.BR,
 			mTC.topLeft.TR,
@@ -252,7 +252,7 @@ namespace X
 				vPos.x + mfWidth - vTexDimsPoint3.x,		// Position X
 				vPos.y),									// Position Y
 			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
+			colour.get(),
 			mTC.topRight.BL,
 			mTC.topRight.BR,
 			mTC.topRight.TR,
@@ -264,7 +264,7 @@ namespace X
 				vPos.x,										// Position X
 				vPos.y + mfHeight - vTexDimsPoint3.y),		// Position Y
 			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
+			colour.get(),
 			mTC.bottomLeft.BL,
 			mTC.bottomLeft.BR,
 			mTC.bottomLeft.TR,
@@ -276,7 +276,7 @@ namespace X
 				vPos.x + mfWidth - vTexDimsPoint3.x,		// Position X
 				vPos.y + mfHeight - vTexDimsPoint3.y),		// Position Y
 			glm::vec2(vTexDimsPoint3.x, vTexDimsPoint3.y),	// Dimensions
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
+			colour.get(),
 			mTC.bottomRight.BL,
 			mTC.bottomRight.BR,
 			mTC.bottomRight.TR,

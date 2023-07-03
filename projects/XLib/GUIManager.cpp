@@ -21,6 +21,8 @@ namespace X
 		pTheme->addAudioToManager();
 		setAudioVol(1.0f);
 		_mbWindowBeingMoved = false;
+		_mfTooltipDelaySeconds = 1.0f;
+		setTooltipOffset(32.0f, 0.0f);
 	}
 
 	void GUIManager::render(const std::string& strFramebufferToSampleFrom)
@@ -374,5 +376,26 @@ namespace X
 				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB";
 			}
 		}
+	}
+
+	void GUIManager::setTooltipDelay(float fSeconds)
+	{
+		_mfTooltipDelaySeconds = fSeconds;
+	}
+
+	float GUIManager::getTooltipDelay(void)
+	{
+		return _mfTooltipDelaySeconds;
+	}
+
+	void GUIManager::setTooltipOffset(float fOffsetX, float fOffsetY)
+	{
+		_mv2TooltipOffset.x = fOffsetX;
+		_mv2TooltipOffset.y = fOffsetY;
+	}
+
+	glm::vec2 GUIManager::getTooltipOffset(void)
+	{
+		return _mv2TooltipOffset;
 	}
 }

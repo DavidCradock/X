@@ -1,5 +1,6 @@
 #pragma once
 #include "PCH.h"
+#include "GUIColour.h"
 
 namespace X
 {
@@ -20,7 +21,8 @@ namespace X
 			void* pParentContainer,							// Pointer to the object's parent container
 			const std::string& strFramebufferToSampleFrom,	// The framebuffer to use as background when sampling (Given to GUIManager::render() and passed down)
 			const std::string& strObjectColourTextureName,	// The name of the object's background colour texture
-			const std::string& strObjectNormalTextureName	// The name of the object's background normal texture
+			const std::string& strObjectNormalTextureName,	// The name of the object's background normal texture
+			GUIColour& colour								// Colour
 			);		
 
 		float mfPositionX;	// Top left position of object along X axis

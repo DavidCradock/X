@@ -25,7 +25,8 @@ namespace X
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.progressBarBGColour, pTheme->mImages.progressBarBGNormal);
+		GUIColour col;
+		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.progressBarBGColour, pTheme->mImages.progressBarBGNormal, col);
 
 		// Get required resources needed to render the tab
 		ResourceManager* pRM = ResourceManager::getPointer();
@@ -47,7 +48,6 @@ namespace X
 		pShader->setInt("texture1_normal", 1);
 		pShader->setInt("texture2_reflection", 2);
 		pShader->setInt("texture3_background", 3);
-		pShader->setFloat("fBlurAmount", pTheme->mfBlurAmount);
 		pShader->setFloat("fNormalAmount", pTheme->mfNormalAmount);
 		pShader->setFloat("fReflectionAmount", pTheme->mfReflectionAmount);
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);

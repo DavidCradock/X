@@ -70,7 +70,8 @@ namespace X
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal);
+		GUIColour col;
+		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal, col);
 
 		// Get required resources needed to render
 		ResourceManager* pRM = ResourceManager::getPointer();

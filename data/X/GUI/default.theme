@@ -16,7 +16,6 @@ SliderTabNormal: data/X/GUI/default/slider_tab_normal.png
 LineGraphBGColour: data/X/GUI/default/linegraphBGcolour.png
 LineGraphBGNormal: data/X/GUI/default/linegraphBGnormal.png
 TooltipBGColour: data/X/GUI/default/tooltipBGcolour.png
-TooltipBGNormal: data/X/GUI/default/tooltipBGnormal.png
 ProgressBarBGColour: data/X/GUI/default/progressBarBGcolour.png
 ProgressBarBGNormal: data/X/GUI/default/progressBarBGnormal.png
 ProgressBarFillerColour: data/X/GUI/default/progressBarFillercolour.png
@@ -50,7 +49,6 @@ buttonImageOver: 1.000000 1.000000 1.000000 0.750000
 buttonImageUp: 1.000000 1.000000 1.000000 0.500000
 
 Floats
-blurAmount: 1.000000
 normalAmount: 0.100000
 reflectionAmount: 0.025000
 mouseCursorDistance: 50.000000
@@ -59,6 +57,7 @@ textEditCursorFlashSpeed: 4.000000
 sliderTabFadeSpeed: 5.000000
 textScrollSliderWidth: 20.000000
 buttonImageFadeSpeed: 5.000000
+tooltipFadeSpeed: 2.000000
 
 Offsets
 ContainerTitlebarText: 1 10

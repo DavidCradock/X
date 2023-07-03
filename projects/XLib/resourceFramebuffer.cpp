@@ -33,7 +33,7 @@ namespace X
 		// Create a texture which will be attached to the framebuffer object for colour information
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _muiWidth, _muiHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _muiWidth, _muiHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _muiTextureID, 0);
@@ -179,15 +179,19 @@ namespace X
 
 	void ResourceFramebuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
+		// If the framebuffer is already the newly specified size, do nother
+		if (uiNewWidth == _muiWidth)
+			if (uiNewHeight == _muiHeight)
+				return;
+
 		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "ResourceFramebuffer::resize() given a dimension of size zero.");
 		onGLContextToBeDestroyed();
 		_muiWidth = uiNewWidth;
 		_muiHeight = uiNewHeight;
-
 		onGLContextCreated();
 	}
 
-	void ResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
+	void ResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, GUIColour colour)
 	{
 		ResourceManager* pRM = ResourceManager::getPointer();
 		ResourceTriangle* pTri = pRM->getTriangle("X:debug");
@@ -197,13 +201,15 @@ namespace X
 		// Setup triangle geometry
 		pTri->removeGeom();
 		pTri->addQuad2D(glm::vec2(float(uiPosX), float(uiPosY)), glm::vec2(float(uiWidth), float(uiHeight)),
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),	// Colour
+			colour.get(),	// Colour
 			glm::vec2(0, 0), glm::vec2(1, 0), glm::vec2(1, 1), glm::vec2(0, 1));	// Texture coordinates
 		pTri->update();
 
 		glm::mat4 matrixProjection = glm::ortho(0.0f, float(pWindow->getWidth()), float(pWindow->getHeight()), 0.0f, -1.0f, 1.0f);
 		pShader->bind();
 		pShader->setMat4("transform", matrixProjection);
+		pShader->setInt("texture0", 0);
+
 		bindAsTexture(0);
 		glDisable(GL_DEPTH_TEST);
 		pTri->draw();

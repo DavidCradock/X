@@ -30,7 +30,8 @@ namespace X
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textEditBGNormal);
+		GUIColour col;
+		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textEditBGNormal, col);
 
 		// Get required resources needed to render
 		ResourceManager* pRM = ResourceManager::getPointer();

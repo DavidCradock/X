@@ -28,7 +28,8 @@ namespace X
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonImageBGColour, pTheme->mImages.buttonImageBGNormal);
+		GUIColour col;
+		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonImageBGColour, pTheme->mImages.buttonImageBGNormal, col);
 
 		// Get required resources needed to render
 		GUIManager* pGUI = GUIManager::getPointer();

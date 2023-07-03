@@ -14,6 +14,9 @@ namespace X
 		// Called from GUIContainer to render this object
 		void render(void* pParentContainer);
 
+		// Called from GUITooltip::render()
+		void renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight);
+
 		// Called from GUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 

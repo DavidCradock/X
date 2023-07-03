@@ -28,18 +28,12 @@ namespace X
 		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
 		GUIManager* pGUIManager = GUIManager::getPointer();
 		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal);
+		GUIColour col;
+		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal, col);
 
 		// Get required resources needed to render
-//		GUIManager* pGUI = GUIManager::getPointer();
 		ResourceManager* pRM = ResourceManager::getPointer();
 		Window* pWindow = Window::getPointer();
-//		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-//		ResourceShader* pShader = pRM->getShader("X:gui");
-//		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
-//		InputManager* pInput = InputManager::getPointer();
-
-
 
 		// Now render the font stuff
 		int iRTDims[2];
@@ -47,13 +41,12 @@ namespace X
 		iRTDims[1] = int(pWindow->getHeight());
 		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.button);
 
-		pFont->printCentered(mstrText,			// The text
+		pFont->printCentered(mstrText,										// The text
 			int(pContainer->mfPositionX + mfPositionX + (mfWidth / 2)),		// X position
-			int(pContainer->mfPositionY + mfPositionY + (mfHeight / 2)),		// Y position
-			iRTDims[0], iRTDims[1],	// Render target dims
-			1.0f,	// Scaling
+			int(pContainer->mfPositionY + mfPositionY + (mfHeight / 2)),	// Y position
+			iRTDims[0], iRTDims[1],											// Render target dims
+			1.0f,															// Scaling
 			glm::vec4(_mfCurrentTextCol[0], _mfCurrentTextCol[1], _mfCurrentTextCol[2], _mfCurrentTextCol[3]));	// Colour
-
 	}
 
 	void GUIButton::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)

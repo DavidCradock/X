@@ -87,6 +87,7 @@ namespace X
 	//
 	// There are also some default containers which can be shown (hidden by default) and they are named as follows...
 	// X:Default:Statistics		// This shows FPS counter, also as a graph
+	// They are created in GUIManager::_createDefaultContainers()
 	// 
 	// Implementation details:
 	// Containers are Z sorted and rendered one at a time, along with their widgets.
@@ -180,7 +181,23 @@ namespace X
 
 		// Returns overall volume of the audio playback for the GUI
 		float getAudioVol(void);
+
+		// Sets the delay in seconds until a tooltip will begin to fade in when the mouse is over a widget
+		// Default is one second
+		void setTooltipDelay(float fSeconds);
+
+		// Returns the currently set delay in seconds until a tooltip will begin to fade int when the mouse is over a widget
+		float getTooltipDelay(void);
+
+		// Sets tooltip offset from mouse cursor position
+		void setTooltipOffset(float fOffsetX, float fOffsetY);
+
+		// Gets tooltip offset from mouse cursor position
+		glm::vec2 getTooltipOffset(void);
+
 	private:
+		glm::vec2 _mv2TooltipOffset;								// Offset of tooltip from cursor position
+		float _mfTooltipDelaySeconds;								// Number of seconds until a tooltip will begin to fade in
 		float _mfScale;												// Scaling value used for GUI scaling.
 		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
 		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.

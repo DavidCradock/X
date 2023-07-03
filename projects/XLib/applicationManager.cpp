@@ -64,7 +64,6 @@ namespace X
 			ResourceManager* pRM = ResourceManager::getPointer();
 			ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
 			
-
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())
 			{
@@ -269,6 +268,7 @@ namespace X
 
 		// Framebuffers
 		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
 
 		// Line vertex buffers
 		pRM->addLine("X:gui");

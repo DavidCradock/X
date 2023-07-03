@@ -76,7 +76,6 @@ namespace X
 			std::string lineGraphBGColour;
 			std::string lineGraphBGNormal;
 			std::string tooltipBGColour;
-			std::string tooltipBGNormal;
 			std::string progressBarBGColour;
 			std::string progressBarBGNormal;
 			std::string progressBarFillerColour;
@@ -153,7 +152,6 @@ namespace X
 		Audio mAudio;
 
 		// Floats
-		float mfBlurAmount;					// 1.0f = max blur, 0.0f = none
 		float mfNormalAmount;				// 1.0f = max normal, 0.0f = none
 		float mfReflectionAmount;			// 1.0f = max reflection, 0.0f = none
 		float mfMouseCursorDistance;		// Distance the mouse cursor is the fragments when computing the bump mapping
@@ -162,6 +160,8 @@ namespace X
 		float mfSliderTabFadeSpeed;			// Rate at which slider's tab colours interpolate between
 		float mfTextScrollSliderWidth;		// Width of a GUITextScroll object's vertical slider.
 		float mfButtonImageTextFadeSpeed;	// Rate at which button image colours interpolate between
+		float mfTooltipFadeSpeed;			// Rate at which tooltips face in/out
+
 	private:
 		// Writes out image info
 		void _writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename);

@@ -34,8 +34,9 @@ namespace X
 	// X:debug					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
 	// X:gui					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for the GUI
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
+	// X:guitooltipFB			// A framebuffer the tooltips are rendered to
 	// X:gui					// A line vertex buffer resource used by the GUI when rendering lines
-	// They are loaded by the ApplicationManager class in it's mainLoop() method
+	// They are loaded by ApplicationManager::addDefaultResources()
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:

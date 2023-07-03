@@ -34,6 +34,11 @@ namespace X
 		// Returns whether this tooltip is enabled or not
 		bool getEnabled(void);
 
+		// Set this tooltip to just contain text with the dimensions set to the width/height of the text and the tooltip border.
+		// Removes all previously added objects
+		// Sets tooltip as enabled
+		void setAsText(const std::string& strText);
+
 		// Add text to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
@@ -46,6 +51,9 @@ namespace X
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
 		void removeText(const std::string& strName);
+
+		// Removes all text from this tooltip
+		void removeAllText(void);
 
 		// Add line graph to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -60,6 +68,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeLineGraph(const std::string& strName);
 
+		// Removes all line graphs from this tooltip
+		void removeAllLineGraphs(void);
+
 		// Add progress bar to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
@@ -72,6 +83,9 @@ namespace X
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
 		void removeProgressBar(const std::string& strName);
+
+		// Removes all progress bars from this tooltip
+		void removeAllProgressBars(void);
 
 		// Add static image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -89,6 +103,9 @@ namespace X
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
 		void removeImage(const std::string& strName);
+
+		// Removes all images from this tooltip
+		void removeAllImages(void);
 
 		// Add animated image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -108,6 +125,9 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageAnimated(const std::string& strName);
 
+		// Removes all animated images from this tooltip
+		void removeAllImagesAnimated(void);
+
 		// Add framebuffer image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
@@ -122,6 +142,9 @@ namespace X
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
 		void removeImageFramebuffer(const std::string& strName);
+
+		// Removes all image framebuffers from this tooltip
+		void removeAllImageFramebuffers(void);
 
 		// Add depthbuffer image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -138,14 +161,23 @@ namespace X
 		// If the named object doesn't exist, this silently fails
 		void removeImageDepthbuffer(const std::string& strName);
 
-		private:
-			bool _mbEnabled;		// Whether this tooltip is enabled or not
-			std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
-			std::map<std::string, GUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
-			std::map<std::string, GUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
-			std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
-			std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-			std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
-			std::map<std::string, GUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
+		// Removes all image depthbuffers from this tooltip
+		void removeAllImageDepthbuffers(void);
+
+		// Removes all objects from this tooltip
+		void removeAll(void);
+
+	private:
+		Timer _mTimer;			// Timer object used for timebased stuff
+		bool _mbEnabled;		// Whether this tooltip is enabled or not
+		GUIColour _mColour;		// Current colour of the tooltip, used for fading in/out
+		float _mfTooltipDelay;	// Used to prevent tooltip from fading in until GUIManager::getTooltipDelay() has passed
+		std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
+		std::map<std::string, GUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		std::map<std::string, GUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
+		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
+		std::map<std::string, GUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
 	};
 }
