@@ -43,6 +43,7 @@
     <ClInclude Include="GUITextScroll.h" />
     <ClInclude Include="GUITheme.h" />
     <ClInclude Include="GUITooltip.h" />
+    <ClInclude Include="physicsManager.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceTexture2DAnimation.h" />
     <ClInclude Include="SMCamera.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="vector3f.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="X.h" />
   </ItemGroup>
@@ -118,6 +120,7 @@
     <ClCompile Include="GUITextScroll.cpp" />
     <ClCompile Include="GUITheme.cpp" />
     <ClCompile Include="GUITooltip.cpp" />
+    <ClCompile Include="physicsManager.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceTexture2DAnimation.cpp" />
     <ClCompile Include="SMCamera.cpp" />
@@ -151,6 +154,7 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="vector3f.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>

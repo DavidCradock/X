@@ -22,6 +22,7 @@
 #include "inputJoystick.h"
 #include "inputKeyboard.h"
 #include "inputMouse.h"
+#include "vector3f.h"
 #include "resourceBase.h"
 #include "resourceDepthbuffer.h"
 #include "resourceFont.h"

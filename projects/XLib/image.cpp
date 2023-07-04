@@ -52,19 +52,19 @@ namespace X
 	bool CImage::load(const std::string& strFilename, bool bFlipForOpenGL)
 	{
 		free();
-		stbi_set_flip_vertically_on_load(bFlipForOpenGL);
+		STB::stbi_set_flip_vertically_on_load(bFlipForOpenGL);
 
 		// Get number of channels in the image file
 		int iDims[2];
 		int iNumChannels = 3;
 		loadInfo(strFilename, iDims[0], iDims[1], iNumChannels);
-		stbi_uc* pixels = 0;
+		STB::stbi_uc* pixels = 0;
 		if (4 == iNumChannels)
-			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
+			pixels = STB::stbi_load(strFilename.c_str(), &width, &height, &numChannels, STB::STBI_rgb_alpha);
 		else if (3 == iNumChannels)
-			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb);
+			pixels = STB::stbi_load(strFilename.c_str(), &width, &height, &numChannels, STB::STBI_rgb);
 		else if (1 == iNumChannels)
-			pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, 1);
+			pixels = STB::stbi_load(strFilename.c_str(), &width, &height, &numChannels, 1);
 
 		if (!pixels)
 			return false;
@@ -92,7 +92,7 @@ namespace X
 				iPixelIndex++;
 			}
 		}
-		stbi_image_free(pixels);
+		STB::stbi_image_free(pixels);
 		return true;
 	}
 
@@ -105,35 +105,35 @@ namespace X
 		//   ok = stbi_info(filename, &x, &y, &n);
 		//   // returns ok=1 and sets x, y, n if image is a supported format,
 		//   // 0 otherwise.
-		return (bool)stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
+		return (bool)STB::stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
 
 	void CImage::saveAsBMP(const std::string& strFilename, bool bFlipOnSave)
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsBMP() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsBMP() failed. Image failed to be written.");
+		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!STB::stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsBMP() failed. Image failed to be written.");
 	}
 
 	void CImage::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsJPG() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "CImage::saveAsJPG() failed. Image failed to be written.");
+		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!STB::stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "CImage::saveAsJPG() failed. Image failed to be written.");
 	}
 
 	void CImage::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsPNG() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "CImage::saveAsPNG failed. Image failed to be written.");
+		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!STB::stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "CImage::saveAsPNG failed. Image failed to be written.");
 	}
 
 	void CImage::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsTGA() failed. Image not yet created.");
-		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsTGA() failed. Image failed to be written.");
+		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
+		ThrowIfTrue(!STB::stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsTGA() failed. Image failed to be written.");
 	}
 
 	void CImage::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)

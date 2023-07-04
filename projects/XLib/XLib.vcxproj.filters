@@ -38,11 +38,15 @@
     <Filter Include="GUI\TODO">
       <UniqueIdentifier>{29a893ac-a9c1-4364-9d18-2414c52e6e7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{8f36b270-3a79-497a-a92f-8205d9b73a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cc27cd10-6453-41bb-a605-8514a51e5eb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="frustum.h" />
     <ClInclude Include="PCH.h" />
-    <ClInclude Include="plane.h" />
     <ClInclude Include="renderQueue.h" />
     <ClInclude Include="applicationManager.h">
       <Filter>Applications</Filter>
@@ -245,11 +249,21 @@
     <ClInclude Include="2DPhysicsData.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="frustum.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3f.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="physicsManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="frustum.cpp" />
     <ClCompile Include="PCH.cpp" />
-    <ClCompile Include="plane.cpp" />
     <ClCompile Include="renderQueue.cpp" />
     <ClCompile Include="applicationBase.cpp">
       <Filter>Applications</Filter>
@@ -427,6 +441,18 @@
     </ClCompile>
     <ClCompile Include="2DPhysicsData.cpp">
       <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="frustum.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3f.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="physicsManager.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

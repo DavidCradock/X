@@ -9,6 +9,11 @@ namespace X
 
 		// Show frame rate statistics
 		SCGUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
+
+
+
+		CVector3f vTwo(2.0f, 2.0f, 2.0f);
+		CVector3f vOne = vTwo * 0.5f;
 	}
 
 	void CApplication::onStart(void)
