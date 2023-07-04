@@ -4,12 +4,12 @@
 
 namespace X
 {
-	GUIColour::GUIColour()
+	CGUIColour::CGUIColour()
 	{
 		set(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-	void GUIColour::set(float fRed, float fGreen, float fBlue, float fAlpha)
+	void CGUIColour::set(float fRed, float fGreen, float fBlue, float fAlpha)
 	{
 		clamp(fRed, 0.0f, 1.0f);
 		clamp(fGreen, 0.0f, 1.0f);
@@ -21,7 +21,7 @@ namespace X
 		alpha = fAlpha;
 	}
 
-	glm::vec4 GUIColour::get(void)
+	glm::vec4 CGUIColour::get(void)
 	{
 		glm::vec4 col;
 		col.r = red;

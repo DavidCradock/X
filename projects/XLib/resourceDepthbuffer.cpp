@@ -8,7 +8,7 @@
 namespace X
 {
 
-	ResourceDepthbuffer::ResourceDepthbuffer(unsigned int iWidth, unsigned int iHeight)
+	CResourceDepthbuffer::CResourceDepthbuffer(unsigned int iWidth, unsigned int iHeight)
 	{
 		_muiWidth = iWidth;
 		_muiHeight = iHeight;
@@ -17,12 +17,12 @@ namespace X
 		onGLContextCreated();
 	}
 
-	ResourceDepthbuffer::~ResourceDepthbuffer()
+	CResourceDepthbuffer::~CResourceDepthbuffer()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceDepthbuffer::onGLContextCreated(void)
+	void CResourceDepthbuffer::onGLContextCreated(void)
 	{
 		// Create the framebuffer object and bind it
 		glGenFramebuffers(1, &_muiFramebufferID);
@@ -45,12 +45,12 @@ namespace X
 		glDrawBuffer(GL_NONE);
 		glReadBuffer(GL_NONE);
 
-		ThrowIfTrue(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, "ResourceDepthbuffer::onGLContextCreated() failed to create a complete framebuffer.");
+		ThrowIfTrue(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, "CResourceDepthbuffer::onGLContextCreated() failed to create a complete framebuffer.");
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	}
 
-	void ResourceDepthbuffer::onGLContextToBeDestroyed(void)
+	void CResourceDepthbuffer::onGLContextToBeDestroyed(void)
 	{
 		if (0 != _muiTextureID)
 		{
@@ -64,7 +64,7 @@ namespace X
 		}
 	}
 
-	void ResourceDepthbuffer::bindAsRenderTarget(bool bClearbuffer)
+	void CResourceDepthbuffer::bindAsRenderTarget(bool bClearbuffer)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, _muiFramebufferID);
 		if (bClearbuffer)
@@ -72,14 +72,14 @@ namespace X
 		glViewport(0, 0, _muiWidth, _muiHeight);
 	}
 
-	void ResourceDepthbuffer::unbindAsRenderTarget(void)
+	void CResourceDepthbuffer::unbindAsRenderTarget(void)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		Window* pWnd = Window::getPointer();
+		CWindow* pWnd = CWindow::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 	}
 
-	void ResourceDepthbuffer::bindAsTexture(unsigned int uiTextureUnit)
+	void CResourceDepthbuffer::bindAsTexture(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -111,7 +111,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void ResourceDepthbuffer::unbindTexture(unsigned int uiTextureUnit)
+	void CResourceDepthbuffer::unbindTexture(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -143,31 +143,31 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int ResourceDepthbuffer::getWidth(void)
+	unsigned int CResourceDepthbuffer::getWidth(void)
 	{
 		return _muiWidth;
 	}
 
-	unsigned int ResourceDepthbuffer::getHeight(void)
+	unsigned int CResourceDepthbuffer::getHeight(void)
 	{
 		return _muiHeight;
 	}
 
-	void ResourceDepthbuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
+	void CResourceDepthbuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
-		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "ResourceDepthbuffer::resize() given a dimension of size zero.");
+		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "CResourceDepthbuffer::resize() given a dimension of size zero.");
 		onGLContextToBeDestroyed();
 		_muiWidth = uiNewWidth;
 		_muiHeight = uiNewHeight;
 		onGLContextCreated();
 	}
 
-	void ResourceDepthbuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
+	void CResourceDepthbuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:debug");
-		ResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
-		Window* pWindow = Window::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:debug");
+		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
+		CWindow* pWindow = CWindow::getPointer();
 		
 		// Setup triangle geometry
 		pTri->removeGeom();

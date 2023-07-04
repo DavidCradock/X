@@ -9,25 +9,25 @@
 
 namespace X
 {
-	GUIContainer::GUIContainer()
+	CGUIContainer::CGUIContainer()
 	{
 		mstrThemename = "default";
 		mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
 		_mbVisible = true;
-		GUIColour col = GUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
+		CGUIColour col = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
 		_mvTextColour.r = col.red;
 		_mvTextColour.g = col.green;
 		_mvTextColour.b = col.blue;
 		_mvTextColour.a = col.alpha;
 	}
 
-	GUIContainer::~GUIContainer()
+	CGUIContainer::~CGUIContainer()
 	{
 		removeAll();
 	}
 
-	void GUIContainer::render(const std::string& strFramebufferToSampleFrom)
+	void CGUIContainer::render(const std::string& strFramebufferToSampleFrom)
 	{
 		if (!_mbVisible)
 			return;
@@ -36,7 +36,7 @@ namespace X
 		_renderContainer(strFramebufferToSampleFrom);
 	
 		// Render each button
-		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
 			itButton->second->render(this, strFramebufferToSampleFrom);
@@ -44,7 +44,7 @@ namespace X
 		}
 
 		// Render each text
-		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
 			itText->second->render(this);
@@ -52,7 +52,7 @@ namespace X
 		}
 
 		// Render each text edit
-		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
 		while (itTextEdit != _mmapTextEdits.end())
 		{
 			itTextEdit->second->render(this, strFramebufferToSampleFrom);
@@ -60,7 +60,7 @@ namespace X
 		}
 
 		// Render each sliders
-		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
 		while (itSlider != _mmapSliders.end())
 		{
 			itSlider->second->render(this, strFramebufferToSampleFrom);
@@ -68,7 +68,7 @@ namespace X
 		}
 
 		// Render each line graph
-		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
 		while (itLineGraph != _mmapLineGraphs.end())
 		{
 			itLineGraph->second->render(this, strFramebufferToSampleFrom);
@@ -76,7 +76,7 @@ namespace X
 		}
 
 		// Render each progress bar
-		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
 		while (itProgressBar != _mmapProgressBars.end())
 		{
 			itProgressBar->second->render(this, strFramebufferToSampleFrom);
@@ -84,7 +84,7 @@ namespace X
 		}
 
 		// Render each image
-		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
 		{
 			itImage->second->render(this, strFramebufferToSampleFrom);
@@ -92,7 +92,7 @@ namespace X
 		}
 
 		// Render each animated image
-		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
 		while (itImageAnimated != _mmapImageAnimateds.end())
 		{
 			itImageAnimated->second->render(this, strFramebufferToSampleFrom);
@@ -100,7 +100,7 @@ namespace X
 		}
 
 		// Images framebuffer
-		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
 		while (itImageFB != _mmapImageFramebuffers.end())
 		{
 			itImageFB->second->render(this, strFramebufferToSampleFrom);
@@ -108,7 +108,7 @@ namespace X
 		}
 
 		// Render each text scroll object
-		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
 		while (itTextScroll != _mmapTextScrolls.end())
 		{
 			itTextScroll->second->render(this, strFramebufferToSampleFrom);
@@ -116,7 +116,7 @@ namespace X
 		}
 
 		// Render each of the button images
-		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
 		{
 			itButtonImage->second->render(this, strFramebufferToSampleFrom);
@@ -124,7 +124,7 @@ namespace X
 		}
 
 		// Images depth buffer
-		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
 		while (itImageDB != _mmapImageDepthbuffers.end())
 		{
 			itImageDB->second->render(this, strFramebufferToSampleFrom);
@@ -132,132 +132,132 @@ namespace X
 		}
 	}
 
-	void GUIContainer::renderTooltips(const std::string& strFramebufferToSampleFrom)
+	void CGUIContainer::renderTooltips(const std::string& strFramebufferToSampleFrom)
 	{
-		GUITooltip* pTT;
+		CGUITooltip* pTT;
 
 		// Render each button's tooltips
-		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
-			pTT = (GUITooltip*)itButton->second->mpTooltip;
+			pTT = (CGUITooltip*)itButton->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itButton++;
 		}
 
 		// Render each text's tooltip
-		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
-			pTT = (GUITooltip*)itText->second->mpTooltip;
+			pTT = (CGUITooltip*)itText->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itText++;
 		}
 
 		// Render each text edit's tooltip
-		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
 		while (itTextEdit != _mmapTextEdits.end())
 		{
-			pTT = (GUITooltip*)itTextEdit->second->mpTooltip;
+			pTT = (CGUITooltip*)itTextEdit->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itTextEdit++;
 		}
 
 		// Render each slider's tooltip
-		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
 		while (itSlider != _mmapSliders.end())
 		{
-			pTT = (GUITooltip*)itSlider->second->mpTooltip;
+			pTT = (CGUITooltip*)itSlider->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itSlider++;
 		}
 
 		// Render each line graph's tooltip
-		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
 		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			pTT = (GUITooltip*)itLineGraph->second->mpTooltip;
+			pTT = (CGUITooltip*)itLineGraph->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itLineGraph++;
 		}
 
 		// Render each progress bar's tooltip
-		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
 		while (itProgressBar != _mmapProgressBars.end())
 		{
-			pTT = (GUITooltip*)itProgressBar->second->mpTooltip;
+			pTT = (CGUITooltip*)itProgressBar->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itProgressBar++;
 		}
 
 		// Render each image's tooltip
-		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
 		{
-			pTT = (GUITooltip*)itImage->second->mpTooltip;
+			pTT = (CGUITooltip*)itImage->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itImage++;
 		}
 
 		// Render each animated image's tooltip
-		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
 		while (itImageAnimated != _mmapImageAnimateds.end())
 		{
-			pTT = (GUITooltip*)itImageAnimated->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageAnimated->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itImageAnimated++;
 		}
 
 		// Images framebuffer's tooltip
-		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
 		while (itImageFB != _mmapImageFramebuffers.end())
 		{
-			pTT = (GUITooltip*)itImageFB->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageFB->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itImageFB++;
 		}
 
 		// Render each text scroll object's tooltip
-		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
 		while (itTextScroll != _mmapTextScrolls.end())
 		{
-			pTT = (GUITooltip*)itTextScroll->second->mpTooltip;
+			pTT = (CGUITooltip*)itTextScroll->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itTextScroll++;
 		}
 
 		// Render each of the button images's tooltip
-		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
 		{
-			pTT = (GUITooltip*)itButtonImage->second->mpTooltip;
+			pTT = (CGUITooltip*)itButtonImage->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itButtonImage++;
 		}
 
 		// Images depth buffer's tooltip
-		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
 		while (itImageDB != _mmapImageDepthbuffers.end())
 		{
-			pTT = (GUITooltip*)itImageDB->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageDB->second->mpTooltip;
 			pTT->render(this, strFramebufferToSampleFrom);
 			itImageDB++;
 		}
 	}
 
 	// Containers are updated in order of ZOrder, with the front most being updated first
-	bool GUIContainer::update(bool bMouseIsOverContainerWhichIsAboveThisOne)
+	bool CGUIContainer::update(bool bMouseIsOverContainerWhichIsAboveThisOne)
 	{
 		if (!_mbVisible)
 			return false;
 
-		ResourceManager* pRM = ResourceManager::getPointer();
-		GUIManager* pGUI = GUIManager::getPointer();
-		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		Window* pWindow = Window::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
+		CWindow* pWindow = CWindow::getPointer();
 		glm::vec2 vWindowDims = pWindow->getDimensions();
 
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		glm::vec2 vTexDimsDiv3 = pRM->getTexture2D(pTheme->mImages.containerBGColour)->mvDimensions * 0.3333333f;
 
@@ -298,7 +298,7 @@ namespace X
 				if (pInput->mouse.leftButtonOnce())
 				{
 					// Set colour of all other containers
-					std::map<std::string, GUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();
+					std::map<std::string, CGUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();
 					while (itCont != pGUI->_mmapContainers.end())
 					{
 						itCont->second->_mvTextColour = glm::vec4(
@@ -352,7 +352,7 @@ namespace X
 		if (mbContainerIsWindow)
 		{
 			// Get a texture so we can determine dimensions
-			ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
+			CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
 			glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
 			if (mfPositionX < vTexDimsDiv3.x)
 				mfPositionX = vTexDimsDiv3.x;
@@ -372,7 +372,7 @@ namespace X
 			bContainerAcceptingMouseClicks = false;
 
 		// Buttons
-		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
 			itButton->second->update(this, bContainerAcceptingMouseClicks);
@@ -380,7 +380,7 @@ namespace X
 		}
 
 		// Text
-		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
 			itText->second->update(this, bContainerAcceptingMouseClicks);
@@ -388,7 +388,7 @@ namespace X
 		}
 
 		// Text edit
-		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
 		while (itTextEdit != _mmapTextEdits.end())
 		{
 			itTextEdit->second->update(this, bContainerAcceptingMouseClicks);
@@ -396,7 +396,7 @@ namespace X
 		}
 
 		// Sliders
-		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
 		while (itSlider != _mmapSliders.end())
 		{
 			itSlider->second->update(this, bContainerAcceptingMouseClicks);
@@ -404,7 +404,7 @@ namespace X
 		}
 
 		// LineGraphs
-		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
 		while (itLineGraph != _mmapLineGraphs.end())
 		{
 			itLineGraph->second->update(this, bContainerAcceptingMouseClicks);
@@ -412,7 +412,7 @@ namespace X
 		}
 
 		// Progress bars
-		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
 		while (itProgressBar != _mmapProgressBars.end())
 		{
 			itProgressBar->second->update(this, bContainerAcceptingMouseClicks);
@@ -420,7 +420,7 @@ namespace X
 		}
 
 		// Images
-		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
 		{
 			itImage->second->update(this, bContainerAcceptingMouseClicks);
@@ -428,7 +428,7 @@ namespace X
 		}
 
 		// Images animated
-		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
 		while (itImageAnimated != _mmapImageAnimateds.end())
 		{
 			itImageAnimated->second->update(this, bContainerAcceptingMouseClicks);
@@ -436,7 +436,7 @@ namespace X
 		}
 
 		// Images framebuffer
-		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
 		while (itImageFB != _mmapImageFramebuffers.end())
 		{
 			itImageFB->second->update(this, bContainerAcceptingMouseClicks);
@@ -444,7 +444,7 @@ namespace X
 		}
 
 		// Text scroll objects
-		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
 		while (itTextScroll != _mmapTextScrolls.end())
 		{
 			itTextScroll->second->update(this, bContainerAcceptingMouseClicks);
@@ -452,7 +452,7 @@ namespace X
 		}
 
 		// Button images
-		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
 		{
 			itButtonImage->second->update(this, bContainerAcceptingMouseClicks);
@@ -460,7 +460,7 @@ namespace X
 		}
 
 		// Images depth buffer
-		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
 		while (itImageDB != _mmapImageDepthbuffers.end())
 		{
 			itImageDB->second->update(this, bContainerAcceptingMouseClicks);
@@ -470,132 +470,132 @@ namespace X
 		return bMouseOver;
 	}
 
-	void GUIContainer::setVisible(bool bVisible)
+	void CGUIContainer::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
 
 		// If set to invisible, we need to reset all tooltips for this container
-		GUITooltip* pTT;
+		CGUITooltip* pTT;
 		// Buttons
-		std::map<std::string, GUIButton*>::iterator itButton = _mmapButtons.begin();
+		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
-			pTT = (GUITooltip*)itButton->second->mpTooltip;
+			pTT = (CGUITooltip*)itButton->second->mpTooltip;
 			pTT->resetFade();
 			itButton++;
 		}
 
 		// Text
-		std::map<std::string, GUIText*>::iterator itText = _mmapTexts.begin();
+		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
-			pTT = (GUITooltip*)itText->second->mpTooltip;
+			pTT = (CGUITooltip*)itText->second->mpTooltip;
 			pTT->resetFade();
 			itText++;
 		}
 
 		// Text edit
-		std::map<std::string, GUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
 		while (itTextEdit != _mmapTextEdits.end())
 		{
-			pTT = (GUITooltip*)itTextEdit->second->mpTooltip;
+			pTT = (CGUITooltip*)itTextEdit->second->mpTooltip;
 			pTT->resetFade();
 			itTextEdit++;
 		}
 
 		// Sliders
-		std::map<std::string, GUISlider*>::iterator itSlider = _mmapSliders.begin();
+		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
 		while (itSlider != _mmapSliders.end())
 		{
-			pTT = (GUITooltip*)itSlider->second->mpTooltip;
+			pTT = (CGUITooltip*)itSlider->second->mpTooltip;
 			pTT->resetFade();
 			itSlider++;
 		}
 
 		// LineGraphs
-		std::map<std::string, GUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
 		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			pTT = (GUITooltip*)itLineGraph->second->mpTooltip;
+			pTT = (CGUITooltip*)itLineGraph->second->mpTooltip;
 			pTT->resetFade();
 			itLineGraph++;
 		}
 
 		// Progress bars
-		std::map<std::string, GUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
 		while (itProgressBar != _mmapProgressBars.end())
 		{
-			pTT = (GUITooltip*)itProgressBar->second->mpTooltip;
+			pTT = (CGUITooltip*)itProgressBar->second->mpTooltip;
 			pTT->resetFade();
 			itProgressBar++;
 		}
 
 		// Images
-		std::map<std::string, GUIImage*>::iterator itImage = _mmapImages.begin();
+		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
 		{
-			pTT = (GUITooltip*)itImage->second->mpTooltip;
+			pTT = (CGUITooltip*)itImage->second->mpTooltip;
 			pTT->resetFade();
 			itImage++;
 		}
 
 		// Images animated
-		std::map<std::string, GUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
 		while (itImageAnimated != _mmapImageAnimateds.end())
 		{
-			pTT = (GUITooltip*)itImageAnimated->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageAnimated->second->mpTooltip;
 			pTT->resetFade();
 			itImageAnimated++;
 		}
 
 		// Images framebuffer
-		std::map<std::string, GUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
 		while (itImageFB != _mmapImageFramebuffers.end())
 		{
-			pTT = (GUITooltip*)itImageFB->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageFB->second->mpTooltip;
 			pTT->resetFade();
 			itImageFB++;
 		}
 
 		// Text scroll objects
-		std::map<std::string, GUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
 		while (itTextScroll != _mmapTextScrolls.end())
 		{
-			pTT = (GUITooltip*)itTextScroll->second->mpTooltip;
+			pTT = (CGUITooltip*)itTextScroll->second->mpTooltip;
 			pTT->resetFade();
 			itTextScroll++;
 		}
 
 		// Button images
-		std::map<std::string, GUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
 		{
-			pTT = (GUITooltip*)itButtonImage->second->mpTooltip;
+			pTT = (CGUITooltip*)itButtonImage->second->mpTooltip;
 			pTT->resetFade();
 			itButtonImage++;
 		}
 
 		// Images depth buffer
-		std::map<std::string, GUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
 		while (itImageDB != _mmapImageDepthbuffers.end())
 		{
-			pTT = (GUITooltip*)itImageDB->second->mpTooltip;
+			pTT = (CGUITooltip*)itImageDB->second->mpTooltip;
 			pTT->resetFade();
 			itImageDB++;
 		}
 	}
 
-	bool GUIContainer::getVisible(void)
+	bool CGUIContainer::getVisible(void)
 	{
 		return _mbVisible;
 	}
 
-	const std::string& GUIContainer::getName(void)
+	const std::string& CGUIContainer::getName(void)
 	{
 		return _mstrName;
 	}
 
-	void GUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
+	void CGUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
 	{
 		if (!_mbVisible)
 			return;
@@ -604,13 +604,13 @@ namespace X
 			return;	// No point rendering anything
 
 		// Get required resources needed to render
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		GUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		InputManager* pInput = InputManager::getPointer();
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:gui");
+		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
+		SCInputManager* pInput = SCInputManager::getPointer();
 
 		pShader->bind();
 
@@ -636,10 +636,10 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures and background sample framebuffer
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerBGNormal);
-		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
+		CResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerBGNormal);
+		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -750,7 +750,7 @@ namespace X
 		int iRTDims[2];
 		iRTDims[0] = int(pWindow->getWidth());
 		iRTDims[1] = int(pWindow->getHeight());
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
 		pFont->print(mstrTitleText,
 			int(mfPositionX) + pTheme->mOffsets.containerTitlebarText.iOffsetX,
 			int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
@@ -759,13 +759,13 @@ namespace X
 			_mvTextColour);
 	}
 
-	GUIButton* GUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	CGUIButton* CGUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
-		ThrowIfTrue(it != _mmapButtons.end(), "GUIContainer::addButton(" + strName + ") failed. The named object already exists.");
-		GUIButton* pNewRes = new GUIButton;
-		ThrowIfFalse(pNewRes, "GUIContainer::addButton(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it != _mmapButtons.end(), "CGUIContainer::addButton(" + strName + ") failed. The named object already exists.");
+		CGUIButton* pNewRes = new CGUIButton;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addButton(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -775,25 +775,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIButton* GUIContainer::getButton(const std::string& strName)
+	CGUIButton* CGUIContainer::getButton(const std::string& strName)
 	{
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
-		ThrowIfTrue(it == _mmapButtons.end(), "GUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIButton*>::iterator it = _mmapButtons.find(strName);
+		ThrowIfTrue(it == _mmapButtons.end(), "CGUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeButton(const std::string& strName)
+	void CGUIContainer::removeButton(const std::string& strName)
 	{
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.find(strName);
+		std::map<std::string, CGUIButton*>::iterator it = _mmapButtons.find(strName);
 		if (it == _mmapButtons.end())
 			return;
 		delete it->second;
 		_mmapButtons.erase(it);
 	}
 
-	void GUIContainer::removeAllButtons(void)
+	void CGUIContainer::removeAllButtons(void)
 	{
-		std::map<std::string, GUIButton*>::iterator it = _mmapButtons.begin();
+		std::map<std::string, CGUIButton*>::iterator it = _mmapButtons.begin();
 		while (it != _mmapButtons.end())
 		{
 			delete it->second;
@@ -802,13 +802,13 @@ namespace X
 		}
 	}
 
-	GUIText* GUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
+	CGUIText* CGUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
 	{
 		// If resource already exists
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
-		ThrowIfTrue(it != _mmapTexts.end(), "GUIContainer::addText(" + strName + ") failed. The named object already exists.");
-		GUIText* pNewRes = new GUIText;
-		ThrowIfFalse(pNewRes, "GUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it != _mmapTexts.end(), "CGUIContainer::addText(" + strName + ") failed. The named object already exists.");
+		CGUIText* pNewRes = new CGUIText;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mstrText = strText;
@@ -816,25 +816,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIText* GUIContainer::getText(const std::string& strName)
+	CGUIText* CGUIContainer::getText(const std::string& strName)
 	{
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
-		ThrowIfTrue(it == _mmapTexts.end(), "GUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.find(strName);
+		ThrowIfTrue(it == _mmapTexts.end(), "CGUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeText(const std::string& strName)
+	void CGUIContainer::removeText(const std::string& strName)
 	{
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.find(strName);
+		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.find(strName);
 		if (it == _mmapTexts.end())
 			return;
 		delete it->second;
 		_mmapTexts.erase(it);
 	}
 
-	void GUIContainer::removeAllText(void)
+	void CGUIContainer::removeAllText(void)
 	{
-		std::map<std::string, GUIText*>::iterator it = _mmapTexts.begin();
+		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.begin();
 		while (it != _mmapTexts.end())
 		{
 			delete it->second;
@@ -843,13 +843,13 @@ namespace X
 		}
 	}
 
-	GUITextEdit* GUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	CGUITextEdit* CGUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
-		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
-		ThrowIfTrue(it != _mmapTextEdits.end(), "GUIContainer::addTextEdit(" + strName + ") failed. The named object already exists.");
-		GUITextEdit* pNewRes = new GUITextEdit;
-		ThrowIfFalse(pNewRes, "GUIContainer::addTextEdit(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		ThrowIfTrue(it != _mmapTextEdits.end(), "CGUIContainer::addTextEdit(" + strName + ") failed. The named object already exists.");
+		CGUITextEdit* pNewRes = new CGUITextEdit;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addTextEdit(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -859,25 +859,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUITextEdit* GUIContainer::getTextEdit(const std::string& strName)
+	CGUITextEdit* CGUIContainer::getTextEdit(const std::string& strName)
 	{
-		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
-		ThrowIfTrue(it == _mmapTextEdits.end(), "GUIContainer::getTextEdit(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		ThrowIfTrue(it == _mmapTextEdits.end(), "CGUIContainer::getTextEdit(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeTextEdit(const std::string& strName)
+	void CGUIContainer::removeTextEdit(const std::string& strName)
 	{
-		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
+		std::map<std::string, CGUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
 		if (it == _mmapTextEdits.end())
 			return;
 		delete it->second;
 		_mmapTextEdits.erase(it);
 	}
 
-	void GUIContainer::removeAllTextEdits(void)
+	void CGUIContainer::removeAllTextEdits(void)
 	{
-		std::map<std::string, GUITextEdit*>::iterator it = _mmapTextEdits.begin();
+		std::map<std::string, CGUITextEdit*>::iterator it = _mmapTextEdits.begin();
 		while (it != _mmapTextEdits.end())
 		{
 			delete it->second;
@@ -886,13 +886,13 @@ namespace X
 		}
 	}
 
-	GUISlider* GUIContainer::addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
+	CGUISlider* CGUIContainer::addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
 	{
 		// If resource already exists
-		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
-		ThrowIfTrue(it != _mmapSliders.end(), "GUIContainer::addSlider(" + strName + ") failed. The named object already exists.");
-		GUISlider* pNewRes = new GUISlider;
-		ThrowIfFalse(pNewRes, "GUIContainer::addSlider(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUISlider*>::iterator it = _mmapSliders.find(strName);
+		ThrowIfTrue(it != _mmapSliders.end(), "CGUIContainer::addSlider(" + strName + ") failed. The named object already exists.");
+		CGUISlider* pNewRes = new CGUISlider;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addSlider(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -902,25 +902,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUISlider* GUIContainer::getSlider(const std::string& strName)
+	CGUISlider* CGUIContainer::getSlider(const std::string& strName)
 	{
-		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
-		ThrowIfTrue(it == _mmapSliders.end(), "GUIContainer::getSlider(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUISlider*>::iterator it = _mmapSliders.find(strName);
+		ThrowIfTrue(it == _mmapSliders.end(), "CGUIContainer::getSlider(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeSlider(const std::string& strName)
+	void CGUIContainer::removeSlider(const std::string& strName)
 	{
-		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.find(strName);
+		std::map<std::string, CGUISlider*>::iterator it = _mmapSliders.find(strName);
 		if (it == _mmapSliders.end())
 			return;
 		delete it->second;
 		_mmapSliders.erase(it);
 	}
 
-	void GUIContainer::removeAllSliders(void)
+	void CGUIContainer::removeAllSliders(void)
 	{
-		std::map<std::string, GUISlider*>::iterator it = _mmapSliders.begin();
+		std::map<std::string, CGUISlider*>::iterator it = _mmapSliders.begin();
 		while (it != _mmapSliders.end())
 		{
 			delete it->second;
@@ -929,13 +929,13 @@ namespace X
 		}
 	}
 
-	GUILineGraph* GUIContainer::addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	CGUILineGraph* CGUIContainer::addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
-		ThrowIfTrue(it != _mmapLineGraphs.end(), "GUIContainer::addLineGraph(" + strName + ") failed. The named object already exists.");
-		GUILineGraph* pNewRes = new GUILineGraph;
-		ThrowIfFalse(pNewRes, "GUIContainer::addLineGraph(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		ThrowIfTrue(it != _mmapLineGraphs.end(), "CGUIContainer::addLineGraph(" + strName + ") failed. The named object already exists.");
+		CGUILineGraph* pNewRes = new CGUILineGraph;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addLineGraph(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -944,25 +944,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUILineGraph* GUIContainer::getLineGraph(const std::string& strName)
+	CGUILineGraph* CGUIContainer::getLineGraph(const std::string& strName)
 	{
-		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
-		ThrowIfTrue(it == _mmapLineGraphs.end(), "GUIContainer::getLineGraph(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		ThrowIfTrue(it == _mmapLineGraphs.end(), "CGUIContainer::getLineGraph(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeLineGraph(const std::string& strName)
+	void CGUIContainer::removeLineGraph(const std::string& strName)
 	{
-		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
+		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
 		if (it == _mmapLineGraphs.end())
 			return;
 		delete it->second;
 		_mmapLineGraphs.erase(it);
 	}
 
-	void GUIContainer::removeAllLineGraphs(void)
+	void CGUIContainer::removeAllLineGraphs(void)
 	{
-		std::map<std::string, GUILineGraph*>::iterator it = _mmapLineGraphs.begin();
+		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.begin();
 		while (it != _mmapLineGraphs.end())
 		{
 			delete it->second;
@@ -971,13 +971,13 @@ namespace X
 		}
 	}
 
-	GUIProgressBar* GUIContainer::addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	CGUIProgressBar* CGUIContainer::addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
-		ThrowIfTrue(it != _mmapProgressBars.end(), "GUIContainer::addProgressBar(" + strName + ") failed. The named object already exists.");
-		GUIProgressBar* pNewRes = new GUIProgressBar;
-		ThrowIfFalse(pNewRes, "GUIContainer::addProgressBar(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		ThrowIfTrue(it != _mmapProgressBars.end(), "CGUIContainer::addProgressBar(" + strName + ") failed. The named object already exists.");
+		CGUIProgressBar* pNewRes = new CGUIProgressBar;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addProgressBar(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -986,25 +986,25 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIProgressBar* GUIContainer::getProgressBar(const std::string& strName)
+	CGUIProgressBar* CGUIContainer::getProgressBar(const std::string& strName)
 	{
-		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
-		ThrowIfTrue(it == _mmapProgressBars.end(), "GUIContainer::getProgressBar(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		ThrowIfTrue(it == _mmapProgressBars.end(), "CGUIContainer::getProgressBar(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeProgressBar(const std::string& strName)
+	void CGUIContainer::removeProgressBar(const std::string& strName)
 	{
-		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
+		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
 		if (it == _mmapProgressBars.end())
 			return;
 		delete it->second;
 		_mmapProgressBars.erase(it);
 	}
 
-	void GUIContainer::removeAllProgressBars(void)
+	void CGUIContainer::removeAllProgressBars(void)
 	{
-		std::map<std::string, GUIProgressBar*>::iterator it = _mmapProgressBars.begin();
+		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.begin();
 		while (it != _mmapProgressBars.end())
 		{
 			delete it->second;
@@ -1013,13 +1013,13 @@ namespace X
 		}
 	}
 
-	GUIImage* GUIContainer::addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth, float fHeight)
+	CGUIImage* CGUIContainer::addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
-		ThrowIfTrue(it != _mmapImages.end(), "GUIContainer::addImage(" + strName + ") failed. The named object already exists.");
-		GUIImage* pNewRes = new GUIImage;
-		ThrowIfFalse(pNewRes, "GUIContainer::addImage(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
+		ThrowIfTrue(it != _mmapImages.end(), "CGUIContainer::addImage(" + strName + ") failed. The named object already exists.");
+		CGUIImage* pNewRes = new CGUIImage;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addImage(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1028,8 +1028,8 @@ namespace X
 		_mmapImages[strName] = pNewRes;
 
 		// Add strImageFilename to the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		ResourceTexture2D *pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceTexture2D *pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1040,30 +1040,30 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIImage* GUIContainer::getImage(const std::string& strName)
+	CGUIImage* CGUIContainer::getImage(const std::string& strName)
 	{
-		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
-		ThrowIfTrue(it == _mmapImages.end(), "GUIContainer::getImage(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
+		ThrowIfTrue(it == _mmapImages.end(), "CGUIContainer::getImage(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeImage(const std::string& strName)
+	void CGUIContainer::removeImage(const std::string& strName)
 	{
-		std::map<std::string, GUIImage*>::iterator it = _mmapImages.find(strName);
+		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
 		if (it == _mmapImages.end())
 			return;
 
 		// Remove _mstrImageFilename from the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		pResMan->removeTexture2D(it->second->_mstrTexturename);
 
 		delete it->second;
 		_mmapImages.erase(it);
 	}
 
-	void GUIContainer::removeAllImages(void)
+	void CGUIContainer::removeAllImages(void)
 	{
-		std::map<std::string, GUIImage*>::iterator it = _mmapImages.begin();
+		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.begin();
 		while (it != _mmapImages.end())
 		{
 			delete it->second;
@@ -1072,13 +1072,13 @@ namespace X
 		}
 	}
 
-	GUIImageAnimated* GUIContainer::addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth, float fHeight)
+	CGUIImageAnimated* CGUIContainer::addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
-		ThrowIfTrue(it != _mmapImageAnimateds.end(), "GUIContainer::addImageAnimated(" + strName + ") failed. The named object already exists.");
-		GUIImageAnimated* pNewRes = new GUIImageAnimated;
-		ThrowIfFalse(pNewRes, "GUIContainer::addImageAnimated(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		ThrowIfTrue(it != _mmapImageAnimateds.end(), "CGUIContainer::addImageAnimated(" + strName + ") failed. The named object already exists.");
+		CGUIImageAnimated* pNewRes = new CGUIImageAnimated;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addImageAnimated(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1086,9 +1086,9 @@ namespace X
 		pNewRes->_mstrResourceTexture2DAnimationName = strName;
 		_mmapImageAnimateds[strName] = pNewRes;
 
-		// Add ResourceTexture2DAnimation to the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		ResourceTexture2DAnimation* pTex = pResMan->addTexture2DAnimation(strName, vecStrImageFilenames);
+		// Add CResourceTexture2DAnimation to the resource manager
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceTexture2DAnimation* pTex = pResMan->addTexture2DAnimation(strName, vecStrImageFilenames);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1099,30 +1099,30 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIImageAnimated* GUIContainer::getImageAnimated(const std::string& strName)
+	CGUIImageAnimated* CGUIContainer::getImageAnimated(const std::string& strName)
 	{
-		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
-		ThrowIfTrue(it == _mmapImageAnimateds.end(), "GUIContainer::getImageAnimated(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		ThrowIfTrue(it == _mmapImageAnimateds.end(), "CGUIContainer::getImageAnimated(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeImageAnimated(const std::string& strName)
+	void CGUIContainer::removeImageAnimated(const std::string& strName)
 	{
-		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
+		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
 		if (it == _mmapImageAnimateds.end())
 			return;
 
-		// Remove ResourceTexture2DAnimation from the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
+		// Remove CResourceTexture2DAnimation from the resource manager
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		pResMan->removeTexture2DAnimation(it->second->_mstrResourceTexture2DAnimationName);
 
 		delete it->second;
 		_mmapImageAnimateds.erase(it);
 	}
 
-	void GUIContainer::removeAllImageAnimateds(void)
+	void CGUIContainer::removeAllImageAnimateds(void)
 	{
-		std::map<std::string, GUIImageAnimated*>::iterator it = _mmapImageAnimateds.begin();
+		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.begin();
 		while (it != _mmapImageAnimateds.end())
 		{
 			delete it->second;
@@ -1131,13 +1131,13 @@ namespace X
 		}
 	}
 
-	GUIImageFramebuffer* GUIContainer::addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth, float fHeight)
+	CGUIImageFramebuffer* CGUIContainer::addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
-		ThrowIfTrue(it != _mmapImageFramebuffers.end(), "GUIContainer::addImageFramebuffer(" + strName + ") failed. The named object already exists.");
-		GUIImageFramebuffer* pNewRes = new GUIImageFramebuffer;
-		ThrowIfFalse(pNewRes, "GUIContainer::addImageFramebuffer(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		ThrowIfTrue(it != _mmapImageFramebuffers.end(), "CGUIContainer::addImageFramebuffer(" + strName + ") failed. The named object already exists.");
+		CGUIImageFramebuffer* pNewRes = new CGUIImageFramebuffer;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addImageFramebuffer(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1145,9 +1145,9 @@ namespace X
 		pNewRes->_mstrFBname = strFBname;
 		_mmapImageFramebuffers[strName] = pNewRes;
 
-		// Get ResourceFramebuffer from the resource manager to set size of this object
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		ResourceFramebuffer* pFB = pResMan->getFramebuffer(strFBname);
+		// Get CResourceFramebuffer from the resource manager to set size of this object
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceFramebuffer* pFB = pResMan->getFramebuffer(strFBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1158,16 +1158,16 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIImageFramebuffer* GUIContainer::getImageFramebuffer(const std::string& strName)
+	CGUIImageFramebuffer* CGUIContainer::getImageFramebuffer(const std::string& strName)
 	{
-		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
-		ThrowIfTrue(it == _mmapImageFramebuffers.end(), "GUIContainer::getImageFramebuffer(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		ThrowIfTrue(it == _mmapImageFramebuffers.end(), "CGUIContainer::getImageFramebuffer(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeImageFramebuffer(const std::string& strName)
+	void CGUIContainer::removeImageFramebuffer(const std::string& strName)
 	{
-		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
+		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
 		if (it == _mmapImageFramebuffers.end())
 			return;
 
@@ -1175,9 +1175,9 @@ namespace X
 		_mmapImageFramebuffers.erase(it);
 	}
 
-	void GUIContainer::removeAllImageFramebuffers(void)
+	void CGUIContainer::removeAllImageFramebuffers(void)
 	{
-		std::map<std::string, GUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.begin();
+		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.begin();
 		while (it != _mmapImageFramebuffers.end())
 		{
 			delete it->second;
@@ -1186,13 +1186,13 @@ namespace X
 		}
 	}
 
-	GUITextScroll* GUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	CGUITextScroll* CGUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
-		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
-		ThrowIfTrue(it != _mmapTextScrolls.end(), "GUIContainer::addTextScroll(" + strName + ") failed. The named object already exists.");
-		GUITextScroll* pNewRes = new GUITextScroll;
-		ThrowIfFalse(pNewRes, "GUIContainer::addTextScroll(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		ThrowIfTrue(it != _mmapTextScrolls.end(), "CGUIContainer::addTextScroll(" + strName + ") failed. The named object already exists.");
+		CGUITextScroll* pNewRes = new CGUITextScroll;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addTextScroll(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1202,40 +1202,40 @@ namespace X
 		pNewRes->_mstrFBName = "GUITextScrollFB_" + _mstrName + "_" + strName;
 
 		// Check to see if the framebuffer resource name already exists
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ThrowIfTrue(pRM->getFramebufferExists(pNewRes->_mstrFBName), "GUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		ThrowIfTrue(pRM->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
 
-		// Create framebuffer in ResourceManager
+		// Create framebuffer in SCResourceManager
 		pRM->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fWidth), unsigned int(fHeight));
 
 		_mmapTextScrolls[strName] = pNewRes;
 		return pNewRes;
 	}
 
-	GUITextScroll* GUIContainer::getTextScroll(const std::string& strName)
+	CGUITextScroll* CGUIContainer::getTextScroll(const std::string& strName)
 	{
-		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
-		ThrowIfTrue(it == _mmapTextScrolls.end(), "GUIContainer::getTextScroll(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		ThrowIfTrue(it == _mmapTextScrolls.end(), "CGUIContainer::getTextScroll(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeTextScroll(const std::string& strName)
+	void CGUIContainer::removeTextScroll(const std::string& strName)
 	{
-		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
+		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
 		if (it == _mmapTextScrolls.end())
 			return;
 
 		// Remove framebuffer resource from resource manager
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->removeFramebuffer(it->second->_mstrFBName);
 
 		delete it->second;
 		_mmapTextScrolls.erase(it);
 	}
 
-	void GUIContainer::removeAllTextScrolls(void)
+	void CGUIContainer::removeAllTextScrolls(void)
 	{
-		std::map<std::string, GUITextScroll*>::iterator it = _mmapTextScrolls.begin();
+		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.begin();
 		while (it != _mmapTextScrolls.end())
 		{
 			delete it->second;
@@ -1244,13 +1244,13 @@ namespace X
 		}
 	}
 
-	GUIButtonImage* GUIContainer::addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth, float fHeight)
+	CGUIButtonImage* CGUIContainer::addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
-		ThrowIfTrue(it != _mmapButtonImages.end(), "GUIContainer::addButtonImage(" + strName + ") failed. The named object already exists.");
-		GUIButtonImage* pNewRes = new GUIButtonImage;
-		ThrowIfFalse(pNewRes, "GUIContainer::addButtonImage(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		ThrowIfTrue(it != _mmapButtonImages.end(), "CGUIContainer::addButtonImage(" + strName + ") failed. The named object already exists.");
+		CGUIButtonImage* pNewRes = new CGUIButtonImage;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addButtonImage(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1261,8 +1261,8 @@ namespace X
 		_mmapButtonImages[strName] = pNewRes;
 
 		// Add images to the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		ResourceTexture2D* pTex = pResMan->addTexture2D(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceTexture2D* pTex = pResMan->addTexture2D(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
 		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureOver, pNewRes->_mstrTextureOver);
 		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureUp, pNewRes->_mstrTextureUp);
 
@@ -1275,21 +1275,21 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIButtonImage* GUIContainer::getButtonImage(const std::string& strName)
+	CGUIButtonImage* CGUIContainer::getButtonImage(const std::string& strName)
 	{
-		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
-		ThrowIfTrue(it == _mmapButtonImages.end(), "GUIContainer::getButtonImage(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		ThrowIfTrue(it == _mmapButtonImages.end(), "CGUIContainer::getButtonImage(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeButtonImage(const std::string& strName)
+	void CGUIContainer::removeButtonImage(const std::string& strName)
 	{
-		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
+		std::map<std::string, CGUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
 		if (it == _mmapButtonImages.end())
 			return;
 
 		// Remove images from the resource manager
-		ResourceManager* pResMan = ResourceManager::getPointer();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		pResMan->removeTexture2D(it->second->_mstrTextureDown);
 		pResMan->removeTexture2D(it->second->_mstrTextureOver);
 		pResMan->removeTexture2D(it->second->_mstrTextureUp);
@@ -1298,9 +1298,9 @@ namespace X
 		_mmapButtonImages.erase(it);
 	}
 
-	void GUIContainer::removeAllButtonImages(void)
+	void CGUIContainer::removeAllButtonImages(void)
 	{
-		std::map<std::string, GUIButtonImage*>::iterator it = _mmapButtonImages.begin();
+		std::map<std::string, CGUIButtonImage*>::iterator it = _mmapButtonImages.begin();
 		while (it != _mmapButtonImages.end())
 		{
 			delete it->second;
@@ -1309,13 +1309,13 @@ namespace X
 		}
 	}
 
-	GUIImageDepthbuffer* GUIContainer::addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth, float fHeight)
+	CGUIImageDepthbuffer* CGUIContainer::addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
-		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
-		ThrowIfTrue(it != _mmapImageDepthbuffers.end(), "GUIContainer::addImageDepthbuffer(" + strName + ") failed. The named object already exists.");
-		GUIImageDepthbuffer* pNewRes = new GUIImageDepthbuffer;
-		ThrowIfFalse(pNewRes, "GUIContainer::addImageDepthbuffer(" + strName + ") failed. Could not allocate memory for the new object.");
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		ThrowIfTrue(it != _mmapImageDepthbuffers.end(), "CGUIContainer::addImageDepthbuffer(" + strName + ") failed. The named object already exists.");
+		CGUIImageDepthbuffer* pNewRes = new CGUIImageDepthbuffer;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addImageDepthbuffer(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
@@ -1323,9 +1323,9 @@ namespace X
 		pNewRes->_mstrDBname = strDBname;
 		_mmapImageDepthbuffers[strName] = pNewRes;
 
-		// Get ResourceFramebuffer from the resource manager to set size of this object
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		ResourceDepthbuffer* pDB = pResMan->getDepthbuffer(strDBname);
+		// Get CResourceFramebuffer from the resource manager to set size of this object
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceDepthbuffer* pDB = pResMan->getDepthbuffer(strDBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1336,16 +1336,16 @@ namespace X
 		return pNewRes;
 	}
 
-	GUIImageDepthbuffer* GUIContainer::getImageDepthbuffer(const std::string& strName)
+	CGUIImageDepthbuffer* CGUIContainer::getImageDepthbuffer(const std::string& strName)
 	{
-		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
-		ThrowIfTrue(it == _mmapImageDepthbuffers.end(), "GUIContainer::getImageDepthbuffer(" + strName + ") failed. The named object doesn't exist.");
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		ThrowIfTrue(it == _mmapImageDepthbuffers.end(), "CGUIContainer::getImageDepthbuffer(" + strName + ") failed. The named object doesn't exist.");
 		return it->second;
 	}
 
-	void GUIContainer::removeImageDepthbuffer(const std::string& strName)
+	void CGUIContainer::removeImageDepthbuffer(const std::string& strName)
 	{
-		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
 		if (it == _mmapImageDepthbuffers.end())
 			return;
 
@@ -1353,9 +1353,9 @@ namespace X
 		_mmapImageDepthbuffers.erase(it);
 	}
 
-	void GUIContainer::removeAllImageDepthbuffers(void)
+	void CGUIContainer::removeAllImageDepthbuffers(void)
 	{
-		std::map<std::string, GUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.begin();
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.begin();
 		while (it != _mmapImageDepthbuffers.end())
 		{
 			delete it->second;
@@ -1364,7 +1364,7 @@ namespace X
 		}
 	}
 
-	void GUIContainer::removeAll(void)
+	void CGUIContainer::removeAll(void)
 	{
 		removeAllButtons();
 		removeAllText();

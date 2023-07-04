@@ -5,10 +5,10 @@
 namespace X
 {
 	// Base class which most GUI classes derive from
-	class GUIBaseObject
+	class CGUIBaseObject
 	{
 	public:
-		GUIBaseObject();
+		CGUIBaseObject();
 
 		// Set position of object
 		void setPosition(float fPosX, float fPosY);
@@ -19,10 +19,10 @@ namespace X
 		// Renders the four edges, four corners and centre quad which make up an object's background
 		void renderBackground(
 			void* pParentContainer,							// Pointer to the object's parent container
-			const std::string& strFramebufferToSampleFrom,	// The framebuffer to use as background when sampling (Given to GUIManager::render() and passed down)
+			const std::string& strFramebufferToSampleFrom,	// The framebuffer to use as background when sampling (Given to SCGUIManager::render() and passed down)
 			const std::string& strObjectColourTextureName,	// The name of the object's background colour texture
 			const std::string& strObjectNormalTextureName,	// The name of the object's background normal texture
-			GUIColour& colour								// Colour
+			CGUIColour& colour								// Colour
 			);		
 
 		float mfPositionX;	// Top left position of object along X axis
@@ -41,7 +41,7 @@ namespace X
 
 		// Most GUI objects need texture coordinates for each of the nine "components" taken from the theme's texture maps
 		// For example, a container has nine images inside a texture representing the four corners, the four edges and the centre.
-		// These are computed inside GUIBaseObject()
+		// These are computed inside CGUIBaseObject()
 		struct TextureCoordinates
 		{
 			TexCoordsQuad centre;

@@ -15,58 +15,58 @@ namespace X
 //		img.normalmap(normal, 0.5f);
 //		normal.saveAsPNG("data/X/gui/default/progressBarFillernormal.png");
 	
-//		ResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
+//		SCResourceManager::getPointer()->buildFontFiles("data/x/fonts/UltimateSerial-Medium-Regular", "UltimateSerial-Medium-Regular.ttf", 20, true, false, false, false, false);
 
-		GUITheme theme;
+		CGUITheme theme;
 		theme.save("data/X/GUI/default");
-		GUITheme theme2;
+		CGUITheme theme2;
 		theme2.load("data/X/GUI/default");
 
-		Window* pWindow = Window::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
 		pWindow->getMaxTextureSize();
-		GUIManager* pGUI = GUIManager::getPointer();
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
 
 		// Small container window with close button
-		GUIContainer* pContainer1 = pGUI->addContainer("Container1");
+		CGUIContainer* pContainer1 = pGUI->addContainer("Container1");
 		pContainer1->mfPositionX = 412.0f;
 		pContainer1->mfPositionY = 412.0f;
 		pContainer1->addButton("Close", 0, 0, 64, 16, "Close");
 		
 		// Container Preview
-		GUIContainer* pContainer2 = pGUI->addContainer("ContainerPreview");
+		CGUIContainer* pContainer2 = pGUI->addContainer("ContainerPreview");
 		pContainer2->setDimensions(1024, 768);
 		// Centre position of container
 		pContainer2->setPosition((float)pWindow->getWidth() / 2 - 512, (float)pWindow->getHeight() / 2 - (768 / 2));
 	
 		// Add each widget and static text naming the widget type
 		// Text edit
-		pContainer2->addText("Text0", 0, 10, "GUITextEdit:");
-		GUITextEdit* pTextEdit = pContainer2->addTextEdit("TextEdit", 150, 0, 100, 40, "TextEdit");
+		pContainer2->addText("Text0", 0, 10, "CGUITextEdit:");
+		CGUITextEdit* pTextEdit = pContainer2->addTextEdit("TextEdit", 150, 0, 100, 40, "TextEdit");
 		pTextEdit->setMaxChars(16);
 		pTextEdit->setIntegerInputOnly(false);
 		// Button
-		pContainer2->addText("Text1", 0, 60, "GUIButton:");
-		GUIButton* pButton = pContainer2->addButton("Button", 150, 60, 100, 30, "A button.");
-		GUITooltip* pTT = (GUITooltip*)pButton->mpTooltip;
+		pContainer2->addText("Text1", 0, 60, "CGUIButton:");
+		CGUIButton* pButton = pContainer2->addButton("Button", 150, 60, 100, 30, "A button.");
+		CGUITooltip* pTT = (CGUITooltip*)pButton->mpTooltip;
 		pTT->setEnabled(true);
 		pTT->setAsText("Tooltip text goes here.");
 
 		// Line graph
-		pContainer2->addText("Text2", 0, 100, "GUILineGraph:");
-		GUIColour col;
-		GUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 150, 90, 200, 50);
+		pContainer2->addText("Text2", 0, 100, "CGUILineGraph:");
+		CGUIColour col;
+		CGUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 150, 90, 200, 50);
 		pLineGraph->addDataset("FPS", col);
 		// Slider
-		pContainer2->addText("Text3", 0, 160, "GUISlider H:");
+		pContainer2->addText("Text3", 0, 160, "CGUISlider H:");
 		pContainer2->addSlider("SliderH", 150, 160, 200, 30, 0.1f);
 		// Progress bar
 		pContainer2->addText("Text4", 0, 200, "GUIProgress H:");
 		pContainer2->addProgressBar("ProgressH", 150, 200, 200, 30);
 		// TextScroll
-		pContainer2->addText("Text5", 0, 240, "GUITextScroll:");
-		pContainer2->addTextScroll("TextScroll", 150, 240, 200, 200, "What if we add loads and loads and loads and loads of text here? Let's do a number sequence... 1 2 3 4 5 6 7 8 9 10. Hello. LONGWORDGOESHERE_DOESN'TIT This is a GUITextScroll object. Let's just use this sentence to add some more text yeah? It contains lots of text which is rendered to a framebuffer object to speed up rendering when the thing isn't being interacted with. 1 2 3 4 5 6 7 8 9 0 1 2");
+		pContainer2->addText("Text5", 0, 240, "CGUITextScroll:");
+		pContainer2->addTextScroll("TextScroll", 150, 240, 200, 200, "What if we add loads and loads and loads and loads of text here? Let's do a number sequence... 1 2 3 4 5 6 7 8 9 10. Hello. LONGWORDGOESHERE_DOESN'TIT This is a CGUITextScroll object. Let's just use this sentence to add some more text yeah? It contains lots of text which is rendered to a framebuffer object to speed up rendering when the thing isn't being interacted with. 1 2 3 4 5 6 7 8 9 0 1 2");
 		// Button image
-		pContainer2->addText("Text6", 0, 450, "GUIButtonImage:");
+		pContainer2->addText("Text6", 0, 450, "CGUIButtonImage:");
 		pContainer2->addButtonImage("ButtonImage", 150, 450,
 			"data/DevApp/textures/buttonImageUp.png",
 			"data/DevApp/textures/buttonImageOver.png",
@@ -81,7 +81,7 @@ namespace X
 
 //		pContainer2->addImageFramebuffer("FB", 140, 400, "X:backbuffer_FB", 640, 360);
 
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
 		// Load some stuff in and setup simple scene manager
@@ -110,8 +110,8 @@ namespace X
 	bool CApplication::onUpdate(void)
 	{
 		// Get pointers to needed managers
-		InputManager* pInputManager = InputManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		// Timer delta
 		timer.update();
@@ -121,15 +121,15 @@ namespace X
 		mSceneManagerSimple.render();
 
 		// Render the debug shadow map onto the screen
-//		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
+//		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 //		pDepthbuffer->renderToBackbuffer(pWindow->getWidth() - 512, 0, 512, 512);
 
 		float fInc = timer.getSecondsPast();
 
 		// GUI button clicks
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		GUIContainer* pCont = pGUIMan->getContainer("Container1");
-		GUIButton* pButton = pCont->getButton("Close");
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUIMan->getContainer("Container1");
+		CGUIButton* pButton = pCont->getButton("Close");
 		if (pButton->getClicked())
 			pCont->setVisible(false);
 
@@ -140,8 +140,8 @@ namespace X
 		{
 			fTimeToAddNewValue = 0.0f;
 			pCont = pGUIMan->getContainer("ContainerPreview");
-			GUILineGraph* pLineGraph = pCont->getLineGraph("FPS");
-			GUILineGraphDataSet* pDataSet = pLineGraph->getDataset("FPS");
+			CGUILineGraph* pLineGraph = pCont->getLineGraph("FPS");
+			CGUILineGraphDataSet* pDataSet = pLineGraph->getDataset("FPS");
 			pDataSet->addValue(timer.getFPS());
 			while (pDataSet->getNumValues() > 200)
 				pDataSet->removeValue();
@@ -149,11 +149,11 @@ namespace X
 
 		// Update progress bars
 		pCont = pGUIMan->getContainer("ContainerPreview");
-		GUISlider* pSlider = pCont->getSlider("SliderH");
+		CGUISlider* pSlider = pCont->getSlider("SliderH");
 		pCont->getProgressBar("ProgressH")->setProgress(pSlider->getTabPos());
 
 		// Update line entity
-		SMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");
+		CSMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");
 		// Translation
 		if (pInputManager->key.pressed(KC_W))	pEntityLine->translateWorld(glm::vec3(0.0f, 0.0f, 1.0f * fInc));
 		if (pInputManager->key.pressed(KC_S))	pEntityLine->translateWorld(glm::vec3(0.0f, 0.0f, -1.0f * fInc));
@@ -213,34 +213,34 @@ namespace X
 			_mvEntityRot[i].z += float(i) * timer.getSecondsPast();
 
 			std::string strEntity = "entity_" + std::to_string(i);
-			SMEntityTriangle* pEntity = mSceneManagerSimple.getEntityTriangle(strEntity);
+			CSMEntityTriangle* pEntity = mSceneManagerSimple.getEntityTriangle(strEntity);
 			pEntity->setRotation(_mvEntityRot[i].x, _mvEntityRot[i].y, _mvEntityRot[i].z);
 		}
 
 		// Render some text
 		std::string strTXT = "FPS: ";
 		strTXT += std::format("{:.2f}", timer.getFPSAveraged());
-		ResourceFont* pFont = pRM->getFont("arial_26");
+		CResourceFont* pFont = pRM->getFont("arial_26");
 		int iYpos = 0;
-		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		iYpos += (int)pFont->getTextHeight();
 
 		// Render some debug text
 		// Position
 //		glm::vec3 vPos = pEntityLine->getWorldPosition();
 //		strTXT = "Line entity getWorldPosition: AD: " + std::format("{:.4f}", vPos.x) + ", RF: " + std::format("{:.4f}", vPos.y) + ", WS: " + std::format("{:.4f}", vPos.z);
-//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		// Scale
 //		glm::vec3 vScale = pEntityLine->getScale();
 //		strTXT = "Line entity getScale: TG: " + std::format("{:.4f}", vScale.x) + ", " + std::format("{:.4f}", vScale.y) + ", " + std::format("{:.4f}", vScale.z);
-//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		// Rotation
 //		strTXT = "Line entity rotation YHUJIK";
-//		pFont->print(strTXT, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		/*		// Render more text with various scaling values
@@ -248,13 +248,13 @@ namespace X
 				for (float fScale = 0.1f; fScale < 1.0f; fScale += 0.1f)
 				{
 					std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
-					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					fYpos += 100.0f * fScale;
 				}
 				for (float fScale = 1.0f; fScale < 3.5f; fScale += 0.5f)
 				{
 					std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
-					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					fYpos += 100.0f * fScale;
 				}
 		*/
@@ -268,11 +268,11 @@ namespace X
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
 		{
-			Window::getPointer()->toggleFullscreen();
+			CWindow::getPointer()->toggleFullscreen();
 		}
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
-			Window::getPointer()->setVsync(!Window::getPointer()->getVSyncEnabled());
+			CWindow::getPointer()->setVsync(!CWindow::getPointer()->getVSyncEnabled());
 		return true;
 	}
 
@@ -301,9 +301,9 @@ namespace X
 		10.0f);	// Shift key multiplier
 
 		// Create needed triangles
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// Cube
-		ResourceTriangle* pTri = pRM->addTriangle("cube");
+		CResourceTriangle* pTri = pRM->addTriangle("cube");
 		pTri->addFromFile("data/DevApp/geometry/cube.geom", true);
 		// Point lights to show where they are
 		pTri = pRM->addTriangle("icosphere_radius_0.01");
@@ -332,7 +332,7 @@ namespace X
 			"X:default_normal",						// Normal texture (float)
 			"X:default_emission");					// Emission texture (black)
 
-		SMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
+		CSMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
 		pEntity->setWorldPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 
 		for (int i = 0; i < 100; ++i)
@@ -375,9 +375,9 @@ namespace X
 
 		// Now we're done with adding triangle entities.
 		// Let's add some line entities
-		ResourceLine* pLine = pRM->addLine("line");
+		CResourceLine* pLine = pRM->addLine("line");
 		pLine->setDrawModeAsLineList();
-		ResourceLine::Vertex lineVertex;
+		CResourceLine::Vertex lineVertex;
 		// + Y
 		lineVertex.colour = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 		lineVertex.position = glm::vec3(0.0f, 0.0f, 0.0f);		pLine->addLinePoint(lineVertex);
@@ -392,7 +392,7 @@ namespace X
 		lineVertex.position = glm::vec3(0.0f, 0.0f, 1.0f);		pLine->addLinePoint(lineVertex);
 		pLine->update();
 
-		SMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:default_white");
+		CSMEntityLine* pEntityLine = mSceneManagerSimple.addEntityLine("line", "line", "X:default_white");
 		pEntityLine->setWorldPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 }

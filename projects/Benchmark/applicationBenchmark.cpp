@@ -18,17 +18,17 @@ namespace X
 	bool CApplication::onUpdate(void)
 	{
 		// Escape key to exit
-		InputManager* pInputManager = InputManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
 		if (pInputManager->key.pressed(KC_ESCAPE))
 			return false;
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
 		{
-			Window::getPointer()->toggleFullscreen();
+			CWindow::getPointer()->toggleFullscreen();
 		}
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
-			Window::getPointer()->setVsync(!Window::getPointer()->getVSyncEnabled());
+			CWindow::getPointer()->setVsync(!CWindow::getPointer()->getVSyncEnabled());
 		return true;
 	}
 }

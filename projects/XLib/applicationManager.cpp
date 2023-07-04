@@ -18,7 +18,7 @@ namespace X
 			// Here's the program's main loop called from WinMain.
 
 			// Clear the log file
-			Log* pLog = Log::getPointer();
+			CLog* pLog = CLog::getPointer();
 			pLog->clear();
 			pLog->add("SCApplicationManager::mainLoop() called.");
 
@@ -30,21 +30,21 @@ namespace X
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
 			// Create window
-			Window* pWindow = Window::getPointer();
+			CWindow* pWindow = CWindow::getPointer();
 			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle shadows.");
 			
 			// Get pointer to input manager
-			InputManager* pInputManager = InputManager::getPointer();
+			SCInputManager* pInputManager = SCInputManager::getPointer();
 			
 			// Set mouse cursor to be located in the centre of the window
 			pInputManager->mouse.setMousePos(pWindow->getWidth() / 2, pWindow->getHeight() / 2);
 
 			// Add default resources used in various places
-			pLog->add("SCApplicationManager::mainLoop() adding default resources to ResourceManager.");
+			pLog->add("SCApplicationManager::mainLoop() adding default resources to SCResourceManager.");
 			addDefaultResources();
 
 			// Initialise GUI
-			GUIManager* pGUI = GUIManager::getPointer();
+			SCGUIManager* pGUI = SCGUIManager::getPointer();
 			pGUI->_createDefaultContainers();
 
 			// Now call each application's initOnce method
@@ -61,8 +61,8 @@ namespace X
 			pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
 			mTimer.update();
 
-			ResourceManager* pRM = ResourceManager::getPointer();
-			ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+			SCResourceManager* pRM = SCResourceManager::getPointer();
+			CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
 			
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (pWindow->checkMessages())
@@ -105,21 +105,21 @@ namespace X
 			// Now close the window
 			pWindow->destroyWindow();
 		}
-		catch (Exception &exception)
+		catch (CException &exception)
 		{
-			Log::getPointer()->add("Total runtime: " + mTimer.getClock());
-			Log::getPointer()->add(exception.mstrException, true);
-			MessageBox(Window::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
+			CLog::getPointer()->add("Total runtime: " + mTimer.getClock());
+			CLog::getPointer()->add(exception.mstrException, true);
+			MessageBox(CWindow::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
 			__debugbreak();
 		}
-		Log::getPointer()->add("Total runtime: " + mTimer.getClock());
+		CLog::getPointer()->add("Total runtime: " + mTimer.getClock());
 	}
 
 	void SCApplicationManager::addApp(const std::string& applicationName, CApplicationBase* pTheApplication)
 	{
-		Log *pLog = Log::getPointer();
+		CLog *pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::addApp(" + applicationName + ") called.";
-		Log::getPointer()->add(strLog);
+		CLog::getPointer()->add(strLog);
 
 		// Make sure it doesn't already exist
 		std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(applicationName);
@@ -137,9 +137,9 @@ namespace X
 
 	const std::string& SCApplicationManager::getAppName(unsigned int index)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::getAppName() with index " + std::to_string(index) + " called.";
-		Log::getPointer()->add(strLog);
+		CLog::getPointer()->add(strLog);
 
 		ThrowIfTrue(index >= mApplications.size(), "SCApplicationManager::getAppName(" + std::to_string(index) + ") failed. Invalid index given, maximum number of added applications is " + std::to_string(mApplications.size()));
 
@@ -153,9 +153,9 @@ namespace X
 
 	void SCApplicationManager::switchToApp(const std::string& applicationToSwitchTo)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::switchToApp(" + applicationToSwitchTo + " called.";
-		Log::getPointer()->add(strLog);
+		CLog::getPointer()->add(strLog);
 
 		// Attempt to find the application we're trying to switch to
 		std::map<std::string, CApplicationBase*>::iterator itNewApp = mApplications.find(applicationToSwitchTo);
@@ -173,9 +173,9 @@ namespace X
 
 	void SCApplicationManager::switchToNextApp(void)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::SwitchToNextApp() called.";
-		Log::getPointer()->add(strLog);
+		CLog::getPointer()->add(strLog);
 
 		// If no apps are currently set
 		ThrowIfTrue(0 == mstrCurrentApp.size(), "SCApplicationManager::switchToNextApp() failed. There is no currently set application name.");
@@ -204,9 +204,9 @@ namespace X
 
 	void SCApplicationManager::callAllApps_initOnce(void)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::callAllApps_initOnce() called.";
-		Log::getPointer()->add(strLog);
+		CLog::getPointer()->add(strLog);
 
 		std::map<std::string, CApplicationBase*>::iterator it = mApplications.begin();
 		while (it != mApplications.end())
@@ -237,9 +237,9 @@ namespace X
 	void SCApplicationManager::addDefaultResources(void)
 	{
 		// NOTE:
-		// When adding resources here, remember to add the resource to the comments at the top of ResourceManager class in resourceManager.h
+		// When adding resources here, remember to add the resource to the comments at the top of SCResourceManager class in resourceManager.h
 
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		// Shaders
 		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");

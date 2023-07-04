@@ -4,7 +4,7 @@
 namespace X
 {
 
-	InputKeyboard::InputKeyboard(void)
+	CInputKeyboard::CInputKeyboard(void)
 	{
 		lpDIDeviceK = NULL;
 		reset();
@@ -13,11 +13,11 @@ namespace X
 		setRepeatRate();
 	}
 
-	InputKeyboard::~InputKeyboard(void)
+	CInputKeyboard::~CInputKeyboard(void)
 	{
 	}
 
-	void InputKeyboard::reset(void)
+	void CInputKeyboard::reset(void)
 	{
 		ZeroMemory(keyState, sizeof(char) * 256);
 		anyKeyPressed = false;
@@ -26,7 +26,7 @@ namespace X
 		keyOnce2Char.clear();
 	}
 
-	bool InputKeyboard::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
+	bool CInputKeyboard::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
 	{
 		lpDI = pMainDirectXinputDevice;
 		HRESULT hr;
@@ -57,7 +57,7 @@ namespace X
 		return true;
 	}
 
-	void InputKeyboard::update(void)
+	void CInputKeyboard::update(void)
 	{
 		timing.update();
 
@@ -103,7 +103,7 @@ namespace X
 		updateKeyRepeat();
 	}
 
-	void InputKeyboard::updateOnceChar(void)
+	void CInputKeyboard::updateOnceChar(void)
 	{
 		keyOnce2Char.clear();
 		if (!anyPressed())
@@ -225,7 +225,7 @@ namespace X
 		}
 	}
 
-	void InputKeyboard::release(void)
+	void CInputKeyboard::release(void)
 	{
 		if (lpDIDeviceK)
 		{
@@ -236,7 +236,7 @@ namespace X
 		reset();
 	}
 
-	bool InputKeyboard::acquire(void)
+	bool CInputKeyboard::acquire(void)
 	{
 		if (!lpDIDeviceK)
 			return false;
@@ -246,7 +246,7 @@ namespace X
 		return false;
 	}
 
-	void InputKeyboard::updateKeyRepeat(void)
+	void CInputKeyboard::updateKeyRepeat(void)
 	{
 		float fMS = float(timing.getSecondsPast()) * 1000.0f;	// Already updated in main update method.
 		unsigned int iKey = 0;
@@ -324,12 +324,12 @@ namespace X
 			keyAny.bRepeatOK = true;
 	}
 
-	void InputKeyboard::setRepeatInitialDelay(float fMilliseconds)
+	void CInputKeyboard::setRepeatInitialDelay(float fMilliseconds)
 	{
 		keyRepDelayMS = fMilliseconds;
 	}
 
-	void InputKeyboard::setRepeatRate(float fMilliseconds)
+	void CInputKeyboard::setRepeatRate(float fMilliseconds)
 	{
 		keyRepRateMS = fMilliseconds;
 	}

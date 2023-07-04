@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMLightPoint::SMLightPoint()
+	CSMLightPoint::CSMLightPoint()
 	{
 		mvPosition.x = 0.0f;
 		mvPosition.y = 0.0f;

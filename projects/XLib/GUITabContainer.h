@@ -4,7 +4,7 @@
 
 namespace X
 {
-	class GUITabContainer : public GUIBaseObject
+	class CGUITabContainer : public CGUIBaseObject
 	{
 	public:
 

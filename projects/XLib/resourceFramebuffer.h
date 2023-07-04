@@ -6,11 +6,11 @@
 
 namespace X
 {
-	class ResourceFramebuffer : public ResourceBase
+	class CResourceFramebuffer : public CResourceBase
 	{
 	public:
-		ResourceFramebuffer(unsigned int iWidth, unsigned int iHeight);
-		~ResourceFramebuffer();
+		CResourceFramebuffer(unsigned int iWidth, unsigned int iHeight);
+		~CResourceFramebuffer();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);
@@ -20,7 +20,7 @@ namespace X
 
 		// Bind this framebuffer object so that all render operations use this as the target.
 		// Also clears the render target by default and sets viewport to match render target
-		// May also detect current dimensions and resize to the Window's dims.
+		// May also detect current dimensions and resize to the window's dims.
 		void bindAsRenderTarget(bool bClearbuffer = true, bool bResizeToWindowDimensions = false);
 
 		// Unbind the framebuffer object so that all render operations use the window's backbuffer as the target.
@@ -46,10 +46,10 @@ namespace X
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
 
 		// Renders the contents of this buffer to a 2D quad with specified position and dimensions
-		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, GUIColour colour = GUIColour());
+		void renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, CGUIColour colour = CGUIColour());
 
 		bool mbNeedsUpdating;	// This is set to true when onGLContextToBeDestroyed() has been called
-								// Set the top of GUITextScroll::render() for where and how this is used.
+								// Set the top of CGUITextScroll::render() for where and how this is used.
 								// It's a flag that's only used by the GUI objects which need to know if the FB needs updating again.
 	private:
 		unsigned int _muiWidth;

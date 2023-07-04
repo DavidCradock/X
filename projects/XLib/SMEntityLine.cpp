@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMEntityLine::SMEntityLine()
+	CSMEntityLine::CSMEntityLine()
 	{
 		mstrTextureName = "X:default_white";
 	}

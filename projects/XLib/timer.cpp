@@ -3,29 +3,29 @@
 
 namespace X
 {
-    Timer::Timer()
+    CTimer::CTimer()
     {
         reset();
     }
 
-    void Timer::pause(void)
+    void CTimer::pause(void)
     {
         mbPaused = true;
     }
 
-    void Timer::resume(void)
+    void CTimer::resume(void)
     {
         mbPaused = false;
     }
 
-    float Timer::getSecondsPast(void)
+    float CTimer::getSecondsPast(void)
     {
         if (mbPaused)
             return 0.0f;
         return (float)mdDeltaSec;
     }
 
-    void Timer::update(void)
+    void CTimer::update(void)
     {
         mdTimePointNew = std::chrono::steady_clock::now();
         mdTimeDeltaSec = mdTimePointNew - mdTimePointOld;
@@ -62,12 +62,12 @@ namespace X
         mdRuntimeInSeconds += mdDeltaSec;
     }
 
-    void Timer::sleep(unsigned int uiMilliseconds)
+    void CTimer::sleep(unsigned int uiMilliseconds)
     {
         Sleep(uiMilliseconds);
     }
 
-    void Timer::reset(void)
+    void CTimer::reset(void)
     {
         mbPaused = false;
         mdTimePointNew = std::chrono::steady_clock::now();
@@ -90,7 +90,7 @@ namespace X
         mdRuntimeInSeconds = 0;
     }
 
-    void Timer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks)
+    void CTimer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks)
     {
         fSeconds = 0.0f;
         iMinutes = 0;
@@ -127,7 +127,7 @@ namespace X
         fSeconds = (float)seconds;  // Seconds
     }
 
-    std::string Timer::getClock(void)
+    std::string CTimer::getClock(void)
     {
         float fSecs = 0.0f;
         int iMins, iHours, iDays, iWeeks = 0;

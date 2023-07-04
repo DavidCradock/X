@@ -6,17 +6,17 @@
 
 namespace X
 {
-	class GUISlider : public GUIBaseObject
+	class CGUISlider : public CGUIBaseObject
 	{
 	public:
-		friend class GUIContainer;
-		GUISlider();
-		~GUISlider();
+		friend class CGUIContainer;
+		CGUISlider();
+		~CGUISlider();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Sets tab position 0-1 range
@@ -32,13 +32,13 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		Timer _mTimer;
+		CTimer _mTimer;
 		float _mfSliderPosition;	// 0-1 position of slider
 		float _mfTabRatio;			// Multiplied by slider dims(depending upon orientation) to obtain tab dimensions
-		GUIColour _mTabColour;		// For fading between over/not over colours of tab
+		CGUIColour _mTabColour;		// For fading between over/not over colours of tab
 		bool _mbTabBeingMoved;		// Whether the tab is being moved or not
 
 		bool _mbOrientationIsHorizontal;// Computed in update() and used in render(). Slider orientation based on dimensions

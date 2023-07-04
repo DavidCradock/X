@@ -11,10 +11,10 @@ namespace X
 {
 	LRESULT CALLBACK MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		return Window::getPointer()->MsgProc(hwnd, msg, wParam, lParam);
+		return CWindow::getPointer()->MsgProc(hwnd, msg, wParam, lParam);
 	}
 
-	Window::Window(void)
+	CWindow::CWindow(void)
 	{
 		mhInstance = GetModuleHandle(NULL);
 		mhWindowHandle = NULL;
@@ -28,10 +28,10 @@ namespace X
 		mv4ClearColour = glm::vec4(0.05f, 0.05f, 0.05f, 0.5f);
 	}
 
-	void Window::createWindow(std::string strWindowTitle)
+	void CWindow::createWindow(std::string strWindowTitle)
 	{
-		Log* pLog = Log::getPointer();
-		pLog->add("Window::createWindow() called.");
+		CLog* pLog = CLog::getPointer();
+		pLog->add("CWindow::createWindow() called.");
 
 		// Store passed parameters
 		mstrWindowTitle = strWindowTitle;
@@ -50,7 +50,7 @@ namespace X
 		mWindowClass.lpszClassName = L"XWindowClassName";
 		mWindowClass.lpszMenuName = 0;										// No menu wanted
 		mWindowClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;			// Redraw on window move/resize and allocate a unique device context for each window in the class.
-		ThrowIfFalse(RegisterClass(&mWindowClass), "Window::createWindow() failed to register window class.");
+		ThrowIfFalse(RegisterClass(&mWindowClass), "CWindow::createWindow() failed to register window class.");
 
 		// Window style (Depends on whether we're doing windowed or fullscreen
 		DWORD dwExtendedStyle;
@@ -103,7 +103,7 @@ namespace X
 		}
 
 		// Create application window
-		pLog->add("Window::createWindow() creating window.");
+		pLog->add("CWindow::createWindow() creating window.");
 		mhWindowHandle = CreateWindowExW(
 			dwExtendedStyle,
 			L"XWindowClassName",
@@ -115,12 +115,12 @@ namespace X
 			0,	// Menu
 			mhInstance,
 			0);	// Do not pass anything to WM_CREATE
-		ThrowIfFalse(mhWindowHandle, "Window::createWindow() failed to create window.");
+		ThrowIfFalse(mhWindowHandle, "CWindow::createWindow() failed to create window.");
 
 		// Attempt to get the window's device context
-		pLog->add("Window::createWindow() obtaining window's device context.");
+		pLog->add("CWindow::createWindow() obtaining window's device context.");
 		mhDeviceContext = GetDC(mhWindowHandle);
-		ThrowIfFalse(mhDeviceContext, "Window::createWindow() failed to get window's device context.");
+		ThrowIfFalse(mhDeviceContext, "CWindow::createWindow() failed to get window's device context.");
 
 		// Set details we need for the pixel format
 		static  PIXELFORMATDESCRIPTOR pfd =
@@ -146,20 +146,20 @@ namespace X
 		};
 
 		// Attempt to get pixel format for the window using the above settings
-		pLog->add("Window::createWindow() choosing a compatible pixel format.");
+		pLog->add("CWindow::createWindow() choosing a compatible pixel format.");
 		GLuint pixelFormat = ChoosePixelFormat(mhDeviceContext, &pfd);
-		ThrowIfFalse(pixelFormat, "Window::createWindow() failed to choose a suitable pixel format for the window's device context.");
+		ThrowIfFalse(pixelFormat, "CWindow::createWindow() failed to choose a suitable pixel format for the window's device context.");
 
 		// Attempt to set the pixel format
-		pLog->add("Window::createWindow() setting pixel format.");
-		ThrowIfFalse(SetPixelFormat(mhDeviceContext, pixelFormat, &pfd), "Window::createWindow() failed to set the choosen pixel format for the window.");
+		pLog->add("CWindow::createWindow() setting pixel format.");
+		ThrowIfFalse(SetPixelFormat(mhDeviceContext, pixelFormat, &pfd), "CWindow::createWindow() failed to set the choosen pixel format for the window.");
 
 		// Create a temporary context so we can obtain required function pointer to create a more modern core profile rendering context
-		pLog->add("Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.");
+		pLog->add("CWindow::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.");
 		HGLRC hglrcTemp = wglCreateContext(mhDeviceContext);
 		wglMakeCurrent(mhDeviceContext, hglrcTemp);	// Make it current
 		PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
-		ThrowIfFalse(wglCreateContextAttribsARB, "Window::createWindow() failed to get function pointer for wglCreateContextAttribsARB.");
+		ThrowIfFalse(wglCreateContextAttribsARB, "CWindow::createWindow() failed to get function pointer for wglCreateContextAttribsARB.");
 
 		// Set the version we require
 		int attribs[] = {
@@ -169,16 +169,16 @@ namespace X
 		0};
 
 		// Attempt to create requested rendering context
-		pLog->add("Window::createWindow() creating OpenGL core profile rendering context.");
+		pLog->add("CWindow::createWindow() creating OpenGL core profile rendering context.");
 		mhGLRenderContext = wglCreateContextAttribsARB(mhDeviceContext, 0, attribs);
-		ThrowIfFalse(mhGLRenderContext, "Window::createWindow() failed to create OpenGL rendering context for the window.");
+		ThrowIfFalse(mhGLRenderContext, "CWindow::createWindow() failed to create OpenGL rendering context for the window.");
 
 		// Attempt to make the OpenGL rendering context the calling thread's current rendering context.
-		pLog->add("Window::createWindow() making rendering context the calling thread's current one.");
-		ThrowIfFalse(wglMakeCurrent(mhDeviceContext, mhGLRenderContext), "Window::createWindow() failed to make a specified OpenGL rendering context the calling thread's current rendering context.");
+		pLog->add("CWindow::createWindow() making rendering context the calling thread's current one.");
+		ThrowIfFalse(wglMakeCurrent(mhDeviceContext, mhGLRenderContext), "CWindow::createWindow() failed to make a specified OpenGL rendering context the calling thread's current rendering context.");
 
 		// Delete the temporary context as no longer needed.
-		pLog->add("Window::createWindow() deleting the temporary OpenGL rendering context.");
+		pLog->add("CWindow::createWindow() deleting the temporary OpenGL rendering context.");
 		wglDeleteContext(hglrcTemp);
 		hglrcTemp = NULL;
 
@@ -194,13 +194,13 @@ namespace X
 		SetFocus(mhWindowHandle);
 
 		// Resize the OpenGL viewport
-		pLog->add("Window::createWindow() resizing OpenGL viewport.");
+		pLog->add("CWindow::createWindow() resizing OpenGL viewport.");
 		_resizeOpenGLViewport(muiWindowWidth, muiWindowHeight);
 
-		pLog->add("Window::createWindow() has created the window.");
+		pLog->add("CWindow::createWindow() has created the window.");
 
 		// Initialise input manager
-		InputManager* pInputManager = InputManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
 		pInputManager->init(mhWindowHandle);
 
 		// Obtain OpenGL extensions
@@ -210,60 +210,60 @@ namespace X
 		setVsync(mbVsyncEnabled);
 	}
 
-	void Window::destroyWindow(void)
+	void CWindow::destroyWindow(void)
 	{
-		Log* pLog = Log::getPointer();
-		pLog->add("Window::destroyWindow() called.");
+		CLog* pLog = CLog::getPointer();
+		pLog->add("CWindow::destroyWindow() called.");
 
 		// Shutdown input manager
-		InputManager* pInputManager = InputManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
 		pInputManager->shutdown();
 
 		// Reset screen mode
 		if (mbWindowFullscreen)
 		{
-			pLog->add("Window::destroyWindow() changing display mode back to normal.");
+			pLog->add("CWindow::destroyWindow() changing display mode back to normal.");
 			ShowCursor(true);
 		}
 
 		// Release OpenGL rendering context
 		if (mhGLRenderContext)
 		{
-			pLog->add("Window::destroyWindow() releasing OpenGL rendering context.");
+			pLog->add("CWindow::destroyWindow() releasing OpenGL rendering context.");
 			// Detach OpenGL rendering context from device context
-			ThrowIfTrue(!wglMakeCurrent(NULL, NULL), "Window::destroyWindow() unable to detach OpenGL rendering context from device context.");
+			ThrowIfTrue(!wglMakeCurrent(NULL, NULL), "CWindow::destroyWindow() unable to detach OpenGL rendering context from device context.");
 
 			// Delete rendering context
-			ThrowIfTrue(!wglDeleteContext(mhGLRenderContext), "Window::destroyWindow() unable to delete OpenGL rendering context.");
+			ThrowIfTrue(!wglDeleteContext(mhGLRenderContext), "CWindow::destroyWindow() unable to delete OpenGL rendering context.");
 			mhGLRenderContext = NULL;
 		}
 		// Release window's device context
 		if (mhDeviceContext)
 		{
-			pLog->add("Window::destroyWindow() releasing window's device context.");
-			ThrowIfTrue(!ReleaseDC(mhWindowHandle, mhDeviceContext), "Window::destroyWindow() unable to release the window's device context.");
+			pLog->add("CWindow::destroyWindow() releasing window's device context.");
+			ThrowIfTrue(!ReleaseDC(mhWindowHandle, mhDeviceContext), "CWindow::destroyWindow() unable to release the window's device context.");
 			mhDeviceContext = NULL;
 		}
 
 		// Close window
 		if (mhWindowHandle)
 		{
-			pLog->add("Window::destroyWindow() closing and destroying the window.");
-			ThrowIfTrue(!CloseWindow(mhWindowHandle), "Window::destroyWindow() unable to close window.");
-			ThrowIfTrue(!DestroyWindow(mhWindowHandle), "Window::destroyWindow() unable to destroy window.");
+			pLog->add("CWindow::destroyWindow() closing and destroying the window.");
+			ThrowIfTrue(!CloseWindow(mhWindowHandle), "CWindow::destroyWindow() unable to close window.");
+			ThrowIfTrue(!DestroyWindow(mhWindowHandle), "CWindow::destroyWindow() unable to destroy window.");
 			mhWindowHandle = NULL;
 		}
 
 		// Unregister window class
-		pLog->add("Window::destroyWindow() unregistering window class.");
-		ThrowIfTrue(!UnregisterClassW(L"XWindowClassName", mhInstance), "Window::destroyWindow() unable to unregister window class.");
+		pLog->add("CWindow::destroyWindow() unregistering window class.");
+		ThrowIfTrue(!UnregisterClassW(L"XWindowClassName", mhInstance), "CWindow::destroyWindow() unable to unregister window class.");
 		mhInstance = NULL;
-		pLog->add("Window::destroyWindow() complete.");
+		pLog->add("CWindow::destroyWindow() complete.");
 	}
 
-	LRESULT Window::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	LRESULT CWindow::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 
 		switch (msg)
 		{
@@ -288,24 +288,24 @@ namespace X
 			{
 			case SC_SCREENSAVE:		// Screensaver is trying to start
 			case SC_MONITORPOWER:	// Monitor is trying to enter power saving mode
-//				pLog->add("Window::MsgProc() SC_SCREENSAVE or SC_MONITORPOWER received.");
+//				pLog->add("CWindow::MsgProc() SC_SCREENSAVE or SC_MONITORPOWER received.");
 				return 0;			// Prevent these things from happening
 			}
 			break;
 		}
 		case WM_CLOSE:				// Window is being closed
-//			pLog->add("Window::MsgProc() WM_CLOSE received. PostQuitMessage(0) called.");
+//			pLog->add("CWindow::MsgProc() WM_CLOSE received. PostQuitMessage(0) called.");
 			PostQuitMessage(0);		// We'll check this during our message peeking. Message will be WM_QUIT
 			return 0;
 		case WM_SIZE:				// WM_SIZE is sent when the user resizes the window.
-//			pLog->add("Window::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().");
+//			pLog->add("CWindow::MsgProc() WM_SIZE received. Calling _resizeOpenGLViewport().");
 			_resizeOpenGLViewport(LOWORD(lParam), HIWORD(lParam));	// Resize stuff
 			return 0;
 		}
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 
-	bool Window::checkMessages(void)
+	bool CWindow::checkMessages(void)
 	{
 		// Check window messages
 		MSG msg;
@@ -322,59 +322,59 @@ namespace X
 		}
 
 		// Update the input manager
-		InputManager* pInputManager = InputManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
 		pInputManager->update(mbWindowFullscreen, muiWindowWidth, muiWindowHeight);
 		return true;
 	}
 
-	HWND Window::getWindowHandle(void)
+	HWND CWindow::getWindowHandle(void)
 	{
 		return mhWindowHandle;
 	}
 
-	HINSTANCE Window::getApplicationInstance(void)
+	HINSTANCE CWindow::getApplicationInstance(void)
 	{
 		return mhInstance;
 	}
 
-	void Window::setClearColour(glm::vec4& clearColour)
+	void CWindow::setClearColour(glm::vec4& clearColour)
 	{
 		mv4ClearColour = clearColour;
 	}
 
-	const std::string& Window::getText(void)
+	const std::string& CWindow::getText(void)
 	{
 		return mstrWindowTitle;
 	}
 
-	void Window::setText(const std::string& strText)
+	void CWindow::setText(const std::string& strText)
 	{
 		SetWindowTextW(mhWindowHandle, StringToWString(strText).c_str());
 	}
 
-	unsigned int Window::getWidth(void)
+	unsigned int CWindow::getWidth(void)
 	{
 		return muiWindowWidth;
 	}
 
-	unsigned int Window::getHeight(void)
+	unsigned int CWindow::getHeight(void)
 	{
 		return muiWindowHeight;
 	}
 
-	bool Window::getFullscreen(void)
+	bool CWindow::getFullscreen(void)
 	{
 		return mbWindowFullscreen;
 	}
 
-	bool Window::getVSyncEnabled(void)
+	bool CWindow::getVSyncEnabled(void)
 	{
 		return mbVsyncEnabled;
 	}
 
-	void Window::_resizeOpenGLViewport(unsigned int uiNewWidth, unsigned int uiNewHeight)
+	void CWindow::_resizeOpenGLViewport(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
-		Log::getPointer()->add("Window::_resizeOpenGLViewport( " + std::to_string(uiNewWidth) + ", " + std::to_string(uiNewHeight) + ") called.");
+		CLog::getPointer()->add("CWindow::_resizeOpenGLViewport( " + std::to_string(uiNewWidth) + ", " + std::to_string(uiNewHeight) + ") called.");
 		if (uiNewWidth < 1)
 			uiNewWidth = 1;
 		if (uiNewHeight < 1)
@@ -386,26 +386,26 @@ namespace X
 		muiWindowHeight = uiNewHeight;
 	}
 
-	void Window::clearBackbuffer(void)
+	void CWindow::clearBackbuffer(void)
 	{
 		glClearColor(mv4ClearColour.r, mv4ClearColour.g, mv4ClearColour.b, mv4ClearColour.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
-	void Window::swapBuffers(void)
+	void CWindow::swapBuffers(void)
 	{
 		SwapBuffers(mhDeviceContext);
 	}
 
-	void Window::setVsync(bool bEnabled)
+	void CWindow::setVsync(bool bEnabled)
 	{
 		mbVsyncEnabled = bEnabled;
 		wglSwapIntervalEXT(mbVsyncEnabled);
 	}
 
-	void Window::toggleFullscreen(void)
+	void CWindow::toggleFullscreen(void)
 	{
 		// With the resource manager, call the method which removes all resources from the GPU which require an OpenGL context
-		ResourceManager* pResMan = ResourceManager::getPointer();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		pResMan->onGLContextToBeDestroyed();
 
 		// Now destroy and recreate the window, toggling fullscreen mode whilst doing so
@@ -418,7 +418,7 @@ namespace X
 
 	}
 
-	glm::vec2 Window::getDimensions(void)
+	glm::vec2 CWindow::getDimensions(void)
 	{
 		glm::vec2 vDims;
 		vDims.x = float(muiWindowWidth);
@@ -426,7 +426,7 @@ namespace X
 		return vDims;
 	}
 
-	int Window::getMaxTextureSize(void)
+	int CWindow::getMaxTextureSize(void)
 	{
 		int value;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &value);

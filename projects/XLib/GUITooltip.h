@@ -16,17 +16,17 @@ namespace X
 	// All the widgets which are non-interactable can be placed inside a tooltip of a widget.
 	// As creating a fancy tooltip with many widgets could be complicated and time consuming to program, there are helper functions
 	// which create various "tooltip templates" such as "just text" or "left aligned text box with right animated image".
-	class GUITooltip : public GUIBaseObject
+	class CGUITooltip : public CGUIBaseObject
 	{
 	public:
-		GUITooltip();
-		~GUITooltip();
+		CGUITooltip();
+		~CGUITooltip();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
 		// Called from each object's update method to update this object
-		void update(void* pParentContainer, GUIBaseObject* pGUIOwner, bool bMouseOverOwner);
+		void update(void* pParentContainer, CGUIBaseObject* pGUIOwner, bool bMouseOverOwner);
 
 		// Enable or disable this tooltip from being rendered
 		void setEnabled(bool bEnabled);
@@ -42,11 +42,11 @@ namespace X
 		// Add text to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		GUIText* addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText);
+		CGUIText* addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIText* getText(const std::string& strName);
+		CGUIText* getText(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -58,11 +58,11 @@ namespace X
 		// Add line graph to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		GUILineGraph* addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+		CGUILineGraph* addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUILineGraph* getLineGraph(const std::string& strName);
+		CGUILineGraph* getLineGraph(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -74,11 +74,11 @@ namespace X
 		// Add progress bar to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		GUIProgressBar* addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+		CGUIProgressBar* addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIProgressBar* getProgressBar(const std::string& strName);
+		CGUIProgressBar* getProgressBar(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -90,15 +90,15 @@ namespace X
 		// Add static image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		// strImageFilename is the name of a file used to create a ResourceTexture2D resource added to ResourceManager.
-		// An image is simply that. It is not clickable. If you want an image which is clickable, use the GUIButtonImage widget
+		// strImageFilename is the name of a file used to create a CResourceTexture2D resource added to SCResourceManager.
+		// An image is simply that. It is not clickable. If you want an image which is clickable, use the CGUIButtonImage widget
 		// If strImageFilename couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
-		GUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImage* getImage(const std::string& strName);
+		CGUIImage* getImage(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -110,16 +110,16 @@ namespace X
 		// Add animated image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		// vecStrImageFilenames holds the names of each file used, for each frame to create a ResourceTexture2DAnimation resource added to ResourceManager.
+		// vecStrImageFilenames holds the names of each file used, for each frame to create a CResourceTexture2DAnimation resource added to SCResourceManager.
 		// If one of the images couldn't be loaded, an exception occurs
 		// Each of the images need to be the same dimensions and have the same number of colour channels, otherwise an exception occurs.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the images.
-		// The ResourceTexture2DAnimation in ResourceManager will have the same name as strName
-		GUIImageAnimated* addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth = -1.0f, float fHeight = -1.0f);
+		// The CResourceTexture2DAnimation in SCResourceManager will have the same name as strName
+		CGUIImageAnimated* addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageAnimated* getImageAnimated(const std::string& strName);
+		CGUIImageAnimated* getImageAnimated(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -131,13 +131,13 @@ namespace X
 		// Add framebuffer image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		// strFBname is the name of the ResourceFramebuffer object resource added to ResourceManager.
+		// strFBname is the name of the CResourceFramebuffer object resource added to SCResourceManager.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the frame buffer.
-		GUIImageFramebuffer* addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImageFramebuffer* addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
+		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -149,13 +149,13 @@ namespace X
 		// Add depthbuffer image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		// strDBname is the name of the ResourceDepthbuffer object resource added to ResourceManager.
+		// strDBname is the name of the CResourceDepthbuffer object resource added to SCResourceManager.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the depth buffer.
-		GUIImageDepthbuffer* addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImageDepthbuffer* addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
+		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -171,16 +171,16 @@ namespace X
 		void resetFade(void);
 
 	private:
-		Timer _mTimer;			// Timer object used for timebased stuff
+		CTimer _mTimer;			// Timer object used for timebased stuff
 		bool _mbEnabled;		// Whether this tooltip is enabled or not
-		GUIColour _mColour;		// Current colour of the tooltip, used for fading in/out
-		float _mfTooltipDelay;	// Used to prevent tooltip from fading in until GUIManager::getTooltipDelay() has passed
-		std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
-		std::map<std::string, GUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
-		std::map<std::string, GUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
-		std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
-		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
-		std::map<std::string, GUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
+		CGUIColour _mColour;		// Current colour of the tooltip, used for fading in/out
+		float _mfTooltipDelay;	// Used to prevent tooltip from fading in until SCGUIManager::getTooltipDelay() has passed
+		std::map<std::string, CGUIText*> _mmapTexts;								// Hashmap for each added text
+		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
+		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
+		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
 	};
 }

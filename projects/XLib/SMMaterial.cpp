@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMMaterial::SMMaterial()
+	CSMMaterial::CSMMaterial()
 	{
 		mstrTextureNameDiffuse = "X:default_diffuse";
 		mstrTextureNameEmission = "X:default_emission";

@@ -13,7 +13,7 @@ namespace X
 	// It also helps me to test the resource loading/unloading which each app uses to make sure everything is
 	// being intialised/shutdown properly.
 	// It's also nice to have the entire codebase's management handled within.
-	class SCApplicationManager : public Singleton<SCApplicationManager>
+	class SCApplicationManager : public CSingleton<SCApplicationManager>
 	{
 	public:
 		// This is the main loop of the entire program, call this from WinMain.
@@ -60,6 +60,6 @@ namespace X
 
 		std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
 		std::string mstrCurrentApp;								// Application name of the current application.
-		Timer mTimer;											// Used to update application running time.
+		CTimer mTimer;											// Used to update application running time.
 	};
 }

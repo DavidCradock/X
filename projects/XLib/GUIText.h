@@ -5,19 +5,19 @@
 
 namespace X
 {
-	class GUIText : public GUIBaseObject
+	class CGUIText : public CGUIBaseObject
 	{
 	public:
-		GUIText();
-		~GUIText();
+		CGUIText();
+		~CGUIText();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer);
 
-		// Called from GUITooltip::render()
+		// Called from CGUITooltip::render()
 		void renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		std::string mstrText;	// Text to be rendered
@@ -28,11 +28,11 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
 
 		bool _mbUseThemeColour;
-		GUIColour _mColour;
+		CGUIColour _mColour;
 	};
 }

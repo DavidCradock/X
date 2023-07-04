@@ -10,34 +10,34 @@
 
 namespace X
 {
-	GUISlider::GUISlider()
+	CGUISlider::CGUISlider()
 	{
 		_mfSliderPosition = 0.5f;
 		_mTabColour.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUISlider::~GUISlider()
+	CGUISlider::~CGUISlider()
 	{
 		delete mpTooltip;
 	}
 
-	void GUISlider::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUISlider::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.sliderBGColour, pTheme->mImages.sliderBGNormal, col);
 
 		// Get required resources needed to render the tab
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		InputManager* pInput = InputManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:gui");
+		SCInputManager* pInput = SCInputManager::getPointer();
 
 		pShader->bind();
 
@@ -63,10 +63,10 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderTabNormal);
-		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
+		CResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderTabNormal);
+		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -310,19 +310,19 @@ namespace X
 
 	}
 
-	void GUISlider::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUISlider::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		InputManager* pInput = InputManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
-		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
+		CGUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
 		glm::vec2 vSliderTabTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
 		glm::vec2 vSliderTabTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
 
@@ -483,17 +483,17 @@ namespace X
 		_mTabColour.set(fCol[0], fCol[1], fCol[2], fCol[3]);
 
 		// Update this object's tooltip
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
-	void GUISlider::setTabPos(float fPos)
+	void CGUISlider::setTabPos(float fPos)
 	{
 		clamp(fPos, 0.0f, 1.0f);
 		_mfSliderPosition = fPos;
 	}
 
-	float GUISlider::getTabPos(void)
+	float CGUISlider::getTabPos(void)
 	{
 		if (_mbOrientationIsHorizontal)
 			return _mfSliderPosition;
@@ -501,7 +501,7 @@ namespace X
 			return 1.0f - _mfSliderPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
 	}
 
-	void GUISlider::setTabRatio(float fRatio)
+	void CGUISlider::setTabRatio(float fRatio)
 	{
 		// Must be less than 1, otherwise the tab can be same width/height as the slider
 		// and if this occurs, we could get a divide by zero error in the update method with the following code...

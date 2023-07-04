@@ -8,25 +8,25 @@
 
 namespace X
 {
-	GUIImageDepthbuffer::GUIImageDepthbuffer()
+	CGUIImageDepthbuffer::CGUIImageDepthbuffer()
 	{
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIImageDepthbuffer::~GUIImageDepthbuffer()
+	CGUIImageDepthbuffer::~CGUIImageDepthbuffer()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIImageDepthbuffer::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUIImageDepthbuffer::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
 
 		pShader->bind();
 
@@ -41,7 +41,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceDepthbuffer* pTexColour = pRM->getDepthbuffer(_mstrDBname);
+		CResourceDepthbuffer* pTexColour = pRM->getDepthbuffer(_mstrDBname);
 
 		// Bind textures
 		pTexColour->bindAsTexture(0);
@@ -66,12 +66,12 @@ namespace X
 
 	}
 
-	void GUIImageDepthbuffer::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIImageDepthbuffer::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -82,7 +82,7 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 }

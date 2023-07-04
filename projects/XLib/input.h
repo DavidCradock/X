@@ -9,12 +9,11 @@ namespace X
 {
 	// This is responsible for obtaining with input from various input devices such
 	// as keyboards, mice, joysticks and steering wheels.
-	// It's based on the new 
-	class InputManager : public Singleton<InputManager>
+	class SCInputManager : public CSingleton<SCInputManager>
 	{
 	public:
 
-		InputManager();
+		SCInputManager();
 
 		// Initialise all input devices
 		void init(HWND hApplicationWindow);
@@ -25,9 +24,9 @@ namespace X
 		// Shutdown all input devices
 		void shutdown(void);
 
-		InputJoystick joy;	// Joystick object
-		InputKeyboard key;	// Keyboard object
-		InputMouse	mouse;	// Mouse object
+		CInputJoystick joy;	// Joystick object
+		CInputKeyboard key;	// Keyboard object
+		CInputMouse	mouse;	// Mouse object
 	private:
 
 		LPDIRECTINPUT8 directInput;	// Main DirectX input object

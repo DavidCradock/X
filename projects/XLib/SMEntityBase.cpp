@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMEntityBase::SMEntityBase()
+	CSMEntityBase::CSMEntityBase()
 	{
 		matrixWorld = glm::mat4(1.0f);
 		_mbWorldNeedsUpdate = false;
@@ -12,20 +12,20 @@ namespace X
 		_mvRotTEMP = glm::vec3(0, 0, 0);
 	}
 
-	glm::mat4 SMEntityBase::getWorldMatrix(void)
+	glm::mat4 CSMEntityBase::getWorldMatrix(void)
 	{
 		if (_mbWorldNeedsUpdate)
 			_updateWorldMatrix();
 		return matrixWorld;
 	}
 
-	void SMEntityBase::setWorldPosition(glm::vec3 vNewPosition)
+	void CSMEntityBase::setWorldPosition(glm::vec3 vNewPosition)
 	{
 		_mvPosition = vNewPosition;
 		_mbWorldNeedsUpdate = true;
 	}
 
-	void SMEntityBase::translateWorld(glm::vec3 vTranslation)
+	void CSMEntityBase::translateWorld(glm::vec3 vTranslation)
 	{
 		_mvPosition.x += vTranslation.x;
 		_mvPosition.y += vTranslation.y;
@@ -33,29 +33,29 @@ namespace X
 		_mbWorldNeedsUpdate = true;
 	}
 
-	glm::vec3 SMEntityBase::getWorldPosition(void)
+	glm::vec3 CSMEntityBase::getWorldPosition(void)
 	{
 		return _mvPosition;
 	}
 
-	void SMEntityBase::setScale(glm::vec3 vScale)
+	void CSMEntityBase::setScale(glm::vec3 vScale)
 	{
 		_mvScale = vScale;
 		_mbWorldNeedsUpdate = true;
 	}
 
-	glm::vec3 SMEntityBase::getScale(void)
+	glm::vec3 CSMEntityBase::getScale(void)
 	{
 		return _mvScale;
 	}
 
-	void SMEntityBase::setRotation(float fX, float fY, float fZ)
+	void CSMEntityBase::setRotation(float fX, float fY, float fZ)
 	{
 		_mvRotTEMP = glm::vec3(fX, fY, fZ);
 		_mbWorldNeedsUpdate = true;
 	}
 
-	void SMEntityBase::_updateWorldMatrix(void)
+	void CSMEntityBase::_updateWorldMatrix(void)
 	{
 		glm::mat4 trans = glm::mat4(1.0f);
 		trans = glm::translate(trans, _mvPosition);

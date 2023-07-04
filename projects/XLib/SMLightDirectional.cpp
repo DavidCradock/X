@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMLightDirectional::SMLightDirectional()
+	CSMLightDirectional::CSMLightDirectional()
 	{
 		mvDirection.x = 0.0f;
 		mvDirection.y = -1.0f;

@@ -99,7 +99,7 @@ namespace X
 
 	HRESULT CAudioSample::_findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		HRESULT hr = S_OK;
 		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "CAudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
 		DWORD dwChunkType;
@@ -335,7 +335,7 @@ namespace X
 
 	SCAudioManager::SCAudioManager()
 	{
-		Log* pLog = Log::getPointer();
+		CLog* pLog = CLog::getPointer();
 		pLog->add("SCAudioManager constructor called.");
 		pLog->add("SCAudioManager initialising COM.");
 		HRESULT hr;

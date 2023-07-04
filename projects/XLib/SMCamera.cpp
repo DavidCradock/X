@@ -7,43 +7,43 @@
 
 namespace X
 {
-	SMCamera::SMCamera()
+	CSMCamera::CSMCamera()
 	{
 		mMode = Mode::None;
 	}
 
-	void SMCamera::setProjectionAsOrthographic(float fWidth, float fHeight)
+	void CSMCamera::setProjectionAsOrthographic(float fWidth, float fHeight)
 	{
 		matrixProjection = glm::ortho(0.0f, fWidth, fHeight, 0.0f, -1.0f, 1.0f);
 	}
 
-	void SMCamera::setProjectionAsPerspective(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
+	void CSMCamera::setProjectionAsPerspective(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
 	{
 		if (fWidth < 0.0f || fHeight < 0.0f)
 		{
-			Window* pWindow = Window::getPointer();
+			CWindow* pWindow = CWindow::getPointer();
 			fWidth = (float)pWindow->getWidth();
 			fHeight = (float)pWindow->getHeight();
 		}
 		matrixProjection = glm::perspective(glm::radians(fFOVdegrees), fWidth / fHeight, fZNear, fZFar);
 	}
 
-	void SMCamera::setViewAsIdentity(void)
+	void CSMCamera::setViewAsIdentity(void)
 	{
 		matrixView = glm::mat4();
 	}
 
-	void SMCamera::setViewAsLookat(glm::vec3 vCameraPosition, glm::vec3 vCameraTargetPosition, glm::vec3 vUpVector)
+	void CSMCamera::setViewAsLookat(glm::vec3 vCameraPosition, glm::vec3 vCameraTargetPosition, glm::vec3 vUpVector)
 	{
 		matrixView = glm::lookAt(vCameraPosition, vCameraTargetPosition, vUpVector);
 	}
 
-	glm::mat4 SMCamera::getViewProjectionMatrix(void)
+	glm::mat4 CSMCamera::getViewProjectionMatrix(void)
 	{
 		return matrixProjection * matrixView;	// Other way around?
 	}
 
-	void SMCamera::update(void)
+	void CSMCamera::update(void)
 	{
 		if (Mode::None == mMode)
 		{
@@ -55,7 +55,7 @@ namespace X
 			_updateModeFPS();
 	}
 
-	void SMCamera::setModeOrbit(glm::vec3 vOrbitPoint, float fMinDistanceFromPoint, float fCurrentDistanceFromPoint, float fMaxDistanceFromPoint, float fSensitivityX, float fSensitivityY, float fMouseSensitivityWheel, bool bLimitYupToPositive)
+	void CSMCamera::setModeOrbit(glm::vec3 vOrbitPoint, float fMinDistanceFromPoint, float fCurrentDistanceFromPoint, float fMaxDistanceFromPoint, float fSensitivityX, float fSensitivityY, float fMouseSensitivityWheel, bool bLimitYupToPositive)
 	{
 		// Set mode of camera
 		mMode = Mode::Orbit;
@@ -73,10 +73,10 @@ namespace X
 		modeOrbit.bLimitYupToPositive = bLimitYupToPositive;
 	}
 
-	void SMCamera::_updateModeOrbit(void)
+	void CSMCamera::_updateModeOrbit(void)
 	{
 		// Get input from mouse, multiply by time delta and sensitivity settings of the mode
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		modeOrbit.timer.update();
 		float fDeltaSec = modeOrbit.timer.getSecondsPast();
 		float fDeltaX = pInput->mouse.deltaX() * modeOrbit.fMouseSensitivityX;
@@ -131,28 +131,28 @@ namespace X
 
 		// Debug text
 		/*
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		std::string strDebug = "Camera mode orbit: Position: ";
 		strDebug += std::format("{:.2f}", v3CameraPosition.x);
 		strDebug += ", " + std::format("{:.2f}", v3CameraPosition.y);
 		strDebug += ", " + std::format("{:.2f}", v3CameraPosition.z);
-		pRM->getFont("arial_26")->print(strDebug, 0, 50, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 50, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fAngleY: " + std::format("{:.2f}", modeOrbit.fAngleY);
-		pRM->getFont("arial_26")->print(strDebug, 0, 80, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 80, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fAngleUp: " + std::format("{:.2f}", modeOrbit.fAngleUp);
-		pRM->getFont("arial_26")->print(strDebug, 0, 110, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 110, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fXZscale: " + std::format("{:.2f}", fXZscale);
-		pRM->getFont("arial_26")->print(strDebug, 0, 140, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 140, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fScale: " + std::format("{:.2f}", fScale);
-		pRM->getFont("arial_26")->print(strDebug, 0, 170, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 170, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		*/
 	}
 
-	void SMCamera::setModeFPS(glm::vec3 vInitialPosition, float fInitialYawDegrees, float fInitialPitchDegrees, float fSensitivityX, float fSensitivityY, float fSensitivityTranslateForward, float fSensitivityTranslateStrafe, float fSensitivityTranslateUp, float fMultiplierShiftKey)
+	void CSMCamera::setModeFPS(glm::vec3 vInitialPosition, float fInitialYawDegrees, float fInitialPitchDegrees, float fSensitivityX, float fSensitivityY, float fSensitivityTranslateForward, float fSensitivityTranslateStrafe, float fSensitivityTranslateUp, float fMultiplierShiftKey)
 	{
 		// Set mode of camera
 		mMode = Mode::FPS;
@@ -171,10 +171,10 @@ namespace X
 		modeFPS.fPitch = fInitialPitchDegrees;
 	}
 
-	void SMCamera::_updateModeFPS(void)
+	void CSMCamera::_updateModeFPS(void)
 	{
 		// Get input from mouse, multiply by time delta and sensitivity settings of the mode
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		modeFPS.timer.update();
 		float fDeltaSec = modeFPS.timer.getSecondsPast();
 		// Rotation with mouse
@@ -228,29 +228,29 @@ namespace X
 
 		// Debug text
 		/*
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceFont* pFont = pRM->getFont("arial_26");
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceFont* pFont = pRM->getFont("arial_26");
 		int iYpos = (int)pFont->getTextHeight();
 
 		// Position
 		std::string strDebug = "Camera mode FPS: Position: " + std::format("{:.2f}", modeFPS.v3Position.x) += ", " + std::format("{:.2f}", modeFPS.v3Position.y) += ", " + std::format("{:.2f}", modeFPS.v3Position.z);
-		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 		
 		// modeFPS.v3Forward
 		strDebug = "modeFPS.v3Forward: " + std::format("{:.2f}", modeFPS.v3Forward.x) += ", " + std::format("{:.2f}", modeFPS.v3Forward.y) += ", " + std::format("{:.2f}", modeFPS.v3Forward.z);
-		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.v3Right
 		strDebug = "modeFPS.v3Right: " + std::format("{:.2f}", modeFPS.v3Right.x) += ", " + std::format("{:.2f}", modeFPS.v3Right.y) += ", " + std::format("{:.2f}", modeFPS.v3Right.z);
-		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.v3Up
 		strDebug = "modeFPS.v3Up: " + std::format("{:.2f}", modeFPS.v3Up.x) += ", " + std::format("{:.2f}", modeFPS.v3Up.y) += ", " + std::format("{:.2f}", modeFPS.v3Up.z);
-		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.fPitch and modeFPS.fYaw
 		strDebug = "modeFPS.fPitch: " + std::format("{:.2f}", modeFPS.fPitch) += " modeFPS.fYaw: " + std::format("{:.2f}", modeFPS.fYaw);
-		pFont->print(strDebug, 0, iYpos, Window::getPointer()->getWidth(), Window::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 		*/
 	}
 }

@@ -6,7 +6,7 @@
 namespace X
 {
 
-	ResourceShader::ResourceShader(const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
+	CResourceShader::CResourceShader(const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
 	{
         _mstrVertexShaderFilename = strVertexProgramFilename;
 		_mstrFragmentShaderFilename = strFragmentProgramFilename;
@@ -16,12 +16,12 @@ namespace X
         onGLContextCreated();
 	}
 
-	ResourceShader::~ResourceShader()
+	CResourceShader::~CResourceShader()
 	{
         onGLContextToBeDestroyed();
 	}
 
-	void ResourceShader::onGLContextCreated(void)
+	void CResourceShader::onGLContextCreated(void)
 	{
         // Load in source code
         std::string vertexCode;
@@ -47,7 +47,7 @@ namespace X
         }
         catch (std::ifstream::failure e)
         {
-            ThrowIfTrue(1, "ResourceShader::onGLContextCreated() failed to read in program code for either " + _mstrVertexShaderFilename + " or " + _mstrFragmentShaderFilename);
+            ThrowIfTrue(1, "CResourceShader::onGLContextCreated() failed to read in program code for either " + _mstrVertexShaderFilename + " or " + _mstrFragmentShaderFilename);
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
@@ -65,7 +65,7 @@ namespace X
         if (!success)
         {
             glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-            std::string err("ResourceShader::onGLContextCreated() failed. ");
+            std::string err("CResourceShader::onGLContextCreated() failed. ");
             err.append(infoLog);
             ThrowIfTrue(1, err);
         };
@@ -78,7 +78,7 @@ namespace X
         if (!success)
         {
             glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-            std::string err("ResourceShader::onGLContextCreated() failed. ");
+            std::string err("CResourceShader::onGLContextCreated() failed. ");
             err.append(infoLog);
             ThrowIfTrue(1, err);
         };
@@ -93,7 +93,7 @@ namespace X
         glGetProgramiv(_muiProgramID, GL_LINK_STATUS, &success);
         if (!success)
         {
-            std::string err("ResourceShader::onGLContextCreated() failed. ");
+            std::string err("CResourceShader::onGLContextCreated() failed. ");
             err.append(infoLog);
             ThrowIfTrue(1, err);
         }
@@ -103,48 +103,48 @@ namespace X
         glDeleteShader(fragment);
 	}
 
-    void ResourceShader::onGLContextToBeDestroyed(void)
+    void CResourceShader::onGLContextToBeDestroyed(void)
     {
         glDeleteProgram(_muiProgramID);
         _muiProgramID = 0;
     }
 
-    void ResourceShader::bind(void)
+    void CResourceShader::bind(void)
     {
         glUseProgram(_muiProgramID);
     }
 
-    void ResourceShader::unbind(void)
+    void CResourceShader::unbind(void)
     {
         glUseProgram(0);
     }
 
-    void ResourceShader::setBool(const std::string& name, bool value)
+    void CResourceShader::setBool(const std::string& name, bool value)
     {
         glUniform1i(glGetUniformLocation(_muiProgramID, name.c_str()), (int)value);
     }
 
-    void ResourceShader::setInt(const std::string& name, int value)
+    void CResourceShader::setInt(const std::string& name, int value)
     {
         glUniform1i(glGetUniformLocation(_muiProgramID, name.c_str()), value);
     }
 
-    void ResourceShader::setFloat(const std::string& name, float value)
+    void CResourceShader::setFloat(const std::string& name, float value)
     {
         glUniform1f(glGetUniformLocation(_muiProgramID, name.c_str()), value);
     }
 
-    void ResourceShader::setMat4(const std::string& name, const glm::mat4& matrix)
+    void CResourceShader::setMat4(const std::string& name, const glm::mat4& matrix)
     {
         glUniformMatrix4fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    void ResourceShader::setVec2(const std::string& name, const glm::vec2& vec2)
+    void CResourceShader::setVec2(const std::string& name, const glm::vec2& vec2)
     {
         glUniform2fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec2[0]);
     }
 
-    void ResourceShader::setVec3(const std::string& name, const glm::vec3& vec3)
+    void CResourceShader::setVec3(const std::string& name, const glm::vec3& vec3)
     {
         glUniform3fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec3[0]);
     }

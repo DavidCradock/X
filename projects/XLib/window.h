@@ -6,11 +6,11 @@ namespace X
 {
 	// Is responsible for creating/updating/shutting down the application's window.
 	// Also initialises/updates/shutsdown the input manager.
-	class Window : public Singleton<Window>
+	class CWindow : public CSingleton<CWindow>
 	{
 	public:
 		// Constructor
-		Window(void);
+		CWindow(void);
 
 		// Creates the window and sets screenmode (If fullscreen)
 		void createWindow(std::string strWindowTitle);

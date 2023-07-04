@@ -9,10 +9,10 @@ namespace X
 	// We can simply use the various methods to set the view and projection matrixs, access them directly or we can use a camera mode
 	// A camera mode is set with a call to one of the various setMode??() methods and then call update() once per program loop to compute 
 	// the view matrix depending upon which mode is currently set
-	class SMCamera
+	class CSMCamera
 	{
 	public:
-		SMCamera();
+		CSMCamera();
 
 		// Sets the projection matrix of the camera as orthogonal
 		// The parameters are the dimensions of whatever we're rendering to.
@@ -22,7 +22,7 @@ namespace X
 		// Sets the projection matrix of the camera as perspective
 		// The parameters are the dimensions of whatever we're rendering to.
 		// Passing the window's dims is a good idea, or perhaps the dims of a framebuffer.
-		// Passing a value of less than zero to the fWidth and fHeight params will set the dims to Window::getWidth() and Window::getHeight().
+		// Passing a value of less than zero to the fWidth and fHeight params will set the dims to CWindow::getWidth() and CWindow::getHeight().
 		void setProjectionAsPerspective(float fFOVdegrees, float fWidth = -1.0f, float fHeight = -1.0f, float fZNear = 1.0f, float fZFar = 10000.0f);
 
 		// Sets the view matrix as identity
@@ -85,7 +85,7 @@ namespace X
 
 			// Variables/objects used to compute view matrix
 			float fCurrentDistanceFromPoint;	// Current distance the camera is from the point
-			Timer timer;						// Timer used for time delta
+			CTimer timer;						// Timer used for time delta
 			float fAngleY;						// Angle around Y axis
 			float fAngleUp;						// Angle up/down
 			bool bLimitYupToPositive;			// Does what it says on the tin
@@ -108,7 +108,7 @@ namespace X
 			float fSensitivityTranslateStrafe;	// Movement speed for AD keys
 			float fSensitivityTranslateUp;		// Movement speed for RF keys
 			float fMultiplierShiftKey;			// Multiplier of movement speed when shift key is held down
-			Timer timer;						// Timer used for time delta
+			CTimer timer;						// Timer used for time delta
 			// Variables used to calculate pitch/yaw
 			float fYaw;							// Rotation around Y axis
 			float fPitch;						// Rotation around right vector

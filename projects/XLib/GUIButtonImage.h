@@ -5,17 +5,17 @@
 
 namespace X
 {
-	class GUIButtonImage : public GUIBaseObject
+	class CGUIButtonImage : public CGUIBaseObject
 	{
 	public:
-		friend class GUIContainer;
-		GUIButtonImage();
-		~GUIButtonImage();
+		friend class CGUIContainer;
+		CGUIButtonImage();
+		~CGUIButtonImage();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Returns true if the button was clicked upon
@@ -24,13 +24,13 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
 		std::string _mstrTextureDown;	// The down state image to be rendered on top of this button
 		std::string _mstrTextureOver;	// The over state image to be rendered on top of this button
 		std::string _mstrTextureUp;		// The up state image to be rendered on top of this button
-		Timer _mTimer;
+		CTimer _mTimer;
 		float _mfCurrentImageCol[4];	// Current image colour (fading between up/over/down states)
 		enum state
 		{

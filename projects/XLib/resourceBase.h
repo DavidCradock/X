@@ -3,8 +3,7 @@
 
 namespace X
 {
-	
-	class ResourceBase
+	class CResourceBase
 	{
 	public:
 		// Create all OpenGL context dependent objects when an OpenGL context exists.

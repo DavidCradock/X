@@ -11,7 +11,7 @@ namespace X
 		HRESULT hr;
 
 		// Obtain an interface to the enumerated joystick.
-		hr = InputManager::getPointer()->joy.directInput->CreateDevice(pdidInstance->guidInstance, &InputManager::getPointer()->joy.device, NULL);
+		hr = SCInputManager::getPointer()->joy.directInput->CreateDevice(pdidInstance->guidInstance, &SCInputManager::getPointer()->joy.device, NULL);
 
 		// If it failed, then we can't use this joystick. (Maybe the user unplugged
 		// it while we were in the middle of enumerating it.)
@@ -23,16 +23,16 @@ namespace X
 		return DIENUM_STOP;
 	}
 
-	InputJoystick::InputJoystick(void)
+	CInputJoystick::CInputJoystick(void)
 	{
 		device = NULL;
 	}
 
-	InputJoystick::~InputJoystick(void)
+	CInputJoystick::~CInputJoystick(void)
 	{
 	}
 
-	bool InputJoystick::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
+	bool CInputJoystick::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
 	{
 		joystickDetected = true;
 		forcefeedbackDetected = true;
@@ -132,7 +132,7 @@ namespace X
 		return true;
 	}
 
-	void InputJoystick::update(void)
+	void CInputJoystick::update(void)
 	{
 		HRESULT hr;
 		if (device == NULL)
@@ -155,7 +155,7 @@ namespace X
 			_mjs.rgdwPOV[0] /= 100;
 	}
 
-	void InputJoystick::release(void)
+	void CInputJoystick::release(void)
 	{
 		if (device)	// Joystick object exists?
 		{

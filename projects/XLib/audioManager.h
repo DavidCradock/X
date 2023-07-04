@@ -102,7 +102,7 @@ namespace X
 	// CAudioEmitter *pAudioEmitter = pAudioManager->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
 	// Now we can playback the sample with...
 	// pAudioEmitter->play(1.0f, 1.0f, false);	// Where parameters are volume, playback speed and whether to loop the sample or not
-	class SCAudioManager : public Singleton<SCAudioManager>
+	class SCAudioManager : public CSingleton<SCAudioManager>
 	{
 	public:
 		friend class CAudioEmitter;

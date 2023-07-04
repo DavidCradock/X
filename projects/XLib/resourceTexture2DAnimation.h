@@ -16,11 +16,11 @@ namespace X
 	// Say we have an animation with dimensions of 512x512, that's 4*512*512 = 1MB per frame.
 	// Say the animation is 10 seconds long, at 60fps, that's 1MB * 60 * 10 = 600MB in size. Too big
 	// It's more suitable for shorter animations such as used by sprites, say having 120 or so frames (Which'd be using 256x256 dims, about 32MB)
-	class ResourceTexture2DAnimation : public ResourceBase
+	class CResourceTexture2DAnimation : public CResourceBase
 	{
 	public:
-		ResourceTexture2DAnimation(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
-		~ResourceTexture2DAnimation();
+		CResourceTexture2DAnimation(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
+		~CResourceTexture2DAnimation();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

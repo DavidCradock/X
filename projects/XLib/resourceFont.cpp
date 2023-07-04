@@ -6,7 +6,7 @@
 
 namespace X
 {
-	ResourceFont::ResourceFont(const std::string& strFontFilename)
+	CResourceFont::CResourceFont(const std::string& strFontFilename)
 	{
 		// Vertex buffer stuff
 		vertexBufferObject = 0;
@@ -20,35 +20,35 @@ namespace X
 		strFontPNGFilename.append(".png");
 
 		// Create required resources (Not using manager, locally, as this object is responsible for onloss/reset of context.
-		_mpResTexture = new ResourceTexture2D(strFontPNGFilename, true);
+		_mpResTexture = new CResourceTexture2D(strFontPNGFilename, true);
 
 		// Now load in the font data
 		FILE* file = 0;
 		errno_t err;
 		err = fopen_s(&file, strFontFNTFilename.c_str(), "rb");
-		ThrowIfTrue(bool(err != 0), "ResourceFont() failed to open file " + strFontFNTFilename);
-		ThrowIfTrue(1 != fread(&fontTypes.fMaxCharHeight, sizeof(fontTypes.fMaxCharHeight), 1, file), "ResourceFont() failed to read in data for file " + strFontFNTFilename);
+		ThrowIfTrue(bool(err != 0), "CResourceFont() failed to open file " + strFontFNTFilename);
+		ThrowIfTrue(1 != fread(&fontTypes.fMaxCharHeight, sizeof(fontTypes.fMaxCharHeight), 1, file), "CResourceFont() failed to read in data for file " + strFontFNTFilename);
 		
 		// Read in charDesc
 		size_t read = fread(&fontTypes.charDesc, sizeof(fontTypes.charDesc), 1, file);
-		ThrowIfTrue(1 != read, "ResourceFont() failed to read in data for file " + strFontFNTFilename);
+		ThrowIfTrue(1 != read, "CResourceFont() failed to read in data for file " + strFontFNTFilename);
 
 		fclose(file);
 		onGLContextCreated();
 	}
 
-	ResourceFont::~ResourceFont()
+	CResourceFont::~CResourceFont()
 	{
 		onGLContextToBeDestroyed();
 		delete _mpResTexture;
 	}
 
-	void ResourceFont::onGLContextCreated(void)
+	void CResourceFont::onGLContextCreated(void)
 	{
 		_mpResTexture->onGLContextCreated();
 	}
 
-	void ResourceFont::onGLContextToBeDestroyed(void)
+	void CResourceFont::onGLContextToBeDestroyed(void)
 	{
 		_mpResTexture->onGLContextToBeDestroyed();
 
@@ -69,11 +69,11 @@ namespace X
 		}
 	}
 
-	void ResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
 	{
 		// Get shader used to render the text
-		ResourceManager* pResourceManager = ResourceManager::getPointer();
-		ResourceShader* pShader = pResourceManager->getShader("X:font");
+		SCResourceManager* pResourceManager = SCResourceManager::getPointer();
+		CResourceShader* pShader = pResourceManager->getShader("X:font");
 		
 		// Setup the projection matrix as orthographic
 		_mmatProjection = glm::ortho(0.0f, float(iRenderTargetWidth), float(iRenderTargetHeight), 0.0f, -1.0f, 1.0f);
@@ -233,7 +233,7 @@ namespace X
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void ResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
 	{
 		float fTextWidth = getTextWidth(strText, fFontScaling);
 		iPosX -= int(fTextWidth * 0.5f);
@@ -241,7 +241,7 @@ namespace X
 		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
 	}
 
-	void ResourceFont::printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int& iTotalRenderedHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int& iTotalRenderedHeight, float fFontScaling, glm::vec4 colour)
 	{
 		std::stringstream ss(strText);
 		std::string strNextWord;
@@ -277,7 +277,7 @@ namespace X
 		iTotalRenderedHeight = iTextYoffset + iTextLineOffset;
 	}
 
-	float ResourceFont::getTextWidth(const std::string& strText, float fFontScaling)
+	float CResourceFont::getTextWidth(const std::string& strText, float fFontScaling)
 	{
 		float fWidth = 0;
 		unsigned char ch;
@@ -291,7 +291,7 @@ namespace X
 		return fWidth * fFontScaling;
 	}
 
-	float ResourceFont::getTextHeight(float fFontScaling)
+	float CResourceFont::getTextHeight(float fFontScaling)
 	{
 		return fontTypes.fMaxCharHeight * fFontScaling;
 	}

@@ -6,12 +6,12 @@
 namespace X
 {
 	// Renders text using data stored in a pair of font files created from this class's buildFontFiles() method.
-	// Requires a shader from the ResourceManager called "X:font" which is loaded during startup. (See SCApplicationManager::mainLoop())
-	class ResourceFont : public ResourceBase
+	// Requires a shader from the SCResourceManager called "X:font" which is loaded during startup. (See SCApplicationManager::mainLoop())
+	class CResourceFont : public CResourceBase
 	{
 	public:
-		ResourceFont(const std::string& strFontFilename);
-		~ResourceFont();
+		CResourceFont(const std::string& strFontFilename);
+		~CResourceFont();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);
@@ -53,7 +53,7 @@ namespace X
 			float fMaxCharHeight;		// The tallest character's height
 		};
 		FontTypes fontTypes;
-		ResourceTexture2D* _mpResTexture;			// Texture holding each characters' image data
+		CResourceTexture2D* _mpResTexture;			// Texture holding each characters' image data
 		glm::mat4 _mmatProjection;					// Projection used when rendering the text
 
 	private:

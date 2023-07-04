@@ -11,7 +11,7 @@ Current progress...
 ![Screenshot of the development application showing GUI progress.](https://github.com/DavidCradock/X/blob/8b0174ddd5eb93baecca9c6d422111aac91df7e6/github_images/github_screenshot_2023_07_03.png)
 
 ** TODO **
-- Add quaternions and position to SMEntityBase along with helper functions to move stuff etc.
+- Add quaternions and position to CSMEntityBase along with helper functions to move stuff etc.
 - implement more stuff into Camera
 - implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
 - implement GUI (2D)
@@ -26,4 +26,3 @@ Current progress...
 - Implement Taskbar to GUI.
 - Create 2D sprite rendering
 - Rewrite joy part of input
-- Refactor code so all singleton classes start with SC and all other classes with C

@@ -3,12 +3,12 @@
 
 namespace X
 {
-	Frustum::Frustum()
+	CFrustum::CFrustum()
 	{
 
 	}
 
-	void Frustum::computeFromCameraProjection(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
+	void CFrustum::computeFromCameraProjection(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar)
 	{
 
 

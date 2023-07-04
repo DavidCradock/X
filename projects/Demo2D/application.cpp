@@ -5,10 +5,10 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Set window title bar text
-		Window::getPointer()->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		CWindow::getPointer()->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 
 		// Show frame rate statistics
-		GUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
+		SCGUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
 	}
 
 	void CApplication::onStart(void)
@@ -22,7 +22,7 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-		InputManager* pInputManager = InputManager::getPointer();
+		SCInputManager* pInputManager = SCInputManager::getPointer();
 
 		// Timer delta
 		timer.update();
@@ -33,15 +33,15 @@ namespace X
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
 		{
-			Window::getPointer()->toggleFullscreen();
+			CWindow::getPointer()->toggleFullscreen();
 		}
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
-			Window::getPointer()->setVsync(!Window::getPointer()->getVSyncEnabled());
+			CWindow::getPointer()->setVsync(!CWindow::getPointer()->getVSyncEnabled());
 		// Toggle statistics window
 		if (pInputManager->key.once(KC_F3))
 		{
-			GUIContainer* pStatsCont = GUIManager::getPointer()->getContainer("X:Default:Statistics");
+			CGUIContainer* pStatsCont = SCGUIManager::getPointer()->getContainer("X:Default:Statistics");
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;

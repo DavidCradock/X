@@ -8,28 +8,28 @@
 
 namespace X
 {
-	GUITextScroll::GUITextScroll()
+	CGUITextScroll::CGUITextScroll()
 	{
 		_mbFBNeedsUpdating = true;
 		_mfPreviousSliderTabPos = -1.0f;
 		_mSlider.setTabPos(0.0f);
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUITextScroll::~GUITextScroll()
+	CGUITextScroll::~CGUITextScroll()
 	{
 		delete mpTooltip;
 	}
 
-	void GUITextScroll::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUITextScroll::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textScrollBGNormal, col);
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);
 
 		// Does the frame buffer need updating (Like when the OpenGL context has been lost)
 		if (pTexColour->mbNeedsUpdating)
@@ -43,9 +43,9 @@ namespace X
 
 		// Get required resources needed to render
 		
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 
 		// Render the frame buffer over the top of the background
 		pShader->bind();
@@ -88,11 +88,11 @@ namespace X
 		_mSlider.render(pParentContainer, strFramebufferToSampleFrom);
 	}
 
-	void GUITextScroll::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUITextScroll::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
 
 		// Update the slider
 		_mSlider.mfPositionX = mfPositionX + mfWidth - pTheme->mfTextScrollSliderWidth;
@@ -110,7 +110,7 @@ namespace X
 		}
 
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
@@ -122,34 +122,34 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
-	void GUITextScroll::setText(const std::string& strText)
+	void CGUITextScroll::setText(const std::string& strText)
 	{
 		_mstrText = strText;
 		_mbFBNeedsUpdating = true;
 	}
 
-	void GUITextScroll::setTextColour(float fRed, float fGreen, float fBlue, float fAlpha)
+	void CGUITextScroll::setTextColour(float fRed, float fGreen, float fBlue, float fAlpha)
 	{
 		_mTextColour.set(fRed, fGreen, fBlue, fAlpha);
 		_mbFBNeedsUpdating = true;
 	}
 
-	void GUITextScroll::_renderFramebuffer(void* pParentContainer)
+	void CGUITextScroll::_renderFramebuffer(void* pParentContainer)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		ResourceManager* pRM = ResourceManager::getPointer();
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.textScroll);
-		ResourceFramebuffer* pFB = pRM->getFramebuffer(_mstrFBName);
-		ResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textScrollBGColour);
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textScroll);
+		CResourceFramebuffer* pFB = pRM->getFramebuffer(_mstrFBName);
+		CResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textScrollBGColour);
 
 		// Unbind the render target which the GUI is currently rendering to.
-		ResourceFramebuffer* pFBGUITarget = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFBGUITarget = pRM->getFramebuffer("X:backbuffer_FB");
 		pFBGUITarget->unbindAsRenderTarget();
 
 		// Resize framebuffer if needed to make room for the slider

@@ -9,7 +9,7 @@
 
 namespace X
 {
-	GUITextEdit::GUITextEdit()
+	CGUITextEdit::CGUITextEdit()
 	{
 		_mState = state::inactive;
 		_mfAddFlashingCursor = 0.0f;
@@ -17,26 +17,26 @@ namespace X
 		_mbIntegerInputOnly = false;
 		_mbWasActiveEnterPressed = false;
 		_mfuncOnEnterPressed = NULL;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUITextEdit::~GUITextEdit()
+	CGUITextEdit::~CGUITextEdit()
 	{
 		delete mpTooltip;
 	}
 
-	void GUITextEdit::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUITextEdit::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textEditBGNormal, col);
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsPoint3 = pTex->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTex->mvDimensions * 0.6666666f;
 
@@ -44,7 +44,7 @@ namespace X
 		int iRTDims[2];
 		iRTDims[0] = int(pWindow->getWidth());
 		iRTDims[1] = int(pWindow->getHeight());
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.textEdit);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textEdit);
 
 		// Simply update to determine whether we add the flashing character when the state is active
 		std::string strFinalText = mstrText;
@@ -84,15 +84,15 @@ namespace X
 		glDisable(GL_SCISSOR_TEST);
 	}
 
-	void GUITextEdit::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUITextEdit::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		_mbWasActiveEnterPressed = false;
 
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		InputManager* pInput = InputManager::getPointer();
-		ResourceManager* pResMan = ResourceManager::getPointer();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		CGUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
 		SCAudioManager* pAudio = SCAudioManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		_mTimer.update();
@@ -104,7 +104,7 @@ namespace X
 			_mfAddFlashingCursor -= 2.0f;
 
 		
-		ResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditBGColour);
+		CResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsDiv3 = pColourTex->mvDimensions * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
@@ -223,21 +223,21 @@ namespace X
 		}
 
 		// Update this object's tooltip
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 	
-	void GUITextEdit::setMaxChars(unsigned int iMaxChars)
+	void CGUITextEdit::setMaxChars(unsigned int iMaxChars)
 	{
 		_muiMaxChars = iMaxChars;
 	}
 
-	void GUITextEdit::setIntegerInputOnly(bool bAllowIntegersOnly)
+	void CGUITextEdit::setIntegerInputOnly(bool bAllowIntegersOnly)
 	{
 		_mbIntegerInputOnly = bAllowIntegersOnly;
 	}
 
-	void GUITextEdit::_checkIsNumber(bool bResetToZero)
+	void CGUITextEdit::_checkIsNumber(bool bResetToZero)
 	{
 		if (0 == mstrText.length())
 			return;
@@ -249,12 +249,12 @@ namespace X
 		}
 	}
 
-	bool GUITextEdit::getEnterPressed(void)
+	bool CGUITextEdit::getEnterPressed(void)
 	{
 		return _mbWasActiveEnterPressed;
 	}
 
-	void GUITextEdit::setOnEnter(void (*func)(const std::string& text))
+	void CGUITextEdit::setOnEnter(void (*func)(const std::string& text))
 	{
 		_mfuncOnEnterPressed = func;
 	}

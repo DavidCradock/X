@@ -8,10 +8,10 @@
 namespace X
 {
 	// Gets thrown via the ThrowIfFalse/True macros below
-	class Exception
+	class CException
 	{
 	public:
-		Exception(std::string strExceptionText, std::string strFilename, int iLineNumber)
+		CException(std::string strExceptionText, std::string strFilename, int iLineNumber)
 		{
 			mstrException = "File: " + strFilename + "\n";
 			mstrException += "Line: " + std::to_string(iLineNumber) + "\n";
@@ -26,7 +26,7 @@ namespace X
 	{                                                   \
 		if(!x){											\
 			__debugbreak();								\
-			throw Exception(y, __FILE__, __LINE__);}	\
+			throw CException(y, __FILE__, __LINE__);}	\
 	}
 	#endif
 	// Macro to check a bool and is true, throw an exception which adds filename, line number and the given text.
@@ -35,13 +35,13 @@ namespace X
 	{                                                   \
 		if(x){											\
 			__debugbreak();								\
-			throw Exception(y, __FILE__, __LINE__);}	\
+			throw CException(y, __FILE__, __LINE__);}	\
 	}
 	#endif
 
 	// Logging of information to "log.txt" file and storage of each added log entry into memory
 	// Call clear() on application startup, otherwise "log.txt" will be appended to, holding previous run's logging.
-	class Log : public Singleton<Log>
+	class CLog : public CSingleton<CLog>
 	{
 	public:
 		// Clear the log file and all log entries in memory
@@ -58,6 +58,6 @@ namespace X
 		std::string getEntryText(size_t entryIndex);
 	private:
 		std::vector<std::string> mlogEntry;	// A vector of strings, to hold each entry added by add() method
-		Timer timer;						// For adding time to the beginning of each entry
+		CTimer timer;						// For adding time to the beginning of each entry
 	};
 }

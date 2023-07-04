@@ -4,7 +4,7 @@
 
 namespace X
 {
-	class SC2DManager : public Singleton<SC2DManager>
+	class SC2DManager : public CSingleton<SC2DManager>
 	{
 	public:
 		SC2DManager();

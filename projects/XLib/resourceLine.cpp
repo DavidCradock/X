@@ -5,7 +5,7 @@
 namespace X
 {
 
-	ResourceLine::ResourceLine()
+	CResourceLine::CResourceLine()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -15,17 +15,17 @@ namespace X
 		muiLineMode = GL_LINE_STRIP;
 	}
 
-	ResourceLine::~ResourceLine()
+	CResourceLine::~CResourceLine()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceLine::onGLContextCreated(void)
+	void CResourceLine::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void ResourceLine::onGLContextToBeDestroyed(void)
+	void CResourceLine::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -44,14 +44,14 @@ namespace X
 		}
 	}
 
-	void ResourceLine::removeGeom(void)
+	void CResourceLine::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 		muiIndex = 0;
 	}
 
-	void ResourceLine::update(void)
+	void CResourceLine::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -112,7 +112,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void ResourceLine::draw(void)
+	void CResourceLine::draw(void)
 	{
 		if (!vertexArrayObject)
 			return;
@@ -134,19 +134,19 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void ResourceLine::addLinePoint(const Vertex& newVertex)
+	void CResourceLine::addLinePoint(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 		indices.push_back(muiIndex);
 		muiIndex++;
 	}
 
-	void ResourceLine::setDrawModeAsLineStrip(void)
+	void CResourceLine::setDrawModeAsLineStrip(void)
 	{
 		muiLineMode = GL_LINE_STRIP;
 	}
 	
-	void ResourceLine::setDrawModeAsLineList(void)
+	void CResourceLine::setDrawModeAsLineList(void)
 	{
 		muiLineMode = GL_LINES;
 	}

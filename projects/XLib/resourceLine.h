@@ -9,11 +9,11 @@ namespace X
 	// each vertex added after those will form an additional line using the new vertex and the previous one.
 	// That's the default mode, but we can call setDrawModeAsLineList() in which case, each pair of added vertices
 	// then represent a single line.
-	class ResourceLine : public ResourceBase
+	class CResourceLine : public CResourceBase
 	{
 	public:
-		ResourceLine();
-		~ResourceLine();
+		CResourceLine();
+		~CResourceLine();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

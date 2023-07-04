@@ -4,7 +4,7 @@
 
 namespace X
 {
-	class GUIDraggableItem : public GUIBaseObject
+	class CGUIDraggableItem : public CGUIBaseObject
 	{
 	public:
 

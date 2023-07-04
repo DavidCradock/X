@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class ResourceTriangle : public ResourceBase
+	class CResourceTriangle : public CResourceBase
 	{
 	public:
-		ResourceTriangle();
-		~ResourceTriangle();
+		CResourceTriangle();
+		~CResourceTriangle();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -8,27 +8,27 @@
 
 namespace X
 {
-	GUIImageAnimated::GUIImageAnimated()
+	CGUIImageAnimated::CGUIImageAnimated()
 	{
 		_mfFramesPerSecond = 60.0f;
 		_mfCurrentFrame = 0.0f;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIImageAnimated::~GUIImageAnimated()
+	CGUIImageAnimated::~CGUIImageAnimated()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIImageAnimated::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUIImageAnimated::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 
 		pShader->bind();
 
@@ -43,7 +43,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2DAnimation* pTexColour = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
+		CResourceTexture2DAnimation* pTexColour = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
 
 		// Bind textures
 		pTexColour->bind(0, (int)_mfCurrentFrame);
@@ -72,10 +72,10 @@ namespace X
 
 	}
 
-	void GUIImageAnimated::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIImageAnimated::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceTexture2DAnimation* pTex = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceTexture2DAnimation* pTex = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
 
 		_mTimer.update();
 		float fSecPast = _mTimer.getSecondsPast();
@@ -85,9 +85,9 @@ namespace X
 			_mfCurrentFrame -= fNumFrames;
 
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -98,12 +98,12 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 
 	}
 
-	void GUIImageAnimated::setFramesPerSecond(float fFramesPerSecond)
+	void CGUIImageAnimated::setFramesPerSecond(float fFramesPerSecond)
 	{
 		_mfFramesPerSecond = fFramesPerSecond;
 	}

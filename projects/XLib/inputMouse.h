@@ -3,14 +3,14 @@
 
 namespace X
 {
-	// Mouse Input class, use InputManager to access it's "mouse" member.
-	// There is an object of this class called "mouse" which is initialised and updated in the InputManager class.
+	// Mouse Input class, use SCInputManager to access it's "mouse" member.
+	// There is an object of this class called "mouse" which is initialised and updated in the SCInputManager class.
 	// Use that object to access information about the device.
-	class InputMouse
+	class CInputMouse
 	{
 	public:
-		InputMouse(void);
-		~InputMouse(void);
+		CInputMouse(void);
+		~CInputMouse(void);
 
 		// Initialize mouse object
 		bool init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow);

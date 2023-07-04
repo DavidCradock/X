@@ -4,7 +4,7 @@
 
 namespace X
 {
-	class GUIMenu : public GUIBaseObject
+	class CGUIMenu : public CGUIBaseObject
 	{
 	public:
 

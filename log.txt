@@ -1,20 +1,20 @@
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() called.
-0w:0d:0h:0m:00s : Window::createWindow() called.
-0w:0d:0h:0m:00s : Window::createWindow() creating window.
-0w:0d:0h:0m:00s : Window::createWindow() obtaining window's device context.
-0w:0d:0h:0m:00s : Window::createWindow() choosing a compatible pixel format.
-0w:0d:0h:0m:00s : Window::createWindow() setting pixel format.
-0w:0d:0h:0m:00s : Window::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
-0w:0d:0h:0m:00s : Window::createWindow() creating OpenGL core profile rendering context.
-0w:0d:0h:0m:00s : Window::createWindow() making rendering context the calling thread's current one.
-0w:0d:0h:0m:00s : Window::createWindow() deleting the temporary OpenGL rendering context.
-0w:0d:0h:0m:00s : Window::_resizeOpenGLViewport( 3072, 1728) called.
-0w:0d:0h:0m:00s : Window::createWindow() resizing OpenGL viewport.
-0w:0d:0h:0m:00s : Window::_resizeOpenGLViewport( 3072, 1728) called.
-0w:0d:0h:0m:00s : Window::createWindow() has created the window.
+0w:0d:0h:0m:00s : CWindow::createWindow() called.
+0w:0d:0h:0m:00s : CWindow::createWindow() creating window.
+0w:0d:0h:0m:00s : CWindow::createWindow() obtaining window's device context.
+0w:0d:0h:0m:00s : CWindow::createWindow() choosing a compatible pixel format.
+0w:0d:0h:0m:00s : CWindow::createWindow() setting pixel format.
+0w:0d:0h:0m:00s : CWindow::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
+0w:0d:0h:0m:00s : CWindow::createWindow() creating OpenGL core profile rendering context.
+0w:0d:0h:0m:00s : CWindow::createWindow() making rendering context the calling thread's current one.
+0w:0d:0h:0m:00s : CWindow::createWindow() deleting the temporary OpenGL rendering context.
+0w:0d:0h:0m:00s : CWindow::_resizeOpenGLViewport( 3072, 1728) called.
+0w:0d:0h:0m:00s : CWindow::createWindow() resizing OpenGL viewport.
+0w:0d:0h:0m:00s : CWindow::_resizeOpenGLViewport( 3072, 1728) called.
+0w:0d:0h:0m:00s : CWindow::createWindow() has created the window.
 0w:0d:0h:0m:00s : setupOpenGLExtensions() called...
 0w:0d:0h:0m:00s : setupOpenGLExtensions() complete.
-0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() adding default resources to ResourceManager.
+0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() adding default resources to SCResourceManager.
 0w:0d:0h:0m:00s : SCAudioManager constructor called.
 0w:0d:0h:0m:00s : SCAudioManager initialising COM.
 0w:0d:0h:0m:00s : SCAudioManager creating XAudio2 engine instance.
@@ -23,12 +23,12 @@
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() calling Demo2D's onStart()
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:02s : SCApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:02s : Window::destroyWindow() called.
-0w:0d:0h:0m:02s : Window::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:02s : Window::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:02s : Window::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:02s : Window::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:03s : Window::destroyWindow() unregistering window class.
-0w:0d:0h:0m:03s : Window::destroyWindow() complete.
-0w:0d:0h:0m:03s : Total runtime: 2sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:07s : SCApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:07s : CWindow::destroyWindow() called.
+0w:0d:0h:0m:07s : CWindow::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:07s : CWindow::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:07s : CWindow::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:07s : CWindow::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:07s : CWindow::destroyWindow() unregistering window class.
+0w:0d:0h:0m:07s : CWindow::destroyWindow() complete.
+0w:0d:0h:0m:07s : Total runtime: 7sec 0min 0hr 0days 0weeks.

@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class ResourceTexture2D : public ResourceBase
+	class CResourceTexture2D : public CResourceBase
 	{
 	public:
-		ResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis = false);
-		~ResourceTexture2D();
+		CResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis = false);
+		~CResourceTexture2D();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -5,7 +5,7 @@
 namespace X
 {
 	// This class holds all settings for a single GUI theme.
-	// They are created and accessed by the GUIManager.
+	// They are created and accessed by the SCGUIManager.
 	// Each of the widgets and containers(if set as a window) use a default theme, more themes can be created and switched between.
 	// Themes may be set per container.
 	// A theme is quite complex, but is designed so that it loads fast.
@@ -17,11 +17,11 @@ namespace X
 	// As well as the above images, there are other settings which may be modified such as text colour for various widget states (for example,
 	// a button's up/over/down/clicked states.
 	// Upon construction, a theme has default settings set.
-	class GUITheme
+	class CGUITheme
 	{
 	public:
 		// Constructor which sets everything to default theme
-		GUITheme();
+		CGUITheme();
 
 		// Loads the theme with all it's settings from a file on disk previously saved with save()
 		// The filename given, if it doesn't have the ".theme" extension, it is added.
@@ -33,19 +33,19 @@ namespace X
 		// If the file couldn't be opened, an exception occurs.
 		void save(const std::string& strFilename);
 
-		// Adds the theme's currently set textures into ResourceManager so that they're ready to use.
+		// Adds the theme's currently set textures into SCResourceManager so that they're ready to use.
 		// If you need to change any of the theme's texture names, please call unloadTextures() before doing so.
 		void loadTextures(void);
 
-		// Removes the theme's currently set textures out of the ResourceManager.
+		// Removes the theme's currently set textures out of the SCResourceManager.
 		// If you need to change any of the theme's texture names, please call this method before doing so.
 		void unloadTextures(void);
 
-		// Adds the theme's currently set fonts into ResourceManager so that they're ready to use.
+		// Adds the theme's currently set fonts into SCResourceManager so that they're ready to use.
 		// If you need to change any of the theme's font names, please call unloadFonts() before doing so.
 		void addFontsToManager(void);
 
-		// Removes the theme's currently set fonts out of the ResourceManager.
+		// Removes the theme's currently set fonts out of the SCResourceManager.
 		// If you need to change any of the theme's font names, please call this method before doing so.
 		void removeFontsFromManager(void);
 
@@ -91,9 +91,9 @@ namespace X
 		// Structure to hold the names of all the fonts used by this theme
 		struct Fonts
 		{
-			std::string containerTitle;	// GUIContainer font
-			std::string button;			// GUIButton font
-			std::string text;			// GUIText font
+			std::string containerTitle;	// CGUIContainer font
+			std::string button;			// CGUIButton font
+			std::string text;			// CGUIText font
 			std::string textEdit;
 			std::string textScroll;
 		};
@@ -102,21 +102,21 @@ namespace X
 		// Structure to hold colours used for this theme
 		struct Colours
 		{
-			GUIColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is set to be a window and is in focus.
-			GUIColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is set to be a window and is not in focus.
-			GUIColour buttonTextDown;					// Colour of a button's text when mouse is over and clicked
-			GUIColour buttonTextOver;					// Colour of a button's text when mouse is over
-			GUIColour buttonTextUp;						// Colour of a button's text when mouse is not over
-			GUIColour text;								// GUIText font colour
-			GUIColour textEditInactive;
-			GUIColour textEditActive;
-			GUIColour sliderTabOver;
-			GUIColour sliderTabNotOver;
-			GUIColour progressBarFiller;
-			GUIColour buttonImageDown;
-			GUIColour buttonImageOver;
-			GUIColour buttonImageUp;
-			GUIColour tooltipText;
+			CGUIColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is set to be a window and is in focus.
+			CGUIColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is set to be a window and is not in focus.
+			CGUIColour buttonTextDown;					// Colour of a button's text when mouse is over and clicked
+			CGUIColour buttonTextOver;					// Colour of a button's text when mouse is over
+			CGUIColour buttonTextUp;						// Colour of a button's text when mouse is not over
+			CGUIColour text;								// CGUIText font colour
+			CGUIColour textEditInactive;
+			CGUIColour textEditActive;
+			CGUIColour sliderTabOver;
+			CGUIColour sliderTabNotOver;
+			CGUIColour progressBarFiller;
+			CGUIColour buttonImageDown;
+			CGUIColour buttonImageOver;
+			CGUIColour buttonImageUp;
+			CGUIColour tooltipText;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 
@@ -159,7 +159,7 @@ namespace X
 		float mfButtonTextFadeSpeed;		// Rate at which button text colours interpolate between
 		float mfTextEditFlashSpeed;			// Rate at which the additional character that flashes when a text edit is active.
 		float mfSliderTabFadeSpeed;			// Rate at which slider's tab colours interpolate between
-		float mfTextScrollSliderWidth;		// Width of a GUITextScroll object's vertical slider.
+		float mfTextScrollSliderWidth;		// Width of a CGUITextScroll object's vertical slider.
 		float mfButtonImageTextFadeSpeed;	// Rate at which button image colours interpolate between
 		float mfTooltipFadeSpeed;			// Rate at which tooltips face in/out
 
@@ -177,10 +177,10 @@ namespace X
 		void _readFontInfo(std::ifstream& stream, std::string& strFontname);
 
 		// Writes out colour info
-		void _writeColourInfo(std::ofstream& stream, const std::string& strDescription, const GUIColour& colour);
+		void _writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CGUIColour& colour);
 
 		// Reads in colour info
-		void _readColourInfo(std::ifstream& stream, GUIColour& colour);
+		void _readColourInfo(std::ifstream& stream, CGUIColour& colour);
 
 		// Writes out offset info
 		void _writeOffsetInfo(std::ofstream& stream, const std::string& strDescription, const Offset& offset);

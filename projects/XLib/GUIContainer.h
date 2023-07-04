@@ -16,17 +16,17 @@
 
 namespace X
 {
-	class GUIContainer : public GUIBaseObject
+	class CGUIContainer : public CGUIBaseObject
 	{
-		friend class GUIManager;
+		friend class SCGUIManager;
 	public:
-		GUIContainer();
-		~GUIContainer();
+		CGUIContainer();
+		~CGUIContainer();
 
 		// Render this container and each of it's objects
 		void render(const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIManager::render to render this container's tooltips
+		// Called from SCGUIManager::render to render this container's tooltips
 		// They are rendered after all containers have had render() called, to prevent tooltips from being rendered underneath anything
 		void renderTooltips(const std::string& strFramebufferToSampleFrom);
 
@@ -43,17 +43,17 @@ namespace X
 		// Returns whether this container is visible or not
 		bool getVisible(void);
 
-		// Returns the name of this container which is set upon construction from the GUIManager::addContainer() method
+		// Returns the name of this container which is set upon construction from the SCGUIManager::addContainer() method
 		const std::string& getName(void);
 
 		// Add a button to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the button is the offset from the top left corner of the container's centre area not including the buttons edge images
-		GUIButton* addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+		CGUIButton* addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
 		
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIButton* getButton(const std::string& strName);
+		CGUIButton* getButton(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -65,11 +65,11 @@ namespace X
 		// Add text to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		GUIText* addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText);
+		CGUIText* addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIText* getText(const std::string& strName);
+		CGUIText* getText(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -81,11 +81,11 @@ namespace X
 		// Add text edit to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		GUITextEdit* addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+		CGUITextEdit* addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUITextEdit* getTextEdit(const std::string& strName);
+		CGUITextEdit* getTextEdit(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -99,11 +99,11 @@ namespace X
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
 		// If the width is greater than height, it is set as a horizontal slider, else vertical.
 		// fTabRatio is a value which is multiplied by the width/height(Depending on orientation) of the slider's dims, to obtain tab dimensions
-		GUISlider* addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio = 0.05f);
+		CGUISlider* addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio = 0.05f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUISlider* getSlider(const std::string& strName);
+		CGUISlider* getSlider(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -115,11 +115,11 @@ namespace X
 		// Add line graph to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		GUILineGraph* addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+		CGUILineGraph* addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUILineGraph* getLineGraph(const std::string& strName);
+		CGUILineGraph* getLineGraph(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -131,11 +131,11 @@ namespace X
 		// Add progress bar to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		GUIProgressBar* addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+		CGUIProgressBar* addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIProgressBar* getProgressBar(const std::string& strName);
+		CGUIProgressBar* getProgressBar(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -147,15 +147,15 @@ namespace X
 		// Add static image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strImageFilename is the name of a file used to create a ResourceTexture2D resource added to ResourceManager.
-		// An image is simply that. It is not clickable. If you want an image which is clickable, use the GUIButtonImage widget
+		// strImageFilename is the name of a file used to create a CResourceTexture2D resource added to SCResourceManager.
+		// An image is simply that. It is not clickable. If you want an image which is clickable, use the CGUIButtonImage widget
 		// If strImageFilename couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
-		GUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImage* getImage(const std::string& strName);
+		CGUIImage* getImage(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -167,16 +167,16 @@ namespace X
 		// Add animated image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// vecStrImageFilenames holds the names of each file used, for each frame to create a ResourceTexture2DAnimation resource added to ResourceManager.
+		// vecStrImageFilenames holds the names of each file used, for each frame to create a CResourceTexture2DAnimation resource added to SCResourceManager.
 		// If one of the images couldn't be loaded, an exception occurs
 		// Each of the images need to be the same dimensions and have the same number of colour channels, otherwise an exception occurs.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the images.
-		// The ResourceTexture2DAnimation in ResourceManager will have the same name as strName
-		GUIImageAnimated* addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth = -1.0f, float fHeight = -1.0f);
+		// The CResourceTexture2DAnimation in SCResourceManager will have the same name as strName
+		CGUIImageAnimated* addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageAnimated* getImageAnimated(const std::string& strName);
+		CGUIImageAnimated* getImageAnimated(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -188,13 +188,13 @@ namespace X
 		// Add framebuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strFBname is the name of the ResourceFramebuffer object resource added to ResourceManager.
+		// strFBname is the name of the CResourceFramebuffer object resource added to SCResourceManager.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the frame buffer.
-		GUIImageFramebuffer* addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImageFramebuffer* addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
+		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -208,11 +208,11 @@ namespace X
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
 		// Please note: The name should be unique for all text scroll objects added to this container as it is used to create the unique framebuffer resource.
 		// If the name is not unique, an exception occurs.
-		GUITextScroll* addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+		CGUITextScroll* addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUITextScroll* getTextScroll(const std::string& strName);
+		CGUITextScroll* getTextScroll(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -224,14 +224,14 @@ namespace X
 		// Add button image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strImageFilenameUp/Over/Down are the name of a files used to create the ResourceTexture2D resource added to ResourceManager.
+		// strImageFilenameUp/Over/Down are the name of a files used to create the CResourceTexture2D resource added to SCResourceManager.
 		// If the images couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
-		GUIButtonImage* addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIButtonImage* addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIButtonImage* getButtonImage(const std::string& strName);
+		CGUIButtonImage* getButtonImage(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -243,13 +243,13 @@ namespace X
 		// Add depthbuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strDBname is the name of the ResourceDepthbuffer object resource added to ResourceManager.
+		// strDBname is the name of the CResourceDepthbuffer object resource added to SCResourceManager.
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the depth buffer.
-		GUIImageDepthbuffer* addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth = -1.0f, float fHeight = -1.0f);
+		CGUIImageDepthbuffer* addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth = -1.0f, float fHeight = -1.0f);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		GUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
+		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -266,18 +266,18 @@ namespace X
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
 
-		std::map<std::string, GUIButton*> _mmapButtons;							// Hashmap for each added button
-		std::map<std::string, GUIText*> _mmapTexts;								// Hashmap for each added text
-		std::map<std::string, GUITextEdit*> _mmapTextEdits;						// Hashmap for each added text edit
-		std::map<std::string, GUISlider*> _mmapSliders;							// Hashmap for each added slider
-		std::map<std::string, GUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
-		std::map<std::string, GUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
-		std::map<std::string, GUIImage*> _mmapImages;							// Hashmap for each added image
-		std::map<std::string, GUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, GUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
-		std::map<std::string, GUITextScroll*> _mmapTextScrolls;					// Hashmap for each added text scroll
-		std::map<std::string, GUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
-		std::map<std::string, GUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
+		std::map<std::string, CGUIButton*> _mmapButtons;							// Hashmap for each added button
+		std::map<std::string, CGUIText*> _mmapTexts;								// Hashmap for each added text
+		std::map<std::string, CGUITextEdit*> _mmapTextEdits;						// Hashmap for each added text edit
+		std::map<std::string, CGUISlider*> _mmapSliders;							// Hashmap for each added slider
+		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
+		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
+		std::map<std::string, CGUITextScroll*> _mmapTextScrolls;					// Hashmap for each added text scroll
+		std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
+		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 

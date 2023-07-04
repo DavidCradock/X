@@ -9,37 +9,37 @@
 
 namespace X
 {
-	GUIButton::GUIButton()
+	CGUIButton::CGUIButton()
 	{
 		_mfCurrentTextCol[0] = _mfCurrentTextCol[1] = _mfCurrentTextCol[2] = _mfCurrentTextCol[3] = 0.0f;
 		_mState = state::up;
 		_mStatePrevious = state::up;
 		_mbClicked = false;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIButton::~GUIButton()
+	CGUIButton::~CGUIButton()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIButton::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUIButton::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal, col);
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
 
 		// Now render the font stuff
 		int iRTDims[2];
 		iRTDims[0] = int(pWindow->getWidth());
 		iRTDims[1] = int(pWindow->getHeight());
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.button);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.button);
 
 		pFont->printCentered(mstrText,										// The text
 			int(pContainer->mfPositionX + mfPositionX + (mfWidth / 2)),		// X position
@@ -49,17 +49,17 @@ namespace X
 			glm::vec4(_mfCurrentTextCol[0], _mfCurrentTextCol[1], _mfCurrentTextCol[2], _mfCurrentTextCol[3]));	// Colour
 	}
 
-	void GUIButton::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIButton::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		InputManager* pInput = InputManager::getPointer();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
-		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
+		CGUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -173,12 +173,12 @@ namespace X
 		bool bMouseOverForTT = false;
 		if (state::over == _mState || state::down == _mState)
 			bMouseOverForTT = true;
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 
 	}
 
-	bool GUIButton::getClicked(void)
+	bool CGUIButton::getClicked(void)
 	{
 		return _mbClicked;
 	}

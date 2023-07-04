@@ -10,12 +10,12 @@ namespace X
     // There's getFPS() which simply returns the current frames per second and then there's...
     // getFPSAveraged() which returns the frames per second which have been averaged over a certain amount of time.
     // This "certain amount of time" is, by default, set to be 1 update per second, but can be changed with a call to setAveragedFPSRate()
-    class Timer
+    class CTimer
     {
     public:
 
         // Constructor
-        Timer();
+        CTimer();
 
         // Call this to compute time difference between last call to this method.
         void update(void);

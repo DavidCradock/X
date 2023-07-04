@@ -6,16 +6,16 @@
 
 namespace X
 {
-	class GUITextEdit : public GUIBaseObject
+	class CGUITextEdit : public CGUIBaseObject
 	{
 	public:
-		GUITextEdit();
-		~GUITextEdit();
+		CGUITextEdit();
+		~CGUITextEdit();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		std::string mstrText;	// The text to be rendered on top of this button
@@ -36,24 +36,24 @@ namespace X
 		// // do stuff here
 		// // text contains the text within the text edit box
 		// }
-		// GUITextEdit *p = GUIManager::getPointer()->getTextEdit("MyTextEdit");
+		// CGUITextEdit *p = SCGUIManager::getPointer()->getTextEdit("MyTextEdit");
 		// p->setOnEnter(MyFunc);
 		void setOnEnter(void (*func)(const std::string& text));
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		Timer _mTimer;
+		CTimer _mTimer;
 		enum state
 		{
 			active,
 			inactive
 		};
 		state _mState;
-		GUIColour _mTextColour;	// Current colour of text based on state
+		CGUIColour _mTextColour;	// Current colour of text based on state
 		float _mfAddFlashingCursor;	// value is incremented and if above 1, adds an additional character to the text edit when active
 		unsigned int _muiMaxChars;	// Maximum number of characters this text edit can hold
 		bool _mbIntegerInputOnly;	// Only allow number input?

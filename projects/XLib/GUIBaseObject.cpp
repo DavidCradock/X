@@ -7,7 +7,7 @@
 
 namespace X
 {
-	GUIBaseObject::GUIBaseObject()
+	CGUIBaseObject::CGUIBaseObject()
 	{
 		mfPositionX = mfPositionY = 0.0f;
 		mfWidth = mfHeight = 32.0f;
@@ -108,34 +108,34 @@ namespace X
 		mTC.right.TL.y = point6;
 	}
 
-	void GUIBaseObject::setPosition(float fPosX, float fPosY)
+	void CGUIBaseObject::setPosition(float fPosX, float fPosY)
 	{
 		mfPositionX = fPosX;
 		mfPositionY = fPosY;
 	}
 
-	void GUIBaseObject::setDimensions(float fWidth, float fHeight)
+	void CGUIBaseObject::setDimensions(float fWidth, float fHeight)
 	{
 		mfWidth = fWidth;
 		mfHeight = fHeight;
 	}
 
-	void GUIBaseObject::renderBackground(void* pParentContainer,	// Pointer to the object's parent container
-		const std::string& strFramebufferToSampleFrom,				// The framebuffer to use as background when sampling (Given to GUIManager::render() and passed down)
+	void CGUIBaseObject::renderBackground(void* pParentContainer,	// Pointer to the object's parent container
+		const std::string& strFramebufferToSampleFrom,				// The framebuffer to use as background when sampling (Given to SCGUIManager::render() and passed down)
 		const std::string& strObjectColourTextureName,				// The name of the object's background colour texture
 		const std::string& strObjectNormalTextureName,				// The name of the object's background normal texture
-		GUIColour& colour)											// Colour
+		CGUIColour& colour)											// Colour
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
-		InputManager* pInput = InputManager::getPointer();
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:gui");
+		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
+		SCInputManager* pInput = SCInputManager::getPointer();
 
 		pShader->bind();
 
@@ -161,10 +161,10 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(strObjectColourTextureName);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(strObjectNormalTextureName);
-		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(strObjectColourTextureName);
+		CResourceTexture2D* pTexNormal = pRM->getTexture2D(strObjectNormalTextureName);
+		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);

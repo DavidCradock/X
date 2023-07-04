@@ -9,11 +9,11 @@
 
 namespace X
 {
-	GUIManager::GUIManager()
+	SCGUIManager::SCGUIManager()
 	{
 		_mfScale = 1.0f;
 		// Add default theme
-		GUITheme *pTheme = addTheme("default");
+		CGUITheme *pTheme = addTheme("default");
 		pTheme->loadTextures();
 		pTheme->addFontsToManager();
 
@@ -25,16 +25,16 @@ namespace X
 		setTooltipOffset(32.0f, 0.0f);
 	}
 
-	void GUIManager::render(const std::string& strFramebufferToSampleFrom)
+	void SCGUIManager::render(const std::string& strFramebufferToSampleFrom)
 	{
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 
 		// Update the timer object
 		_mTimer.update();
 
 		// Update each container
 		// Go through each container, starting with the one at the front first
-		GUIContainer* pContainer;
+		CGUIContainer* pContainer;
 		std::list<std::string>::iterator it = _mlistContainerZOrder.end();
 		bool bMouseIsOverContainerWhichIsAboveThisOne = false;
 		
@@ -93,58 +93,58 @@ namespace X
 		_updateDefaultContainers();
 	}
 
-	void GUIManager::setScale(float fScalingValue)
+	void SCGUIManager::setScale(float fScalingValue)
 	{
 		_mfScale = fScalingValue;
 	}
 
-	float GUIManager::getScale(void)
+	float SCGUIManager::getScale(void)
 	{
 		return _mfScale;
 	}
 
-	GUITheme* GUIManager::addTheme(const std::string& strName)
+	CGUITheme* SCGUIManager::addTheme(const std::string& strName)
 	{
 		// Attempt to find by name
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.find(strName);
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
 		// If it already exists, return a pointer to that.
 		if (it != _mmapThemes.end())
 			return it->second;
 
 		// Allocate the new theme
-		GUITheme* pNew = new GUITheme;
-		ThrowIfFalse(pNew, "GUIManager::addTheme(" + strName + ") failed. Unable to allocate memory for the new theme.");
+		CGUITheme* pNew = new CGUITheme;
+		ThrowIfFalse(pNew, "SCGUIManager::addTheme(" + strName + ") failed. Unable to allocate memory for the new theme.");
 
 		// Place in the hashmap
 		_mmapThemes[strName] = pNew;
 		return pNew;
 	}
 
-	GUITheme* GUIManager::getTheme(const std::string& strName)
+	CGUITheme* SCGUIManager::getTheme(const std::string& strName)
 	{
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.find(strName);
-		ThrowIfTrue(it == _mmapThemes.end(), "GUIManager::getTheme(" + strName + ") failed. Theme doesn't exist.");
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
+		ThrowIfTrue(it == _mmapThemes.end(), "SCGUIManager::getTheme(" + strName + ") failed. Theme doesn't exist.");
 		return it->second;
 	}
 
-	bool GUIManager::getThemeExists(const std::string& strName)
+	bool SCGUIManager::getThemeExists(const std::string& strName)
 	{
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.find(strName);
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
 		return it != _mmapThemes.end();
 	}
 
-	void GUIManager::removeTheme(const std::string& strName)
+	void SCGUIManager::removeTheme(const std::string& strName)
 	{
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.find(strName);
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
 		if (it == _mmapThemes.end())
 			return;	// Doesn't exist.
 		delete it->second;
 		_mmapThemes.erase(it);
 	}
 
-	void GUIManager::removeAllThemes(void)
+	void SCGUIManager::removeAllThemes(void)
 	{
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.begin();
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.begin();
 		while (it != _mmapThemes.end())
 		{
 			delete it->second;
@@ -153,45 +153,45 @@ namespace X
 		_mmapThemes.clear();
 	}
 
-	int GUIManager::getNumberOfThemes(void)
+	int SCGUIManager::getNumberOfThemes(void)
 	{
 		return (int)_mmapThemes.size();
 	}
 
-	std::string GUIManager::getThemeName(int iIndex)
+	std::string SCGUIManager::getThemeName(int iIndex)
 	{
-		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapThemes.size(), "GUIManager::getThemeName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
-		std::map<std::string, GUITheme*>::iterator it = _mmapThemes.begin();
+		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapThemes.size(), "SCGUIManager::getThemeName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
+		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.begin();
 		int iCount = 0;
 		while (iCount < iIndex)
 			it++;
 		return it->first;
 	}
 
-	void GUIManager::setThemeForAll(const std::string& strName)
+	void SCGUIManager::setThemeForAll(const std::string& strName)
 	{
-		ThrowIfTrue(1, "GUIManager::setThemeForAll() failed. This method isn't implemented yet!");
+		ThrowIfTrue(1, "SCGUIManager::setThemeForAll() failed. This method isn't implemented yet!");
 	}
 
 
-	GUIContainer* GUIManager::addContainer(const std::string& strName)
+	CGUIContainer* SCGUIManager::addContainer(const std::string& strName)
 	{
 		// Add container name to the Z order list
 		_mlistContainerZOrder.push_back(strName);
 
 		// Attempt to find by name
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
 		// If it already exists, return a pointer to that.
 		if (it != _mmapContainers.end())
 			return it->second;
 
 		// Allocate the new object
-		GUIContainer* pNew = new GUIContainer;
-		ThrowIfFalse(pNew, "GUIManager::addContainer(" + strName + ") failed. Unable to allocate memory for the new container.");
+		CGUIContainer* pNew = new CGUIContainer;
+		ThrowIfFalse(pNew, "SCGUIManager::addContainer(" + strName + ") failed. Unable to allocate memory for the new container.");
 
 		pNew->mstrTitleText = strName;
 
-		// Store name of container inside the container, as it's used to create unique names for things such as the framebuffers used by the GUITextScroll object.
+		// Store name of container inside the container, as it's used to create unique names for things such as the framebuffers used by the CGUITextScroll object.
 		pNew->_mstrName;	
 
 		// Place in the hashmap
@@ -199,20 +199,20 @@ namespace X
 		return pNew;
 	}
 
-	GUIContainer* GUIManager::getContainer(const std::string& strName)
+	CGUIContainer* SCGUIManager::getContainer(const std::string& strName)
 	{
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
-		ThrowIfTrue(it == _mmapContainers.end(), "GUIManager::getContainer(" + strName + ") failed. Container doesn't exist.");
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
+		ThrowIfTrue(it == _mmapContainers.end(), "SCGUIManager::getContainer(" + strName + ") failed. Container doesn't exist.");
 		return it->second;
 	}
 
-	bool GUIManager::getContainerExists(const std::string& strName)
+	bool SCGUIManager::getContainerExists(const std::string& strName)
 	{
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
 		return it != _mmapContainers.end();
 	}
 
-	void GUIManager::removeContainer(const std::string& strName)
+	void SCGUIManager::removeContainer(const std::string& strName)
 	{
 		// Remove container name from the Z order list
 		std::list<std::string>::iterator itlist = std::find(_mlistContainerZOrder.begin(), _mlistContainerZOrder.end(), strName);
@@ -221,19 +221,19 @@ namespace X
 			_mlistContainerZOrder.erase(itlist);
 		}
 
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.find(strName);
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
 		if (it == _mmapContainers.end())
 			return;	// Doesn't exist.
 		delete it->second;
 		_mmapContainers.erase(it);
 	}
 
-	void GUIManager::removeAllContainers(void)
+	void SCGUIManager::removeAllContainers(void)
 	{
 		// Clear the list holding Zordering
 		_mlistContainerZOrder.clear();
 
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.begin();
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.begin();
 		while (it != _mmapContainers.end())
 		{
 			delete it->second;
@@ -242,22 +242,22 @@ namespace X
 		_mmapContainers.clear();
 	}
 
-	int GUIManager::getNumberOfContainers(void)
+	int SCGUIManager::getNumberOfContainers(void)
 	{
 		return (int)_mmapContainers.size();
 	}
 
-	std::string GUIManager::getContainerName(int iIndex)
+	std::string SCGUIManager::getContainerName(int iIndex)
 	{
-		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapContainers.size(), "GUIManager::getContainerName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
-		std::map<std::string, GUIContainer*>::iterator it = _mmapContainers.begin();
+		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapContainers.size(), "SCGUIManager::getContainerName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.begin();
 		int iCount = 0;
 		while (iCount < iIndex)
 			it++;
 		return it->first;
 	}
 
-	void GUIManager::moveContainerToFront(const std::string& strContainerName)
+	void SCGUIManager::moveContainerToFront(const std::string& strContainerName)
 	{
 		std::list<std::string>::iterator itlist = std::find(_mlistContainerZOrder.begin(), _mlistContainerZOrder.end(), strContainerName);
 		if (itlist != _mlistContainerZOrder.end())
@@ -267,37 +267,37 @@ namespace X
 		}
 	}
 
-	bool GUIManager::getWindowBeingMoved(void)
+	bool SCGUIManager::getWindowBeingMoved(void)
 	{
 		return _mbWindowBeingMoved;
 	}
 
-	void GUIManager::setWindowBeingMoved(bool bWindowBeingMoved)
+	void SCGUIManager::setWindowBeingMoved(bool bWindowBeingMoved)
 	{
 		_mbWindowBeingMoved = bWindowBeingMoved;
 	}
 
-	void GUIManager::setAudioVol(float fVol)
+	void SCGUIManager::setAudioVol(float fVol)
 	{
 		clamp(fVol, 0.0f, 1.0f);
 		_mfAudioVol = fVol;
 	}
 
-	float GUIManager::getAudioVol(void)
+	float SCGUIManager::getAudioVol(void)
 	{
 		return _mfAudioVol;
 	}
 
-	void GUIManager::_createDefaultContainers(void)
+	void SCGUIManager::_createDefaultContainers(void)
 	{
-		GUIContainer* pCont = addContainer("X:Default:Statistics");
+		CGUIContainer* pCont = addContainer("X:Default:Statistics");
 		pCont->setDimensions(450.0f, 210.0f);
 		pCont->setPosition(100000.0f, 0.0f);
 		pCont->setVisible(false);
 		pCont->mstrTitleText = "Statistics";
 
-		GUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 120);
-		GUIColour col;
+		CGUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 120);
+		CGUIColour col;
 		col.set(1.0f, 1.0f, 1.0f, 0.5f);	pLineGraph->addDataset("FPS", col);
 		col.set(1.0f, 1.0f, 1.0f, 1.0f);	pLineGraph->addDataset("FPSAVR", col);
 		pCont->addText("Text_FPSMax", 330, 0, "FPSMax: ")->setColour(false, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -311,28 +311,28 @@ namespace X
 
 		// Close button
 		pCont->addButton("Close", 225 - 50, 190, 100, 30, "Close");
-		GUITooltip* pTT = (GUITooltip*)pCont->getButton("Close")->mpTooltip;
+		CGUITooltip* pTT = (CGUITooltip*)pCont->getButton("Close")->mpTooltip;
 		pTT->setAsText("Close window.");
 	}
 
-	void GUIManager::_updateDefaultContainers(void)
+	void SCGUIManager::_updateDefaultContainers(void)
 	{
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		GUIContainer* pCont = getContainer("X:Default:Statistics");
-		GUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		CGUIContainer* pCont = getContainer("X:Default:Statistics");
+		CGUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		if (pCont->getVisible())
 		{
-			GUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
+			CGUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
 			
 			// Add new value to linegraph data set
 			_mDefContStatistics.fAddValueToLinegraphDataset += _mTimer.getSecondsPast();
 			if (_mDefContStatistics.fAddValueToLinegraphDataset >= 0.1f)
 			{
 				_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
-				GUILineGraphDataSet* pDataSetFPS = pLineGraph->getDataset("FPS");
-				GUILineGraphDataSet* pDataSetFPSAVR = pLineGraph->getDataset("FPSAVR");
+				CGUILineGraphDataSet* pDataSetFPS = pLineGraph->getDataset("FPS");
+				CGUILineGraphDataSet* pDataSetFPSAVR = pLineGraph->getDataset("FPSAVR");
 
 				pDataSetFPS->addValue(_mTimer.getFPS());
 				pDataSetFPSAVR->addValue(_mTimer.getFPSAveraged());
@@ -359,7 +359,7 @@ namespace X
 					fMin = fMinFPSAVR;
 
 				str = "FPSMin: " + std::to_string((int)fMin);
-				GUIText* pText = pCont->getText("Text_FPSMin");
+				CGUIText* pText = pCont->getText("Text_FPSMin");
 				pText->mstrText = str;
 
 				// Set Text_FPSMin position
@@ -382,29 +382,29 @@ namespace X
 			}
 
 			// Close button
-			GUIButton* pButton = pCont->getButton("Close");
+			CGUIButton* pButton = pCont->getButton("Close");
 			if (pButton->getClicked())
 				pCont->setVisible(false);
 		}
 	}
 
-	void GUIManager::setTooltipDelay(float fSeconds)
+	void SCGUIManager::setTooltipDelay(float fSeconds)
 	{
 		_mfTooltipDelaySeconds = fSeconds;
 	}
 
-	float GUIManager::getTooltipDelay(void)
+	float SCGUIManager::getTooltipDelay(void)
 	{
 		return _mfTooltipDelaySeconds;
 	}
 
-	void GUIManager::setTooltipOffset(float fOffsetX, float fOffsetY)
+	void SCGUIManager::setTooltipOffset(float fOffsetX, float fOffsetY)
 	{
 		_mv2TooltipOffset.x = fOffsetX;
 		_mv2TooltipOffset.y = fOffsetY;
 	}
 
-	glm::vec2 GUIManager::getTooltipOffset(void)
+	glm::vec2 SCGUIManager::getTooltipOffset(void)
 	{
 		return _mv2TooltipOffset;
 	}

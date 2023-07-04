@@ -4,7 +4,7 @@
 namespace X
 {
 
-	InputMouse::InputMouse(void)
+	CInputMouse::CInputMouse(void)
 	{
 		windowHandle = NULL;
 		lpDIDeviceM = NULL;
@@ -26,11 +26,11 @@ namespace X
 		mouseDeltaZ = 0.0f;
 	}
 
-	InputMouse::~InputMouse(void)
+	CInputMouse::~CInputMouse(void)
 	{
 	}
 
-	bool InputMouse::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
+	bool CInputMouse::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
 	{
 		windowHandle = hApplicationWindow;
 
@@ -62,7 +62,7 @@ namespace X
 		return true;	// Success!
 	}
 
-	void InputMouse::update(bool fullscreen, unsigned int screenWidth, unsigned int screenHeight)
+	void CInputMouse::update(bool fullscreen, unsigned int screenWidth, unsigned int screenHeight)
 	{
 		DIMOUSESTATE mouseState;	// Struct to store state of mouse
 		HRESULT hr = lpDIDeviceM->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mouseState);
@@ -182,7 +182,7 @@ namespace X
 		}
 	}
 
-	void InputMouse::release(void)
+	void CInputMouse::release(void)
 	{
 		if (lpDIDeviceM)	// Mouse object exists?
 		{
@@ -192,7 +192,7 @@ namespace X
 		}
 	}
 
-	void InputMouse::setMousePos(int x, int y)
+	void CInputMouse::setMousePos(int x, int y)
 	{
 		mouseX = float(x);
 		mouseY = float(y);

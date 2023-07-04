@@ -7,7 +7,7 @@
 namespace X
 {
 
-	ResourceTexture2DAnimation::ResourceTexture2DAnimation(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
+	CResourceTexture2DAnimation::CResourceTexture2DAnimation(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		_mbFlipYaxis = bFlipYaxis;
 
@@ -17,12 +17,12 @@ namespace X
 		onGLContextCreated();
 	}
 
-	ResourceTexture2DAnimation::~ResourceTexture2DAnimation()
+	CResourceTexture2DAnimation::~CResourceTexture2DAnimation()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceTexture2DAnimation::onGLContextCreated(void)
+	void CResourceTexture2DAnimation::onGLContextCreated(void)
 	{
 		// For each of the large images, create a texture
 		for (int i = 0; i < _mvLargeTextureIDs.size(); i++)
@@ -42,7 +42,7 @@ namespace X
 		}
 	}
 
-	void ResourceTexture2DAnimation::onGLContextToBeDestroyed(void)
+	void CResourceTexture2DAnimation::onGLContextToBeDestroyed(void)
 	{
 		// For each of the large images, delete texture
 		for (int i = 0; i < _mvLargeTextureIDs.size(); i++)
@@ -52,9 +52,9 @@ namespace X
 		}
 	}
 
-	void ResourceTexture2DAnimation::bind(unsigned int uiTextureUnit, unsigned int uiFrameNumber)
+	void CResourceTexture2DAnimation::bind(unsigned int uiTextureUnit, unsigned int uiFrameNumber)
 	{
-		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "ResourceTexture2DAnimation::bind() given invalid frame number.");
+		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "CResourceTexture2DAnimation::bind() given invalid frame number.");
 
 		switch (uiTextureUnit)
 		{
@@ -86,7 +86,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _mvLargeTextureIDs[_mvAnimationFrames[uiFrameNumber].uiTextureNumber]);
 	}
 
-	void ResourceTexture2DAnimation::unbind(unsigned int uiTextureUnit)
+	void CResourceTexture2DAnimation::unbind(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -118,7 +118,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void ResourceTexture2DAnimation::unbindAll(void)
+	void CResourceTexture2DAnimation::unbindAll(void)
 	{
 		glActiveTexture(GL_TEXTURE7);	glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE6);	glBindTexture(GL_TEXTURE_2D, 0);
@@ -130,35 +130,35 @@ namespace X
 		glActiveTexture(GL_TEXTURE0);	glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int ResourceTexture2DAnimation::getNumFrames(void)
+	unsigned int CResourceTexture2DAnimation::getNumFrames(void)
 	{
 		return unsigned int(_mvAnimationFrames.size());
 	}
 
-	void ResourceTexture2DAnimation::getTextureCoords(unsigned int uiFrameNumber, glm::vec2& vTCMin, glm::vec2& vTCMax)
+	void CResourceTexture2DAnimation::getTextureCoords(unsigned int uiFrameNumber, glm::vec2& vTCMin, glm::vec2& vTCMax)
 	{
-		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "ResourceTexture2DAnimation::getTextureCoords() given invalid frame number.");
+		ThrowIfTrue(uiFrameNumber >= _mvAnimationFrames.size(), "CResourceTexture2DAnimation::getTextureCoords() given invalid frame number.");
 		vTCMin = _mvAnimationFrames[uiFrameNumber].vTCMin;
 		vTCMax = _mvAnimationFrames[uiFrameNumber].vTCMax;
 	}
 
-	void ResourceTexture2DAnimation::_packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
+	void CResourceTexture2DAnimation::_packImagesIntoLargeImages(const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		// Make sure the vector is valid
-		ThrowIfTrue(0 == vecStrImageFilenames.size(), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Given vector of strings has no data.");
+		ThrowIfTrue(0 == vecStrImageFilenames.size(), "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Given vector of strings has no data.");
 
 		// Load first image in the vector and determine dimensions
 		CImage image;
 		int iImageWidth, iImageHeight, iImageChannels;
-		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to determined dimensions of first image.");
+		ThrowIfFalse(image.loadInfo(vecStrImageFilenames[0], iImageWidth, iImageHeight, iImageChannels), "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to determined dimensions of first image.");
 
 		// Set dimensions of a single texture
 		mvDimensions.x = (float)iImageWidth;
 		mvDimensions.y = (float)iImageHeight;
 
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
-		int iMaxTextureDims = Window::getPointer()->getMaxTextureSize();
-		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
+		int iMaxTextureDims = CWindow::getPointer()->getMaxTextureSize();
+		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed
 		std::vector<CImage*> vImages;	// Holds each individual image
@@ -174,17 +174,17 @@ namespace X
 		{
 			// Create new image and store in vImages
 			CImage* pNewImage = new CImage;
-			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to allocate memory for image " + vecStrImageFilenames[iImage] + ".");
+			ThrowIfFalse(pNewImage, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to allocate memory for image " + vecStrImageFilenames[iImage] + ".");
 			vImages.push_back(pNewImage);
 
 			// Load in the image
-			ThrowIfFalse(vImages[iImage]->load(vecStrImageFilenames[iImage], bFlipYaxis), "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to load image " + vecStrImageFilenames[iImage] + " in.");
+			ThrowIfFalse(vImages[iImage]->load(vecStrImageFilenames[iImage], bFlipYaxis), "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Unable to load image " + vecStrImageFilenames[iImage] + " in.");
 
 			// Make sure it's the same dimensions as the first image
-			ThrowIfTrue((int)vImages[iImage]->getWidth() != iImageWidth || (int)vImages[iImage]->getHeight() != iImageHeight, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different dimensions of first image.");
+			ThrowIfTrue((int)vImages[iImage]->getWidth() != iImageWidth || (int)vImages[iImage]->getHeight() != iImageHeight, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different dimensions of first image.");
 
 			// Make sure the number of channels is the same as the first image
-			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
+			ThrowIfTrue((int)vImages[iImage]->getNumChannels() != iImageChannels, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image " + vecStrImageFilenames[iImage] + " has different number of channels than first image.");
 
 			// If this new image fits within iMaxTextureDims
 			if (animFrame.vTCMax.x <= iMaxTextureDims)
@@ -234,7 +234,7 @@ namespace X
 		for (int iLargeImage = 0; iLargeImage < iNumImages; iLargeImage++)
 		{
 			CImage* pNewImage = new CImage;
-			ThrowIfFalse(pNewImage, "ResourceTexture2DAnimation::_packImagesIntoLargeImages() failed to allocated memory for large image.");
+			ThrowIfFalse(pNewImage, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed to allocated memory for large image.");
 			_mvLargeImages.push_back(pNewImage);
 			_mvLargeImages[iLargeImage]->createBlank((unsigned int)vecLargeImageDims[iLargeImage].x, (unsigned int)vecLargeImageDims[iLargeImage].y, (unsigned short)iImageChannels);
 		}
@@ -279,7 +279,7 @@ namespace X
 		}
 	}
 
-	unsigned int ResourceTexture2DAnimation::getNumPackedTextures(void)
+	unsigned int CResourceTexture2DAnimation::getNumPackedTextures(void)
 	{
 		return (unsigned int)_mvLargeTextureIDs.size();
 	}

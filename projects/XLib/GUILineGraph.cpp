@@ -9,12 +9,12 @@
 
 namespace X
 {
-	void GUILineGraphDataSet::addValue(float fValue)
+	void CGUILineGraphDataSet::addValue(float fValue)
 	{
 		values.push_back(fValue);
 	}
 
-	void GUILineGraphDataSet::removeValue(void)
+	void CGUILineGraphDataSet::removeValue(void)
 	{
 		if (values.size())
 		{
@@ -23,12 +23,12 @@ namespace X
 		}
 	}
 
-	unsigned int GUILineGraphDataSet::getNumValues(void)
+	unsigned int CGUILineGraphDataSet::getNumValues(void)
 	{
 		return (unsigned int)values.size();
 	}
 
-	float GUILineGraphDataSet::getHighestValue(void)
+	float CGUILineGraphDataSet::getHighestValue(void)
 	{
 		if (!values.size())
 			return 0.0f;
@@ -42,7 +42,7 @@ namespace X
 		return fResult;
 	}
 
-	float GUILineGraphDataSet::getLowestValue(void)
+	float CGUILineGraphDataSet::getLowestValue(void)
 	{
 		if (!values.size())
 			return 0.0f;
@@ -55,29 +55,29 @@ namespace X
 		return fResult;
 	}
 
-	GUILineGraph::GUILineGraph()
+	CGUILineGraph::CGUILineGraph()
 	{
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUILineGraph::~GUILineGraph()
+	CGUILineGraph::~CGUILineGraph()
 	{
 		delete mpTooltip;
 	}
 
-	void GUILineGraph::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUILineGraph::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal, col);
 
 		// Get required resources needed to render
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceLine* pLine = pRM->getLine("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:line");
-		Window* pWindow = Window::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceLine* pLine = pRM->getLine("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:line");
+		CWindow* pWindow = CWindow::getPointer();
 
 		pShader->bind();
 
@@ -96,8 +96,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D("X:default_white");
-		ResourceTexture2D* pTexBG = pRM->getTexture2D(pTheme->mImages.lineGraphBGColour);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D("X:default_white");
+		CResourceTexture2D* pTexBG = pRM->getTexture2D(pTheme->mImages.lineGraphBGColour);
 		glm::vec2 vTexDimsPoint3 = pTexBG->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTexBG->mvDimensions * 0.6666666f;
 
@@ -110,7 +110,7 @@ namespace X
 		unsigned int iMaxNumEntries = 0;
 
 		// For each data set
-		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
+		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
 		while (it != _mmapDataSets.end())
 		{
 			// Get largest amount of entries of all data sets
@@ -141,7 +141,7 @@ namespace X
 
 			pLine->removeGeom();
 			pLine->setDrawModeAsLineStrip();
-			ResourceLine::Vertex vert;
+			CResourceLine::Vertex vert;
 
 			// For each data set (line)
 			it = _mmapDataSets.begin();
@@ -176,14 +176,14 @@ namespace X
 		glDisable(GL_BLEND);
 	}
 
-	void GUILineGraph::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUILineGraph::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		_mTimer.update();
 
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -194,47 +194,47 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 
 	}
 
-	GUILineGraphDataSet* GUILineGraph::addDataset(const std::string& strName, const GUIColour& cCol)
+	CGUILineGraphDataSet* CGUILineGraph::addDataset(const std::string& strName, const CGUIColour& cCol)
 	{
-		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
-		ThrowIfTrue(it != _mmapDataSets.end(), "GUILineGraph::addDataSet(" + strName + ") failed. The named data set already exists.");
-		GUILineGraphDataSet* pNew = new GUILineGraphDataSet;
-		ThrowIfFalse(pNew, "GUILineGraph::addDataSet(" + strName + ") failed. Unable to allocate memory for new data set.");
+		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		ThrowIfTrue(it != _mmapDataSets.end(), "CGUILineGraph::addDataSet(" + strName + ") failed. The named data set already exists.");
+		CGUILineGraphDataSet* pNew = new CGUILineGraphDataSet;
+		ThrowIfFalse(pNew, "CGUILineGraph::addDataSet(" + strName + ") failed. Unable to allocate memory for new data set.");
 		pNew->colour = cCol;
 		_mmapDataSets[strName] = pNew;
 		return pNew;
 	}
 
-	GUILineGraphDataSet* GUILineGraph::getDataset(const std::string& strName)
+	CGUILineGraphDataSet* CGUILineGraph::getDataset(const std::string& strName)
 	{
-		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
-		ThrowIfTrue(it == _mmapDataSets.end(), "GUILineGraph::getDataset(" + strName + ") failed. The named data set doesn't exist.");
+		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		ThrowIfTrue(it == _mmapDataSets.end(), "CGUILineGraph::getDataset(" + strName + ") failed. The named data set doesn't exist.");
 		return it->second;
 	}
 
-	void GUILineGraph::removeDataset(const std::string& strName)
+	void CGUILineGraph::removeDataset(const std::string& strName)
 	{
-		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
+		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
 		if (it == _mmapDataSets.end())
 			return;
 		delete it->second;
 		_mmapDataSets.erase(it);
 	}
 
-	unsigned int GUILineGraph::getNumDatasets(void)
+	unsigned int CGUILineGraph::getNumDatasets(void)
 	{
 		return (unsigned int)_mmapDataSets.size();
 	}
 
-	std::string GUILineGraph::getDatasetName(unsigned int iIndex)
+	std::string CGUILineGraph::getDatasetName(unsigned int iIndex)
 	{
-		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapDataSets.size(), "GUILineGraph::getDatasetName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
-		std::map<std::string, GUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
+		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapDataSets.size(), "CGUILineGraph::getDatasetName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
+		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.begin();
 		unsigned int iCount = 0;
 		while (iCount < iIndex)
 			it++;

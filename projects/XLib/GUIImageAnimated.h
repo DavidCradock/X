@@ -6,34 +6,34 @@
 
 namespace X
 {
-	class GUIImageAnimated : public GUIBaseObject
+	class CGUIImageAnimated : public CGUIBaseObject
 	{
-		friend class GUIContainer;
-		friend class GUITooltip;
+		friend class CGUIContainer;
+		friend class CGUITooltip;
 	public:
-		GUIImageAnimated();
-		~GUIImageAnimated();
+		CGUIImageAnimated();
+		~CGUIImageAnimated();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Sets the playback rate of the animation
 		void setFramesPerSecond(float fFramesPerSecond);
-		GUIColour mColour;
+		CGUIColour mColour;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		Timer _mTimer;
+		CTimer _mTimer;
 		float _mfFramesPerSecond;
 		float _mfCurrentFrame;
-		std::string _mstrResourceTexture2DAnimationName;	// Name of the ResourceTexture2DAnimation stored in ResourceManager
+		std::string _mstrResourceTexture2DAnimationName;	// Name of the CResourceTexture2DAnimation stored in SCResourceManager
 
 	};
 }

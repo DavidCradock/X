@@ -5,16 +5,16 @@
 
 namespace X
 {
-	class GUIButton : public GUIBaseObject
+	class CGUIButton : public CGUIBaseObject
 	{
 	public:
-		GUIButton();
-		~GUIButton();
+		CGUIButton();
+		~CGUIButton();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void *pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		std::string mstrText;	// The text to be rendered on top of this button
@@ -25,10 +25,10 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		Timer _mTimer;
+		CTimer _mTimer;
 		float _mfCurrentTextCol[4];	// Current text colour (fading between up/over/down states)
 		enum state
 		{

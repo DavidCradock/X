@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class ResourceDepthbuffer : public ResourceBase
+	class CResourceDepthbuffer : public CResourceBase
 	{
 	public:
-		ResourceDepthbuffer(unsigned int iWidth, unsigned int iHeight);
-		~ResourceDepthbuffer();
+		CResourceDepthbuffer(unsigned int iWidth, unsigned int iHeight);
+		~CResourceDepthbuffer();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

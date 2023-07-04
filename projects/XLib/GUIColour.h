@@ -4,11 +4,11 @@
 namespace X
 {
 	// Used throughout the GUI code to represent a colour
-	class GUIColour
+	class CGUIColour
 	{
 	public:
 		// Constructor, sets to default values
-		GUIColour();
+		CGUIColour();
 
 		// Sets the colour to the given values.
 		// Clamps the values in the range of 0.0f and 1.0f

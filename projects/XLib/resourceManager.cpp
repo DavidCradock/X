@@ -1,15 +1,15 @@
 #include "PCH.h"
 #include "resourceManager.h"
 #include "log.h"
-#include "image.h"	// For building the ResourceFont files with buildFontFiles()
+#include "image.h"	// For building the CResourceFont files with buildFontFiles()
 namespace X
 {
-	ResourceManager::ResourceManager()
+	SCResourceManager::SCResourceManager()
 	{
 
 	}
 
-	void ResourceManager::onGLContextToBeDestroyed(void)
+	void SCResourceManager::onGLContextToBeDestroyed(void)
 	{
 		// For each of the resources, call their onGLContextToBeDestroyed() methods.
 
@@ -78,7 +78,7 @@ namespace X
 		}
 	}
 
-	void ResourceManager::onGLContextRecreated(void)
+	void SCResourceManager::onGLContextRecreated(void)
 	{
 		// For each of the resources, call their onGLContextCreated() methods.
 
@@ -147,7 +147,7 @@ namespace X
 		}
 	}
 
-	ResourceFont* ResourceManager::addFont(const std::string& strResourceName, const std::string& strFontFilename)
+	CResourceFont* SCResourceManager::addFont(const std::string& strResourceName, const std::string& strFontFilename)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
@@ -158,25 +158,25 @@ namespace X
 		}
 		SResourceFont newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceFont(strFontFilename);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addFont(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceFont(strFontFilename);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addFont(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResFonts[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceFont* ResourceManager::getFont(const std::string& strResourceName)
+	CResourceFont* SCResourceManager::getFont(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
-		ThrowIfTrue(it == _mmapResFonts.end(), "ResourceManager::getFont(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResFonts.end(), "SCResourceManager::getFont(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getFontExists(const std::string& strResourceName)
+	bool SCResourceManager::getFontExists(const std::string& strResourceName)
 	{
 		return _mmapResFonts.find(strResourceName) != _mmapResFonts.end();
 	}
 
-	void ResourceManager::removeFont(const std::string& strResourceName)
+	void SCResourceManager::removeFont(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
 		if (it == _mmapResFonts.end())
@@ -190,7 +190,7 @@ namespace X
 		_mmapResFonts.erase(it);
 	}
 
-	ResourceFramebuffer* ResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	CResourceFramebuffer* SCResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
@@ -201,25 +201,25 @@ namespace X
 		}
 		SResourceFramebuffer newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceFramebuffer(uiWidth, uiHeight);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceFramebuffer(uiWidth, uiHeight);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResFramebuffers[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceFramebuffer* ResourceManager::getFramebuffer(const std::string& strResourceName)
+	CResourceFramebuffer* SCResourceManager::getFramebuffer(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
-		ThrowIfTrue(it == _mmapResFramebuffers.end(), "ResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getFramebufferExists(const std::string& strResourceName)
+	bool SCResourceManager::getFramebufferExists(const std::string& strResourceName)
 	{
 		return _mmapResFramebuffers.find(strResourceName) != _mmapResFramebuffers.end();
 	}
 
-	void ResourceManager::removeFramebuffer(const std::string& strResourceName)
+	void SCResourceManager::removeFramebuffer(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
 		if (it == _mmapResFramebuffers.end())
@@ -233,7 +233,7 @@ namespace X
 		_mmapResFramebuffers.erase(it);
 	}
 
-	ResourceDepthbuffer* ResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
@@ -244,25 +244,25 @@ namespace X
 		}
 		SResourceDepthbuffer newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceDepthbuffer(uiWidth, uiHeight);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addDepthbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceDepthbuffer(uiWidth, uiHeight);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addDepthbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResDepthbuffers[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceDepthbuffer* ResourceManager::getDepthbuffer(const std::string& strResourceName)
+	CResourceDepthbuffer* SCResourceManager::getDepthbuffer(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
-		ThrowIfTrue(it == _mmapResDepthbuffers.end(), "ResourceManager::getDepthbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResDepthbuffers.end(), "SCResourceManager::getDepthbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getDepthbufferExists(const std::string& strResourceName)
+	bool SCResourceManager::getDepthbufferExists(const std::string& strResourceName)
 	{
 		return _mmapResDepthbuffers.find(strResourceName) != _mmapResDepthbuffers.end();
 	}
 
-	void ResourceManager::removeDepthbuffer(const std::string& strResourceName)
+	void SCResourceManager::removeDepthbuffer(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
 		if (it == _mmapResDepthbuffers.end())
@@ -276,7 +276,7 @@ namespace X
 		_mmapResDepthbuffers.erase(it);
 	}
 
-	ResourceShader* ResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
+	CResourceShader* SCResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
@@ -287,25 +287,25 @@ namespace X
 		}
 		SResourceShader newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceShader(strVertexProgramFilename, strFragmentProgramFilename);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addShader(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceShader(strVertexProgramFilename, strFragmentProgramFilename);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addShader(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResShaders[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceShader* ResourceManager::getShader(const std::string& strResourceName)
+	CResourceShader* SCResourceManager::getShader(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
-		ThrowIfTrue(it == _mmapResShaders.end(), "ResourceManager::getShader(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResShaders.end(), "SCResourceManager::getShader(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getShaderExists(const std::string& strResourceName)
+	bool SCResourceManager::getShaderExists(const std::string& strResourceName)
 	{
 		return _mmapResShaders.find(strResourceName) != _mmapResShaders.end();
 	}
 
-	void ResourceManager::removeShader(const std::string& strResourceName)
+	void SCResourceManager::removeShader(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
 		if (it == _mmapResShaders.end())
@@ -319,7 +319,7 @@ namespace X
 		_mmapResShaders.erase(it);
 	}
 
-	ResourceTexture2D* ResourceManager::addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis)
+	CResourceTexture2D* SCResourceManager::addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceTexture2D>::iterator it = _mmapResTextures2D.find(strResourceName);
@@ -330,25 +330,25 @@ namespace X
 		}
 		SResourceTexture2D newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceTexture2D(strImageFilename, bFlipYaxis);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addTexture2D(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceTexture2D(strImageFilename, bFlipYaxis);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2D(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTextures2D[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceTexture2D* ResourceManager::getTexture2D(const std::string& strResourceName)
+	CResourceTexture2D* SCResourceManager::getTexture2D(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2D>::iterator it = _mmapResTextures2D.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTextures2D.end(), "ResourceManager::getTexture2D(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResTextures2D.end(), "SCResourceManager::getTexture2D(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getTexture2DExists(const std::string& strResourceName)
+	bool SCResourceManager::getTexture2DExists(const std::string& strResourceName)
 	{
 		return _mmapResTextures2D.find(strResourceName) != _mmapResTextures2D.end();
 	}
 
-	void ResourceManager::removeTexture2D(const std::string& strResourceName)
+	void SCResourceManager::removeTexture2D(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2D>::iterator it = _mmapResTextures2D.find(strResourceName);
 		if (it == _mmapResTextures2D.end())
@@ -362,7 +362,7 @@ namespace X
 		_mmapResTextures2D.erase(it);
 	}
 
-	ResourceTriangle* ResourceManager::addTriangle(const std::string& strResourceName)
+	CResourceTriangle* SCResourceManager::addTriangle(const std::string& strResourceName)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
@@ -373,25 +373,25 @@ namespace X
 		}
 		SResourceTriangle newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceTriangle();
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addTriangle(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceTriangle();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTriangle(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTriangles[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceTriangle* ResourceManager::getTriangle(const std::string& strResourceName)
+	CResourceTriangle* SCResourceManager::getTriangle(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTriangles.end(), "ResourceManager::getTriangle(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResTriangles.end(), "SCResourceManager::getTriangle(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getTriangleExists(const std::string& strResourceName)
+	bool SCResourceManager::getTriangleExists(const std::string& strResourceName)
 	{
 		return _mmapResTriangles.find(strResourceName) != _mmapResTriangles.end();
 	}
 
-	void ResourceManager::removeTriangle(const std::string& strResourceName)
+	void SCResourceManager::removeTriangle(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
 		if (it == _mmapResTriangles.end())
@@ -405,7 +405,7 @@ namespace X
 		_mmapResTriangles.erase(it);
 	}
 
-	ResourceLine* ResourceManager::addLine(const std::string& strResourceName)
+	CResourceLine* SCResourceManager::addLine(const std::string& strResourceName)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
@@ -416,25 +416,25 @@ namespace X
 		}
 		SResourceLine newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceLine();
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addLine(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceLine();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addLine(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResLines[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceLine* ResourceManager::getLine(const std::string& strResourceName)
+	CResourceLine* SCResourceManager::getLine(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
-		ThrowIfTrue(it == _mmapResLines.end(), "ResourceManager::getLine(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResLines.end(), "SCResourceManager::getLine(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getLineExists(const std::string& strResourceName)
+	bool SCResourceManager::getLineExists(const std::string& strResourceName)
 	{
 		return _mmapResLines.find(strResourceName) != _mmapResLines.end();
 	}
 
-	void ResourceManager::removeLine(const std::string& strResourceName)
+	void SCResourceManager::removeLine(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
 		if (it == _mmapResLines.end())
@@ -448,7 +448,7 @@ namespace X
 		_mmapResLines.erase(it);
 	}
 
-	ResourceTexture2DAnimation* ResourceManager::addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
+	CResourceTexture2DAnimation* SCResourceManager::addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
@@ -459,25 +459,25 @@ namespace X
 		}
 		SResourceTexture2DAnimation newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new ResourceTexture2DAnimation(vecStrImageFilenames, bFlipYaxis);
-		ThrowIfFalse(newRes.pResource, "ResourceManager::addTexture2DAnimation(" + strResourceName + ") failed to allocate memory for new resource.");
+		newRes.pResource = new CResourceTexture2DAnimation(vecStrImageFilenames, bFlipYaxis);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DAnimation(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTextures2DAnimation[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	ResourceTexture2DAnimation* ResourceManager::getTexture2DAnimation(const std::string& strResourceName)
+	CResourceTexture2DAnimation* SCResourceManager::getTexture2DAnimation(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTextures2DAnimation.end(), "ResourceManager::getTexture2DAnimation(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResTextures2DAnimation.end(), "SCResourceManager::getTexture2DAnimation(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool ResourceManager::getTexture2DAnimationExists(const std::string& strResourceName)
+	bool SCResourceManager::getTexture2DAnimationExists(const std::string& strResourceName)
 	{
 		return _mmapResTextures2DAnimation.find(strResourceName) != _mmapResTextures2DAnimation.end();
 	}
 
-	void ResourceManager::removeTexture2DAnimation(const std::string& strResourceName)
+	void SCResourceManager::removeTexture2DAnimation(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
 		if (it == _mmapResTextures2DAnimation.end())
@@ -491,7 +491,7 @@ namespace X
 		_mmapResTextures2DAnimation.erase(it);
 	}
 
-	void ResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
+	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create an image holding each characters' image and saves the image to disk.
@@ -527,13 +527,13 @@ namespace X
 			iAntiAliased,				// Output Quality. Either ANTIALIASED_QUALITY or NONANTIALIASED_QUALITY
 			FF_DONTCARE | DEFAULT_PITCH,// Family And Pitch
 			StringToWString(strFontName).c_str());		// Font Name
-		ThrowIfTrue(font == NULL, "ResourceManager::buildFontFiles() failed upon call to Win32 API call CreateFont()");
+		ThrowIfTrue(font == NULL, "SCResourceManager::buildFontFiles() failed upon call to Win32 API call CreateFont()");
 
 		hDC = CreateCompatibleDC(0);
 		if (0 == hDC)
 		{
 			DeleteObject(font);
-			ThrowIfTrue(1, "ResourceManager::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
+			ThrowIfTrue(1, "SCResourceManager::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
 		}
 
 		SetTextColor(hDC, RGB(255, 255, 255));
@@ -546,7 +546,7 @@ namespace X
 		SelectObject(hDC, font);
 		GetTextMetrics(hDC, &tm);
 		float fMaxHeight = (float)tm.tmHeight;
-		ResourceFont::CharDesc charDesc[256];
+		CResourceFont::CharDesc charDesc[256];
 		ABCFLOAT abcf;
 		// Get information for the font
 		SelectObject(hDC, font);
@@ -643,7 +643,7 @@ namespace X
 			SelectObject(hDC, oldFont);
 			DeleteObject(font);
 			DeleteDC(hDC);
-			ThrowIfTrue(1, "ResourceManager::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
+			ThrowIfTrue(1, "SCResourceManager::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
 		}
 		// Draw chars into bitmap
 		SelectObject(hDC, hBMP);
@@ -712,17 +712,17 @@ namespace X
 		FILE* f = 0;
 		strOutputNameBase.append(".fnt");
 		fopen_s(&f, strOutputNameBase.c_str(), "wb");
-		ThrowIfTrue(!f, "ResourceManager::buildFontFiles() failed. Unable to open file for saving.");
+		ThrowIfTrue(!f, "SCResourceManager::buildFontFiles() failed. Unable to open file for saving.");
 
 		// Write out max char height of each of the fonts
 		if (1 != fwrite(&fMaxHeight, sizeof(float), 1, f))
-			ThrowIfTrue(1, "ResourceManager::buildFontFiles() failed. Error while saving.");
+			ThrowIfTrue(1, "SCResourceManager::buildFontFiles() failed. Error while saving.");
 
 		// Write out each of the characters' info, for the normal font
-		if (256 != fwrite(charDesc, sizeof(ResourceFont::CharDesc), 256, f))
+		if (256 != fwrite(charDesc, sizeof(CResourceFont::CharDesc), 256, f))
 		{
 			fclose(f);
-			ThrowIfTrue(!f, "ResourceManager::buildFontFiles() failed. Error while saving.");
+			ThrowIfTrue(!f, "SCResourceManager::buildFontFiles() failed. Error while saving.");
 		}
 
 		fclose(f);

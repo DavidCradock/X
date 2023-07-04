@@ -8,31 +8,31 @@
 
 namespace X
 {
-	GUIText::GUIText()
+	CGUIText::CGUIText()
 	{
 		_mbUseThemeColour = true;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIText::~GUIText()
+	CGUIText::~CGUIText()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIText::render(void* pParentContainer)
+	void CGUIText::render(void* pParentContainer)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
 	
 		int iRTDims[2];
 		iRTDims[0] = int(pWindow->getWidth());
 		iRTDims[1] = int(pWindow->getHeight());
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
-		GUIColour col;
+		CGUIColour col;
 		if (_mbUseThemeColour)
 		{
 			col = pTheme->mColours.text;
@@ -49,19 +49,19 @@ namespace X
 			col.get());	// Colour
 	}
 
-	void GUIText::renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight)
+	void CGUIText::renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		GUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
 
 		int iRTDims[2];
 		iRTDims[0] = int(uiTooltipFramebufferWidth);
 		iRTDims[1] = int(uiTooltipFramebufferHeight);
-		ResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
-		GUIColour col;
+		CGUIColour col;
 		if (_mbUseThemeColour)
 		{
 			col = pTheme->mColours.tooltipText;
@@ -78,13 +78,12 @@ namespace X
 			col.get());	// Colour
 	}
 
-	// Called from GUIContainer to update this object
-	void GUIText::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIText::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -95,12 +94,12 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
 
-	void GUIText::setColour(bool bUseDefaultThemeColour, float fRed, float fGreen, float fBlue, float fAlpha)
+	void CGUIText::setColour(bool bUseDefaultThemeColour, float fRed, float fGreen, float fBlue, float fAlpha)
 	{
 		_mbUseThemeColour = bUseDefaultThemeColour;
 		if (!bUseDefaultThemeColour)

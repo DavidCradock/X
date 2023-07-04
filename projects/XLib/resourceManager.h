@@ -14,10 +14,10 @@ namespace X
 {
 	// This resource manager holds various resources which require an OpenGL context
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
-	// All resources are derived from the ResourceBase class and have the pure virtual methods defined in their own files.
+	// All resources are derived from the CResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:font					// A shader used by the ResourceFont class to render text.
-	// X:line					// A shader used by the ResourceLine class to render lines.
+	// X:font					// A shader used by the CResourceFont class to render text.
+	// X:line					// A shader used by the CResourceLine class to render lines.
 	// X:DRNE					// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
 	// X:DRNE_noshadows			// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
 	// X:pos_col_tex			// A shader which accepts vertex position, colour and texture coodinates
@@ -37,10 +37,10 @@ namespace X
 	// X:guitooltipFB			// A framebuffer the tooltips are rendered to
 	// X:gui					// A line vertex buffer resource used by the GUI when rendering lines
 	// They are loaded by SCApplicationManager::addDefaultResources()
-	class ResourceManager : public Singleton<ResourceManager>
+	class SCResourceManager : public CSingleton<SCResourceManager>
 	{
 	public:
-		ResourceManager();
+		SCResourceManager();
 
 		// Call just before the OpenGL window context is about to be destroyed, to free all resources which depend upon it.
 		void onGLContextToBeDestroyed(void);
@@ -52,11 +52,11 @@ namespace X
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strFontFilename is the base name of the pair of files used to hold the font data
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceFont* addFont(const std::string& strResourceName, const std::string& strFontFilename);
+		CResourceFont* addFont(const std::string& strResourceName, const std::string& strFontFilename);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceFont* getFont(const std::string& strResourceName);
+		CResourceFont* getFont(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getFontExists(const std::string& strResourceName);
@@ -70,11 +70,11 @@ namespace X
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the framebuffer
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceFramebuffer* addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+		CResourceFramebuffer* addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceFramebuffer* getFramebuffer(const std::string& strResourceName);
+		CResourceFramebuffer* getFramebuffer(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getFramebufferExists(const std::string& strResourceName);
@@ -88,11 +88,11 @@ namespace X
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the depthbuffer
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+		CResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceDepthbuffer* getDepthbuffer(const std::string& strResourceName);
+		CResourceDepthbuffer* getDepthbuffer(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getDepthbufferExists(const std::string& strResourceName);
@@ -106,11 +106,11 @@ namespace X
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strVertexProgramFilename and strFragmentProgramFilename are the names of the two files which hold the vertex and fragment code.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceShader* addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
+		CResourceShader* addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceShader* getShader(const std::string& strResourceName);
+		CResourceShader* getShader(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getShaderExists(const std::string& strResourceName);
@@ -124,11 +124,11 @@ namespace X
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceTexture2D* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
+		CResourceTexture2D* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceTexture2D* getTexture2D(const std::string& strResourceName);
+		CResourceTexture2D* getTexture2D(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getTexture2DExists(const std::string& strResourceName);
@@ -141,11 +141,11 @@ namespace X
 		// Adds a new triangle object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceTriangle* addTriangle(const std::string& strResourceName);
+		CResourceTriangle* addTriangle(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceTriangle* getTriangle(const std::string& strResourceName);
+		CResourceTriangle* getTriangle(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getTriangleExists(const std::string& strResourceName);
@@ -158,11 +158,11 @@ namespace X
 		// Adds a new line vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceLine* addLine(const std::string& strResourceName);
+		CResourceLine* addLine(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceLine* getLine(const std::string& strResourceName);
+		CResourceLine* getLine(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getLineExists(const std::string& strResourceName);
@@ -177,11 +177,11 @@ namespace X
 		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the frames of animation.
 		// Each image must be the same dimensions, otherwise an exception occurs
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		ResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
+		CResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		ResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
+		CResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getTexture2DAnimationExists(const std::string& strResourceName);
@@ -191,7 +191,7 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2DAnimation(const std::string& strResourceName);
 
-		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the ResourceFont class.
+		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
 		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.
 		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.png
@@ -206,56 +206,56 @@ namespace X
 	private:
 		struct SResourceFont
 		{
-			ResourceFont* pResource;	// Pointer to the resource
+			CResourceFont* pResource;	// Pointer to the resource
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceFont> _mmapResFonts;
 
 		struct SResourceDepthbuffer
 		{
-			ResourceDepthbuffer* pResource;	// Pointer to the resource
+			CResourceDepthbuffer* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceDepthbuffer>	_mmapResDepthbuffers;
 
 		struct SResourceFramebuffer
 		{
-			ResourceFramebuffer* pResource;	// Pointer to the resource
+			CResourceFramebuffer* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
 
 		struct SResourceShader
 		{
-			ResourceShader* pResource;	// Pointer to the resource
+			CResourceShader* pResource;	// Pointer to the resource
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceShader> _mmapResShaders;
 
 		struct SResourceTexture2D
 		{
-			ResourceTexture2D* pResource;	// Pointer to the resource
+			CResourceTexture2D* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceTexture2D> _mmapResTextures2D;
 
 		struct SResourceTriangle
 		{
-			ResourceTriangle* pResource;	// Pointer to the resource
+			CResourceTriangle* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceTriangle> _mmapResTriangles;
 
 		struct SResourceLine
 		{
-			ResourceLine* pResource;	// Pointer to the resource
+			CResourceLine* pResource;	// Pointer to the resource
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceLine> _mmapResLines;
 
 		struct SResourceTexture2DAnimation
 		{
-			ResourceTexture2DAnimation* pResource;	// Pointer to the resource
+			CResourceTexture2DAnimation* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceTexture2DAnimation> _mmapResTextures2DAnimation;

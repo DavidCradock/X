@@ -4,7 +4,7 @@
 
 namespace X
 {
-	class GUITaskbar : public GUIBaseObject
+	class CGUITaskbar : public CGUIBaseObject
 	{
 	public:
 

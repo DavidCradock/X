@@ -6,7 +6,7 @@
 
 namespace X
 {
-	SceneManagerSimple::SceneManagerSimple()
+	CSceneManagerSimple::CSceneManagerSimple()
 	{
 		mCamera.setViewAsLookat(glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 		miNumPointLights = 0;
@@ -16,15 +16,15 @@ namespace X
 		setDirectionalLightDir(glm::vec3(1.0f, -1.0f, 1.0f));
 	}
 
-	void SceneManagerSimple::render(const std::string strFramebufferToRenderTo, bool bResizeFramebufferToWindowDims)
+	void CSceneManagerSimple::render(const std::string strFramebufferToRenderTo, bool bResizeFramebufferToWindowDims)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// The application manager has X:backbuffer_FB set to render target, so unbind this first
-		ResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
 		pBGFB->unbindAsRenderTarget();
 
 		// Camera
-		Window* pWindow = Window::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
 		mCamera.setProjectionAsPerspective(65.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
 		// Render depth map for directional light
@@ -32,7 +32,7 @@ namespace X
 			_renderDepthmapForDirectionalLight();
 
 		// Bind the framebuffer we're rendering to
-		ResourceFramebuffer* pFramebuffer = pRM->getFramebuffer(strFramebufferToRenderTo);
+		CResourceFramebuffer* pFramebuffer = pRM->getFramebuffer(strFramebufferToRenderTo);
 		pFramebuffer->bindAsRenderTarget(true, bResizeFramebufferToWindowDims);
 
 		// Render the triangle entities
@@ -47,22 +47,22 @@ namespace X
 		pBGFB->bindAsRenderTarget(false, false);
 	}
 
-	SMMaterial* SceneManagerSimple::addMaterial(
+	CSMMaterial* CSceneManagerSimple::addMaterial(
 		const std::string strMaterialName,				// The unique name of this material
 		float fAmbientStrength,							// Ambient strength
-		const std::string& strTextureNameDiffuse,		// The texture resource located in the ResourceManager used for the diffuse colour
-		const std::string& strTextureNameRoughness,		// The texture resource located in the ResourceManager used for the roughness
+		const std::string& strTextureNameDiffuse,		// The texture resource located in the SCResourceManager used for the diffuse colour
+		const std::string& strTextureNameRoughness,		// The texture resource located in the SCResourceManager used for the roughness
 		float fSpecularStrength,						// Specular strength
-		const std::string& strTextureNameNormal,		// The texture resource located in the ResourceManager used for the normal map
-		const std::string& strTextureNameEmission		// The texture resource located in the ResourceManager used for the emission
+		const std::string& strTextureNameNormal,		// The texture resource located in the SCResourceManager used for the normal map
+		const std::string& strTextureNameEmission		// The texture resource located in the SCResourceManager used for the emission
 	)
 	{
 		// Make sure the entity doesn't already exist
-		ThrowIfTrue(getMaterialExists(strMaterialName), "SceneManagerSimple::addMaterial(" + strMaterialName + ") failed. The named material already exists.");
+		ThrowIfTrue(getMaterialExists(strMaterialName), "CSceneManagerSimple::addMaterial(" + strMaterialName + ") failed. The named material already exists.");
 
 		// Allocate the new entity
-		SMMaterial* pNewMaterial = new SMMaterial;
-		ThrowIfFalse(pNewMaterial, "SceneManagerSimple::addMaterial(" + strMaterialName + ") failed. Unable to allocate memory for the new material.");
+		CSMMaterial* pNewMaterial = new CSMMaterial;
+		ThrowIfFalse(pNewMaterial, "CSceneManagerSimple::addMaterial(" + strMaterialName + ") failed. Unable to allocate memory for the new material.");
 
 		// Set passed values
 		pNewMaterial->mstrTextureNameDiffuse = strTextureNameDiffuse;
@@ -77,31 +77,31 @@ namespace X
 		return pNewMaterial;
 	}
 
-	SMMaterial* SceneManagerSimple::getMaterial(const std::string& strMaterialName)
+	CSMMaterial* CSceneManagerSimple::getMaterial(const std::string& strMaterialName)
 	{
-		std::map<std::string, SMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
-		ThrowIfTrue(it == mmapMaterials.end(), "SceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
+		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		ThrowIfTrue(it == mmapMaterials.end(), "CSceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
 		return it->second;
 	}
 
-	bool SceneManagerSimple::getMaterialExists(const std::string& strMaterialName)
+	bool CSceneManagerSimple::getMaterialExists(const std::string& strMaterialName)
 	{
-		std::map<std::string, SMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
 		return it != mmapMaterials.end();
 	}
 
-	void SceneManagerSimple::removeMaterial(const std::string& strMaterialName)
+	void CSceneManagerSimple::removeMaterial(const std::string& strMaterialName)
 	{
-		std::map<std::string, SMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
+		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
 		if (it == mmapMaterials.end())
 			return;	// Doesn't exist.
 		delete it->second;
 		mmapMaterials.erase(it);
 	}
 
-	void SceneManagerSimple::removeAllMaterials(void)
+	void CSceneManagerSimple::removeAllMaterials(void)
 	{
-		std::map<std::string, SMMaterial*>::iterator it = mmapMaterials.begin();
+		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.begin();
 		while (it != mmapMaterials.end())
 		{
 			delete it->second;
@@ -110,17 +110,17 @@ namespace X
 		mmapMaterials.clear();
 	}
 
-	SMEntityTriangle* SceneManagerSimple::addEntityTriangle(
+	CSMEntityTriangle* CSceneManagerSimple::addEntityTriangle(
 		const std::string& strEntityName,			// The unique name of this entity
-		const std::string& strTriangleName,			// The triangle resource located in the ResourceManager used when rendering this entity
+		const std::string& strTriangleName,			// The triangle resource located in the SCResourceManager used when rendering this entity
 		const std::string& strMaterialName)			// Material name (added to scene manager) which this entity uses for rendering
 	{
 		// Make sure the entity doesn't already exist
-		ThrowIfTrue(getEntityTriangleExists(strEntityName), "SceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. The named entity already exists.");
+		ThrowIfTrue(getEntityTriangleExists(strEntityName), "CSceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. The named entity already exists.");
 
 		// Allocate the new entity
-		SMEntityTriangle* pNewEntity = new SMEntityTriangle;
-		ThrowIfFalse(pNewEntity, "SceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+		CSMEntityTriangle* pNewEntity = new CSMEntityTriangle;
+		ThrowIfFalse(pNewEntity, "CSceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
 
 		// Set passed values
 		pNewEntity->mstrTriangleName = strTriangleName;
@@ -131,31 +131,31 @@ namespace X
 		return pNewEntity;
 	}
 
-	SMEntityTriangle* SceneManagerSimple::getEntityTriangle(const std::string& strEntityName)
+	CSMEntityTriangle* CSceneManagerSimple::getEntityTriangle(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesTriangles.end(), "SceneManagerSimple::getEntityTriangle(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesTriangles.end(), "CSceneManagerSimple::getEntityTriangle(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
-	bool SceneManagerSimple::getEntityTriangleExists(const std::string& strEntityName)
+	bool CSceneManagerSimple::getEntityTriangleExists(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
 		return it != mmapEntitiesTriangles.end();
 	}
 
-	void SceneManagerSimple::removeEntityTriangle(const std::string& strEntityName)
+	void CSceneManagerSimple::removeEntityTriangle(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
 		if (it == mmapEntitiesTriangles.end())
 			return;	// Doesn't exist.
 		delete it->second;
 		mmapEntitiesTriangles.erase(it);
 	}
 
-	void SceneManagerSimple::removeAllEnititiesTriangle(void)
+	void CSceneManagerSimple::removeAllEnititiesTriangle(void)
 	{
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
 			delete it->second;
@@ -164,14 +164,14 @@ namespace X
 		mmapEntitiesTriangles.clear();
 	}
 
-	SMEntityLine* SceneManagerSimple::addEntityLine(const std::string& strEntityName, const std::string& strLineName,	const std::string& strTextureName)
+	CSMEntityLine* CSceneManagerSimple::addEntityLine(const std::string& strEntityName, const std::string& strLineName,	const std::string& strTextureName)
 	{
 		// Make sure the entity doesn't already exist
-		ThrowIfTrue(getEntityLineExists(strEntityName), "SceneManagerSimple::addEntityLine(" + strEntityName + ") failed. The named entity already exists.");
+		ThrowIfTrue(getEntityLineExists(strEntityName), "CSceneManagerSimple::addEntityLine(" + strEntityName + ") failed. The named entity already exists.");
 
 		// Allocate the new entity
-		SMEntityLine* pNewEntity = new SMEntityLine;
-		ThrowIfFalse(pNewEntity, "SceneManagerSimple::addEntityLine(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+		CSMEntityLine* pNewEntity = new CSMEntityLine;
+		ThrowIfFalse(pNewEntity, "CSceneManagerSimple::addEntityLine(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
 
 		// Set passed values
 		pNewEntity->mstrLineName = strLineName;
@@ -182,31 +182,31 @@ namespace X
 		return pNewEntity;
 	}
 
-	SMEntityLine* SceneManagerSimple::getEntityLine(const std::string& strEntityName)
+	CSMEntityLine* CSceneManagerSimple::getEntityLine(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesLine.end(), "SceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesLine.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
-	bool SceneManagerSimple::getEntityLineExists(const std::string& strEntityName)
+	bool CSceneManagerSimple::getEntityLineExists(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
 		return it != mmapEntitiesLine.end();
 	}
 
-	void SceneManagerSimple::removeEntityLine(const std::string& strEntityName)
+	void CSceneManagerSimple::removeEntityLine(const std::string& strEntityName)
 	{
-		std::map<std::string, SMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
 		if (it == mmapEntitiesLine.end())
 			return;	// Doesn't exist.
 		delete it->second;
 		mmapEntitiesLine.erase(it);
 	}
 
-	void SceneManagerSimple::removeAllEntitiesLine(void)
+	void CSceneManagerSimple::removeAllEntitiesLine(void)
 	{
-		std::map<std::string, SMEntityLine*>::iterator it = mmapEntitiesLine.begin();
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.begin();
 		while (it != mmapEntitiesLine.end())
 		{
 			delete it->second;
@@ -215,20 +215,20 @@ namespace X
 		mmapEntitiesLine.clear();
 	}
 
-	void SceneManagerSimple::_renderTriangleEntities(void)
+	void CSceneManagerSimple::_renderTriangleEntities(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader;
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceShader* pShader;
 		if (mbShadowsCastFromDirectionalLight)
 			pShader = pRM->getShader("X:DRNE");
 		else
 			pShader = pRM->getShader("X:DRNE_noshadows");
 
-		ResourceTriangle* pResTri;
-		ResourceTexture2D* pTexDiffuse = 0;
-		ResourceTexture2D* pTexRoughness = 0;
-		ResourceTexture2D* pTexNormal = 0;
-		ResourceTexture2D* pTexEmission = 0;
+		CResourceTriangle* pResTri;
+		CResourceTexture2D* pTexDiffuse = 0;
+		CResourceTexture2D* pTexRoughness = 0;
+		CResourceTexture2D* pTexNormal = 0;
+		CResourceTexture2D* pTexEmission = 0;
 
 		pShader->bind();
 
@@ -255,7 +255,7 @@ namespace X
 		pShader->setVec3("v3LightDirectionalDirection", mvLightDirectional.mvDirection);
 
 		// If we're rendering shadows, using the DRNE shader, set additional stuff for that
-		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
+		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 		if (mbShadowsCastFromDirectionalLight)
 		{
 			pShader->setMat4("matrixLightViewProjection", mmatShadowsDirectionalLightViewProj);
@@ -306,11 +306,11 @@ namespace X
 		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
 		// Triangle entities
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
 			// Get entity material
-			SMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
+			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
 
 			// Get vertex buffer and textures used by each entity
 			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
@@ -353,12 +353,12 @@ namespace X
 		pShader->unbind();
 	}
 
-	void SceneManagerSimple::_renderLineEntities(void)
+	void CSceneManagerSimple::_renderLineEntities(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
-		ResourceLine* pLine;
-		ResourceTexture2D* pTexColour = 0;
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
+		CResourceLine* pLine;
+		CResourceTexture2D* pTexColour = 0;
 
 		pShader->bind();
 
@@ -377,7 +377,7 @@ namespace X
 		pShader->setMat4("matrixView", mCamera.matrixView);
 
 		// Vertex buffer line entities
-		std::map<std::string, SMEntityLine*>::iterator it = mmapEntitiesLine.begin();
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.begin();
 		while (it != mmapEntitiesLine.end())
 		{
 			// Get vertex buffer and textures used by each entity
@@ -400,12 +400,12 @@ namespace X
 		pShader->unbind();
 	}
 
-	void SceneManagerSimple::_renderDepthmapForDirectionalLight(void)
+	void CSceneManagerSimple::_renderDepthmapForDirectionalLight(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceShader* pShader = pRM->getShader("X:shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceShader* pShader = pRM->getShader("X:shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
 		pShader->bind();
-		ResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
+		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
 		pDepthbuffer->bindAsRenderTarget();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, pDepthbuffer->getWidth(), pDepthbuffer->getHeight());
@@ -427,8 +427,8 @@ namespace X
 		pShader->setMat4("lightSpace", mmatShadowsDirectionalLightViewProj);
 
 		// Triangle entities
-		ResourceTriangle* pResTri;
-		std::map<std::string, SMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
+		CResourceTriangle* pResTri;
+		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
 			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
@@ -441,32 +441,32 @@ namespace X
 		pShader->unbind();
 		pDepthbuffer->unbindAsRenderTarget();
 		// Reset viewport
-		Window* pWindow = Window::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
 		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
 	}
 
-	void SceneManagerSimple::setShadowsEnabled(bool bShadowsEnabled)
+	void CSceneManagerSimple::setShadowsEnabled(bool bShadowsEnabled)
 	{
 		mbShadowsCastFromDirectionalLight = bShadowsEnabled;
 	}
 
-	bool SceneManagerSimple::getShadowsEnabled(void)
+	bool CSceneManagerSimple::getShadowsEnabled(void)
 	{
 		return mbShadowsCastFromDirectionalLight;
 	}
 
-	void SceneManagerSimple::setDirectionalLightProjection(float fProjMatWidth, float fProjMatHeight, float fProjMatNear, float fProjMatFar, glm::vec3 v3LightPosition)
+	void CSceneManagerSimple::setDirectionalLightProjection(float fProjMatWidth, float fProjMatHeight, float fProjMatNear, float fProjMatFar, glm::vec3 v3LightPosition)
 	{
 		_mmatDirectionallightProjection = glm::ortho(-fProjMatWidth, fProjMatWidth, -fProjMatHeight, fProjMatHeight, fProjMatNear, fProjMatFar);
 		_mv3DirectionLightPosition = v3LightPosition;
 	}
 
-	void SceneManagerSimple::setDirectionalLightDir(glm::vec3 vDirection)
+	void CSceneManagerSimple::setDirectionalLightDir(glm::vec3 vDirection)
 	{
 		mvLightDirectional.mvDirection = glm::normalize(vDirection);
 	}
 
-	void SceneManagerSimple::setDirectionalLightColour(glm::vec3 vColour)
+	void CSceneManagerSimple::setDirectionalLightColour(glm::vec3 vColour)
 	{
 		mvLightDirectional.mvColour = vColour;
 

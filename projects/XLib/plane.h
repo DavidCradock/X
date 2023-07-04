@@ -7,10 +7,10 @@ namespace X
 	// A plane is defined by two things.
 	// 1. Distance to the origin
 	// 2. A normal vector
-	class Plane
+	class CPlane
 	{
 	public:
-		Plane();
+		CPlane();
 
 		glm::vec3 mvDirection;
 		float mfDistanceToOrigin;

@@ -3,7 +3,7 @@
 
 namespace X
 {
-	SMEntityTriangle::SMEntityTriangle()
+	CSMEntityTriangle::CSMEntityTriangle()
 	{
 	}
 }

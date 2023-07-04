@@ -4,14 +4,14 @@
 namespace X
 {
 
-	// Joystick Input class, use InputManager to access it's "joy" member.
-	// There is an object of this class called "joy" which is initialised and updated in the InputManager class.
+	// Joystick Input class, use SCInputManager to access it's "joy" member.
+	// There is an object of this class called "joy" which is initialised and updated in the SCInputManager class.
 	// Use that object to access information about the device. 
-	class InputJoystick
+	class CInputJoystick
 	{
 	public:
-		InputJoystick(void);
-		~InputJoystick(void);
+		CInputJoystick(void);
+		~CInputJoystick(void);
 
 		// Init joystick device
 		// Only returns an error if the given main device is invalid or

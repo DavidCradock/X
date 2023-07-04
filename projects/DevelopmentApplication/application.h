@@ -26,8 +26,8 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-		Timer timer;
-		SceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
+		CTimer timer;
+		CSceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
 		glm::vec3 _mvEntityRot[100];
 		void _initSceneManager(void);
 	};

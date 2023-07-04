@@ -6,13 +6,13 @@
 
 namespace X
 {
-	// Data set used by GUILineGraph object.
+	// Data set used by CGUILineGraph object.
 	// It holds values used to render the line graph
-	class GUILineGraphDataSet
+	class CGUILineGraphDataSet
 	{
 	public:
 		std::vector<float> values;		// Each of the values stored in this data set
-		GUIColour colour;				// The colour used to render this data set as a line on a graph
+		CGUIColour colour;				// The colour used to render this data set as a line on a graph
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
@@ -39,26 +39,26 @@ namespace X
 	// A 2 axis line graph
 	// A dataset has to be added to store all values (y axis) which are plotted against the x axis
 	// Only one dataset is required and is represented by a line on the graph, however, multiple datasets can exist (multiple lines)
-	class GUILineGraph : public GUIBaseObject
+	class CGUILineGraph : public CGUIBaseObject
 	{
 	public:
-		GUILineGraph();
-		~GUILineGraph();
+		CGUILineGraph();
+		~CGUILineGraph();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Add a new named data set to this graph
 		// If the named set already exists, an exception occurs
 		// Returns a pointer to the newly added data set
-		GUILineGraphDataSet* addDataset(const std::string& strName, const GUIColour& cCol);
+		CGUILineGraphDataSet* addDataset(const std::string& strName, const CGUIColour& cCol);
 
 		// Returns a pointer to a previously added data set
 		// If the data set couldn't be found, an exception occurs
-		GUILineGraphDataSet* getDataset(const std::string& strName);
+		CGUILineGraphDataSet* getDataset(const std::string& strName);
 
 		// Removes a previously added data set from the graph
 		// If the named data set doesn't exist, this silently fails
@@ -74,10 +74,10 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		Timer _mTimer;
-		std::map<std::string, GUILineGraphDataSet*> _mmapDataSets;	// Hashmap holding each data set
+		CTimer _mTimer;
+		std::map<std::string, CGUILineGraphDataSet*> _mmapDataSets;	// Hashmap holding each data set
 	};
 }

@@ -150,14 +150,14 @@ namespace X
 	#define KC_MAIL            0xEC		// Mail 
 	#define KC_MEDIASELECT     0xED		// Media Select 
 
-	// Keyboard Input class, use InputManager to access it's "key" member.
-	// There is an object of this class called "key" which is initialised and updated in the InputManager class.
+	// Keyboard Input class, use SCInputManager to access it's "key" member.
+	// There is an object of this class called "key" which is initialised and updated in the SCInputManager class.
 	// Use that object to access information about the device.
-	class InputKeyboard
+	class CInputKeyboard
 	{
 	public:
-		InputKeyboard(void);
-		~InputKeyboard(void);
+		CInputKeyboard(void);
+		~CInputKeyboard(void);
 
 		// Initialize keyboard object
 		bool init(LPDIRECTINPUT8 pMainDirectXinputObject, HWND hApplicationWindow);
@@ -231,7 +231,7 @@ namespace X
 		};
 		KeyRep keyRep[256];
 		KeyRep keyAny;
-		Timer timing;
+		CTimer timing;
 		void updateKeyRepeat(void);
 
 		// Key repeat settings

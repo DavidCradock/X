@@ -4,16 +4,16 @@
 
 namespace X
 {
-	class GUIProgressBar : public GUIBaseObject
+	class CGUIProgressBar : public CGUIBaseObject
 	{
 	public:
-		GUIProgressBar();
-		~GUIProgressBar();
+		CGUIProgressBar();
+		~CGUIProgressBar();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Sets progress 0-1 range
@@ -25,7 +25,7 @@ namespace X
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
 		float _mfProgress;	// 0-1 position of progress bar

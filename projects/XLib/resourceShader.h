@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class ResourceShader : public ResourceBase
+	class CResourceShader : public CResourceBase
 	{
 	public:
-		ResourceShader(const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
-		~ResourceShader();
+		CResourceShader(const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename);
+		~CResourceShader();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

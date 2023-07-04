@@ -5,28 +5,28 @@
 
 namespace X
 {
-	class GUIImageFramebuffer : public GUIBaseObject
+	class CGUIImageFramebuffer : public CGUIBaseObject
 	{
-		friend class GUIContainer;
-		friend class GUITooltip;
+		friend class CGUIContainer;
+		friend class CGUITooltip;
 	public:
-		GUIImageFramebuffer();
-		~GUIImageFramebuffer();
+		CGUIImageFramebuffer();
+		~CGUIImageFramebuffer();
 
-		// Called from GUIContainer to render this object
+		// Called from CGUIContainer to render this object
 		void render(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 
-		// Called from GUIContainer to update this object
+		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
-		GUIColour mColour;
+		CGUIColour mColour;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
 		// We've had to set this as a void pointer due to header inclusion restrictions.
-		// Type cast this to a GUITooltip* to use. GUITooltip* pTT = (GUITooltip*)pWidget->mpTooltip;
+		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		std::string _mstrFBname;	// Name of the framebuffer stored in ResourceManager
+		std::string _mstrFBname;	// Name of the framebuffer stored in SCResourceManager
 	};
 }

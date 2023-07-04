@@ -8,7 +8,7 @@
 namespace X
 {
 
-	ResourceFramebuffer::ResourceFramebuffer(unsigned int iWidth, unsigned int iHeight)
+	CResourceFramebuffer::CResourceFramebuffer(unsigned int iWidth, unsigned int iHeight)
 	{
 		_muiWidth = iWidth;
 		_muiHeight = iHeight;
@@ -19,12 +19,12 @@ namespace X
 		onGLContextCreated();
 	}
 
-	ResourceFramebuffer::~ResourceFramebuffer()
+	CResourceFramebuffer::~CResourceFramebuffer()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceFramebuffer::onGLContextCreated(void)
+	void CResourceFramebuffer::onGLContextCreated(void)
 	{
 		// Create the framebuffer object and bind it
 		glGenFramebuffers(1, &_muiFramebufferID);
@@ -44,13 +44,13 @@ namespace X
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _muiWidth, _muiHeight);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _muiRenderbufferID);
 
-		ThrowIfTrue(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, "ResourceFramebuffer::onGLContextCreated() failed to create a complete framebuffer.");
+		ThrowIfTrue(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, "CResourceFramebuffer::onGLContextCreated() failed to create a complete framebuffer.");
 		
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 
-	void ResourceFramebuffer::onGLContextToBeDestroyed(void)
+	void CResourceFramebuffer::onGLContextToBeDestroyed(void)
 	{
 		mbNeedsUpdating = true;
 
@@ -71,11 +71,11 @@ namespace X
 		}
 	}
 
-	void ResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions)
+	void CResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions)
 	{
 		if (bResizeToWindowDimensions)
 		{
-			Window* pWindow = Window::getPointer();
+			CWindow* pWindow = CWindow::getPointer();
 			unsigned int iWindowWidth = (unsigned int)pWindow->getWidth();
 			unsigned int iWindowHeight = (unsigned int)pWindow->getHeight();
 			if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
@@ -94,16 +94,16 @@ namespace X
 		glViewport(0, 0, _muiWidth, _muiHeight);
 	}
 
-	void ResourceFramebuffer::unbindAsRenderTarget(void)
+	void CResourceFramebuffer::unbindAsRenderTarget(void)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		Window* pWnd = Window::getPointer();
+		CWindow* pWnd = CWindow::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 		glFlush();
 		glFinish();
 	}
 
-	void ResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit)
+	void CResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -135,7 +135,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void ResourceFramebuffer::unbindTexture(unsigned int uiTextureUnit)
+	void CResourceFramebuffer::unbindTexture(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -167,36 +167,36 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int ResourceFramebuffer::getWidth(void)
+	unsigned int CResourceFramebuffer::getWidth(void)
 	{
 		return _muiWidth;
 	}
 
-	unsigned int ResourceFramebuffer::getHeight(void)
+	unsigned int CResourceFramebuffer::getHeight(void)
 	{
 		return _muiHeight;
 	}
 
-	void ResourceFramebuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
+	void CResourceFramebuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
 		// If the framebuffer is already the newly specified size, do nother
 		if (uiNewWidth == _muiWidth)
 			if (uiNewHeight == _muiHeight)
 				return;
 
-		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "ResourceFramebuffer::resize() given a dimension of size zero.");
+		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "CResourceFramebuffer::resize() given a dimension of size zero.");
 		onGLContextToBeDestroyed();
 		_muiWidth = uiNewWidth;
 		_muiHeight = uiNewHeight;
 		onGLContextCreated();
 	}
 
-	void ResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, GUIColour colour)
+	void CResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, CGUIColour colour)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:debug");
-		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
-		Window* pWindow = Window::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:debug");
+		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		CWindow* pWindow = CWindow::getPointer();
 
 		// Setup triangle geometry
 		pTri->removeGeom();

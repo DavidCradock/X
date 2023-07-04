@@ -4,12 +4,14 @@
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
 #include "GUIButtonImage.h"
+#include "GUIColour.h"
 #include "GUIContainer.h"
 #include "GUIDraggableDock.h"
 #include "GUIDraggableItem.h"
-#include "GUIImageFramebuffer.h"
 #include "GUIImage.h"
 #include "GUIImageAnimated.h"
+#include "GUIImageDepthbuffer.h"
+#include "GUIImageFramebuffer.h"
 #include "GUILineGraph.h"
 #include "GUIMenu.h"
 #include "GUIProgressBar.h"
@@ -21,8 +23,8 @@
 #include "GUITextEdit.h"
 #include "GUITextScroll.h"
 #include "GUITheme.h"
-#include "timer.h"
 #include "GUITooltip.h"
+#include "timer.h"
 
 namespace X
 {
@@ -76,7 +78,7 @@ namespace X
 	// a button's up/over/down/clicked states.
 	// 
 	// Scaling:
-	// We have implemented text scaling which works quite well when using a ResourceFont which has been created from a large font (such as a size
+	// We have implemented text scaling which works quite well when using a CResourceFont which has been created from a large font (such as a size
 	// of around 200 or so) and this text scales down quite well. But as we know, scaling bitmap images up to a larger size introduces
 	// bluriness, so when creating fonts for the GUI to use, create them huge as to maintain decent appearence.
 	// Do the same for each of the required images (colour/normal/blur/etc). Make them larger than needed for optimal appearance.
@@ -87,7 +89,7 @@ namespace X
 	//
 	// There are also some default containers which can be shown (hidden by default) and they are named as follows...
 	// X:Default:Statistics		// This shows FPS counter, also as a graph
-	// They are created in GUIManager::_createDefaultContainers()
+	// They are created in SCGUIManager::_createDefaultContainers()
 	// 
 	// Implementation details:
 	// Containers are Z sorted and rendered one at a time, along with their widgets.
@@ -96,12 +98,12 @@ namespace X
 	// A great use of this is with text which is quite demanding and if the text doesn't change, there's no point rendering it each frame update.
 	// As themes contain many images per widget and there are many widgets, there are many images/textures to deal with.
 	// When creating a theme, we keep things simple for us by creating a theme from many individual images.
-	class GUIManager : public Singleton<GUIManager>
+	class SCGUIManager : public CSingleton<SCGUIManager>
 	{
 	public:
-		friend class GUIContainer;
+		friend class CGUIContainer;
 		friend class SCApplicationManager;
-		GUIManager();
+		SCGUIManager();
 
 		// Updates and renders the GUI
 		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer_FB");
@@ -114,11 +116,11 @@ namespace X
 
 		// Adds a new theme for use by the GUI and returns a pointer to it
 		// If the named theme already exists, a pointer to that theme is returned.
-		GUITheme* addTheme(const std::string& strName);
+		CGUITheme* addTheme(const std::string& strName);
 
 		// Returns a pointer to a named theme.
 		// If the named object doesn't exist, an exception occurs.
-		GUITheme* getTheme(const std::string& strName);
+		CGUITheme* getTheme(const std::string& strName);
 
 		// Returns true if the named theme exists
 		bool getThemeExists(const std::string& strName);
@@ -142,11 +144,11 @@ namespace X
 
 		// Adds a new container and returns a pointer to it
 		// If the named container already exists, a pointer to that object is returned.
-		GUIContainer* addContainer(const std::string& strName);
+		CGUIContainer* addContainer(const std::string& strName);
 
 		// Returns a pointer to a named container.
 		// If the named container doesn't exist, an exception occurs.
-		GUIContainer* getContainer(const std::string& strName);
+		CGUIContainer* getContainer(const std::string& strName);
 
 		// Returns true if the named container exists
 		bool getContainerExists(const std::string& strName);
@@ -199,10 +201,10 @@ namespace X
 		glm::vec2 _mv2TooltipOffset;								// Offset of tooltip from cursor position
 		float _mfTooltipDelaySeconds;								// Number of seconds until a tooltip will begin to fade in
 		float _mfScale;												// Scaling value used for GUI scaling.
-		std::map<std::string, GUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
-		std::map<std::string, GUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
+		std::map<std::string, CGUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
+		std::map<std::string, CGUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
 		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
-		Timer _mTimer;												// Timer object used for time based stuff.
+		CTimer _mTimer;												// Timer object used for time based stuff.
 		bool _mbWindowBeingMoved;									// This is used to prevent multiple windows being moved
 		float _mfAudioVol;											// Audio volume 0-1 range
 

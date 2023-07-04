@@ -6,7 +6,7 @@
 namespace X
 {
 
-	ResourceTexture2D::ResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis)
+	CResourceTexture2D::CResourceTexture2D(const std::string& strImageFilename, bool bFlipYaxis)
 	{
 		_mstrImageFilename = strImageFilename;
 		_muiTextureID = 0;
@@ -14,15 +14,15 @@ namespace X
 		onGLContextCreated();
 	}
 
-	ResourceTexture2D::~ResourceTexture2D()
+	CResourceTexture2D::~CResourceTexture2D()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void ResourceTexture2D::onGLContextCreated(void)
+	void CResourceTexture2D::onGLContextCreated(void)
 	{
 		CImage image;
-		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "ResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
+		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "CResourceTexture2D::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
 		mvDimensions.x = (float)image.getWidth();
 		mvDimensions.y = (float)image.getHeight();
 		glGenTextures(1, &_muiTextureID);
@@ -40,13 +40,13 @@ namespace X
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
-	void ResourceTexture2D::onGLContextToBeDestroyed(void)
+	void CResourceTexture2D::onGLContextToBeDestroyed(void)
 	{
 		glDeleteTextures(1, &_muiTextureID);
 		_muiTextureID = 0;
 	}
 
-	void ResourceTexture2D::bind(unsigned int uiTextureUnit)
+	void CResourceTexture2D::bind(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -78,7 +78,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void ResourceTexture2D::unbind(unsigned int uiTextureUnit)
+	void CResourceTexture2D::unbind(unsigned int uiTextureUnit)
 	{
 		switch (uiTextureUnit)
 		{
@@ -110,7 +110,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void ResourceTexture2D::unbindAll(void)
+	void CResourceTexture2D::unbindAll(void)
 	{
 		glActiveTexture(GL_TEXTURE7);	glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE6);	glBindTexture(GL_TEXTURE_2D, 0);

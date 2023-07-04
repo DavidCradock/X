@@ -9,33 +9,33 @@
 
 namespace X
 {
-	GUIProgressBar::GUIProgressBar()
+	CGUIProgressBar::CGUIProgressBar()
 	{
 		_mfProgress = 0.5f;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIProgressBar::~GUIProgressBar()
+	CGUIProgressBar::~CGUIProgressBar()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIProgressBar::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUIProgressBar::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.progressBarBGColour, pTheme->mImages.progressBarBGNormal, col);
 
 		// Get required resources needed to render the tab
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:gui");
-		InputManager* pInput = InputManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:gui");
+		SCInputManager* pInput = SCInputManager::getPointer();
 
-		GUIColour colFiller = pTheme->mColours.progressBarFiller;
+		CGUIColour colFiller = pTheme->mColours.progressBarFiller;
 
 		pShader->bind();
 
@@ -61,10 +61,10 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.progressBarFillerColour);
-		ResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.progressBarFillerNormal);
-		ResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
-		ResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.progressBarFillerColour);
+		CResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.progressBarFillerNormal);
+		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -321,7 +321,7 @@ namespace X
 		glDisable(GL_BLEND);
 	}
 
-	void GUIProgressBar::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIProgressBar::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Compute orientation
 		_mbOrientationIsHorizontal = false;
@@ -331,9 +331,9 @@ namespace X
 		}
 
 		// Update this object's tooltip
-		InputManager* pInput = InputManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -344,17 +344,17 @@ namespace X
 						if (vMousePos.y < pContainer->mfPositionY + mfPositionY + mfHeight)
 							bMouseOver = true;
 		}
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
-	void GUIProgressBar::setProgress(float fPos)
+	void CGUIProgressBar::setProgress(float fPos)
 	{
 		clamp(fPos, 0.0f, 1.0f);
 		_mfProgress = fPos;
 	}
 
-	float GUIProgressBar::getProgress(void)
+	float CGUIProgressBar::getProgress(void)
 	{
 		return _mfProgress;
 	}

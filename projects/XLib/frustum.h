@@ -6,19 +6,19 @@ namespace X
 {
 	// A frustum is defined by six planes.
 	// It can be used to determine whether various geometric shapes and points are inside of it
-	class Frustum
+	class CFrustum
 	{
 	public:
-		Frustum();
+		CFrustum();
 
 		// Sets this frustum's planes from the given values used to set a camera's projection matrix
 		void computeFromCameraProjection(float fFOVdegrees, float fWidth, float fHeight, float fZNear, float fZFar);
 
-		Plane mPlaneNear;
-		Plane mPlaneFar;
-		Plane mPlaneLeft;
-		Plane mPlaneRight;
-		Plane mPlaneTop;
-		Plane mPlaneBottom;
+		CPlane mPlaneNear;
+		CPlane mPlaneFar;
+		CPlane mPlaneLeft;
+		CPlane mPlaneRight;
+		CPlane mPlaneTop;
+		CPlane mPlaneBottom;
 	};
 }

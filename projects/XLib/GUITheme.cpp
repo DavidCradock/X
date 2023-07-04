@@ -7,7 +7,7 @@
 
 namespace X
 {
-	GUITheme::GUITheme()
+	CGUITheme::CGUITheme()
 	{
 		mstrThemeName = "Default theme";
 
@@ -86,7 +86,7 @@ namespace X
 		mAudio.buttonImageClicked.strSampleName = "data/X/gui/default/click3.wav";		mAudio.buttonImageClicked.fPitch = 1.0f;		mAudio.buttonImageClicked.fVolume = 0.8f;
 	}
 
-	void GUITheme::load(const std::string& strFilename)
+	void CGUITheme::load(const std::string& strFilename)
 	{
 		// Make sure filename given has the required extension and set to lowercase
 		std::string filename = addFilenameExtension(".theme", strFilename);
@@ -94,7 +94,7 @@ namespace X
 		// Open file in text mode
 		std::ifstream file;
 		file.open(filename, std::ofstream::in);
-		ThrowIfFalse(file.is_open(), "GUITheme::load(" + filename + ") failed to open file for reading.");
+		ThrowIfFalse(file.is_open(), "CGUITheme::load(" + filename + ") failed to open file for reading.");
 
 		// Filename
 		std::string strWord;
@@ -194,11 +194,11 @@ namespace X
 		_readAudioSampleInfo(file, mAudio.textEditNoMoreCharSpace);
 		_readAudioSampleInfo(file, mAudio.buttonImageClicked);
 
-		ThrowIfTrue(file.fail(), "GUITheme::load(" + filename + ") failed whilst loading file.");
+		ThrowIfTrue(file.fail(), "CGUITheme::load(" + filename + ") failed whilst loading file.");
 		file.close();
 	}
 
-	void GUITheme::save(const std::string& strFilename)
+	void CGUITheme::save(const std::string& strFilename)
 	{
 		// Make sure filename given has the required extension and set to lowercase
 		std::string filename = addFilenameExtension(".theme", strFilename);
@@ -206,7 +206,7 @@ namespace X
 		// Open file in text mode, deleting contents if existed before
 		std::ofstream file;
 		file.open(filename, std::ofstream::out | std::ofstream::trunc);
-		ThrowIfFalse(file.is_open(), "GUITheme::save(" + filename + ") failed to open file for writing.");
+		ThrowIfFalse(file.is_open(), "CGUITheme::save(" + filename + ") failed to open file for writing.");
 
 		// Filename
 		file << filename + "\n";
@@ -293,13 +293,13 @@ namespace X
 		_writeAudioSampleInfo(file, "buttonImageClicked", mAudio.buttonImageClicked);
 
 		// Make sure there were no errors
-		ThrowIfTrue(file.fail(), "GUITheme::save(" + filename + ") failed whilst saving file.");
+		ThrowIfTrue(file.fail(), "CGUITheme::save(" + filename + ") failed whilst saving file.");
 		file.close();
 	}
 
-	void GUITheme::loadTextures(void)
+	void CGUITheme::loadTextures(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->addTexture2D(mImages.containerBGColour, mImages.containerBGColour);
 		pRM->addTexture2D(mImages.containerBGNormal, mImages.containerBGNormal);
 		pRM->addTexture2D(mImages.buttonBGColour, mImages.buttonBGColour);
@@ -324,9 +324,9 @@ namespace X
 		pRM->addTexture2D(mImages.buttonImageBGNormal, mImages.buttonImageBGNormal);
 	}
 
-	void GUITheme::unloadTextures(void)
+	void CGUITheme::unloadTextures(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->removeTexture2D(mImages.containerBGColour);
 		pRM->removeTexture2D(mImages.containerBGNormal);
 		pRM->removeTexture2D(mImages.buttonBGColour);
@@ -351,9 +351,9 @@ namespace X
 		pRM->removeTexture2D(mImages.buttonImageBGNormal);
 	}
 
-	void GUITheme::addFontsToManager(void)
+	void CGUITheme::addFontsToManager(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->addFont(mFonts.button, mFonts.containerTitle);
 		pRM->addFont(mFonts.button, mFonts.button);
 		pRM->addFont(mFonts.text, mFonts.text);
@@ -361,9 +361,9 @@ namespace X
 		pRM->addFont(mFonts.textScroll, mFonts.textScroll);
 	}
 
-	void GUITheme::removeFontsFromManager(void)
+	void CGUITheme::removeFontsFromManager(void)
 	{
-		ResourceManager* pRM = ResourceManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->removeFont(mFonts.containerTitle);
 		pRM->removeFont(mFonts.button);
 		pRM->removeFont(mFonts.text);
@@ -371,7 +371,7 @@ namespace X
 		pRM->removeFont(mFonts.textScroll);
 	}
 
-	void GUITheme::addAudioToManager(void)
+	void CGUITheme::addAudioToManager(void)
 	{
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->addSample(mAudio.buttonClicked.strSampleName, "gui");				pAM->addEmitter(mAudio.buttonClicked.strSampleName, mAudio.buttonClicked.strSampleName, 4, "gui");
@@ -385,7 +385,7 @@ namespace X
 		pAM->loadSampleGroup("gui");
 	}
 
-	void GUITheme::removeAudioFromManager(void)
+	void CGUITheme::removeAudioFromManager(void)
 	{
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->unloadSampleGroup("gui");
@@ -398,12 +398,12 @@ namespace X
 		pAM->removeSample(mAudio.buttonImageClicked.strSampleName, "gui");		pAM->removeEmitter(mAudio.buttonImageClicked.strSampleName);
 	}
 
-	void GUITheme::_writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename)
+	void CGUITheme::_writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename)
 	{
 		stream << strDescription + ": " + strImagename + "\n";
 	}
 
-	void GUITheme::_readImageInfo(std::ifstream& stream, std::string& strImagename)
+	void CGUITheme::_readImageInfo(std::ifstream& stream, std::string& strImagename)
 	{
 		std::string strWord;
 		char space;
@@ -412,12 +412,12 @@ namespace X
 		getline(stream, strImagename);
 	}
 
-	void GUITheme::_writeFontInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strFontname)
+	void CGUITheme::_writeFontInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strFontname)
 	{
 		stream << strDescription + ": " + strFontname + "\n";
 	}
 
-	void GUITheme::_readFontInfo(std::ifstream& stream, std::string& strFontname)
+	void CGUITheme::_readFontInfo(std::ifstream& stream, std::string& strFontname)
 	{
 		std::string strWord;
 		char space;
@@ -426,14 +426,14 @@ namespace X
 		getline(stream, strFontname);
 	}
 
-	void GUITheme::_writeColourInfo(std::ofstream& stream, const std::string& strDescription, const GUIColour& colour)
+	void CGUITheme::_writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CGUIColour& colour)
 	{
 		std::string str;
 		str = std::to_string(colour.red) + " " + std::to_string(colour.green) + " " + std::to_string(colour.blue) + " " + std::to_string(colour.alpha);
 		stream << strDescription + ": " + str + "\n";
 	}
 
-	void GUITheme::_readColourInfo(std::ifstream& stream, GUIColour& colour)
+	void CGUITheme::_readColourInfo(std::ifstream& stream, CGUIColour& colour)
 	{
 		static char space;			// For storing a space character
 		static std::string strWord;	// For storing a single word
@@ -447,14 +447,14 @@ namespace X
 		stream >> colour.alpha;
 	}
 
-	void GUITheme::_writeOffsetInfo(std::ofstream& stream, const std::string& strDescription, const Offset& offset)
+	void CGUITheme::_writeOffsetInfo(std::ofstream& stream, const std::string& strDescription, const Offset& offset)
 	{
 		std::string str;
 		str = std::to_string(offset.iOffsetX) + " " + std::to_string(offset.iOffsetY);
 		stream << strDescription + ": " + str + "\n";
 	}
 
-	void GUITheme::_readOffsetInfo(std::ifstream& stream, Offset& offset)
+	void CGUITheme::_readOffsetInfo(std::ifstream& stream, Offset& offset)
 	{
 		static char space;			// For storing a space character
 		static std::string strWord;	// For storing a single word
@@ -467,13 +467,13 @@ namespace X
 		stream >> offset.iOffsetY;
 	}
 
-	void GUITheme::_writeAudioSampleInfo(std::ofstream& stream, const std::string& strDescription, const AudioSampleInfo& asi)
+	void CGUITheme::_writeAudioSampleInfo(std::ofstream& stream, const std::string& strDescription, const AudioSampleInfo& asi)
 	{
 		stream << strDescription + "Name: " + mAudio.buttonClicked.strSampleName + "\n";
 		stream << strDescription + "VolPitch: " << std::to_string(asi.fVolume) + " " + std::to_string(asi.fPitch) + "\n";
 	}
 
-	void GUITheme::_readAudioSampleInfo(std::ifstream& stream, AudioSampleInfo& asi)
+	void CGUITheme::_readAudioSampleInfo(std::ifstream& stream, AudioSampleInfo& asi)
 	{
 		std::string strWord;
 		char space;
@@ -487,12 +487,12 @@ namespace X
 		stream >> asi.fPitch;
 	}
 
-	void GUITheme::_writeFloatInfo(std::ofstream& stream, const std::string& strDescription, const float& fValue)
+	void CGUITheme::_writeFloatInfo(std::ofstream& stream, const std::string& strDescription, const float& fValue)
 	{
 		stream << strDescription + ": " + std::to_string(fValue) + "\n";
 	}
 
-	void GUITheme::_readFloatInfo(std::ifstream& stream, float& fValue)
+	void CGUITheme::_readFloatInfo(std::ifstream& stream, float& fValue)
 	{
 		std::string strWord;
 		char space;

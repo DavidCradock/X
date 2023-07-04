@@ -4,7 +4,7 @@
 namespace X
 {
 	// This is a material which entities use whilst rendering and are added into the various scene managers.
-	// This holds the texture names used by this material, each located inside the ResourceManager class.
+	// This holds the texture names used by this material, each located inside the SCResourceManager class.
 	// It also holds some other variables such as specular and ambient strength.
 	// We have default texture maps stored in the resource manager which are used if these texture strings are not set.
 	// They are added from the SCApplicationManager::addDefaultResources() method.
@@ -15,10 +15,10 @@ namespace X
 	// If emission texture name is not set, we use the default tiny black texture, which equates to zero emission or turning it off.
 	// If normal texture name is not set, we use the default tiny flat normal map, which equates to turning off bump mapping
 	// If roughness texture name is not set, we use the default tiny black texture, which equates to medium (0.5f) roughness
-	class SMMaterial
+	class CSMMaterial
 	{
 	public:
-		SMMaterial();
+		CSMMaterial();
 
 		// Texture names used for this material
 		std::string mstrTextureNameDiffuse;		// Name of the texture in the resource manager used for this material. Diffuse colour

@@ -9,35 +9,35 @@
 
 namespace X
 {
-	GUIButtonImage::GUIButtonImage()
+	CGUIButtonImage::CGUIButtonImage()
 	{
 		_mfCurrentImageCol[0] = _mfCurrentImageCol[1] = _mfCurrentImageCol[2] = _mfCurrentImageCol[3] = 0.0f;
 		_mState = state::up;
 		_mStatePrevious = state::up;
 		_mbClicked = false;
-		mpTooltip = new GUITooltip;
+		mpTooltip = new CGUITooltip;
 	}
 
-	GUIButtonImage::~GUIButtonImage()
+	CGUIButtonImage::~CGUIButtonImage()
 	{
 		delete mpTooltip;
 	}
 
-	void GUIButtonImage::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	void CGUIButtonImage::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
-		GUIManager* pGUIManager = GUIManager::getPointer();
-		GUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		GUIColour col;
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
+		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
+		CGUIColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonImageBGColour, pTheme->mImages.buttonImageBGNormal, col);
 
 		// Get required resources needed to render
-		GUIManager* pGUI = GUIManager::getPointer();
-		ResourceManager* pRM = ResourceManager::getPointer();
-		Window* pWindow = Window::getPointer();
-		ResourceTriangle* pTri = pRM->getTriangle("X:gui");
-		ResourceShader* pShader = pRM->getShader("X:pos_col_tex");
-		//InputManager* pInput = InputManager::getPointer();
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CWindow* pWindow = CWindow::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
+		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		//SCInputManager* pInput = SCInputManager::getPointer();
 
 		pShader->bind();
 
@@ -52,7 +52,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		ResourceTexture2D* pTexColour = pRM->getTexture2D(_mstrTextureUp);
+		CResourceTexture2D* pTexColour = pRM->getTexture2D(_mstrTextureUp);
 		if (state::over == _mState)
 			pTexColour = pRM->getTexture2D(_mstrTextureOver);
 		else if (state::down == _mState)
@@ -83,17 +83,17 @@ namespace X
 		glDisable(GL_BLEND);
 	}
 
-	void GUIButtonImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
+	void CGUIButtonImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		GUIManager* pGUIMan = GUIManager::getPointer();
-		InputManager* pInput = InputManager::getPointer();
-		GUIContainer* pContainer = (GUIContainer*)pParentContainer;
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		glm::vec2 vMousePos = pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
-		GUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
+		CGUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -207,12 +207,12 @@ namespace X
 		bool bMouseOverForTT = false;
 		if (state::over == _mState || state::down == _mState)
 			bMouseOverForTT = true;
-		GUITooltip* pTooltip = (GUITooltip*)mpTooltip;
-		pTooltip->update(pParentContainer, (GUIBaseObject*)this, bMouseOver);
+		CGUITooltip* pTooltip = (CGUITooltip*)mpTooltip;
+		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 
 	}
 
-	bool GUIButtonImage::getClicked(void)
+	bool CGUIButtonImage::getClicked(void)
 	{
 		return _mbClicked;
 	}
