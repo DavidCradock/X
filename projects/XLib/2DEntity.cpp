@@ -3,5 +3,13 @@
 
 namespace X
 {
+	C2DEntity::C2DEntity()
+	{
 
+	}
+
+	C2DEntity::~C2DEntity()
+	{
+
+	}
 }

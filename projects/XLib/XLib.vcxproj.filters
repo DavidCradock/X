@@ -234,7 +234,7 @@
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="2DManager.h">
+    <ClInclude Include="2DRenderer.h">
       <Filter>2D</Filter>
     </ClInclude>
     <ClInclude Include="2DLayer.h">
@@ -244,9 +244,6 @@
       <Filter>2D</Filter>
     </ClInclude>
     <ClInclude Include="2DImageData.h">
-      <Filter>2D</Filter>
-    </ClInclude>
-    <ClInclude Include="2DPhysicsData.h">
       <Filter>2D</Filter>
     </ClInclude>
     <ClInclude Include="frustum.h">
@@ -263,6 +260,15 @@
     </ClInclude>
     <ClInclude Include="vector3d.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="2DWorld.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCamera.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntityComplex.h">
+      <Filter>2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -430,7 +436,7 @@
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="2DManager.cpp">
+    <ClCompile Include="2DRenderer.cpp">
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="2DLayer.cpp">
@@ -440,9 +446,6 @@
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="2DImageData.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DPhysicsData.cpp">
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="frustum.cpp">
@@ -459,6 +462,15 @@
     </ClCompile>
     <ClCompile Include="vector3d.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="2DWorld.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCamera.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntityComplex.cpp">
+      <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
