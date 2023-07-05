@@ -20,7 +20,7 @@ namespace X
 		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer != _mmapLayers.end())
 		{
-			std::string err("SC2DSpriteManger::addLayer(\"");
+			std::string err("C2DWorld::addLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer already exists.");
 			ThrowIfTrue(1, err);
@@ -51,7 +51,7 @@ namespace X
 		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer == _mmapLayers.end())
 		{
-			std::string err("SC2DSpriteManager::getLayer(\"");
+			std::string err("C2DWorld::getLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. Layer name doesn't exist!");
 			ThrowIfTrue(1, err);
@@ -65,7 +65,7 @@ namespace X
 		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer == _mmapLayers.end())
 		{
-			std::string err("SC2DSpriteManger::removeLayer(\"");
+			std::string err("C2DWorld::removeLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer doesn't exist.");
 			ThrowIfTrue(1, err);
@@ -113,7 +113,7 @@ namespace X
 		// Make sure valid index given
 		if (iZorder < 0 || iZorder >= (int)_mvecLayerNameZOrder.size())
 		{
-			std::string err("SC2DSpriteManager::getLayerName(");
+			std::string err("C2DWorld::getLayerName(");
 			err += std::to_string(iZorder);
 			err.append(") failed. Invalid iZorder value given!");
 			ThrowIfTrue(1, err);
@@ -138,7 +138,7 @@ namespace X
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SC2DSpriteManager::getLayerZorder(\"");
+			std::string err("C2DWorld::getLayerZorder(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			ThrowIfTrue(1, err);
@@ -163,7 +163,7 @@ namespace X
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SC2DSpriteManager::moveLayerUpOne(\"");
+			std::string err("C2DWorld::moveLayerUpOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			ThrowIfTrue(1, err);
@@ -195,7 +195,7 @@ namespace X
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SC2DSpriteManager::moveLayerToBackByOne(\"");
+			std::string err("C2DWorld::moveLayerToBackByOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			ThrowIfTrue(1, err);
@@ -225,7 +225,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerToBack(\"");
+			std::string err("C2DWorld::moveLayerToBack(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			ThrowIfTrue(1, err);
@@ -251,7 +251,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerToFront(\"");
+			std::string err("C2DWorld::moveLayerToFront(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			ThrowIfTrue(1, err);
@@ -276,7 +276,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerBehind(\"");
+			std::string err("C2DWorld::moveLayerBehind(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -296,7 +296,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerBehind(\"");
+			std::string err("C2DWorld::moveLayerBehind(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -330,7 +330,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerInfront(\"");
+			std::string err("C2DWorld::moveLayerInfront(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -350,7 +350,7 @@ namespace X
 		}
 		if (!bFound)
 		{
-			std::string err("SC2DSpriteManager::moveLayerInfront(\"");
+			std::string err("C2DWorld::moveLayerInfront(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);

@@ -70,7 +70,6 @@ namespace X
 
 	private:
 		std::map<std::string, C2DLayer*> _mmapLayers;		// Each named layer which holds sprite entities
-
 		std::vector<std::string> _mvecLayerNameZOrder;		// Holds names of each layer, in their rendering order (first added = first rendered)
 	};
 }
