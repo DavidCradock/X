@@ -83,6 +83,7 @@
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="vector3d.h" />
     <ClInclude Include="vector3f.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="X.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="vector3d.cpp" />
     <ClCompile Include="vector3f.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>

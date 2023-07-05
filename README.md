@@ -26,3 +26,4 @@ Current progress...
 - Implement Taskbar to GUI.
 - Create 2D sprite rendering
 - Rewrite joy part of input
+- Remove and replace glm with own code?

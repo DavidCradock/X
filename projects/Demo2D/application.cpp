@@ -12,8 +12,11 @@ namespace X
 
 
 
-		CVector3f vTwo(2.0f, 2.0f, 2.0f);
-		CVector3f vOne = vTwo * 0.5f;
+//		CVector3f vTwo(2.0f, 2.0f, 2.0f);
+//		CVector3f vOne = vTwo * 0.5f;
+
+		CVector3d vTwo(2.0f, 2.0f, 2.0f);
+		CVector3d vOne = vTwo * 0.5000000000000001;
 	}
 
 	void CApplication::onStart(void)

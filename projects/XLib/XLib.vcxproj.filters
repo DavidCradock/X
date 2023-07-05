@@ -261,6 +261,9 @@
     <ClInclude Include="physicsManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="vector3d.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -453,6 +456,9 @@
     </ClCompile>
     <ClCompile Include="physicsManager.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3d.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
