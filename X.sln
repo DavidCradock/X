@@ -20,6 +20,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo2D", "projects\Demo2D\D
 		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoPhysics", "projects\DemoPhysics\DemoPhysics.vcxproj", "{3584CD78-BD0C-4EF6-B346-D421D24C27F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoNeuralNets", "projects\DemoNeuralNets\DemoNeuralNets.vcxproj", "{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -42,6 +52,14 @@ Global
 		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Debug|x64.Build.0 = Debug|x64
 		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.ActiveCfg = Release|x64
 		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.Build.0 = Release|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Debug|x64.ActiveCfg = Debug|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Debug|x64.Build.0 = Debug|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Release|x64.ActiveCfg = Release|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Release|x64.Build.0 = Release|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Debug|x64.ActiveCfg = Debug|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Debug|x64.Build.0 = Debug|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Release|x64.ActiveCfg = Release|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

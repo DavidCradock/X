@@ -1,9 +1,14 @@
 #include "application.h"
+#include "resource.h"
 
 namespace X
 {
 	void CApplication::initOnce(void)
 	{
+		// Set window title bar text and set icon
+		CWindow* pWindow = CWindow::getPointer();
+		pWindow->setText("X DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		pWindow->setIcon(IDI_ICON1);
 
 //		CImage img;
 //		CImage normal;
@@ -22,7 +27,6 @@ namespace X
 		CGUITheme theme2;
 		theme2.load("data/X/GUI/default");
 
-		CWindow* pWindow = CWindow::getPointer();
 		pWindow->getMaxTextureSize();
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 

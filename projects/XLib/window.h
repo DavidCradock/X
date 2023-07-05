@@ -74,6 +74,10 @@ namespace X
 
 		// Returns the maximum texture size supported by the OpenGL drivers
 		int getMaxTextureSize(void);
+
+		// Sets the icon of the application window using an int from resource.h
+		void setIcon(int iIconResource);
+
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle

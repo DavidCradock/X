@@ -1,5 +1,5 @@
 #pragma once
-#include "applicationDemo2D.h"
+#include "applicationDemoPhysics.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {

@@ -25,7 +25,7 @@ namespace X
 		mbWindowFullscreen = false;
 		muiWindowWidth = 640;
 		muiWindowHeight = 480;
-		mv4ClearColour = glm::vec4(0.05f, 0.05f, 0.05f, 0.5f);
+		mv4ClearColour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	void CWindow::createWindow(std::string strWindowTitle)
@@ -431,5 +431,12 @@ namespace X
 		int value;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &value);
 		return value;
+	}
+
+	void CWindow::setIcon(int iIconResource)
+	{
+		HICON hIcon = LoadIcon(mhInstance, MAKEINTRESOURCE(iIconResource));
+//		_ASSERTE(hIcon != 0);
+		SendMessage(mhWindowHandle, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
 	}
 }

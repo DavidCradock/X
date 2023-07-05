@@ -1,4 +1,4 @@
-#include "applicationBenchmark.h"
+#include "application.h"
 #include "resource.h"
 
 namespace X
@@ -7,8 +7,10 @@ namespace X
 	{
 		// Set window title bar text and set icon
 		CWindow* pWindow = CWindow::getPointer();
-		pWindow->setText("X Benchmark. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		pWindow->setText("X DemoNeuralNets. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
+
+
 	}
 
 	void CApplication::onStart(void)
@@ -22,8 +24,12 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-		// Escape key to exit
 		SCInputManager* pInputManager = SCInputManager::getPointer();
+
+		// Timer delta
+		timer.update();
+
+		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))
 			return false;
 		// Toggle fullscreen
@@ -42,4 +48,5 @@ namespace X
 		}
 		return true;
 	}
+
 }

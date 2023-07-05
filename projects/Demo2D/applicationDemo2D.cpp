@@ -1,22 +1,17 @@
-#include "application.h"
+#include "applicationDemo2D.h"
+#include "resource.h"
 
 namespace X
 {
 	void CApplication::initOnce(void)
 	{
-		// Set window title bar text
-		CWindow::getPointer()->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		// Set window title bar text and set icon
+		CWindow* pWindow = CWindow::getPointer();
+		pWindow->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		pWindow->setIcon(IDI_ICON1);
 
 		// Show frame rate statistics
 		SCGUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
-
-
-
-//		CVector3f vTwo(2.0f, 2.0f, 2.0f);
-//		CVector3f vOne = vTwo * 0.5f;
-
-		CVector3d vTwo(2.0f, 2.0f, 2.0f);
-		CVector3d vOne = vTwo * 0.5000000000000001;
 	}
 
 	void CApplication::onStart(void)
