@@ -8,6 +8,7 @@ namespace X
 	class C2DEntity
 	{
 	public:
+		friend class SC2DRenderer;
 		C2DEntity();
 		~C2DEntity();
 

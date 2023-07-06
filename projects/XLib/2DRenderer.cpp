@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "2DRenderer.h"
 #include "log.h"
+#include "resourceManager.h"
 
 namespace X
 {
@@ -104,5 +105,58 @@ namespace X
 	int SC2DRenderer::getNumWorlds(void)
 	{
 		return int(_mmapWorlds.size());
+	}
+
+	void SC2DRenderer::render(void)
+	{
+		// Get required resources needed to render stuff
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceTriangle* pTri = pRM->getTriangle("X:2D");
+		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:backbuffer_FB");
+
+		pTri->removeGeom();
+
+		// For each world
+		std::map<std::string, C2DWorld*>::iterator itWorld = _mmapWorlds.begin();
+		while (itWorld != _mmapWorlds.end())
+		{
+			// For each camera in world
+			std::map<std::string, C2DCamera*>::iterator itCamera = itWorld->second->_mmapCameras.begin();
+			while (itCamera != itWorld->second->_mmapCameras.end())
+			{
+				// For each layer in world
+				for (unsigned int uiLayerZorder = 0; uiLayerZorder < itWorld->second->_mvecLayerNameZOrder.size(); ++uiLayerZorder)
+				{
+					// Get layers, in z order , starting with the one at the back
+					C2DLayer* pLayer = itWorld->second->_mmapLayers[itWorld->second->_mvecLayerNameZOrder[uiLayerZorder]];
+
+					// For each entity in layer
+					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntitys.begin();
+					while (itEntity != pLayer->_mmapEntitys.end())
+					{
+						itEntity->second->_mv2rPosition;
+
+						itEntity++;
+					}
+
+					// For each complex entity in layer
+					std::map<std::string, C2DEntityComplex*>::iterator itEntityComplex = pLayer->_mmapEntityComplexs.begin();
+					while (itEntityComplex != pLayer->_mmapEntityComplexs.end())
+					{
+
+						itEntityComplex++;
+					}
+
+				}	// Each layer
+
+				itCamera++;
+			}	// Each camera in world
+			itWorld++;
+		}	// Each world
+
+
+
+
 	}
 }

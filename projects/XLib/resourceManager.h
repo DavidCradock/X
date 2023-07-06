@@ -33,6 +33,7 @@ namespace X
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
 	// X:debug					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes.
 	// X:gui					// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for the GUI
+	// X:2D						// A triangle resource (vertex buffer) used for rendering 2D quads for the SCRenderer
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the tooltips are rendered to
 	// X:gui					// A line vertex buffer resource used by the GUI when rendering lines

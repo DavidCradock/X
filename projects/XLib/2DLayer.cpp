@@ -101,7 +101,7 @@ namespace X
 		}
 	}
 
-	int C2DLayer::getNumEntitys(void)
+	unsigned int C2DLayer::getNumEntitys(void)
 	{
 		return int(_mmapEntitys.size());
 	}

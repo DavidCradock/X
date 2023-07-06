@@ -91,6 +91,9 @@ namespace X
 		// Returns the total number of added objects
 		int getNumWorlds(void);
 
+		// Updates and renders everything
+		// Called from SCApplicationManager::mainLoop before GUI rendering
+		void render(void);
 	private:
 		std::map<std::string, C2DWorld*> _mmapWorlds;		// Each named world
 	};

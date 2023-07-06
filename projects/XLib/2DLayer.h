@@ -9,6 +9,7 @@ namespace X
 	class C2DLayer
 	{
 	public:
+		friend class SC2DRenderer;
 		C2DLayer();
 		~C2DLayer();
 
@@ -38,7 +39,7 @@ namespace X
 		void removeAllEntitys(void);
 
 		// Returns the total number of added objects
-		int getNumEntitys(void);
+		unsigned int getNumEntitys(void);
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs

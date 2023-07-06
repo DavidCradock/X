@@ -8,6 +8,7 @@ namespace X
 	class C2DWorld
 	{
 	public:
+		friend class SC2DRenderer;
 		C2DWorld();
 		~C2DWorld();
 
@@ -38,7 +39,7 @@ namespace X
 		void removeAllLayers(void);
 
 		// Returns the total number of added objects
-		int getNumLayers(void);
+		unsigned int getNumLayers(void);
 
 		// Returns the name of the layer at specified z order
 		// A z order of 0 would give you the back most layer

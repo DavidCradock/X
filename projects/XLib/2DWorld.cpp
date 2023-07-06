@@ -136,9 +136,9 @@ namespace X
 		}
 	}
 
-	int C2DWorld::getNumLayers(void)
+	unsigned int C2DWorld::getNumLayers(void)
 	{
-		return int(_mmapLayers.size());
+		return unsigned int(_mmapLayers.size());
 	}
 
 	std::string C2DWorld::getLayerNameAtZorder(unsigned int uiZorder)

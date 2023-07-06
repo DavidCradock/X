@@ -5,6 +5,7 @@
 #include "input.h"
 #include "resourceManager.h"
 #include "GUIManager.h"
+#include "2DRenderer.h"
 
 // Include each application
 
@@ -47,6 +48,9 @@ namespace X
 			SCGUIManager* pGUI = SCGUIManager::getPointer();
 			pGUI->_createDefaultContainers();
 
+			// Initialise 2D renderer
+			SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
+
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
 
@@ -79,6 +83,9 @@ namespace X
 				{
 					break;	// Application wants to close
 				}
+
+				// Update and render the 2DRenderer to the "X:backbuffer_FB" and any various other framebuffers each of it's cameras are set to render to
+				p2DRenderer->render();
 
 				// Update and render the GUI to the "X:backbuffer_FB" framebuffer, using the "X:backbuffer_FB" as the sample source
 				pGUI->render("X:backbuffer_FB");
@@ -265,6 +272,7 @@ namespace X
 		// Triangle resources
 		pRM->addTriangle("X:debug");
 		pRM->addTriangle("X:gui");
+		pRM->addTriangle("X:2D");
 
 		// Framebuffers
 		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
