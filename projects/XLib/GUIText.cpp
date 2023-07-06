@@ -32,7 +32,7 @@ namespace X
 		iRTDims[1] = int(pWindow->getHeight());
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
-		CGUIColour col;
+		CColour col;
 		if (_mbUseThemeColour)
 		{
 			col = pTheme->mColours.text;
@@ -61,7 +61,7 @@ namespace X
 		iRTDims[1] = int(uiTooltipFramebufferHeight);
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
-		CGUIColour col;
+		CColour col;
 		if (_mbUseThemeColour)
 		{
 			col = pTheme->mColours.tooltipText;

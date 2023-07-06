@@ -29,7 +29,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		CGUIColour col;
+		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.sliderBGColour, pTheme->mImages.sliderBGNormal, col);
 
 		// Get required resources needed to render the tab

@@ -63,7 +63,7 @@ namespace X
 
 		// Render the centre
 		glm::vec2 vPos = glm::vec2(0.0f, 0.0f);
-		CGUIColour colWhite;
+		CColour colWhite;
 		pTri->removeGeom();
 		pTri->addQuad2D(vTexDimsPoint3,		// Position
 			glm::vec2(mfWidth, mfHeight),	// Dimensions

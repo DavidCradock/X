@@ -426,14 +426,14 @@ namespace X
 		getline(stream, strFontname);
 	}
 
-	void CGUITheme::_writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CGUIColour& colour)
+	void CGUITheme::_writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CColour& colour)
 	{
 		std::string str;
 		str = std::to_string(colour.red) + " " + std::to_string(colour.green) + " " + std::to_string(colour.blue) + " " + std::to_string(colour.alpha);
 		stream << strDescription + ": " + str + "\n";
 	}
 
-	void CGUITheme::_readColourInfo(std::ifstream& stream, CGUIColour& colour)
+	void CGUITheme::_readColourInfo(std::ifstream& stream, CColour& colour)
 	{
 		static char space;			// For storing a space character
 		static std::string strWord;	// For storing a single word

@@ -28,7 +28,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		CGUIColour col;
+		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal, col);
 
 		// Get required resources needed to render

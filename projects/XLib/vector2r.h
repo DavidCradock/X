@@ -97,18 +97,6 @@ namespace X
 		// If the vector has zero length(magnitude), then it is not modified.
 		void normalise(void);
 
-		// Computes the dot product (also known as inner product) between this vector and the one given.
-		// Dot product is commutative (v1.getDot(v2) == v2.getDot(v1)) == always true.
-		// If returned dot product is...
-		// > 0		vectors are pointing roughly in same direction (upto 90 degrees apart)
-		// = 0		vectors are perpendicular to one another (90 degrees)
-		// < 0		vectors are pointing in opposite directions (+90 degrees to 180 degrees)	
-		real getDot(const CVector2r& vec) const;
-
-		// Computes the angle (in radians) between two UNIT VECTORS (Length of 1)
-		// No checking of vectors are unit length here. 
-		real getAngle(const CVector2r& vec) const;
-
 		// Computes distance between this vector and the one given, treating each vector as a point in 3D space.
 		real getDistance(const CVector2r& vec) const;
 

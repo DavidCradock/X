@@ -102,16 +102,6 @@ namespace X
 		y *= rReciprocal;
 	}
 
-	real CVector2r::getDot(const CVector2r& vec) const
-	{
-		return x * vec.x + y * vec.y;
-	}
-
-	real CVector2r::getAngle(const CVector2r& vec) const
-	{
-		return acos(getDot(vec));
-	}
-
 	real CVector2r::getDistance(const CVector2r& vec) const
 	{
 		real rx = x - vec.x;

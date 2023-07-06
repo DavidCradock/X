@@ -26,7 +26,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		CGUIColour col;
+		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textScrollBGNormal, col);
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);

@@ -1,6 +1,6 @@
 #pragma once
 #include "PCH.h"
-#include "GUIColour.h"
+#include "colour.h"
 
 namespace X
 {
@@ -102,21 +102,21 @@ namespace X
 		// Structure to hold colours used for this theme
 		struct Colours
 		{
-			CGUIColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is set to be a window and is in focus.
-			CGUIColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is set to be a window and is not in focus.
-			CGUIColour buttonTextDown;					// Colour of a button's text when mouse is over and clicked
-			CGUIColour buttonTextOver;					// Colour of a button's text when mouse is over
-			CGUIColour buttonTextUp;						// Colour of a button's text when mouse is not over
-			CGUIColour text;								// CGUIText font colour
-			CGUIColour textEditInactive;
-			CGUIColour textEditActive;
-			CGUIColour sliderTabOver;
-			CGUIColour sliderTabNotOver;
-			CGUIColour progressBarFiller;
-			CGUIColour buttonImageDown;
-			CGUIColour buttonImageOver;
-			CGUIColour buttonImageUp;
-			CGUIColour tooltipText;
+			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is set to be a window and is in focus.
+			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is set to be a window and is not in focus.
+			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
+			CColour buttonTextOver;						// Colour of a button's text when mouse is over
+			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
+			CColour text;								// CGUIText font colour
+			CColour textEditInactive;
+			CColour textEditActive;
+			CColour sliderTabOver;
+			CColour sliderTabNotOver;
+			CColour progressBarFiller;
+			CColour buttonImageDown;
+			CColour buttonImageOver;
+			CColour buttonImageUp;
+			CColour tooltipText;
 		};
 		Colours mColours;	// Holds all the colours used by the theme
 
@@ -177,10 +177,10 @@ namespace X
 		void _readFontInfo(std::ifstream& stream, std::string& strFontname);
 
 		// Writes out colour info
-		void _writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CGUIColour& colour);
+		void _writeColourInfo(std::ofstream& stream, const std::string& strDescription, const CColour& colour);
 
 		// Reads in colour info
-		void _readColourInfo(std::ifstream& stream, CGUIColour& colour);
+		void _readColourInfo(std::ifstream& stream, CColour& colour);
 
 		// Writes out offset info
 		void _writeOffsetInfo(std::ofstream& stream, const std::string& strDescription, const Offset& offset);

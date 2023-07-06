@@ -2,7 +2,7 @@
 #include "PCH.h"
 #include "GUIBaseObject.h"
 #include "timer.h"
-#include "GUIColour.h"
+#include "colour.h"
 
 namespace X
 {
@@ -38,7 +38,7 @@ namespace X
 		CTimer _mTimer;
 		float _mfSliderPosition;	// 0-1 position of slider
 		float _mfTabRatio;			// Multiplied by slider dims(depending upon orientation) to obtain tab dimensions
-		CGUIColour _mTabColour;		// For fading between over/not over colours of tab
+		CColour _mTabColour;		// For fading between over/not over colours of tab
 		bool _mbTabBeingMoved;		// Whether the tab is being moved or not
 
 		bool _mbOrientationIsHorizontal;// Computed in update() and used in render(). Slider orientation based on dimensions

@@ -25,7 +25,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		CGUIColour col;
+		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.progressBarBGColour, pTheme->mImages.progressBarBGNormal, col);
 
 		// Get required resources needed to render the tab
@@ -35,7 +35,7 @@ namespace X
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		SCInputManager* pInput = SCInputManager::getPointer();
 
-		CGUIColour colFiller = pTheme->mColours.progressBarFiller;
+		CColour colFiller = pTheme->mColours.progressBarFiller;
 
 		pShader->bind();
 

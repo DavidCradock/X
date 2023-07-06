@@ -173,14 +173,14 @@ namespace X
 	private:
 		CTimer _mTimer;			// Timer object used for timebased stuff
 		bool _mbEnabled;		// Whether this tooltip is enabled or not
-		CGUIColour _mColour;		// Current colour of the tooltip, used for fading in/out
+		CColour _mColour;		// Current colour of the tooltip, used for fading in/out
 		float _mfTooltipDelay;	// Used to prevent tooltip from fading in until SCGUIManager::getTooltipDelay() has passed
-		std::map<std::string, CGUIText*> _mmapTexts;								// Hashmap for each added text
+		std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
 		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
 		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
 		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
 		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
-		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
+		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
+		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
 	};
 }

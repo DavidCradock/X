@@ -124,7 +124,7 @@ namespace X
 		const std::string& strFramebufferToSampleFrom,				// The framebuffer to use as background when sampling (Given to SCGUIManager::render() and passed down)
 		const std::string& strObjectColourTextureName,				// The name of the object's background colour texture
 		const std::string& strObjectNormalTextureName,				// The name of the object's background normal texture
-		CGUIColour& colour)											// Colour
+		CColour& colour)											// Colour
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 

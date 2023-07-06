@@ -4,7 +4,7 @@
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
 #include "GUIButtonImage.h"
-#include "GUIColour.h"
+#include "colour.h"
 #include "GUIContainer.h"
 #include "GUIDraggableDock.h"
 #include "GUIDraggableItem.h"

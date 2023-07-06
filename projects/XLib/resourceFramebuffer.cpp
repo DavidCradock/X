@@ -191,7 +191,7 @@ namespace X
 		onGLContextCreated();
 	}
 
-	void CResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, CGUIColour colour)
+	void CResourceFramebuffer::renderTo2DQuad(unsigned int uiPosX, unsigned int uiPosY, unsigned int uiWidth, unsigned int uiHeight, CColour colour)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:debug");

@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "GUIBaseObject.h"
-#include "GUIColour.h"
+#include "colour.h"
 
 namespace X
 {
@@ -19,7 +19,7 @@ namespace X
 		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
-		CGUIColour mColour;
+		CColour mColour;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip

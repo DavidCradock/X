@@ -16,15 +16,11 @@ namespace X
 		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
 		//p2DRenderer->addWorld("World");
 		C2DWorld world;
-		world.addLayer("test");
-		C2DLayer* pLayer = world.getLayer("test");
-		world.removeLayer("test");
-		world.addLayer("test");
-		world.addLayer("test2");
-		world.addLayer("test3");
-		world.moveLayerInfront("test", "test2");
-		std::string str1 = world.getLayerNameIndex(0);
-		std::string str2 = world.getLayerNameIndex(1);
+
+		CVector2r v1(0, 0);
+		CVector2r v2(1.0, 1.0);
+		real rAngle = v1.getDistance(v2);
+
 	}
 
 	void CApplication::onStart(void)

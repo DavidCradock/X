@@ -15,7 +15,7 @@ namespace X
 		mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
 		_mbVisible = true;
-		CGUIColour col = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
+		CColour col = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
 		_mvTextColour.r = col.red;
 		_mvTextColour.g = col.green;
 		_mvTextColour.b = col.blue;

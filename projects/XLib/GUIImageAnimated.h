@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "GUIBaseObject.h"
-#include "GUIColour.h"
+#include "colour.h"
 #include "timer.h"
 
 namespace X
@@ -22,7 +22,7 @@ namespace X
 
 		// Sets the playback rate of the animation
 		void setFramesPerSecond(float fFramesPerSecond);
-		CGUIColour mColour;
+		CColour mColour;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip

@@ -195,9 +195,6 @@
     <ClInclude Include="GUIBaseObject.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIColour.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="resourceTexture2DAnimation.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -407,9 +404,6 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIBaseObject.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIColour.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="resourceTexture2DAnimation.cpp">

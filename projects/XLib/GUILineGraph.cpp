@@ -70,7 +70,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
-		CGUIColour col;
+		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal, col);
 
 		// Get required resources needed to render
@@ -199,7 +199,7 @@ namespace X
 
 	}
 
-	CGUILineGraphDataSet* CGUILineGraph::addDataset(const std::string& strName, const CGUIColour& cCol)
+	CGUILineGraphDataSet* CGUILineGraph::addDataset(const std::string& strName, const CColour& cCol)
 	{
 		std::map<std::string, CGUILineGraphDataSet*>::iterator it = _mmapDataSets.find(strName);
 		ThrowIfTrue(it != _mmapDataSets.end(), "CGUILineGraph::addDataSet(" + strName + ") failed. The named data set already exists.");

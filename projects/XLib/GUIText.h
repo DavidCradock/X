@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "GUIBaseObject.h"
-#include "GUIColour.h"
+#include "colour.h"
 
 namespace X
 {
@@ -33,6 +33,6 @@ namespace X
 	private:
 
 		bool _mbUseThemeColour;
-		CGUIColour _mColour;
+		CColour _mColour;
 	};
 }

@@ -2,7 +2,7 @@
 #include "PCH.h"
 #include "GUIBaseObject.h"
 #include "timer.h"
-#include "GUIColour.h"
+#include "colour.h"
 
 namespace X
 {
@@ -12,7 +12,7 @@ namespace X
 	{
 	public:
 		std::vector<float> values;		// Each of the values stored in this data set
-		CGUIColour colour;				// The colour used to render this data set as a line on a graph
+		CColour colour;					// The colour used to render this data set as a line on a graph
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip
@@ -54,7 +54,7 @@ namespace X
 		// Add a new named data set to this graph
 		// If the named set already exists, an exception occurs
 		// Returns a pointer to the newly added data set
-		CGUILineGraphDataSet* addDataset(const std::string& strName, const CGUIColour& cCol);
+		CGUILineGraphDataSet* addDataset(const std::string& strName, const CColour& cCol);
 
 		// Returns a pointer to a previously added data set
 		// If the data set couldn't be found, an exception occurs

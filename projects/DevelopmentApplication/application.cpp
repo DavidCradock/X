@@ -57,7 +57,7 @@ namespace X
 
 		// Line graph
 		pContainer2->addText("Text2", 0, 100, "CGUILineGraph:");
-		CGUIColour col;
+		CColour col;
 		CGUILineGraph* pLineGraph = pContainer2->addLineGraph("FPS", 150, 90, 200, 50);
 		pLineGraph->addDataset("FPS", col);
 		// Slider
