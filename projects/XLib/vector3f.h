@@ -3,6 +3,7 @@
 
 namespace X
 {
+	// Vector class, using floats
 	class CVector3f
 	{
 	public:

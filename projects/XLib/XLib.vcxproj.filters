@@ -270,6 +270,18 @@
     <ClInclude Include="2DEntityComplex.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="vector3r.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="precision.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="colour.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2r.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -471,6 +483,15 @@
     </ClCompile>
     <ClCompile Include="2DEntityComplex.cpp">
       <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3r.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="colour.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2r.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

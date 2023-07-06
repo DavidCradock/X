@@ -1,17 +1,19 @@
 #pragma once
 #include "PCH.h"
+#include "precision.h"
 
 namespace X
 {
-	// Vector class, using doubles
-	class CVector3d
+
+	// Vector class, using real number which is defined in the precision.h file to use either floats or doubles
+	class CVector2r
 	{
 	public:
 		// Constructor, sets all values to zero
-		CVector3d();
+		CVector2r();
 
 		// Constructor, sets all values to the ones given
-		CVector3d(double dX, double dY, double dZ);
+		CVector2r(real rX, real rY);
 
 		// Addition operator which adds two vectors together
 		// Vector addition is commutative. (v1 + v2 == v2 + v1) is always true.
@@ -19,10 +21,10 @@ namespace X
 		// triangle with the order of magnitude and direction, then the third side of the triangle represents
 		// the magnitude and direction of the resultant vector.
 		// Example:
-		// CVector3d vOne(1.0, 1.0, 1.0);
-		// CVector3d vTwo(2.0, 2.0, 2.0);
-		// CVector3d vThree = vOne + vTwo;
-		CVector3d operator +(const CVector3d& vec) const;
+		// CVector2r vOne(1.0f, 1.0f);
+		// CVector2r vTwo(2.0f, 2.0f);
+		// CVector2r vThree = vOne + vTwo;
+		CVector2r operator +(const CVector2r& vec) const;
 
 		// Addition operator which adds two vectors together
 		// Vector addition is commutative. (v1 + v2 == v2 + v1) is always true.
@@ -30,49 +32,49 @@ namespace X
 		// triangle with the order of magnitude and direction, then the third side of the triangle represents
 		// the magnitude and direction of the resultant vector.
 		// Example:
-		// CVector3d vOne(1.0, 1.0, 1.0);
-		// CVector3d vThree(2.0, 2.0, 2.0);
+		// CVector2r vOne(1.0f, 1.0f);
+		// CVector2r vThree(2.0f, 2.0f);
 		// vThree += vOne;
-		CVector3d& operator +=(const CVector3d& vec);
+		CVector2r& operator +=(const CVector2r& vec);
 
 		// Subtraction operator 
 		// Vector subtraction is not commutative. (v1 - v2 == v2 - v1) is only true when v1 is same as v2.
 		// Example:
-		// CVector3d vOne(1.0, 1.0, 1.0);
-		// CVector3d vTwo(2.0, 2.0, 2.0);
-		// CVector3d vMinusOne = vOne - vTwo;
-		CVector3d operator -(const CVector3d& vec) const;
+		// CVector2r vOne(1.0f, 1.0f);
+		// CVector2r vTwo(2.0f, 2.0f);
+		// CVector2r vMinusOne = vOne - vTwo;
+		CVector2r operator -(const CVector2r& vec) const;
 
 		// Subtraction operator 
 		// Vector subtraction is not commutative. (v1 - v2 == v2 - v1) is only true when v1 is same as v2.
 		// Example:
-		// CVector3d vMinusOne(1.0, 1.0, 1.0);
-		// CVector3d vTwo(2.0, 2.0, 2.0);
+		// CVector2r vMinusOne(1.0f, 1.0f);
+		// CVector2r vTwo(2.0f, 2.0f);
 		// vMinusOne -= vTwo;
-		CVector3d& operator -=(const CVector3d& vec);
+		CVector2r& operator -=(const CVector2r& vec);
 
 		// Multiplication by scalar
 		// Adjusts the magnitude of a vector, keeping the direction the same (Unless the scalar is negative, in which case the direction is reversed)
 		// Example:
-		// CVector3d vTwo(2.0, 2.0, 2.0);
-		// CVector3d vOne = vTwo * 0.5;
-		const CVector3d operator *(const double d) const;
+		// CVector2r vTwo(2.0f, 2.0f);
+		// CVector2r vOne = vTwo * 0.5f;
+		const CVector2r operator *(const real r) const;
 
 		// Multiplication by scalar
 		// Adjusts the magnitude of a vector, keeping the direction the same (Unless the scalar is negative, in which case the direction is reversed) 
 		// Example:
-		// CVector3d vOne(2.0, 2.0, 2.0);
-		// vOne *= 0.5; 
-		void operator *=(const double d);
+		// CVector2r vOne(2.0f, 2.0f, 2.0f);
+		// vOne *= 0.5f; 
+		void operator *=(const real r);
 
 		// Check for equality
-		bool operator ==(const CVector3d& vec) const;
+		bool operator ==(const CVector2r& vec) const;
 
 		// Check for inequality
-		bool operator !=(const CVector3d& vec) const;
+		bool operator !=(const CVector2r& vec) const;
 
 		// Sets each element to the values given
-		void set(double dX, double dY, double dZ);
+		void set(real rX, real rY);
 
 		// Sets each element within the vector's set to zero.
 		// A zero vector is a special case. It does not have a direction, and it's magnitude is zero. 
@@ -87,11 +89,11 @@ namespace X
 
 		// Computes and returns the vector's magnitude
 		// A vector's magnitude is also know as "the length" or norm of the vector.
-		// Uses sqrt() so it's quite expensive.
-		double getMagnitude(void) const;
+		// Uses sqrtf() so it's quite expensive.
+		real getMagnitude(void) const;
 
 		// Normalises this vector so that it becomes a unit vector (Has a magnitude of 1)
-		// Uses sqrt() so it's quite expensive.
+		// Uses sqrtf() so it's quite expensive.
 		// If the vector has zero length(magnitude), then it is not modified.
 		void normalise(void);
 
@@ -101,27 +103,22 @@ namespace X
 		// > 0		vectors are pointing roughly in same direction (upto 90 degrees apart)
 		// = 0		vectors are perpendicular to one another (90 degrees)
 		// < 0		vectors are pointing in opposite directions (+90 degrees to 180 degrees)	
-		double getDot(const CVector3d& vec) const;
-
-		// Computes the cross product between this vector and the one given.
-		// The cross product is a vector which is perpendicular to the two vectors it was calculated from. 
-		CVector3d getCross(const CVector3d& vec) const;
+		real getDot(const CVector2r& vec) const;
 
 		// Computes the angle (in radians) between two UNIT VECTORS (Length of 1)
 		// No checking of vectors are unit length here. 
-		double getAngle(const CVector3d& vec) const;
+		real getAngle(const CVector2r& vec) const;
 
 		// Computes distance between this vector and the one given, treating each vector as a point in 3D space.
-		double getDistance(const CVector3d& vec) const;
+		real getDistance(const CVector2r& vec) const;
 
 		// Computes distance squared between this vector and the one given, treating each vector as a point in 3D space.
 		// This is faster than the getDistance() method, as no expensive square root is used.
 		// This is useful if you have many vectors/points and need to find the closest out of them all.
 		// After finding the closest, then you can squareroot the return value from this method or use getDistance() to obtain the true distance. 
-		double getDistanceSquared(const CVector3d& vec) const;
+		real getDistanceSquared(const CVector2r& vec) const;
 
-		double x;
-		double y;
-		double z;
+		real x;
+		real y;
 	};
 }

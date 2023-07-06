@@ -21,6 +21,7 @@
     <ClInclude Include="applicationBase.h" />
     <ClInclude Include="applicationManager.h" />
     <ClInclude Include="audioManager.h" />
+    <ClInclude Include="colour.h" />
     <ClInclude Include="GUIBaseObject.h" />
     <ClInclude Include="GUIButton.h" />
     <ClInclude Include="GUIButtonImage.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="GUITheme.h" />
     <ClInclude Include="GUITooltip.h" />
     <ClInclude Include="physicsManager.h" />
+    <ClInclude Include="precision.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceTexture2DAnimation.h" />
     <ClInclude Include="SMCamera.h" />
@@ -85,8 +87,10 @@
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="vector2r.h" />
     <ClInclude Include="vector3d.h" />
     <ClInclude Include="vector3f.h" />
+    <ClInclude Include="vector3r.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="X.h" />
   </ItemGroup>
@@ -101,6 +105,7 @@
     <ClCompile Include="applicationBase.cpp" />
     <ClCompile Include="applicationManager.cpp" />
     <ClCompile Include="audioManager.cpp" />
+    <ClCompile Include="colour.cpp" />
     <ClCompile Include="GUIBaseObject.cpp" />
     <ClCompile Include="GUIButton.cpp" />
     <ClCompile Include="GUIButtonImage.cpp" />
@@ -159,8 +164,10 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="vector2r.cpp" />
     <ClCompile Include="vector3d.cpp" />
     <ClCompile Include="vector3f.cpp" />
+    <ClCompile Include="vector3r.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>

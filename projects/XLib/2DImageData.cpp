@@ -3,5 +3,13 @@
 
 namespace X
 {
+	C2DImageData::C2DImageData()
+	{
 
+	}
+	
+	C2DImageData::~C2DImageData()
+	{
+
+	}
 }

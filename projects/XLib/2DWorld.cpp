@@ -11,72 +11,69 @@ namespace X
 
 	C2DWorld::~C2DWorld()
 	{
-
+		removeAllCameras();
+		removeAllLayers();
 	}
 
 	C2DLayer* C2DWorld::addLayer(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
-		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer != _mmapLayers.end())
-		{
-			std::string err("C2DWorld::addLayer(\"");
-			err.append(strUniqueName);
-			err.append("\") failed. The layer already exists.");
-			ThrowIfTrue(1, err);
-		}
+		// Attempt to find if the object name already exists
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.find(strUniqueName);
+		ThrowIfTrue(it != _mmapLayers.end(), "C2DWorld::addLayer(\"" + strUniqueName + "\") failed. The object already exists.");
 
-		C2DLayer* pNewLayer = new C2DLayer;
-		if (!pNewLayer)
-			ThrowIfTrue(1, "Memory allocation error.");
+		// Allocate memory for new object
+		C2DLayer* pNew = new C2DLayer;
+		ThrowIfFalse(pNew, "C2DWorld::addLayer(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
 
-		// Add layer to hash map
-		_mmapLayers[strUniqueName] = pNewLayer;
+		// Add object to hash map
+		_mmapLayers[strUniqueName] = pNew;
 
-		// Add layer name to z order vector
+		// Add object name to z order vector
 		_mvecLayerNameZOrder.push_back(strUniqueName);
 
-		return pNewLayer;
+		return pNew;
 	}
 
-	bool C2DWorld::layerExists(const std::string& strUniqueName)
+	bool C2DWorld::getLayerExists(const std::string& strUniqueName)
 	{
 		if (_mmapLayers.find(strUniqueName) == _mmapLayers.end())
 			return false;
 		return true;
 	}
+
 	C2DLayer* C2DWorld::getLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
-		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer == _mmapLayers.end())
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.find(strUniqueName);
+		ThrowIfTrue(it == _mmapLayers.end(), "C2DWorld::getLayer(\"" + strUniqueName + "\") failed. Object name doesn't exist!");
+		return it->second;
+	}
+
+	C2DLayer* C2DWorld::getLayer(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapLayers.size(), "C2DWorld::getLayer(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
 		{
-			std::string err("C2DWorld::getLayer(\"");
-			err.append(strUniqueName);
-			err.append("\") failed. Layer name doesn't exist!");
-			ThrowIfTrue(1, err);
+			ui++;
+			it++;
 		}
-		return itlayer->second;
+		return it->second;
 	}
 
 	void C2DWorld::removeLayer(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
-		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer == _mmapLayers.end())
-		{
-			std::string err("C2DWorld::removeLayer(\"");
-			err.append(strUniqueName);
-			err.append("\") failed. The layer doesn't exist.");
-			ThrowIfTrue(1, err);
-		}
+		// Attempt to find if the name already exists
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.find(strUniqueName);
+		ThrowIfTrue(it == _mmapLayers.end(), "C2DWorld::removeLayer(\"" + strUniqueName + "\") failed. The name doesn't exist.");
 
-		C2DLayer* pLayer = itlayer->second;
 		// De-allocate memory for the layer
-		delete pLayer;
+		delete it->second;
 
 		// Remove layer from hash map
-		itlayer = _mmapLayers.erase(itlayer);
+		_mmapLayers.erase(it);
 
 		// Remove layer name from z order vector
 		std::vector<std::string>::iterator itv = _mvecLayerNameZOrder.begin();
@@ -91,34 +88,78 @@ namespace X
 		}
 	}
 
-	void C2DWorld::removeAllLayers(void)
+	void C2DWorld::removeLayer(unsigned int uiIndex)
 	{
-		// Get names of each layer
-		std::vector<std::string> vNames;
-		std::map<std::string, C2DLayer*>::iterator itlayer = _mmapLayers.begin();
-		while (itlayer != _mmapLayers.end())
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapLayers.size(), "C2DWorld::removeLayer(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
 		{
-			std::string name = itlayer->first;
-			vNames.push_back(name);
-			itlayer++;
+			ui++;
+			it++;
 		}
-		for (int i = 0; i < (int)vNames.size(); ++i)
+		// Temporarily store name (For removal from zorder vector)
+		std::string strIndexName = it->first;
+
+		// De-allocate memory for the object
+		delete it->second;
+
+		// Remove object from hash map
+		_mmapLayers.erase(it);
+
+		// Remove layer name from z order vector
+		std::vector<std::string>::iterator itv = _mvecLayerNameZOrder.begin();
+		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
 		{
-			removeLayer(vNames[i]);
+			if (_mvecLayerNameZOrder[i] == strIndexName)
+			{
+				itv = _mvecLayerNameZOrder.erase(itv);
+				break;
+			}
+			itv++;
 		}
 	}
 
-	std::string C2DWorld::getLayerName(int iZorder)
+	void C2DWorld::removeAllLayers(void)
+	{
+		// Remove all names from z order vector
+		_mvecLayerNameZOrder.clear();
+
+		// Remove all layers
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.begin();
+		while (it != _mmapLayers.end())
+		{
+			delete it->second;
+			_mmapLayers.erase(it);
+			it = _mmapLayers.begin();
+		}
+	}
+
+	int C2DWorld::getNumLayers(void)
+	{
+		return int(_mmapLayers.size());
+	}
+
+	std::string C2DWorld::getLayerNameAtZorder(unsigned int uiZorder)
 	{
 		// Make sure valid index given
-		if (iZorder < 0 || iZorder >= (int)_mvecLayerNameZOrder.size())
+		ThrowIfTrue(uiZorder >= (unsigned int)_mvecLayerNameZOrder.size(), "C2DWorld::getLayerNameAtZorder(" + std::to_string(uiZorder) + ") failed. Invalid iZorder value given.");
+		return _mvecLayerNameZOrder[uiZorder];
+	}
+
+	std::string C2DWorld::getLayerNameAtIndex(unsigned int uiIndex)
+	{
+		// Make sure valid index given
+		ThrowIfTrue(uiIndex >= (unsigned int)_mmapLayers.size(), "C2DWorld::getLayerNameAtIndex(" + std::to_string(uiIndex) + ") failed. Invalid index value given.");
+		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
 		{
-			std::string err("C2DWorld::getLayerName(");
-			err += std::to_string(iZorder);
-			err.append(") failed. Invalid iZorder value given!");
-			ThrowIfTrue(1, err);
+			ui++;
+			it++;
 		}
-		return _mvecLayerNameZOrder[iZorder];
+		return it->first;
 	}
 
 	int C2DWorld::getLayerZorder(const std::string& strLayerName)
@@ -132,17 +173,10 @@ namespace X
 				iCurrentIndex = i;
 				break;
 			}
-			++i;
 		}
 
 		// If the layer couldn't be found
-		if (-1 == iCurrentIndex)
-		{
-			std::string err("C2DWorld::getLayerZorder(\"");
-			err.append(strLayerName);
-			err.append("\") failed. The given layer name couldn't be found.");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfTrue(-1 == iCurrentIndex, "C2DWorld::getLayerZorder(\"" + strLayerName + "\") failed. The given name couldn't be found.");
 		return iCurrentIndex;
 	}
 
@@ -157,17 +191,10 @@ namespace X
 				iCurrentIndex = i;
 				break;
 			}
-			++i;
 		}
 
 		// If the layer couldn't be found
-		if (-1 == iCurrentIndex)
-		{
-			std::string err("C2DWorld::moveLayerUpOne(\"");
-			err.append(strLayerName);
-			err.append("\") failed. The given layer name couldn't be found.");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfTrue(-1 == iCurrentIndex, "C2DWorld::moveLayerUpOne(\"" + strLayerName + "\") failed. The given name couldn't be found.");
 
 		// If it's already at the front, do nothing
 		if ((int)_mvecLayerNameZOrder.size() - 1 == iCurrentIndex)
@@ -189,17 +216,10 @@ namespace X
 				iCurrentIndex = i;
 				break;
 			}
-			++i;
 		}
 
 		// If the layer couldn't be found
-		if (-1 == iCurrentIndex)
-		{
-			std::string err("C2DWorld::moveLayerToBackByOne(\"");
-			err.append(strLayerName);
-			err.append("\") failed. The given layer name couldn't be found.");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfTrue(-1 == iCurrentIndex, "C2DWorld::moveLayerToBackByOne(\"" + strLayerName +  "\") failed. The given name couldn't be found.");
 
 		// If it's already at the back, do nothing
 		if (0 == iCurrentIndex)
@@ -223,18 +243,11 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerToBack(\"");
-			err.append(strLayerName);
-			err.append("\") failed. The given layer name couldn't be found.");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerToBack(\"" + strLayerName + "\") failed. The given name couldn't be found.");
 		while (getLayerZorder(strLayerName) != 0)
 		{
 			moveLayerToBackByOne(strLayerName);
 		}
-
 	}
 
 	void C2DWorld::moveLayerToFront(const std::string& strLayerName)
@@ -249,14 +262,8 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerToFront(\"");
-			err.append(strLayerName);
-			err.append("\") failed. The given layer name couldn't be found.");
-			ThrowIfTrue(1, err);
-		}
-		while (getLayerZorder(strLayerName) != getLayerCount() - 1)
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerToFront(\"" + strLayerName + "\") failed. The given name couldn't be found.");
+		while (getLayerZorder(strLayerName) != getNumLayers() - 1)
 		{
 			moveLayerToFrontByOne(strLayerName);
 		}
@@ -274,17 +281,7 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerBehind(\"");
-			err.append(strLayerName);
-			err.append("\", \"");
-			err.append(strLayerNameOther);
-			err.append("\") failed. The given layer name couldn't be found. (");
-			err.append(strLayerName);
-			err.append(")");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerBehind(\"" + strLayerName + "\", \"" + strLayerNameOther + "\") failed. The given name couldn't be found. (" + strLayerName + ")");
 		bFound = false;
 		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
 		{
@@ -294,17 +291,7 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerBehind(\"");
-			err.append(strLayerName);
-			err.append("\", \"");
-			err.append(strLayerNameOther);
-			err.append("\") failed. The given layer name couldn't be found. (");
-			err.append(strLayerNameOther);
-			err.append(")");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerBehind(\"" + strLayerName + "\", \"" + strLayerNameOther + "\") failed. The given name couldn't be found. (" + strLayerNameOther + ")");
 
 		// If this layer is before other, then move until it's just before
 		while (getLayerZorder(strLayerName) < getLayerZorder(strLayerNameOther))
@@ -313,7 +300,6 @@ namespace X
 		// If this layer is after other, then move until it's just before
 		while (getLayerZorder(strLayerName) > getLayerZorder(strLayerNameOther))
 			moveLayerToBackByOne(strLayerName);
-
 	}
 
 	void C2DWorld::moveLayerInfront(const std::string& strLayerName, const std::string& strLayerNameOther)
@@ -328,17 +314,7 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerInfront(\"");
-			err.append(strLayerName);
-			err.append("\", \"");
-			err.append(strLayerNameOther);
-			err.append("\") failed. The given layer name couldn't be found. (");
-			err.append(strLayerName);
-			err.append(")");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerInfront(\"" + strLayerName + "\", \"" + strLayerNameOther + "\") failed. The given name couldn't be found. (" + strLayerName + ")");
 		bFound = false;
 		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
 		{
@@ -348,17 +324,7 @@ namespace X
 				break;
 			}
 		}
-		if (!bFound)
-		{
-			std::string err("C2DWorld::moveLayerInfront(\"");
-			err.append(strLayerName);
-			err.append("\", \"");
-			err.append(strLayerNameOther);
-			err.append("\") failed. The given layer name couldn't be found. (");
-			err.append(strLayerNameOther);
-			err.append(")");
-			ThrowIfTrue(1, err);
-		}
+		ThrowIfFalse(bFound, "C2DWorld::moveLayerInfront(\"" + strLayerName + "\", \"" + strLayerNameOther + "\") failed. The given name couldn't be found. (" + strLayerNameOther + ")");
 
 		// If this layer is after other, then move until it's just before
 		while (getLayerZorder(strLayerName) > getLayerZorder(strLayerNameOther))
@@ -367,5 +333,97 @@ namespace X
 		// If this layer is before other, then move until it's just before
 		while (getLayerZorder(strLayerName) < getLayerZorder(strLayerNameOther))
 			moveLayerToFrontByOne(strLayerName);
+	}
+
+	C2DCamera* C2DWorld::addCamera(const std::string& strUniqueName)
+	{
+		// Attempt to find if the object name already exists
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.find(strUniqueName);
+		ThrowIfTrue(it != _mmapCameras.end(), "C2DWorld::addCamera(\"" + strUniqueName + "\") failed. The object already exists.");
+
+		// Allocate memory for new object
+		C2DCamera* pNew = new C2DCamera;
+		ThrowIfFalse(pNew, "C2DWorld::addCamera(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
+
+		// Add object to hash map
+		_mmapCameras[strUniqueName] = pNew;
+		return pNew;
+	}
+
+	bool C2DWorld::getCameraExists(const std::string& strUniqueName)
+	{
+		if (_mmapCameras.find(strUniqueName) == _mmapCameras.end())
+			return false;
+		return true;
+	}
+
+	C2DCamera* C2DWorld::getCamera(const std::string& strUniqueName)
+	{
+		// Attempt to find if the name already exists
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.find(strUniqueName);
+		ThrowIfTrue(it == _mmapCameras.end(), "C2DWorld::getCamera(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
+		return it->second;
+	}
+
+	C2DCamera* C2DWorld::getCamera(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapCameras.size(), "C2DWorld::getCamera(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		return it->second;
+	}
+
+	void C2DWorld::removeCamera(const std::string& strUniqueName)
+	{
+		// Attempt to find if the layer name already exists
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.find(strUniqueName);
+		ThrowIfTrue(it == _mmapCameras.end(), "C2DWorld::removeCamera(\"" + strUniqueName + "\") failed. The object doesn't exist.");
+
+		// De-allocate memory
+		delete it->second;
+
+		// Remove from hash map
+		_mmapCameras.erase(it);
+	}
+
+	void C2DWorld::removeCamera(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapCameras.size(), "C2DWorld::removeCamera(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		// De-allocate memory for the object
+		delete it->second;
+
+		// Remove object from hash map
+		_mmapCameras.erase(it);
+	}
+
+	void C2DWorld::removeAllCameras(void)
+	{
+		// Remove all objects
+		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.begin();
+		while (it != _mmapCameras.end())
+		{
+			delete it->second;
+			_mmapCameras.erase(it);
+			it = _mmapCameras.begin();
+		}
+	}
+
+	int C2DWorld::getNumCameras(void)
+	{
+		return int(_mmapCameras.size());
 	}
 }

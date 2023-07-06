@@ -27,3 +27,7 @@ Current progress...
 - Create 2D sprite rendering
 - Rewrite joy part of input
 - Remove and replace glm with own code?
+- Replace usages of GUIColour with CColour
+- Add padding to vector classes
+- Check CVector2r
+- Add stuff to CColour

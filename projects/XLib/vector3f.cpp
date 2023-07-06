@@ -127,7 +127,7 @@ namespace X
 
 	float CVector3f::getAngle(const CVector3f& vec) const
 	{
-		return acos(getDot(vec));
+		return acosf(getDot(vec));
 	}
 
 	float CVector3f::getDistance(const CVector3f& vec) const

@@ -21,7 +21,7 @@ namespace X
 	// 
 	// Here is more information about each of the objects...
 	// 
-	// SC2DManager:
+	// SC2DRenderer:
 	// We go here to create everything 2D related, including image data.
 	// 
 	// C2DImageData:
@@ -34,7 +34,8 @@ namespace X
 	// C2DWorld:
 	// The top most object is a C2DWorld, we create at least one of these to hold all other objects.
 	// We can have multiple worlds.
-	// A world has at least one camera.
+	// A world needs at least one camera to be able to render the world to a framebuffer.
+	// A world should have at least one layer with which to contain the various entities.
 	// 
 	// C2DCamera:
 	// A camera has a position inside a C2DWorld and is used to render it's view of the world into a framebuffer
@@ -62,5 +63,35 @@ namespace X
 		SC2DRenderer();
 		~SC2DRenderer();
 
+		// Add a new named object
+		// If the object name already exists, an exception occurs
+		// Returns a pointer to the newly added object
+		C2DWorld* addWorld(const std::string& strUniqueName);
+
+		// Returns true if an object exists, else false
+		bool getWorldExists(const std::string& strUniqueName);
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DWorld* getWorld(const std::string& strUniqueName);
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DWorld* getWorld(unsigned int uiIndex);
+
+		// Removes an object
+		// If the object's name given doesn't exist, an exception occurs
+		void removeWorld(const std::string& strUniqueName);
+
+		// Removes an object
+		// If an invalid index is given, an exception occurs
+		void removeWorld(unsigned int uiIndex);
+
+		// Removes all objects
+		void removeAllWorlds(void);
+
+		// Returns the total number of added objects
+		int getNumWorlds(void);
+
+	private:
+		std::map<std::string, C2DWorld*> _mmapWorlds;		// Each named world
 	};
 }
