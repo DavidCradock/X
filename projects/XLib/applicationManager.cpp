@@ -257,6 +257,7 @@ namespace X
 		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
 		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
 		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag");
+		pRM->addShader("X:2D", "data/X/shaders/2D.vert", "data/X/shaders/2D.frag");
 
 		// Textures
 		pRM->addTexture2D("X:default_particle", "data/X/textures/particle0.png");

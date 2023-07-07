@@ -38,6 +38,9 @@ namespace X
 		// Returns height of the depth buffer
 		unsigned int getHeight(void);
 
+		// Returns dimensions of the depth buffer
+		glm::vec2 getDimensions(void);
+
 		// Sets depth buffer to new dimensions
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
 

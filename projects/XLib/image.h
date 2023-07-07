@@ -1,5 +1,6 @@
 #pragma once
 #include "PCH.h"
+#include "vector2f.h"
 
 namespace X
 {
@@ -74,19 +75,22 @@ namespace X
 		// Return pointer to image data for manual modification. 
 		// Please, BE CAREFULL if you're using this method to directly access the image data.
 		// returns The pointer to the image's data. 
-		unsigned char* getData(void) { return pData; }
+		unsigned char* getData(void);
 
 		// Get size of image data in bytes
 		// returns The size of the image data 
-		unsigned int getDataSize(void) const { return dataSize; }
+		unsigned int getDataSize(void) const;
 
 		// Get width of image
 		// returns The width of the image. 
-		unsigned int getWidth(void) const { return width; }
+		unsigned int getWidth(void) const;
 
 		// Get height of image
 		// returns The height of the image. 
-		unsigned int getHeight(void) const { return height; }
+		unsigned int getHeight(void) const;
+
+		// Returns dimenions of the image
+		CVector2f getDimensions(void);
 
 		// Get number of channels
 		// returns The number of channels of the image. 

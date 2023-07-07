@@ -20,12 +20,12 @@ namespace X
 		// Create Debug GUI
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("Debug");
-		pCont->setDimensions(200, 200);
+		pCont->setDimensions(640, 200);
 		pCont->setPositionCentreWindow();
 		for (int i = 0; i < 100; i += 20)
 		{
 			std::string strText = "Text: " + std::to_string(i);
-			pCont->addText(strText, 0, i, strText);
+			pCont->addText(strText, 0, (float)i, strText);
 		}
 		pCont->setVisible(true);
 

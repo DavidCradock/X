@@ -15,8 +15,11 @@ namespace X
 		// Set the position of the sprite entity
 		void setPosition(const CVector2r& vPosition);
 
-		// Returns the currently set position of the sprite entity
+		// Returns the currently set position of the entity
 		CVector2r getPosition(void);
+
+		// Returns the currently set position of the entity
+		glm::vec3 getPositionGLM(void);
 
 		// Set the amount of rotation of the entity in degrees
 		void setRotationDeg(real rRotationDegress);

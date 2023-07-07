@@ -153,6 +153,14 @@ namespace X
 		return _muiHeight;
 	}
 
+	glm::vec2 CResourceDepthbuffer::getDimensions(void)
+	{
+		glm::vec2 vDims;
+		vDims.x = float(_muiWidth);
+		vDims.y = float(_muiHeight);
+		return vDims;
+	}
+
 	void CResourceDepthbuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
 		ThrowIfTrue(uiNewWidth == 0 || uiNewHeight == 0, "CResourceDepthbuffer::resize() given a dimension of size zero.");

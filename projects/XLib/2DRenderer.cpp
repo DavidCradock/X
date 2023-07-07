@@ -112,10 +112,13 @@ namespace X
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:2D");
-		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		CResourceShader* pShader = pRM->getShader("X:2D");
 		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:backbuffer_FB");
 
 		pTri->removeGeom();
+
+		glm::vec2 vDims = pFB->getDimensions();
+		glm::mat4 matrixProjection = glm::ortho(0.0f, vDims.x, vDims.y, 0.0f, -1.0f, 1.0f);
 
 		// For each world
 		std::map<std::string, C2DWorld*>::iterator itWorld = _mmapWorlds.begin();
@@ -125,6 +128,15 @@ namespace X
 			std::map<std::string, C2DCamera*>::iterator itCamera = itWorld->second->_mmapCameras.begin();
 			while (itCamera != itWorld->second->_mmapCameras.end())
 			{
+				// Set matrix view from camera
+				glm::mat4 matrixView = glm::mat4();
+				glm::vec3 v3CameraPos = itCamera->second->getPositionGLM();
+				matrixView = glm::translate(matrixView, v3CameraPos);
+
+				// Compute view projection matrix and pass to shader
+				glm::mat4 matrixViewProjection = matrixProjection * matrixView;
+				pShader->setMat4("matrixViewProjection", matrixViewProjection);
+
 				// For each layer in world
 				for (unsigned int uiLayerZorder = 0; uiLayerZorder < itWorld->second->_mvecLayerNameZOrder.size(); ++uiLayerZorder)
 				{
@@ -135,7 +147,11 @@ namespace X
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntitys.begin();
 					while (itEntity != pLayer->_mmapEntitys.end())
 					{
-						itEntity->second->_mv2rPosition;
+						// Compute world matrix and pass to shader
+						glm::mat4 matrixWorld = glm::mat4();
+						glm::vec3 v3EntityPos = itEntity->second->getPositionGLM();
+						matrixWorld = glm::translate(matrixWorld, v3EntityPos);
+						pShader->setMat4("matrixWorld", matrixWorld);
 
 						itEntity++;
 					}

@@ -177,6 +177,14 @@ namespace X
 		return _muiHeight;
 	}
 
+	glm::vec2 CResourceFramebuffer::getDimensions(void)
+	{
+		glm::vec2 vDims;
+		vDims.x = float(_muiWidth);
+		vDims.y = float(_muiHeight);
+		return vDims;
+	}
+
 	void CResourceFramebuffer::resize(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
 		// If the framebuffer is already the newly specified size, do nother

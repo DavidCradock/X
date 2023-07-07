@@ -24,6 +24,7 @@ namespace X
 	// X:depthbuffer_debug		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 	// X:shadowdepthmap			// A shader used by the scene manager to render the depth map used for rendering shadows
 	// X:gui					// A shader used by the GUI to render everything.
+	// X:2D						// A shader used by SC2DRenderer
 	// X:default_particle		// A texture for use with rendering generic particles
 	// X:default_white			// A texture which is tiny and white.
 	// X:default_diffuse		// A texture which is grey for diffuse, used if not set

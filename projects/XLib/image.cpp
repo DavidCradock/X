@@ -168,6 +168,32 @@ namespace X
 		}
 	}
 
+	unsigned char* CImage::getData(void)
+	{
+		return pData;
+	}
+
+	unsigned int CImage::getDataSize(void) const
+	{
+		return dataSize;
+	}
+
+	unsigned int CImage::getWidth(void) const
+	{
+		return width;
+	}
+
+	unsigned int CImage::getHeight(void) const
+	{
+		return height;
+	}
+
+	CVector2f CImage::getDimensions(void)
+	{
+		CVector2f vDims((float)width, (float)height);
+		return vDims;
+	}
+
 	bool CImage::getDimsArePowerOfTwo(void)
 	{
 		int iX = 1;

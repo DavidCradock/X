@@ -27,6 +27,15 @@ namespace X
 		return _mv2rPosition;
 	}
 
+	glm::vec3 C2DEntity::getPositionGLM(void)
+	{
+		glm::vec3 vPos;
+		vPos.x = (float)_mv2rPosition.x;
+		vPos.y = (float)_mv2rPosition.y;
+		vPos.z = 0.0f;
+		return vPos;
+	}
+
 	void C2DEntity::setRotationDeg(real rRotationDegress)
 	{
 		_mrRotationDegrees = rRotationDegress;

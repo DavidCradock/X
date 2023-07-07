@@ -41,6 +41,9 @@ namespace X
 		// Returns height of the frame buffer
 		unsigned int getHeight(void);
 
+		// Returns dimensions of the frame buffer
+		glm::vec2 getDimensions(void);
+
 		// Sets frame buffer to new dimensions
 		// If the new dimensions are the same as the current ones, this simply returns
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
