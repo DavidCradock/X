@@ -28,3 +28,5 @@ Current progress...
 - Rewrite joy part of input
 - Remove and replace glm with own code?
 - Add padding to vector classes
+- Create CResourceTexture2DAtlas class, copy from CResourceTexture2DAnimation then modify to include images of any size and allow spacing inbetween each image.
+- Change CResourceTexture2DAnimation to CResourceTexture2DAtlas

@@ -45,6 +45,7 @@
     <ClInclude Include="GUITextScroll.h" />
     <ClInclude Include="GUITheme.h" />
     <ClInclude Include="GUITooltip.h" />
+    <ClInclude Include="imageAtlas.h" />
     <ClInclude Include="physicsManager.h" />
     <ClInclude Include="precision.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
@@ -128,6 +129,7 @@
     <ClCompile Include="GUITextScroll.cpp" />
     <ClCompile Include="GUITheme.cpp" />
     <ClCompile Include="GUITooltip.cpp" />
+    <ClCompile Include="imageAtlas.cpp" />
     <ClCompile Include="physicsManager.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceTexture2DAnimation.cpp" />
