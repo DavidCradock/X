@@ -282,6 +282,12 @@
     <ClInclude Include="imageAtlas.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="vector2f.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2d.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -492,6 +498,12 @@
     </ClCompile>
     <ClCompile Include="imageAtlas.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2f.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2d.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

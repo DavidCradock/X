@@ -3,12 +3,12 @@
 
 namespace X
 {
-	SCImageAtlasPacker::SCImageAtlasPacker()
+	CImageAtlasPacker::CImageAtlasPacker()
 	{
 
 	}
 
-	SCImageAtlasPacker::~SCImageAtlasPacker()
+	CImageAtlasPacker::~CImageAtlasPacker()
 	{
 
 	}
