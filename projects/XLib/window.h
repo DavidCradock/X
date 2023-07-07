@@ -6,11 +6,11 @@ namespace X
 {
 	// Is responsible for creating/updating/shutting down the application's window.
 	// Also initialises/updates/shutsdown the input manager.
-	class CWindow : public CSingleton<CWindow>
+	class SCWindow : public CSingleton<SCWindow>
 	{
 	public:
 		// Constructor
-		CWindow(void);
+		SCWindow(void);
 
 		// Creates the window and sets screenmode (If fullscreen)
 		void createWindow(std::string strWindowTitle);
@@ -73,7 +73,7 @@ namespace X
 		glm::vec2 getDimensions(void);
 
 		// Returns the maximum texture size supported by the OpenGL drivers
-		int getMaxTextureSize(void);
+		unsigned int getMaxTextureSize(void);
 
 		// Sets the icon of the application window using an int from resource.h
 		void setIcon(int iIconResource);

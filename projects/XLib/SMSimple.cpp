@@ -24,7 +24,7 @@ namespace X
 		pBGFB->unbindAsRenderTarget();
 
 		// Camera
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		mCamera.setProjectionAsPerspective(65.0f, (float)pWindow->getWidth(), (float)pWindow->getHeight(), 1.0f, 10000.0f);
 
 		// Render depth map for directional light
@@ -441,7 +441,7 @@ namespace X
 		pShader->unbind();
 		pDepthbuffer->unbindAsRenderTarget();
 		// Reset viewport
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
 	}
 

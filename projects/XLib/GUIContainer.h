@@ -266,18 +266,18 @@ namespace X
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
 
-		std::map<std::string, CGUIButton*> _mmapButtons;							// Hashmap for each added button
-		std::map<std::string, CGUIText*> _mmapTexts;								// Hashmap for each added text
-		std::map<std::string, CGUITextEdit*> _mmapTextEdits;						// Hashmap for each added text edit
-		std::map<std::string, CGUISlider*> _mmapSliders;							// Hashmap for each added slider
+		std::map<std::string, CGUIButton*> _mmapButtons;						// Hashmap for each added button
+		std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
+		std::map<std::string, CGUITextEdit*> _mmapTextEdits;					// Hashmap for each added text edit
+		std::map<std::string, CGUISlider*> _mmapSliders;						// Hashmap for each added slider
 		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
 		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
 		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
 		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;		// Hashmap for each added image framebuffer 
-		std::map<std::string, CGUITextScroll*> _mmapTextScrolls;					// Hashmap for each added text scroll
+		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
+		std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
 		std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
-		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;		// Hashmap for each added image depthbuffer 
+		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 

@@ -31,7 +31,7 @@ namespace X
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
 			// Create window
-			CWindow* pWindow = CWindow::getPointer();
+			SCWindow* pWindow = SCWindow::getPointer();
 			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle shadows.");
 			
 			// Get pointer to input manager
@@ -116,7 +116,7 @@ namespace X
 		{
 			CLog::getPointer()->add("Total runtime: " + mTimer.getClock());
 			CLog::getPointer()->add(exception.mstrException, true);
-			MessageBox(CWindow::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
+			MessageBox(SCWindow::getPointer()->getWindowHandle(), StringToWString(exception.mstrException).c_str(), L"Sorry, an exception has been thrown...", MB_OK);
 			__debugbreak();
 		}
 		CLog::getPointer()->add("Total runtime: " + mTimer.getClock());

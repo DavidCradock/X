@@ -67,6 +67,6 @@ namespace X
 		};
 		std::vector<AnimationFrame> _mvAnimationFrames;	// Stores information for each animation frame (texture coordinates and which large texture it's located in)
 		std::vector<unsigned int> _mvLargeTextureIDs;	// OpenGL texture ID for each generated large texture holding the smaller images.
-		std::vector<CImage*> _mvLargeImages;				// The images holding multiple images, used for generating the OpenGL texture/s.
+		std::vector<CImage*> _mvLargeImages;			// The images holding multiple images, used for generating the OpenGL texture/s.
 	};
 }

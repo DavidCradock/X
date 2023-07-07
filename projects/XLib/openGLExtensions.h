@@ -9,7 +9,7 @@ namespace X
 	// Detects required extensions and retrieves pointers to the functions
 	// Also writes out the extensions to the log file.
 	// Must be called AFTER the OpenGL window is created.
-	// Called from CWindow::createWindow()
+	// Called from SCWindow::createWindow()
 	// If it has been called before, it'll silently return.
 	void setupOpenGLExtensions(bool bLogExtensions);
 

@@ -35,7 +35,7 @@ namespace X
 
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsPoint3 = pTex->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTex->mvDimensions * 0.6666666f;

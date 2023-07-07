@@ -254,7 +254,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		glm::vec2 vWindowDims = pWindow->getDimensions();
 
 		SCInputManager* pInput = SCInputManager::getPointer();
@@ -606,7 +606,7 @@ namespace X
 		// Get required resources needed to render
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);

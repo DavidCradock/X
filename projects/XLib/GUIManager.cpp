@@ -170,9 +170,17 @@ namespace X
 
 	void SCGUIManager::setThemeForAll(const std::string& strName)
 	{
-		ThrowIfTrue(1, "SCGUIManager::setThemeForAll() failed. This method isn't implemented yet!");
-	}
+		// Make sure the given theme name exists
+		ThrowIfFalse(getThemeExists(strName), "SCGUIManager::setThemeForAll() failed. The given theme name of " + strName + " doesn't exist.");
 
+		// Set each container to use the given theme
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.begin();
+		while (it != _mmapContainers.end())
+		{
+			it->second->mstrThemename = strName;
+			it++;
+		}
+	}
 
 	CGUIContainer* SCGUIManager::addContainer(const std::string& strName)
 	{
@@ -196,6 +204,29 @@ namespace X
 
 		// Place in the hashmap
 		_mmapContainers[strName] = pNew;
+
+		// Set this containers titlebar text to active and all other to inactive
+		// Set colour of all other containers
+		std::map<std::string, CGUIContainer*>::iterator itCont = _mmapContainers.begin();
+		CGUITheme* pTheme = getTheme(pNew->mstrThemename);
+
+		while (itCont != _mmapContainers.end())
+		{
+			itCont->second->_mvTextColour = glm::vec4(
+				pTheme->mColours.containerTitlebarTextNotInFocus.red,
+				pTheme->mColours.containerTitlebarTextNotInFocus.green,
+				pTheme->mColours.containerTitlebarTextNotInFocus.blue,
+				pTheme->mColours.containerTitlebarTextNotInFocus.alpha);
+			itCont++;
+		}
+
+		// Set colour of titlebar text
+		pNew->_mvTextColour = glm::vec4(
+			pTheme->mColours.containerTitlebarTextInFocus.red,
+			pTheme->mColours.containerTitlebarTextInFocus.green,
+			pTheme->mColours.containerTitlebarTextInFocus.blue,
+			pTheme->mColours.containerTitlebarTextInFocus.alpha);
+
 		return pNew;
 	}
 

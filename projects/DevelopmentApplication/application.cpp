@@ -6,7 +6,7 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Set window title bar text and set icon
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		pWindow->setText("X DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
 
@@ -226,25 +226,25 @@ namespace X
 		strTXT += std::format("{:.2f}", timer.getFPSAveraged());
 		CResourceFont* pFont = pRM->getFont("arial_26");
 		int iYpos = 0;
-		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pFont->print(strTXT, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		iYpos += (int)pFont->getTextHeight();
 
 		// Render some debug text
 		// Position
 //		glm::vec3 vPos = pEntityLine->getWorldPosition();
 //		strTXT = "Line entity getWorldPosition: AD: " + std::format("{:.4f}", vPos.x) + ", RF: " + std::format("{:.4f}", vPos.y) + ", WS: " + std::format("{:.4f}", vPos.z);
-//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		// Scale
 //		glm::vec3 vScale = pEntityLine->getScale();
 //		strTXT = "Line entity getScale: TG: " + std::format("{:.4f}", vScale.x) + ", " + std::format("{:.4f}", vScale.y) + ", " + std::format("{:.4f}", vScale.z);
-//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		// Rotation
 //		strTXT = "Line entity rotation YHUJIK";
-//		pFont->print(strTXT, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f);
+//		pFont->print(strTXT, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f);
 //		iYpos += (int)pFont->getTextHeight();
 
 		/*		// Render more text with various scaling values
@@ -252,13 +252,13 @@ namespace X
 				for (float fScale = 0.1f; fScale < 1.0f; fScale += 0.1f)
 				{
 					std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
-					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					fYpos += 100.0f * fScale;
 				}
 				for (float fScale = 1.0f; fScale < 3.5f; fScale += 0.5f)
 				{
 					std::string strText = "Text scale: " + std::format("{:.1f}", fScale) + " hmm, OK.";
-					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					pRM->getFont("tahoma_200")->print(strText, 0, fYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), fScale, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					fYpos += 100.0f * fScale;
 				}
 		*/
@@ -272,11 +272,11 @@ namespace X
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
 		{
-			CWindow::getPointer()->toggleFullscreen();
+			SCWindow::getPointer()->toggleFullscreen();
 		}
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
-			CWindow::getPointer()->setVsync(!CWindow::getPointer()->getVSyncEnabled());
+			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
 		return true;
 	}
 

@@ -34,7 +34,7 @@ namespace X
 
 		// Get required resources needed to render the tab
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		SCInputManager* pInput = SCInputManager::getPointer();

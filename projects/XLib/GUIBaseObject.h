@@ -13,6 +13,9 @@ namespace X
 		// Set position of object
 		void setPosition(float fPosX, float fPosY);
 		
+		// Set position to centre of window
+		void setPositionCentreWindow(void);
+
 		// Set dimensions of object
 		void setDimensions(float fWidth, float fHeight);
 

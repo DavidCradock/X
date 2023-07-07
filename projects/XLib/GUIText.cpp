@@ -24,7 +24,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
 	
 		int iRTDims[2];

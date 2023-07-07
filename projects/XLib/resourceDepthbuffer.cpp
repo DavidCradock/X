@@ -75,7 +75,7 @@ namespace X
 	void CResourceDepthbuffer::unbindAsRenderTarget(void)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		CWindow* pWnd = CWindow::getPointer();
+		SCWindow* pWnd = SCWindow::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 	}
 
@@ -167,7 +167,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:debug");
 		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		
 		// Setup triangle geometry
 		pTri->removeGeom();

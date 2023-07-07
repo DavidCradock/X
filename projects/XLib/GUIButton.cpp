@@ -33,7 +33,7 @@ namespace X
 
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Now render the font stuff
 		int iRTDims[2];

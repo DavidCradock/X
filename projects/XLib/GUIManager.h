@@ -140,6 +140,7 @@ namespace X
 		std::string getThemeName(int iIndex);
 
 		// Sets all GUI objects to use the named theme.
+		// If the passed theme name doesn't exist, an exception occurs
 		void setThemeForAll(const std::string& strName);
 
 		// Adds a new container and returns a pointer to it

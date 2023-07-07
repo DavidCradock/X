@@ -6,7 +6,7 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Set window title bar text and set icon
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		pWindow->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
 
@@ -17,9 +17,23 @@ namespace X
 		//p2DRenderer->addWorld("World");
 		C2DWorld world;
 
-		CVector2r v1(0, 0);
-		CVector2r v2(1.0, 1.0);
-		real rAngle = v1.getDistance(v2);
+		// Create Debug GUI
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUI->addContainer("Debug");
+		pCont->setDimensions(200, 200);
+		pCont->setPositionCentreWindow();
+		for (int i = 0; i < 100; i += 20)
+		{
+			std::string strText = "Text: " + std::to_string(i);
+			pCont->addText(strText, 0, i, strText);
+		}
+		pCont->setVisible(true);
+
+		CImageAtlasPacker imageAtlasPacker;
+		std::vector<std::string> vstrImageFilenames = getFilesInDir("data/Demo2D/images/CImageAtlasPackerTest/");
+		imageAtlasPacker.createAtlasImages(vstrImageFilenames, pWindow->getMaxTextureSize(), pWindow->getMaxTextureSize(), true, 1);
+
+		
 
 	}
 
@@ -45,11 +59,11 @@ namespace X
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
 		{
-			CWindow::getPointer()->toggleFullscreen();
+			SCWindow::getPointer()->toggleFullscreen();
 		}
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
-			CWindow::getPointer()->setVsync(!CWindow::getPointer()->getVSyncEnabled());
+			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
 		// Toggle statistics window
 		if (pInputManager->key.once(KC_F3))
 		{

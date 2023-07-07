@@ -21,7 +21,7 @@ namespace X
 	{
 		if (fWidth < 0.0f || fHeight < 0.0f)
 		{
-			CWindow* pWindow = CWindow::getPointer();
+			SCWindow* pWindow = SCWindow::getPointer();
 			fWidth = (float)pWindow->getWidth();
 			fHeight = (float)pWindow->getHeight();
 		}
@@ -136,19 +136,19 @@ namespace X
 		strDebug += std::format("{:.2f}", v3CameraPosition.x);
 		strDebug += ", " + std::format("{:.2f}", v3CameraPosition.y);
 		strDebug += ", " + std::format("{:.2f}", v3CameraPosition.z);
-		pRM->getFont("arial_26")->print(strDebug, 0, 50, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 50, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fAngleY: " + std::format("{:.2f}", modeOrbit.fAngleY);
-		pRM->getFont("arial_26")->print(strDebug, 0, 80, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 80, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fAngleUp: " + std::format("{:.2f}", modeOrbit.fAngleUp);
-		pRM->getFont("arial_26")->print(strDebug, 0, 110, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 110, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fXZscale: " + std::format("{:.2f}", fXZscale);
-		pRM->getFont("arial_26")->print(strDebug, 0, 140, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 140, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		strDebug = "Camera mode orbit: fScale: " + std::format("{:.2f}", fScale);
-		pRM->getFont("arial_26")->print(strDebug, 0, 170, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		pRM->getFont("arial_26")->print(strDebug, 0, 170, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		*/
 	}
 
@@ -234,23 +234,23 @@ namespace X
 
 		// Position
 		std::string strDebug = "Camera mode FPS: Position: " + std::format("{:.2f}", modeFPS.v3Position.x) += ", " + std::format("{:.2f}", modeFPS.v3Position.y) += ", " + std::format("{:.2f}", modeFPS.v3Position.z);
-		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 		
 		// modeFPS.v3Forward
 		strDebug = "modeFPS.v3Forward: " + std::format("{:.2f}", modeFPS.v3Forward.x) += ", " + std::format("{:.2f}", modeFPS.v3Forward.y) += ", " + std::format("{:.2f}", modeFPS.v3Forward.z);
-		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.v3Right
 		strDebug = "modeFPS.v3Right: " + std::format("{:.2f}", modeFPS.v3Right.x) += ", " + std::format("{:.2f}", modeFPS.v3Right.y) += ", " + std::format("{:.2f}", modeFPS.v3Right.z);
-		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.v3Up
 		strDebug = "modeFPS.v3Up: " + std::format("{:.2f}", modeFPS.v3Up.x) += ", " + std::format("{:.2f}", modeFPS.v3Up.y) += ", " + std::format("{:.2f}", modeFPS.v3Up.z);
-		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 
 		// modeFPS.fPitch and modeFPS.fYaw
 		strDebug = "modeFPS.fPitch: " + std::format("{:.2f}", modeFPS.fPitch) += " modeFPS.fYaw: " + std::format("{:.2f}", modeFPS.fYaw);
-		pFont->print(strDebug, 0, iYpos, CWindow::getPointer()->getWidth(), CWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
+		pFont->print(strDebug, 0, iYpos, SCWindow::getPointer()->getWidth(), SCWindow::getPointer()->getHeight(), 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));		iYpos += (int)pFont->getTextHeight();
 		*/
 	}
 }

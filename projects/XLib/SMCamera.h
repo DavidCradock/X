@@ -22,7 +22,7 @@ namespace X
 		// Sets the projection matrix of the camera as perspective
 		// The parameters are the dimensions of whatever we're rendering to.
 		// Passing the window's dims is a good idea, or perhaps the dims of a framebuffer.
-		// Passing a value of less than zero to the fWidth and fHeight params will set the dims to CWindow::getWidth() and CWindow::getHeight().
+		// Passing a value of less than zero to the fWidth and fHeight params will set the dims to SCWindow::getWidth() and SCWindow::getHeight().
 		void setProjectionAsPerspective(float fFOVdegrees, float fWidth = -1.0f, float fHeight = -1.0f, float fZNear = 1.0f, float fZFar = 10000.0f);
 
 		// Sets the view matrix as identity

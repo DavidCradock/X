@@ -77,7 +77,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceLine* pLine = pRM->getLine("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:line");
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 
 		pShader->bind();
 

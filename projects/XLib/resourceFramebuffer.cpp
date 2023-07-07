@@ -75,7 +75,7 @@ namespace X
 	{
 		if (bResizeToWindowDimensions)
 		{
-			CWindow* pWindow = CWindow::getPointer();
+			SCWindow* pWindow = SCWindow::getPointer();
 			unsigned int iWindowWidth = (unsigned int)pWindow->getWidth();
 			unsigned int iWindowHeight = (unsigned int)pWindow->getHeight();
 			if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
@@ -97,7 +97,7 @@ namespace X
 	void CResourceFramebuffer::unbindAsRenderTarget(void)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		CWindow* pWnd = CWindow::getPointer();
+		SCWindow* pWnd = SCWindow::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 		glFlush();
 		glFinish();
@@ -196,7 +196,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:debug");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Setup triangle geometry
 		pTri->removeGeom();

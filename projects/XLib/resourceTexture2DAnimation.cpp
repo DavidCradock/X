@@ -157,7 +157,7 @@ namespace X
 		mvDimensions.y = (float)iImageHeight;
 
 		// Get maximum texture dimensions supported by gfx hardware and check that the first image dims are <= to that
-		int iMaxTextureDims = CWindow::getPointer()->getMaxTextureSize();
+		int iMaxTextureDims = SCWindow::getPointer()->getMaxTextureSize();
 		ThrowIfTrue(iImageWidth > iMaxTextureDims || iImageHeight > iMaxTextureDims, "CResourceTexture2DAnimation::_packImagesIntoLargeImages() failed. Image size is greater than maximum texture size supported by gfx hardware.");
 
 		// Load in each individual image and whilst doing so, compute large texture dimensions and amount needed

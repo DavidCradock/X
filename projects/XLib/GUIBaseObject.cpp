@@ -114,6 +114,13 @@ namespace X
 		mfPositionY = fPosY;
 	}
 
+	void CGUIBaseObject::setPositionCentreWindow(void)
+	{
+		SCWindow* pWindow = SCWindow::getPointer();
+		mfPositionX = (pWindow->getWidth() / 2) - (mfWidth / 2);
+		mfPositionY = (pWindow->getHeight() / 2) - (mfHeight / 2);
+	}
+
 	void CGUIBaseObject::setDimensions(float fWidth, float fHeight)
 	{
 		mfWidth = fWidth;
@@ -131,7 +138,7 @@ namespace X
 		// Get required resources needed to render
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);

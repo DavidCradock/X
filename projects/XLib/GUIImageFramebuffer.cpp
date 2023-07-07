@@ -24,7 +24,7 @@ namespace X
 
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CWindow* pWindow = CWindow::getPointer();
+		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 
