@@ -318,11 +318,11 @@ namespace X
 
 		// Load in a textures
 		// Cubes
-		pRM->addTexture2D("data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_BaseColor.png", true);
-		pRM->addTexture2D("data/DevApp/textures/cube_Roughness.png", "data/DevApp/textures/cube_Roughness.png", true);
-		pRM->addTexture2D("data/DevApp/textures/cube_Normal.png", "data/DevApp/textures/cube_Normal.png", true);
+		pRM->addTexture2DFromFile("data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_BaseColor.png", true);
+		pRM->addTexture2DFromFile("data/DevApp/textures/cube_Roughness.png", "data/DevApp/textures/cube_Roughness.png", true);
+		pRM->addTexture2DFromFile("data/DevApp/textures/cube_Normal.png", "data/DevApp/textures/cube_Normal.png", true);
 		// Point light entities
-		pRM->addTexture2D("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
+		pRM->addTexture2DFromFile("data/DevApp/textures/groundplane.png", "data/DevApp/textures/groundplane.png", true);
 
 		// Create materials
 		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DevApp/textures/cube_BaseColor.png", "data/DevApp/textures/cube_Roughness.png", 0.75f, "data/DevApp/textures/cube_Normal.png", "X:default_emission");

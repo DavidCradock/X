@@ -60,7 +60,7 @@ namespace X
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
-		glm::vec2 vBGdims = pRM->getTexture2D(pTheme->mImages.textScrollBGColour)->mvDimensions;
+		glm::vec2 vBGdims = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour)->mvDimensions;
 		glm::vec2 vBGDimsPoint3 = vBGdims * 0.3333333f;
 		glm::vec2 vBGDimsPoint6 = vBGdims * 0.6666666f;
 
@@ -146,7 +146,7 @@ namespace X
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textScroll);
 		CResourceFramebuffer* pFB = pRM->getFramebuffer(_mstrFBName);
-		CResourceTexture2DFromFile* pTex = pRM->getTexture2D(pTheme->mImages.textScrollBGColour);
+		CResourceTexture2DFromFile* pTex = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour);
 
 		// Unbind the render target which the GUI is currently rendering to.
 		CResourceFramebuffer* pFBGUITarget = pRM->getFramebuffer("X:backbuffer_FB");

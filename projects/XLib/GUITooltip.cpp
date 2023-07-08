@@ -34,7 +34,7 @@ namespace X
 		CGUITheme* pTheme = pGUI->getTheme(pContainer->mstrThemename);
 		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
 		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:guitooltipFB");
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.tooltipBGColour);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
 		glm::vec2 vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
 
@@ -543,7 +543,7 @@ namespace X
 
 		// Add strImageFilename to the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DFromFile* pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
+		CResourceTexture2DFromFile* pTex = pResMan->addTexture2DFromFile(strImageFilename, strImageFilename);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -569,7 +569,7 @@ namespace X
 
 		// Remove _mstrImageFilename from the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2D(it->second->_mstrTexturename);
+		pResMan->removeTexture2DFromFile(it->second->_mstrTexturename);
 
 		delete it->second;
 		_mmapImages.erase(it);

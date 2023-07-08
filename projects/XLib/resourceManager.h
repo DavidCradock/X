@@ -115,7 +115,7 @@ namespace X
 		// If the resource couldn't be found, an exception is thrown
 		CResourceShader* getShader(const std::string& strResourceName);
 
-		// Returns whether a named resource exists
+		// Returns whether a named resource existsgetTexture2DFromFileExists
 		bool getShaderExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
@@ -123,24 +123,24 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeShader(const std::string& strResourceName);
 
-		// Adds a new texture2D object to the manager.
+		// Adds a new texture2DFromFile object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the stored filename.
-		CResourceTexture2DFromFile* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
+		CResourceTexture2DFromFile* addTexture2DFromFile(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceTexture2DFromFile* getTexture2D(const std::string& strResourceName);
+		CResourceTexture2DFromFile* getTexture2DFromFile(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getTexture2DExists(const std::string& strResourceName);
+		bool getTexture2DFromFileExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeTexture2D(const std::string& strResourceName);
+		void removeTexture2DFromFile(const std::string& strResourceName);
 
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.

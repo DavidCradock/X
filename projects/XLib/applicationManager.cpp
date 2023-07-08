@@ -260,12 +260,12 @@ namespace X
 		pRM->addShader("X:2D", "data/X/shaders/2D.vert", "data/X/shaders/2D.frag");
 
 		// Textures
-		pRM->addTexture2D("X:default_particle", "data/X/textures/particle0.png");
-		pRM->addTexture2D("X:default_white", "data/X/textures/default_white.png");
-		pRM->addTexture2D("X:default_diffuse", "data/X/textures/default_diffuse.png");
-		pRM->addTexture2D("X:default_emission", "data/X/textures/default_emission.png");
-		pRM->addTexture2D("X:default_normal", "data/X/textures/default_normal.png");
-		pRM->addTexture2D("X:default_roughness", "data/X/textures/default_roughness.png");
+		pRM->addTexture2DFromFile("X:default_particle", "data/X/textures/particle0.png");
+		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png");
+		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png");
+		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png");
+		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png");
+		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png");
 
 		// Depth buffers
 		pRM->addDepthbuffer("X:shadows", 2048, 2048);

@@ -61,9 +61,9 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.progressBarFillerColour);
-		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2D(pTheme->mImages.progressBarFillerNormal);
-		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.progressBarFillerColour);
+		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2DFromFile(pTheme->mImages.progressBarFillerNormal);
+		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2DFromFile(pTheme->mImages.reflection);
 		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures

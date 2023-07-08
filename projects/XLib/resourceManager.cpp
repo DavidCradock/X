@@ -335,7 +335,7 @@ namespace X
 		_mmapResShaders.erase(it);
 	}
 
-	CResourceTexture2DFromFile* SCResourceManager::addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis)
+	CResourceTexture2DFromFile* SCResourceManager::addTexture2DFromFile(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
@@ -347,24 +347,24 @@ namespace X
 		SResourceTexture2DFromFile newRes;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceTexture2DFromFile(strImageFilename, bFlipYaxis);
-		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2D(" + strResourceName + ") failed to allocate memory for new resource.");
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DFromFile(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTextures2D[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	CResourceTexture2DFromFile* SCResourceManager::getTexture2D(const std::string& strResourceName)
+	CResourceTexture2DFromFile* SCResourceManager::getTexture2DFromFile(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTextures2D.end(), "SCResourceManager::getTexture2D(" + strResourceName + ") failed. Named resource doesn't exist.");
+		ThrowIfTrue(it == _mmapResTextures2D.end(), "SCResourceManager::getTexture2DFromFile(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool SCResourceManager::getTexture2DExists(const std::string& strResourceName)
+	bool SCResourceManager::getTexture2DFromFileExists(const std::string& strResourceName)
 	{
 		return _mmapResTextures2D.find(strResourceName) != _mmapResTextures2D.end();
 	}
 
-	void SCResourceManager::removeTexture2D(const std::string& strResourceName)
+	void SCResourceManager::removeTexture2DFromFile(const std::string& strResourceName)
 	{
 		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
 		if (it == _mmapResTextures2D.end())

@@ -52,11 +52,11 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(_mstrTextureUp);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(_mstrTextureUp);
 		if (state::over == _mState)
-			pTexColour = pRM->getTexture2D(_mstrTextureOver);
+			pTexColour = pRM->getTexture2DFromFile(_mstrTextureOver);
 		else if (state::down == _mState)
-			pTexColour = pRM->getTexture2D(_mstrTextureDown);
+			pTexColour = pRM->getTexture2DFromFile(_mstrTextureDown);
 
 		glm::vec2 vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;

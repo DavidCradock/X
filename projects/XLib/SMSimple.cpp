@@ -314,10 +314,10 @@ namespace X
 
 			// Get vertex buffer and textures used by each entity
 			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
-			pTexDiffuse = pRM->getTexture2D(pMaterial->mstrTextureNameDiffuse);
-			pTexRoughness = pRM->getTexture2D(pMaterial->mstrTextureNameRoughness);
-			pTexNormal = pRM->getTexture2D(pMaterial->mstrTextureNameNormalmap);
-			pTexEmission = pRM->getTexture2D(pMaterial->mstrTextureNameEmission);
+			pTexDiffuse = pRM->getTexture2DFromFile(pMaterial->mstrTextureNameDiffuse);
+			pTexRoughness = pRM->getTexture2DFromFile(pMaterial->mstrTextureNameRoughness);
+			pTexNormal = pRM->getTexture2DFromFile(pMaterial->mstrTextureNameNormalmap);
+			pTexEmission = pRM->getTexture2DFromFile(pMaterial->mstrTextureNameEmission);
 
 			// Bind each texture to each sampler unit
 			pTexDiffuse->bind(0);
@@ -382,7 +382,7 @@ namespace X
 		{
 			// Get vertex buffer and textures used by each entity
 			pLine = pRM->getLine(it->second->mstrLineName);
-			pTexColour = pRM->getTexture2D(it->second->mstrTextureName);
+			pTexColour = pRM->getTexture2DFromFile(it->second->mstrTextureName);
 
 			// Bind texture to sampler unit
 			pTexColour->bind(0);

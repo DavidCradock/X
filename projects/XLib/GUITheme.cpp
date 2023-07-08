@@ -300,55 +300,55 @@ namespace X
 	void CGUITheme::loadTextures(void)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->addTexture2D(mImages.containerBGColour, mImages.containerBGColour);
-		pRM->addTexture2D(mImages.containerBGNormal, mImages.containerBGNormal);
-		pRM->addTexture2D(mImages.buttonBGColour, mImages.buttonBGColour);
-		pRM->addTexture2D(mImages.buttonBGNormal, mImages.buttonBGNormal);
-		pRM->addTexture2D(mImages.reflection, mImages.reflection);
-		pRM->addTexture2D(mImages.textEditBGColour, mImages.textEditBGColour);
-		pRM->addTexture2D(mImages.textEditBGNormal, mImages.textEditBGNormal);
-		pRM->addTexture2D(mImages.sliderBGColour, mImages.sliderBGColour);
-		pRM->addTexture2D(mImages.sliderBGNormal, mImages.sliderBGNormal);
-		pRM->addTexture2D(mImages.sliderTabColour, mImages.sliderTabColour);
-		pRM->addTexture2D(mImages.sliderTabNormal, mImages.sliderTabNormal);
-		pRM->addTexture2D(mImages.lineGraphBGColour, mImages.lineGraphBGColour);
-		pRM->addTexture2D(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
-		pRM->addTexture2D(mImages.tooltipBGColour, mImages.tooltipBGColour);
-		pRM->addTexture2D(mImages.progressBarBGColour, mImages.progressBarBGColour);
-		pRM->addTexture2D(mImages.progressBarBGNormal, mImages.progressBarBGNormal);
-		pRM->addTexture2D(mImages.progressBarFillerColour, mImages.progressBarFillerColour);
-		pRM->addTexture2D(mImages.progressBarFillerNormal, mImages.progressBarFillerNormal);
-		pRM->addTexture2D(mImages.textScrollBGColour, mImages.textScrollBGColour);
-		pRM->addTexture2D(mImages.textScrollBGNormal, mImages.textScrollBGNormal);
-		pRM->addTexture2D(mImages.buttonImageBGColour, mImages.buttonImageBGColour);
-		pRM->addTexture2D(mImages.buttonImageBGNormal, mImages.buttonImageBGNormal);
+		pRM->addTexture2DFromFile(mImages.containerBGColour, mImages.containerBGColour);
+		pRM->addTexture2DFromFile(mImages.containerBGNormal, mImages.containerBGNormal);
+		pRM->addTexture2DFromFile(mImages.buttonBGColour, mImages.buttonBGColour);
+		pRM->addTexture2DFromFile(mImages.buttonBGNormal, mImages.buttonBGNormal);
+		pRM->addTexture2DFromFile(mImages.reflection, mImages.reflection);
+		pRM->addTexture2DFromFile(mImages.textEditBGColour, mImages.textEditBGColour);
+		pRM->addTexture2DFromFile(mImages.textEditBGNormal, mImages.textEditBGNormal);
+		pRM->addTexture2DFromFile(mImages.sliderBGColour, mImages.sliderBGColour);
+		pRM->addTexture2DFromFile(mImages.sliderBGNormal, mImages.sliderBGNormal);
+		pRM->addTexture2DFromFile(mImages.sliderTabColour, mImages.sliderTabColour);
+		pRM->addTexture2DFromFile(mImages.sliderTabNormal, mImages.sliderTabNormal);
+		pRM->addTexture2DFromFile(mImages.lineGraphBGColour, mImages.lineGraphBGColour);
+		pRM->addTexture2DFromFile(mImages.lineGraphBGNormal, mImages.lineGraphBGNormal);
+		pRM->addTexture2DFromFile(mImages.tooltipBGColour, mImages.tooltipBGColour);
+		pRM->addTexture2DFromFile(mImages.progressBarBGColour, mImages.progressBarBGColour);
+		pRM->addTexture2DFromFile(mImages.progressBarBGNormal, mImages.progressBarBGNormal);
+		pRM->addTexture2DFromFile(mImages.progressBarFillerColour, mImages.progressBarFillerColour);
+		pRM->addTexture2DFromFile(mImages.progressBarFillerNormal, mImages.progressBarFillerNormal);
+		pRM->addTexture2DFromFile(mImages.textScrollBGColour, mImages.textScrollBGColour);
+		pRM->addTexture2DFromFile(mImages.textScrollBGNormal, mImages.textScrollBGNormal);
+		pRM->addTexture2DFromFile(mImages.buttonImageBGColour, mImages.buttonImageBGColour);
+		pRM->addTexture2DFromFile(mImages.buttonImageBGNormal, mImages.buttonImageBGNormal);
 	}
 
 	void CGUITheme::unloadTextures(void)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2D(mImages.containerBGColour);
-		pRM->removeTexture2D(mImages.containerBGNormal);
-		pRM->removeTexture2D(mImages.buttonBGColour);
-		pRM->removeTexture2D(mImages.buttonBGNormal);
-		pRM->removeTexture2D(mImages.reflection);
-		pRM->removeTexture2D(mImages.textEditBGColour);
-		pRM->removeTexture2D(mImages.textEditBGNormal);
-		pRM->removeTexture2D(mImages.sliderBGColour);
-		pRM->removeTexture2D(mImages.sliderBGNormal);
-		pRM->removeTexture2D(mImages.sliderTabColour);
-		pRM->removeTexture2D(mImages.sliderTabNormal);
-		pRM->removeTexture2D(mImages.lineGraphBGColour);
-		pRM->removeTexture2D(mImages.lineGraphBGNormal);
-		pRM->removeTexture2D(mImages.tooltipBGColour);
-		pRM->removeTexture2D(mImages.progressBarBGColour);
-		pRM->removeTexture2D(mImages.progressBarBGNormal);
-		pRM->removeTexture2D(mImages.progressBarFillerColour);
-		pRM->removeTexture2D(mImages.progressBarFillerNormal);
-		pRM->removeTexture2D(mImages.textScrollBGColour);
-		pRM->removeTexture2D(mImages.textScrollBGNormal);
-		pRM->removeTexture2D(mImages.buttonImageBGColour);
-		pRM->removeTexture2D(mImages.buttonImageBGNormal);
+		pRM->removeTexture2DFromFile(mImages.containerBGColour);
+		pRM->removeTexture2DFromFile(mImages.containerBGNormal);
+		pRM->removeTexture2DFromFile(mImages.buttonBGColour);
+		pRM->removeTexture2DFromFile(mImages.buttonBGNormal);
+		pRM->removeTexture2DFromFile(mImages.reflection);
+		pRM->removeTexture2DFromFile(mImages.textEditBGColour);
+		pRM->removeTexture2DFromFile(mImages.textEditBGNormal);
+		pRM->removeTexture2DFromFile(mImages.sliderBGColour);
+		pRM->removeTexture2DFromFile(mImages.sliderBGNormal);
+		pRM->removeTexture2DFromFile(mImages.sliderTabColour);
+		pRM->removeTexture2DFromFile(mImages.sliderTabNormal);
+		pRM->removeTexture2DFromFile(mImages.lineGraphBGColour);
+		pRM->removeTexture2DFromFile(mImages.lineGraphBGNormal);
+		pRM->removeTexture2DFromFile(mImages.tooltipBGColour);
+		pRM->removeTexture2DFromFile(mImages.progressBarBGColour);
+		pRM->removeTexture2DFromFile(mImages.progressBarBGNormal);
+		pRM->removeTexture2DFromFile(mImages.progressBarFillerColour);
+		pRM->removeTexture2DFromFile(mImages.progressBarFillerNormal);
+		pRM->removeTexture2DFromFile(mImages.textScrollBGColour);
+		pRM->removeTexture2DFromFile(mImages.textScrollBGNormal);
+		pRM->removeTexture2DFromFile(mImages.buttonImageBGColour);
+		pRM->removeTexture2DFromFile(mImages.buttonImageBGNormal);
 	}
 
 	void CGUITheme::addFontsToManager(void)
