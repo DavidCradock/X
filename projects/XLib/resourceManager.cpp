@@ -53,6 +53,14 @@ namespace X
 			itTextures2D++;
 		}
 
+		// Texture2DFromImages
+		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
+		while (itTextures2DFromImage != _mmapResTextures2DFromImage.end())
+		{
+			itTextures2DFromImage->second.pResource->onGLContextToBeDestroyed();
+			itTextures2DFromImage++;
+		}
+
 		// Triangle
 		std::map<std::string, SResourceTriangle>::iterator itResourceTriangles = _mmapResTriangles.begin();
 		while (itResourceTriangles != _mmapResTriangles.end())
@@ -120,6 +128,14 @@ namespace X
 		{
 			itTextures2D->second.pResource->onGLContextCreated();
 			itTextures2D++;
+		}
+
+		// Texture2DFromImages
+		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
+		while (itTextures2DFromImage != _mmapResTextures2DFromImage.end())
+		{
+			itTextures2DFromImage->second.pResource->onGLContextCreated();
+			itTextures2DFromImage++;
 		}
 
 		// Triangle
@@ -360,6 +376,49 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResTextures2D.erase(it);
+	}
+
+	CResourceTexture2DFromImage* SCResourceManager::addTexture2DFromImage(const std::string& strResourceName, const CImage & image)
+	{
+		// If resource already exists
+		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		if (it != _mmapResTextures2DFromImage.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceTexture2DFromImage newRes;
+		newRes.uiCount = 1;
+		newRes.pResource = new CResourceTexture2DFromImage(image);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DFromImage(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResTextures2DFromImage[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	CResourceTexture2DFromImage* SCResourceManager::getTexture2DFromImage(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		ThrowIfTrue(it == _mmapResTextures2DFromImage.end(), "SCResourceManager::getTexture2DFromImage(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool SCResourceManager::getTexture2DFromImageExists(const std::string& strResourceName)
+	{
+		return _mmapResTextures2DFromImage.find(strResourceName) != _mmapResTextures2DFromImage.end();
+	}
+
+	void SCResourceManager::removeTexture2DFromImage(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		if (it == _mmapResTextures2DFromImage.end())
+			return;	// Doesn't exist.
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResTextures2DFromImage.erase(it);
 	}
 
 	CResourceTriangle* SCResourceManager::addTriangle(const std::string& strResourceName)

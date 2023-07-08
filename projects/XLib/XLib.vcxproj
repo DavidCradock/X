@@ -50,6 +50,7 @@
     <ClInclude Include="precision.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceTexture2DAnimation.h" />
+    <ClInclude Include="resourceTexture2DFromImage.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
     <ClInclude Include="image.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="physicsManager.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceTexture2DAnimation.cpp" />
+    <ClCompile Include="resourceTexture2DFromImage.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />
     <ClCompile Include="image.cpp" />

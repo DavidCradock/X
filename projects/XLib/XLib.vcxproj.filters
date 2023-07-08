@@ -288,6 +288,9 @@
     <ClInclude Include="vector2d.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="resourceTexture2DFromImage.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -504,6 +507,9 @@
     </ClCompile>
     <ClCompile Include="vector2d.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromImage.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
