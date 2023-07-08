@@ -225,10 +225,10 @@ namespace X
 			pShader = pRM->getShader("X:DRNE_noshadows");
 
 		CResourceTriangle* pResTri;
-		CResourceTexture2D* pTexDiffuse = 0;
-		CResourceTexture2D* pTexRoughness = 0;
-		CResourceTexture2D* pTexNormal = 0;
-		CResourceTexture2D* pTexEmission = 0;
+		CResourceTexture2DFromFile* pTexDiffuse = 0;
+		CResourceTexture2DFromFile* pTexRoughness = 0;
+		CResourceTexture2DFromFile* pTexNormal = 0;
+		CResourceTexture2DFromFile* pTexEmission = 0;
 
 		pShader->bind();
 
@@ -358,7 +358,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
 		CResourceLine* pLine;
-		CResourceTexture2D* pTexColour = 0;
+		CResourceTexture2DFromFile* pTexColour = 0;
 
 		pShader->bind();
 

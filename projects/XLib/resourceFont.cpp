@@ -20,7 +20,7 @@ namespace X
 		strFontPNGFilename.append(".png");
 
 		// Create required resources (Not using manager, locally, as this object is responsible for onloss/reset of context.
-		_mpResTexture = new CResourceTexture2D(strFontPNGFilename, true);
+		_mpResTexture = new CResourceTexture2DFromFile(strFontPNGFilename, true);
 
 		// Now load in the font data
 		FILE* file = 0;

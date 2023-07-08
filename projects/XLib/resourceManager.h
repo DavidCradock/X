@@ -128,11 +128,11 @@ namespace X
 		// strImageFilename is the name of the file which holds the image data for the texture.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the stored filename.
-		CResourceTexture2D* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
+		CResourceTexture2DFromFile* addTexture2D(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceTexture2D* getTexture2D(const std::string& strResourceName);
+		CResourceTexture2DFromFile* getTexture2D(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
 		bool getTexture2DExists(const std::string& strResourceName);
@@ -256,12 +256,12 @@ namespace X
 		};
 		std::map<std::string, SResourceShader> _mmapResShaders;
 
-		struct SResourceTexture2D
+		struct SResourceTexture2DFromFile
 		{
-			CResourceTexture2D* pResource;	// Pointer to the resource
+			CResourceTexture2DFromFile* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
-		std::map<std::string, SResourceTexture2D> _mmapResTextures2D;
+		std::map<std::string, SResourceTexture2DFromFile> _mmapResTextures2D;
 
 		struct SResourceTexture2DFromImage
 		{

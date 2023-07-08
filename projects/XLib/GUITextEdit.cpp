@@ -36,7 +36,7 @@ namespace X
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
+		CResourceTexture2DFromFile* pTex = pRM->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsPoint3 = pTex->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTex->mvDimensions * 0.6666666f;
 
@@ -104,7 +104,7 @@ namespace X
 			_mfAddFlashingCursor -= 2.0f;
 
 		
-		CResourceTexture2D* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditBGColour);
+		CResourceTexture2DFromFile* pColourTex = pResMan->getTexture2D(pTheme->mImages.textEditBGColour);
 		glm::vec2 vTexDimsDiv3 = pColourTex->mvDimensions * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

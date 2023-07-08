@@ -147,7 +147,7 @@ namespace X
 		// Add static image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strImageFilename is the name of a file used to create a CResourceTexture2D resource added to SCResourceManager.
+		// strImageFilename is the name of a file used to create a CResourceTexture2DFromFile resource added to SCResourceManager.
 		// An image is simply that. It is not clickable. If you want an image which is clickable, use the CGUIButtonImage widget
 		// If strImageFilename couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
@@ -224,7 +224,7 @@ namespace X
 		// Add button image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// strImageFilenameUp/Over/Down are the name of a files used to create the CResourceTexture2D resource added to SCResourceManager.
+		// strImageFilenameUp/Over/Down are the name of a files used to create the CResourceTexture2DFromFile resource added to SCResourceManager.
 		// If the images couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
 		CGUIButtonImage* addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth = -1.0f, float fHeight = -1.0f);

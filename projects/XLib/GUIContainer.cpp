@@ -352,7 +352,7 @@ namespace X
 		if (mbContainerIsWindow)
 		{
 			// Get a texture so we can determine dimensions
-			CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
+			CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
 			glm::vec2 vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
 			if (mfPositionX < vTexDimsDiv3.x)
 				mfPositionX = vTexDimsDiv3.x;
@@ -636,9 +636,9 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures and background sample framebuffer
-		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
-		CResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerBGNormal);
-		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.containerBGColour);
+		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2D(pTheme->mImages.containerBGNormal);
+		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
@@ -1029,7 +1029,7 @@ namespace X
 
 		// Add strImageFilename to the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2D *pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
+		CResourceTexture2DFromFile *pTex = pResMan->addTexture2D(strImageFilename, strImageFilename);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1262,7 +1262,7 @@ namespace X
 
 		// Add images to the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2D* pTex = pResMan->addTexture2D(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
+		CResourceTexture2DFromFile* pTex = pResMan->addTexture2D(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
 		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureOver, pNewRes->_mstrTextureOver);
 		pTex = pResMan->addTexture2D(pNewRes->_mstrTextureUp, pNewRes->_mstrTextureUp);
 

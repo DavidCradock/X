@@ -96,8 +96,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2D* pTexColour = pRM->getTexture2D("X:default_white");
-		CResourceTexture2D* pTexBG = pRM->getTexture2D(pTheme->mImages.lineGraphBGColour);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D("X:default_white");
+		CResourceTexture2DFromFile* pTexBG = pRM->getTexture2D(pTheme->mImages.lineGraphBGColour);
 		glm::vec2 vTexDimsPoint3 = pTexBG->mvDimensions * 0.3333333f;
 		glm::vec2 vTexDimsPoint6 = pTexBG->mvDimensions * 0.6666666f;
 

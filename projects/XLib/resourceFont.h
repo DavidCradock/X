@@ -53,7 +53,7 @@ namespace X
 			float fMaxCharHeight;		// The tallest character's height
 		};
 		FontTypes fontTypes;
-		CResourceTexture2D* _mpResTexture;			// Texture holding each characters' image data
+		CResourceTexture2DFromFile* _mpResTexture;			// Texture holding each characters' image data
 		glm::mat4 _mmatProjection;					// Projection used when rendering the text
 
 	private:

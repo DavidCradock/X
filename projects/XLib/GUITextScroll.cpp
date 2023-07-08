@@ -146,7 +146,7 @@ namespace X
 		CGUITheme* pTheme = pGUIManager->getTheme(pContainer->mstrThemename);
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textScroll);
 		CResourceFramebuffer* pFB = pRM->getFramebuffer(_mstrFBName);
-		CResourceTexture2D* pTex = pRM->getTexture2D(pTheme->mImages.textScrollBGColour);
+		CResourceTexture2DFromFile* pTex = pRM->getTexture2D(pTheme->mImages.textScrollBGColour);
 
 		// Unbind the render target which the GUI is currently rendering to.
 		CResourceFramebuffer* pFBGUITarget = pRM->getFramebuffer("X:backbuffer_FB");

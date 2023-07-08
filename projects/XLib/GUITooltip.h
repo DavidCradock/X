@@ -90,7 +90,7 @@ namespace X
 		// Add static image to this tooltip and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the tooltip's centre area not including the tooltip's edge images
-		// strImageFilename is the name of a file used to create a CResourceTexture2D resource added to SCResourceManager.
+		// strImageFilename is the name of a file used to create a CResourceTexture2DFromFile resource added to SCResourceManager.
 		// An image is simply that. It is not clickable. If you want an image which is clickable, use the CGUIButtonImage widget
 		// If strImageFilename couldn't be loaded, an exception occurs
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.

@@ -63,9 +63,9 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
-		CResourceTexture2D* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderTabNormal);
-		CResourceTexture2D* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
+		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2D(pTheme->mImages.sliderTabNormal);
+		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2D(pTheme->mImages.reflection);
 		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
@@ -322,7 +322,7 @@ namespace X
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
 		CGUITheme* pTheme = pGUIMan->getTheme(pContainer->mstrThemename);	// Get parent container's theme
-		CResourceTexture2D* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
+		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2D(pTheme->mImages.sliderTabColour);
 		glm::vec2 vSliderTabTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
 		glm::vec2 vSliderTabTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
 
