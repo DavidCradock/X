@@ -34,9 +34,15 @@ namespace X
 		pCont->addImageAnimated("AnimTest", 600, 0, vstrImageFilenames, -1.0f, -1.0f);
 
 		CImageAtlasPacker imageAtlasPacker;
-		vstrImageFilenames = getFilesInDir("data/Demo2D/images/CImageAtlasPackerTest/");
-		imageAtlasPacker.createAtlasImages(vstrImageFilenames, pWindow->getMaxTextureSize(), pWindow->getMaxTextureSize(), true, 1);
-		CImage *pImage = imageAtlasPacker.getAtlasImage(0);
+		vstrImageFilenames = getFilesInDir("data/DevApp/textures/anim_test_320x140x180/");
+		imageAtlasPacker.createAtlasImages(vstrImageFilenames, 1034, 2049, true, 1);
+		for (int i = 0; i < imageAtlasPacker.getNumAtlases(); i++)
+		{
+			CImage* pImage = imageAtlasPacker.getAtlasImage(i);
+			std::string strImageName = "CImageAtlasPacker_OUTPUT_" + std::to_string(i) + ".png";
+			pImage->saveAsPNG(strImageName);
+		}
+		CImage* pImage = imageAtlasPacker.getAtlasImage(0);
 		SCResourceManager::getPointer()->addTexture2DFromImage("AtlasImageResource", *pImage);
 		pCont->addImageFromImage("AtlasImage", 0, 100, "AtlasImageResource");
 		

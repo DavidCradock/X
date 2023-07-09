@@ -185,7 +185,7 @@ namespace X
 			_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
 			_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
 
-			// If the image position fits in current atlas
+			// If the image position fits in current atlas row
 			if (_mvImageDetails[ui].sTexCoords.bottom_right.x <= (float)uiMaxAtlasImageWidth)
 			{
 				// Image fits, fill in the rest of it's information
@@ -198,7 +198,7 @@ namespace X
 				if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
 					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
 				if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
-					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+					vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
 
 				// Move position in atlas right
 				v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
@@ -210,7 +210,7 @@ namespace X
 			{
 				// Move position in atlas down by max image height in row
 				v2fCurrentPositionInAtlas.x = 0.0f;
-				v2fCurrentPositionInAtlas.y += vv2fAtlasDims[iCurAtlasImage].y - fSpacing;
+				v2fCurrentPositionInAtlas.y = vv2fAtlasDims[iCurAtlasImage].y - fSpacing;
 
 				// Compute position of current image in atlas
 				_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;

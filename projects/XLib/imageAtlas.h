@@ -72,6 +72,10 @@ namespace X
 		// std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		// unsigned int uiLastImageIndex = pviad->size() - 1;
 		// unsigned int uiAtlasNumber = (*pviad)[uiLastImageIndex].uiAtlasImage;
+		// or
+		// unsigned int uiAtlasNumber = pviad->operator[](uiLastImageIndex).uiAtlasImage;
+		// or
+		// unsigned int uiAtlasNumber = pviad[0][uiLastImageIndex].uiAtlasImage;
 		std::vector<CImageAtlasDetails>* getAllImageDetailsPointer(void);
 
 		// Returns the total number of individual images added to all the atlases
