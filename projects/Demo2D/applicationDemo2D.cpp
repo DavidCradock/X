@@ -36,26 +36,7 @@ namespace X
 		SCResourceManager::getPointer()->addTexture2DFromImage("AtlasImageResource", *pImage);
 		pCont->addImageFromImage("AtlasImage", 0, 100, "AtlasImageResource");
 		
-		// Test imagepacker
-		unsigned int uiNumAtlases = imageAtlasPacker.getNumAtlases();
-
-		CTimer timer;
-		float fSec1, fSec2;
-		timer.update();
-		for (int i = 0; i < 10000; i++)
-			std::vector<CImageAtlasDetails> atlasImageDetails = imageAtlasPacker.getAllImageDetails();
-		timer.update();
-		fSec1 = timer.getSecondsPast();
-
-		timer.update();
-		for (int i = 0; i < 10000; i++)
-			std::vector<CImageAtlasDetails> *pDetails = imageAtlasPacker.getAllImageDetailsPointer();
-		timer.update();
-		fSec2 = timer.getSecondsPast();
-
-
-		unsigned int uiNumImages = imageAtlasPacker.getNumIndividualImages();
-		CImageAtlasDetails imageDetails = imageAtlasPacker.getImageDetails(vstrImageFilenames[0]);
+		
 	}
 
 	void CApplication::onStart(void)

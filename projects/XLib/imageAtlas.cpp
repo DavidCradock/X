@@ -100,7 +100,7 @@ namespace X
 		// std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each individual image's details
 		std::string strFilenameTemp;
 		CImage* pImageTemp;
-//		CImageAtlasDetails imageAtlasDetailsTemp;
+		CImageAtlasDetails imageAtlasDetailsTemp;
 		for (int i = 0; i < (int)vImages.size(); ++i)
 		{
 			for (int j = 0; j < (int)vImages.size(); ++j)
@@ -108,15 +108,19 @@ namespace X
 				// Swap by largest first
 				if (_mvImageDetails[j].v2fDimensions.x < _mvImageDetails[i].v2fDimensions.x)
 				{
-					// Temporarily store image and filename
+					// Temporarily store image, filename and image details
+					// Assign i to temp
 					pImageTemp = vImages[i];
 					strFilenameTemp = vStrImageFilenames[i];
+					imageAtlasDetailsTemp = _mvImageDetails[i];
 					// Assign j to i
 					vImages[i] = vImages[j];
 					vStrImageFilenames[i] = vStrImageFilenames[j];
+					_mvImageDetails[i] = _mvImageDetails[j];
 					// Assign temp to j
 					vImages[j] = pImageTemp;
 					vStrImageFilenames[j] = strFilenameTemp;
+					_mvImageDetails[j] = imageAtlasDetailsTemp;
 				}
 			}
 		}
@@ -134,19 +138,23 @@ namespace X
 				// Swap by largest first
 				if (_mvImageDetails[j].v2fDimensions.y < _mvImageDetails[i].v2fDimensions.y)
 				{
-					// Temporarily store image and filename
+					// Temporarily store image, filename and image details
+					// Assign i to temp
 					pImageTemp = vImages[i];
 					strFilenameTemp = vStrImageFilenames[i];
+					imageAtlasDetailsTemp = _mvImageDetails[i];
 					// Assign j to i
 					vImages[i] = vImages[j];
 					vStrImageFilenames[i] = vStrImageFilenames[j];
+					_mvImageDetails[i] = _mvImageDetails[j];
 					// Assign temp to j
 					vImages[j] = pImageTemp;
 					vStrImageFilenames[j] = strFilenameTemp;
+					_mvImageDetails[j] = imageAtlasDetailsTemp;
 				}
 			}
 		}
-		// Now, vStrImageFilenames and vImages contain the filename and images sorted by greatest width, then height first
+		// Now, vStrImageFilenames, vImages and _mvImageDetails contain the filename and images sorted by greatest width, then height first
 		timer.update();
 		// Debug text
 		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 80")->mstrText = "Time to bubblesort vecs by height: " + std::to_string(timer.getSecondsPast()) + " seconds.";
