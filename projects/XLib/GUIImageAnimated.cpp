@@ -43,7 +43,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DAnimation* pTexColour = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
+		CResourceTexture2DAtlas* pTexColour = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 
 		// Bind textures
 		pTexColour->bind(0, (int)_mfCurrentFrame);
@@ -75,12 +75,12 @@ namespace X
 	void CGUIImageAnimated::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceTexture2DAnimation* pTex = pRM->getTexture2DAnimation(_mstrResourceTexture2DAnimationName);
+		CResourceTexture2DAtlas* pTex = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 
 		_mTimer.update();
 		float fSecPast = _mTimer.getSecondsPast();
 		_mfCurrentFrame += fSecPast * _mfFramesPerSecond;
-		float fNumFrames = (float)pTex->getNumFrames();
+		float fNumFrames = (float)pTex->getNumImages();
 		while (_mfCurrentFrame >= fNumFrames)
 			_mfCurrentFrame -= fNumFrames;
 

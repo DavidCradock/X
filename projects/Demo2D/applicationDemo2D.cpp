@@ -29,8 +29,12 @@ namespace X
 		}
 		pCont->setVisible(true);
 
+		// Add image animation to GUI
+		std::vector<std::string> vstrImageFilenames = getFilesInDir("data/DevApp/textures/anim_test_320x140x180/");
+		pCont->addImageAnimated("AnimTest", 600, 0, vstrImageFilenames, -1.0f, -1.0f);
+
 		CImageAtlasPacker imageAtlasPacker;
-		std::vector<std::string> vstrImageFilenames = getFilesInDir("data/Demo2D/images/CImageAtlasPackerTest/");
+		vstrImageFilenames = getFilesInDir("data/Demo2D/images/CImageAtlasPackerTest/");
 		imageAtlasPacker.createAtlasImages(vstrImageFilenames, pWindow->getMaxTextureSize(), pWindow->getMaxTextureSize(), true, 1);
 		CImage *pImage = imageAtlasPacker.getAtlasImage(0);
 		SCResourceManager::getPointer()->addTexture2DFromImage("AtlasImageResource", *pImage);

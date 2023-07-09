@@ -1121,18 +1121,18 @@ namespace X
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
 		pNewRes->mfHeight = fHeight;
-		pNewRes->_mstrResourceTexture2DAnimationName = strName;
+		pNewRes->_mstrResourceTexture2DAtlasName = strName;
 		_mmapImageAnimateds[strName] = pNewRes;
 
 		// Add CResourceTexture2DAnimation to the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DAnimation* pTex = pResMan->addTexture2DAnimation(strName, vecStrImageFilenames);
+		CResourceTexture2DAtlas* pTex = pResMan->addTexture2DAtlas(strName, vecStrImageFilenames, false, 1);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->mvDimensions.x;
+			pNewRes->mfWidth = pTex->getImageDims(0).x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->mvDimensions.y;
+			pNewRes->mfHeight = pTex->getImageDims(0).y;
 
 		return pNewRes;
 	}
@@ -1150,9 +1150,9 @@ namespace X
 		if (it == _mmapImageAnimateds.end())
 			return;
 
-		// Remove CResourceTexture2DAnimation from the resource manager
+		// Remove CResourceTexture2DAtlas from the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DAnimation(it->second->_mstrResourceTexture2DAnimationName);
+		pResMan->removeTexture2DAtlas(it->second->_mstrResourceTexture2DAtlasName);
 
 		delete it->second;
 		_mmapImageAnimateds.erase(it);

@@ -5,7 +5,6 @@
 #include "resourceFont.h"
 #include "resourceFramebuffer.h"
 #include "resourceShader.h"
-#include "resourceTexture2DAnimation.h"
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
@@ -153,26 +152,6 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeShader(const std::string& strResourceName);
 
-		// Adds a new texture2D animation object to the manager.
-		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the frames of animation.
-		// Each image must be the same dimensions, otherwise an exception occurs
-		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the large images stored in memory.
-		CResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
-
-		// Returns a pointer to an existing resource
-		// If the resource couldn't be found, an exception is thrown
-		CResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
-
-		// Returns whether a named resource exists
-		bool getTexture2DAnimationExists(const std::string& strResourceName);
-
-		// Removes a previously added resource from this manager
-		// If the resource doesn't exist, this silently fails.
-		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeTexture2DAnimation(const std::string& strResourceName);
-
 		// Adds a new texture2D atlas object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the images in the atlas/es.
@@ -282,13 +261,6 @@ namespace X
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceShader> _mmapResShaders;
-
-		struct SResourceTexture2DAnimation
-		{
-			CResourceTexture2DAnimation* pResource;	// Pointer to the resource
-			unsigned int uiCount;			// Number of times the resource has been added
-		};
-		std::map<std::string, SResourceTexture2DAnimation> _mmapResTextures2DAnimation;
 
 		struct SResourceTexture2DAtlas
 		{

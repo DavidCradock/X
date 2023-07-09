@@ -279,9 +279,6 @@
     <ClInclude Include="resourceShader.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceTexture2DAnimation.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="resourceTexture2DAtlas.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -500,9 +497,6 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="resourceShader.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2DAnimation.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="resourceTexture2DAtlas.cpp">

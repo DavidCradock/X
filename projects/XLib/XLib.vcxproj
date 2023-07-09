@@ -49,7 +49,6 @@
     <ClInclude Include="physicsManager.h" />
     <ClInclude Include="precision.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
-    <ClInclude Include="resourceTexture2DAnimation.h" />
     <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
     <ClInclude Include="SMCamera.h" />
@@ -136,7 +135,6 @@
     <ClCompile Include="imageAtlas.cpp" />
     <ClCompile Include="physicsManager.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
-    <ClCompile Include="resourceTexture2DAnimation.cpp" />
     <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />
     <ClCompile Include="SMCamera.cpp" />

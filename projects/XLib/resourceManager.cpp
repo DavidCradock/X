@@ -53,14 +53,6 @@ namespace X
 			itShaders++;
 		}
 
-		// Texture animations
-		std::map<std::string, SResourceTexture2DAnimation>::iterator itTextureAnim = _mmapResTextures2DAnimation.begin();
-		while (itTextureAnim != _mmapResTextures2DAnimation.end())
-		{
-			itTextureAnim->second.pResource->onGLContextToBeDestroyed();
-			itTextureAnim++;
-		}
-
 		// Texture atlases
 		std::map<std::string, SResourceTexture2DAtlas>::iterator itTextureAtlas = _mmapResTextures2DAtlases.begin();
 		while (itTextureAtlas != _mmapResTextures2DAtlases.end())
@@ -136,14 +128,6 @@ namespace X
 		{
 			itShaders->second.pResource->onGLContextCreated();
 			itShaders++;
-		}
-
-		// Texture animated
-		std::map<std::string, SResourceTexture2DAnimation>::iterator itTextureAnim = _mmapResTextures2DAnimation.begin();
-		while (itTextureAnim != _mmapResTextures2DAnimation.end())
-		{
-			itTextureAnim->second.pResource->onGLContextCreated();
-			itTextureAnim++;
 		}
 
 		// Texture atlases
@@ -635,49 +619,6 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResShaders.erase(it);
-	}
-
-	CResourceTexture2DAnimation* SCResourceManager::addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis)
-	{
-		// If resource already exists
-		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
-		if (it != _mmapResTextures2DAnimation.end())
-		{
-			it->second.uiCount++;
-			return it->second.pResource;
-		}
-		SResourceTexture2DAnimation newRes;
-		newRes.uiCount = 1;
-		newRes.pResource = new CResourceTexture2DAnimation(vecStrImageFilenames, bFlipYaxis);
-		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DAnimation(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResTextures2DAnimation[strResourceName] = newRes;
-		return newRes.pResource;
-	}
-
-	CResourceTexture2DAnimation* SCResourceManager::getTexture2DAnimation(const std::string& strResourceName)
-	{
-		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTextures2DAnimation.end(), "SCResourceManager::getTexture2DAnimation(" + strResourceName + ") failed. Named resource doesn't exist.");
-		return it->second.pResource;
-	}
-
-	bool SCResourceManager::getTexture2DAnimationExists(const std::string& strResourceName)
-	{
-		return _mmapResTextures2DAnimation.find(strResourceName) != _mmapResTextures2DAnimation.end();
-	}
-
-	void SCResourceManager::removeTexture2DAnimation(const std::string& strResourceName)
-	{
-		std::map<std::string, SResourceTexture2DAnimation>::iterator it = _mmapResTextures2DAnimation.find(strResourceName);
-		if (it == _mmapResTextures2DAnimation.end())
-			return;	// Doesn't exist.
-		if (it->second.uiCount > 1)
-		{
-			it->second.uiCount--;
-			return;
-		}
-		delete it->second.pResource;
-		_mmapResTextures2DAnimation.erase(it);
 	}
 
 	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing)

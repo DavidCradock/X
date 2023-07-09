@@ -42,7 +42,6 @@
 #include "resourceShader.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
-#include "resourceTexture2DAnimation.h"
 #include "resourceTriangle.h"
 #include "SMCamera.h"
 #include "SMEntityBase.h"

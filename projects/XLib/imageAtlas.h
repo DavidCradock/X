@@ -39,6 +39,7 @@ namespace X
 		// After calling this, we can call the various other methods to get at the information
 		// If the vector of strings is empty, an exception occurs
 		// If an individual image's dimensions, including spacing is greater than the max atlas dimensions, an exception occurs.
+		// If all given images are the same dimensions, nothing is sorted.
 		void createAtlasImages(
 			const std::vector<std::string>& vstrImages,	// A vector of strings holding each individual image's filename which to add to the atlas image/s
 			unsigned int uiMaxAtlasImageWidth,			// The maximum allowed width of the created atlas image/s

@@ -33,7 +33,7 @@ namespace X
 		CTimer _mTimer;
 		float _mfFramesPerSecond;
 		float _mfCurrentFrame;
-		std::string _mstrResourceTexture2DAnimationName;	// Name of the CResourceTexture2DAnimation stored in SCResourceManager
+		std::string _mstrResourceTexture2DAtlasName;	// Name of the CResourceTexture2DAtlas stored in SCResourceManager
 
 	};
 }
