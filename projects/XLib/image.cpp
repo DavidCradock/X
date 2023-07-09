@@ -188,9 +188,9 @@ namespace X
 		return height;
 	}
 
-	CVector2f CImage::getDimensions(void)
+	CVector2r CImage::getDimensions(void)
 	{
-		CVector2f vDims((float)width, (float)height);
+		CVector2r vDims((real)width, (real)height);
 		return vDims;
 	}
 

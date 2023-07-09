@@ -2,14 +2,18 @@
 #include "PCH.h"
 #include "vector2r.h"
 #include "colour.h"
+#include "resourceManager.h"
 
 namespace X
 {
+	// This is an object which holds the position of the entity within the world is is assigned to, a rotation, non-uniform scale, the CResourceTexture2DAtlas used to 
+	// render itself as well as it's current animation frame (if it is animated)
 	class C2DEntity
 	{
 	public:
 		friend class SC2DRenderer;
-		C2DEntity();
+		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
+		C2DEntity(const std::string &strResourceTexture2DAtlasName);
 		~C2DEntity();
 
 		// Set the position of the sprite entity
@@ -19,7 +23,10 @@ namespace X
 		CVector2r getPosition(void);
 
 		// Returns the currently set position of the entity
-		glm::vec3 getPositionGLM(void);
+		glm::vec3 getPositionGLMV3(void);
+
+		// Returns the currently set position of the entity
+		glm::vec2 getPositionGLMV2(void);
 
 		// Set the amount of rotation of the entity in degrees
 		void setRotationDeg(real rRotationDegress);
@@ -39,16 +46,38 @@ namespace X
 		// Returns the currently set colour multiplier for the sprite entity
 		CColour getColour(void);
 
+		// Sets the entity to use a single image stored within the texture atlas to use whilst rendering itself
+		// If an invalid image name is given, an exception occurs
+		// Resets current frame number to 0
+		void setImagesSingle(const std::string& strImageFilenameInAtlas);
+
+		// Sets the entity to use multiple images stored within the texture atlas, specifying each image name in order.
+		// If an invalid image name is given, an exception occurs.
+		// Resets current frame number to 0
+		void setImagesMultiple(const std::vector<std::string>& strImageFilenamesInAtlas);
+
 		// Returns this entity's current animation frame number
 		unsigned int getCurrentFrameNumber(void);
 
 		// Sets this entity's current animation frame number
+		// If invalid framenumber is given, an exception occurs
 		void setCurrentFrameNumber(unsigned int uiFrameNumber);
 	private:
-		unsigned int _muiCurrentFrameNumber;	// Current frame number of this entity
-		CVector2r _mv2rPosition;				// Position of this entity in the world
-		CVector2r _mv2rScale;					// Scale of this entity
-		real _mrRotationDegrees;				// Rotation of this entity in degrees.
-		CColour _mColour;						// Colour used for the vertex colour of this entity.
+		CVector2r _mv2rPosition;						// Position of this entity in the world
+		CVector2r _mv2rScale;							// Scale of this entity
+		real _mrRotationDegrees;						// Rotation of this entity in degrees.
+		CColour _mColour;								// Colour used for the vertex colour of this entity.
+		std::string _mstrResourceTexture2DAtlasName;	// Name of the CResourceTexture2DAtlas added to SCResourceManager which holds this entity's image data
+		unsigned int _muiCurrentFrameNumber;			// Current frame number of this entity
+		bool _mbUseAnimationFrames;						// Whether to use a single image or multiple stored in the texture atlas.
+		std::vector<std::string> _mvstrImageNames;		// A vector of strings holding each image name stored in the texture atlas to use.
+
+		/* A vector of CImageAtlasDetails, holding each image's atlas details including...
+			sTexCoords The texture coordinates within the atlas image of the image
+			v2fDimensions The dimensions of the image
+			strImageFilename The filename which the image was created from.
+			uiAtlasImage The atlas image number which the image is located in.
+			bRotated Whether the image was rotated clockwise to fit better or not. */
+		std::vector<CImageAtlasDetails> _mvImageDetails;
 	};
 }

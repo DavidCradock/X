@@ -1,6 +1,6 @@
 #pragma once
 #include "PCH.h"
-#include "vector2f.h"
+#include "vector2r.h"
 
 namespace X
 {
@@ -90,7 +90,7 @@ namespace X
 		unsigned int getHeight(void) const;
 
 		// Returns dimenions of the image
-		CVector2f getDimensions(void);
+		CVector2r getDimensions(void);
 
 		// Get number of channels
 		// returns The number of channels of the image. 

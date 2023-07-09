@@ -57,7 +57,7 @@ namespace X
 
 		// Sets passed vectors to hold texture coordinates within atlas texture for the specified image number
 		// If an invalid image number is given, an exception occurs.
-		void getTextureCoords(unsigned int uiImageNumber, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft);
+		void getTextureCoords(unsigned int uiImageNumber, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft);
 
 		// Sets passed vecs to hold min and max texture coordinates within atlas texture for the specified image name
 		// If an invalid image name is given, an exception occurs.
@@ -65,15 +65,15 @@ namespace X
 
 		// Sets passed vectors to hold texture coordinates within atlas texture for the specified image name
 		// If an invalid image name is given, an exception occurs.
-		void getTextureCoords(const std::string& strImageName, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft);
+		void getTextureCoords(const std::string& strImageName, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft);
 
 		// Get dimensions of the image number
 		// If an invalid image number is given, an exception occurs.
-		CVector2f getImageDims(unsigned int uiImageNumber);
+		CVector2r getImageDims(unsigned int uiImageNumber);
 
 		// Get dimensions of the image name
 		// If an invalid image name is given, an exception occurs.
-		CVector2f getImageDims(const std::string& strImageName);
+		CVector2r getImageDims(const std::string& strImageName);
 
 		// Returns the filename the given image number was created from.
 		// If an invalid image number is given, an exception occurs.
@@ -102,6 +102,9 @@ namespace X
 		// Returns image details of the named image name using the CImageAtlasPacker's hashmap
 		// If an invalid image name is given, an exception occurs
 		CImageAtlasDetails getImageDetails(const std::string& strImageName);
+
+		// Returns whether the named image name exists or not
+		bool getImageNameExists(const std::string& strImageName);
 	private:
 		CImageAtlasPacker _mAtlases;					// Holds one or more atlas images containing all images
 		std::vector<unsigned int> _mvAtlasTextureIDs;	// OpenGL texture ID for each generated atlas texture holding the smaller images.

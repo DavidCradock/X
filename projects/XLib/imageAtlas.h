@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "image.h"
-#include "vector2f.h"
+#include "vector2r.h"
 
 namespace X
 {
@@ -11,13 +11,13 @@ namespace X
 	public:
 		struct STexCoords
 		{
-			CVector2f top_left;
-			CVector2f top_right;
-			CVector2f bottom_left;
-			CVector2f bottom_right;
+			CVector2r top_left;
+			CVector2r top_right;
+			CVector2r bottom_left;
+			CVector2r bottom_right;
 		};
 		STexCoords sTexCoords;			// The texture coordinates within the atlas image of the image
-		CVector2f v2fDimensions;		// The dimensions of the image
+		CVector2r v2rDimensions;		// The dimensions of the image
 		std::string strImageFilename;	// The filename which the image was created from.
 		unsigned int uiAtlasImage;		// The atlas image number which the image is located in.
 		bool bRotated;					// Whether the image was rotated clockwise to fit better or not.
@@ -86,6 +86,9 @@ namespace X
 		// Call createAtlasImages() first.
 		// If an invalid image name is given, an exception occurs
 		CImageAtlasDetails getImageDetails(const std::string& strImageName);
+
+		// Returns whether the named image exists or not
+		bool getImageExists(const std::string& strImageName);
 	private:
 		std::vector<CImage*> _mvAtlasImages;				// Holds each atlas image which contain all the added images.
 		std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each image's details

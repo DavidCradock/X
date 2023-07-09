@@ -1130,9 +1130,9 @@ namespace X
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->getImageDims(0).x;
+			pNewRes->mfWidth = (float)pTex->getImageDims(0).x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->getImageDims(0).y;
+			pNewRes->mfHeight = (float)pTex->getImageDims(0).y;
 
 		return pNewRes;
 	}

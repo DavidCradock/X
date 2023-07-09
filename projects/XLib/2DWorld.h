@@ -5,6 +5,10 @@
 
 namespace X
 {
+	// The top most object of the 2D rendering process is a C2DWorld, we create at least one of these in the SC2DRenderer to hold all other objects.
+	// We can have multiple worlds.
+	// A world needs at least one camera to be able to render the world to a framebuffer.
+	// A world should have at least one layer with which to contain the various entities.
 	class C2DWorld
 	{
 	public:

@@ -13,39 +13,50 @@ namespace X
 		// Show frame rate statistics
 		SCGUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
 
-		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
-		//p2DRenderer->addWorld("World");
-		C2DWorld world;
-
 		// Create Debug GUI
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("Debug");
-		pCont->setDimensions(1600, 1200);
+		pCont->setDimensions(640, 480);
 		pCont->setPositionCentreWindow();
+		pCont->setPosition(pCont->mfPositionX + 640, pCont->mfPositionY);
+
 		for (int i = 0; i < 100; i += 20)
 		{
 			std::string strText = "Text: " + std::to_string(i);
 			pCont->addText(strText, 0, (float)i, strText);
 		}
-		pCont->setVisible(true);
+//		pCont->setVisible(false);
 
-		// Add image animation to GUI
-		std::vector<std::string> vstrImageFilenames = getFilesInDir("data/DevApp/textures/anim_test_320x140x180/");
-		pCont->addImageAnimated("AnimTest", 600, 0, vstrImageFilenames, -1.0f, -1.0f);
-
-		CImageAtlasPacker imageAtlasPacker;
-		vstrImageFilenames = getFilesInDir("data/DevApp/textures/anim_test_320x140x180/");
-		imageAtlasPacker.createAtlasImages(vstrImageFilenames, 1034, 2049, true, 1);
-		for (int i = 0; i < imageAtlasPacker.getNumAtlases(); i++)
-		{
-			CImage* pImage = imageAtlasPacker.getAtlasImage(i);
-			std::string strImageName = "CImageAtlasPacker_OUTPUT_" + std::to_string(i) + ".png";
-			pImage->saveAsPNG(strImageName);
-		}
-		CImage* pImage = imageAtlasPacker.getAtlasImage(0);
-		SCResourceManager::getPointer()->addTexture2DFromImage("AtlasImageResource", *pImage);
-		pCont->addImageFromImage("AtlasImage", 0, 100, "AtlasImageResource");
+		// First, create the C2DTexture2DAtlas resource which the entity will use for it's image data.
+		SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.
+		// Fill in a std::vector<std::string> to hold all the images the entity will use, in this case, just one single image.
+		std::vector<std::string> vstrImageFilenames;
+		vstrImageFilenames.push_back("data/Demo2D/images/creature_top_down.png");
+		// Now create the texture atlas with the resource manager...
+		pResourceManager->addTexture2DAtlas("MyTextureAtlas", vstrImageFilenames, true, 1);
+		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();					// Obtain pointer to this object
+		C2DWorld* pWorld = p2DRenderer->addWorld("MyWorld");						// Add a new world to contain everything
+		C2DLayer* pLayer = pWorld->addLayer("MyLayer");							// Add a new layer to the world
+		C2DCamera* pCamera = pWorld->addCamera("MyCamera");						// Add a new camera to the world
+		// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...
+		C2DEntity* pEntity = pLayer->addEntity("MyEntity", "MyTextureAtlas");
+		// Set which image in the texture atlas the entity will use...
+		pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
+		// Optionally, set the entity's position...
+		// pEntity->setPosition(CVector2r(1.0f, 2.0f));
 		
+		pEntity = pLayer->addEntity("MyEntity2", "MyTextureAtlas");
+		pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
+
+		// Now add lots of entitys
+		for (int i = 0; i < 1000; i++)
+		{
+			std::string strEntityName = "Entity: " + std::to_string(i);
+			pEntity = pLayer->addEntity(strEntityName, "MyTextureAtlas");
+			pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
+			CVector2r vPos(randf(0, pWindow->getWidth()), randf(0, pWindow->getHeight()));
+			pEntity->setPosition(vPos);
+		}
 		
 	}
 
@@ -64,6 +75,20 @@ namespace X
 
 		// Timer delta
 		timer.update();
+		
+		// Move entity
+		static float fInc = 0.0f;
+		fInc += timer.getSecondsPast() * 100.0f;
+		if (fInc > 100)
+			fInc = 0;
+		CVector2r vSpritePos;
+		vSpritePos.x = 500 + fInc;
+		vSpritePos.y = 500 + (sinf(fInc * 0.1f) * 10.0f);
+		SC2DRenderer* p2D = SC2DRenderer::getPointer();
+		p2D->getWorld(0)->getLayer(0)->getEntity(0)->setPosition(vSpritePos);
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUI->getContainer("Debug");
+		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(vSpritePos.x) + "y=" + std::to_string(vSpritePos.y);
 
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))

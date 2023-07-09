@@ -10,6 +10,9 @@ namespace X
 		// Constructor, sets to default values (white with full alpha)
 		CColour();
 
+		// Constructor, sets to passed values
+		CColour(float fRed, float fGreen, float fBlue, float fAlpha);
+
 		// Sets the colour to the given values.
 		// Clamps the values in the range of 0.0f and 1.0f
 		void set(float fRed, float fGreen, float fBlue, float fAlpha);

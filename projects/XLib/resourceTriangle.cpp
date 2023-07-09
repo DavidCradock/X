@@ -237,6 +237,50 @@ namespace X
 		addVertex(vertex);
 	}
 
+	void CResourceTriangle::addQuad2D(const CVector2r& vPosition, CVector2r& vDimensions, const CColour& colour, const CVector2r& textureCoordinateBottomLeft, const CVector2r& textureCoordinateBottomRight, const CVector2r& textureCoordinateTopRight, const CVector2r& textureCoordinateTopLeft)
+	{
+		// Indicies
+		unsigned int iIndex = (unsigned int)vertices.size();
+		addIndex(iIndex);		// BL
+		addIndex(iIndex + 1);	// TL
+		addIndex(iIndex + 2);	// TR
+
+		addIndex(iIndex + 2);	// TR
+		addIndex(iIndex + 3);	// BR
+		addIndex(iIndex);		// BL
+
+		// Bottom left
+		Vertex vertex;	// Holds a vertex's data before adding to the vector
+		vertex.position.x = (float)vPosition.x;
+		vertex.position.y = float(vPosition.y + vDimensions.y);
+		vertex.position.z = 0.0f;
+		vertex.colour.r = colour.red;
+		vertex.colour.g = colour.green;
+		vertex.colour.b = colour.blue;
+		vertex.colour.a = colour.alpha;
+		vertex.texCoord.x = (float)textureCoordinateBottomLeft.x;
+		vertex.texCoord.y = (float)textureCoordinateBottomLeft.y;
+		addVertex(vertex);
+
+		// Top left
+		vertex.position.y = (float)vPosition.y;
+		vertex.texCoord.x = (float)textureCoordinateTopLeft.x;
+		vertex.texCoord.y = (float)textureCoordinateTopLeft.y;
+		addVertex(vertex);
+
+		// Top right
+		vertex.position.x = float(vPosition.x + vDimensions.x);
+		vertex.texCoord.x = (float)textureCoordinateTopRight.x;
+		vertex.texCoord.y = (float)textureCoordinateTopRight.y;
+		addVertex(vertex);
+
+		// Bottom right
+		vertex.position.y = float(vPosition.y + vDimensions.y);
+		vertex.texCoord.x = (float)textureCoordinateBottomRight.x;
+		vertex.texCoord.y = (float)textureCoordinateBottomRight.y;
+		addVertex(vertex);
+	}
+
 	void CResourceTriangle::addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour, const glm::vec2& textureCoordinateFrontLeft, const glm::vec2& textureCoordinateFrontRight, const glm::vec2& textureCoordinateBackRight, const glm::vec2& textureCoordinateBackLeft)
 	{
 		// Indicies

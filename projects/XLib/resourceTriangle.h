@@ -1,6 +1,8 @@
 #pragma once
 #include "PCH.h"
 #include "resourceBase.h"
+#include "vector2r.h"
+#include "colour.h"
 
 namespace X
 {
@@ -47,6 +49,9 @@ namespace X
 
 		// Adds a bunch of vertices and indices which represent a 2D quad
 		void addQuad2D(const glm::vec2& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateBottomLeft = glm::vec2(0, 1), const glm::vec2& textureCoordinateBottomRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateTopRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateTopLeft = glm::vec2(0, 0));
+
+		// Adds a bunch of vertices and indices which represent a 2D quad
+		void addQuad2D(const CVector2r& vPosition, CVector2r& vDimensions, const CColour& colour = CColour(1.0f, 1.0f, 1.0f, 1.0f), const CVector2r& textureCoordinateBottomLeft = CVector2r(0, 1), const CVector2r& textureCoordinateBottomRight = CVector2r(1, 1), const CVector2r& textureCoordinateTopRight = CVector2r(1, 0), const CVector2r& textureCoordinateTopLeft = CVector2r(0, 0));
 
 		// Adds a bunch of vertices and indices which represent a 3D quad pointing up along the Y axis
 		void addGroundplane(const glm::vec3& vPosition, const glm::vec2& vDimensions, const glm::vec4& colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), const glm::vec2& textureCoordinateFrontLeft = glm::vec2(0, 1), const glm::vec2& textureCoordinateFrontRight = glm::vec2(1, 1), const glm::vec2& textureCoordinateBackRight = glm::vec2(1, 0), const glm::vec2& textureCoordinateBackLeft = glm::vec2(0, 0));

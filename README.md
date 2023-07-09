@@ -27,6 +27,4 @@ Current progress...
 - Create 2D sprite rendering
 - Rewrite joy part of input
 - Remove and replace glm with own code?
-- Add padding to vector classes
-- Check CImageAtlasPacker
-
+- Add padding to vector classes and test speed increase

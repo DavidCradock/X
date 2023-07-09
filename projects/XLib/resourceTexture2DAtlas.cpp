@@ -220,16 +220,16 @@ namespace X
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
 		glm::vec2 glmv2;
-		glmv2.x = (*pviad)[uiImageNumber].sTexCoords.top_left.x;
-		glmv2.y = (*pviad)[uiImageNumber].sTexCoords.top_left.y;
+		glmv2.x = (float)(*pviad)[uiImageNumber].sTexCoords.top_left.x;
+		glmv2.y = (float)(*pviad)[uiImageNumber].sTexCoords.top_left.y;
 		vTCMin = glmv2;
 
-		glmv2.x = (*pviad)[uiImageNumber].sTexCoords.bottom_right.x;
-		glmv2.y = (*pviad)[uiImageNumber].sTexCoords.bottom_right.y;
+		glmv2.x = (float)(*pviad)[uiImageNumber].sTexCoords.bottom_right.x;
+		glmv2.y = (float)(*pviad)[uiImageNumber].sTexCoords.bottom_right.y;
 		vTCMax = glmv2;
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft)
+	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft)
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
@@ -244,16 +244,16 @@ namespace X
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 
 		glm::vec2 glmv2;
-		glmv2.x = iad.sTexCoords.top_left.x;
-		glmv2.y = iad.sTexCoords.top_left.y;
+		glmv2.x = (float)iad.sTexCoords.top_left.x;
+		glmv2.y = (float)iad.sTexCoords.top_left.y;
 		vTCMin = glmv2;
 
-		glmv2.x = iad.sTexCoords.bottom_right.x;
-		glmv2.y = iad.sTexCoords.bottom_right.y;
+		glmv2.x = (float)iad.sTexCoords.bottom_right.x;
+		glmv2.y = (float)iad.sTexCoords.bottom_right.y;
 		vTCMax = glmv2;
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft)
+	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft)
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 
@@ -268,17 +268,17 @@ namespace X
 		return _mAtlases.getNumAtlases();
 	}
 
-	CVector2f CResourceTexture2DAtlas::getImageDims(unsigned int uiImageNumber)
+	CVector2r CResourceTexture2DAtlas::getImageDims(unsigned int uiImageNumber)
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageDims() given invalid image number.");
-		return (*pviad)[uiImageNumber].v2fDimensions;
+		return (*pviad)[uiImageNumber].v2rDimensions;
 	}
 
-	CVector2f CResourceTexture2DAtlas::getImageDims(const std::string& strImageName)
+	CVector2r CResourceTexture2DAtlas::getImageDims(const std::string& strImageName)
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
-		return iad.v2fDimensions;
+		return iad.v2rDimensions;
 	}
 	
 	std::string CResourceTexture2DAtlas::getImageFilename(unsigned int uiImageNumber)
@@ -324,5 +324,10 @@ namespace X
 	CImageAtlasDetails CResourceTexture2DAtlas::getImageDetails(const std::string& strImageName)
 	{
 		return _mAtlases.getImageDetails(strImageName);
+	}
+
+	bool CResourceTexture2DAtlas::getImageNameExists(const std::string& strImageName)
+	{
+		return _mAtlases.getImageExists(strImageName);
 	}
 }

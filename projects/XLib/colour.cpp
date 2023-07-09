@@ -9,6 +9,11 @@ namespace X
 		set(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
+	CColour::CColour(float fRed, float fGreen, float fBlue, float fAlpha)
+	{
+		set(fRed, fGreen, fBlue, fAlpha);
+	}
+
 	void CColour::set(float fRed, float fGreen, float fBlue, float fAlpha)
 	{
 		clamp(fRed, 0.0f, 1.0f);

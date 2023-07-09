@@ -5,7 +5,8 @@
 
 namespace X
 {
-
+	// A layer stores entities and each layer is ordered by rendering order (in the C2DWorld objects) so that we can
+	// have some control over which entities get rendered on top of others.
 	class C2DLayer
 	{
 	public:
@@ -15,8 +16,10 @@ namespace X
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs
+		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
+		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
 		// Returns a pointer to the newly added object
-		C2DEntity* addEntity(const std::string& strUniqueName);
+		C2DEntity* addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
 
 		// Returns true if an object exists, else false
 		bool getEntityExists(const std::string& strUniqueName);
@@ -43,8 +46,10 @@ namespace X
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs
+		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
+		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
 		// Returns a pointer to the newly added object
-		C2DEntityComplex* addEntityComplex(const std::string& strUniqueName);
+		C2DEntityComplex* addEntityComplex(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
 
 		// Returns true if an object exists, else false
 		bool getEntityComplexExists(const std::string& strUniqueName);

@@ -5,7 +5,8 @@ namespace X
 {
 	C2DCamera::C2DCamera()
 	{
-
+		_mstrFramebufferTarget = "X:backbuffer_FB";
+		mv2rPosition.setZero();
 	}
 
 	C2DCamera::~C2DCamera()

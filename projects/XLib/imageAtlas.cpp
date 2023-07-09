@@ -1,7 +1,6 @@
 #include "PCH.h"
 #include "imageAtlas.h"
 #include "log.h"
-#include "GUIManager.h"	// For debugging text access
 
 namespace X
 {
@@ -22,8 +21,6 @@ namespace X
 		// Reset, freeing atlas images if they exist
 		reset();
 
-		CTimer timer;	timer.update();
-
 		// Store each image filename and as we go, create and load each individual image into memory
 		std::vector<std::string> vStrImageFilenames;
 		std::vector<CImage*> vImages;
@@ -39,8 +36,6 @@ namespace X
 			// Load each individual image
 			ThrowIfFalse(vImages[ui]->load(vStrImageFilenames[ui], false), "CImageAtlasPacker::createAtlasImages() failed. Unable to load image from file: " + vStrImageFilenames[ui] + ".");
 		}
-
-		timer.update();
 
 		// Determine maximum width/height of the individual images and make sure, including image spacing, they can all fit within the specified max atlas image width/height
 		unsigned int uiMaxImageWidth = 0;
@@ -60,11 +55,6 @@ namespace X
 		ThrowIfTrue(uiMaxImageWidth > uiMaxAtlasImageWidth, "CImageAtlasPacker::createAtlasImages() failed. An individual image's width(" + std::to_string(uiMaxImageWidth) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's width(" + std::to_string(uiMaxAtlasImageWidth) + ".");
 		ThrowIfTrue(uiMaxImageHeight > uiMaxAtlasImageHeight, "CImageAtlasPacker::createAtlasImages() failed. An individual image's height(" + std::to_string(uiMaxImageHeight) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's height(" + std::to_string(uiMaxAtlasImageHeight) + ".");
 
-		// Debug text
-		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 0")->mstrText = "Total num images: " + std::to_string(vImages.size());
-		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 20")->mstrText = "Time to load all images: " + std::to_string(timer.getSecondsPast()) + " seconds.";
-
-		timer.update();
 		// Create each image detail for each individual image, determining whether we should rotate the image or not
 		// Also, rotate the images that should be
 		for (unsigned int ui = 0; ui < vImages.size(); ui++)
@@ -73,25 +63,19 @@ namespace X
 			imageDetail.bRotated = false;
 			imageDetail.strImageFilename = vStrImageFilenames[ui];
 			imageDetail.uiAtlasImage = 0;
-			imageDetail.v2fDimensions = vImages[ui]->getDimensions();
+			imageDetail.v2rDimensions = vImages[ui]->getDimensions();
 			if (bAllowRotationOfImages)
 			{
 				// Rotate image so that it's height is greatest
-				if (imageDetail.v2fDimensions.x > imageDetail.v2fDimensions.y)
+				if (imageDetail.v2rDimensions.x > imageDetail.v2rDimensions.y)
 				{
 					imageDetail.bRotated = true;
 					vImages[ui]->rotateClockwise();
-					imageDetail.v2fDimensions = vImages[ui]->getDimensions();
+					imageDetail.v2rDimensions = vImages[ui]->getDimensions();
 				}
 			}
 			_mvImageDetails.push_back(imageDetail);
 		}
-		timer.update();
-		// Debug text
-		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 40")->mstrText = "Time to rotate images: " + std::to_string(timer.getSecondsPast()) + " seconds.";
-
-
-		timer.update();
 
 		// Bubble sort temp vectors by their image's width
 		// vectors which we have to sort...
@@ -106,7 +90,7 @@ namespace X
 			for (int j = 0; j < (int)vImages.size(); ++j)
 			{
 				// Swap by largest first
-				if (_mvImageDetails[j].v2fDimensions.x < _mvImageDetails[i].v2fDimensions.x)
+				if (_mvImageDetails[j].v2rDimensions.x < _mvImageDetails[i].v2rDimensions.x)
 				{
 					// Temporarily store image, filename and image details
 					// Assign i to temp
@@ -124,11 +108,6 @@ namespace X
 				}
 			}
 		}
-		timer.update();
-		// Debug text
-		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 60")->mstrText = "Time to bubblesort vecs by width: " + std::to_string(timer.getSecondsPast()) + " seconds.";
-
-		timer.update();
 
 		// Bubble sort temp vectors by their image's height
 		for (int i = 0; i < (int)vImages.size(); ++i)
@@ -136,7 +115,7 @@ namespace X
 			for (int j = 0; j < (int)vImages.size(); ++j)
 			{
 				// Swap by largest first
-				if (_mvImageDetails[j].v2fDimensions.y < _mvImageDetails[i].v2fDimensions.y)
+				if (_mvImageDetails[j].v2rDimensions.y < _mvImageDetails[i].v2rDimensions.y)
 				{
 					// Temporarily store image, filename and image details
 					// Assign i to temp
@@ -155,9 +134,6 @@ namespace X
 			}
 		}
 		// Now, vStrImageFilenames, vImages and _mvImageDetails contain the filename and images sorted by greatest width, then height first
-		timer.update();
-		// Debug text
-		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 80")->mstrText = "Time to bubblesort vecs by height: " + std::to_string(timer.getSecondsPast()) + " seconds.";
 
 		// Now we have to following arrays filled...
 		// std::vector<std::string> vStrImageFilenames;		// Holds each individual image's filename 
@@ -167,10 +143,10 @@ namespace X
 		// and then convert to actual texture coordinates below.
 
 		// We now need to compute each image's position within the large atlas image and once done, we'll have the dimensions of the atlas image/s and the number required.
-		std::vector<CVector2f> vv2fAtlasDims;	// Will hold computed dims of each atlas image
-		vv2fAtlasDims.push_back(CVector2f(0.0f, (float)vImages[0]->getHeight()));
+		std::vector<CVector2r> vv2fAtlasDims;	// Will hold computed dims of each atlas image
+		vv2fAtlasDims.push_back(CVector2r(0.0f, (real)vImages[0]->getHeight()));
 		int iCurAtlasImage = 0;
-		CVector2f v2fCurrentPositionInAtlas(0.0f, 0.0f);
+		CVector2r v2fCurrentPositionInAtlas(0.0f, 0.0f);
 		float fSpacing = (float)uiImageSpacing;
 		float fSpacingTimesTwo = fSpacing * 2.0f;
 		
@@ -179,7 +155,7 @@ namespace X
 		for (unsigned int ui = 0; ui < vImages.size(); ui++)
 		{
 			// Compute position of current image in atlas
-			CVector2f vImageDims = vImages[ui]->getDimensions();
+			CVector2r vImageDims = vImages[ui]->getDimensions();
 			_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
 			_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
 			_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
@@ -242,7 +218,7 @@ namespace X
 				else // This image doesn't fit in this atlas and maximum dims of the atlas have been reached
 				{
 					iCurAtlasImage++;
-					vv2fAtlasDims.push_back(CVector2f(0.0f, (float)vImages[ui]->getHeight()));
+					vv2fAtlasDims.push_back(CVector2r(0.0f, (real)vImages[ui]->getHeight()));
 					v2fCurrentPositionInAtlas.setZero();
 
 					// Add image to new atlas image
@@ -295,11 +271,11 @@ namespace X
 				(int)_mvImageDetails[ui].sTexCoords.top_left.y);
 
 			// Now compute texture coordinates
-			CVector2f vAtlasDims = _mvAtlasImages[_mvImageDetails[ui].uiAtlasImage]->getDimensions();
+			CVector2r vAtlasDims = _mvAtlasImages[_mvImageDetails[ui].uiAtlasImage]->getDimensions();
 			// Prevent divide by zero
 			ThrowIfTrue(vAtlasDims.x < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas width less than 1.");
 			ThrowIfTrue(vAtlasDims.y < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas height less than 1.");
-			CVector2f vAtlasDimsRecip(1.0f / vAtlasDims.x, 1.0f / vAtlasDims.y);
+			CVector2r vAtlasDimsRecip(1.0f / vAtlasDims.x, 1.0f / vAtlasDims.y);
 			_mvImageDetails[ui].sTexCoords.bottom_left.x *= vAtlasDimsRecip.x;
 			_mvImageDetails[ui].sTexCoords.bottom_left.y *= vAtlasDimsRecip.y;
 			_mvImageDetails[ui].sTexCoords.bottom_right.x *= vAtlasDimsRecip.x;
@@ -368,5 +344,11 @@ namespace X
 		}
 		_mvImageDetails.clear();
 		_mmapImageDetails.clear();
+	}
+
+	bool CImageAtlasPacker::getImageExists(const std::string& strImageName)
+	{
+		std::map<std::string, CImageAtlasDetails>::iterator it = _mmapImageDetails.find(strImageName);
+		return (it != _mmapImageDetails.end());
 	}
 }

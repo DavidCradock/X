@@ -210,9 +210,6 @@
     <ClInclude Include="2DEntity.h">
       <Filter>2D</Filter>
     </ClInclude>
-    <ClInclude Include="2DImageData.h">
-      <Filter>2D</Filter>
-    </ClInclude>
     <ClInclude Include="frustum.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -434,9 +431,6 @@
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="2DEntity.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DImageData.cpp">
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="frustum.cpp">
