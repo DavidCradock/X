@@ -538,7 +538,7 @@ namespace X
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
 		pNewRes->mfHeight = fHeight;
-		pNewRes->_mstrTexturename = strImageFilename;
+		pNewRes->_mstrTextureResourceName = strImageFilename;
 		_mmapImages[strName] = pNewRes;
 
 		// Add strImageFilename to the resource manager
@@ -567,10 +567,13 @@ namespace X
 		if (it == _mmapImages.end())
 			return;
 
-		// Remove _mstrImageFilename from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DFromFile(it->second->_mstrTexturename);
-
+		// Remove _mstrTextureResourceName from the resource manager
+		if (it->second->_mbImageIsFromFile)
+		{
+			SCResourceManager* pResMan = SCResourceManager::getPointer();
+			pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+		}
+		
 		delete it->second;
 		_mmapImages.erase(it);
 	}
@@ -578,8 +581,14 @@ namespace X
 	void CGUITooltip::removeAllImages(void)
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.begin();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		while (it != _mmapImages.end())
 		{
+			// Remove _mstrTextureResourceName from the resource manager
+			if (it->second->_mbImageIsFromFile)
+			{
+				pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+			}
 			delete it->second;
 			_mmapImages.erase(it);
 			it = _mmapImages.begin();

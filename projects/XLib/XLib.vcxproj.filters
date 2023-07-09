@@ -114,27 +114,6 @@
     <ClInclude Include="audioManager.h">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="resourceFont.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceFramebuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceManager.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceShader.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTexture2D.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTriangle.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceLine.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="X.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
@@ -152,12 +131,6 @@
     </ClInclude>
     <ClInclude Include="OpenGL\wglext.h">
       <Filter>OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceBase.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceDepthbuffer.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="GUIButton.h">
       <Filter>GUI</Filter>
@@ -194,9 +167,6 @@
     </ClInclude>
     <ClInclude Include="GUIBaseObject.h">
       <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTexture2DAnimation.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="GUIDraggableDock.h">
       <Filter>GUI\TODO</Filter>
@@ -288,7 +258,40 @@
     <ClInclude Include="vector2d.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="resourceBase.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceDepthbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFramebuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceShader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DAnimation.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DAtlas.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DFromFile.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
     <ClInclude Include="resourceTexture2DFromImage.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTriangle.h">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
@@ -358,30 +361,6 @@
     <ClCompile Include="audioManager.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="resourceFont.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceFramebuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceShader.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2D.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTriangle.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceLine.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceDepthbuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="GUIButton.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -417,9 +396,6 @@
     </ClCompile>
     <ClCompile Include="GUIBaseObject.cpp">
       <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2DAnimation.cpp">
-      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="GUIDraggableDock.cpp">
       <Filter>GUI\TODO</Filter>
@@ -508,7 +484,37 @@
     <ClCompile Include="vector2d.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="resourceDepthbuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFramebuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceShader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DAnimation.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DAtlas.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromFile.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
     <ClCompile Include="resourceTexture2DFromImage.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTriangle.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>

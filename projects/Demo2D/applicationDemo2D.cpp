@@ -20,7 +20,7 @@ namespace X
 		// Create Debug GUI
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("Debug");
-		pCont->setDimensions(640, 200);
+		pCont->setDimensions(1600, 1200);
 		pCont->setPositionCentreWindow();
 		for (int i = 0; i < 100; i += 20)
 		{
@@ -32,9 +32,30 @@ namespace X
 		CImageAtlasPacker imageAtlasPacker;
 		std::vector<std::string> vstrImageFilenames = getFilesInDir("data/Demo2D/images/CImageAtlasPackerTest/");
 		imageAtlasPacker.createAtlasImages(vstrImageFilenames, pWindow->getMaxTextureSize(), pWindow->getMaxTextureSize(), true, 1);
-
+		CImage *pImage = imageAtlasPacker.getAtlasImage(0);
+		SCResourceManager::getPointer()->addTexture2DFromImage("AtlasImageResource", *pImage);
+		pCont->addImageFromImage("AtlasImage", 0, 100, "AtlasImageResource");
 		
+		// Test imagepacker
+		unsigned int uiNumAtlases = imageAtlasPacker.getNumAtlases();
 
+		CTimer timer;
+		float fSec1, fSec2;
+		timer.update();
+		for (int i = 0; i < 10000; i++)
+			std::vector<CImageAtlasDetails> atlasImageDetails = imageAtlasPacker.getAllImageDetails();
+		timer.update();
+		fSec1 = timer.getSecondsPast();
+
+		timer.update();
+		for (int i = 0; i < 10000; i++)
+			std::vector<CImageAtlasDetails> *pDetails = imageAtlasPacker.getAllImageDetailsPointer();
+		timer.update();
+		fSec2 = timer.getSecondsPast();
+
+
+		unsigned int uiNumImages = imageAtlasPacker.getNumIndividualImages();
+		CImageAtlasDetails imageDetails = imageAtlasPacker.getImageDetails(vstrImageFilenames[0]);
 	}
 
 	void CApplication::onStart(void)

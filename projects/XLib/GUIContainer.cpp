@@ -1024,12 +1024,41 @@ namespace X
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
 		pNewRes->mfHeight = fHeight;
-		pNewRes->_mstrTexturename = strImageFilename;
+		pNewRes->_mstrTextureResourceName = strImageFilename;
+		pNewRes->_mbImageIsFromFile = true;
 		_mmapImages[strName] = pNewRes;
 
 		// Add strImageFilename to the resource manager
 		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		CResourceTexture2DFromFile *pTex = pResMan->addTexture2DFromFile(strImageFilename, strImageFilename);
+
+		// If a value less than 0 is passed to width/height, set widget to dims of the image
+		if (fWidth < 0)
+			pNewRes->mfWidth = pTex->mvDimensions.x;
+		if (fHeight < 0)
+			pNewRes->mfHeight = pTex->mvDimensions.y;
+
+		return pNewRes;
+	}
+
+	CGUIImage* CGUIContainer::addImageFromImage(const std::string& strName, float fPosX, float fPosY, const std::string& strCResourceTexture2DFromImage, float fWidth, float fHeight)
+	{
+		// If resource already exists
+		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
+		ThrowIfTrue(it != _mmapImages.end(), "CGUIContainer::addImageFromImage(" + strName + ") failed. The named object already exists.");
+		CGUIImage* pNewRes = new CGUIImage;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addImageFromImage(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->mfWidth = fWidth;
+		pNewRes->mfHeight = fHeight;
+		pNewRes->_mstrTextureResourceName = strCResourceTexture2DFromImage;
+		pNewRes->_mbImageIsFromFile = false;
+		_mmapImages[strName] = pNewRes;
+
+		// Get image from the resource manager
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
+		CResourceTexture2DFromImage* pTex = pResMan->getTexture2DFromImage(strCResourceTexture2DFromImage);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1053,9 +1082,12 @@ namespace X
 		if (it == _mmapImages.end())
 			return;
 
-		// Remove _mstrImageFilename from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DFromFile(it->second->_mstrTexturename);
+		// Remove _mstrTextureResourceName from the resource manager
+		if (it->second->_mbImageIsFromFile)
+		{
+			SCResourceManager* pResMan = SCResourceManager::getPointer();
+			pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+		}
 
 		delete it->second;
 		_mmapImages.erase(it);
@@ -1064,8 +1096,14 @@ namespace X
 	void CGUIContainer::removeAllImages(void)
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.begin();
+		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		while (it != _mmapImages.end())
 		{
+			// Remove _mstrTextureResourceName from the resource manager
+			if (it->second->_mbImageIsFromFile)
+			{
+				pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+			}
 			delete it->second;
 			_mmapImages.erase(it);
 			it = _mmapImages.begin();

@@ -27,6 +27,7 @@ namespace X
 		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-		std::string _mstrTexturename;	// Name of the texture (based on the image filename it's created from) stored in SCResourceManager
+		std::string _mstrTextureResourceName;	// Name of the texture stored in SCResourceManager will be either the name of a CTexture2DFromImage, or CTexture2DFromFile
+		bool _mbImageIsFromFile;				// If this is true, then _mstrTextureResourceName points to a CTexture2DFromImage, else CTexture2DFromFile
 	};
 }

@@ -11,7 +11,7 @@ namespace X
 
 	CImageAtlasPacker::~CImageAtlasPacker()
 	{
-		_reset();
+		reset();
 	}
 
 	void CImageAtlasPacker::createAtlasImages(const std::vector<std::string>& vstrImages, unsigned int uiMaxAtlasImageWidth, unsigned int uiMaxAtlasImageHeight, bool bAllowRotationOfImages, unsigned int uiImageSpacing)
@@ -20,7 +20,7 @@ namespace X
 		ThrowIfTrue(0 == uiMaxAtlasImageWidth || 0 == uiMaxAtlasImageHeight, "CImageAtlasPacker::createAtlasImages() failed. uiMaxAtlasImageWidth or uiMaxAtlasImageHeight was set to zero.");
 
 		// Reset, freeing atlas images if they exist
-		_reset();
+		reset();
 
 		CTimer timer;	timer.update();
 
@@ -42,7 +42,7 @@ namespace X
 
 		timer.update();
 
-		// Determine maximum width/height of the individual images and make sure, including image spacing, they can all fit within the specified max atlas image widht/height
+		// Determine maximum width/height of the individual images and make sure, including image spacing, they can all fit within the specified max atlas image width/height
 		unsigned int uiMaxImageWidth = 0;
 		unsigned int uiMaxImageHeight = 0;
 		unsigned int uiImageWidth;
@@ -57,8 +57,8 @@ namespace X
 			if (uiMaxImageHeight < uiImageHeight)
 				uiMaxImageHeight = uiImageHeight;
 		}
-		ThrowIfTrue(uiMaxImageWidth > uiMaxAtlasImageWidth, "CImageAtlasPacker::createAtlasImages() failed.An individual image's width(" + std::to_string(uiMaxImageWidth) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's width(" + std::to_string(uiMaxAtlasImageWidth) + ".");
-		ThrowIfTrue(uiMaxImageHeight > uiMaxAtlasImageHeight, "CImageAtlasPacker::createAtlasImages() failed.An individual image's height(" + std::to_string(uiMaxImageHeight) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's height(" + std::to_string(uiMaxAtlasImageHeight) + ".");
+		ThrowIfTrue(uiMaxImageWidth > uiMaxAtlasImageWidth, "CImageAtlasPacker::createAtlasImages() failed. An individual image's width(" + std::to_string(uiMaxImageWidth) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's width(" + std::to_string(uiMaxAtlasImageWidth) + ".");
+		ThrowIfTrue(uiMaxImageHeight > uiMaxAtlasImageHeight, "CImageAtlasPacker::createAtlasImages() failed. An individual image's height(" + std::to_string(uiMaxImageHeight) + "), including spacing of " + std::to_string(uiImageSpacing) + " is greater than the specified max atlas image's height(" + std::to_string(uiMaxAtlasImageHeight) + ".");
 
 		// Debug text
 		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 0")->mstrText = "Total num images: " + std::to_string(vImages.size());
@@ -74,7 +74,6 @@ namespace X
 			imageDetail.strImageFilename = vStrImageFilenames[ui];
 			imageDetail.uiAtlasImage = 0;
 			imageDetail.v2fDimensions = vImages[ui]->getDimensions();
-
 			if (bAllowRotationOfImages)
 			{
 				// Rotate image so that it's height is greatest
@@ -82,7 +81,7 @@ namespace X
 				{
 					imageDetail.bRotated = true;
 					vImages[ui]->rotateClockwise();
-					imageDetail.v2fDimensions = vImages[ui]->getDimensions();	// Update dims
+					imageDetail.v2fDimensions = vImages[ui]->getDimensions();
 				}
 			}
 			_mvImageDetails.push_back(imageDetail);
@@ -101,7 +100,7 @@ namespace X
 		// std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each individual image's details
 		std::string strFilenameTemp;
 		CImage* pImageTemp;
-		CImageAtlasDetails imageAtlasDetailsTemp;
+//		CImageAtlasDetails imageAtlasDetailsTemp;
 		for (int i = 0; i < (int)vImages.size(); ++i)
 		{
 			for (int j = 0; j < (int)vImages.size(); ++j)
@@ -152,8 +151,163 @@ namespace X
 		// Debug text
 		SCGUIManager::getPointer()->getContainer("Debug")->getText("Text: 80")->mstrText = "Time to bubblesort vecs by height: " + std::to_string(timer.getSecondsPast()) + " seconds.";
 
+		// Now we have to following arrays filled...
+		// std::vector<std::string> vStrImageFilenames;		// Holds each individual image's filename 
+		// std::vector<CImage*> vImages;					// Holds each individual image's image data
+		// std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each individual image's details
+		// _mvImageDetails[X].sTexCoords is not computed yet, we'll temporarily use this to hold position of each individual image inside of texture atlas
+		// and then convert to actual texture coordinates below.
 
+		// We now need to compute each image's position within the large atlas image and once done, we'll have the dimensions of the atlas image/s and the number required.
+		std::vector<CVector2f> vv2fAtlasDims;	// Will hold computed dims of each atlas image
+		vv2fAtlasDims.push_back(CVector2f(0.0f, (float)vImages[0]->getHeight()));
+		int iCurAtlasImage = 0;
+		CVector2f v2fCurrentPositionInAtlas(0.0f, 0.0f);
+		float fSpacing = (float)uiImageSpacing;
+		float fSpacingTimesTwo = fSpacing * 2.0f;
+		
+		// We go from left to right for each row, adding images one at a time, then when we can no longer add any more
+		// images along the X axis, we move down a row and add more images starting from the left again.
+		for (unsigned int ui = 0; ui < vImages.size(); ui++)
+		{
+			// Compute position of current image in atlas
+			CVector2f vImageDims = vImages[ui]->getDimensions();
+			_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
+			_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
+			_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+			_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
 
+			// If the image position fits in current atlas
+			if (_mvImageDetails[ui].sTexCoords.bottom_right.x <= (float)uiMaxAtlasImageWidth)
+			{
+				// Image fits, fill in the rest of it's information
+				_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+				_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
+				_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
+				_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+				// Update maximum atlas size
+				if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
+					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+				if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
+					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+				// Move position in atlas right
+				v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
+
+				// Set atlas image index for current image
+				_mvImageDetails[ui].uiAtlasImage = iCurAtlasImage;
+			}
+			else // This image doesn't fit along current row, so start a new one
+			{
+				// Move position in atlas down by max image height in row
+				v2fCurrentPositionInAtlas.x = 0.0f;
+				v2fCurrentPositionInAtlas.y += vv2fAtlasDims[iCurAtlasImage].y - fSpacing;
+
+				// Compute position of current image in atlas
+				_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
+				_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
+				_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+				_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
+
+				// If the image position fits in current atlas
+				if (_mvImageDetails[ui].sTexCoords.bottom_right.y <= (float)uiMaxAtlasImageHeight)
+				{
+					// Image fits, fill in the rest of it's information
+					_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+					_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
+					_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
+					_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+					// Update maximum atlas size
+					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
+						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
+						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+					// Move position in atlas right
+					v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
+
+					// Set atlas image index for current image
+					_mvImageDetails[ui].uiAtlasImage = iCurAtlasImage;
+				}
+				else // This image doesn't fit in this atlas and maximum dims of the atlas have been reached
+				{
+					iCurAtlasImage++;
+					vv2fAtlasDims.push_back(CVector2f(0.0f, (float)vImages[ui]->getHeight()));
+					v2fCurrentPositionInAtlas.setZero();
+
+					// Add image to new atlas image
+					_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
+					_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
+					_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+					_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
+					_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+					_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
+					_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
+					_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+					// Update maximum atlas size
+					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
+						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
+					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
+						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+
+					// Move position in atlas right
+					v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
+
+					// Set atlas image index for current image
+					_mvImageDetails[ui].uiAtlasImage = iCurAtlasImage;
+				}
+			}
+		}
+
+		// Now we get here...
+		// iCurAtlasImage holds number of atlas images needed
+		// vv2fAtlasDims[X] holds each atlas image's dimensions
+		// _mvImageDetails[X].sTexCoords holds position in atlas of each individual image
+		
+		// Create each atlas image
+		for (unsigned int ui = 0; ui < (unsigned int)iCurAtlasImage + 1; ui++)
+		{
+			CImage* pNewImage = new CImage;
+			ThrowIfFalse(pNewImage, "CImageAtlasPacker::createAtlasImages() failed. Unable to allocate memory for atlas image.");
+			pNewImage->createBlank((unsigned int)vv2fAtlasDims[ui].x, (unsigned int)vv2fAtlasDims[ui].y, 4);
+			_mvAtlasImages.push_back(pNewImage);
+		}
+
+		// Now copy each image into atlas image
+		for (unsigned int ui = 0; ui < vImages.size(); ui++)
+		{
+			vImages[ui]->copyRectTo(*_mvAtlasImages[_mvImageDetails[ui].uiAtlasImage],
+				0, 0,
+				(int)vImages[ui]->getWidth(),
+				(int)vImages[ui]->getHeight(),
+				(int)_mvImageDetails[ui].sTexCoords.top_left.x,
+				(int)_mvImageDetails[ui].sTexCoords.top_left.y);
+
+			// Now compute texture coordinates
+			CVector2f vAtlasDims = _mvAtlasImages[_mvImageDetails[ui].uiAtlasImage]->getDimensions();
+			// Prevent divide by zero
+			ThrowIfTrue(vAtlasDims.x < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas width less than 1.");
+			ThrowIfTrue(vAtlasDims.y < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas height less than 1.");
+			CVector2f vAtlasDimsRecip(1.0f / vAtlasDims.x, 1.0f / vAtlasDims.y);
+			_mvImageDetails[ui].sTexCoords.bottom_left.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.bottom_left.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.bottom_right.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.bottom_right.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.top_left.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.top_left.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.top_right.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.top_right.y *= vAtlasDimsRecip.y;
+		}
+
+		// Now we're done, we setup the hashmap for fast lookup of image details by individual image names
+		for (unsigned int ui = 0; ui < _mvImageDetails.size(); ui++)
+		{
+			_mmapImageDetails[_mvImageDetails[ui].strImageFilename] = _mvImageDetails[ui];
+		}
+		
 		// Free each individual loaded image
 		for (unsigned int ui = 0; ui < vImages.size(); ui++)
 		{
@@ -162,7 +316,7 @@ namespace X
 		vImages.clear();
 	}
 
-	unsigned int CImageAtlasPacker::getNumAtlasImages(void)
+	unsigned int CImageAtlasPacker::getNumAtlases(void)
 	{
 		return (unsigned int)_mvAtlasImages.size();
 	}
@@ -174,17 +328,37 @@ namespace X
 		return _mvAtlasImages[uiIndex];
 	}
 
-	std::vector<CImageAtlasDetails> CImageAtlasPacker::getImageDetails(void)
+	std::vector<CImageAtlasDetails> CImageAtlasPacker::getAllImageDetails(void)
 	{
-		ThrowIfFalse(_mvImageDetails.size(), "CImageAtlasPacker::getImageDetails() failed. No image data currently exists.");
+		ThrowIfFalse(_mvImageDetails.size(), "CImageAtlasPacker::getAllImageDetails() failed. No image data currently exists.");
 		return _mvImageDetails;
 	}
 
-	void CImageAtlasPacker::_reset(void)
+	std::vector<CImageAtlasDetails>* CImageAtlasPacker::getAllImageDetailsPointer(void)
+	{
+		ThrowIfFalse(_mvImageDetails.size(), "CImageAtlasPacker::getAllImageDetailsPointer() failed. No image data currently exists.");
+		return &_mvImageDetails;
+	}
+
+	unsigned int CImageAtlasPacker::getNumIndividualImages(void)
+	{
+		return unsigned int(_mvImageDetails.size());
+	}
+
+	CImageAtlasDetails CImageAtlasPacker::getImageDetails(const std::string& strImageName)
+	{
+		std::map<std::string, CImageAtlasDetails>::iterator it = _mmapImageDetails.find(strImageName);
+		ThrowIfTrue(it == _mmapImageDetails.end(), "CImageAtlasPacker::getImageDetails(" + strImageName + ") failed. Named image doesn't exist.");
+		return it->second;
+	}
+
+	void CImageAtlasPacker::reset(void)
 	{
 		for (unsigned int ui = 0; ui < _mvAtlasImages.size(); ui++)
 		{
 			delete _mvAtlasImages[ui];
 		}
+		_mvImageDetails.clear();
+		_mmapImageDetails.clear();
 	}
 }

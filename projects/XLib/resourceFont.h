@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "resourceBase.h"
-#include "resourceTexture2D.h"
+#include "resourceTexture2DFromFile.h"
 
 namespace X
 {

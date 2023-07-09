@@ -5,11 +5,12 @@
 #include "resourceFont.h"
 #include "resourceFramebuffer.h"
 #include "resourceShader.h"
-#include "resourceTexture2D.h"
+#include "resourceTexture2DAnimation.h"
+#include "resourceTexture2DAtlas.h"
+#include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceTriangle.h"
 #include "resourceLine.h"
-#include "resourceTexture2DAnimation.h"
 
 namespace X
 {
@@ -51,6 +52,36 @@ namespace X
 		// Call this after the OpenGL window context has been recreated, to return all the resource back to their original state.
 		void onGLContextRecreated(void);
 
+		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
+		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
+		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.
+		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.png
+		// strOutputBaseName is the base filename used to create the two filenames for the .fnt and .png file names
+		// strFontName is the name of the font which is installed on the operating system which is used to generate the font
+		// iFontHeight is the size of the font
+		// bAntialiased is whether to perform antialiasing when generating the font's character images.
+		// bBold, bItalic, bUnderlines and bStrikeout define the style of the font.
+		// If an error occurred, an error message is shown and execution ends.
+		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
+
+		// Adds a new depthbuffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// uiWidth and uiHeight are the dimensions of the depthbuffer
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		CResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceDepthbuffer* getDepthbuffer(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getDepthbufferExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeDepthbuffer(const std::string& strResourceName);
+
 		// Adds a new font object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strFontFilename is the base name of the pair of files used to hold the font data
@@ -87,23 +118,22 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFramebuffer(const std::string& strResourceName);
 
-		// Adds a new depthbuffer object to the manager.
+		// Adds a new line vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// uiWidth and uiHeight are the dimensions of the depthbuffer
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		CResourceDepthbuffer* addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight);
+		CResourceLine* addLine(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceDepthbuffer* getDepthbuffer(const std::string& strResourceName);
+		CResourceLine* getLine(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getDepthbufferExists(const std::string& strResourceName);
+		bool getLineExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeDepthbuffer(const std::string& strResourceName);
+		void removeLine(const std::string& strResourceName);
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -122,6 +152,45 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeShader(const std::string& strResourceName);
+
+		// Adds a new texture2D animation object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the frames of animation.
+		// Each image must be the same dimensions, otherwise an exception occurs
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the large images stored in memory.
+		CResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getTexture2DAnimationExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeTexture2DAnimation(const std::string& strResourceName);
+
+		// Adds a new texture2D atlas object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the images in the atlas/es.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the atlas images stored in memory.
+		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing = 1);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceTexture2DAtlas* getTexture2DAtlas(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getTexture2DAtlasExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeTexture2DAtlas(const std::string& strResourceName);
 
 		// Adds a new texture2DFromFile object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -178,69 +247,20 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTriangle(const std::string& strResourceName);
 
-		// Adds a new line vertex buffer object to the manager.
-		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		CResourceLine* addLine(const std::string& strResourceName);
-
-		// Returns a pointer to an existing resource
-		// If the resource couldn't be found, an exception is thrown
-		CResourceLine* getLine(const std::string& strResourceName);
-
-		// Returns whether a named resource exists
-		bool getLineExists(const std::string& strResourceName);
-
-		// Removes a previously added resource from this manager
-		// If the resource doesn't exist, this silently fails.
-		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeLine(const std::string& strResourceName);
-
-		// Adds a new texture2D animation object to the manager.
-		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// const std::vector<std::string>& vecStrImageFilenames holds the name of the files which hold the image data for each of the frames of animation.
-		// Each image must be the same dimensions, otherwise an exception occurs
-		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the large images stored in memory.
-		CResourceTexture2DAnimation* addTexture2DAnimation(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bFlipYaxis = false);
-
-		// Returns a pointer to an existing resource
-		// If the resource couldn't be found, an exception is thrown
-		CResourceTexture2DAnimation* getTexture2DAnimation(const std::string& strResourceName);
-
-		// Returns whether a named resource exists
-		bool getTexture2DAnimationExists(const std::string& strResourceName);
-
-		// Removes a previously added resource from this manager
-		// If the resource doesn't exist, this silently fails.
-		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeTexture2DAnimation(const std::string& strResourceName);
-
-		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
-		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
-		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.
-		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.png
-		// strOutputBaseName is the base filename used to create the two filenames for the .fnt and .png file names
-		// strFontName is the name of the font which is installed on the operating system which is used to generate the font
-		// iFontHeight is the size of the font
-		// bAntialiased is whether to perform antialiasing when generating the font's character images.
-		// bBold, bItalic, bUnderlines and bStrikeout define the style of the font.
-		// If an error occurred, an error message is shown and execution ends.
-		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
-
 	private:
-		struct SResourceFont
-		{
-			CResourceFont* pResource;	// Pointer to the resource
-			unsigned int uiCount;		// Number of times the resource has been added
-		};
-		std::map<std::string, SResourceFont> _mmapResFonts;
-
 		struct SResourceDepthbuffer
 		{
 			CResourceDepthbuffer* pResource;	// Pointer to the resource
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceDepthbuffer>	_mmapResDepthbuffers;
+
+		struct SResourceFont
+		{
+			CResourceFont* pResource;	// Pointer to the resource
+			unsigned int uiCount;		// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceFont> _mmapResFonts;
 
 		struct SResourceFramebuffer
 		{
@@ -249,12 +269,33 @@ namespace X
 		};
 		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
 
+		struct SResourceLine
+		{
+			CResourceLine* pResource;	// Pointer to the resource
+			unsigned int uiCount;		// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceLine> _mmapResLines;
+
 		struct SResourceShader
 		{
 			CResourceShader* pResource;	// Pointer to the resource
 			unsigned int uiCount;		// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceShader> _mmapResShaders;
+
+		struct SResourceTexture2DAnimation
+		{
+			CResourceTexture2DAnimation* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceTexture2DAnimation> _mmapResTextures2DAnimation;
+
+		struct SResourceTexture2DAtlas
+		{
+			CResourceTexture2DAtlas* pResource;	// Pointer to the resource
+			unsigned int uiCount;			// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceTexture2DAtlas> _mmapResTextures2DAtlases;
 
 		struct SResourceTexture2DFromFile
 		{
@@ -276,20 +317,6 @@ namespace X
 			unsigned int uiCount;			// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceTriangle> _mmapResTriangles;
-
-		struct SResourceLine
-		{
-			CResourceLine* pResource;	// Pointer to the resource
-			unsigned int uiCount;		// Number of times the resource has been added
-		};
-		std::map<std::string, SResourceLine> _mmapResLines;
-
-		struct SResourceTexture2DAnimation
-		{
-			CResourceTexture2DAnimation* pResource;	// Pointer to the resource
-			unsigned int uiCount;			// Number of times the resource has been added
-		};
-		std::map<std::string, SResourceTexture2DAnimation> _mmapResTextures2DAnimation;
 	};
 
 }

@@ -153,15 +153,35 @@ namespace X
 		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
 		CGUIImage* addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth = -1.0f, float fHeight = -1.0f);
 
+		// Add static image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
+		// strCResourceTexture2DFromImage is the name of a CResourceTexture2DFromImage resource which you must add to SCResourceManager before calling this
+		// An image is simply that. It is not clickable. If you want an image which is clickable, use the CGUIButtonImage widget
+		// If image has zero dims, an exception occurs
+		// Passing a value of less than zero to either fWidth or fHeight will set the widget to the size of the image.
+		// Usage:
+		// CImage image;
+		// image.createBlank(512, 512, 4);
+		// // Do more stuff to image here
+		// SCResourceManager::getPointer()->addTexture2DFromImage("MyImageResource", image);
+		// CGUIContainer* pContainer = SCGUIManager::getPointer()->getContainer("container name");
+		// pContainer->addImageFromImage("MyGUIImage", 0, 0, "MyImageResource");
+		CGUIImage* addImageFromImage(const std::string& strName, float fPosX, float fPosY, const std::string& strCResourceTexture2DFromImage, float fWidth = -1.0f, float fHeight = -1.0f);
+
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
 		CGUIImage* getImage(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
+		// If the image object was added with addImage() then this removes the CResourceTexture2DFromFile resource from the file manager
+		// If the image object was added with addImageFromImage(), please remember, to remove to resource yourself from the resource manager.
 		void removeImage(const std::string& strName);
 
 		// Removes all images from this container
+		// If the image object was added with addImage() then this removes the CResourceTexture2DFromFile resource from the file manager
+		// If the image object was added with addImageFromImage(), please remember, to remove to resource yourself from the resource manager.
 		void removeAllImages(void);
 
 		// Add animated image to this container and return a pointer to it

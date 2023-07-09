@@ -11,6 +11,7 @@ namespace X
 	CGUIImage::CGUIImage()
 	{
 		mpTooltip = new CGUITooltip;
+		_mbImageIsFromFile = false;
 	}
 
 	CGUIImage::~CGUIImage()
@@ -41,10 +42,20 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(_mstrTexturename);
-
-		// Bind textures
-		pTexColour->bind(0);
+		CResourceTexture2DFromFile* pTexFileColour = 0;
+		CResourceTexture2DFromImage* pTexImageColour = 0;
+		if (_mbImageIsFromFile)
+		{
+			pTexFileColour = pRM->getTexture2DFromFile(_mstrTextureResourceName);
+			// Bind textures
+			pTexFileColour->bind(0);
+		}
+		else
+		{
+			pTexImageColour = pRM->getTexture2DFromImage(_mstrTextureResourceName);
+			// Bind textures
+			pTexImageColour->bind(0);
+		}
 
 		// Render the image
 		pTri->removeGeom();
@@ -60,7 +71,12 @@ namespace X
 		pTri->update();
 		pTri->draw();
 
-		pTexColour->unbindAll();	// Unbind textures
+		// Unbind textures
+		if (_mbImageIsFromFile)
+			pTexFileColour->unbindAll();
+		else
+			pTexImageColour->unbindAll();
+
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
 

@@ -30,4 +30,5 @@ Current progress...
 - Add padding to vector classes
 - Create CResourceTexture2DAtlas class, copy from CResourceTexture2DAnimation then modify to include images of any size and allow spacing inbetween each image.
 - Change CResourceTexture2DAnimation to CResourceTexture2DAtlas
+- Check CImageAtlasPacker
 

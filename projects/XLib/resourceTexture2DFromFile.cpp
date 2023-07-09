@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "resourceTexture2D.h"
+#include "resourceTexture2DFromFile.h"
 #include "image.h"
 #include "log.h"
 

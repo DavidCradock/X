@@ -50,6 +50,7 @@
     <ClInclude Include="precision.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceTexture2DAnimation.h" />
+    <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
@@ -73,7 +74,7 @@
     <ClInclude Include="resourceFramebuffer.h" />
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="resourceShader.h" />
-    <ClInclude Include="resourceTexture2D.h" />
+    <ClInclude Include="resourceTexture2DFromFile.h" />
     <ClInclude Include="resourceTriangle.h" />
     <ClInclude Include="resourceLine.h" />
     <ClInclude Include="singleton.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="physicsManager.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceTexture2DAnimation.cpp" />
+    <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />
@@ -156,7 +158,7 @@
     <ClCompile Include="resourceFramebuffer.cpp" />
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="resourceShader.cpp" />
-    <ClCompile Include="resourceTexture2D.cpp" />
+    <ClCompile Include="resourceTexture2DFromFile.cpp" />
     <ClCompile Include="resourceTriangle.cpp" />
     <ClCompile Include="resourceLine.cpp" />
     <ClCompile Include="SMEntityBase.cpp" />
