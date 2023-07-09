@@ -11,7 +11,6 @@ namespace X
 		_mv2rPosition.setZero();
 		_mv2rScale.set(1, 1);
 		_mColour.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mrRotationDegrees = 0;
 	}
 
 	C2DEntity::~C2DEntity()
@@ -44,16 +43,6 @@ namespace X
 		vPos.x = (float)_mv2rPosition.x;
 		vPos.y = (float)_mv2rPosition.y;
 		return vPos;
-	}
-
-	void C2DEntity::setRotationDeg(real rRotationDegress)
-	{
-		_mrRotationDegrees = rRotationDegress;
-	}
-
-	real C2DEntity::getRotationDeg(void)
-	{
-		return _mrRotationDegrees;
 	}
 
 	void C2DEntity::setScale(real rScaleX, real rScaleY)

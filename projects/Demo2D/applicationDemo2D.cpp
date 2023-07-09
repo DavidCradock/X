@@ -89,6 +89,7 @@ namespace X
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->getContainer("Debug");
 		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(vSpritePos.x) + "y=" + std::to_string(vSpritePos.y);
+		pCont->getText("Text: 20")->mstrText = "getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop());
 
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))

@@ -28,12 +28,6 @@ namespace X
 		// Returns the currently set position of the entity
 		glm::vec2 getPositionGLMV2(void);
 
-		// Set the amount of rotation of the entity in degrees
-		void setRotationDeg(real rRotationDegress);
-
-		// Returns the amount of rotation of the entity in degrees
-		real getRotationDeg(void);
-
 		// Set the scale of the sprite (a default of 1.0f is same size as the texture used to render it)
 		void setScale(real rScaleX, real rScaleY);
 
@@ -65,7 +59,6 @@ namespace X
 	private:
 		CVector2r _mv2rPosition;						// Position of this entity in the world
 		CVector2r _mv2rScale;							// Scale of this entity
-		real _mrRotationDegrees;						// Rotation of this entity in degrees.
 		CColour _mColour;								// Colour used for the vertex colour of this entity.
 		std::string _mstrResourceTexture2DAtlasName;	// Name of the CResourceTexture2DAtlas added to SCResourceManager which holds this entity's image data
 		unsigned int _muiCurrentFrameNumber;			// Current frame number of this entity

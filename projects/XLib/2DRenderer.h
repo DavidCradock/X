@@ -21,6 +21,14 @@ namespace X
 	// We go here to create everything 2D related, except the CResourceTexture2DAtlas objects (which the entitys use),
 	// which are created with the SCResourceManager->addTexture2DAtlas() method.
 	//
+	// I decided against rotation capabilities of the entitys for performance reasons.
+	// I did try using a world matrix holding the rotation transformations, but it required calling pTri->draw()
+	// for each entity otherwise the world transform matrix wouldn't affect the entity individually.
+	// Not being able to batch quads before passing onto the GPU was too slow.
+	// I did think of performing the rotation on the CPU instead, but that would be slow too.
+	// Instead, just use the loads of memory we have available and store the image used by the entity, rotated for a set amount
+	// of degress and set the image frame number based upon the entity's rotation.
+	// 
 	// Usage example to get a single entity rendered...
 	// // First, create the C2DTexture2DAtlas resource which the entity will use for it's image data.
 	// SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.
@@ -77,7 +85,11 @@ namespace X
 		// Updates and renders everything
 		// Called from SCApplicationManager::mainLoop before GUI rendering
 		void render(void);
+
+		// Returns the total number of atlas texture bindings per loop
+		unsigned int getNumberTextureRebindingsPerLoop(void);
 	private:
 		std::map<std::string, C2DWorld*> _mmapWorlds;		// Each named world
+		unsigned int _muiNumTextureBindingsPerLoop;			// Holds number of times textures are bound per loop
 	};
 }

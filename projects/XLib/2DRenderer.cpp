@@ -7,7 +7,7 @@ namespace X
 {
 	SC2DRenderer::SC2DRenderer()
 	{
-
+		_muiNumTextureBindingsPerLoop = 0;
 	}
 
 	SC2DRenderer::~SC2DRenderer()
@@ -109,6 +109,10 @@ namespace X
 
 	void SC2DRenderer::render(void)
 	{
+		// Reset _muiNumTextureBindingsPerLoop
+		// It's used for statistical purposes only
+		_muiNumTextureBindingsPerLoop = 0;
+
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:2D");
@@ -185,6 +189,7 @@ namespace X
 							CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(itEntity->second->_mstrResourceTexture2DAtlasName);
 							// Bind the atlas texture containing the entity's currently set frame number's image
 							pAtlas->bindAtlas(0, itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].uiAtlasImage);
+							_muiNumTextureBindingsPerLoop++;
 						}
 						
 						// Now get the entity's frame information for texture coordinates and entity position and add to CResourceTriangle* pTri
@@ -234,5 +239,10 @@ namespace X
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
+	}
+
+	unsigned int SC2DRenderer::getNumberTextureRebindingsPerLoop(void)
+	{
+		return _muiNumTextureBindingsPerLoop;
 	}
 }
