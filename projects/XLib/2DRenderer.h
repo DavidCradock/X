@@ -29,6 +29,10 @@ namespace X
 	// Instead, just use the loads of memory we have available and store the image used by the entity, rotated for a set amount
 	// of degress and set the image frame number based upon the entity's rotation.
 	// 
+	// When rendering an animation sequence of .png files, to make sure the images have alpha channel,
+	// not only goto render properties, film and enable transparent, but also make sure in the compositor 
+	// tab, that the alpha from render layers node is linked to alpha of composite node.
+	// 
 	// Usage example to get a single entity rendered...
 	// // First, create the C2DTexture2DAtlas resource which the entity will use for it's image data.
 	// SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.

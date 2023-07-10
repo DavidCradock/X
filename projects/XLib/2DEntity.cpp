@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "2DEntity.h"
 #include "log.h"
+#include "vector3r.h"
 
 namespace X
 {
@@ -11,6 +12,7 @@ namespace X
 		_mv2rPosition.setZero();
 		_mv2rScale.set(1, 1);
 		_mColour.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mbImagesAreSet = false;
 	}
 
 	C2DEntity::~C2DEntity()
@@ -81,6 +83,7 @@ namespace X
 		_mvImageDetails.clear();
 		_mvImageDetails.push_back(pAtlas->getImageDetails(strImageFilenameInAtlas));
 		_muiCurrentFrameNumber = 0;
+		_mbImagesAreSet = true;
 	}
 
 	void C2DEntity::setImagesMultiple(const std::vector<std::string>& strImageFilenamesInAtlas)
@@ -94,6 +97,7 @@ namespace X
 		_mvstrImageNames.clear();	// Clear stored image names
 		_mvImageDetails.clear();
 		_muiCurrentFrameNumber = 0;
+		_mbImagesAreSet = true;
 		for (unsigned int ui = 0; ui < strImageFilenamesInAtlas.size(); ui++)
 		{
 			// Make sure the named images exist within the atlas
@@ -115,5 +119,30 @@ namespace X
 	{
 		ThrowIfTrue(uiFrameNumber > _mvstrImageNames.size(), "C2DEntity::setCurrentFrameNumber() given invalid frame number.");
 		_muiCurrentFrameNumber = uiFrameNumber;
+	}
+
+	unsigned int C2DEntity::getNumFrames(void)
+	{
+		return (unsigned int)_mvstrImageNames.size();
+	}
+
+	void C2DEntity::setFrameBasedOnAngle(float fRotationDegrees)
+	{
+		clamp(fRotationDegrees, 0.0f, 359.9999f);
+		float fTemp = fRotationDegrees / 360.0f;	// Zero to one
+		_muiCurrentFrameNumber = unsigned int(fTemp * float(_mvstrImageNames.size()));
+		ThrowIfTrue(_muiCurrentFrameNumber >= (unsigned int)_mvstrImageNames.size(), "C2DEntity::setFrameBasedOnAngle() computed wrong frame number.");
+	}
+
+	void C2DEntity::setFrameBasedOnDirection(CVector2r vDir)
+	{
+		CVector3r vDirection(vDir.x, vDir.y, 0.0f);
+		CVector3r vUp(0.0f, 1.0f, 0.0f);
+		CVector3r vDown(0.0f, -1.0f, 0.0f);
+		vDirection.normalise();
+//		float fAngleUp = vDirection.getAngle(vUp);
+//		float fAngleDown = vDirection.getAngle(vDown);
+
+
 	}
 }

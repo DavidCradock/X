@@ -31,7 +31,7 @@ namespace X
 		SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.
 		// Fill in a std::vector<std::string> to hold all the images the entity will use, in this case, just one single image.
 		std::vector<std::string> vstrImageFilenames;
-		vstrImageFilenames.push_back("data/Demo2D/images/creature_top_down.png");
+		vstrImageFilenames = getFilesInDir("data/Demo2D/images/creature_top_down/");
 		// Now create the texture atlas with the resource manager...
 		pResourceManager->addTexture2DAtlas("MyTextureAtlas", vstrImageFilenames, true, 1);
 		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();					// Obtain pointer to this object
@@ -41,23 +41,28 @@ namespace X
 		// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...
 		C2DEntity* pEntity = pLayer->addEntity("MyEntity", "MyTextureAtlas");
 		// Set which image in the texture atlas the entity will use...
-		pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
+		pEntity->setImagesMultiple(vstrImageFilenames);
 		// Optionally, set the entity's position...
 		// pEntity->setPosition(CVector2r(1.0f, 2.0f));
 		
-		pEntity = pLayer->addEntity("MyEntity2", "MyTextureAtlas");
-		pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
-
 		// Now add lots of entitys
 		for (int i = 0; i < 1000; i++)
 		{
 			std::string strEntityName = "Entity: " + std::to_string(i);
 			pEntity = pLayer->addEntity(strEntityName, "MyTextureAtlas");
-			pEntity->setImagesSingle("data/Demo2D/images/creature_top_down.png");
-			CVector2r vPos(randf(0, pWindow->getWidth()), randf(0, pWindow->getHeight()));
+			pEntity->setImagesMultiple(vstrImageFilenames);
+			CVector2r vPos(randf(0, (float)pWindow->getWidth()), randf(0, (float)pWindow->getHeight()));
 			pEntity->setPosition(vPos);
+			pEntity->setScale(0.5, 0.5);
+			mfEntityDegrees[i] = 0;
 		}
-		
+
+		// Now add controllable entity on a new layer above the layer with 1000 enititys
+		pLayer = pWorld->addLayer("Layer2");
+		pEntity = pLayer->addEntity("EntityControllable", "MyTextureAtlas");
+		pEntity->setImagesMultiple(vstrImageFilenames);
+		mvEntityDir.set(0.0f, 1.0f);
+		mvEntityPos.set(500, 500);
 	}
 
 	void CApplication::onStart(void)
@@ -90,6 +95,27 @@ namespace X
 		CGUIContainer* pCont = pGUI->getContainer("Debug");
 		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(vSpritePos.x) + "y=" + std::to_string(vSpritePos.y);
 		pCont->getText("Text: 20")->mstrText = "getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop());
+
+		// Increase animation frames for each sprite
+		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
+		C2DWorld* pWorld = p2DRenderer->getWorld("MyWorld");
+		C2DLayer* pLayer = pWorld->getLayer("MyLayer");
+		
+		for (int i = 0; i < 1000; i++)
+		{
+			std::string strEntityName = "Entity: " + std::to_string(i);
+			C2DEntity* pEntity = pLayer->getEntity(strEntityName);
+			mfEntityDegrees[i] += timer.getSecondsPast() * 45.0f;
+			while (mfEntityDegrees[i] >= 360)
+				mfEntityDegrees[i] -= 360;
+			pEntity->setFrameBasedOnAngle(mfEntityDegrees[i]);
+		}
+
+		// Now deal with controllable entity
+		pLayer = pWorld->addLayer("Layer2");
+		C2DEntity* pEntity = pLayer->getEntity("EntityControllable");
+		pEntity->setPosition(mvEntityPos);
+		pEntity->setFrameBasedOnDirection(mvEntityDir);
 
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))

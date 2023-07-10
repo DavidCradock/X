@@ -169,8 +169,13 @@ namespace X
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
 					std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntitys.begin();
+					CVector2r v2rPos;	// Used by to compute actual entity position based on scale
+					CVector2r v2rDims;	// Used by to compute actual entity position based on scale
 					while (itEntity != pLayer->_mmapEntitys.end())
 					{
+						// Make sure the images have been set, if not, throw an exception
+						ThrowIfFalse(itEntity->second->_mbImagesAreSet, "SC2DRenderer::render() failed. Entity: " + itEntity->first + " has not had either setImagesSingle() or setImagesMultiple() called.");
+
 						// Bind correct atlas texture if not previously bound
 						bool bBindTexture = false;
 						if (strPreviouslyBoundAtlasName != itEntity->second->_mstrResourceTexture2DAtlasName)
@@ -201,10 +206,23 @@ namespace X
 							pTri->removeGeom();
 						}
 
+						v2rDims = itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].v2rDimensions;
+						v2rPos = itEntity->second->_mv2rPosition;
+						
+						// Scale sprite if needed
+						if (itEntity->second->_mv2rScale.x != 1.0f || itEntity->second->_mv2rScale.y != 1.0f)
+						{
+							v2rDims.x *= itEntity->second->_mv2rScale.x;
+							v2rDims.y *= itEntity->second->_mv2rScale.y;
+						}
+
+						// Offset position from top left to center of entity
+						v2rPos -= v2rDims * 0.5f;
+
 						pTri->addQuad2D(
-							itEntity->second->_mv2rPosition,															// Position
-							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].v2rDimensions,	// Dimensions
-							itEntity->second->_mColour,																	// Colour
+							v2rPos,															// Position
+							v2rDims,														// Dimensions
+							itEntity->second->_mColour,										// Colour
 							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
 							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
 							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates

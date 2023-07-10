@@ -73,6 +73,14 @@ namespace X
 		// Check for inequality
 		bool operator !=(const CVector2d& vec) const;
 
+		// Divides both elements by the given scalar value
+		// If scalar given is less than 0.0000001, an exception occurs
+		void divide(double dScaler);
+
+		// Multiplies both elements by the given scalar value
+		// Adjusts the magnitude of a vector, keeping the direction the same (Unless the scalar is negative, in which case the direction is reversed) 
+		void multiply(double dScaler);
+
 		// Sets each element to the values given
 		void set(double dX, double dY);
 
@@ -105,6 +113,48 @@ namespace X
 		// This is useful if you have many vectors/points and need to find the closest out of them all.
 		// After finding the closest, then you can squareroot the return value from this method or use getDistance() to obtain the true distance. 
 		double getDistanceSquared(const CVector2d& vec) const;
+
+		// Returns 1.0 if vOther is clockwise, else -1.0 if vOther is anticlockwise
+		double getSign(const CVector2d& vOther);
+
+		// Computes the dot product (also known as inner product) between this vector and the one given.
+		// Dot product is commutative (v1.getDot(v2) == v2.getDot(v1)) == always true.
+		// If returned dot product is...
+		// > 0		vectors are pointing roughly in same direction (upto 90 degrees apart)
+		// = 0		vectors are perpendicular to one another (90 degrees)
+		// < 0		vectors are pointing in opposite directions (+90 degrees to 180 degrees)	
+		double getDot(const CVector2d& vec) const;
+
+		// Returns angle (in radians between this and parsed vector (unsigned result)
+		double getAngleRadiansUnsigned(const CVector2d& vOther);
+
+		// Returns signed angle (in radians) between this vector and one parsed
+		// If given vector is clockwise of this vector, the angle (in radians) will be positive, else negative
+		double getAngleRadiansSigned(const CVector2d& vOther);
+
+		// Returns signed angle (in degrees) between this vector and one parsed
+		// If given vector is clockwise of this vector, the angle (in degrees) will be positive, else negative
+		double getAngleDegreesSigned(const CVector2d& vOther);
+
+		// Returns angle in degrees that this vector is from north (CVector2d(0,1)) in the range of 0-360
+		double getAngleDegrees360(void);
+
+		// If this vector represents a position, rotate it clockwise by the given number of degrees
+		void rotate(double dDegrees);
+
+		// Limits the length of this vector so that is equal to or below the parsed value
+		// If the length of this vector does not exceed the one given, it remains unchanged.
+		void limitLength(double dMaxLength);
+
+		// Returns a vector which is at right angle / 90 degrees / perpendicular to this one
+		CVector2d getPerpendicular(void);
+
+		// Determines a point between two specified points.
+		// The parameter d determines where the new interpolated point is located relative to the two end points specified by parameters pt1 and pt2.
+		// The closer the value of the parameter d is to 1.0, the closer the interpolated point is to the first point (parameter pt1).
+		// The closer the value of the parameter d is to 0, the closer the interpolated point is to the second point (parameter pt2). 
+		// Returns the new interpolated point
+		CVector2d interpolate(const CVector2d& v1, const CVector2d& v2, double d);
 
 		double x;
 		double y;

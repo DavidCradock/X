@@ -17,6 +17,8 @@ namespace X
 		~C2DEntity();
 
 		// Set the position of the sprite entity
+		// This sets the top left position of the entity, but in the rendering code, this if offset
+		// by half the entity's dimensions, so the this position is the center of the entity.
 		void setPosition(const CVector2r& vPosition);
 
 		// Returns the currently set position of the entity
@@ -56,6 +58,24 @@ namespace X
 		// Sets this entity's current animation frame number
 		// If invalid framenumber is given, an exception occurs
 		void setCurrentFrameNumber(unsigned int uiFrameNumber);
+
+		// Returns the number of image names in the atlas texture
+		unsigned int getNumFrames(void);
+
+		// This sets the current frame number based on angle of entity
+		// Expects an angle between 0.0f-359.99f the value will be clamped
+		// This makes some assumptions, that the atlas being used by this entity holds nothing but images
+		// which represent the entity images rendered as a rotating sprite, say for example 359 individual
+		// images with the entity rendered pointing up on frame 0 and rotating clockwise throughout all the
+		// other images. If this is not the case, expect weird results.
+		void setFrameBasedOnAngle(float fRotationDegrees);
+
+		// This sets the current frame number based on direction vector of entity
+		// This makes some assumptions, that the atlas being used by this entity holds nothing but images
+		// which represent the entity images rendered as a rotating sprite, say for example 359 individual
+		// images with the entity rendered pointing up on frame 0 and rotating clockwise throughout all the
+		// other images. If this is not the case, expect weird results.
+		void setFrameBasedOnDirection(CVector2r vDir);
 	private:
 		CVector2r _mv2rPosition;						// Position of this entity in the world
 		CVector2r _mv2rScale;							// Scale of this entity
@@ -64,6 +84,8 @@ namespace X
 		unsigned int _muiCurrentFrameNumber;			// Current frame number of this entity
 		bool _mbUseAnimationFrames;						// Whether to use a single image or multiple stored in the texture atlas.
 		std::vector<std::string> _mvstrImageNames;		// A vector of strings holding each image name stored in the texture atlas to use.
+		bool _mbImagesAreSet;							// Keeps track of whether either setImagesSingle() or setImagesMultiple() has been called and
+														// checked in SC2DRenderer to throw an exception stating that they haven't
 
 		/* A vector of CImageAtlasDetails, holding each image's atlas details including...
 			sTexCoords The texture coordinates within the atlas image of the image

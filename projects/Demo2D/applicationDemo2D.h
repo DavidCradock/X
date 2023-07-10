@@ -27,5 +27,8 @@ namespace X
 		bool onUpdate(void);
 	private:
 		CTimer timer;
+		float mfEntityDegrees[1000];
+		CVector2r mvEntityPos;
+		CVector2r mvEntityDir;
 	};
 }
