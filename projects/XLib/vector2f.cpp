@@ -276,4 +276,5 @@ namespace X
 		vB.multiply(1.0f - f);
 		return vA + vB;
 	}
+
 }

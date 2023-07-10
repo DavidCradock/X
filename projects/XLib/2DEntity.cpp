@@ -136,13 +136,7 @@ namespace X
 
 	void C2DEntity::setFrameBasedOnDirection(CVector2r vDir)
 	{
-		CVector3r vDirection(vDir.x, vDir.y, 0.0f);
-		CVector3r vUp(0.0f, 1.0f, 0.0f);
-		CVector3r vDown(0.0f, -1.0f, 0.0f);
-		vDirection.normalise();
-//		float fAngleUp = vDirection.getAngle(vUp);
-//		float fAngleDown = vDirection.getAngle(vDown);
-
-
+		real rDegrees = vDir.getAngleDegrees360();
+		setFrameBasedOnAngle((float)rDegrees);
 	}
 }

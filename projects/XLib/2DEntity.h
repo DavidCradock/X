@@ -6,12 +6,14 @@
 
 namespace X
 {
-	// This is an object which holds the position of the entity within the world is is assigned to, a rotation, non-uniform scale, the CResourceTexture2DAtlas used to 
+	// This is an object which holds the position of the entity within the world is is assigned to, non-uniform scale, the CResourceTexture2DAtlas used to 
 	// render itself as well as it's current animation frame (if it is animated)
 	class C2DEntity
 	{
 	public:
 		friend class SC2DRenderer;
+		friend class C2DEntityComplex;
+
 		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
 		C2DEntity(const std::string &strResourceTexture2DAtlasName);
 		~C2DEntity();

@@ -230,7 +230,6 @@ namespace X
 		_mvecLayerNameZOrder[iCurrentIndex - 1] = strLayerName;
 	}
 
-
 	void C2DWorld::moveLayerToBack(const std::string& strLayerName)
 	{
 		// Make sure the layer name exists

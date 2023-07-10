@@ -111,19 +111,15 @@ namespace X
 		return int(_mmapEntitys.size());
 	}
 
-	C2DEntityComplex* C2DLayer::addEntityComplex(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
+	C2DEntityComplex* C2DLayer::addEntityComplex(const std::string& strUniqueName)
 	{
 		// Attempt to find if the object name already exists
 		std::map<std::string, C2DEntityComplex*>::iterator it = _mmapEntityComplexs.find(strUniqueName);
 		ThrowIfTrue(it != _mmapEntityComplexs.end(), "C2DLayer::addEntityComplex(\"" + strUniqueName + "\") failed. The object already exists.");
 
 		// Allocate memory for new object
-		C2DEntityComplex* pNew = new C2DEntityComplex(strResourceTexture2DAtlasName);
+		C2DEntityComplex* pNew = new C2DEntityComplex();
 		ThrowIfFalse(pNew, "C2DLayer::addEntityComplex(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
-
-		// Make sure the named atlas resource exists, otherwise throw an exception
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfFalse(pRM->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityComplex(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
 
 		// Add object to hash map
 		_mmapEntityComplexs[strUniqueName] = pNew;

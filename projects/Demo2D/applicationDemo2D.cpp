@@ -13,56 +13,113 @@ namespace X
 		// Show frame rate statistics
 		SCGUIManager::getPointer()->getContainer("X:Default:Statistics")->setVisible(true);
 
-		// Create Debug GUI
+		// Create GUI
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("Debug");
-		pCont->setDimensions(640, 480);
-		pCont->setPositionCentreWindow();
-		pCont->setPosition(pCont->mfPositionX + 640, pCont->mfPositionY);
+		CGUIContainer* pCont = pGUI->addContainer("Demo2D");
+		pCont->setDimensions(500, 480);
+		pCont->setPosition(0, 0);
 
+		// Add some text objects
 		for (int i = 0; i < 100; i += 20)
 		{
 			std::string strText = "Text: " + std::to_string(i);
 			pCont->addText(strText, 0, (float)i, strText);
 		}
+
+		// Add text scroll showing controls
+		std::string strTextScroll;
+		strTextScroll += "Welcome to Demo2D. The WSAD keys move the camera. The cursor keys move and rotate entity. There are 1000 scaled down entities in the background on the lowest layer, then the controllable entity is rendered on a layer above that one.";
+		pCont->addTextScroll("TextScroll", 20, 120, 480, 200, strTextScroll);
 //		pCont->setVisible(false);
 
 		// First, create the C2DTexture2DAtlas resource which the entity will use for it's image data.
-		SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.
-		// Fill in a std::vector<std::string> to hold all the images the entity will use, in this case, just one single image.
+		// Obtain pointer to the resource manager.
+		SCResourceManager* pResourceManager = SCResourceManager::getPointer();
+
+		// Fill in a std::vector<std::string> to hold all the images the entity we will
 		std::vector<std::string> vstrImageFilenames;
 		vstrImageFilenames = getFilesInDir("data/Demo2D/images/creature_top_down/");
+
 		// Now create the texture atlas with the resource manager...
 		pResourceManager->addTexture2DAtlas("MyTextureAtlas", vstrImageFilenames, true, 1);
-		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();					// Obtain pointer to this object
-		C2DWorld* pWorld = p2DRenderer->addWorld("MyWorld");						// Add a new world to contain everything
-		C2DLayer* pLayer = pWorld->addLayer("MyLayer");							// Add a new layer to the world
-		C2DCamera* pCamera = pWorld->addCamera("MyCamera");						// Add a new camera to the world
-		// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...
-		C2DEntity* pEntity = pLayer->addEntity("MyEntity", "MyTextureAtlas");
-		// Set which image in the texture atlas the entity will use...
-		pEntity->setImagesMultiple(vstrImageFilenames);
-		// Optionally, set the entity's position...
-		// pEntity->setPosition(CVector2r(1.0f, 2.0f));
 		
-		// Now add lots of entitys
+		// Obtain pointer to 2D renderer
+		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
+
+		// Add a new world to contain everything
+		C2DWorld* pWorld = p2DRenderer->addWorld("MyWorld");
+
+		// Add a new layer to the world
+		C2DLayer* pLayer = pWorld->addLayer("MyLayer");
+
+		// Add a new camera to the world
+		C2DCamera* pCamera = pWorld->addCamera("MyCamera");
+
+		// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...
+				
+		// Now add lots of entities
 		for (int i = 0; i < 1000; i++)
 		{
+			// Create unique name for the entity
 			std::string strEntityName = "Entity: " + std::to_string(i);
-			pEntity = pLayer->addEntity(strEntityName, "MyTextureAtlas");
+
+			// Add entity to the layer
+			C2DEntity* pEntity = pLayer->addEntity(strEntityName, "MyTextureAtlas");
+
+			// Set which images the entity will be using
 			pEntity->setImagesMultiple(vstrImageFilenames);
+
+			// Set random position
 			CVector2r vPos(randf(0, (float)pWindow->getWidth()), randf(0, (float)pWindow->getHeight()));
 			pEntity->setPosition(vPos);
+
+			// Set scale
 			pEntity->setScale(0.5, 0.5);
-			mfEntityDegrees[i] = 0;
+
+			// Set random initial rotation
+			mfEntityBackgroundDegrees[i] = randf(0, 360.0f);
+
+			// Set entity rotation direction
+			if (randf(0, 1) < 0.5f)
+				mfEntityRotDir[i] = -1.0f;
+			else
+				mfEntityRotDir[i] = 1.0f;
 		}
 
-		// Now add controllable entity on a new layer above the layer with 1000 enititys
+		// Now add controllable complex entity on a new layer above the layer with 1000 entities
 		pLayer = pWorld->addLayer("Layer2");
-		pEntity = pLayer->addEntity("EntityControllable", "MyTextureAtlas");
+
+		// Add complex entity to the layer
+		C2DEntityComplex* pEntityComplex = pLayer->addEntityComplex("EntityControllable");
+
+		// Add a layer to the complex entity
+		C2DLayerComplex* pLayerComplex = pEntityComplex->addLayer("ParentLayer");
+
+		// Setup the texture atlas the "PARENT" entity of the complex entity will use
+		vstrImageFilenames = getFilesInDir("data/Demo2D/images/spaceship_hull/");
+		pResourceManager->addTexture2DAtlas("SpaceshipHull", vstrImageFilenames, true, 1);
+		C2DEntity* pEntity = pLayerComplex->addEntity("PARENT", "SpaceshipHull");
 		pEntity->setImagesMultiple(vstrImageFilenames);
 		mvEntityDir.set(0.0f, 1.0f);
-		mvEntityPos.set(500, 500);
+		mvEntityPos.set((pWindow->getDimensions().x * 0.5f), 500);
+		mfEntityVel = 0.0f;
+
+		// Now set up child entities of the parent entity (The gun turrets)
+		// Setup the texture atlas the gun turret entities of the complex entity will use
+		vstrImageFilenames = getFilesInDir("data/Demo2D/images/spaceship_turret/");
+		pResourceManager->addTexture2DAtlas("SpaceshipTurrets", vstrImageFilenames, true, 1);
+
+		// Create a new layer in the complex entity for the gun turrets
+		pLayerComplex = pEntityComplex->addLayer("TurretLayer");
+		// Create a new child entity in the new layer
+		pEntity = pLayerComplex->addEntity("Gun1", "SpaceshipTurrets");
+		// Set the atlas the gun entity will use
+		pEntity->setImagesMultiple(vstrImageFilenames);
+		// Scale it down a bit
+		pEntity->setScale(0.5f, 0.5f);
+		// Set position offset from the "PARENT" entity
+		pEntity->setPosition(CVector2r(0, 50));
+		
 	}
 
 	void CApplication::onStart(void)
@@ -81,41 +138,71 @@ namespace X
 		// Timer delta
 		timer.update();
 		
-		// Move entity
-		static float fInc = 0.0f;
-		fInc += timer.getSecondsPast() * 100.0f;
-		if (fInc > 100)
-			fInc = 0;
-		CVector2r vSpritePos;
-		vSpritePos.x = 500 + fInc;
-		vSpritePos.y = 500 + (sinf(fInc * 0.1f) * 10.0f);
 		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		p2D->getWorld(0)->getLayer(0)->getEntity(0)->setPosition(vSpritePos);
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("Debug");
-		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(vSpritePos.x) + "y=" + std::to_string(vSpritePos.y);
-		pCont->getText("Text: 20")->mstrText = "getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop());
+		CGUIContainer* pCont = pGUI->getContainer("Demo2D");
 
-		// Increase animation frames for each sprite
-		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2DRenderer->getWorld("MyWorld");
+		// Rotate background entities
+		C2DWorld* pWorld = p2D->getWorld("MyWorld");
 		C2DLayer* pLayer = pWorld->getLayer("MyLayer");
-		
 		for (int i = 0; i < 1000; i++)
 		{
 			std::string strEntityName = "Entity: " + std::to_string(i);
 			C2DEntity* pEntity = pLayer->getEntity(strEntityName);
-			mfEntityDegrees[i] += timer.getSecondsPast() * 45.0f;
-			while (mfEntityDegrees[i] >= 360)
-				mfEntityDegrees[i] -= 360;
-			pEntity->setFrameBasedOnAngle(mfEntityDegrees[i]);
+			mfEntityBackgroundDegrees[i] += timer.getSecondsPast() * 45.0f * mfEntityRotDir[i];
+			while (mfEntityBackgroundDegrees[i] >= 360)
+				mfEntityBackgroundDegrees[i] -= 360;
+			while (mfEntityBackgroundDegrees[i] < 0.0f)
+				mfEntityBackgroundDegrees[i] += 360;
+			pEntity->setFrameBasedOnAngle(mfEntityBackgroundDegrees[i]);
 		}
 
 		// Now deal with controllable entity
-		pLayer = pWorld->addLayer("Layer2");
-		C2DEntity* pEntity = pLayer->getEntity("EntityControllable");
-		pEntity->setPosition(mvEntityPos);
-		pEntity->setFrameBasedOnDirection(mvEntityDir);
+		pLayer = pWorld->getLayer("Layer2");
+		C2DEntityComplex* pEntityComplex = pLayer->getEntityComplex("EntityControllable");
+		pEntityComplex->setFrameBasedOnDirection(mvEntityDir);
+		// Set rotation of entity
+		pEntityComplex->setRotation(mvEntityDir);
+
+		if (pInputManager->key.pressed(KC_RIGHT))
+			mvEntityDir.rotate(timer.getSecondsPast() * 180.0f);
+		if (pInputManager->key.pressed(KC_LEFT))
+			mvEntityDir.rotate(timer.getSecondsPast() * -180.0f);
+		if (pInputManager->key.pressed(KC_UP))
+		{
+			mfEntityVel += timer.getSecondsPast() * 1.5f;
+			if (mfEntityVel > 2.0f)
+				mfEntityVel = 2.0f;
+			
+		}
+		if (pInputManager->key.pressed(KC_DOWN))
+		{
+			mfEntityVel -= timer.getSecondsPast() * 1.5f;
+		}
+		// Reduce velocity
+		mfEntityVel -= timer.getSecondsPast() * 0.85f;
+		if (mfEntityVel < 0.0f)
+			mfEntityVel = 0.0f;
+		// Compute position offset of entity based upon velocity.
+		CVector2r vOffset = mvEntityDir * timer.getSecondsPast() * 250.0f * mfEntityVel;
+		vOffset.y *= -1.0f;							// Invert Y for correct direction
+		mvEntityPos += vOffset;						// Adjust position
+		pEntityComplex->setPosition(mvEntityPos);	// Set position
+
+		// Now move camera
+		C2DCamera* pCamera = pWorld->getCamera(0);
+		if (pInputManager->key.pressed(KC_W))
+			pCamera->mv2rPosition.y -= timer.getSecondsPast() * 150.0f;
+		if (pInputManager->key.pressed(KC_S))
+			pCamera->mv2rPosition.y += timer.getSecondsPast() * 150.0f;
+		if (pInputManager->key.pressed(KC_A))
+			pCamera->mv2rPosition.x -= timer.getSecondsPast() * 150.0f;
+		if (pInputManager->key.pressed(KC_D))
+			pCamera->mv2rPosition.x += timer.getSecondsPast() * 150.0f;
+
+		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(mvEntityPos.x) + "y=" + std::to_string(mvEntityPos.y);
+		pCont->getText("Text: 20")->mstrText = "SpriteDirection: x=" + std::to_string(mvEntityDir.x) + "y=" + std::to_string(mvEntityDir.y);
+		pCont->getText("Text: 40")->mstrText = "getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop());
 
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))

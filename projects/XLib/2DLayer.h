@@ -11,6 +11,7 @@ namespace X
 	{
 	public:
 		friend class SC2DRenderer;
+		
 		C2DLayer();
 		~C2DLayer();
 
@@ -46,10 +47,8 @@ namespace X
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs
-		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
-		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
 		// Returns a pointer to the newly added object
-		C2DEntityComplex* addEntityComplex(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
+		C2DEntityComplex* addEntityComplex(const std::string& strUniqueName);
 
 		// Returns true if an object exists, else false
 		bool getEntityComplexExists(const std::string& strUniqueName);

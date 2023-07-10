@@ -14,7 +14,6 @@ Current progress...
 - Add quaternions and position to CSMEntityBase along with helper functions to move stuff etc.
 - implement more stuff into Camera
 - implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
-- implement GUI (2D)
 - particle systems
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
@@ -24,7 +23,8 @@ Current progress...
 - Implement Menu to GUI.
 - Implement Tab and TabContainer to GUI.
 - Implement Taskbar to GUI.
-- Create 2D sprite rendering
+- Work on C2DEntityComplex of 2D sprite rendering
 - Rewrite joy part of input
 - Remove and replace glm with own code?
 - Add padding to vector classes and test speed increase
+- Add the ability to be able to add newlines to the text scroll GUI object.

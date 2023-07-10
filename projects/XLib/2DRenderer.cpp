@@ -238,6 +238,7 @@ namespace X
 					std::map<std::string, C2DEntityComplex*>::iterator itEntityComplex = pLayer->_mmapEntityComplexs.begin();
 					while (itEntityComplex != pLayer->_mmapEntityComplexs.end())
 					{
+						itEntityComplex->second->render();
 
 						itEntityComplex++;
 					}

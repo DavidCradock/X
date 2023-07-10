@@ -18,10 +18,10 @@ namespace X
 	// Each object is stored in a hashmap, so they can be accessed via a unique name for each object and
 	// take advantage of fast sorting of the objects.
 	// 
-	// We go here to create everything 2D related, except the CResourceTexture2DAtlas objects (which the entitys use),
+	// We go here to create everything 2D related, except the CResourceTexture2DAtlas objects (which the entities use),
 	// which are created with the SCResourceManager->addTexture2DAtlas() method.
 	//
-	// I decided against rotation capabilities of the entitys for performance reasons.
+	// I decided against rotation capabilities of the entities for performance reasons.
 	// I did try using a world matrix holding the rotation transformations, but it required calling pTri->draw()
 	// for each entity otherwise the world transform matrix wouldn't affect the entity individually.
 	// Not being able to batch quads before passing onto the GPU was too slow.

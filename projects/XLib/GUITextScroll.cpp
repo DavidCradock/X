@@ -42,7 +42,6 @@ namespace X
 			_renderFramebuffer(pParentContainer);
 
 		// Get required resources needed to render
-		
 		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:gui");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
