@@ -127,7 +127,7 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DEntityComplex::getLayerExists(const std::string& strUniqueName)
+	bool C2DEntityComplex::getLayerExists(const std::string& strUniqueName) const
 	{
 		if (_mmapLayers.find(strUniqueName) == _mmapLayers.end())
 			return false;
@@ -229,12 +229,12 @@ namespace X
 		}
 	}
 
-	unsigned int C2DEntityComplex::getNumLayers(void)
+	unsigned int C2DEntityComplex::getNumLayers(void) const
 	{
 		return unsigned int(_mmapLayers.size());
 	}
 
-	std::string C2DEntityComplex::getLayerNameAtZorder(unsigned int uiZorder)
+	std::string C2DEntityComplex::getLayerNameAtZorder(unsigned int uiZorder) const
 	{
 		// Make sure valid index given
 		ThrowIfTrue(uiZorder >= (unsigned int)_mvecLayerNameZOrder.size(), "C2DEntityComplex::getLayerNameAtZorder(" + std::to_string(uiZorder) + ") failed. Invalid iZorder value given.");
@@ -255,7 +255,7 @@ namespace X
 		return it->first;
 	}
 
-	int C2DEntityComplex::getLayerZorder(const std::string& strLayerName)
+	int C2DEntityComplex::getLayerZorder(const std::string& strLayerName) const
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;

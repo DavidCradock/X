@@ -24,7 +24,7 @@ namespace X
 		void setHueColour(float fHueAmount, float fSaturation = 1.0f, float fBrightness = 1.0f);
 
 		// Returns the colour as glm::vec4
-		glm::vec4 get(void);
+		glm::vec4 get(void) const;
 		float red;		// Red colour between 0.0f and 1.0f
 		float green;	// Green colour between 0.0f and 1.0f
 		float blue;		// Blue colour between 0.0f and 1.0f

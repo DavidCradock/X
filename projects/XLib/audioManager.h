@@ -56,7 +56,7 @@ namespace X
 		void stop(unsigned int uiIndex);
 
 		// Returns the number of voices which are currently playing for this emitter
-		unsigned int getNumVoicesPlaying(void);
+		unsigned int getNumVoicesPlaying(void) const;
 
 		// Sets a voice's volume whilst it's playing
 		// If an invalid index is given, an exception occurs
@@ -64,7 +64,7 @@ namespace X
 
 		// Retrieves a voice's currently set volume
 		// If an invalid index is given, an exception occurs
-		float getVolume(unsigned int uiIndex);
+		float getVolume(unsigned int uiIndex) const;
 
 		// Sets a voice's frequency whilst it's playing
 		// If an invalid index is given, an exception occurs
@@ -72,7 +72,7 @@ namespace X
 
 		// Retrieves a voice's currently set frequency
 		// If an invalid index is given, an exception occurs
-		float getFrequency(unsigned int uiIndex);
+		float getFrequency(unsigned int uiIndex) const;
 
 		unsigned int _muiMaxSimultaneousInstances;		// Maximum number of sounds which can be played back simultaneously
 		std::vector<IXAudio2SourceVoice*> _mvecVoices;	// Multiple instances playback

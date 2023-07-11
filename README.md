@@ -12,12 +12,12 @@ Current progress...
 
 ** TODO **
 - Add quaternions and position to CSMEntityBase along with helper functions to move stuff etc.
-- implement more stuff into Camera
-- implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
-- particle systems
+- Implement more stuff into Camera
+- Implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
+- Particle systems
 - Add in neural networks, steering behaviours, pathfinding
 - Add and profile sorting of scene by materials
-- add translation/rotation/scale of base entities
+- Add translation/rotation/scale of base entities
 - Implement DraggableDock to GUI.
 - Implement DraggableItem to GUI.
 - Implement Menu to GUI.
@@ -28,3 +28,7 @@ Current progress...
 - Remove and replace glm with own code?
 - Add padding to vector classes and test speed increase
 - Add the ability to be able to add newlines to the text scroll GUI object.
+- Change 2D stuff from using CVector2r to CVector2f
+- Check const usage everywhere and add operator overloads where needed.
+- Tidy up CMatrix, CVector?? and CQuaternion classes.
+- 

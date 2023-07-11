@@ -24,28 +24,28 @@ namespace X
 		void destroyWindow(void);
 
 		// Returns the window's handle
-		HWND getWindowHandle(void);
+		HWND getWindowHandle(void) const;
 
 		// Returns the application's HINSTANCE
-		HINSTANCE getApplicationInstance(void);
+		HINSTANCE getApplicationInstance(void) const;
 
 		// Returns window's text
-		const std::string& getText(void);
+		const std::string& getText(void) const;
 
 		// Sets the window's text
 		void setText(const std::string& strText);
 
 		// Returns window's width
-		unsigned int getWidth(void);
+		unsigned int getWidth(void) const;
 
 		// Returns window's height
-		unsigned int getHeight(void);
+		unsigned int getHeight(void) const;
 
 		// Returns whether the window is fullscreen or not
-		bool getFullscreen(void);
+		bool getFullscreen(void) const;
 
 		// Returns whether VSync is enabled 
-		bool getVSyncEnabled(void);
+		bool getVSyncEnabled(void) const;
 	
 		// Sets the colour used when clearing the back buffer
 		void setClearColour(glm::vec4& clearColour);
@@ -70,10 +70,10 @@ namespace X
 		void toggleFullscreen(void);
 
 		// Returns window dimensions as a glm::vec2
-		glm::vec2 getDimensions(void);
+		glm::vec2 getDimensions(void) const;
 
 		// Returns the maximum texture size supported by the OpenGL drivers
-		unsigned int getMaxTextureSize(void);
+		unsigned int getMaxTextureSize(void) const;
 
 		// Sets the icon of the application window using an int from resource.h
 		void setIcon(int iIconResource);

@@ -115,7 +115,7 @@ namespace X
 		real getDistanceSquared(const CVector2r& vec) const;
 
 		// Returns 1.0 if vOther is clockwise, else -1.0 if vOther is anticlockwise
-		real getSign(const CVector2r& vOther);
+		real getSign(const CVector2r& vOther) const;
 
 		// Computes the dot product (also known as inner product) between this vector and the one given.
 		// Dot product is commutative (v1.getDot(v2) == v2.getDot(v1)) == always true.
@@ -126,18 +126,18 @@ namespace X
 		real getDot(const CVector2r& vec) const;
 
 		// Returns angle (in radians between this and parsed vector (unsigned result)
-		real getAngleRadiansUnsigned(const CVector2r& vOther);
+		real getAngleRadiansUnsigned(const CVector2r& vOther) const;
 
 		// Returns signed angle (in radians) between this vector and one parsed
 		// If given vector is clockwise of this vector, the angle (in radians) will be positive, else negative
-		real getAngleRadiansSigned(const CVector2r& vOther);
+		real getAngleRadiansSigned(const CVector2r& vOther) const;
 
 		// Returns signed angle (in degrees) between this vector and one parsed
 		// If given vector is clockwise of this vector, the angle (in degrees) will be positive, else negative
-		real getAngleDegreesSigned(const CVector2r& vOther);
+		real getAngleDegreesSigned(const CVector2r& vOther) const;
 
 		// Returns angle in degrees that this vector is from north (CVector2r(0,1)) in the range of 0-360
-		real getAngleDegrees360(void);
+		real getAngleDegrees360(void) const;
 
 		// If this vector represents a position, rotate it clockwise by the given number of degrees
 		void rotate(real rDegrees);
@@ -147,14 +147,14 @@ namespace X
 		void limitLength(real rMaxLength);
 
 		// Returns a vector which is at right angle / 90 degrees / perpendicular to this one
-		CVector2r getPerpendicular(void);
+		CVector2r getPerpendicular(void) const;
 
 		// Determines a point between two specified points.
 		// The parameter r determines where the new interpolated point is located relative to the two end points specified by parameters pt1 and pt2.
 		// The closer the value of the parameter r is to 1.0, the closer the interpolated point is to the first point (parameter pt1).
 		// The closer the value of the parameter r is to 0, the closer the interpolated point is to the second point (parameter pt2). 
 		// Returns the new interpolated point
-		CVector2r interpolate(const CVector2r& v1, const CVector2r& v2, real r);
+		CVector2r interpolate(const CVector2r& v1, const CVector2r& v2, real r) const;
 
 		real x;
 		real y;

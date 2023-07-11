@@ -26,7 +26,7 @@ namespace X
 		void addApp(const std::string& applicationName, CApplicationBase* pTheApplication);
 
 		// Return the number of applications added to this manager
-		size_t getNumApps(void) { return mApplications.size(); }
+		size_t getNumApps(void) const { return mApplications.size(); }
 
 		// Return application name at specified index into map
 		// If invalid index given, a critical error occurs
@@ -42,7 +42,7 @@ namespace X
 		void switchToNextApp(void);
 
 		// Returns the name of the currently set application
-		std::string getCurrentAppName(void) { return mstrCurrentApp; }
+		std::string getCurrentAppName(void) const { return mstrCurrentApp; }
 
 		// Returns the amount of seconds the named application has been active/running for
 		// If an invalid application name is given, an exception occurs

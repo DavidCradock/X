@@ -493,7 +493,7 @@ namespace X
 		_mfSliderPosition = fPos;
 	}
 
-	float CGUISlider::getTabPos(void)
+	float CGUISlider::getTabPos(void) const
 	{
 		if (_mbOrientationIsHorizontal)
 			return _mfSliderPosition;

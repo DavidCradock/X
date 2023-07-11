@@ -14,7 +14,7 @@ namespace X
 		~C2DCamera();
 
 		// Returns the camera position in the world
-		glm::vec3 getPositionGLM(void);
+		glm::vec3 getPositionGLM(void) const;
 
 		CVector2r mv2rPosition;	// Position of the camera in the world
 		std::string _mstrFramebufferTarget;	// The name of the CFramebuffer resource located in the SCResourceManager which this camera uses to render to.

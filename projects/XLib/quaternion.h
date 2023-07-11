@@ -55,7 +55,7 @@ namespace X
 		void setIdentity(void);
 
 		// Gets magnitude of the quaternion
-		float getMagnitude(void);
+		float getMagnitude(void) const;
 
 		// Normalizes the quaternion
 		void normalise(void);
@@ -70,16 +70,16 @@ namespace X
 		void setFromAxisAngle(CVector3f& vAxis, float fAngleRadians);
 
 		// Returns this quaternion's axis
-		CVector3f getAxis(void);
+		CVector3f getAxis(void) const;
 
 		// Returns this quaternion's angle
-		float getAngle(void);
+		float getAngle(void) const;
 
 		// Sets this quaternion from Euler angles
 		void setFromEuler(float fAngleRadiansX, float fAngleRadiansY, float fAngleRadiansZ);
 
 		// Returns a vector containing the amount of rotation around each local axis
-		CVector3f getEuler(void);
+		CVector3f getEuler(void) const;
 
 		// Sets quaternion from given CMatrix
 		void setFromMatrix(const CMatrix& matrix);

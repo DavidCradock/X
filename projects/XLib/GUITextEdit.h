@@ -27,7 +27,7 @@ namespace X
 		void setIntegerInputOnly(bool bAllowNumbersOnly);
 
 		// Returns true if the text edit was active and is now in-active via enter key
-		bool getEnterPressed(void);
+		bool getEnterPressed(void) const;
 
 		// Set the C function which'll be called once the text edit box is active and enter key is pressed
 		// To use, create a function with the following syntax...

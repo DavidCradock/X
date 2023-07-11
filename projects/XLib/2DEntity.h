@@ -24,25 +24,25 @@ namespace X
 		void setPosition(const CVector2r& vPosition);
 
 		// Returns the currently set position of the entity
-		CVector2r getPosition(void);
+		CVector2r getPosition(void) const;
 
 		// Returns the currently set position of the entity
-		glm::vec3 getPositionGLMV3(void);
+		glm::vec3 getPositionGLMV3(void) const;
 
 		// Returns the currently set position of the entity
-		glm::vec2 getPositionGLMV2(void);
+		glm::vec2 getPositionGLMV2(void) const;
 
 		// Set the scale of the sprite (a default of 1.0f is same size as the texture used to render it)
 		void setScale(real rScaleX, real rScaleY);
 
 		// Get the scale of the sprite
-		CVector2r getScale(void);
+		CVector2r getScale(void) const;
 
 		// Set the colour multiplier for the sprite entity (default = white, full opacity)
 		void setColour(const CColour& colour);
 
 		// Returns the currently set colour multiplier for the sprite entity
-		CColour getColour(void);
+		CColour getColour(void) const;
 
 		// Sets the entity to use a single image stored within the texture atlas to use whilst rendering itself
 		// If an invalid image name is given, an exception occurs
@@ -55,14 +55,14 @@ namespace X
 		void setImagesMultiple(const std::vector<std::string>& strImageFilenamesInAtlas);
 
 		// Returns this entity's current animation frame number
-		unsigned int getCurrentFrameNumber(void);
+		unsigned int getCurrentFrameNumber(void) const;
 
 		// Sets this entity's current animation frame number
 		// If invalid framenumber is given, an exception occurs
 		void setCurrentFrameNumber(unsigned int uiFrameNumber);
 
 		// Returns the number of image names in the atlas texture
-		unsigned int getNumFrames(void);
+		unsigned int getNumFrames(void) const;
 
 		// This sets the current frame number based on angle of entity
 		// Expects an angle between 0.0f-359.99f the value will be clamped

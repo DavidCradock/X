@@ -39,12 +39,12 @@ namespace X
 		mlogEntry.push_back(string);
 	}
 
-	size_t CLog::getNumEntries(void)
+	size_t CLog::getNumEntries(void) const
 	{
 		return mlogEntry.size();
 	}
 
-	std::string CLog::getEntryText(size_t entryIndex)
+	std::string CLog::getEntryText(size_t entryIndex) const
 	{
 		ThrowIfTrue(entryIndex >= mlogEntry.size(), "CLog::getEntryText() with given index of " + std::to_string(entryIndex) + " failed as given index is invalid.");
 		return mlogEntry[entryIndex];

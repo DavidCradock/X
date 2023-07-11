@@ -260,7 +260,7 @@ namespace X
 		ThrowIfTrue(FAILED(hr), "CAudioEmitter::stop() failed. Error calling IXAudio2SourceVoice->FlushSourceBuffers().");
 	}
 
-	unsigned int CAudioEmitter::getNumVoicesPlaying(void)
+	unsigned int CAudioEmitter::getNumVoicesPlaying(void) const
 	{
 		unsigned int iNumberVoicesPlaying = 0;
 		XAUDIO2_VOICE_STATE state;
@@ -287,7 +287,7 @@ namespace X
 		_mvecVoices[uiIndex]->SetVolume(fVolume);
 	}
 
-	float CAudioEmitter::getVolume(unsigned int uiIndex)
+	float CAudioEmitter::getVolume(unsigned int uiIndex) const
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)
@@ -317,7 +317,7 @@ namespace X
 		_mvecVoices[uiIndex]->SetFrequencyRatio(fFrequency);
 	}
 
-	float CAudioEmitter::getFrequency(unsigned int uiIndex)
+	float CAudioEmitter::getFrequency(unsigned int uiIndex) const
 	{
 		// Make sure valid index is given
 		if (uiIndex >= _muiMaxSimultaneousInstances)

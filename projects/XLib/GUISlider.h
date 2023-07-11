@@ -23,7 +23,7 @@ namespace X
 		void setTabPos(float fPos);
 
 		// Gets tab position 0-1 range
-		float getTabPos(void);
+		float getTabPos(void) const;
 
 		// Set tab ratio.
 		// This is multiplied by the slider dimensions(depending upon orientation) to obtain tab dimensions

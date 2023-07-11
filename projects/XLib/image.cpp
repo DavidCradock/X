@@ -108,28 +108,28 @@ namespace X
 		return (bool)STB::stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
 
-	void CImage::saveAsBMP(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsBMP(const std::string& strFilename, bool bFlipOnSave) const
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsBMP() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
 		ThrowIfTrue(!STB::stbi_write_bmp(strFilename.c_str(), width, height, numChannels, pData), "CImage::saveAsBMP() failed. Image failed to be written.");
 	}
 
-	void CImage::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality)
+	void CImage::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality) const
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsJPG() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
 		ThrowIfTrue(!STB::stbi_write_jpg(strFilename.c_str(), width, height, numChannels, pData, iQuality), "CImage::saveAsJPG() failed. Image failed to be written.");
 	}
 
-	void CImage::saveAsPNG(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsPNG(const std::string& strFilename, bool bFlipOnSave) const
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsPNG() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
 		ThrowIfTrue(!STB::stbi_write_png(strFilename.c_str(), width, height, numChannels, pData, width * numChannels), "CImage::saveAsPNG failed. Image failed to be written.");
 	}
 
-	void CImage::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
+	void CImage::saveAsTGA(const std::string& strFilename, bool bFlipOnSave) const
 	{
 		ThrowIfTrue(!pData, "CImage::saveAsTGA() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
@@ -168,7 +168,7 @@ namespace X
 		}
 	}
 
-	unsigned char* CImage::getData(void)
+	unsigned char* CImage::getData(void) const
 	{
 		return pData;
 	}
@@ -188,13 +188,13 @@ namespace X
 		return height;
 	}
 
-	CVector2r CImage::getDimensions(void)
+	CVector2r CImage::getDimensions(void) const
 	{
 		CVector2r vDims((real)width, (real)height);
 		return vDims;
 	}
 
-	bool CImage::getDimsArePowerOfTwo(void)
+	bool CImage::getDimsArePowerOfTwo(void) const
 	{
 		int iX = 1;
 		int iY = 1;
@@ -410,7 +410,7 @@ namespace X
 		memcpy(destImage.pData, pData, sizeof(unsigned char) * dataSize);
 	}
 
-	void CImage::copyRectTo(CImage &destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY)
+	void CImage::copyRectTo(CImage &destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY) const
 	{
 		// Check that both images have data
 		ThrowIfTrue(!pData, "CImage::copyRectTo() failed. Source image not yet created.");
@@ -477,7 +477,7 @@ namespace X
 		}
 	}
 
-	void CImage::copyToAddBorder(CImage& outputImage)
+	void CImage::copyToAddBorder(CImage& outputImage) const
 	{
 		ThrowIfTrue(!pData, "CImage::copyToAddBorder() failed. Image data doesn't exist.");
 
@@ -607,7 +607,7 @@ namespace X
 		}
 	}
 
-	void CImage::normalmap(CImage& outputImage, float fScale)
+	void CImage::normalmap(CImage& outputImage, float fScale) const
 	{
 		ThrowIfTrue(!pData, "CImage::normalmap() failed. Image data doesn't exist.");
 

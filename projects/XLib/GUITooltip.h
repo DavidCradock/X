@@ -32,7 +32,7 @@ namespace X
 		void setEnabled(bool bEnabled);
 
 		// Returns whether this tooltip is enabled or not
-		bool getEnabled(void);
+		bool getEnabled(void) const;
 
 		// Set this tooltip to just contain text with the dimensions set to the width/height of the text and the tooltip border.
 		// Removes all previously added objects

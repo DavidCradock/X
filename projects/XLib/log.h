@@ -51,11 +51,11 @@ namespace X
 		void add(const std::string& string, bool bAddNewLine = true, bool bAddTime = true);
 
 		// Return number of entries added via add()
-		size_t getNumEntries(void);
+		size_t getNumEntries(void) const;
 
 		// Returns a string for an entry.
 		// If entryIndex is out of bounds, an exception occurs
-		std::string getEntryText(size_t entryIndex);
+		std::string getEntryText(size_t entryIndex) const;
 	private:
 		std::vector<std::string> mlogEntry;	// A vector of strings, to hold each entry added by add() method
 		CTimer timer;						// For adding time to the beginning of each entry

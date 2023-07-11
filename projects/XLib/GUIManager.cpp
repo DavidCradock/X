@@ -98,7 +98,7 @@ namespace X
 		_mfScale = fScalingValue;
 	}
 
-	float SCGUIManager::getScale(void)
+	float SCGUIManager::getScale(void) const
 	{
 		return _mfScale;
 	}
@@ -153,7 +153,7 @@ namespace X
 		_mmapThemes.clear();
 	}
 
-	int SCGUIManager::getNumberOfThemes(void)
+	int SCGUIManager::getNumberOfThemes(void) const
 	{
 		return (int)_mmapThemes.size();
 	}
@@ -273,7 +273,7 @@ namespace X
 		_mmapContainers.clear();
 	}
 
-	int SCGUIManager::getNumberOfContainers(void)
+	int SCGUIManager::getNumberOfContainers(void) const
 	{
 		return (int)_mmapContainers.size();
 	}
@@ -298,7 +298,7 @@ namespace X
 		}
 	}
 
-	bool SCGUIManager::getWindowBeingMoved(void)
+	bool SCGUIManager::getWindowBeingMoved(void) const
 	{
 		return _mbWindowBeingMoved;
 	}
@@ -314,7 +314,7 @@ namespace X
 		_mfAudioVol = fVol;
 	}
 
-	float SCGUIManager::getAudioVol(void)
+	float SCGUIManager::getAudioVol(void) const
 	{
 		return _mfAudioVol;
 	}
@@ -424,7 +424,7 @@ namespace X
 		_mfTooltipDelaySeconds = fSeconds;
 	}
 
-	float SCGUIManager::getTooltipDelay(void)
+	float SCGUIManager::getTooltipDelay(void) const
 	{
 		return _mfTooltipDelaySeconds;
 	}
@@ -435,7 +435,7 @@ namespace X
 		_mv2TooltipOffset.y = fOffsetY;
 	}
 
-	glm::vec2 SCGUIManager::getTooltipOffset(void)
+	glm::vec2 SCGUIManager::getTooltipOffset(void) const
 	{
 		return _mv2TooltipOffset;
 	}

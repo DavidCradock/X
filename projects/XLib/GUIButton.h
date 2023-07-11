@@ -20,7 +20,7 @@ namespace X
 		std::string mstrText;	// The text to be rendered on top of this button
 
 		// Returns true if the button was clicked upon
-		bool getClicked(void);
+		bool getClicked(void) const;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip

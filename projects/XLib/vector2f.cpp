@@ -131,7 +131,7 @@ namespace X
 		return fx * fx + fy * fy;
 	}
 
-	float CVector2f::getSign(const CVector2f& vOther)
+	float CVector2f::getSign(const CVector2f& vOther) const
 	{
 		if (y * vOther.x > x * vOther.y)
 		{
@@ -148,7 +148,7 @@ namespace X
 		return x * vec.x + y * vec.y;
 	}
 
-	float CVector2f::getAngleRadiansUnsigned(const CVector2f& vOther)
+	float CVector2f::getAngleRadiansUnsigned(const CVector2f& vOther) const
 	{
 		float fDot = getDot(vOther);
 		if (fDot < -1.0f)
@@ -158,7 +158,7 @@ namespace X
 		return acosf(fDot);
 	}
 
-	float CVector2f::getAngleRadiansSigned(const CVector2f& vOther)
+	float CVector2f::getAngleRadiansSigned(const CVector2f& vOther) const
 	{
 		CVector2f vOtherNorm = vOther;
 		vOtherNorm.normalise();
@@ -174,7 +174,7 @@ namespace X
 		return fAngleRadians;
 	}
 
-	float CVector2f::getAngleDegreesSigned(const CVector2f& vOther)
+	float CVector2f::getAngleDegreesSigned(const CVector2f& vOther) const
 	{
 		// Normalise this vector
 		CVector2f vThisNorm(x, y);
@@ -205,7 +205,7 @@ namespace X
 		return fTmp * 57.2957795f;
 	}
 
-	float CVector2f::getAngleDegrees360(void)
+	float CVector2f::getAngleDegrees360(void) const
 	{
 		// Normalise this vector
 		CVector2f vThisNorm(x, y);
@@ -257,14 +257,14 @@ namespace X
 		multiply(fMaxLength);
 	}
 
-	CVector2f CVector2f::getPerpendicular(void)
+	CVector2f CVector2f::getPerpendicular(void) const
 	{
 		//CVector2f vPerpendicular(y, -x);
 		CVector2f vPerpendicular(-y, x);
 		return vPerpendicular;
 	}
 
-	CVector2f CVector2f::interpolate(const CVector2f& v1, const CVector2f& v2, float f)
+	CVector2f CVector2f::interpolate(const CVector2f& v1, const CVector2f& v2, float f) const
 	{
 		if (f < 0.0f)
 			return v2;

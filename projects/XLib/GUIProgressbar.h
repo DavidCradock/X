@@ -20,7 +20,7 @@ namespace X
 		void setProgress(float fPos);
 
 		// Gets progress 0-1 range
-		float getProgress(void);
+		float getProgress(void) const;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip

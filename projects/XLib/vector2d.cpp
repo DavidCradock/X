@@ -131,7 +131,7 @@ namespace X
 		return dx * dx + dy * dy;
 	}
 
-	double CVector2d::getSign(const CVector2d& vOther)
+	double CVector2d::getSign(const CVector2d& vOther) const
 	{
 		if (y * vOther.x > x * vOther.y)
 		{
@@ -148,7 +148,7 @@ namespace X
 		return x * vec.x + y * vec.y;
 	}
 
-	double CVector2d::getAngleRadiansUnsigned(const CVector2d& vOther)
+	double CVector2d::getAngleRadiansUnsigned(const CVector2d& vOther) const
 	{
 		double dDot = getDot(vOther);
 		if (dDot < -1.0)
@@ -158,7 +158,7 @@ namespace X
 		return acos(dDot);
 	}
 
-	double CVector2d::getAngleRadiansSigned(const CVector2d& vOther)
+	double CVector2d::getAngleRadiansSigned(const CVector2d& vOther) const
 	{
 		CVector2d vOtherNorm = vOther;
 		vOtherNorm.normalise();
@@ -174,7 +174,7 @@ namespace X
 		return dAngleRadians;
 	}
 
-	double CVector2d::getAngleDegreesSigned(const CVector2d& vOther)
+	double CVector2d::getAngleDegreesSigned(const CVector2d& vOther) const
 	{
 		// Normalise this vector
 		CVector2d vThisNorm(x, y);
@@ -205,7 +205,7 @@ namespace X
 		return dTmp * 57.29577951308232;
 	}
 
-	double CVector2d::getAngleDegrees360(void)
+	double CVector2d::getAngleDegrees360(void) const
 	{
 		// Normalise this vector
 		CVector2d vThisNorm(x, y);
@@ -257,14 +257,14 @@ namespace X
 		multiply(dMaxLength);
 	}
 
-	CVector2d CVector2d::getPerpendicular(void)
+	CVector2d CVector2d::getPerpendicular(void) const
 	{
 		//CVector2d vPerpendicular(y, -x);
 		CVector2d vPerpendicular(-y, x);
 		return vPerpendicular;
 	}
 
-	CVector2d CVector2d::interpolate(const CVector2d& v1, const CVector2d& v2, double d)
+	CVector2d CVector2d::interpolate(const CVector2d& v1, const CVector2d& v2, double d) const
 	{
 		if (d < 0.0)
 			return v2;

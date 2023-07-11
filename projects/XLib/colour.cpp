@@ -26,7 +26,7 @@ namespace X
 		alpha = fAlpha;
 	}
 
-	glm::vec4 CColour::get(void)
+	glm::vec4 CColour::get(void) const
 	{
 		glm::vec4 col;
 		col.r = red;

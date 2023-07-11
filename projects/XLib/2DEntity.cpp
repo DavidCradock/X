@@ -25,12 +25,12 @@ namespace X
 		_mv2rPosition = vPosition;
 	}
 
-	CVector2r C2DEntity::getPosition(void)
+	CVector2r C2DEntity::getPosition(void) const
 	{
 		return _mv2rPosition;
 	}
 
-	glm::vec3 C2DEntity::getPositionGLMV3(void)
+	glm::vec3 C2DEntity::getPositionGLMV3(void) const
 	{
 		glm::vec3 vPos;
 		vPos.x = (float)_mv2rPosition.x;
@@ -39,7 +39,7 @@ namespace X
 		return vPos;
 	}
 
-	glm::vec2 C2DEntity::getPositionGLMV2(void)
+	glm::vec2 C2DEntity::getPositionGLMV2(void) const
 	{
 		glm::vec2 vPos;
 		vPos.x = (float)_mv2rPosition.x;
@@ -52,7 +52,7 @@ namespace X
 		_mv2rScale.set(rScaleX, rScaleY);
 	}
 
-	CVector2r C2DEntity::getScale(void)
+	CVector2r C2DEntity::getScale(void) const
 	{
 		return _mv2rScale;
 	}
@@ -62,7 +62,7 @@ namespace X
 		_mColour = colour;
 	}
 
-	CColour C2DEntity::getColour(void)
+	CColour C2DEntity::getColour(void) const
 	{
 		return _mColour;
 	}
@@ -110,7 +110,7 @@ namespace X
 		}
 	}
 
-	unsigned int C2DEntity::getCurrentFrameNumber(void)
+	unsigned int C2DEntity::getCurrentFrameNumber(void) const
 	{
 		return _muiCurrentFrameNumber;
 	}
@@ -121,7 +121,7 @@ namespace X
 		_muiCurrentFrameNumber = uiFrameNumber;
 	}
 
-	unsigned int C2DEntity::getNumFrames(void)
+	unsigned int C2DEntity::getNumFrames(void) const
 	{
 		return (unsigned int)_mvstrImageNames.size();
 	}

@@ -101,7 +101,7 @@ namespace X
 		void set(const CMatrix& src);
 
 		// Returns a matrix containing the contents of this matrix
-		CMatrix get(void);
+		CMatrix get(void) const;
 
 		// Set the matrix to hold a translation transformation
 		void setTranslation(float fX, float fY, float fZ);
@@ -124,15 +124,15 @@ namespace X
 
 		// Sets the given vector to hold this matrix's right vector/axis
 		// This is used to obtain the orientation of the current state of the matrix
-		void getRightVector(CVector3f& vVec);
+		void getRightVector(CVector3f& vVec) const;
 
 		// Sets the given vector to hold this matrix's up vector/axis
 		// This is used to obtain the orientation of the current state of the matrix
-		void getUpVector(CVector3f& vVec);
+		void getUpVector(CVector3f& vVec) const;
 
 		// Sets the given vector to hold this matrix's forward vector/axis
 		// This is used to obtain the orientation of the current state of the matrix
-		void getForwardVector(CVector3f& vVec);
+		void getForwardVector(CVector3f& vVec) const;
 
 		// Returns a matrix which is the transpose of this matrix
 		// The transpose of a matrix is obtained by flipping the matrix over its diagonal.

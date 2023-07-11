@@ -249,7 +249,7 @@ namespace X
 		}
 	}
 
-	bool CGUITextEdit::getEnterPressed(void)
+	bool CGUITextEdit::getEnterPressed(void) const
 	{
 		return _mbWasActiveEnterPressed;
 	}

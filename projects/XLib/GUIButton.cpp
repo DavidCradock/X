@@ -178,7 +178,7 @@ namespace X
 
 	}
 
-	bool CGUIButton::getClicked(void)
+	bool CGUIButton::getClicked(void) const
 	{
 		return _mbClicked;
 	}

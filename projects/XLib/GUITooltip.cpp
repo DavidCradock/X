@@ -397,7 +397,7 @@ namespace X
 		_mbEnabled = bEnabled;
 	}
 
-	bool CGUITooltip::getEnabled(void)
+	bool CGUITooltip::getEnabled(void) const
 	{
 		return _mbEnabled;
 	}

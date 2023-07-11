@@ -53,17 +53,17 @@ namespace X
 
 		// Returns the number of generated atlas images holding the individual images
 		// Call createAtlasImages() first.
-		unsigned int getNumAtlases(void);
+		unsigned int getNumAtlases(void) const;
 
 		// Returns a pointer to the atlas image at the specified index
 		// Call createAtlasImages() first.
 		// If an invalid index is given, or no atlases exist, an exception occurs
-		CImage* getAtlasImage(unsigned int uiIndex);
+		CImage* getAtlasImage(unsigned int uiIndex) const;
 
 		// Returns a vector of CImageAtlasDetails containing each image's details
 		// Call createAtlasImages() first.
 		// If no image data exists, an exception occurs.
-		std::vector<CImageAtlasDetails> getAllImageDetails(void);
+		std::vector<CImageAtlasDetails> getAllImageDetails(void) const;
 
 		// Returns a pointer to _mvImageDetails containing each image's details
 		// Call createAtlasImages() first.
@@ -80,7 +80,7 @@ namespace X
 
 		// Returns the total number of individual images added to all the atlases
 		// Call createAtlasImages() first.
-		unsigned int getNumIndividualImages(void);
+		unsigned int getNumIndividualImages(void) const;
 
 		// Returns the named image's details
 		// Call createAtlasImages() first.

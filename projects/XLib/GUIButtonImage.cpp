@@ -212,7 +212,7 @@ namespace X
 
 	}
 
-	bool CGUIButtonImage::getClicked(void)
+	bool CGUIButtonImage::getClicked(void) const
 	{
 		return _mbClicked;
 	}

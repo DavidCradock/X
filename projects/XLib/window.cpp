@@ -327,12 +327,12 @@ namespace X
 		return true;
 	}
 
-	HWND SCWindow::getWindowHandle(void)
+	HWND SCWindow::getWindowHandle(void) const
 	{
 		return mhWindowHandle;
 	}
 
-	HINSTANCE SCWindow::getApplicationInstance(void)
+	HINSTANCE SCWindow::getApplicationInstance(void) const
 	{
 		return mhInstance;
 	}
@@ -342,7 +342,7 @@ namespace X
 		mv4ClearColour = clearColour;
 	}
 
-	const std::string& SCWindow::getText(void)
+	const std::string& SCWindow::getText(void) const
 	{
 		return mstrWindowTitle;
 	}
@@ -352,22 +352,22 @@ namespace X
 		SetWindowTextW(mhWindowHandle, StringToWString(strText).c_str());
 	}
 
-	unsigned int SCWindow::getWidth(void)
+	unsigned int SCWindow::getWidth(void) const
 	{
 		return muiWindowWidth;
 	}
 
-	unsigned int SCWindow::getHeight(void)
+	unsigned int SCWindow::getHeight(void) const
 	{
 		return muiWindowHeight;
 	}
 
-	bool SCWindow::getFullscreen(void)
+	bool SCWindow::getFullscreen(void) const
 	{
 		return mbWindowFullscreen;
 	}
 
-	bool SCWindow::getVSyncEnabled(void)
+	bool SCWindow::getVSyncEnabled(void) const
 	{
 		return mbVsyncEnabled;
 	}
@@ -418,7 +418,7 @@ namespace X
 
 	}
 
-	glm::vec2 SCWindow::getDimensions(void)
+	glm::vec2 SCWindow::getDimensions(void) const
 	{
 		glm::vec2 vDims;
 		vDims.x = float(muiWindowWidth);
@@ -426,7 +426,7 @@ namespace X
 		return vDims;
 	}
 
-	unsigned int SCWindow::getMaxTextureSize(void)
+	unsigned int SCWindow::getMaxTextureSize(void) const
 	{
 		int value;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &value);

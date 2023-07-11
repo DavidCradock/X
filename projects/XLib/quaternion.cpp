@@ -135,7 +135,7 @@ namespace X
 		q[3] = 1;
 	}
 
-	float CQuaternion::getMagnitude(void)
+	float CQuaternion::getMagnitude(void) const
 	{
 		return sqrtf(	(q[0] * q[0]) +
 						(q[1] * q[1]) +
@@ -176,13 +176,13 @@ namespace X
 		q[3] = ca;
 	}
 
-	CVector3f CQuaternion::getAxis(void)
+	CVector3f CQuaternion::getAxis(void) const
 	{
 		float sa = 1 / sqrtf(1 - (q[4] * q[4]));
 		return CVector3f(q[0] * sa, q[1] * sa, q[2] * sa);
 	}
 
-	float CQuaternion::getAngle(void)
+	float CQuaternion::getAngle(void) const
 	{
 		return (float)2 * acosf(q[3]);
 	}
@@ -203,7 +203,7 @@ namespace X
 		normalise();
 	}
 
-	CVector3f CQuaternion::getEuler(void)
+	CVector3f CQuaternion::getEuler(void) const
 	{
 		float fSq[4];
 		fSq[0] = q[0] * q[0];

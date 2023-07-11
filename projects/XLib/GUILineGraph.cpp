@@ -23,12 +23,12 @@ namespace X
 		}
 	}
 
-	unsigned int CGUILineGraphDataSet::getNumValues(void)
+	unsigned int CGUILineGraphDataSet::getNumValues(void) const
 	{
 		return (unsigned int)values.size();
 	}
 
-	float CGUILineGraphDataSet::getHighestValue(void)
+	float CGUILineGraphDataSet::getHighestValue(void) const
 	{
 		if (!values.size())
 			return 0.0f;
@@ -42,7 +42,7 @@ namespace X
 		return fResult;
 	}
 
-	float CGUILineGraphDataSet::getLowestValue(void)
+	float CGUILineGraphDataSet::getLowestValue(void) const
 	{
 		if (!values.size())
 			return 0.0f;

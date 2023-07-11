@@ -41,10 +41,10 @@ namespace X
 		void setVisible(bool bVisible);
 
 		// Returns whether this container is visible or not
-		bool getVisible(void);
+		bool getVisible(void) const;
 
 		// Returns the name of this container which is set upon construction from the SCGUIManager::addContainer() method
-		const std::string& getName(void);
+		const std::string& getName(void) const;
 
 		// Add a button to this container and return a pointer to it
 		// If the name already exists, an exception occurs

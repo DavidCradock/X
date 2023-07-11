@@ -112,7 +112,7 @@ namespace X
 		void setScale(float fScalingValue);
 
 		// Returns the currently set scaling value of the entire GUI
-		float getScale(void);
+		float getScale(void) const;
 
 		// Adds a new theme for use by the GUI and returns a pointer to it
 		// If the named theme already exists, a pointer to that theme is returned.
@@ -133,7 +133,7 @@ namespace X
 		void removeAllThemes(void);
 
 		// Returns the number of themes
-		int getNumberOfThemes(void);
+		int getNumberOfThemes(void) const;
 
 		// Returns the name of a theme at the specified index.
 		// If an invalid index is given, an exception occurs.
@@ -162,7 +162,7 @@ namespace X
 		void removeAllContainers(void);
 
 		// Returns the number of containers
-		int getNumberOfContainers(void);
+		int getNumberOfContainers(void) const;
 
 		// Returns the name of a container at the specified index.
 		// If an invalid index is given, an exception occurs.
@@ -173,7 +173,7 @@ namespace X
 		void moveContainerToFront(const std::string& strContainerName);
 
 		// Returns true is a window is being moved
-		bool getWindowBeingMoved(void);
+		bool getWindowBeingMoved(void) const;
 
 		// Sets whether a window is being moved 
 		void setWindowBeingMoved(bool bWindowBeingMoved);
@@ -183,20 +183,20 @@ namespace X
 		void setAudioVol(float fVol = 1.0f);
 
 		// Returns overall volume of the audio playback for the GUI
-		float getAudioVol(void);
+		float getAudioVol(void) const;
 
 		// Sets the delay in seconds until a tooltip will begin to fade in when the mouse is over a widget
 		// Default is one second
 		void setTooltipDelay(float fSeconds);
 
 		// Returns the currently set delay in seconds until a tooltip will begin to fade int when the mouse is over a widget
-		float getTooltipDelay(void);
+		float getTooltipDelay(void) const;
 
 		// Sets tooltip offset from mouse cursor position
 		void setTooltipOffset(float fOffsetX, float fOffsetY);
 
 		// Gets tooltip offset from mouse cursor position
-		glm::vec2 getTooltipOffset(void);
+		glm::vec2 getTooltipOffset(void) const;
 
 	private:
 		glm::vec2 _mv2TooltipOffset;								// Offset of tooltip from cursor position

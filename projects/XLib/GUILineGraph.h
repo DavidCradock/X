@@ -25,13 +25,13 @@ namespace X
 		void removeValue(void);
 
 		// Get number of values currently in the set
-		unsigned int getNumValues(void);
+		unsigned int getNumValues(void) const;
 
 		// Returns highest value in dataset
-		float getHighestValue(void);
+		float getHighestValue(void) const;
 
 		// Returns loweset value in dataset
-		float getLowestValue(void);
+		float getLowestValue(void) const;
 
 	private:
 	};

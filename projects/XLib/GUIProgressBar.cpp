@@ -354,7 +354,7 @@ namespace X
 		_mfProgress = fPos;
 	}
 
-	float CGUIProgressBar::getProgress(void)
+	float CGUIProgressBar::getProgress(void) const
 	{
 		return _mfProgress;
 	}

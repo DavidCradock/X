@@ -585,12 +585,12 @@ namespace X
 		}
 	}
 
-	bool CGUIContainer::getVisible(void)
+	bool CGUIContainer::getVisible(void) const
 	{
 		return _mbVisible;
 	}
 
-	const std::string& CGUIContainer::getName(void)
+	const std::string& CGUIContainer::getName(void) const
 	{
 		return _mstrName;
 	}

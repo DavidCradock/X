@@ -53,19 +53,19 @@ namespace X
 
 		// Save image as BMP file to disk.
 		// Throws exception if image contains no data or saving fails.
-		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false);
+		void saveAsBMP(const std::string& strFilename, bool bFlipOnSave = false) const;
 
 		// Save image to JPG file to disk
 		// Throws exception if image contains no data or saving fails.
-		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
+		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100) const;
 
 		// Save image to PNG file to disk
 		// Throws exception if image contains no data or saving fails.
-		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false);
+		void saveAsPNG(const std::string& strFilename, bool bFlipOnSave = false) const;
 
 		// Save image to TGA file to disk
 		// Throws exception if image contains no data or saving fails.
-		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
+		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false) const;
 
 		// Fills the image with the given colour values.
 		// If the image only contains 3 colour channels, the alpha component is ignored. 
@@ -75,7 +75,7 @@ namespace X
 		// Return pointer to image data for manual modification. 
 		// Please, BE CAREFULL if you're using this method to directly access the image data.
 		// returns The pointer to the image's data. 
-		unsigned char* getData(void);
+		unsigned char* getData(void) const;
 
 		// Get size of image data in bytes
 		// returns The size of the image data 
@@ -90,14 +90,14 @@ namespace X
 		unsigned int getHeight(void) const;
 
 		// Returns dimenions of the image
-		CVector2r getDimensions(void);
+		CVector2r getDimensions(void) const;
 
 		// Get number of channels
 		// returns The number of channels of the image. 
 		unsigned int getNumChannels(void) const { return numChannels; }
 
 		// Returns whether this texture's width and height are to power of two.
-		bool getDimsArePowerOfTwo(void);
+		bool getDimsArePowerOfTwo(void) const;
 
 		// Sets pixel at given coordinate to given values.
 		// Due to additional overhead of this method due to function calling and bounds checking,
@@ -119,7 +119,7 @@ namespace X
 		// g The colour will be held in here (Green). 
 		// b The colour will be held in here (Blue). 
 		// a The colour will be held in here (Alpha). 
-		inline void getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a);
+		inline void getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a) const;
 
 		// Swap red and blue colour components around
 		// If this image contains no data, an exception occurs.
@@ -169,13 +169,13 @@ namespace X
 		// iDestPosX The bottom left position within the destination image to copy to
 		// iDestPosY The bottom left position within the destination image to copy to
 		// If this image or the destination image contain no data, an exception occurs.
-		void copyRectTo(CImage& destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY);
+		void copyRectTo(CImage& destImage, int iSrcPosX, int iSrcPosY, int iSrcWidth, int iSrcHeight, int iDestPosX, int iDestPosY) const;
 
 		// Copies the contents of this image into the outputImage and gives the output image a border and sets the pixels around that
 		// border to be the same as the ones in this image's edge pixels, thereby making the output image have dimensions which are +2 of this one.
 		// This is typically used to simply calculating of stuff without having to take into consideration, edge cases.
 		// If this image contains no data, an exception occurs.
-		void copyToAddBorder(CImage& outputImage);
+		void copyToAddBorder(CImage& outputImage) const;
 
 		// Rotates the image 90 degrees clockwise
 		// If this image contains no data, an exception occurs.
@@ -202,7 +202,7 @@ namespace X
 		// However, this image first creates a copy of itself in memory, then calls greyscaleSimple() on that to ensure proper computation of the normals.
 		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally. Lower values increase the effect
 		// If this image contains no data, an exception occurs.
-		void normalmap(CImage& outputImage, float fScale = 1.0f);
+		void normalmap(CImage& outputImage, float fScale = 1.0f) const;
 		
 	private:
 		unsigned char* pData;
@@ -253,7 +253,7 @@ namespace X
 		}
 	}
 
-	inline void CImage::getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a)
+	inline void CImage::getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a) const
 	{
 		if (iX >= width)
 			return;

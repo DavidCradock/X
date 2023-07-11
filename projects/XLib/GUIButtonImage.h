@@ -19,7 +19,7 @@ namespace X
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
 		// Returns true if the button was clicked upon
-		bool getClicked(void);
+		bool getClicked(void) const;
 
 		// The tooltip for this object.
 		// By default, it is disabled. Use this object to enable and setup the tooltip

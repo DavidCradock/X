@@ -86,7 +86,7 @@ namespace X
 		m[12] = src.m[12];	m[13] = src.m[13];	m[14] = src.m[14];	m[15] = src.m[15];
 	}
 
-	CMatrix CMatrix::get(void)
+	CMatrix CMatrix::get(void) const
 	{
 		CMatrix mt;
 		mt.m[0] = m[0];		mt.m[1] = m[1];		mt.m[2] = m[2];		mt.m[3] = m[3];
@@ -159,21 +159,21 @@ namespace X
 		m[15] = 1.0f;
 	}
 
-	void CMatrix::getRightVector(CVector3f& vVec)
+	void CMatrix::getRightVector(CVector3f& vVec) const
 	{
 		vVec.x = m[0];
 		vVec.y = m[1];
 		vVec.z = m[2];
 	}
 
-	void CMatrix::getUpVector(CVector3f& vVec)
+	void CMatrix::getUpVector(CVector3f& vVec) const
 	{
 		vVec.x = m[4];
 		vVec.y = m[5];
 		vVec.z = m[6];
 	}
 
-	void CMatrix::getForwardVector(CVector3f& vVec)
+	void CMatrix::getForwardVector(CVector3f& vVec) const
 	{
 		vVec.x = m[8];
 		vVec.y = m[9];

@@ -18,7 +18,7 @@ namespace X
         mbPaused = false;
     }
 
-    float CTimer::getSecondsPast(void)
+    float CTimer::getSecondsPast(void) const
     {
         if (mbPaused)
             return 0.0f;
@@ -90,7 +90,7 @@ namespace X
         mdRuntimeInSeconds = 0;
     }
 
-    void CTimer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks)
+    void CTimer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks) const
     {
         fSeconds = 0.0f;
         iMinutes = 0;
@@ -127,7 +127,7 @@ namespace X
         fSeconds = (float)seconds;  // Seconds
     }
 
-    std::string CTimer::getClock(void)
+    std::string CTimer::getClock(void) const
     {
         float fSecs = 0.0f;
         int iMins, iHours, iDays, iWeeks = 0;

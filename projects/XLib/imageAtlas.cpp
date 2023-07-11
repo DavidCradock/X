@@ -300,19 +300,19 @@ namespace X
 		vImages.clear();
 	}
 
-	unsigned int CImageAtlasPacker::getNumAtlases(void)
+	unsigned int CImageAtlasPacker::getNumAtlases(void) const
 	{
 		return (unsigned int)_mvAtlasImages.size();
 	}
 
-	CImage* CImageAtlasPacker::getAtlasImage(unsigned int uiIndex)
+	CImage* CImageAtlasPacker::getAtlasImage(unsigned int uiIndex) const
 	{
 		ThrowIfTrue(0 == _mvAtlasImages.size(), "CImageAtlasPacker::getAtlasImage(" + std::to_string(uiIndex) + ") failed. There are no atlas images.");
 		ThrowIfTrue(uiIndex >= _mvAtlasImages.size(), "CImageAtlasPacker::getAtlasImage(" + std::to_string(uiIndex) + ") failed. Invalid atlas index given.");
 		return _mvAtlasImages[uiIndex];
 	}
 
-	std::vector<CImageAtlasDetails> CImageAtlasPacker::getAllImageDetails(void)
+	std::vector<CImageAtlasDetails> CImageAtlasPacker::getAllImageDetails(void) const
 	{
 		ThrowIfFalse(_mvImageDetails.size(), "CImageAtlasPacker::getAllImageDetails() failed. No image data currently exists.");
 		return _mvImageDetails;
@@ -324,7 +324,7 @@ namespace X
 		return &_mvImageDetails;
 	}
 
-	unsigned int CImageAtlasPacker::getNumIndividualImages(void)
+	unsigned int CImageAtlasPacker::getNumIndividualImages(void) const
 	{
 		return unsigned int(_mvImageDetails.size());
 	}
