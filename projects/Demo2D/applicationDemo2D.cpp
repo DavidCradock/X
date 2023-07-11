@@ -55,8 +55,6 @@ namespace X
 		// Add a new camera to the world
 		C2DCamera* pCamera = pWorld->addCamera("MyCamera");
 
-		// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...
-				
 		// Now add lots of entities
 		for (int i = 0; i < 1000; i++)
 		{
@@ -101,7 +99,7 @@ namespace X
 		C2DEntity* pEntity = pLayerComplex->addEntity("PARENT", "SpaceshipHull");
 		pEntity->setImagesMultiple(vstrImageFilenames);
 		mvEntityDir.set(0.0f, 1.0f);
-		mvEntityPos.set((pWindow->getDimensions().x * 0.5f), 500);
+		mvEntityPos.set((pWindow->getDimensions().x * 0.5f), (pWindow->getDimensions().y * 0.5f));
 		mfEntityVel = 0.0f;
 
 		// Now set up child entities of the parent entity (The gun turrets)

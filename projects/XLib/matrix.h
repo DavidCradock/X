@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "PCH.h"
 #include "vector3f.h"
+#include "quaternion.h"
 
 namespace X
 {
@@ -65,23 +66,27 @@ namespace X
 	class CMatrix
 	{
 	public:
-		// Default constructor, leaves matrix in undefined state
+		friend class CQuaternion;
+
+		// Default constructor, sets to identity matrix
 		CMatrix();
 
-		// Constructor which sets this matrix from the given floats
-		CMatrix(
-			float m00, float m01, float m02, float m03,
-			float m04, float m05, float m06, float m07,
-			float m08, float m09, float m10, float m11,
-			float m12, float m13, float m14, float m15);
+		// Sets this vector to the one on the right
+		const void operator = (const CMatrix& matrix);
+
+		// Multiply this matrix by another and return the result
+		const CMatrix operator * (const CMatrix& matrix) const;
+
+		// Multiply this matrix by another
+		const void operator *= (const CMatrix& matrix);
 
 		// Compares whether this matrix and the one to the right of the == operator are equal.
 		// This is an exact compare, no teeny epsilon value.
-		bool operator==(const CMatrix& other) const;
-		
+		bool operator==(const CMatrix& matrix) const;
+
 		// Compares whether this matrix and the one to the right of the != operator are equal.
 		// This is an exact compare, no teeny epsilon value.
-		bool operator!=(const CMatrix& other) const;
+		bool operator!=(const CMatrix& matrix) const;
 
 		// Sets matrix to identity matrix
 		void setIdentity(void);
@@ -98,29 +103,24 @@ namespace X
 		// Returns a matrix containing the contents of this matrix
 		CMatrix get(void);
 
-		// Set the matrix translation
-		// We can set this AND the scale of the matrix without having to create seperate matrixs
-		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
-		// then multiplied with another matrix to combine the results.
+		// Set the matrix to hold a translation transformation
 		void setTranslation(float fX, float fY, float fZ);
 
-		// Set the matrix translation 
-		// We can set this AND the scale of the matrix without having to create seperate matrixs
-		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
-		// then multiplied with another matrix to combine the results.
+		// Set the matrix to hold a translation transformation
 		void setTranslation(const CVector3f& vTrans);
 
-		// Set the matrix scale
-		// We can set this AND the translation of the matrix without having to create seperate matrixs
-		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
-		// then multiplied with another matrix to combine the results.
+		// Set the matrix to hold a scale transformation
 		void setScale(float fX, float fY, float fZ);
 
-		// Set the matrix scale 
-		// We can set this AND the translation of the matrix without having to create seperate matrixs
-		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
-		// then multiplied with another matrix to combine the results.
+		// Set the matrix to hold a scale transformation
 		void setScale(const CVector3f& vTrans);
+
+		// Sets the matrix to hold a rotation transformation
+		// The rotation is specified from the give amount of rotation in degrees around the given axis.
+		void setFromAxisAngle(const CVector3f& vAxis, float fAngle);
+
+		// Sets the matrix to hold a rotation transformation from a quaternion
+		void setFromQuaternion(const CQuaternion& quaternion);
 
 		// Sets the given vector to hold this matrix's right vector/axis
 		// This is used to obtain the orientation of the current state of the matrix
@@ -138,14 +138,15 @@ namespace X
 		// The transpose of a matrix is obtained by flipping the matrix over its diagonal.
 		// Which means the rows become columns and the columns become rows.
 		// The transpose of a matrix has some useful properties such as reversing the order
-		// of multiplication, preserving the trace and determinant, and changing the orientation of vectors.
+		// of multiplication, preserving the trace and determinant, changing the orientation
+		// of vectors and converting matrixs between column major and row major.
 		CMatrix transpose(void);
 
 		// Multiplies this matrix by the one given and returns the resulting matrix
-		CMatrix multiply(const CMatrix& other);
+		CMatrix multiply(const CMatrix& matrix);
 
 		// Multiplies the given vector by this matrix and returns the resulting vector
-		CVector3f multiply(const CVector3f& v);
+		CVector3f multiply(const CVector3f& vector);
 
 	private:
 		float m[16];	// Values for the matrix

@@ -290,6 +290,9 @@
     <ClInclude Include="matrix.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -511,6 +514,9 @@
       <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="quaternion.cpp">
       <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>

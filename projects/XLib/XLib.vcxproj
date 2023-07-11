@@ -49,6 +49,7 @@
     <ClInclude Include="matrix.h" />
     <ClInclude Include="physicsManager.h" />
     <ClInclude Include="precision.h" />
+    <ClInclude Include="quaternion.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="imageAtlas.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="physicsManager.cpp" />
+    <ClCompile Include="quaternion.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />

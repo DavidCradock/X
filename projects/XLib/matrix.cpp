@@ -5,35 +5,58 @@ namespace X
 {
 	CMatrix::CMatrix()
 	{
-
+		setIdentity();
 	}
 
-	CMatrix::CMatrix(
-		float m00, float m01, float m02, float m03,
-		float m04, float m05, float m06, float m07,
-		float m08, float m09, float m10, float m11,
-		float m12, float m13, float m14, float m15)
+	const void CMatrix::operator =(const CMatrix& matrix)
 	{
-		m[0] = m00;		m[1] = m01;		m[2] = m02;		m[3] = m03;
-		m[4] = m04;		m[5] = m05;		m[6] = m06;		m[7] = m07;
-		m[8] = m08;		m[9] = m09;		m[10] = m10;	m[11] = m11;
-		m[12] = m12;	m[13] = m13;	m[14] = m14;	m[15] = m15;
+		memcpy(m, matrix.m, sizeof(float[16]));
 	}
 
-	bool CMatrix::operator==(const CMatrix& other) const
+	const CMatrix CMatrix::operator *(const CMatrix& n) const
 	{
-		return	(m[0] == other.m[0])	&& (m[1] == other.m[1])		&&	(m[2] == other.m[2])	&&	(m[3] == other.m[3]) &&
-				(m[4] == other.m[4])	&& (m[5] == other.m[5])		&& (m[6] == other.m[6])		&& (m[7] == other.m[7]) &&
-				(m[8] == other.m[8])	&& (m[9] == other.m[9])		&& (m[10] == other.m[10])	&& (m[11] == other.m[11]) &&
-				(m[12] == other.m[12])	&& (m[13] == other.m[13])	&& (m[14] == other.m[14])	&& (m[15] == other.m[15]);
+		CMatrix r;
+		r.m[0] = m[0] * n.m[0] + m[4] * n.m[1] + m[8] * n.m[2] + m[12] * n.m[3];
+		r.m[1] = m[1] * n.m[0] + m[5] * n.m[1] + m[9] * n.m[2] + m[13] * n.m[3];
+		r.m[2] = m[2] * n.m[0] + m[6] * n.m[1] + m[10] * n.m[2] + m[14] * n.m[3];
+		r.m[3] = m[3] * n.m[0] + m[7] * n.m[1] + m[11] * n.m[2] + m[15] * n.m[3];
+
+		r.m[4] = m[0] * n.m[4] + m[4] * n.m[5] + m[8] * n.m[6] + m[12] * n.m[7];
+		r.m[5] = m[1] * n.m[4] + m[5] * n.m[5] + m[9] * n.m[6] + m[13] * n.m[7];
+		r.m[6] = m[2] * n.m[4] + m[6] * n.m[5] + m[10] * n.m[6] + m[14] * n.m[7];
+		r.m[7] = m[3] * n.m[4] + m[7] * n.m[5] + m[11] * n.m[6] + m[15] * n.m[7];
+
+		r.m[8] = m[0] * n.m[8] + m[4] * n.m[9] + m[8] * n.m[10] + m[12] * n.m[11];
+		r.m[9] = m[1] * n.m[8] + m[5] * n.m[9] + m[9] * n.m[10] + m[13] * n.m[11];
+		r.m[10] = m[2] * n.m[8] + m[6] * n.m[9] + m[10] * n.m[10] + m[14] * n.m[11];
+		r.m[11] = m[3] * n.m[8] + m[7] * n.m[9] + m[11] * n.m[10] + m[15] * n.m[11];
+
+		r.m[12] = m[0] * n.m[12] + m[4] * n.m[13] + m[8] * n.m[14] + m[12] * n.m[15];
+		r.m[13] = m[1] * n.m[12] + m[5] * n.m[13] + m[9] * n.m[14] + m[13] * n.m[15];
+		r.m[14] = m[2] * n.m[12] + m[6] * n.m[13] + m[10] * n.m[14] + m[14] * n.m[15];
+		r.m[15] = m[3] * n.m[12] + m[7] * n.m[13] + m[11] * n.m[14] + m[15] * n.m[15];
+		return r;
 	}
 
-	bool CMatrix::operator!=(const CMatrix& other) const
+	const void CMatrix::operator *= (const CMatrix& n)
 	{
-		return	(m[0] != other.m[0])	|| (m[1] != other.m[1])		|| (m[2] != other.m[2])		|| (m[3] != other.m[3]) ||
-				(m[4] != other.m[4])	|| (m[5] != other.m[5])		|| (m[6] != other.m[6])		|| (m[7] != other.m[7]) ||
-				(m[8] != other.m[8])	|| (m[9] != other.m[9])		|| (m[10] != other.m[10])	|| (m[11] != other.m[11]) ||
-				(m[12] != other.m[12])	|| (m[13] != other.m[13])	|| (m[14] != other.m[14])	|| (m[15] != other.m[15]);
+		*this = *this * n;
+	}
+
+	bool CMatrix::operator==(const CMatrix& n) const
+	{
+		return	(m[0] == n.m[0]) && (m[1] == n.m[1]) && (m[2] == n.m[2]) && (m[3] == n.m[3]) &&
+			(m[4] == n.m[4]) && (m[5] == n.m[5]) && (m[6] == n.m[6]) && (m[7] == n.m[7]) &&
+			(m[8] == n.m[8]) && (m[9] == n.m[9]) && (m[10] == n.m[10]) && (m[11] == n.m[11]) &&
+			(m[12] == n.m[12]) && (m[13] == n.m[13]) && (m[14] == n.m[14]) && (m[15] == n.m[15]);
+	}
+
+	bool CMatrix::operator!=(const CMatrix& n) const
+	{
+		return	(m[0] != n.m[0]) || (m[1] != n.m[1]) || (m[2] != n.m[2]) || (m[3] != n.m[3]) ||
+			(m[4] != n.m[4]) || (m[5] != n.m[5]) || (m[6] != n.m[6]) || (m[7] != n.m[7]) ||
+			(m[8] != n.m[8]) || (m[9] != n.m[9]) || (m[10] != n.m[10]) || (m[11] != n.m[11]) ||
+			(m[12] != n.m[12]) || (m[13] != n.m[13]) || (m[14] != n.m[14]) || (m[15] != n.m[15]);
 	}
 
 	void CMatrix::setIdentity(void)
@@ -101,6 +124,41 @@ namespace X
 		m[10] = vVec.z;
 	}
 
+	void CMatrix::setFromAxisAngle(const CVector3f& vAxis, float fAngle)
+	{
+		float fCos = cosf(fAngle);
+		float fSin = sinf(fAngle);
+		float fOMC = 1.0f - fCos;
+
+		m[0] = fCos + (vAxis.x * vAxis.x) * fOMC;
+		m[5] = fCos + (vAxis.y * vAxis.y) * fOMC;
+		m[10] = fCos + (vAxis.z * vAxis.z) * fOMC;
+		m[15] = 1.0f;
+		m[4] = vAxis.x * vAxis.y * fOMC + vAxis.z * fSin;
+		m[1] = vAxis.x * vAxis.y * fOMC - vAxis.z * fSin;
+		m[8] = vAxis.x * vAxis.z * fOMC + vAxis.y * fSin;
+		m[2] = vAxis.x * vAxis.z * fOMC - vAxis.y * fSin;
+		m[9] = vAxis.y * vAxis.z * fOMC + vAxis.x * fSin;
+		m[6] = vAxis.y * vAxis.z * fOMC - vAxis.x * fSin;
+	}
+
+	void CMatrix::setFromQuaternion(const CQuaternion& q)
+	{
+		m[0] = 1.0f - 2.0f * (q.q[1] * q.q[1] + q.q[2] * q.q[2]);
+		m[1] = 2.0f * (q.q[0] * q.q[1] - q.q[2] * q.q[3]);
+		m[2] = 2.0f * (q.q[0] * q.q[2] + q.q[1] * q.q[3]);
+
+		m[4] = 2.0f * (q.q[0] * q.q[1] + q.q[2] * q.q[3]);
+		m[5] = 1.0f - 2.0f * (q.q[0] * q.q[0] + q.q[2] * q.q[2]);
+		m[6] = 2.0f * (q.q[1] * q.q[2] - q.q[0] * q.q[3]);
+
+		m[8] = 2.0f * (q.q[0] * q.q[2] - q.q[1] * q.q[3]);
+		m[9] = 2.0f * (q.q[1] * q.q[2] + q.q[0] * q.q[3]);
+		m[10] = 1.0f - 2.0f * (q.q[0] * q.q[0] + q.q[1] * q.q[1]);
+
+		m[15] = 1.0f;
+	}
+
 	void CMatrix::getRightVector(CVector3f& vVec)
 	{
 		vVec.x = m[0];
@@ -132,28 +190,28 @@ namespace X
 		return mt;
 	}
 
-	CMatrix CMatrix::multiply(const CMatrix& other)
+	CMatrix CMatrix::multiply(const CMatrix& n)
 	{
 		CMatrix r;
-		r.m[0] = m[0] * other.m[0] + m[4] * other.m[1] + m[8] * other.m[2] + m[12] * other.m[3];
-		r.m[1] = m[1] * other.m[0] + m[5] * other.m[1] + m[9] * other.m[2] + m[13] * other.m[3];
-		r.m[2] = m[2] * other.m[0] + m[6] * other.m[1] + m[10] * other.m[2] + m[14] * other.m[3];
-		r.m[3] = m[3] * other.m[0] + m[7] * other.m[1] + m[11] * other.m[2] + m[15] * other.m[3];
+		r.m[0] = m[0] * n.m[0] + m[4] * n.m[1] + m[8] * n.m[2] + m[12] * n.m[3];
+		r.m[1] = m[1] * n.m[0] + m[5] * n.m[1] + m[9] * n.m[2] + m[13] * n.m[3];
+		r.m[2] = m[2] * n.m[0] + m[6] * n.m[1] + m[10] * n.m[2] + m[14] * n.m[3];
+		r.m[3] = m[3] * n.m[0] + m[7] * n.m[1] + m[11] * n.m[2] + m[15] * n.m[3];
 
-		r.m[4] = m[0] * other.m[4] + m[4] * other.m[5] + m[8] * other.m[6] + m[12] * other.m[7];
-		r.m[5] = m[1] * other.m[4] + m[5] * other.m[5] + m[9] * other.m[6] + m[13] * other.m[7];
-		r.m[6] = m[2] * other.m[4] + m[6] * other.m[5] + m[10] * other.m[6] + m[14] * other.m[7];
-		r.m[7] = m[3] * other.m[4] + m[7] * other.m[5] + m[11] * other.m[6] + m[15] * other.m[7];
+		r.m[4] = m[0] * n.m[4] + m[4] * n.m[5] + m[8] * n.m[6] + m[12] * n.m[7];
+		r.m[5] = m[1] * n.m[4] + m[5] * n.m[5] + m[9] * n.m[6] + m[13] * n.m[7];
+		r.m[6] = m[2] * n.m[4] + m[6] * n.m[5] + m[10] * n.m[6] + m[14] * n.m[7];
+		r.m[7] = m[3] * n.m[4] + m[7] * n.m[5] + m[11] * n.m[6] + m[15] * n.m[7];
 
-		r.m[8] = m[0] * other.m[8] + m[4] * other.m[9] + m[8] * other.m[10] + m[12] * other.m[11];
-		r.m[9] = m[1] * other.m[8] + m[5] * other.m[9] + m[9] * other.m[10] + m[13] * other.m[11];
-		r.m[10] = m[2] * other.m[8] + m[6] * other.m[9] + m[10] * other.m[10] + m[14] * other.m[11];
-		r.m[11] = m[3] * other.m[8] + m[7] * other.m[9] + m[11] * other.m[10] + m[15] * other.m[11];
+		r.m[8] = m[0] * n.m[8] + m[4] * n.m[9] + m[8] * n.m[10] + m[12] * n.m[11];
+		r.m[9] = m[1] * n.m[8] + m[5] * n.m[9] + m[9] * n.m[10] + m[13] * n.m[11];
+		r.m[10] = m[2] * n.m[8] + m[6] * n.m[9] + m[10] * n.m[10] + m[14] * n.m[11];
+		r.m[11] = m[3] * n.m[8] + m[7] * n.m[9] + m[11] * n.m[10] + m[15] * n.m[11];
 
-		r.m[12] = m[0] * other.m[12] + m[4] * other.m[13] + m[8] * other.m[14] + m[12] * other.m[15];
-		r.m[13] = m[1] * other.m[12] + m[5] * other.m[13] + m[9] * other.m[14] + m[13] * other.m[15];
-		r.m[14] = m[2] * other.m[12] + m[6] * other.m[13] + m[10] * other.m[14] + m[14] * other.m[15];
-		r.m[15] = m[3] * other.m[12] + m[7] * other.m[13] + m[11] * other.m[14] + m[15] * other.m[15];
+		r.m[12] = m[0] * n.m[12] + m[4] * n.m[13] + m[8] * n.m[14] + m[12] * n.m[15];
+		r.m[13] = m[1] * n.m[12] + m[5] * n.m[13] + m[9] * n.m[14] + m[13] * n.m[15];
+		r.m[14] = m[2] * n.m[12] + m[6] * n.m[13] + m[10] * n.m[14] + m[14] * n.m[15];
+		r.m[15] = m[3] * n.m[12] + m[7] * n.m[13] + m[11] * n.m[14] + m[15] * n.m[15];
 		return r;
 	}
 

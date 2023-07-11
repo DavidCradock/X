@@ -67,28 +67,27 @@ namespace X
 					pTri->removeGeom();
 				}
 
-				v2rDims = itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].v2rDimensions;
+				// Get position and dimensions of entity
 				v2rPos = itEntity->second->_mv2rPosition;
-
-				// Scale sprite if needed
-				if (itEntity->second->_mv2rScale.x != 1.0f || itEntity->second->_mv2rScale.y != 1.0f)
-				{
-					v2rDims.x *= itEntity->second->_mv2rScale.x;
-					v2rDims.y *= itEntity->second->_mv2rScale.y;
-				}
-
-				// Offset position from top left to center of entity
-				v2rPos -= v2rDims * 0.5f;
+				v2rDims = itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].v2rDimensions * itEntity->second->_mv2rScale.x;
 
 				// If the entity is NOT the "PARENT" entity, then we need to set it's position, rotation, offset from the parent
 				if (itEntity->first != "PARENT")
 				{
-					// Adjust position 
-					CVector2r vParentPos = getPosition();
-					
-					// Use matrixs here
+					// Get parent entity
+					C2DEntity* pParentEntity = _findParentEntity();
 
-					v2rPos += vParentPos;
+					// Rotate entity position based upon PARENT rotation
+					v2rPos.rotate(-_mrParentRotationDegrees);
+
+					// Offset position of entity by PARENT entity's position	
+					v2rPos += pParentEntity->_mv2rPosition;
+					v2rPos -= v2rDims * 0.5f;
+				}
+				else  // Is the "PARENT" entity
+				{
+					// Offset position from top left to centre of entity
+					v2rPos -= v2rDims * 0.5f;
 				}
 
 				pTri->addQuad2D(
