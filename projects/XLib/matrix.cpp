@@ -44,7 +44,7 @@ namespace X
 
 	void CMatrix::setZero(void)
 	{
-		m[0] = m[1] = m[2] = m[3] =	m[4] = m[5] = m[6] = m[7] = m[8] = m[9] = m[10] = m[11] = m[12] = m[13] = m[14] = m[15] = 0.0f;
+		m[0] = m[1] = m[2] = m[3] = m[4] = m[5] = m[6] = m[7] = m[8] = m[9] = m[10] = m[11] = m[12] = m[13] = m[14] = m[15] = 0.0f;
 	}
 
 	void CMatrix::set(const float src[16])
@@ -71,6 +71,34 @@ namespace X
 		mt.m[8] = m[8];		mt.m[9] = m[9];		mt.m[10] = m[10];	mt.m[11] = m[11];
 		mt.m[12] = m[12];	mt.m[13] = m[13];	mt.m[14] = m[14];	mt.m[15] = m[15];
 		return mt;
+	}
+
+	void CMatrix::setTranslation(float fX, float fY, float fZ)
+	{
+		m[12] = fX;
+		m[13] = fY;
+		m[14] = fZ;
+	}
+
+	void CMatrix::setTranslation(const CVector3f& vVec)
+	{
+		m[12] = vVec.x;
+		m[13] = vVec.y;
+		m[14] = vVec.z;
+	}
+
+	void CMatrix::setScale(float fX, float fY, float fZ)
+	{
+		m[0] = fX;
+		m[5] = fY;
+		m[10] = fZ;
+	}
+
+	void CMatrix::setScale(const CVector3f& vVec)
+	{
+		m[0] = vVec.x;
+		m[5] = vVec.y;
+		m[10] = vVec.z;
 	}
 
 	void CMatrix::getRightVector(CVector3f& vVec)
@@ -126,6 +154,15 @@ namespace X
 		r.m[13] = m[1] * other.m[12] + m[5] * other.m[13] + m[9] * other.m[14] + m[13] * other.m[15];
 		r.m[14] = m[2] * other.m[12] + m[6] * other.m[13] + m[10] * other.m[14] + m[14] * other.m[15];
 		r.m[15] = m[3] * other.m[12] + m[7] * other.m[13] + m[11] * other.m[14] + m[15] * other.m[15];
+		return r;
+	}
+
+	CVector3f CMatrix::multiply(const CVector3f& v)
+	{
+		CVector3f r;
+		r.x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
+		r.y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
+		r.z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
 		return r;
 	}
 }

@@ -98,6 +98,30 @@ namespace X
 		// Returns a matrix containing the contents of this matrix
 		CMatrix get(void);
 
+		// Set the matrix translation
+		// We can set this AND the scale of the matrix without having to create seperate matrixs
+		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
+		// then multiplied with another matrix to combine the results.
+		void setTranslation(float fX, float fY, float fZ);
+
+		// Set the matrix translation 
+		// We can set this AND the scale of the matrix without having to create seperate matrixs
+		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
+		// then multiplied with another matrix to combine the results.
+		void setTranslation(const CVector3f& vTrans);
+
+		// Set the matrix scale
+		// We can set this AND the translation of the matrix without having to create seperate matrixs
+		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
+		// then multiplied with another matrix to combine the results.
+		void setScale(float fX, float fY, float fZ);
+
+		// Set the matrix scale 
+		// We can set this AND the translation of the matrix without having to create seperate matrixs
+		// and multiplying them. Unlike with rotation, which has to be set in a serperate matrix and
+		// then multiplied with another matrix to combine the results.
+		void setScale(const CVector3f& vTrans);
+
 		// Sets the given vector to hold this matrix's right vector/axis
 		// This is used to obtain the orientation of the current state of the matrix
 		void getRightVector(CVector3f& vVec);
@@ -119,6 +143,10 @@ namespace X
 
 		// Multiplies this matrix by the one given and returns the resulting matrix
 		CMatrix multiply(const CMatrix& other);
+
+		// Multiplies the given vector by this matrix and returns the resulting vector
+		CVector3f multiply(const CVector3f& v);
+
 	private:
 		float m[16];	// Values for the matrix
 //		float tm[16];	// Used as a temporary matrix in calculations
