@@ -20,7 +20,11 @@ namespace X
 		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
-		std::string mstrText;	// Text to be rendered
+		// Sets the text to be rendered
+		void setText(const std::string& strText);
+
+		// Gets the currently set text
+		std::string getText(void) const;
 
 		// Sets the colour to use for this text, or use the theme colour
 		void setColour(bool bUseDefaultThemeColour = false, float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f, float fAlpha = 1.0f);
@@ -31,7 +35,7 @@ namespace X
 		// Type cast this to a CGUITooltip* to use. CGUITooltip* pTT = (CGUITooltip*)pWidget->mpTooltip;
 		void* mpTooltip;
 	private:
-
+		std::string _mstrText;	// Text to be rendered, set by calling setText()
 		bool _mbUseThemeColour;
 		CColour _mColour;
 	};

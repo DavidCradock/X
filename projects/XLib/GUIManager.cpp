@@ -381,7 +381,7 @@ namespace X
 					fMax = fMaxFPSAVR;
 
 				std::string str = "FPSMax: " + std::to_string((int)fMax);
-				pCont->getText("Text_FPSMax")->mstrText = str;
+				pCont->getText("Text_FPSMax")->setText(str);
 
 				float fMinFPS = pDataSetFPS->getLowestValue();
 				float fMinFPSAVR = pDataSetFPSAVR->getLowestValue();
@@ -391,7 +391,7 @@ namespace X
 
 				str = "FPSMin: " + std::to_string((int)fMin);
 				CGUIText* pText = pCont->getText("Text_FPSMin");
-				pText->mstrText = str;
+				pText->setText(str);
 
 				// Set Text_FPSMin position
 				float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
@@ -399,17 +399,17 @@ namespace X
 
 				// Set text values
 				pText = pCont->getText("Text_FPS");
-				pText->mstrText = "FPS: " + std::to_string((int)_mTimer.getFPS());
+				pText->setText("FPS: " + std::to_string((int)_mTimer.getFPS()));
 				pText->mfPositionY = 60.0f - (fTextHeight * 1.0f);
 				pText = pCont->getText("Text_FPSAVR");
-				pText->mstrText = "FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged());
+				pText->setText("FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged()));
 				pText->mfPositionY = 60.0f - (fTextHeight * 0.0f);
 
 				// Memory text
 				SMemInfo memInfo;
 				getMemInfo(memInfo);
-				pCont->getText("Text_Mem1")->mstrText = "MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB";
-				pCont->getText("Text_Mem2")->mstrText = "MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB";
+				pCont->getText("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
+				pCont->getText("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
 			}
 
 			// Close button

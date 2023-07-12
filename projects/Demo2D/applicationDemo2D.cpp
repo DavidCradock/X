@@ -7,7 +7,7 @@ namespace X
 	{
 		// Set window title bar text and set icon
 		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		pWindow->setText("X: Demo2D. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
 
 		// Show frame rate statistics
@@ -28,7 +28,7 @@ namespace X
 
 		// Add text scroll showing controls
 		std::string strTextScroll;
-		strTextScroll += "Welcome to Demo2D. The WSAD keys move the camera. The cursor keys move and rotate entity. There are 1000 scaled down entities in the background on the lowest layer, then the controllable entity is rendered on a layer above that one.";
+		strTextScroll += "Welcome to Demo2D. The cursor keys move the camera. The WSAD keys move and rotate entity. There are 1000 scaled down entities in the background on the lowest layer, then the controllable entity is rendered on a layer above that one.";
 		pCont->addTextScroll("TextScroll", 20, 120, 480, 200, strTextScroll);
 //		pCont->setVisible(false);
 
@@ -126,7 +126,6 @@ namespace X
 
 	void CApplication::onStop(void)
 	{
-
 	}
 
 	bool CApplication::onUpdate(void)
@@ -162,18 +161,17 @@ namespace X
 		// Set rotation of entity
 		pEntityComplex->setRotation(mvEntityDir);
 
-		if (pInputManager->key.pressed(KC_RIGHT))
+		if (pInputManager->key.pressed(KC_D))
 			mvEntityDir.rotate(timer.getSecondsPast() * 180.0f);
-		if (pInputManager->key.pressed(KC_LEFT))
+		if (pInputManager->key.pressed(KC_A))
 			mvEntityDir.rotate(timer.getSecondsPast() * -180.0f);
-		if (pInputManager->key.pressed(KC_UP))
+		if (pInputManager->key.pressed(KC_W))
 		{
 			mfEntityVel += timer.getSecondsPast() * 1.5f;
 			if (mfEntityVel > 2.0f)
 				mfEntityVel = 2.0f;
-			
 		}
-		if (pInputManager->key.pressed(KC_DOWN))
+		if (pInputManager->key.pressed(KC_S))
 		{
 			mfEntityVel -= timer.getSecondsPast() * 1.5f;
 		}
@@ -189,30 +187,31 @@ namespace X
 
 		// Now move camera
 		C2DCamera* pCamera = pWorld->getCamera(0);
-		if (pInputManager->key.pressed(KC_W))
+		if (pInputManager->key.pressed(KC_UP))
 			pCamera->mv2rPosition.y -= timer.getSecondsPast() * 150.0f;
-		if (pInputManager->key.pressed(KC_S))
+		if (pInputManager->key.pressed(KC_DOWN))
 			pCamera->mv2rPosition.y += timer.getSecondsPast() * 150.0f;
-		if (pInputManager->key.pressed(KC_A))
+		if (pInputManager->key.pressed(KC_LEFT))
 			pCamera->mv2rPosition.x -= timer.getSecondsPast() * 150.0f;
-		if (pInputManager->key.pressed(KC_D))
+		if (pInputManager->key.pressed(KC_RIGHT))
 			pCamera->mv2rPosition.x += timer.getSecondsPast() * 150.0f;
 
-		pCont->getText("Text: 0")->mstrText = "SpritePosition: x=" + std::to_string(mvEntityPos.x) + "y=" + std::to_string(mvEntityPos.y);
-		pCont->getText("Text: 20")->mstrText = "SpriteDirection: x=" + std::to_string(mvEntityDir.x) + "y=" + std::to_string(mvEntityDir.y);
-		pCont->getText("Text: 40")->mstrText = "getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop());
+		pCont->getText("Text: 0")->setText("SpritePosition: x=" + std::to_string(mvEntityPos.x) + "y=" + std::to_string(mvEntityPos.y));
+		pCont->getText("Text: 20")->setText("SpriteDirection: x=" + std::to_string(mvEntityDir.x) + "y=" + std::to_string(mvEntityDir.y));
+		pCont->getText("Text: 40")->setText("getNumberTextureRebindingsPerLoop() = " + std::to_string(p2D->getNumberTextureRebindingsPerLoop()));
 
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))
+
 			return false;
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
-		{
 			SCWindow::getPointer()->toggleFullscreen();
-		}
+
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
 			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
+
 		// Toggle statistics window
 		if (pInputManager->key.once(KC_F3))
 		{

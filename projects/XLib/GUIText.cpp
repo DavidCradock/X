@@ -41,7 +41,7 @@ namespace X
 		{
 			col = _mColour;
 		}
-		pFont->print(mstrText,			// The text
+		pFont->print(_mstrText,			// The text
 			int(pContainer->mfPositionX + mfPositionX),		// X position
 			int(pContainer->mfPositionY + mfPositionY),		// Y position
 			iRTDims[0], iRTDims[1],	// Render target dims
@@ -70,7 +70,7 @@ namespace X
 		{
 			col = _mColour;
 		}
-		pFont->print(mstrText,		// The text
+		pFont->print(_mstrText,		// The text
 			int(mfPositionX),		// X position
 			int(mfPositionY),		// Y position
 			iRTDims[0], iRTDims[1],	// Render target dims
@@ -98,6 +98,15 @@ namespace X
 		pTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
+	void CGUIText::setText(const std::string& strText)
+	{
+		_mstrText = strText;
+	}
+
+	std::string CGUIText::getText(void) const
+	{
+		return _mstrText;
+	}
 
 	void CGUIText::setColour(bool bUseDefaultThemeColour, float fRed, float fGreen, float fBlue, float fAlpha)
 	{

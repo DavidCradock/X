@@ -301,7 +301,7 @@ namespace X
 		while (itText != _mmapTexts.end())
 		{
 			// We need to set the dimensions of the text object using the current theme
-			itText->second->mfWidth = pFont->getTextWidth(itText->second->mstrText);
+			itText->second->mfWidth = pFont->getTextWidth(itText->second->getText());
 			itText->second->mfHeight = pFont->getTextHeight(1.0f);
 
 			fMaxPos[0] = itText->second->mfPositionX + itText->second->mfWidth;
@@ -411,7 +411,7 @@ namespace X
 		ThrowIfFalse(pNewRes, "CGUITooltip::addText(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
-		pNewRes->mstrText = strText;
+		pNewRes->setText(strText);
 		_mmapTexts[strName] = pNewRes;
 		return pNewRes;
 	}

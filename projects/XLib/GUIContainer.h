@@ -34,8 +34,10 @@ namespace X
 		// Will only return true if the mouse isn't over a previously updated container.
 		bool update(bool bMouseIsOverContainerWhichIsAboveThisOne);
 
+		// Sets this container's behavious. Whether it will be, or not, a draggable window, or just an invisible container
+		void setBehaviour(bool bContainerIsWindow);
+
 		std::string mstrThemename;	// Theme name used by this container
-		bool mbContainerIsWindow;	// If true, this container is set as a window, which enables dragging and rendering of a window's borders, titlebar text etc
 		
 		// Sets whether this container is visible or not
 		void setVisible(bool bVisible);
@@ -285,6 +287,7 @@ namespace X
 	private:
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
+		bool _mbContainerIsWindow;	// If true, this container is set as a window, which enables dragging and rendering of a window's borders, titlebar text etc
 
 		mutable std::map<std::string, CGUIButton*> _mmapButtons;						// Hashmap for each added button
 		mutable std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text

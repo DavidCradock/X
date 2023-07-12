@@ -7,7 +7,7 @@ namespace X
 	{
 		// Set window title bar text and set icon
 		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X DemoSceneManager. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		pWindow->setText("X: DemoSceneManager. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
 
 		// Show "X:Default:Statistics" container
@@ -26,7 +26,6 @@ namespace X
 
 	void CApplication::onStop(void)
 	{
-
 	}
 
 	bool CApplication::onUpdate(void)
@@ -119,14 +118,15 @@ namespace X
 		// Toggle shadows
 		if (pInputManager->key.once(KC_F3))
 			mSceneManagerSimple.setShadowsEnabled(!mSceneManagerSimple.getShadowsEnabled());
+
 		// Escape key to exit
 		if (pInputManager->key.pressed(KC_ESCAPE))
 			return false;
+
 		// Toggle fullscreen
 		if (pInputManager->key.once(KC_F1))
-		{
 			SCWindow::getPointer()->toggleFullscreen();
-		}
+
 		// Toggle vertical sync
 		if (pInputManager->key.once(KC_F2))
 			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());

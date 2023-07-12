@@ -6,7 +6,7 @@ namespace X
 {
 	C2DWorld::C2DWorld()
 	{
-
+		_mbVisible = true;
 	}
 
 	C2DWorld::~C2DWorld()
@@ -424,5 +424,15 @@ namespace X
 	int C2DWorld::getNumCameras(void) const
 	{
 		return int(_mmapCameras.size());
+	}
+
+	void C2DWorld::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool C2DWorld::getVisible(void) const
+	{
+		return _mbVisible;
 	}
 }

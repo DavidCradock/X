@@ -72,8 +72,16 @@ namespace X
 
 		// Returns the total number of added objects
 		int getNumEntityComplexs(void) const;
+
+		// Sets whether this layer is rendered or not.
+		// By default, they are visible
+		void setVisible(bool bVisible);
+
+		// Returns whether this layer is currently set to be visible and rendered or not
+		bool getVisible(void) const;
 	private:
 		mutable std::map<std::string, C2DEntity*> _mmapEntitys;					// Each named entity
 		mutable std::map<std::string, C2DEntityComplex*> _mmapEntityComplexs;	// Each named entity complex
+		bool _mbVisible;														// Whether this layer is visible and rendered or not
 	};
 }

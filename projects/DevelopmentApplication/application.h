@@ -27,8 +27,5 @@ namespace X
 		bool onUpdate(void);
 	private:
 		CTimer timer;
-		CSceneManagerSimple mSceneManagerSimple;	// Simple, no spatial partioning scene manager
-		glm::vec3 _mvEntityRot[100];
-		void _initSceneManager(void);
 	};
 }

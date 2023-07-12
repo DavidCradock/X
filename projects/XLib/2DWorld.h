@@ -113,9 +113,18 @@ namespace X
 
 		// Returns the total number of added objects
 		int getNumCameras(void) const;
+
+		// Sets whether this world is rendered or not.
+		// By default, they are visible
+		void setVisible(bool bVisible);
+
+		// Returns whether this world is currently set to be visible and rendered or not
+		bool getVisible(void) const;
+
 	private:
 		mutable std::map<std::string, C2DLayer*> _mmapLayers;		// Each named layer which holds sprite entities
 		std::vector<std::string> _mvecLayerNameZOrder;				// Holds names of each layer, in their rendering order (first added = first rendered)
 		mutable std::map<std::string, C2DCamera*> _mmapCameras;		// Each named camera
+		bool _mbVisible;											// Whether this world is visible and rendered or not
 	};
 }

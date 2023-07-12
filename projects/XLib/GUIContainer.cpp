@@ -12,7 +12,7 @@ namespace X
 	CGUIContainer::CGUIContainer()
 	{
 		mstrThemename = "default";
-		mbContainerIsWindow = true;
+		_mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
 		_mbVisible = true;
 		CColour col = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
@@ -265,7 +265,7 @@ namespace X
 		bool bMouseOver = false;
 		if (!bMouseIsOverContainerWhichIsAboveThisOne)	// Only perform check if mouse is NOT over a container which is above this one
 		{
-			if (mbContainerIsWindow)
+			if (_mbContainerIsWindow)
 			{
 				if (vMousePos.x >= mfPositionX - vTexDimsDiv3.x)
 					if (vMousePos.x <= mfPositionX + mfWidth + vTexDimsDiv3.x)
@@ -293,7 +293,7 @@ namespace X
 		if (bMouseOver)
 		{
 			// Dragging of window?
-			if (mbContainerIsWindow)
+			if (_mbContainerIsWindow)
 			{
 				if (pInput->mouse.leftButtonOnce())
 				{
@@ -349,7 +349,7 @@ namespace X
 		}
 
 		// Clamp the container's position so that it's borders are viewable IF the container is set as a window
-		if (mbContainerIsWindow)
+		if (_mbContainerIsWindow)
 		{
 			// Get a texture so we can determine dimensions
 			CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour);
@@ -468,6 +468,11 @@ namespace X
 		}
 
 		return bMouseOver;
+	}
+
+	void CGUIContainer::setBehaviour(bool bContainerIsWindow)
+	{
+		_mbContainerIsWindow = bContainerIsWindow;
 	}
 
 	void CGUIContainer::setVisible(bool bVisible)
@@ -600,7 +605,7 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-		if (!mbContainerIsWindow)
+		if (!_mbContainerIsWindow)
 			return;	// No point rendering anything
 
 		// Get required resources needed to render
@@ -811,7 +816,7 @@ namespace X
 		ThrowIfFalse(pNewRes, "CGUIContainer::addText(" + strName + ") failed. Could not allocate memory for the new object.");
 		pNewRes->mfPositionX = fPosX;
 		pNewRes->mfPositionY = fPosY;
-		pNewRes->mstrText = strText;
+		pNewRes->setText(strText);
 		_mmapTexts[strName] = pNewRes;
 		return pNewRes;
 	}

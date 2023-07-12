@@ -349,6 +349,7 @@ namespace X
 
 	void SCWindow::setText(const std::string& strText)
 	{
+		mstrWindowTitle = strText;
 		SetWindowTextW(mhWindowHandle, StringToWString(strText).c_str());
 	}
 

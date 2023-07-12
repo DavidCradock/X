@@ -132,6 +132,13 @@ namespace X
 		std::map<std::string, C2DWorld*>::iterator itWorld = _mmapWorlds.begin();
 		while (itWorld != _mmapWorlds.end())
 		{
+			// Only render the world if it is set to be
+			if (!itWorld->second->_mbVisible)
+			{
+				itWorld++;
+				continue;
+			}
+
 			// For each camera in world
 			std::map<std::string, C2DCamera*>::iterator itCamera = itWorld->second->_mmapCameras.begin();
 			while (itCamera != itWorld->second->_mmapCameras.end())
@@ -164,6 +171,12 @@ namespace X
 				{
 					// Get layers, in z order , starting with the one at the back
 					C2DLayer* pLayer = itWorld->second->_mmapLayers[itWorld->second->_mvecLayerNameZOrder[uiLayerZorder]];
+
+					// Only render the layer if it is set to be
+					if (!pLayer->_mbVisible)
+					{
+						continue;
+					}
 
 					// For each entity in layer
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture

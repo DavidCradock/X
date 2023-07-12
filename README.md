@@ -30,4 +30,4 @@ Current progress...
 - Add the ability to be able to add newlines to the text scroll GUI object.
 - Change 2D stuff from using CVector2r to CVector2f
 - Tidy up CMatrix, CVector?? and CQuaternion classes.
-
+- Add mouse wheel support for CGUITextScroll object.

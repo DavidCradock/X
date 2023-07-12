@@ -7,6 +7,7 @@ namespace X
 {
 	C2DLayer::C2DLayer()
 	{
+		_mbVisible = true;
 	}
 
 	C2DLayer::~C2DLayer()
@@ -201,5 +202,15 @@ namespace X
 	int C2DLayer::getNumEntityComplexs(void) const
 	{
 		return int(_mmapEntityComplexs.size());
+	}
+
+	void C2DLayer::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool C2DLayer::getVisible(void) const
+	{
+		return _mbVisible;
 	}
 }
