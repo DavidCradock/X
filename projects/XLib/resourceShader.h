@@ -17,13 +17,13 @@ namespace X
 		void onGLContextToBeDestroyed(void);
 
 		// Bind the shader
-		void bind(void);
+		void bind(void) const;
 
 		// Unbind the shader
-		void unbind(void);
+		void unbind(void) const;
 
 		// Set uniform (call after bind())
-		void setBool(const std::string& name, bool value);
+		void setBool(const std::string& name, bool value) const;
 
 		// Set uniform (call after bind())
 		// Usefull for telling OpenGL which sampler unit belongs to which uniform sampler2D name in the fragment program
@@ -31,19 +31,19 @@ namespace X
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		// pShader->setInt("texture0", 0);
 		// pShader->setInt("texture1", 1);
-		void setInt(const std::string& name, int value);
+		void setInt(const std::string& name, int value) const;
 
 		// Set uniform (call after bind())
-		void setFloat(const std::string& name, float value);
+		void setFloat(const std::string& name, float value) const;
 
 		// Set named matrix (call after bind())
-		void setMat4(const std::string& name, const glm::mat4& matrix);
+		void setMat4(const std::string& name, const glm::mat4& matrix) const;
 
 		// Set uniform vec2 (call after bind())
-		void setVec2(const std::string& name, const glm::vec2& vec2);
+		void setVec2(const std::string& name, const glm::vec2& vec2) const;
 
 		// Set uniform vec3 (call after bind())
-		void setVec3(const std::string& name, const glm::vec3& vec3);
+		void setVec3(const std::string& name, const glm::vec3& vec3) const;
 
 		std::string _mstrVertexShaderFilename;
 		std::string _mstrFragmentShaderFilename;

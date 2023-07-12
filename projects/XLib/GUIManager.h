@@ -120,10 +120,10 @@ namespace X
 
 		// Returns a pointer to a named theme.
 		// If the named object doesn't exist, an exception occurs.
-		CGUITheme* getTheme(const std::string& strName);
+		CGUITheme* getTheme(const std::string& strName) const;
 
 		// Returns true if the named theme exists
-		bool getThemeExists(const std::string& strName);
+		bool getThemeExists(const std::string& strName) const;
 
 		// Removes the named theme.
 		// If the named object doesn't exist, this silently fails.
@@ -137,7 +137,7 @@ namespace X
 
 		// Returns the name of a theme at the specified index.
 		// If an invalid index is given, an exception occurs.
-		std::string getThemeName(int iIndex);
+		std::string getThemeName(int iIndex) const;
 
 		// Sets all GUI objects to use the named theme.
 		// If the passed theme name doesn't exist, an exception occurs
@@ -149,10 +149,10 @@ namespace X
 
 		// Returns a pointer to a named container.
 		// If the named container doesn't exist, an exception occurs.
-		CGUIContainer* getContainer(const std::string& strName);
+		CGUIContainer* getContainer(const std::string& strName) const;
 
 		// Returns true if the named container exists
-		bool getContainerExists(const std::string& strName);
+		bool getContainerExists(const std::string& strName) const;
 
 		// Removes the named container.
 		// If the named container doesn't exist, this silently fails.
@@ -166,7 +166,7 @@ namespace X
 
 		// Returns the name of a container at the specified index.
 		// If an invalid index is given, an exception occurs.
-		std::string getContainerName(int iIndex);
+		std::string getContainerName(int iIndex) const;
 
 		// Moves the named container's ZOrder so that it at the top/in front
 		// If the named container doesn't exist, this does nothing.
@@ -199,15 +199,15 @@ namespace X
 		glm::vec2 getTooltipOffset(void) const;
 
 	private:
-		glm::vec2 _mv2TooltipOffset;								// Offset of tooltip from cursor position
-		float _mfTooltipDelaySeconds;								// Number of seconds until a tooltip will begin to fade in
-		float _mfScale;												// Scaling value used for GUI scaling.
-		std::map<std::string, CGUITheme*>		_mmapThemes;		// A hashmap holding each named theme.
-		std::map<std::string, CGUIContainer*>	_mmapContainers;	// A hashmap holding eacn named container.
-		std::list<std::string>	_mlistContainerZOrder;				// Holds each container name, in order of their Z order where the front most container is last in the list.
-		CTimer _mTimer;												// Timer object used for time based stuff.
-		bool _mbWindowBeingMoved;									// This is used to prevent multiple windows being moved
-		float _mfAudioVol;											// Audio volume 0-1 range
+		glm::vec2 _mv2TooltipOffset;									// Offset of tooltip from cursor position
+		float _mfTooltipDelaySeconds;									// Number of seconds until a tooltip will begin to fade in
+		float _mfScale;													// Scaling value used for GUI scaling.
+		mutable std::map<std::string, CGUITheme*> _mmapThemes;			// A hashmap holding each named theme.
+		mutable std::map<std::string, CGUIContainer*> _mmapContainers;	// A hashmap holding each named container.
+		std::list<std::string>	_mlistContainerZOrder;					// Holds each container name, in order of their Z order where the front most container is last in the list.
+		CTimer _mTimer;													// Timer object used for time based stuff.
+		bool _mbWindowBeingMoved;										// This is used to prevent multiple windows being moved
+		float _mfAudioVol;												// Audio volume 0-1 range
 
 		// Creates the default containers which are hidden by default
 		// Called from SCApplicationManager mainloop

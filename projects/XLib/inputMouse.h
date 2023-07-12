@@ -22,49 +22,49 @@ namespace X
 		void release(void);
 
 		// Returns true if the left mouse button is pressed.
-		inline bool leftButDown(void) { return mouseLeft; }
+		inline bool leftButDown(void) const { return mouseLeft; }
 
 		// Returns true if the middle mouse button is pressed.
-		inline bool midButDown(void) { return mouseMiddle; }
+		inline bool midButDown(void) const { return mouseMiddle; }
 
 		// Returns true if the right mouse button is pressed.
-		inline bool rightButDown(void) { return mouseRight; }
+		inline bool rightButDown(void) const { return mouseRight; }
 
 		// Returns true if the mouse button was pressed once
-		inline bool leftButtonOnce(void) { return leftButOnce[0]; }
+		inline bool leftButtonOnce(void) const { return leftButOnce[0]; }
 
 		// Returns true if the mouse button was pressed once
-		inline bool midButtonOnce(void) { return midButOnce[0]; }
+		inline bool midButtonOnce(void) const { return midButOnce[0]; }
 
 		// Returns true if the mouse button was pressed once
-		inline bool rightButtonOnce(void) { return rightButOnce[0]; }
+		inline bool rightButtonOnce(void) const { return rightButOnce[0]; }
 
 		// Returns the mouse cursor position on screen, along X axis
-		inline int posX(void) { return int(mouseX); }
+		inline int posX(void) const { return int(mouseX); }
 
 		// Returns the mouse cursor position on screen, along Y axis
-		inline int posY(void) { return int(mouseY); }
+		inline int posY(void) const { return int(mouseY); }
 
 		// Returns the mouse cursor position on screen
-		inline glm::vec2 pos(void) { glm::vec2 vPos(mouseX, mouseY);	return vPos; }
+		inline glm::vec2 pos(void) const { glm::vec2 vPos(mouseX, mouseY);	return vPos; }
 
 		// Returns the distance which the mouse has moved since the last frame, along the X axis
-		inline float deltaX(void) { return mouseDeltaX; }
+		inline float deltaX(void) const { return mouseDeltaX; }
 
 		// Returns the distance which the mouse has moved since the last frame, along the Y axis
-		inline float deltaY(void) { return mouseDeltaY; }
+		inline float deltaY(void) const { return mouseDeltaY; }
 
 		// Returns the distance which the mouse wheel has moved since the last frame.
-		inline float deltaZ(void) { return mouseDeltaZ; }
+		inline float deltaZ(void) const { return mouseDeltaZ; }
 
 		// Sets the mouse position on screen
 		void setMousePos(int x, int y);
 
 		// Gets mouse cursor delta, for GUI
-		inline glm::vec2 getMouseDeltaGUI(void) { return glm::vec2(mouseX - mouseXold, mouseY - mouseYold); }
+		inline glm::vec2 getMouseDeltaGUI(void) const { return glm::vec2(mouseX - mouseXold, mouseY - mouseYold); }
 
 		// Returns mouse cursor position
-		inline glm::vec2 getCursorPos(void) { return glm::vec2(mouseX, mouseY); }
+		inline glm::vec2 getCursorPos(void) const { return glm::vec2(mouseX, mouseY); }
 
 	private:
 		LPDIRECTINPUT8 lpDI;				// Pointer to main DirectX input object

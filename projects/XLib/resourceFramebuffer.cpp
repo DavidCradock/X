@@ -94,7 +94,7 @@ namespace X
 		glViewport(0, 0, _muiWidth, _muiHeight);
 	}
 
-	void CResourceFramebuffer::unbindAsRenderTarget(void)
+	void CResourceFramebuffer::unbindAsRenderTarget(void) const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		SCWindow* pWnd = SCWindow::getPointer();
@@ -103,7 +103,7 @@ namespace X
 		glFinish();
 	}
 
-	void CResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit)
+	void CResourceFramebuffer::bindAsTexture(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -135,7 +135,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void CResourceFramebuffer::unbindTexture(unsigned int uiTextureUnit)
+	void CResourceFramebuffer::unbindTexture(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -167,17 +167,17 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int CResourceFramebuffer::getWidth(void)
+	unsigned int CResourceFramebuffer::getWidth(void) const
 	{
 		return _muiWidth;
 	}
 
-	unsigned int CResourceFramebuffer::getHeight(void)
+	unsigned int CResourceFramebuffer::getHeight(void) const
 	{
 		return _muiHeight;
 	}
 
-	glm::vec2 CResourceFramebuffer::getDimensions(void)
+	glm::vec2 CResourceFramebuffer::getDimensions(void) const
 	{
 		glm::vec2 vDims;
 		vDims.x = float(_muiWidth);

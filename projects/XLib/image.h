@@ -21,6 +21,9 @@ namespace X
 		CImage();
 		~CImage();
 
+		// Sets this image to the one on the right
+		CImage& operator=(const CImage& other);
+
 		// Free image and memory
 		void free(void);
 
@@ -94,7 +97,7 @@ namespace X
 
 		// Get number of channels
 		// returns The number of channels of the image. 
-		unsigned int getNumChannels(void) const { return numChannels; }
+		unsigned int getNumChannels(void) const;
 
 		// Returns whether this texture's width and height are to power of two.
 		bool getDimsArePowerOfTwo(void) const;
@@ -203,7 +206,6 @@ namespace X
 		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally. Lower values increase the effect
 		// If this image contains no data, an exception occurs.
 		void normalmap(CImage& outputImage, float fScale = 1.0f) const;
-		
 	private:
 		unsigned char* pData;
 		unsigned int dataSize;

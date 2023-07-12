@@ -26,11 +26,11 @@ namespace X
 		void addApp(const std::string& applicationName, CApplicationBase* pTheApplication);
 
 		// Return the number of applications added to this manager
-		size_t getNumApps(void) const { return mApplications.size(); }
+		size_t getNumApps(void) const;
 
 		// Return application name at specified index into map
 		// If invalid index given, a critical error occurs
-		const std::string& getAppName(unsigned int index);
+		const std::string& getAppName(unsigned int index) const;
 
 		// Switches from the current application, to the named one.
 		// If invalid application name is given, an exception is thrown
@@ -42,11 +42,11 @@ namespace X
 		void switchToNextApp(void);
 
 		// Returns the name of the currently set application
-		std::string getCurrentAppName(void) const { return mstrCurrentApp; }
+		std::string getCurrentAppName(void) const;
 
 		// Returns the amount of seconds the named application has been active/running for
 		// If an invalid application name is given, an exception occurs
-		float getApplicationRuntime(const std::string& applicationName);
+		float getApplicationRuntime(const std::string& applicationName) const;
 	private:
 		// Calls all added applications' initOnce() methods
 		void callAllApps_initOnce(void);
@@ -58,8 +58,8 @@ namespace X
 		// Adds default required resources to the resource manager, called during startup from mainLoop
 		void addDefaultResources(void);
 
-		std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
-		std::string mstrCurrentApp;								// Application name of the current application.
-		CTimer mTimer;											// Used to update application running time.
+		mutable std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
+		std::string mstrCurrentApp;										// Application name of the current application.
+		CTimer mTimer;													// Used to update application running time.
 	};
 }

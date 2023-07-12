@@ -775,7 +775,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIButton* CGUIContainer::getButton(const std::string& strName)
+	CGUIButton* CGUIContainer::getButton(const std::string& strName) const
 	{
 		std::map<std::string, CGUIButton*>::iterator it = _mmapButtons.find(strName);
 		ThrowIfTrue(it == _mmapButtons.end(), "CGUIContainer::getButton(" + strName + ") failed. The named object doesn't exist.");
@@ -816,7 +816,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIText* CGUIContainer::getText(const std::string& strName)
+	CGUIText* CGUIContainer::getText(const std::string& strName) const
 	{
 		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.find(strName);
 		ThrowIfTrue(it == _mmapTexts.end(), "CGUIContainer::getText(" + strName + ") failed. The named object doesn't exist.");
@@ -859,7 +859,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUITextEdit* CGUIContainer::getTextEdit(const std::string& strName)
+	CGUITextEdit* CGUIContainer::getTextEdit(const std::string& strName) const
 	{
 		std::map<std::string, CGUITextEdit*>::iterator it = _mmapTextEdits.find(strName);
 		ThrowIfTrue(it == _mmapTextEdits.end(), "CGUIContainer::getTextEdit(" + strName + ") failed. The named object doesn't exist.");
@@ -902,7 +902,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUISlider* CGUIContainer::getSlider(const std::string& strName)
+	CGUISlider* CGUIContainer::getSlider(const std::string& strName) const
 	{
 		std::map<std::string, CGUISlider*>::iterator it = _mmapSliders.find(strName);
 		ThrowIfTrue(it == _mmapSliders.end(), "CGUIContainer::getSlider(" + strName + ") failed. The named object doesn't exist.");
@@ -944,7 +944,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUILineGraph* CGUIContainer::getLineGraph(const std::string& strName)
+	CGUILineGraph* CGUIContainer::getLineGraph(const std::string& strName) const
 	{
 		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
 		ThrowIfTrue(it == _mmapLineGraphs.end(), "CGUIContainer::getLineGraph(" + strName + ") failed. The named object doesn't exist.");
@@ -986,7 +986,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIProgressBar* CGUIContainer::getProgressBar(const std::string& strName)
+	CGUIProgressBar* CGUIContainer::getProgressBar(const std::string& strName) const
 	{
 		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
 		ThrowIfTrue(it == _mmapProgressBars.end(), "CGUIContainer::getProgressBar(" + strName + ") failed. The named object doesn't exist.");
@@ -1069,7 +1069,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImage* CGUIContainer::getImage(const std::string& strName)
+	CGUIImage* CGUIContainer::getImage(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
 		ThrowIfTrue(it == _mmapImages.end(), "CGUIContainer::getImage(" + strName + ") failed. The named object doesn't exist.");
@@ -1137,7 +1137,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageAnimated* CGUIContainer::getImageAnimated(const std::string& strName)
+	CGUIImageAnimated* CGUIContainer::getImageAnimated(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
 		ThrowIfTrue(it == _mmapImageAnimateds.end(), "CGUIContainer::getImageAnimated(" + strName + ") failed. The named object doesn't exist.");
@@ -1196,7 +1196,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageFramebuffer* CGUIContainer::getImageFramebuffer(const std::string& strName)
+	CGUIImageFramebuffer* CGUIContainer::getImageFramebuffer(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
 		ThrowIfTrue(it == _mmapImageFramebuffers.end(), "CGUIContainer::getImageFramebuffer(" + strName + ") failed. The named object doesn't exist.");
@@ -1250,7 +1250,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUITextScroll* CGUIContainer::getTextScroll(const std::string& strName)
+	CGUITextScroll* CGUIContainer::getTextScroll(const std::string& strName) const
 	{
 		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
 		ThrowIfTrue(it == _mmapTextScrolls.end(), "CGUIContainer::getTextScroll(" + strName + ") failed. The named object doesn't exist.");
@@ -1313,7 +1313,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIButtonImage* CGUIContainer::getButtonImage(const std::string& strName)
+	CGUIButtonImage* CGUIContainer::getButtonImage(const std::string& strName) const
 	{
 		std::map<std::string, CGUIButtonImage*>::iterator it = _mmapButtonImages.find(strName);
 		ThrowIfTrue(it == _mmapButtonImages.end(), "CGUIContainer::getButtonImage(" + strName + ") failed. The named object doesn't exist.");
@@ -1374,7 +1374,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageDepthbuffer* CGUIContainer::getImageDepthbuffer(const std::string& strName)
+	CGUIImageDepthbuffer* CGUIContainer::getImageDepthbuffer(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
 		ThrowIfTrue(it == _mmapImageDepthbuffers.end(), "CGUIContainer::getImageDepthbuffer(" + strName + ") failed. The named object doesn't exist.");

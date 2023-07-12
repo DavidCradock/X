@@ -18,28 +18,28 @@ namespace X
 
 		// Bind this framebuffer object so that all render operations use this as the target.
 		// Also clears the render target by default and sets viewport to match render target
-		void bindAsRenderTarget(bool bClearbuffer = true);
+		void bindAsRenderTarget(bool bClearbuffer = true) const;
 
 		// Unbind the framebuffer object so that all render operations use the window's backbuffer as the target.
 		// Also calls glViewport to reset to the window's dimensions
-		void unbindAsRenderTarget(void);
+		void unbindAsRenderTarget(void) const;
 
 		// Bind this framebuffer's attached colour texture to a texture unit, to be used as a normal 2D texture.
 		// uiTextureUnit should be between 0-7
-		void bindAsTexture(unsigned int uiTextureUnit);
+		void bindAsTexture(unsigned int uiTextureUnit) const;
 
 		// Unbinds texturing for the specified texture unit
 		// uiTextureUnit should be between 0-7
-		void unbindTexture(unsigned int uiTextureUnit = 0);
+		void unbindTexture(unsigned int uiTextureUnit = 0) const;
 
 		// Returns width of the depth buffer
-		unsigned int getWidth(void);
+		unsigned int getWidth(void) const;
 
 		// Returns height of the depth buffer
-		unsigned int getHeight(void);
+		unsigned int getHeight(void) const;
 
 		// Returns dimensions of the depth buffer
-		glm::vec2 getDimensions(void);
+		glm::vec2 getDimensions(void) const;
 
 		// Sets depth buffer to new dimensions
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);

@@ -53,7 +53,7 @@ namespace X
 		
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIButton* getButton(const std::string& strName);
+		CGUIButton* getButton(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -69,7 +69,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIText* getText(const std::string& strName);
+		CGUIText* getText(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -85,7 +85,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUITextEdit* getTextEdit(const std::string& strName);
+		CGUITextEdit* getTextEdit(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -103,7 +103,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUISlider* getSlider(const std::string& strName);
+		CGUISlider* getSlider(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -119,7 +119,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUILineGraph* getLineGraph(const std::string& strName);
+		CGUILineGraph* getLineGraph(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -135,7 +135,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIProgressBar* getProgressBar(const std::string& strName);
+		CGUIProgressBar* getProgressBar(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -171,7 +171,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImage* getImage(const std::string& strName);
+		CGUIImage* getImage(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -196,7 +196,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageAnimated* getImageAnimated(const std::string& strName);
+		CGUIImageAnimated* getImageAnimated(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -214,7 +214,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
+		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -232,7 +232,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUITextScroll* getTextScroll(const std::string& strName);
+		CGUITextScroll* getTextScroll(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -251,7 +251,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIButtonImage* getButtonImage(const std::string& strName);
+		CGUIButtonImage* getButtonImage(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -269,7 +269,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
+		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName) const;
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails
@@ -286,18 +286,18 @@ namespace X
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
 
-		std::map<std::string, CGUIButton*> _mmapButtons;						// Hashmap for each added button
-		std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
-		std::map<std::string, CGUITextEdit*> _mmapTextEdits;					// Hashmap for each added text edit
-		std::map<std::string, CGUISlider*> _mmapSliders;						// Hashmap for each added slider
-		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
-		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
-		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
-		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
-		std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
-		std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
-		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
+		mutable std::map<std::string, CGUIButton*> _mmapButtons;						// Hashmap for each added button
+		mutable std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
+		mutable std::map<std::string, CGUITextEdit*> _mmapTextEdits;					// Hashmap for each added text edit
+		mutable std::map<std::string, CGUISlider*> _mmapSliders;						// Hashmap for each added slider
+		mutable std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		mutable std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		mutable std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
+		mutable std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		mutable std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
+		mutable std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
+		mutable std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
+		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
 		glm::vec4 _mvTextColour;	// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 

@@ -109,42 +109,42 @@ namespace X
         _muiProgramID = 0;
     }
 
-    void CResourceShader::bind(void)
+    void CResourceShader::bind(void) const
     {
         glUseProgram(_muiProgramID);
     }
 
-    void CResourceShader::unbind(void)
+    void CResourceShader::unbind(void) const
     {
         glUseProgram(0);
     }
 
-    void CResourceShader::setBool(const std::string& name, bool value)
+    void CResourceShader::setBool(const std::string& name, bool value) const
     {
         glUniform1i(glGetUniformLocation(_muiProgramID, name.c_str()), (int)value);
     }
 
-    void CResourceShader::setInt(const std::string& name, int value)
+    void CResourceShader::setInt(const std::string& name, int value) const
     {
         glUniform1i(glGetUniformLocation(_muiProgramID, name.c_str()), value);
     }
 
-    void CResourceShader::setFloat(const std::string& name, float value)
+    void CResourceShader::setFloat(const std::string& name, float value) const
     {
         glUniform1f(glGetUniformLocation(_muiProgramID, name.c_str()), value);
     }
 
-    void CResourceShader::setMat4(const std::string& name, const glm::mat4& matrix)
+    void CResourceShader::setMat4(const std::string& name, const glm::mat4& matrix) const
     {
         glUniformMatrix4fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    void CResourceShader::setVec2(const std::string& name, const glm::vec2& vec2)
+    void CResourceShader::setVec2(const std::string& name, const glm::vec2& vec2) const
     {
         glUniform2fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec2[0]);
     }
 
-    void CResourceShader::setVec3(const std::string& name, const glm::vec3& vec3)
+    void CResourceShader::setVec3(const std::string& name, const glm::vec3& vec3) const
     {
         glUniform3fv(glGetUniformLocation(_muiProgramID, name.c_str()), 1, &vec3[0]);
     }

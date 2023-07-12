@@ -34,14 +34,14 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DLayer::getEntityExists(const std::string& strUniqueName)
+	bool C2DLayer::getEntityExists(const std::string& strUniqueName) const
 	{
 		if (_mmapEntitys.find(strUniqueName) == _mmapEntitys.end())
 			return false;
 		return true;
 	}
 
-	C2DEntity* C2DLayer::getEntity(const std::string& strUniqueName)
+	C2DEntity* C2DLayer::getEntity(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the name already exists
 		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.find(strUniqueName);
@@ -49,7 +49,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DEntity* C2DLayer::getEntity(unsigned int uiIndex)
+	C2DEntity* C2DLayer::getEntity(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapEntitys.size(), "C2DLayer::getEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -106,7 +106,7 @@ namespace X
 		}
 	}
 
-	unsigned int C2DLayer::getNumEntitys(void)
+	unsigned int C2DLayer::getNumEntitys(void) const
 	{
 		return int(_mmapEntitys.size());
 	}
@@ -126,14 +126,14 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DLayer::getEntityComplexExists(const std::string& strUniqueName)
+	bool C2DLayer::getEntityComplexExists(const std::string& strUniqueName) const
 	{
 		if (_mmapEntityComplexs.find(strUniqueName) == _mmapEntityComplexs.end())
 			return false;
 		return true;
 	}
 
-	C2DEntityComplex* C2DLayer::getEntityComplex(const std::string& strUniqueName)
+	C2DEntityComplex* C2DLayer::getEntityComplex(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the name already exists
 		std::map<std::string, C2DEntityComplex*>::iterator it = _mmapEntityComplexs.find(strUniqueName);
@@ -141,7 +141,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DEntityComplex* C2DLayer::getEntityComplex(unsigned int uiIndex)
+	C2DEntityComplex* C2DLayer::getEntityComplex(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapEntityComplexs.size(), "C2DLayer::getEntityComplex(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -198,7 +198,7 @@ namespace X
 		}
 	}
 
-	int C2DLayer::getNumEntityComplexs(void)
+	int C2DLayer::getNumEntityComplexs(void) const
 	{
 		return int(_mmapEntityComplexs.size());
 	}

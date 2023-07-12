@@ -64,7 +64,7 @@ namespace X
 		}
 	}
 
-	void CResourceDepthbuffer::bindAsRenderTarget(bool bClearbuffer)
+	void CResourceDepthbuffer::bindAsRenderTarget(bool bClearbuffer) const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, _muiFramebufferID);
 		if (bClearbuffer)
@@ -72,14 +72,14 @@ namespace X
 		glViewport(0, 0, _muiWidth, _muiHeight);
 	}
 
-	void CResourceDepthbuffer::unbindAsRenderTarget(void)
+	void CResourceDepthbuffer::unbindAsRenderTarget(void) const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		SCWindow* pWnd = SCWindow::getPointer();
 		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
 	}
 
-	void CResourceDepthbuffer::bindAsTexture(unsigned int uiTextureUnit)
+	void CResourceDepthbuffer::bindAsTexture(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -111,7 +111,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void CResourceDepthbuffer::unbindTexture(unsigned int uiTextureUnit)
+	void CResourceDepthbuffer::unbindTexture(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -143,17 +143,17 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int CResourceDepthbuffer::getWidth(void)
+	unsigned int CResourceDepthbuffer::getWidth(void) const
 	{
 		return _muiWidth;
 	}
 
-	unsigned int CResourceDepthbuffer::getHeight(void)
+	unsigned int CResourceDepthbuffer::getHeight(void) const
 	{
 		return _muiHeight;
 	}
 
-	glm::vec2 CResourceDepthbuffer::getDimensions(void)
+	glm::vec2 CResourceDepthbuffer::getDimensions(void) const
 	{
 		glm::vec2 vDims;
 		vDims.x = float(_muiWidth);

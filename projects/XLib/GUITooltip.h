@@ -46,7 +46,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIText* getText(const std::string& strName);
+		CGUIText* getText(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -62,7 +62,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUILineGraph* getLineGraph(const std::string& strName);
+		CGUILineGraph* getLineGraph(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -78,7 +78,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIProgressBar* getProgressBar(const std::string& strName);
+		CGUIProgressBar* getProgressBar(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -98,7 +98,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImage* getImage(const std::string& strName);
+		CGUIImage* getImage(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -119,7 +119,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageAnimated* getImageAnimated(const std::string& strName);
+		CGUIImageAnimated* getImageAnimated(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -137,7 +137,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName);
+		CGUIImageFramebuffer* getImageFramebuffer(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -155,7 +155,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName);
+		CGUIImageDepthbuffer* getImageDepthbuffer(const std::string& strName) const;
 
 		// Removes the named object from the tooltip
 		// If the named object doesn't exist, this silently fails
@@ -175,12 +175,12 @@ namespace X
 		bool _mbEnabled;		// Whether this tooltip is enabled or not
 		CColour _mColour;		// Current colour of the tooltip, used for fading in/out
 		float _mfTooltipDelay;	// Used to prevent tooltip from fading in until SCGUIManager::getTooltipDelay() has passed
-		std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
-		std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
-		std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
-		std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
-		std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
-		std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
-		std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
+		mutable std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
+		mutable std::map<std::string, CGUILineGraph*> _mmapLineGraphs;					// Hashmap for each added line graph
+		mutable std::map<std::string, CGUIProgressBar*> _mmapProgressBars;				// Hashmap for each added progress bar
+		mutable std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
+		mutable std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
+		mutable std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
+		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
 	};
 }

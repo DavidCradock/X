@@ -34,14 +34,14 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DWorld::getLayerExists(const std::string& strUniqueName)
+	bool C2DWorld::getLayerExists(const std::string& strUniqueName) const
 	{
 		if (_mmapLayers.find(strUniqueName) == _mmapLayers.end())
 			return false;
 		return true;
 	}
 
-	C2DLayer* C2DWorld::getLayer(const std::string& strUniqueName)
+	C2DLayer* C2DWorld::getLayer(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the layer name already exists
 		std::map<std::string, C2DLayer*>::iterator it = _mmapLayers.find(strUniqueName);
@@ -49,7 +49,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DLayer* C2DWorld::getLayer(unsigned int uiIndex)
+	C2DLayer* C2DWorld::getLayer(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapLayers.size(), "C2DWorld::getLayer(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -136,19 +136,19 @@ namespace X
 		}
 	}
 
-	unsigned int C2DWorld::getNumLayers(void)
+	unsigned int C2DWorld::getNumLayers(void) const
 	{
 		return unsigned int(_mmapLayers.size());
 	}
 
-	std::string C2DWorld::getLayerNameAtZorder(unsigned int uiZorder)
+	std::string C2DWorld::getLayerNameAtZorder(unsigned int uiZorder) const
 	{
 		// Make sure valid index given
 		ThrowIfTrue(uiZorder >= (unsigned int)_mvecLayerNameZOrder.size(), "C2DWorld::getLayerNameAtZorder(" + std::to_string(uiZorder) + ") failed. Invalid iZorder value given.");
 		return _mvecLayerNameZOrder[uiZorder];
 	}
 
-	std::string C2DWorld::getLayerNameAtIndex(unsigned int uiIndex)
+	std::string C2DWorld::getLayerNameAtIndex(unsigned int uiIndex) const
 	{
 		// Make sure valid index given
 		ThrowIfTrue(uiIndex >= (unsigned int)_mmapLayers.size(), "C2DWorld::getLayerNameAtIndex(" + std::to_string(uiIndex) + ") failed. Invalid index value given.");
@@ -162,7 +162,7 @@ namespace X
 		return it->first;
 	}
 
-	int C2DWorld::getLayerZorder(const std::string& strLayerName)
+	int C2DWorld::getLayerZorder(const std::string& strLayerName) const
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
@@ -349,14 +349,14 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DWorld::getCameraExists(const std::string& strUniqueName)
+	bool C2DWorld::getCameraExists(const std::string& strUniqueName) const
 	{
 		if (_mmapCameras.find(strUniqueName) == _mmapCameras.end())
 			return false;
 		return true;
 	}
 
-	C2DCamera* C2DWorld::getCamera(const std::string& strUniqueName)
+	C2DCamera* C2DWorld::getCamera(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the name already exists
 		std::map<std::string, C2DCamera*>::iterator it = _mmapCameras.find(strUniqueName);
@@ -364,7 +364,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DCamera* C2DWorld::getCamera(unsigned int uiIndex)
+	C2DCamera* C2DWorld::getCamera(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapCameras.size(), "C2DWorld::getCamera(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -421,7 +421,7 @@ namespace X
 		}
 	}
 
-	int C2DWorld::getNumCameras(void)
+	int C2DWorld::getNumCameras(void) const
 	{
 		return int(_mmapCameras.size());
 	}

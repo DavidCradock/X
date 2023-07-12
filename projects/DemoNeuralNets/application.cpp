@@ -10,7 +10,11 @@ namespace X
 		pWindow->setText("X DemoNeuralNets. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		pWindow->setIcon(IDI_ICON1);
 
-
+		CImage img1;
+		img1.createBlank(8, 8, 3);
+		CImage img2;
+		img2 = img1;
+		img2 = img2;
 	}
 
 	void CApplication::onStart(void)

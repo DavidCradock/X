@@ -38,9 +38,9 @@ namespace X
 		matrixView = glm::lookAt(vCameraPosition, vCameraTargetPosition, vUpVector);
 	}
 
-	glm::mat4 CSMCamera::getViewProjectionMatrix(void)
+	glm::mat4 CSMCamera::getViewProjectionMatrix(void) const
 	{
-		return matrixProjection * matrixView;	// Other way around?
+		return matrixProjection * matrixView;
 	}
 
 	void CSMCamera::update(void)

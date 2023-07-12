@@ -134,7 +134,7 @@ namespace X
 		return true;
 	}
 
-	C2DLayerComplex* C2DEntityComplex::getLayer(const std::string& strUniqueName)
+	C2DLayerComplex* C2DEntityComplex::getLayer(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the layer name already exists
 		std::map<std::string, C2DLayerComplex*>::iterator it = _mmapLayers.find(strUniqueName);
@@ -142,7 +142,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DLayerComplex* C2DEntityComplex::getLayer(unsigned int uiIndex)
+	C2DLayerComplex* C2DEntityComplex::getLayer(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapLayers.size(), "C2DEntityComplex::getLayer(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -241,7 +241,7 @@ namespace X
 		return _mvecLayerNameZOrder[uiZorder];
 	}
 
-	std::string C2DEntityComplex::getLayerNameAtIndex(unsigned int uiIndex)
+	std::string C2DEntityComplex::getLayerNameAtIndex(unsigned int uiIndex) const
 	{
 		// Make sure valid index given
 		ThrowIfTrue(uiIndex >= (unsigned int)_mmapLayers.size(), "C2DEntityComplex::getLayerNameAtIndex(" + std::to_string(uiIndex) + ") failed. Invalid index value given.");
@@ -427,7 +427,7 @@ namespace X
 			moveLayerToFrontByOne(strLayerName);
 	}
 
-	C2DEntity* C2DEntityComplex::_findParentEntity(void)
+	C2DEntity* C2DEntityComplex::_findParentEntity(void) const
 	{
 		C2DEntity* pParentEntity = 0;
 		// For each layer
@@ -452,7 +452,7 @@ namespace X
 		pParentEntity->setPosition(vPosition);
 	}
 
-	CVector2r C2DEntityComplex::getPosition(void)
+	CVector2r C2DEntityComplex::getPosition(void) const
 	{
 		C2DEntity* pParentEntity = _findParentEntity();
 		return pParentEntity->getPosition();
@@ -464,7 +464,7 @@ namespace X
 		pParentEntity->setScale(rScaleX, rScaleY);	
 	}
 
-	CVector2r C2DEntityComplex::getScale(void)
+	CVector2r C2DEntityComplex::getScale(void) const
 	{
 		C2DEntity* pParentEntity = _findParentEntity();
 		return pParentEntity->getScale();
@@ -476,7 +476,7 @@ namespace X
 		pParentEntity->setColour(colour);
 	}
 
-	CColour C2DEntityComplex::getColour(void)
+	CColour C2DEntityComplex::getColour(void) const
 	{
 		C2DEntity* pParentEntity = _findParentEntity();
 		return pParentEntity->getColour();
@@ -529,7 +529,7 @@ namespace X
 		}
 	}
 
-	unsigned int C2DEntityComplex::getCurrentFrameNumber(void)
+	unsigned int C2DEntityComplex::getCurrentFrameNumber(void) const
 	{
 		C2DEntity* pParentEntity = _findParentEntity();
 		return pParentEntity->_muiCurrentFrameNumber;
@@ -543,7 +543,7 @@ namespace X
 		pParentEntity->_muiCurrentFrameNumber = uiFrameNumber;
 	}
 
-	unsigned int C2DEntityComplex::getNumFrames(void)
+	unsigned int C2DEntityComplex::getNumFrames(void) const
 	{
 		C2DEntity* pParentEntity = _findParentEntity();
 		return (unsigned int)pParentEntity->_mvstrImageNames.size();

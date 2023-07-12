@@ -169,30 +169,30 @@ namespace X
 		void release(void);
 
 		// Returns true if any key is pressed.
-		inline bool anyPressed(void) { return anyKeyPressed; }
+		bool anyPressed(void) const;
 
 		// Returns true if any key is pressed, taking into consideration key repeat timings
-		inline bool anyRepeat(void) { return keyAny.bRepeatOK; }
+		bool anyRepeat(void) const;
 
 		// Returns true if the given key is pressed.
-		inline bool pressed(unsigned char KC_KEYCODE) { if (keyState[KC_KEYCODE] & 0x80)return true; return false; }
+		bool pressed(unsigned char KC_KEYCODE) const;
 
 		// Returns true if the key has changed from the up state, to the down state since last call to update()
-		inline bool once(unsigned char KC_KEYCODE) { return keyOnceResult[KC_KEYCODE]; }
+		bool once(unsigned char KC_KEYCODE) const;
 
 		// Returns a const reference to the CText object, which the key being pressed represents.
 		// The string has zero length if no key has been pressed.
 		// Only returns a char if the key has been toggled from off to on since previous call to update(), not if the key is held down.
 		// Upper and lower case chars are supported with shift keys.
 		// If multiple non case changing keys are pressed, the results are unexpected. 
-		inline const std::string& once2Char(void) { return keyOnce2Char; }
+		const std::string& once2Char(void) const;
 
 		// Key repeat timing.
 		// Key repeat using timing, if a key is held down for a short delay, key repeat is started and this
 		// method returns true at set timing intervals.
 		// Both the initial time delay until repeating starts and the time delay between each key repeat can be set
 		// using setKeyRepeatInitialDelay and setKeyRepeatRate 
-		inline bool repeat(unsigned char KC_KEYCODE) { return keyRep[KC_KEYCODE].bRepeatOK; }
+		bool repeat(unsigned char KC_KEYCODE) const;
 
 		// Set time in milliseconds until keyRepeat method will start to return true for a given key
 		void setRepeatInitialDelay(float fMilliseconds = 500.0f);

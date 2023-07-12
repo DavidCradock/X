@@ -120,14 +120,14 @@ namespace X
 		return pNew;
 	}
 
-	CGUITheme* SCGUIManager::getTheme(const std::string& strName)
+	CGUITheme* SCGUIManager::getTheme(const std::string& strName) const
 	{
 		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
 		ThrowIfTrue(it == _mmapThemes.end(), "SCGUIManager::getTheme(" + strName + ") failed. Theme doesn't exist.");
 		return it->second;
 	}
 
-	bool SCGUIManager::getThemeExists(const std::string& strName)
+	bool SCGUIManager::getThemeExists(const std::string& strName) const
 	{
 		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.find(strName);
 		return it != _mmapThemes.end();
@@ -158,7 +158,7 @@ namespace X
 		return (int)_mmapThemes.size();
 	}
 
-	std::string SCGUIManager::getThemeName(int iIndex)
+	std::string SCGUIManager::getThemeName(int iIndex) const
 	{
 		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapThemes.size(), "SCGUIManager::getThemeName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
 		std::map<std::string, CGUITheme*>::iterator it = _mmapThemes.begin();
@@ -230,14 +230,14 @@ namespace X
 		return pNew;
 	}
 
-	CGUIContainer* SCGUIManager::getContainer(const std::string& strName)
+	CGUIContainer* SCGUIManager::getContainer(const std::string& strName) const
 	{
 		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
 		ThrowIfTrue(it == _mmapContainers.end(), "SCGUIManager::getContainer(" + strName + ") failed. Container doesn't exist.");
 		return it->second;
 	}
 
-	bool SCGUIManager::getContainerExists(const std::string& strName)
+	bool SCGUIManager::getContainerExists(const std::string& strName) const
 	{
 		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
 		return it != _mmapContainers.end();
@@ -278,7 +278,7 @@ namespace X
 		return (int)_mmapContainers.size();
 	}
 
-	std::string SCGUIManager::getContainerName(int iIndex)
+	std::string SCGUIManager::getContainerName(int iIndex) const
 	{
 		ThrowIfTrue(iIndex < 0 || iIndex >= (int)_mmapContainers.size(), "SCGUIManager::getContainerName() failed. Invalid index of " + std::to_string(iIndex) + " was given.");
 		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.begin();

@@ -29,6 +29,5 @@ Current progress...
 - Add padding to vector classes and test speed increase
 - Add the ability to be able to add newlines to the text scroll GUI object.
 - Change 2D stuff from using CVector2r to CVector2f
-- Check const usage everywhere and add operator overloads where needed.
 - Tidy up CMatrix, CVector?? and CQuaternion classes.
-- 
+

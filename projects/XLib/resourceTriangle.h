@@ -39,7 +39,7 @@ namespace X
 
 		// Binds the vertexArrayObject and calls glDrawElements()
 		// If there's no vertex data, this silently fails.
-		void draw(bool bWireframeMode = false);
+		void draw(bool bWireframeMode = false) const;
 
 		// Adds a new vertex
 		void addVertex(const Vertex& newVertex);
@@ -64,19 +64,13 @@ namespace X
 		void addFromFile(const std::string& strGeometryFilename, bool bCallUpdate = true);
 
 		// Return number of vertices which have been added so far.
-		inline size_t getNumVertices(void)
-		{
-			return vertices.size();
-		}
+		size_t getNumVertices(void) const;
 
 		// Return nummber of indices which have been added so far.
-		inline size_t getNumIndicies(void)
-		{
-			return indices.size();
-		}
+		size_t getNumIndicies(void) const;
 
 		// Converts an .obj file to our custom geometry file format and saves to disk
-		void convertObj(const std::string filename);
+		void convertObj(const std::string filename) const;
 
 	private:
 

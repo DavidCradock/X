@@ -40,7 +40,7 @@ namespace X
 		// Binds the vertexArrayObject and calls glDrawElements()
 		// If there's no vertex data, this silently fails.
 		// Don't forget to call update() if you've added vertex data
-		void draw(void);
+		void draw(void) const;
 
 		// Sets drawing of each added vertex as a strip of lines where each additional vertex draws an additional line (This is the default mode)
 		void setDrawModeAsLineStrip(void);
@@ -52,13 +52,13 @@ namespace X
 		void addLinePoint(const Vertex& newVertex);
 
 		// Return number of vertices which have been added so far.
-		inline size_t getNumVertices(void)
+		inline size_t getNumVertices(void) const
 		{
 			return vertices.size();
 		}
 
 		// Return nummber of indices which have been added so far.
-		inline size_t getNumIndicies(void)
+		inline size_t getNumIndicies(void) const
 		{
 			return indices.size();
 		}

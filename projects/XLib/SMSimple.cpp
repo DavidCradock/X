@@ -77,14 +77,14 @@ namespace X
 		return pNewMaterial;
 	}
 
-	CSMMaterial* CSceneManagerSimple::getMaterial(const std::string& strMaterialName)
+	CSMMaterial* CSceneManagerSimple::getMaterial(const std::string& strMaterialName) const
 	{
 		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
 		ThrowIfTrue(it == mmapMaterials.end(), "CSceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
 		return it->second;
 	}
 
-	bool CSceneManagerSimple::getMaterialExists(const std::string& strMaterialName)
+	bool CSceneManagerSimple::getMaterialExists(const std::string& strMaterialName) const
 	{
 		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
 		return it != mmapMaterials.end();
@@ -131,14 +131,14 @@ namespace X
 		return pNewEntity;
 	}
 
-	CSMEntityTriangle* CSceneManagerSimple::getEntityTriangle(const std::string& strEntityName)
+	CSMEntityTriangle* CSceneManagerSimple::getEntityTriangle(const std::string& strEntityName) const
 	{
 		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
 		ThrowIfTrue(it == mmapEntitiesTriangles.end(), "CSceneManagerSimple::getEntityTriangle(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
-	bool CSceneManagerSimple::getEntityTriangleExists(const std::string& strEntityName)
+	bool CSceneManagerSimple::getEntityTriangleExists(const std::string& strEntityName) const
 	{
 		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
 		return it != mmapEntitiesTriangles.end();
@@ -182,14 +182,14 @@ namespace X
 		return pNewEntity;
 	}
 
-	CSMEntityLine* CSceneManagerSimple::getEntityLine(const std::string& strEntityName)
+	CSMEntityLine* CSceneManagerSimple::getEntityLine(const std::string& strEntityName) const
 	{
 		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
 		ThrowIfTrue(it == mmapEntitiesLine.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
-	bool CSceneManagerSimple::getEntityLineExists(const std::string& strEntityName)
+	bool CSceneManagerSimple::getEntityLineExists(const std::string& strEntityName) const
 	{
 		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
 		return it != mmapEntitiesLine.end();
@@ -450,7 +450,7 @@ namespace X
 		mbShadowsCastFromDirectionalLight = bShadowsEnabled;
 	}
 
-	bool CSceneManagerSimple::getShadowsEnabled(void)
+	bool CSceneManagerSimple::getShadowsEnabled(void) const
 	{
 		return mbShadowsCastFromDirectionalLight;
 	}

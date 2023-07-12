@@ -45,7 +45,7 @@ namespace X
 		_muiTextureID = 0;
 	}
 
-	void CResourceTexture2DFromImage::bind(unsigned int uiTextureUnit)
+	void CResourceTexture2DFromImage::bind(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -77,7 +77,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 	}
 
-	void CResourceTexture2DFromImage::unbind(unsigned int uiTextureUnit)
+	void CResourceTexture2DFromImage::unbind(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -109,7 +109,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void CResourceTexture2DFromImage::unbindAll(void)
+	void CResourceTexture2DFromImage::unbindAll(void) const
 	{
 		glActiveTexture(GL_TEXTURE7);	glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE6);	glBindTexture(GL_TEXTURE_2D, 0);

@@ -37,19 +37,19 @@ namespace X
 		void setRotation(CVector2r vDirection);
 
 		// Returns the currently set position of the "PARENT" entity
-		CVector2r getPosition(void);
+		CVector2r getPosition(void) const;
 
 		// Set the scale of the "PARENT" entity (a default of 1.0f is same size as the texture used to render it)
 		void setScale(real rScaleX, real rScaleY);
 
 		// Get the scale of the "PARENT" entity
-		CVector2r getScale(void);
+		CVector2r getScale(void) const;
 
 		// Set the colour multiplier for the "PARENT" entity (default = white, full opacity)
 		void setColour(const CColour& colour);
 
 		// Returns the currently set colour multiplier for the "PARENT" entity
-		CColour getColour(void);
+		CColour getColour(void) const;
 
 		// Sets the "PARENT" entity to use a single image stored within the texture atlas to use whilst rendering itself
 		// If an invalid image name is given, an exception occurs
@@ -62,14 +62,14 @@ namespace X
 		void setImagesMultiple(const std::vector<std::string>& strImageFilenamesInAtlas);
 
 		// Returns the "PARENT" entity's current animation frame number
-		unsigned int getCurrentFrameNumber(void);
+		unsigned int getCurrentFrameNumber(void) const;
 
 		// Sets the "PARENT" entity's current animation frame number
 		// If invalid framenumber is given, an exception occurs
 		void setCurrentFrameNumber(unsigned int uiFrameNumber);
 
 		// Returns the number of image names in the atlas texture used by the "PARENT" entity
-		unsigned int getNumFrames(void);
+		unsigned int getNumFrames(void) const;
 
 		// This sets the current frame number of the "PARENT" entity based on angle of entity
 		// Expects an angle between 0.0f-359.99f the value will be clamped
@@ -96,10 +96,10 @@ namespace X
 		bool getLayerExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DLayerComplex* getLayer(const std::string& strUniqueName);
+		C2DLayerComplex* getLayer(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DLayerComplex* getLayer(unsigned int uiIndex);
+		C2DLayerComplex* getLayer(unsigned int uiIndex) const;
 
 		// Removes an object (and all the entities which have been added to it)
 		// If the object's name given doesn't exist, an exception occurs
@@ -124,7 +124,7 @@ namespace X
 		// Returns the name of the layer at specified index
 		// Use getNumLayers() to get the number of layers
 		// If invalid index given, an exception occurs
-		std::string getLayerNameAtIndex(unsigned int uiIndex);
+		std::string getLayerNameAtIndex(unsigned int uiIndex) const;
 
 		// Given a name of an existing layer, returns it's order of rendering
 		// If it's at the back, this would be 0
@@ -157,12 +157,12 @@ namespace X
 		void moveLayerInfront(const std::string& strLayerName, const std::string& strLayerNameOther);
 
 	private:
-		std::map<std::string, C2DLayerComplex*> _mmapLayers;	// Each named layer which holds sprite entities
-		std::vector<std::string> _mvecLayerNameZOrder;			// Holds names of each layer, in their rendering order (first added = first rendered)
-		real _mrParentRotationDegrees;							// Holds the rotation of the "PARENT" entity in degrees
+		mutable std::map<std::string, C2DLayerComplex*> _mmapLayers;	// Each named layer which holds sprite entities
+		std::vector<std::string> _mvecLayerNameZOrder;					// Holds names of each layer, in their rendering order (first added = first rendered)
+		real _mrParentRotationDegrees;									// Holds the rotation of the "PARENT" entity in degrees
 
 		// Goes through all the layers, finds the entity named "PARENT" and returns a pointer to it.
 		// If the "PARENT" entity couldn't be found, an exception occurs.
-		C2DEntity* _findParentEntity(void);
+		C2DEntity* _findParentEntity(void) const;
 	};
 }

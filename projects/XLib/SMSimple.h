@@ -43,10 +43,10 @@ namespace X
 		
 		// Returns a pointer to the named material
 		// If the named material doesn't exist, an exception occurs
-		CSMMaterial* getMaterial(const std::string& strMaterialName);
+		CSMMaterial* getMaterial(const std::string& strMaterialName) const;
 
 		// Returns whether the named material exists or not
-		bool getMaterialExists(const std::string& strMaterialName);
+		bool getMaterialExists(const std::string& strMaterialName) const;
 
 		// Attempts to remove the named material from the scene manager
 		// If the material doesn't exist, this silently fails
@@ -65,10 +65,10 @@ namespace X
 
 		// Returns a pointer to the named triangle entity.
 		// If the enitity doesn't exist, an exception occurs.
-		CSMEntityTriangle* getEntityTriangle(const std::string& strEntityName);
+		CSMEntityTriangle* getEntityTriangle(const std::string& strEntityName) const;
 
 		// Returns whether the named triangle entity exists or not
-		bool getEntityTriangleExists(const std::string& strEntityName);
+		bool getEntityTriangleExists(const std::string& strEntityName) const;
 
 		// Attempts to remove the named entity from the scene
 		// If the entity doesn't exist, this silently fails
@@ -87,10 +87,10 @@ namespace X
 
 		// Returns a pointer to the named line entity.
 		// If the enitity doesn't exist, an exception occurs.
-		CSMEntityLine* getEntityLine(const std::string& strEntityName);
+		CSMEntityLine* getEntityLine(const std::string& strEntityName) const;
 
 		// Returns whether the named line entity exists or not
-		bool getEntityLineExists(const std::string& strEntityName);
+		bool getEntityLineExists(const std::string& strEntityName) const;
 
 		// Attempts to remove the named entity from the scene
 		// If the entity doesn't exist, this silently fails
@@ -103,7 +103,7 @@ namespace X
 		void setShadowsEnabled(bool bShadowsEnabled = true);
 
 		// Returns whether rendering of shadows from directional light is enabled or not
-		bool getShadowsEnabled(void);
+		bool getShadowsEnabled(void) const;
 
 		// Sets the directional light's parameters for it's projection matrix and position.
 		// Even though the directional light doesn't have a position, just a direction, it still needs a position to be able to work.
@@ -115,9 +115,9 @@ namespace X
 		// Sets the directional light's colour
 		void setDirectionalLightColour(glm::vec3 vColour);
 	private:
-		std::map<std::string, CSMEntityTriangle*>	mmapEntitiesTriangles;	// Each named triangle entity in this scene.
-		std::map<std::string, CSMEntityLine*>		mmapEntitiesLine;		// Each named line entity in this scene.
-		std::map<std::string, CSMMaterial*>			mmapMaterials;			// Each named material in this scene.
+		mutable std::map<std::string, CSMEntityTriangle*>	mmapEntitiesTriangles;	// Each named triangle entity in this scene.
+		mutable std::map<std::string, CSMEntityLine*>		mmapEntitiesLine;		// Each named line entity in this scene.
+		mutable std::map<std::string, CSMMaterial*>			mmapMaterials;			// Each named material in this scene.
 		
 		// Variables used for rendering the depth map for the directional light
 		bool mbShadowsCastFromDirectionalLight;			// Whether to cast shadows from the directional light

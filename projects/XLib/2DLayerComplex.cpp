@@ -33,14 +33,14 @@ namespace X
 		return pNew;
 	}
 
-	bool C2DLayerComplex::getEntityExists(const std::string& strUniqueName)
+	bool C2DLayerComplex::getEntityExists(const std::string& strUniqueName) const
 	{
 		if (_mmapEntitys.find(strUniqueName) == _mmapEntitys.end())
 			return false;
 		return true;
 	}
 
-	C2DEntity* C2DLayerComplex::getEntity(const std::string& strUniqueName)
+	C2DEntity* C2DLayerComplex::getEntity(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the name already exists
 		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.find(strUniqueName);
@@ -48,7 +48,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DEntity* C2DLayerComplex::getEntity(unsigned int uiIndex)
+	C2DEntity* C2DLayerComplex::getEntity(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapEntitys.size(), "C2DLayerComplex::getEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -105,7 +105,7 @@ namespace X
 		}
 	}
 
-	unsigned int C2DLayerComplex::getNumEntitys(void)
+	unsigned int C2DLayerComplex::getNumEntitys(void) const
 	{
 		return int(_mmapEntitys.size());
 	}

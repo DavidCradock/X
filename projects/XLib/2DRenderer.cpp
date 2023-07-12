@@ -30,14 +30,14 @@ namespace X
 		return pNew;
 	}
 
-	bool SC2DRenderer::getWorldExists(const std::string& strUniqueName)
+	bool SC2DRenderer::getWorldExists(const std::string& strUniqueName) const
 	{
 		if (_mmapWorlds.find(strUniqueName) == _mmapWorlds.end())
 			return false;
 		return true;
 	}
 
-	C2DWorld* SC2DRenderer::getWorld(const std::string& strUniqueName)
+	C2DWorld* SC2DRenderer::getWorld(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the world name already exists
 		std::map<std::string, C2DWorld*>::iterator it = _mmapWorlds.find(strUniqueName);
@@ -45,7 +45,7 @@ namespace X
 		return it->second;
 	}
 
-	C2DWorld* SC2DRenderer::getWorld(unsigned int uiIndex)
+	C2DWorld* SC2DRenderer::getWorld(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
 		ThrowIfTrue(uiIndex >= _mmapWorlds.size(), "SC2DRenderer::getWorld(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
@@ -102,7 +102,7 @@ namespace X
 		}
 	}
 
-	int SC2DRenderer::getNumWorlds(void)
+	int SC2DRenderer::getNumWorlds(void) const
 	{
 		return int(_mmapWorlds.size());
 	}
@@ -260,7 +260,7 @@ namespace X
 
 	}
 
-	unsigned int SC2DRenderer::getNumberTextureRebindingsPerLoop(void)
+	unsigned int SC2DRenderer::getNumberTextureRebindingsPerLoop(void) const
 	{
 		return _muiNumTextureBindingsPerLoop;
 	}

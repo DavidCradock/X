@@ -62,9 +62,31 @@ namespace X
         mdRuntimeInSeconds += mdDeltaSec;
     }
 
-    void CTimer::sleep(unsigned int uiMilliseconds)
+    void CTimer::sleep(unsigned int uiMilliseconds) const
     {
         Sleep(uiMilliseconds);
+    }
+
+    void CTimer::setAveragedFPSRate(float fSecondsBetweenUpdates)
+    {
+        mdFPSAveragedRate = (double)fSecondsBetweenUpdates;
+        if (mdFPSAveragedRate <= 0)
+            mdFPSAveragedRate = 0.001;
+    }
+
+    float CTimer::getAveragedFPSRate(void) const
+    {
+        return (float)mdFPSAveragedRate;
+    }
+
+    float CTimer::getFPS(void) const
+    {
+         return (float)mdFPS;
+    }
+
+    float CTimer::getFPSAveraged(void) const
+    {
+        return (float)mdFPSAveraged;
     }
 
     void CTimer::reset(void)
@@ -88,6 +110,11 @@ namespace X
         mdFPSAveragedAccum = 0;                 // Used to compute FPSAveraged stuff
 
         mdRuntimeInSeconds = 0;
+    }
+
+    float CTimer::getRuntimeSeconds(void) const
+    { 
+        return (float)mdRuntimeInSeconds;
     }
 
     void CTimer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks) const

@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "image.h"
 #include "log.h"
+#include "vector3f.h"
 
 namespace X
 {
@@ -15,6 +16,17 @@ namespace X
 	{
 		free();
 	}
+
+	CImage& CImage::operator=(const CImage& other)
+	{
+		// Guard against self assignment
+		if (this == &other)
+			return *this;
+
+		other.copyTo(*this);
+		return *this;
+	}
+
 
 	void CImage::free(void)
 	{
@@ -192,6 +204,11 @@ namespace X
 	{
 		CVector2r vDims((real)width, (real)height);
 		return vDims;
+	}
+
+	unsigned int CImage::getNumChannels(void) const
+	{
+		return numChannels;
 	}
 
 	bool CImage::getDimsArePowerOfTwo(void) const

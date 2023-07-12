@@ -62,7 +62,7 @@ namespace X
 		}
 	}
 
-	void CResourceTexture2DAtlas::bind(unsigned int uiTextureUnit, unsigned int uiImageNumber)
+	void CResourceTexture2DAtlas::bind(unsigned int uiTextureUnit, unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		
@@ -98,7 +98,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _mvAtlasTextureIDs[(*pviad)[uiImageNumber].uiAtlasImage]);
 	}
 
-	void CResourceTexture2DAtlas::bind(unsigned int uiTextureUnit, const std::string& strImageName)
+	void CResourceTexture2DAtlas::bind(unsigned int uiTextureUnit, const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 		
@@ -132,7 +132,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _mvAtlasTextureIDs[iad.uiAtlasImage]);
 	}
 
-	void CResourceTexture2DAtlas::bindAtlas(unsigned int uiTextureUnit, unsigned int uiAtlasImageNumber)
+	void CResourceTexture2DAtlas::bindAtlas(unsigned int uiTextureUnit, unsigned int uiAtlasImageNumber) const
 	{
 		ThrowIfTrue(uiAtlasImageNumber >= _mvAtlasTextureIDs.size(), "CResourceTexture2DAtlas::bindAtlas() given invalid image number.");
 
@@ -166,7 +166,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, _mvAtlasTextureIDs[uiAtlasImageNumber]);
 	}
 
-	void CResourceTexture2DAtlas::unbind(unsigned int uiTextureUnit)
+	void CResourceTexture2DAtlas::unbind(unsigned int uiTextureUnit) const
 	{
 		switch (uiTextureUnit)
 		{
@@ -198,7 +198,7 @@ namespace X
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void CResourceTexture2DAtlas::unbindAll(void)
+	void CResourceTexture2DAtlas::unbindAll(void) const
 	{
 		glActiveTexture(GL_TEXTURE7);	glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE6);	glBindTexture(GL_TEXTURE_2D, 0);
@@ -210,12 +210,12 @@ namespace X
 		glActiveTexture(GL_TEXTURE0);	glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	unsigned int CResourceTexture2DAtlas::getNumImages(void)
+	unsigned int CResourceTexture2DAtlas::getNumImages(void) const
 	{
 		return _mAtlases.getNumIndividualImages();
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, glm::vec2& vTCMin, glm::vec2& vTCMax)
+	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, glm::vec2& vTCMin, glm::vec2& vTCMax) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
@@ -229,7 +229,7 @@ namespace X
 		vTCMax = glmv2;
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft)
+	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
@@ -239,7 +239,7 @@ namespace X
 		vtcBottomLeft = (*pviad)[uiImageNumber].sTexCoords.bottom_left;
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, glm::vec2& vTCMin, glm::vec2& vTCMax)
+	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, glm::vec2& vTCMin, glm::vec2& vTCMax) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 
@@ -253,7 +253,7 @@ namespace X
 		vTCMax = glmv2;
 	}
 
-	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft)
+	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2r& vtcTopLeft, CVector2r& vtcTopRight, CVector2r& vtcBottomRight, CVector2r& vtcBottomLeft) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 
@@ -263,70 +263,70 @@ namespace X
 		vtcBottomLeft = iad.sTexCoords.bottom_left;
 	}
 
-	unsigned int CResourceTexture2DAtlas::getNumAtlases(void)
+	unsigned int CResourceTexture2DAtlas::getNumAtlases(void) const
 	{
 		return _mAtlases.getNumAtlases();
 	}
 
-	CVector2r CResourceTexture2DAtlas::getImageDims(unsigned int uiImageNumber)
+	CVector2r CResourceTexture2DAtlas::getImageDims(unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageDims() given invalid image number.");
 		return (*pviad)[uiImageNumber].v2rDimensions;
 	}
 
-	CVector2r CResourceTexture2DAtlas::getImageDims(const std::string& strImageName)
+	CVector2r CResourceTexture2DAtlas::getImageDims(const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 		return iad.v2rDimensions;
 	}
 	
-	std::string CResourceTexture2DAtlas::getImageFilename(unsigned int uiImageNumber)
+	std::string CResourceTexture2DAtlas::getImageFilename(unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageFilename() given invalid image number.");
 		return (*pviad)[uiImageNumber].strImageFilename;
 	}
 
-	bool CResourceTexture2DAtlas::getImageWasRotated(unsigned int uiImageNumber)
+	bool CResourceTexture2DAtlas::getImageWasRotated(unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageWasRotated() given invalid image number.");
 		return (*pviad)[uiImageNumber].bRotated;
 	}
 
-	bool CResourceTexture2DAtlas::getImageWasRotated(const std::string& strImageName)
+	bool CResourceTexture2DAtlas::getImageWasRotated(const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 		return iad.bRotated;
 	}
 
-	unsigned int CResourceTexture2DAtlas::getImageStoredInAtlasNumber(unsigned int uiImageNumber)
+	unsigned int CResourceTexture2DAtlas::getImageStoredInAtlasNumber(unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageWasRotated() given invalid image number.");
 		return (*pviad)[uiImageNumber].uiAtlasImage;
 	}
 
-	unsigned int CResourceTexture2DAtlas::getImageStoredInAtlasNumber(const std::string& strImageName)
+	unsigned int CResourceTexture2DAtlas::getImageStoredInAtlasNumber(const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 		return iad.uiAtlasImage;
 	}
 
-	std::string CResourceTexture2DAtlas::getImageNameAtIndex(unsigned int uiImageNumber)
+	std::string CResourceTexture2DAtlas::getImageNameAtIndex(unsigned int uiImageNumber) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageNameAtIndex() given invalid image number.");
 		return (*pviad)[uiImageNumber].strImageFilename;
 	}
 
-	CImageAtlasDetails CResourceTexture2DAtlas::getImageDetails(const std::string& strImageName)
+	CImageAtlasDetails CResourceTexture2DAtlas::getImageDetails(const std::string& strImageName) const
 	{
 		return _mAtlases.getImageDetails(strImageName);
 	}
 
-	bool CResourceTexture2DAtlas::getImageNameExists(const std::string& strImageName)
+	bool CResourceTexture2DAtlas::getImageNameExists(const std::string& strImageName) const
 	{
 		return _mAtlases.getImageExists(strImageName);
 	}

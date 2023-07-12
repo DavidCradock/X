@@ -32,7 +32,7 @@ namespace X
 		void setViewAsLookat(glm::vec3 vCameraPosition, glm::vec3 vCameraTargetPosition, glm::vec3 vUpVector = glm::vec3(0.0f,1.0f,0.0f));
 
 		// Multiplies the view and projection matrixs together and returns the result
-		glm::mat4 getViewProjectionMatrix(void);
+		glm::mat4 getViewProjectionMatrix(void) const;
 
 		// Sets the camera mode to orbit a point in 3D world space
 		// Call update() once per program loop to update the view matrix with this mode in mind.

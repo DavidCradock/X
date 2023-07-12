@@ -64,13 +64,13 @@ namespace X
 		C2DWorld* addWorld(const std::string& strUniqueName);
 
 		// Returns true if an object exists, else false
-		bool getWorldExists(const std::string& strUniqueName);
+		bool getWorldExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DWorld* getWorld(const std::string& strUniqueName);
+		C2DWorld* getWorld(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DWorld* getWorld(unsigned int uiIndex);
+		C2DWorld* getWorld(unsigned int uiIndex) const;
 
 		// Removes an object
 		// If the object's name given doesn't exist, an exception occurs
@@ -84,16 +84,16 @@ namespace X
 		void removeAllWorlds(void);
 
 		// Returns the total number of added objects
-		int getNumWorlds(void);
+		int getNumWorlds(void) const;
 
 		// Updates and renders everything
 		// Called from SCApplicationManager::mainLoop before GUI rendering
 		void render(void);
 
 		// Returns the total number of atlas texture bindings per loop
-		unsigned int getNumberTextureRebindingsPerLoop(void);
+		unsigned int getNumberTextureRebindingsPerLoop(void) const;
 	private:
-		std::map<std::string, C2DWorld*> _mmapWorlds;		// Each named world
-		unsigned int _muiNumTextureBindingsPerLoop;			// Holds number of times textures are bound per loop
+		mutable std::map<std::string, C2DWorld*> _mmapWorlds;	// Each named world
+		unsigned int _muiNumTextureBindingsPerLoop;				// Holds number of times textures are bound per loop
 	};
 }

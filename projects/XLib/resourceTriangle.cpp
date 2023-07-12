@@ -165,7 +165,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceTriangle::draw(bool bWireframeMode)
+	void CResourceTriangle::draw(bool bWireframeMode) const
 	{
 		if (!vertexArrayObject)
 			return;
@@ -361,7 +361,17 @@ namespace X
 			update();
 	}
 
-	void CResourceTriangle::convertObj(const std::string filename)
+	size_t CResourceTriangle::getNumVertices(void) const
+	{
+		return vertices.size();
+	}
+
+	size_t CResourceTriangle::getNumIndicies(void) const
+	{
+		return indices.size();
+	}
+
+	void CResourceTriangle::convertObj(const std::string filename) const
 	{
 		// Used to temporarily hold each line of data from file
 		glm::vec3 vertex;

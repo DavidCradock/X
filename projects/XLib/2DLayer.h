@@ -23,13 +23,13 @@ namespace X
 		C2DEntity* addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
 
 		// Returns true if an object exists, else false
-		bool getEntityExists(const std::string& strUniqueName);
+		bool getEntityExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DEntity* getEntity(const std::string& strUniqueName);
+		C2DEntity* getEntity(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DEntity* getEntity(unsigned int uiIndex);
+		C2DEntity* getEntity(unsigned int uiIndex) const;
 
 		// Removes an object
 		// If the object's name given doesn't exist, an exception occurs
@@ -43,7 +43,7 @@ namespace X
 		void removeAllEntitys(void);
 
 		// Returns the total number of added objects
-		unsigned int getNumEntitys(void);
+		unsigned int getNumEntitys(void) const;
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs
@@ -51,13 +51,13 @@ namespace X
 		C2DEntityComplex* addEntityComplex(const std::string& strUniqueName);
 
 		// Returns true if an object exists, else false
-		bool getEntityComplexExists(const std::string& strUniqueName);
+		bool getEntityComplexExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DEntityComplex* getEntityComplex(const std::string& strUniqueName);
+		C2DEntityComplex* getEntityComplex(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DEntityComplex* getEntityComplex(unsigned int uiIndex);
+		C2DEntityComplex* getEntityComplex(unsigned int uiIndex) const;
 
 		// Removes an object
 		// If the object's name given doesn't exist, an exception occurs
@@ -71,9 +71,9 @@ namespace X
 		void removeAllEntityComplexs(void);
 
 		// Returns the total number of added objects
-		int getNumEntityComplexs(void);
+		int getNumEntityComplexs(void) const;
 	private:
-		std::map<std::string, C2DEntity*> _mmapEntitys;					// Each named entity
-		std::map<std::string, C2DEntityComplex*> _mmapEntityComplexs;	// Each named entity complex
+		mutable std::map<std::string, C2DEntity*> _mmapEntitys;					// Each named entity
+		mutable std::map<std::string, C2DEntityComplex*> _mmapEntityComplexs;	// Each named entity complex
 	};
 }

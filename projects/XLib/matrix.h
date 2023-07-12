@@ -71,7 +71,7 @@ namespace X
 		// Default constructor, sets to identity matrix
 		CMatrix();
 
-		// Sets this vector to the one on the right
+		// Sets this matrix to the one on the right
 		const void operator = (const CMatrix& matrix);
 
 		// Multiply this matrix by another and return the result

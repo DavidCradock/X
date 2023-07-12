@@ -33,7 +33,7 @@ namespace X
 		_mbWorldNeedsUpdate = true;
 	}
 
-	glm::vec3 CSMEntityBase::getWorldPosition(void)
+	glm::vec3 CSMEntityBase::getWorldPosition(void) const
 	{
 		return _mvPosition;
 	}
@@ -44,7 +44,7 @@ namespace X
 		_mbWorldNeedsUpdate = true;
 	}
 
-	glm::vec3 CSMEntityBase::getScale(void)
+	glm::vec3 CSMEntityBase::getScale(void) const
 	{
 		return _mvScale;
 	}

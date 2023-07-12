@@ -25,24 +25,24 @@ namespace X
 
 		// Unbind the framebuffer object so that all render operations use the window's backbuffer as the target.
 		// Also calls glViewport to reset to the window's dimensions
-		void unbindAsRenderTarget(void);
+		void unbindAsRenderTarget(void) const;
 
 		// Bind this framebuffer's attached colour texture to a texture unit, to be used as a normal 2D texture.
 		// uiTextureUnit should be between 0-7
-		void bindAsTexture(unsigned int uiTextureUnit);
+		void bindAsTexture(unsigned int uiTextureUnit) const;
 
 		// Unbinds texturing for the specified texture unit
 		// uiTextureUnit should be between 0-7
-		void unbindTexture(unsigned int uiTextureUnit = 0);
+		void unbindTexture(unsigned int uiTextureUnit = 0) const;
 
 		// Returns width of the frame buffer
-		unsigned int getWidth(void);
+		unsigned int getWidth(void) const;
 
 		// Returns height of the frame buffer
-		unsigned int getHeight(void);
+		unsigned int getHeight(void) const;
 
 		// Returns dimensions of the frame buffer
-		glm::vec2 getDimensions(void);
+		glm::vec2 getDimensions(void) const;
 
 		// Sets frame buffer to new dimensions
 		// If the new dimensions are the same as the current ones, this simply returns

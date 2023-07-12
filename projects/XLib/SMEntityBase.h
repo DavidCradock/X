@@ -21,13 +21,13 @@ namespace X
 		void translateWorld(glm::vec3 vTranslation);
 
 		// Gets currently set position in world space
-		glm::vec3 getWorldPosition(void);
+		glm::vec3 getWorldPosition(void) const;
 
 		// Set scale of this entity
 		void setScale(glm::vec3 vScale);
 
 		// Returns entity's currently set scale
-		glm::vec3 getScale(void);
+		glm::vec3 getScale(void) const;
 
 		// Temp rotation
 		void setRotation(float fX, float fY, float fZ);

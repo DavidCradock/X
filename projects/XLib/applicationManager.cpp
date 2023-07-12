@@ -142,7 +142,12 @@ namespace X
 		}
 	}
 
-	const std::string& SCApplicationManager::getAppName(unsigned int index)
+	size_t SCApplicationManager::getNumApps(void) const
+	{
+		return mApplications.size();
+	}
+
+	const std::string& SCApplicationManager::getAppName(unsigned int index) const
 	{
 		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::getAppName() with index " + std::to_string(index) + " called.";
@@ -209,6 +214,11 @@ namespace X
 		switchToApp(getAppName(indexOfNextApp));
 	}
 
+	std::string SCApplicationManager::getCurrentAppName(void) const
+	{
+		return mstrCurrentApp;
+	}
+
 	void SCApplicationManager::callAllApps_initOnce(void)
 	{
 		CLog* pLog = CLog::getPointer();
@@ -234,7 +244,7 @@ namespace X
 		return it->second->onUpdate();
 	}
 
-	float SCApplicationManager::getApplicationRuntime(const std::string& applicationName)
+	float SCApplicationManager::getApplicationRuntime(const std::string& applicationName) const
 	{
 		std::map<std::string, CApplicationBase*>::iterator it = mApplications.find(applicationName);
 		ThrowIfTrue(it == mApplications.end(), "SCApplicationManager::getApplicationRuntime(" + applicationName + " failed. Unable to find the named application");

@@ -20,22 +20,22 @@ namespace X
 		void onGLContextToBeDestroyed(void);
 
 		// Prints the given text as a single line
-		void print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		void print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) const;
 		
 		// Prints the given text as a single line, centered at iPosX and iPosY
-		void printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		void printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) const;
 
 		// Prints the given text as multiple lines to fit inside the given render target width and height.
 		// If bRenderText is true, the text is rendered, else only the following values are computed...
 		// Also sets the passed std::vector<std::string>& vstrTextLines to contain each line of text.
 		// Also sets the passed int &iTotalRenderedHeight to hold the total amount of Y pixels the text takes up which may be larger than iRenderTargetHeight;
-		void printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int &iTotalRenderedHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		void printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int &iTotalRenderedHeight, float fFontScaling = 1.0f, glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) const;
 
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
-		float getTextWidth(const std::string& strText, float fFontScaling = 1.0f);
+		float getTextWidth(const std::string& strText, float fFontScaling = 1.0f) const;
 
 		// Get the maximum height in pixels, of the font
-		float getTextHeight(float fFontScaling = 1.0f);
+		float getTextHeight(float fFontScaling = 1.0f) const;
 
 		// Each character description (width, height, offset etc)
 		struct CharDesc
@@ -53,8 +53,8 @@ namespace X
 			float fMaxCharHeight;		// The tallest character's height
 		};
 		FontTypes fontTypes;
-		CResourceTexture2DFromFile* _mpResTexture;			// Texture holding each characters' image data
-		glm::mat4 _mmatProjection;					// Projection used when rendering the text
+		CResourceTexture2DFromFile* _mpResTexture;		// Texture holding each characters' image data
+		mutable glm::mat4 _mmatProjection;				// Projection used when rendering the text
 
 	private:
 		// Vertex buffer members used for rendering each character
@@ -65,10 +65,10 @@ namespace X
 			glm::vec4 colour;		// Vertex colour
 			glm::vec2 texCoord;		// Vertex texture coordinate
 		};
-		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
-		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
-		unsigned int elementBufferObject;	// OpenGL element buffer object ID
-		std::vector<Vertex> vertices;		// Vector holding each unique vertex
-		std::vector<int> indices;			// Vector holding indicies to each unique vertex
+		mutable unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
+		mutable unsigned int vertexArrayObject;		// OpenGL vertex array object ID
+		mutable unsigned int elementBufferObject;	// OpenGL element buffer object ID
+		mutable std::vector<Vertex> vertices;		// Vector holding each unique vertex
+		mutable std::vector<int> indices;			// Vector holding indicies to each unique vertex
 	};
 }

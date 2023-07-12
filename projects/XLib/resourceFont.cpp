@@ -69,7 +69,7 @@ namespace X
 		}
 	}
 
-	void CResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour) const
 	{
 		// Get shader used to render the text
 		SCResourceManager* pResourceManager = SCResourceManager::getPointer();
@@ -233,7 +233,7 @@ namespace X
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void CResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, glm::vec4 colour) const
 	{
 		float fTextWidth = getTextWidth(strText, fFontScaling);
 		iPosX -= int(fTextWidth * 0.5f);
@@ -241,7 +241,7 @@ namespace X
 		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
 	}
 
-	void CResourceFont::printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int& iTotalRenderedHeight, float fFontScaling, glm::vec4 colour)
+	void CResourceFont::printInRect(bool bRenderText, const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, std::vector<std::string>& vstrTextLines, int& iTotalRenderedHeight, float fFontScaling, glm::vec4 colour) const
 	{
 		std::stringstream ss(strText);
 		std::string strNextWord;
@@ -277,7 +277,7 @@ namespace X
 		iTotalRenderedHeight = iTextYoffset + iTextLineOffset;
 	}
 
-	float CResourceFont::getTextWidth(const std::string& strText, float fFontScaling)
+	float CResourceFont::getTextWidth(const std::string& strText, float fFontScaling) const
 	{
 		float fWidth = 0;
 		unsigned char ch;
@@ -291,7 +291,7 @@ namespace X
 		return fWidth * fFontScaling;
 	}
 
-	float CResourceFont::getTextHeight(float fFontScaling)
+	float CResourceFont::getTextHeight(float fFontScaling) const
 	{
 		return fontTypes.fMaxCharHeight * fFontScaling;
 	}

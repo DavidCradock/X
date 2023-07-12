@@ -23,13 +23,13 @@ namespace X
 		C2DLayer* addLayer(const std::string& strUniqueName);
 
 		// Returns true if an object exists, else false
-		bool getLayerExists(const std::string& strUniqueName);
+		bool getLayerExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DLayer* getLayer(const std::string& strUniqueName);
+		C2DLayer* getLayer(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DLayer* getLayer(unsigned int uiIndex);
+		C2DLayer* getLayer(unsigned int uiIndex) const;
 
 		// Removes an object (and all the entities which have been added to it)
 		// If the object's name given doesn't exist, an exception occurs
@@ -43,24 +43,24 @@ namespace X
 		void removeAllLayers(void);
 
 		// Returns the total number of added objects
-		unsigned int getNumLayers(void);
+		unsigned int getNumLayers(void) const;
 
 		// Returns the name of the layer at specified z order
 		// A z order of 0 would give you the back most layer
 		// Use getNumLayers() to get the number of layers
 		// If invalid z order given, an exception occurs
-		std::string getLayerNameAtZorder(unsigned int uiZorder);
+		std::string getLayerNameAtZorder(unsigned int uiZorder) const;
 
 		// Returns the name of the layer at specified index
 		// Use getNumLayers() to get the number of layers
 		// If invalid index given, an exception occurs
-		std::string getLayerNameAtIndex(unsigned int uiIndex);
+		std::string getLayerNameAtIndex(unsigned int uiIndex) const;
 
 		// Given a name of an existing layer, returns it's order of rendering
 		// If it's at the back, this would be 0
 		// If it's at the front, this would be the total number of added layers - 1
 		// If the layer couldn't be found, an exception occurs
-		int getLayerZorder(const std::string& strLayerName);
+		int getLayerZorder(const std::string& strLayerName) const;
 
 		// Given a name of an existing layer (strLayerName), moves it closer to the front by one
 		// If the layer name doesn't exist, an exception occurs
@@ -92,13 +92,13 @@ namespace X
 		C2DCamera* addCamera(const std::string& strUniqueName);
 
 		// Returns true if an object exists, else false
-		bool getCameraExists(const std::string& strUniqueName);
+		bool getCameraExists(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DCamera* getCamera(const std::string& strUniqueName);
+		C2DCamera* getCamera(const std::string& strUniqueName) const;
 
 		// Returns a pointer to a previously added named object if it exists, else an exception occurs
-		C2DCamera* getCamera(unsigned int uiIndex);
+		C2DCamera* getCamera(unsigned int uiIndex) const;
 
 		// Removes an object
 		// If the object's name given doesn't exist, an exception occurs
@@ -112,10 +112,10 @@ namespace X
 		void removeAllCameras(void);
 
 		// Returns the total number of added objects
-		int getNumCameras(void);
+		int getNumCameras(void) const;
 	private:
-		std::map<std::string, C2DLayer*> _mmapLayers;		// Each named layer which holds sprite entities
-		std::vector<std::string> _mvecLayerNameZOrder;		// Holds names of each layer, in their rendering order (first added = first rendered)
-		std::map<std::string, C2DCamera*> _mmapCameras;		// Each named camera
+		mutable std::map<std::string, C2DLayer*> _mmapLayers;		// Each named layer which holds sprite entities
+		std::vector<std::string> _mvecLayerNameZOrder;				// Holds names of each layer, in their rendering order (first added = first rendered)
+		mutable std::map<std::string, C2DCamera*> _mmapCameras;		// Each named camera
 	};
 }

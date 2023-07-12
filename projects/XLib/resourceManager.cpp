@@ -163,7 +163,7 @@ namespace X
 		}
 	}
 
-	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
+	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create an image holding each characters' image and saves the image to disk.

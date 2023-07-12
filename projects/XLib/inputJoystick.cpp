@@ -165,4 +165,69 @@ namespace X
 		}
 	}
 
+	bool CInputJoystick::getJoystickDetected(void) const
+	{
+		return joystickDetected;
+	}
+
+	bool CInputJoystick::getForcefeedbackDetected(void) const
+	{ 
+		return forcefeedbackDetected;
+	}
+
+	long CInputJoystick::axisX(void) const
+	{ 
+		return _mjs.lX;
+	}
+
+	long CInputJoystick::axisY(void) const
+	{
+		return _mjs.lY;
+	}
+
+	long CInputJoystick::axisZ(void) const
+	{
+		return _mjs.lRz;
+	}
+
+	long CInputJoystick::axisS1(void) const
+	{
+		return _mjs.rglSlider[0];
+	}
+
+	long CInputJoystick::axisS2(void) const 
+	{
+		return _mjs.rglSlider[1];
+	}
+
+	DWORD CInputJoystick::axisPOW1(void) const
+	{
+		return _mjs.rgdwPOV[0];
+	}
+
+	DWORD CInputJoystick::axisPOW2(void) const 
+	{
+		return _mjs.rgdwPOV[1];
+	}
+
+	int CInputJoystick::buttonDown(unsigned int iButNum) const 
+	{
+		if (iButNum > 127)iButNum = 127;
+		return int(_mjs.rgbButtons[iButNum]);
+	}
+
+	int CInputJoystick::getNumButtons(void) const
+	{
+		return numButtons;
+	}
+
+	int CInputJoystick::getNumPOVS(void) const
+	{
+		return numPOVS;
+	}
+
+	int CInputJoystick::getNumAxis(void) const
+	{
+		return numAxis;
+	}
 }

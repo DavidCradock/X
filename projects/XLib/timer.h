@@ -33,28 +33,28 @@ namespace X
 
         // Suspends execution of the calling thread for the parsed number of microseconds.
         // The sleep may be lengthened slightly by any system activity or by the time spent processing the call or by the granularity of system timers. 
-        void sleep(unsigned int uiMilliseconds);
+        void sleep(unsigned int uiMilliseconds) const;
 
         // Sets the rate at which the getFPSAveraged() method's return value will be updated per second.
         // fSecondsPerUpdate - How much time in seconds before the FPSS value is updated.
         // For example, a value of 2.0 = update once every 2 seconds.
-        inline void setAveragedFPSRate(float fSecondsBetweenUpdates) { mdFPSAveragedRate = (double)fSecondsBetweenUpdates; if (mdFPSAveragedRate <= 0) mdFPSAveragedRate = 0.001; }
+        void setAveragedFPSRate(float fSecondsBetweenUpdates);
 
         // Returns the currently set rate at which the getFPSAveraged() method's return value will be updated per second.
-        inline float getAveragedFPSRate(void) const { return (float)mdFPSAveragedRate; }
+        float getAveragedFPSRate(void) const;
 
         // Returns computed Frames Per Second current value.
-        inline float getFPS(void) const { return (float)mdFPS; }
+        float getFPS(void) const;
 
         // Returns computed Frames Per Second averaged value.
-        inline float getFPSAveraged(void) const { return (float)mdFPSAveraged; }
+        float getFPSAveraged(void) const;
 
         // Resets all values to sane values, including the member set by setAveragedFPSRate()
         // Also, if this timer has been paused, it is unpaused.
         void reset(void);
 
         // Returns amount of seconds that we've been calling update()
-        float getRuntimeSeconds(void) const {    return (float)mdRuntimeInSeconds;    }
+        float getRuntimeSeconds(void) const;
 
         // Based on current runtime, sets parsed values to seconds, minutes, hours, days and weeks
         void getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int&iWeeks) const;

@@ -18,14 +18,14 @@ namespace X
 
 		// Binds the texture to the given texture unit
 		// uiTextureUnit should be between 0-7
-		void bind(unsigned int uiTextureUnit = 0);
+		void bind(unsigned int uiTextureUnit = 0) const;
 
 		// Unbinds texturing for the specified texture unit
 		// uiTextureUnit should be between 0-7
-		void unbind(unsigned int uiTextureUnit = 0);
+		void unbind(unsigned int uiTextureUnit = 0) const;
 
 		// Unbind all texture units
-		void unbindAll(void);
+		void unbindAll(void) const;
 
 		std::string _mstrImageFilename;
 		unsigned int _muiTextureID;

@@ -85,16 +85,16 @@ namespace X
 		// Returns the named image's details
 		// Call createAtlasImages() first.
 		// If an invalid image name is given, an exception occurs
-		CImageAtlasDetails getImageDetails(const std::string& strImageName);
+		CImageAtlasDetails getImageDetails(const std::string& strImageName) const;
 
 		// Returns whether the named image exists or not
-		bool getImageExists(const std::string& strImageName);
+		bool getImageExists(const std::string& strImageName) const;
 	private:
 		std::vector<CImage*> _mvAtlasImages;				// Holds each atlas image which contain all the added images.
 		std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each image's details
 
 		// This is so we can lookup an image by name using getImageDetails()
-		std::map<std::string, CImageAtlasDetails> _mmapImageDetails;
+		mutable std::map<std::string, CImageAtlasDetails> _mmapImageDetails;
 
 		
 

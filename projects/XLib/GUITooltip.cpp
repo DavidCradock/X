@@ -416,7 +416,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIText* CGUITooltip::getText(const std::string& strName)
+	CGUIText* CGUITooltip::getText(const std::string& strName) const
 	{
 		std::map<std::string, CGUIText*>::iterator it = _mmapTexts.find(strName);
 		ThrowIfTrue(it == _mmapTexts.end(), "CGUITooltip::getText(" + strName + ") failed. The named object doesn't exist.");
@@ -458,7 +458,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUILineGraph* CGUITooltip::getLineGraph(const std::string& strName)
+	CGUILineGraph* CGUITooltip::getLineGraph(const std::string& strName) const
 	{
 		std::map<std::string, CGUILineGraph*>::iterator it = _mmapLineGraphs.find(strName);
 		ThrowIfTrue(it == _mmapLineGraphs.end(), "CGUITooltip::getLineGraph(" + strName + ") failed. The named object doesn't exist.");
@@ -500,7 +500,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIProgressBar* CGUITooltip::getProgressBar(const std::string& strName)
+	CGUIProgressBar* CGUITooltip::getProgressBar(const std::string& strName) const
 	{
 		std::map<std::string, CGUIProgressBar*>::iterator it = _mmapProgressBars.find(strName);
 		ThrowIfTrue(it == _mmapProgressBars.end(), "CGUITooltip::getProgressBar(" + strName + ") failed. The named object doesn't exist.");
@@ -554,7 +554,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImage* CGUITooltip::getImage(const std::string& strName)
+	CGUIImage* CGUITooltip::getImage(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.find(strName);
 		ThrowIfTrue(it == _mmapImages.end(), "CGUITooltip::getImage(" + strName + ") failed. The named object doesn't exist.");
@@ -622,7 +622,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageAnimated* CGUITooltip::getImageAnimated(const std::string& strName)
+	CGUIImageAnimated* CGUITooltip::getImageAnimated(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageAnimated*>::iterator it = _mmapImageAnimateds.find(strName);
 		ThrowIfTrue(it == _mmapImageAnimateds.end(), "CGUITooltip::getImageAnimated(" + strName + ") failed. The named object doesn't exist.");
@@ -681,7 +681,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageFramebuffer* CGUITooltip::getImageFramebuffer(const std::string& strName)
+	CGUIImageFramebuffer* CGUITooltip::getImageFramebuffer(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageFramebuffer*>::iterator it = _mmapImageFramebuffers.find(strName);
 		ThrowIfTrue(it == _mmapImageFramebuffers.end(), "CGUITooltip::getImageFramebuffer(" + strName + ") failed. The named object doesn't exist.");
@@ -736,7 +736,7 @@ namespace X
 		return pNewRes;
 	}
 
-	CGUIImageDepthbuffer* CGUITooltip::getImageDepthbuffer(const std::string& strName)
+	CGUIImageDepthbuffer* CGUITooltip::getImageDepthbuffer(const std::string& strName) const
 	{
 		std::map<std::string, CGUIImageDepthbuffer*>::iterator it = _mmapImageDepthbuffers.find(strName);
 		ThrowIfTrue(it == _mmapImageDepthbuffers.end(), "CGUITooltip::getImageDepthbuffer(" + strName + ") failed. The named object doesn't exist.");

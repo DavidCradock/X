@@ -25,43 +25,43 @@ namespace X
 		void release(void);
 
 		// Returns true if a joystick has been detected.
-		inline bool getJoystickDetected(void) { return joystickDetected; }
+		inline bool getJoystickDetected(void) const;
 
 		// Returns true if force feedback is supported.
-		inline bool getForcefeedbackDetected(void) { return forcefeedbackDetected; }
+		inline bool getForcefeedbackDetected(void) const;
 
 		// Returns position along X axis +-1000
-		inline long axisX(void) { return _mjs.lX; }
+		inline long axisX(void) const;
 
 		// Returns position along X axis +-1000
-		inline long axisY(void) { return _mjs.lY; }
+		inline long axisY(void) const;
 
 		// Returns rotation of rudder +-1000
-		inline long axisZ(void) { return _mjs.lRz; }
+		inline long axisZ(void) const;
 
 		// Returns position along slider 1 +-1000
-		inline long axisS1(void) { return _mjs.rglSlider[0]; }
+		inline long axisS1(void) const;
 
 		// Returns position along slider 2 +-1000
-		inline long axisS2(void) { return _mjs.rglSlider[1]; }
+		inline long axisS2(void) const;
 
 		// Returns 1st POW hat position. -1 for central position, else degrees from "north" position
-		inline DWORD axisPOW1(void) { return _mjs.rgdwPOV[0]; }
+		inline DWORD axisPOW1(void) const;
 
 		// Returns 2nd POW hat position. -1 for central position, else degrees from "north" position
-		inline DWORD axisPOW2(void) { return _mjs.rgdwPOV[1]; }
+		inline DWORD axisPOW2(void) const;
 
 		// Returns non zero number if the specified button is pressed. (upto 128 (0 to 127) buttons)
-		inline int buttonDown(unsigned int iButNum = 0) { if (iButNum > 127)iButNum = 127;	return int(_mjs.rgbButtons[iButNum]); }
+		inline int buttonDown(unsigned int iButNum = 0) const;
 
 		// Returns number of buttons
-		inline int getNumButtons(void) { return numButtons; }
+		inline int getNumButtons(void) const;
 
 		// Returns number of view hats
-		inline int getNumPOVS(void) { return numPOVS; }
+		inline int getNumPOVS(void) const;
 
 		// Returns number of axis
-		inline int getNumAxis(void) { return numAxis; }
+		inline int getNumAxis(void) const;
 
 		LPDIRECTINPUT8			directInput;			// Pointer to main DirectX input object
 		LPDIRECTINPUTDEVICE8	device;	// DirectX input device object for the joystick

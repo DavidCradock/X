@@ -121,7 +121,7 @@ namespace X
 		{
 			switch (iFirstKey)
 			{
-			case KC_A:			keyOnce2Char.append("A");	break;
+			case KC_A:			keyOnce2Char.append("A"); break;
 			case KC_B:			keyOnce2Char.append("B"); break;
 			case KC_C:			keyOnce2Char.append("C"); break;
 			case KC_D:			keyOnce2Char.append("D"); break;
@@ -174,7 +174,7 @@ namespace X
 		{
 			switch (iFirstKey)
 			{
-			case KC_A:			keyOnce2Char.append("a");	break;
+			case KC_A:			keyOnce2Char.append("a"); break;
 			case KC_B:			keyOnce2Char.append("b"); break;
 			case KC_C:			keyOnce2Char.append("c"); break;
 			case KC_D:			keyOnce2Char.append("d"); break;
@@ -322,6 +322,38 @@ namespace X
 		// If this is the first time a key has been pressed, set state of key pressed as true
 		if (bAnyKeyOnce)
 			keyAny.bRepeatOK = true;
+	}
+
+	bool CInputKeyboard::anyPressed(void) const
+	{
+		return anyKeyPressed;
+	}
+
+	bool CInputKeyboard::anyRepeat(void) const
+	{
+		return keyAny.bRepeatOK;
+	}
+
+	bool CInputKeyboard::pressed(unsigned char KC_KEYCODE) const
+	{
+		if (keyState[KC_KEYCODE] & 0x80)
+			return true;
+		return false;
+	}
+
+	bool CInputKeyboard::once(unsigned char KC_KEYCODE) const
+	{
+		return keyOnceResult[KC_KEYCODE];
+	}
+
+	const std::string& CInputKeyboard::once2Char(void) const
+	{
+		return keyOnce2Char;
+	}
+
+	bool CInputKeyboard::repeat(unsigned char KC_KEYCODE) const
+	{
+		return keyRep[KC_KEYCODE].bRepeatOK;
 	}
 
 	void CInputKeyboard::setRepeatInitialDelay(float fMilliseconds)

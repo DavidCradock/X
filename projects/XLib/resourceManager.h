@@ -61,7 +61,7 @@ namespace X
 		// bAntialiased is whether to perform antialiasing when generating the font's character images.
 		// bBold, bItalic, bUnderlines and bStrikeout define the style of the font.
 		// If an error occurred, an error message is shown and execution ends.
-		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout);
+		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout) const;
 
 		// Adds a new depthbuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
