@@ -10,6 +10,8 @@ namespace X
 		void onEnter(void);	// This is called when this state is first entered.
 		void onActive(CFiniteStateMachine* pFSM);	// This is called whilst the state is active.
 		void onExit(void);	// This is called when this state is left.
+		CTimer timer;
+		float fTimeDelayUntilAutostart;
 	};
 
 	class CState02_2DSprites : public CFiniteStateBase
@@ -22,6 +24,15 @@ namespace X
 		CTimer timer;
 		float fCentreSpriteRotation;
 		std::vector<std::string> vstrImages;	// Each image name for entity
+		float fSecondsNoEntitiesAdded;			// To detect when benchmark has reached the end
+	};
+
+	class CState99_Results : public CFiniteStateBase
+	{
+	public:
+		void onEnter(void);	// This is called when this state is first entered.
+		void onActive(CFiniteStateMachine* pFSM);	// This is called whilst the state is active.
+		void onExit(void);	// This is called when this state is left.
 	};
 
 	class CApplication : public CApplicationBase
