@@ -12,15 +12,15 @@ namespace X
 
 	C2DLayer::~C2DLayer()
 	{
-		removeAllEntitys();
+		removeAllEntities();
 		removeAllEntityComplexs();
 	}
 
 	C2DEntity* C2DLayer::addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
 	{
 		// Attempt to find if the object name already exists
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.find(strUniqueName);
-		ThrowIfTrue(it != _mmapEntitys.end(), "C2DLayer::addEntity(\"" + strUniqueName + "\") failed. The object already exists.");
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.find(strUniqueName);
+		ThrowIfTrue(it != _mmapEntities.end(), "C2DLayer::addEntity(\"" + strUniqueName + "\") failed. The object already exists.");
 
 		// Allocate memory for new object
 		C2DEntity* pNew = new C2DEntity(strResourceTexture2DAtlasName);
@@ -31,13 +31,13 @@ namespace X
 		ThrowIfFalse(pRM->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntity(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
 		
 		// Add object to hash map
-		_mmapEntitys[strUniqueName] = pNew;
+		_mmapEntities[strUniqueName] = pNew;
 		return pNew;
 	}
 
 	bool C2DLayer::getEntityExists(const std::string& strUniqueName) const
 	{
-		if (_mmapEntitys.find(strUniqueName) == _mmapEntitys.end())
+		if (_mmapEntities.find(strUniqueName) == _mmapEntities.end())
 			return false;
 		return true;
 	}
@@ -45,16 +45,16 @@ namespace X
 	C2DEntity* C2DLayer::getEntity(const std::string& strUniqueName) const
 	{
 		// Attempt to find if the name already exists
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.find(strUniqueName);
-		ThrowIfTrue(it == _mmapEntitys.end(), "C2DLayer::getEntity(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntities.end(), "C2DLayer::getEntity(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
 		return it->second;
 	}
 
 	C2DEntity* C2DLayer::getEntity(unsigned int uiIndex) const
 	{
 		// Make sure given index is valid
-		ThrowIfTrue(uiIndex >= _mmapEntitys.size(), "C2DLayer::getEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.begin();
+		ThrowIfTrue(uiIndex >= _mmapEntities.size(), "C2DLayer::getEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.begin();
 		unsigned int ui = 0;
 		while (ui < uiIndex)
 		{
@@ -67,21 +67,21 @@ namespace X
 	void C2DLayer::removeEntity(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.find(strUniqueName);
-		ThrowIfTrue(it == _mmapEntitys.end(), "C2DLayer::removeEntity(\"" + strUniqueName + "\") failed. The object doesn't exist.");
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntities.end(), "C2DLayer::removeEntity(\"" + strUniqueName + "\") failed. The object doesn't exist.");
 
 		// De-allocate memory
 		delete it->second;
 
 		// Remove from hash map
-		_mmapEntitys.erase(it);
+		_mmapEntities.erase(it);
 	}
 
 	void C2DLayer::removeEntity(unsigned int uiIndex)
 	{
 		// Make sure given index is valid
-		ThrowIfTrue(uiIndex >= _mmapEntitys.size(), "C2DLayer::removeEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.begin();
+		ThrowIfTrue(uiIndex >= _mmapEntities.size(), "C2DLayer::removeEntity(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.begin();
 		unsigned int ui = 0;
 		while (ui < uiIndex)
 		{
@@ -92,24 +92,24 @@ namespace X
 		delete it->second;
 
 		// Remove object from hash map
-		_mmapEntitys.erase(it);
+		_mmapEntities.erase(it);
 	}
 
-	void C2DLayer::removeAllEntitys(void)
+	void C2DLayer::removeAllEntities(void)
 	{
 		// Remove all objects
-		std::map<std::string, C2DEntity*>::iterator it = _mmapEntitys.begin();
-		while (it != _mmapEntitys.end())
+		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.begin();
+		while (it != _mmapEntities.end())
 		{
 			delete it->second;
-			_mmapEntitys.erase(it);
-			it = _mmapEntitys.begin();
+			_mmapEntities.erase(it);
+			it = _mmapEntities.begin();
 		}
 	}
 
-	unsigned int C2DLayer::getNumEntitys(void) const
+	unsigned int C2DLayer::getNumEntities(void) const
 	{
-		return int(_mmapEntitys.size());
+		return int(_mmapEntities.size());
 	}
 
 	C2DEntityComplex* C2DLayer::addEntityComplex(const std::string& strUniqueName)

@@ -40,12 +40,12 @@ namespace X
 		void removeEntity(unsigned int uiIndex);
 
 		// Removes all objects
-		void removeAllEntitys(void);
+		void removeAllEntities(void);
 
 		// Returns the total number of added objects
-		unsigned int getNumEntitys(void) const;
+		unsigned int getNumEntities(void) const;
 
 	private:
-		mutable std::map<std::string, C2DEntity*> _mmapEntitys;					// Each named entity
+		mutable std::map<std::string, C2DEntity*> _mmapEntities;					// Each named entity
 	};
 }

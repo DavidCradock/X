@@ -7,6 +7,7 @@ namespace X
 	{
 		_mstrFramebufferTarget = "X:backbuffer_FB";
 		mv2rPosition.setZero();
+		_mbEnabled = true;
 	}
 
 	C2DCamera::~C2DCamera()
@@ -21,5 +22,15 @@ namespace X
 		vPos.y = (float)mv2rPosition.y;
 		vPos.z = 0.0f;
 		return vPos;
+	}
+
+	void C2DCamera::setEnabled(bool bEnabled)
+	{
+		_mbEnabled = bEnabled;
+	}
+
+	bool C2DCamera::getEnabled(void) const
+	{
+		return _mbEnabled;
 	}
 }

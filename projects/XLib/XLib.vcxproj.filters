@@ -40,6 +40,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{cc27cd10-6453-41bb-a605-8514a51e5eb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{cca17d79-4315-431d-aaad-162af7e7cfd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -293,6 +296,9 @@
     <ClInclude Include="quaternion.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="finiteStateMachine.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -518,6 +524,9 @@
     </ClCompile>
     <ClCompile Include="quaternion.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="finiteStateMachine.cpp">
+      <Filter>AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

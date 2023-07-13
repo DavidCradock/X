@@ -22,6 +22,7 @@
     <ClInclude Include="applicationManager.h" />
     <ClInclude Include="audioManager.h" />
     <ClInclude Include="colour.h" />
+    <ClInclude Include="finiteStateMachine.h" />
     <ClInclude Include="GUIBaseObject.h" />
     <ClInclude Include="GUIButton.h" />
     <ClInclude Include="GUIButtonImage.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="applicationManager.cpp" />
     <ClCompile Include="audioManager.cpp" />
     <ClCompile Include="colour.cpp" />
+    <ClCompile Include="finiteStateMachine.cpp" />
     <ClCompile Include="GUIBaseObject.cpp" />
     <ClCompile Include="GUIButton.cpp" />
     <ClCompile Include="GUIButtonImage.cpp" />

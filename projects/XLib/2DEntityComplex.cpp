@@ -30,10 +30,10 @@ namespace X
 			// For each entity in layer
 			unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
 			std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
-			std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntitys.begin();
+			std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
 			CVector2r v2rPos;	// Used by to compute actual entity position based on scale
 			CVector2r v2rDims;	// Used by to compute actual entity position based on scale
-			while (itEntity != pLayer->_mmapEntitys.end())
+			while (itEntity != pLayer->_mmapEntities.end())
 			{
 				// Make sure the images have been set, if not, throw an exception
 				ThrowIfFalse(itEntity->second->_mbImagesAreSet, "C2DEntityComplex::render() failed. Entity: " + itEntity->first + " has not had either setImagesSingle() or setImagesMultiple() called.");

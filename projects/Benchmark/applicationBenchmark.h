@@ -3,7 +3,27 @@
 
 namespace X
 {
-	// 
+	// Finite state machine state classes
+	class CState01_Welcome : public CFiniteStateBase
+	{
+	public:
+		void onEnter(void);	// This is called when this state is first entered.
+		void onActive(CFiniteStateMachine* pFSM);	// This is called whilst the state is active.
+		void onExit(void);	// This is called when this state is left.
+	};
+
+	class CState02_2DSprites : public CFiniteStateBase
+	{
+	public:
+		void onEnter(void);	// This is called when this state is first entered.
+		void onActive(CFiniteStateMachine* pFSM);	// This is called whilst the state is active.
+		void onExit(void);	// This is called when this state is left.
+
+		CTimer timer;
+		float fCentreSpriteRotation;
+		std::vector<std::string> vstrImages;	// Each image name for entity
+	};
+
 	class CApplication : public CApplicationBase
 	{
 	public:
@@ -26,42 +46,7 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-		CTimer timer;
-
-		// Create benchmark information GUI and results container.
-		void _initGUI(void);
-
-		// Each application state
-		enum AppState
-		{
-			welcomeScreen,
-			benchmark1,
-			benchmark2,
-			benchmark3,
-			showResults
-		};
-		// Holds the state of the application, starting at "welcomeScreen" for showing the welcome screen,
-		// then incrementing for each test until finally, we're at the final state which shows the results.
-		AppState _mState;
-
-		// Setup benchmarks
-		void _initBenchmark1(void);
-		void _initBenchmark2(void);
-		void _initBenchmark3(void);
-		void _initShowResults(void);
-
-		// Update benchmarks
-		// Each return true, once the benchmark has complete
-		bool _updateBenchmark1(void);
-		bool _updateBenchmark2(void);
-		bool _updateBenchmark3(void);
-		bool _updateShowResults(void);
-
-		struct SBenchmark1
-		{
-			float fCentreSpriteRotation;
-		};
-		SBenchmark1 b1;	// Holds variables for benchmark1
-
+		
+		CFiniteStateMachine _mFSM;	// Finite state machine holding each of the states for the application
 	};
 }

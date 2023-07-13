@@ -440,4 +440,14 @@ namespace X
 //		_ASSERTE(hIcon != 0);
 		SendMessage(mhWindowHandle, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
 	}
+
+	unsigned int SCWindow::getRefreshRate(void) const
+	{
+		DEVMODE dmCurrent;
+		EnumDisplaySettings(NULL,	// Current device which this thread is running on
+			ENUM_CURRENT_SETTINGS,
+			&dmCurrent);
+		return (unsigned int)dmCurrent.dmDisplayFrequency;
+	}
+
 }

@@ -13,6 +13,7 @@ namespace X
 		_mv2rScale.set(1, 1);
 		_mColour.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mbImagesAreSet = false;
+		_mbVisible = true;
 	}
 
 	C2DEntity::~C2DEntity()
@@ -138,5 +139,15 @@ namespace X
 	{
 		real rDegrees = vDir.getAngleDegrees360();
 		setFrameBasedOnAngle((float)rDegrees);
+	}
+
+	void C2DEntity::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool C2DEntity::getVisible(void) const
+	{
+		return _mbVisible;
 	}
 }

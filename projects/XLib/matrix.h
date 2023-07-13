@@ -150,6 +150,5 @@ namespace X
 
 	private:
 		float m[16];	// Values for the matrix
-//		float tm[16];	// Used as a temporary matrix in calculations
 	};
 }

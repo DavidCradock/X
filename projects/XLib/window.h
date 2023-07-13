@@ -78,6 +78,9 @@ namespace X
 		// Sets the icon of the application window using an int from resource.h
 		void setIcon(int iIconResource);
 
+		// Returns currently set refresh rate of the display
+		unsigned int getRefreshRate(void) const;
+		
 	private:
 		WNDCLASS mWindowClass;			// Window class used to create the window
 		HINSTANCE mhInstance;			// Application instance handle

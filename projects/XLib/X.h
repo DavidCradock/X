@@ -8,6 +8,7 @@
 #include "2DLayer.h"
 #include "2DRenderer.h"
 #include "2DWorld.h"
+#include "finiteStateMachine.h"
 #include "applicationBase.h"
 #include "applicationManager.h"
 #include "audioManager.h"

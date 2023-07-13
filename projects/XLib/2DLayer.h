@@ -40,10 +40,10 @@ namespace X
 		void removeEntity(unsigned int uiIndex);
 
 		// Removes all objects
-		void removeAllEntitys(void);
+		void removeAllEntities(void);
 
 		// Returns the total number of added objects
-		unsigned int getNumEntitys(void) const;
+		unsigned int getNumEntities(void) const;
 
 		// Add a new named object
 		// If the object name already exists, an exception occurs
@@ -80,7 +80,7 @@ namespace X
 		// Returns whether this layer is currently set to be visible and rendered or not
 		bool getVisible(void) const;
 	private:
-		mutable std::map<std::string, C2DEntity*> _mmapEntitys;					// Each named entity
+		mutable std::map<std::string, C2DEntity*> _mmapEntities;					// Each named entity
 		mutable std::map<std::string, C2DEntityComplex*> _mmapEntityComplexs;	// Each named entity complex
 		bool _mbVisible;														// Whether this layer is visible and rendered or not
 	};

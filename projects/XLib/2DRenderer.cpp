@@ -143,6 +143,13 @@ namespace X
 			std::map<std::string, C2DCamera*>::iterator itCamera = itWorld->second->_mmapCameras.begin();
 			while (itCamera != itWorld->second->_mmapCameras.end())
 			{
+				// Only proceed if this camera is enabled
+				if (!itCamera->second->getEnabled())
+				{
+					itCamera++;
+					continue;
+				}
+
 				// Get framebuffer to render to
 				CResourceFramebuffer* pFB = pRM->getFramebuffer(itCamera->second->_mstrFramebufferTarget);
 				
@@ -174,18 +181,23 @@ namespace X
 
 					// Only render the layer if it is set to be
 					if (!pLayer->_mbVisible)
-					{
 						continue;
-					}
 
 					// For each entity in layer
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
 					std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
-					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntitys.begin();
+					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
 					CVector2r v2rPos;	// Used by to compute actual entity position based on scale
 					CVector2r v2rDims;	// Used by to compute actual entity position based on scale
-					while (itEntity != pLayer->_mmapEntitys.end())
+					while (itEntity != pLayer->_mmapEntities.end())
 					{
+						// Only render if the entity is set to be rendered
+						if (!itEntity->second->getVisible())
+						{
+							itEntity++;
+							continue;
+						}
+
 						// Make sure the images have been set, if not, throw an exception
 						ThrowIfFalse(itEntity->second->_mbImagesAreSet, "SC2DRenderer::render() failed. Entity: " + itEntity->first + " has not had either setImagesSingle() or setImagesMultiple() called.");
 
@@ -252,7 +264,6 @@ namespace X
 					while (itEntityComplex != pLayer->_mmapEntityComplexs.end())
 					{
 						itEntityComplex->second->render();
-
 						itEntityComplex++;
 					}
 
