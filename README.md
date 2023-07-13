@@ -7,8 +7,11 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio, hit compile, done.
 
-Current progress...
+Screenshot of the development application showing GUI...
 ![Screenshot of the development application showing GUI progress.](https://github.com/DavidCradock/X/blob/8b0174ddd5eb93baecca9c6d422111aac91df7e6/github_images/github_screenshot_2023_07_03.png)
+
+Screenshot of Benchmark application showing lots of 2D images being rendered...
+![Screenshot of Benchmark application showing lots of 2D images being rendered.](https://github.com/DavidCradock/X/blob/a3010410cca1f2320c03d0e0bc02bbb0f61f15df/github_images/github_screenshot_2023_07_13.png)
 
 ** TODO **
 - Add quaternions and position to CSMEntityBase along with helper functions to move stuff etc.
