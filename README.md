@@ -12,23 +12,25 @@ Current progress...
 
 ** TODO **
 - Add quaternions and position to CSMEntityBase along with helper functions to move stuff etc.
-- Implement more stuff into Camera
-- Implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
-- Particle systems
-- Add in neural networks, steering behaviours, pathfinding
-- Add and profile sorting of scene by materials
 - Add translation/rotation/scale of base entities
+- Implement more stuff into Camera of scene manager
+- Implement SceneManagers (A brute force, render everything, but sorted by shader/textures) and SceneManagerOctTree, perhaps also SceneManagerQuadTree
+- Add 2D and 3D particle systems
+- Work on C2DEntityComplex of 2D sprite rendering
+- Rewrite joy part of input
+- Add padding to vector classes and test speed increase
+- Add the ability to be able to add newlines to the text scroll GUI object.
+- Change 2D stuff from using CVector2r to CVector2f
+- Add mouse wheel support for CGUITextScroll object.
+- Add CText class and exchange it for all the std::string usage
+- Add generation of orthographic and perspective matrix
+- Add in neural networks, steering behaviours, pathfinding
+- Add physics engine.
+- Remove and replace glm with own code?
+- Implement better random number generator
+- GUI...
 - Implement DraggableDock to GUI.
 - Implement DraggableItem to GUI.
 - Implement Menu to GUI.
 - Implement Tab and TabContainer to GUI.
 - Implement Taskbar to GUI.
-- Work on C2DEntityComplex of 2D sprite rendering
-- Rewrite joy part of input
-- Remove and replace glm with own code?
-- Add padding to vector classes and test speed increase
-- Add the ability to be able to add newlines to the text scroll GUI object.
-- Change 2D stuff from using CVector2r to CVector2f
-- Tidy up CMatrix, CVector?? and CQuaternion classes.
-- Add mouse wheel support for CGUITextScroll object.
-- Implement better random number generator
