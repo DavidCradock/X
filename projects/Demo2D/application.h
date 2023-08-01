@@ -26,12 +26,8 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-		CTimer timer;
-		float mfEntityBackgroundDegrees[1000];
-		float mfEntityRotDir[1000];
+		CFiniteStateMachine _mFSM;
 
-		CVector2f mvEntityPos;
-		float mfEntityVel;
-		CVector2f mvEntityDir;
+		
 	};
 }

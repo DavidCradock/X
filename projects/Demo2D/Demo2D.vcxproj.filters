@@ -4,6 +4,8 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="state0.cpp" />
+    <ClCompile Include="state1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -11,6 +13,8 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="PCH.h" />
+    <ClInclude Include="state0.h" />
+    <ClInclude Include="state1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">

@@ -48,6 +48,7 @@ namespace X
 	{
 		std::map<std::string, CFiniteStateBase*>::iterator it = _mmapStates.find(strStateName);
 		ThrowIfTrue(it != _mmapStates.end(), "CFiniteStateMachine::addState(\"" + strStateName + "\") failed. State name already exists.");
+		ThrowIfFalse(pState, "CFiniteStateMachine::addState(\"" + strStateName + "\") failed. The given state pointer was 0.");
 		_mmapStates[strStateName] = pState;
 	}
 

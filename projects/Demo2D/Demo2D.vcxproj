@@ -101,12 +101,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="state0.cpp" />
+    <ClCompile Include="state1.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
     <ClInclude Include="PCH.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="state0.h" />
+    <ClInclude Include="state1.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
