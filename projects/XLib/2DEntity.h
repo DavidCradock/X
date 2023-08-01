@@ -107,8 +107,8 @@ namespace X
 		bool _mbUseAnimationFrames;						// Whether to use a single image or multiple stored in the texture atlas.
 		std::vector<std::string> _mvstrImageNames;		// A vector of strings holding each image name stored in the texture atlas to use.
 		bool _mbImagesAreSet;							// Keeps track of whether either setImagesSingle() or setImagesMultiple() has been called and
-														// checked in SC2DRenderer to throw an exception stating that they haven't
-		bool _mbVisible;								// Whether this layer is visible and rendered or not
+														// checked in render() to throw an exception stating that they haven't
+		bool _mbVisible;								// Whether this entity is visible and rendered or not
 
 		/* A vector of CImageAtlasDetails, holding each image's atlas details including...
 			sTexCoords The texture coordinates within the atlas image of the image

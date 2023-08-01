@@ -184,7 +184,7 @@ namespace X
 					if (!pLayer->_mbVisible)
 						continue;
 
-					// For each entity in layer
+					// For each C2DEntity in layer
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
 					std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
@@ -195,7 +195,6 @@ namespace X
 							uiPreviouslyBoundAtlasImageNumber,
 							pTri,
 							_muiNumTextureBindingsPerLoop);
-
 						itEntity++;
 					}
 					// Send remaining vertex data to GPU to be rendered
@@ -203,7 +202,7 @@ namespace X
 					pTri->draw(false);
 					pTri->removeGeom();
 
-					// For each complex entity in layer
+					// For each C2DEntityComplex in layer
 					std::map<std::string, C2DEntityComplex*>::iterator itEntityComplex = pLayer->_mmapEntityComplexs.begin();
 					while (itEntityComplex != pLayer->_mmapEntityComplexs.end())
 					{
@@ -219,7 +218,7 @@ namespace X
 		}	// Each world
 
 
-		// Reset framebuffer to render to to the "X:backbuffer_FB"
+		// Reset framebuffer to render to the "X:backbuffer_FB"
 		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:backbuffer_FB");
 		pFB->bindAsRenderTarget(false, false);
 
