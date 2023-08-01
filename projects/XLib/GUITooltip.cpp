@@ -37,9 +37,11 @@ namespace X
 		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
 		CVector2f vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
 		CVector2f vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		SCWindow* pWindow = SCWindow::getPointer();
+		SCInputManager* pInput = SCInputManager::getPointer();
 
 		// Tooltip framebuffer: set size if needed, clear it and set as render target
-		// We need to make the framebuffer bigger than just the mfWidth and mfHeight, as we need to accomodate borders
+		// We need to make the framebuffer bigger than just the mfWidth and mfHeight, as we need to accommodate borders
 		pFB->resize(unsigned int(mfWidth + vTexDimsPoint6.x), unsigned int(mfHeight + vTexDimsPoint6.y));
 		pFB->bindAsRenderTarget(true, false);
 
@@ -50,7 +52,6 @@ namespace X
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		SCWindow* pWindow = SCWindow::getPointer();
 		matProjection.setProjectionOrthographic(0.0f, float(pFB->getWidth()), 0.0f, float(pFB->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
@@ -251,7 +252,19 @@ namespace X
 //		glEnable(GL_BLEND);
 //		glDisable(GL_DEPTH_TEST);
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		pFB->renderTo2DQuad(unsigned int(mfPositionX + vTexDimsPoint3.x), unsigned int(mfPositionY), unsigned int(pFB->getWidth()), unsigned int(pFB->getHeight()), _mColour);
+		// Now render the framebuffer which now contains the tooltip.
+		// But before we do so, we need to make sure it fits on screen, otherwise reposition as required.
+
+		CVector3f vTooltipPosition;
+		vTooltipPosition.x = mfPositionX + vTexDimsPoint3.x;
+		vTooltipPosition.y = mfPositionY;
+		// Move tooltip position left if it doesn't fit on screen
+		if (vTooltipPosition.x + pFB->getWidth() >= pWindow->getWidth())
+		{
+			// Position so the tooltip's right most edge is to the left of the mouse cursor
+			vTooltipPosition.x = pInput->mouse.getCursorPos().x - (float)pFB->getWidth();
+		}
+		pFB->renderTo2DQuad(unsigned int(vTooltipPosition.x), unsigned int(vTooltipPosition.y), unsigned int(pFB->getWidth()), unsigned int(pFB->getHeight()), _mColour);
 		glDisable(GL_BLEND);
 	}
 

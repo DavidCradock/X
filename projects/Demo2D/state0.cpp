@@ -99,7 +99,7 @@ namespace X
 		strTxt += "A C2DWorld holds one or more C2DCamera objects which render the world to their set framebuffer object and a camera has a position, so we can render a world to multiple framebuffers at different locations.\n";
 		strTxt += "A C2DWorld holds all layers which hold all the renderable entity types we have to play with. Layers have a Z order and can be positioned above or underneath other layers to help with the rendering order of each layers' entities.\n";
 		strTxt += "Each layer can have added to it, one or more entities of various types...\n \n";
-		strTxt += "CEntity is a simple entity which can be positioned and scaled and have multiple images used to render itself with, these images are stored in the SCResourceManager with it's addTexture2DAtlas() method which accepts a vector of image file names to insert into a single texture.\n";
+		strTxt += "CEntity is a simple entity which can be positioned and scaled and have multiple images used to render itself with. These images are stored in the SCResourceManager with it's addTexture2DAtlas() method which accepts a vector of image file names to insert into a single texture.\n";
 		strTxt += "These images can be used to represent an entity's rotation, or an animation sequence.\n \n";
 		strTxt += "CEntityComplex is just like a CEntity, except it can have child entities which can be set to \"rotate\" along with it's \"PARENT\" entity, using a position offset from the parent entity.\n \n";
 		strTxt += "CEntityLine entities use a CResourceLine object to render lines. These lines can be cubes, circles or simple lines and unlike the previously mentioned entities, can actually be rotated. They are generally used for debug rendering.\n \n";
