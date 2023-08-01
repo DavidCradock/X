@@ -6,6 +6,7 @@
     <ClCompile Include="PCH.cpp" />
     <ClCompile Include="state0.cpp" />
     <ClCompile Include="state1.cpp" />
+    <ClCompile Include="state2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -15,6 +16,7 @@
     <ClInclude Include="PCH.h" />
     <ClInclude Include="state0.h" />
     <ClInclude Include="state1.h" />
+    <ClInclude Include="state2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">

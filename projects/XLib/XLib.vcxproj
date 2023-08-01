@@ -14,6 +14,7 @@
     <ClInclude Include="2DCamera.h" />
     <ClInclude Include="2DEntity.h" />
     <ClInclude Include="2DEntityComplex.h" />
+    <ClInclude Include="2DEntityRot.h" />
     <ClInclude Include="2DLayer.h" />
     <ClInclude Include="2DLayerComplex.h" />
     <ClInclude Include="2DMap.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="2DCamera.cpp" />
     <ClCompile Include="2DEntity.cpp" />
     <ClCompile Include="2DEntityComplex.cpp" />
+    <ClCompile Include="2DEntityRot.cpp" />
     <ClCompile Include="2DLayer.cpp" />
     <ClCompile Include="2DLayerComplex.cpp" />
     <ClCompile Include="2DMap.cpp" />

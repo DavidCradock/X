@@ -346,6 +346,9 @@
     <ClInclude Include="2DMap.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="2DEntityRot.h">
+      <Filter>2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -617,6 +620,9 @@
       <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="2DMap.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntityRot.cpp">
       <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>

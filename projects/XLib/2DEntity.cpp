@@ -132,4 +132,73 @@ namespace X
 	{
 		return _mbVisible;
 	}
+
+	void C2DEntity::render(
+		std::string& strPreviouslyBoundAtlasName,
+		unsigned int& uiPreviouslyBoundAtlasImageNumber,
+		CResourceTriangle* pTri,
+		unsigned int& uiNumTextureBindingsPerLoop)
+	{
+		// If this entity is set as invisible, do nuffin'
+		if (!_mbVisible)
+			return;
+
+		// Make sure the images this entity uses have been set, if not, throw an exception
+		ThrowIfFalse(_mbImagesAreSet, "C2DEntity::render() failed. Entity has not had either setImagesSingle() or setImagesMultiple() called.");
+
+		// Determine whether texture atlas has changed since rendering of any previous entity
+		bool bNeedToBindTexture = false;
+		if (strPreviouslyBoundAtlasName != _mstrResourceTexture2DAtlasName)
+		{
+			strPreviouslyBoundAtlasName = _mstrResourceTexture2DAtlasName;
+			bNeedToBindTexture = true;
+		}
+		// Determine whether texture atlas's texture number has changed since rendering of any previous entity as texture atlases can have multiple textures
+		if (uiPreviouslyBoundAtlasImageNumber != _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage)
+		{
+			uiPreviouslyBoundAtlasImageNumber = _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage;
+			bNeedToBindTexture = true;
+		}
+
+		// We need to send any existing vertex data to be rendered IF the atlas texture is to be changed
+		if (bNeedToBindTexture)	// If the atlas texture has changed
+		{
+			pTri->update();
+			pTri->draw(false);
+			pTri->removeGeom();
+		}
+
+		// Bind the texture AFTER rendering the above vertices, otherwise the above vertices will use the new texture
+		if (bNeedToBindTexture)
+		{
+			SCResourceManager* pRM = SCResourceManager::getPointer();
+			// Get CResourceTexture2DAtlas the entity is set to use
+			CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+			// Bind the atlas texture containing the entity's currently set frame number's image
+			pAtlas->bindAtlas(0, _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage);
+			uiNumTextureBindingsPerLoop++;
+		}
+
+		CVector2f v2fDims = _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions;
+		CVector2f v2fPos = _mv2fPosition;
+
+		// Scale sprite if needed
+		if (_mv2fScale.x != 1.0f || _mv2fScale.y != 1.0f)
+		{
+			v2fDims.x *= _mv2fScale.x;
+			v2fDims.y *= _mv2fScale.y;
+		}
+
+		// Offset position from top left to center of entity
+		v2fPos -= v2fDims * 0.5f;
+
+		pTri->addQuad2D(
+			v2fPos,											// Position
+			v2fDims,										// Dimensions
+			_mColour,										// Colour
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
+	}
 }

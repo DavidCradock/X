@@ -212,21 +212,12 @@ namespace X
 
 		while (itCont != _mmapContainers.end())
 		{
-			itCont->second->_mvTextColour = CColour(
-				pTheme->mColours.containerTitlebarTextNotInFocus.red,
-				pTheme->mColours.containerTitlebarTextNotInFocus.green,
-				pTheme->mColours.containerTitlebarTextNotInFocus.blue,
-				pTheme->mColours.containerTitlebarTextNotInFocus.alpha);
+			itCont->second->_mTextColour = pTheme->mColours.containerTitlebarTextNotInFocus;
 			itCont++;
 		}
 
 		// Set colour of titlebar text
-		pNew->_mvTextColour = CColour(
-			pTheme->mColours.containerTitlebarTextInFocus.red,
-			pTheme->mColours.containerTitlebarTextInFocus.green,
-			pTheme->mColours.containerTitlebarTextInFocus.blue,
-			pTheme->mColours.containerTitlebarTextInFocus.alpha);
-
+		pNew->_mTextColour = pTheme->mColours.containerTitlebarTextInFocus;
 		return pNew;
 	}
 
@@ -474,4 +465,24 @@ namespace X
 	{
 		return _mv2TooltipOffset;
 	}
+
+	void SCGUIManager::setContainerAsActive(const std::string& strContainerName)
+	{
+		// Make sure the container exists
+		std::map<std::string, CGUIContainer*>::iterator itCont = _mmapContainers.find(strContainerName);
+		ThrowIfTrue(_mmapContainers.end() == itCont, "SCGUIManager:::setContainerAsActive(" + strContainerName + ") failed. The named container doesn't exist.");
+
+		// Go through all containers and set their titlebar text to not in focus
+		itCont = _mmapContainers.begin();
+		while (itCont != _mmapContainers.end())
+		{
+			itCont->second->_mTextColour = itCont->second->getTheme()->mColours.containerTitlebarTextNotInFocus;
+			itCont++;
+		}
+
+		// Set colour of titlebar text
+		itCont = _mmapContainers.find(strContainerName);
+		itCont->second->_mTextColour = itCont->second->getTheme()->mColours.containerTitlebarTextInFocus;
+	}
+	
 }

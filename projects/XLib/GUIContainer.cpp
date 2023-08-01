@@ -15,11 +15,7 @@ namespace X
 		_mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
 		_mbVisible = true;
-		CColour col = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
-		_mvTextColour.red = col.red;
-		_mvTextColour.green = col.green;
-		_mvTextColour.blue = col.blue;
-		_mvTextColour.alpha = col.alpha;
+		_mTextColour = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
 	}
 
 	CGUIContainer::~CGUIContainer()
@@ -287,19 +283,11 @@ namespace X
 					std::map<std::string, CGUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();
 					while (itCont != pGUI->_mmapContainers.end())
 					{
-						itCont->second->_mvTextColour = CColour(
-							pTheme->mColours.containerTitlebarTextNotInFocus.red,
-							pTheme->mColours.containerTitlebarTextNotInFocus.green,
-							pTheme->mColours.containerTitlebarTextNotInFocus.blue,
-							pTheme->mColours.containerTitlebarTextNotInFocus.alpha);
+						itCont->second->_mTextColour = pTheme->mColours.containerTitlebarTextNotInFocus;
 						itCont++;
 					}
 					// Set colour of titlebar text
-					_mvTextColour = CColour(
-						pTheme->mColours.containerTitlebarTextInFocus.red,
-						pTheme->mColours.containerTitlebarTextInFocus.green,
-						pTheme->mColours.containerTitlebarTextInFocus.blue,
-						pTheme->mColours.containerTitlebarTextInFocus.alpha);
+					_mTextColour = pTheme->mColours.containerTitlebarTextInFocus;
 					
 					// Only move window if mouse is over titlebar
 					if (vMousePos.y > mfPositionY - vTexDimsDiv3.y && vMousePos.y < mfPositionY)
@@ -751,7 +739,7 @@ namespace X
 			int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
 			iRTDims[0], iRTDims[1],
 			1.0f,
-			_mvTextColour);
+			_mTextColour);
 	}
 
 	CGUIButton* CGUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)

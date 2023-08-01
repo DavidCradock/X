@@ -188,74 +188,14 @@ namespace X
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
 					std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
-					CVector2f v2fPos;	// Used by to compute actual entity position based on scale
-					CVector2f v2fDims;	// Used by to compute actual entity position based on scale
 					while (itEntity != pLayer->_mmapEntities.end())
 					{
-						// Only render if the entity is set to be rendered
-						if (!itEntity->second->getVisible())
-						{
-							itEntity++;
-							continue;
-						}
+						itEntity->second->render(
+							strPreviouslyBoundAtlasName,
+							uiPreviouslyBoundAtlasImageNumber,
+							pTri,
+							_muiNumTextureBindingsPerLoop);
 
-						// Make sure the images have been set, if not, throw an exception
-						ThrowIfFalse(itEntity->second->_mbImagesAreSet, "SC2DRenderer::render() failed. Entity: " + itEntity->first + " has not had either setImagesSingle() or setImagesMultiple() called.");
-
-						// Bind correct atlas texture if not previously bound
-						bool bBindTexture = false;
-						if (strPreviouslyBoundAtlasName != itEntity->second->_mstrResourceTexture2DAtlasName)
-						{
-							strPreviouslyBoundAtlasName = itEntity->second->_mstrResourceTexture2DAtlasName;
-							bBindTexture = true;
-						}
-						if (uiPreviouslyBoundAtlasImageNumber != itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].uiAtlasImage)
-						{
-							uiPreviouslyBoundAtlasImageNumber = itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].uiAtlasImage;
-							bBindTexture = true;
-						}
-						
-						
-						// Now get the entity's frame information for texture coordinates and entity position and add to CResourceTriangle* pTri
-						// But before doing that, we need to send any existing data to be rendered IF the atlas texture has changed
-						if (bBindTexture)	// If the atlas texture has changed
-						{
-							pTri->update();
-							pTri->draw(false);
-							pTri->removeGeom();
-						}
-
-						// Bind the texture AFTER rendering the above vertices, otherwise, the above vertices will use the new texture
-						if (bBindTexture)
-						{
-							// Get CResourceTexture2DAtlas the entity is set to use
-							CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(itEntity->second->_mstrResourceTexture2DAtlasName);
-							// Bind the atlas texture containing the entity's currently set frame number's image
-							pAtlas->bindAtlas(0, itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].uiAtlasImage);
-							_muiNumTextureBindingsPerLoop++;
-						}
-
-						v2fDims = itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].v2fDimensions;
-						v2fPos = itEntity->second->_mv2fPosition;
-						
-						// Scale sprite if needed
-						if (itEntity->second->_mv2fScale.x != 1.0f || itEntity->second->_mv2fScale.y != 1.0f)
-						{
-							v2fDims.x *= itEntity->second->_mv2fScale.x;
-							v2fDims.y *= itEntity->second->_mv2fScale.y;
-						}
-
-						// Offset position from top left to center of entity
-						v2fPos -= v2fDims * 0.5f;
-
-						pTri->addQuad2D(
-							v2fPos,															// Position
-							v2fDims,														// Dimensions
-							itEntity->second->_mColour,										// Colour
-							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
-							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
-							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
-							itEntity->second->_mvImageDetails[itEntity->second->_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
 						itEntity++;
 					}
 					// Send remaining vertex data to GPU to be rendered

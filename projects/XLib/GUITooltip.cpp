@@ -258,11 +258,18 @@ namespace X
 		CVector3f vTooltipPosition;
 		vTooltipPosition.x = mfPositionX + vTexDimsPoint3.x;
 		vTooltipPosition.y = mfPositionY;
+		CVector2f vMousePos = pInput->mouse.getCursorPos();
 		// Move tooltip position left if it doesn't fit on screen
 		if (vTooltipPosition.x + pFB->getWidth() >= pWindow->getWidth())
 		{
 			// Position so the tooltip's right most edge is to the left of the mouse cursor
-			vTooltipPosition.x = pInput->mouse.getCursorPos().x - (float)pFB->getWidth();
+			vTooltipPosition.x = vMousePos.x - (float)pFB->getWidth();
+		}
+		// Move tooltip position up if it doesn't fit on screen
+		if (vTooltipPosition.y + pFB->getHeight() >= pWindow->getHeight())
+		{
+			// Position so the tooltip's bottom most edge is above the mouse cursor
+			vTooltipPosition.y = vMousePos.y - (float)pFB->getHeight();
 		}
 		pFB->renderTo2DQuad(unsigned int(vTooltipPosition.x), unsigned int(vTooltipPosition.y), unsigned int(pFB->getWidth()), unsigned int(pFB->getHeight()), _mColour);
 		glDisable(GL_BLEND);

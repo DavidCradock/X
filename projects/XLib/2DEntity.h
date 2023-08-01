@@ -58,7 +58,12 @@ namespace X
 		// Returns the number of image names in the atlas texture
 		unsigned int getNumFrames(void) const;
 
-		// This sets the current frame number based on angle of entity
+		// Although this entity type doesn't actually support rotation (For speed reasons),
+		// this sets the current frame number based on the angle of the entity.
+		// This is because to "simulate" rotation, we render out many images of the object at various amounts
+		// of rotation and store all these images inside the texture atlas. We then set which image to use when
+		// rendering, based upon the angle we wish the entity to be rendered at.
+		// 
 		// Expects an angle between 0.0f-359.99f the value will be clamped
 		// This makes some assumptions, that the atlas being used by this entity holds nothing but images
 		// which represent the entity images rendered as a rotating sprite, say for example 359 individual
@@ -66,7 +71,13 @@ namespace X
 		// other images. If this is not the case, expect weird results.
 		void setFrameBasedOnAngle(float fRotationDegrees);
 
-		// This sets the current frame number based on direction vector of entity
+		// Although this entity type doesn't actually support rotation (For speed reasons),
+		// this sets the current frame number based on direction vector of entity.
+		// This is because to "simulate" rotation, we render out many images of the object at various amounts
+		// of rotation and store all these images inside the texture atlas. We then set which image to use when
+		// rendering, based upon the direction we wish the entity to be rendered at.
+		//
+		// The CVector2f is normalized for us within.
 		// This makes some assumptions, that the atlas being used by this entity holds nothing but images
 		// which represent the entity images rendered as a rotating sprite, say for example 359 individual
 		// images with the entity rendered pointing up on frame 0 and rotating clockwise throughout all the
@@ -79,6 +90,14 @@ namespace X
 
 		// Returns whether this entity is currently set to be visible and rendered or not
 		bool getVisible(void) const;
+
+		// Renders this entity.
+		// It's called from the SC2DRenderer::render() method.
+		void render(
+			std::string& strPreviouslyBoundAtlasName,
+			unsigned int& uiPreviouslyBoundAtlasImageNumber,
+			CResourceTriangle* pTri,
+			unsigned int& uiNumTextureBindingsPerLoop);
 	private:
 		CVector2f _mv2fPosition;						// Position of this entity in the world
 		CVector2f _mv2fScale;							// Scale of this entity

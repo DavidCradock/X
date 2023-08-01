@@ -35,9 +35,9 @@ namespace X
         // The sleep may be lengthened slightly by any system activity or by the time spent processing the call or by the granularity of system timers. 
         void sleep(unsigned int uiMilliseconds) const;
 
-        // Sets the rate at which the getFPSAveraged() method's return value will be updated per second.
+        // Sets the delay in seconds at which the getFPSAveraged() method's return value will be updated.
         // fSecondsPerUpdate - How much time in seconds before the FPSS value is updated.
-        // For example, a value of 2.0 = update once every 2 seconds.
+        // For example, a value of 3.0 = update once every 3 seconds which is the default
         void setAveragedFPSRate(float fSecondsBetweenUpdates);
 
         // Returns the currently set rate at which the getFPSAveraged() method's return value will be updated per second.

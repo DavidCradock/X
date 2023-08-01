@@ -81,6 +81,7 @@ namespace X
 		CGUIContainer* pCont = pGUI->addContainer("state0");
 		pCont->setDimensions(640, 640);
 		pCont->setPosition(0, 0);
+		pCont->mstrTitleText = "State zero.";
 
 		// Add text scroll
 		std::string strTxt;

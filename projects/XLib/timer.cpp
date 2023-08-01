@@ -104,7 +104,7 @@ namespace X
         
         // Stuff for FPS averaged
         mdFPSAveraged = 1.0;                    // Holds computed averaged frames per second value
-        mdFPSAveragedRate = 1.0;                // Number of times per second in which is the delay until updating the value returned by getFPSAveraged() method.
+        mdFPSAveragedRate = 3.0;                // Number of seconds between updating the value returned by getFPSAveraged() method.
         mdFPSAveragedTimeCount = 0;             // Used to compute FPSAveraged stuff
         miFPSAveragedNumCallsPerSec = 0;        // Used to compute FPSAveraged stuff
         mdFPSAveragedAccum = 0;                 // Used to compute FPSAveraged stuff

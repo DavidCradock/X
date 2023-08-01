@@ -81,7 +81,7 @@ namespace X
 		// Returns whether this layer is currently set to be visible and rendered or not
 		bool getVisible(void) const;
 	private:
-		mutable std::map<std::string, C2DEntity*> _mmapEntities;					// Each named entity
+		mutable std::map<std::string, C2DEntity*> _mmapEntities;				// Each named entity
 		mutable std::map<std::string, C2DEntityComplex*> _mmapEntityComplexs;	// Each named entity complex
 		bool _mbVisible;														// Whether this layer is visible and rendered or not
 

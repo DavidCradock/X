@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "state0.h"
 #include "state1.h"
+#include "state2.h"
 
 namespace X
 {
@@ -25,11 +26,12 @@ namespace X
 		// Create GUI shared between states
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("State Selection.");
-		pCont->setDimensions(150, 200);
+		pCont->setDimensions(150, 120);
 		pCont->setPosition(999999, 999999);
 		float fYpos = 5;
 		pCont->addButton("state0", 0, fYpos, 150, 30, "State 0")->mpTooltip->setAsText("Click me to switch to state zero."); fYpos += 40;
 		pCont->addButton("state1", 0, fYpos, 150, 30, "State 1")->mpTooltip->setAsText("Click me to switch to state one."); fYpos += 40;
+		pCont->addButton("state2", 0, fYpos, 150, 30, "State 2")->mpTooltip->setAsText("Click me to switch to state two."); fYpos += 40;
 
 		// Create all resources for each of the states
 		SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -48,7 +50,8 @@ namespace X
 		// Create the application states
 		CState0* pState0 = new CState0;	_mFSM.addState("state0", pState0);
 		CState1* pState1 = new CState1;	_mFSM.addState("state1", pState1);
-		_mFSM.switchToState("state0");
+		CState2* pState2 = new CState2;	_mFSM.addState("state2", pState2);
+		_mFSM.switchToState("state1");
 
 		// End of loading screen
 		pLS->onInitEnd();
@@ -70,11 +73,22 @@ namespace X
 
 		pBut = pCont->getButton("state0");
 		if (pBut->getClicked())
+		{
 			_mFSM.switchToState("state0");
-
+			pGUI->setContainerAsActive("State Selection.");
+		}
 		pBut = pCont->getButton("state1");
 		if (pBut->getClicked())
+		{
 			_mFSM.switchToState("state1");
+			pGUI->setContainerAsActive("State Selection.");
+		}
+		pBut = pCont->getButton("state2");
+		if (pBut->getClicked())
+		{
+			_mFSM.switchToState("state2");
+			pGUI->setContainerAsActive("State Selection.");
+		}
 
 		// Update current state
 		_mFSM.update();
