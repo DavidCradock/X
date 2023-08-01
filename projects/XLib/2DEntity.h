@@ -6,6 +6,11 @@
 
 namespace X
 {
+	// A C2DEntity is fast to render lots of entities, but has a limitation.
+	// The limitation is that the entity can not be rotated.
+	// If we wish to use entities which can be rotated, see the C2DEntityRot object.
+	// We can however fake rotation by rendering 360 or so images, each representing the entity at each angle of rotation, adding each of those
+	// images to a texture atlas and setting which image to use based on the angle of rotation we wish to render the entity.
 	// This is an object which holds the position of the entity within the world is is assigned to, non-uniform scale, the CResourceTexture2DAtlas used to 
 	// render itself as well as it's current animation frame (if it is animated)
 	class C2DEntity

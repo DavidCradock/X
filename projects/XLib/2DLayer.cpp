@@ -14,6 +14,17 @@ namespace X
 	{
 		removeAllEntities();
 		removeAllEntityComplexs();
+		removeAllEntityRots();
+	}
+
+	void C2DLayer::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool C2DLayer::getVisible(void) const
+	{
+		return _mbVisible;
 	}
 
 	C2DEntity* C2DLayer::addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
@@ -204,13 +215,99 @@ namespace X
 		return int(_mmapEntityComplexs.size());
 	}
 
-	void C2DLayer::setVisible(bool bVisible)
+	C2DEntityRot* C2DLayer::addEntityRot(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
 	{
-		_mbVisible = bVisible;
+		// Attempt to find if the object name already exists
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.find(strUniqueName);
+		ThrowIfTrue(it != _mmapEntityRots.end(), "C2DLayer::addEntityRot(\"" + strUniqueName + "\") failed. The object already exists.");
+
+		// Allocate memory for new object
+		C2DEntityRot* pNew = new C2DEntityRot(strResourceTexture2DAtlasName);
+		ThrowIfFalse(pNew, "C2DLayer::addEntityRot(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
+
+		// Make sure the named atlas resource exists, otherwise throw an exception
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		ThrowIfFalse(pRM->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityRot(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
+
+		// Add object to hash map
+		_mmapEntityRots[strUniqueName] = pNew;
+		return pNew;
 	}
 
-	bool C2DLayer::getVisible(void) const
+	bool C2DLayer::getEntityRotExists(const std::string& strUniqueName) const
 	{
-		return _mbVisible;
+		if (_mmapEntityRots.find(strUniqueName) == _mmapEntityRots.end())
+			return false;
+		return true;
+	}
+
+	C2DEntityRot* C2DLayer::getEntityRot(const std::string& strUniqueName) const
+	{
+		// Attempt to find if the name already exists
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntityRots.end(), "C2DLayer::getEntityRot(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
+		return it->second;
+	}
+
+	C2DEntityRot* C2DLayer::getEntityRot(unsigned int uiIndex) const
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapEntityRots.size(), "C2DLayer::getEntityRot(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		return it->second;
+	}
+
+	void C2DLayer::removeEntityRot(const std::string& strUniqueName)
+	{
+		// Attempt to find if the layer name already exists
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntityRots.end(), "C2DLayer::removeEntityRot(\"" + strUniqueName + "\") failed. The object doesn't exist.");
+
+		// De-allocate memory
+		delete it->second;
+
+		// Remove from hash map
+		_mmapEntityRots.erase(it);
+	}
+
+	void C2DLayer::removeEntityRot(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapEntityRots.size(), "C2DLayer::removeEntityRot(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		// De-allocate memory for the object
+		delete it->second;
+
+		// Remove object from hash map
+		_mmapEntityRots.erase(it);
+	}
+
+	void C2DLayer::removeAllEntityRots(void)
+	{
+		// Remove all objects
+		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.begin();
+		while (it != _mmapEntityRots.end())
+		{
+			delete it->second;
+			_mmapEntityRots.erase(it);
+			it = _mmapEntityRots.begin();
+		}
+	}
+
+	unsigned int C2DLayer::getNumEntityRots(void) const
+	{
+		return int(_mmapEntityRots.size());
 	}
 }

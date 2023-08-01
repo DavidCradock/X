@@ -210,6 +210,14 @@ namespace X
 						itEntityComplex++;
 					}
 
+					// For each C2DEntityRot in layer
+					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
+					while (itEntityRot != pLayer->_mmapEntityRots.end())
+					{
+						itEntityRot->second->render();
+						itEntityRot++;
+					}
+
 				}	// Each layer
 
 				itCamera++;
