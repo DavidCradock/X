@@ -1,4 +1,4 @@
-#pragma once
+#include "PCH.h"
 #include "application.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)

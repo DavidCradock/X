@@ -1,4 +1,3 @@
-#pragma once
 #include "PCH.h"
 #include "application.h"
 
