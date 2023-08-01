@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XLib", "projects\XLib\XLib.vcxproj", "{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevelopmentApplication", "projects\DevelopmentApplication\DevelopmentApplication.vcxproj", "{FA1102A7-D043-4302-8EFE-F886BE14B924}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Benchmark", "projects\Benchmark\Benchmark.vcxproj", "{61CF46D3-7775-423F-8282-BDAE365A944D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo2D", "projects\Demo2D\Demo2D.vcxproj", "{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoPhysics", "projects\DemoPhysics\DemoPhysics.vcxproj", "{3584CD78-BD0C-4EF6-B346-D421D24C27F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoNeuralNets", "projects\DemoNeuralNets\DemoNeuralNets.vcxproj", "{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoSceneManager", "projects\DemoSceneManager\DemoSceneManager.vcxproj", "{625A8D19-3913-495B-AB77-F421F0C0E840}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoQuadTree", "projects\DemoQuadTree\DemoQuadTree.vcxproj", "{9ACB73D1-4D6F-4695-917B-934F6546FBE7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoOctTree", "projects\DemoOctTree\DemoOctTree.vcxproj", "{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}.Debug|x64.ActiveCfg = Debug|x64
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}.Debug|x64.Build.0 = Debug|x64
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}.Release|x64.ActiveCfg = Release|x64
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}.Release|x64.Build.0 = Release|x64
+		{FA1102A7-D043-4302-8EFE-F886BE14B924}.Debug|x64.ActiveCfg = Debug|x64
+		{FA1102A7-D043-4302-8EFE-F886BE14B924}.Debug|x64.Build.0 = Debug|x64
+		{FA1102A7-D043-4302-8EFE-F886BE14B924}.Release|x64.ActiveCfg = Release|x64
+		{FA1102A7-D043-4302-8EFE-F886BE14B924}.Release|x64.Build.0 = Release|x64
+		{61CF46D3-7775-423F-8282-BDAE365A944D}.Debug|x64.ActiveCfg = Debug|x64
+		{61CF46D3-7775-423F-8282-BDAE365A944D}.Debug|x64.Build.0 = Debug|x64
+		{61CF46D3-7775-423F-8282-BDAE365A944D}.Release|x64.ActiveCfg = Release|x64
+		{61CF46D3-7775-423F-8282-BDAE365A944D}.Release|x64.Build.0 = Release|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Debug|x64.ActiveCfg = Debug|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Debug|x64.Build.0 = Debug|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.ActiveCfg = Release|x64
+		{D573B07C-4ED7-4BDA-993F-D67DC17C8BF1}.Release|x64.Build.0 = Release|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Debug|x64.ActiveCfg = Debug|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Debug|x64.Build.0 = Debug|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Release|x64.ActiveCfg = Release|x64
+		{3584CD78-BD0C-4EF6-B346-D421D24C27F8}.Release|x64.Build.0 = Release|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Debug|x64.ActiveCfg = Debug|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Debug|x64.Build.0 = Debug|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Release|x64.ActiveCfg = Release|x64
+		{36AC16A8-F1DB-4178-A563-4DCAD1D331BC}.Release|x64.Build.0 = Release|x64
+		{625A8D19-3913-495B-AB77-F421F0C0E840}.Debug|x64.ActiveCfg = Debug|x64
+		{625A8D19-3913-495B-AB77-F421F0C0E840}.Debug|x64.Build.0 = Debug|x64
+		{625A8D19-3913-495B-AB77-F421F0C0E840}.Release|x64.ActiveCfg = Release|x64
+		{625A8D19-3913-495B-AB77-F421F0C0E840}.Release|x64.Build.0 = Release|x64
+		{9ACB73D1-4D6F-4695-917B-934F6546FBE7}.Debug|x64.ActiveCfg = Debug|x64
+		{9ACB73D1-4D6F-4695-917B-934F6546FBE7}.Debug|x64.Build.0 = Debug|x64
+		{9ACB73D1-4D6F-4695-917B-934F6546FBE7}.Release|x64.ActiveCfg = Release|x64
+		{9ACB73D1-4D6F-4695-917B-934F6546FBE7}.Release|x64.Build.0 = Release|x64
+		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Debug|x64.ActiveCfg = Debug|x64
+		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Debug|x64.Build.0 = Debug|x64
+		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Release|x64.ActiveCfg = Release|x64
+		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48F88000-F5D7-44FF-9043-24B3D2015584}
+	EndGlobalSection
+EndGlobal

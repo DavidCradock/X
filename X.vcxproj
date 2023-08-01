@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ca1936ba-1587-4c00-a20c-1426013bdd1f}</ProjectGuid>
+    <RootNamespace>X</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="sourcecode\applicationBase.cpp" />
+    <ClCompile Include="sourcecode\applicationDevelopment.cpp" />
+    <ClCompile Include="sourcecode\applicationGame.cpp" />
+    <ClCompile Include="sourcecode\applicationManager.cpp" />
+    <ClCompile Include="sourcecode\audioManager.cpp" />
+    <ClCompile Include="sourcecode\camera.cpp" />
+    <ClCompile Include="sourcecode\frustum.cpp" />
+    <ClCompile Include="sourcecode\image.cpp" />
+    <ClCompile Include="sourcecode\input.cpp" />
+    <ClCompile Include="sourcecode\inputJoystick.cpp" />
+    <ClCompile Include="sourcecode\inputKeyboard.cpp" />
+    <ClCompile Include="sourcecode\inputMouse.cpp" />
+    <ClCompile Include="sourcecode\openGLExtensions.cpp" />
+    <ClCompile Include="sourcecode\plane.cpp" />
+    <ClCompile Include="sourcecode\renderQueue.cpp" />
+    <ClCompile Include="sourcecode\resourceFramebuffer.cpp" />
+    <ClCompile Include="sourcecode\resourceManager.cpp" />
+    <ClCompile Include="sourcecode\resourceShader.cpp" />
+    <ClCompile Include="sourcecode\resourceTexture2D.cpp" />
+    <ClCompile Include="sourcecode\resourceVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\resourceFont.cpp" />
+    <ClCompile Include="sourcecode\resourceVertexbufferLine.cpp" />
+    <ClCompile Include="sourcecode\SMEntityVertexbuffer.cpp" />
+    <ClCompile Include="sourcecode\SMEntityBase.cpp" />
+    <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp" />
+    <ClCompile Include="sourcecode\SMLightDirectional.cpp" />
+    <ClCompile Include="sourcecode\SMLightPoint.cpp" />
+    <ClCompile Include="sourcecode\SMMaterial.cpp" />
+    <ClCompile Include="sourcecode\SMSimple.cpp" />
+    <ClCompile Include="sourcecode\utilities.cpp" />
+    <ClCompile Include="sourcecode\window.cpp" />
+    <ClCompile Include="sourcecode\log.cpp" />
+    <ClCompile Include="sourcecode\PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="sourcecode\timer.cpp" />
+    <ClCompile Include="sourcecode\WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="shaders\DRNE.frag" />
+    <None Include="shaders\DRNE.vert" />
+    <None Include="shaders\font.frag" />
+    <None Include="shaders\font.vert" />
+    <None Include="shaders\line.frag" />
+    <None Include="shaders\line.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h" />
+    <ClInclude Include="dependencies\OpenGL\glext.h" />
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h" />
+    <ClInclude Include="dependencies\OpenGL\wgl.h" />
+    <ClInclude Include="dependencies\OpenGL\wglext.h" />
+    <ClInclude Include="dependencies\stb_image.h" />
+    <ClInclude Include="dependencies\stb_image_write.h" />
+    <ClInclude Include="sourcecode\applicationBase.h" />
+    <ClInclude Include="sourcecode\applicationDevelopment.h" />
+    <ClInclude Include="sourcecode\applicationGame.h" />
+    <ClInclude Include="sourcecode\applicationManager.h" />
+    <ClInclude Include="sourcecode\audioManager.h" />
+    <ClInclude Include="sourcecode\camera.h" />
+    <ClInclude Include="sourcecode\frustum.h" />
+    <ClInclude Include="sourcecode\image.h" />
+    <ClInclude Include="sourcecode\input.h" />
+    <ClInclude Include="sourcecode\inputJoystick.h" />
+    <ClInclude Include="sourcecode\inputKeyboard.h" />
+    <ClInclude Include="sourcecode\inputMouse.h" />
+    <ClInclude Include="sourcecode\openGLExtensions.h" />
+    <ClInclude Include="sourcecode\plane.h" />
+    <ClInclude Include="sourcecode\renderQueue.h" />
+    <ClInclude Include="sourcecode\resourceBase.h" />
+    <ClInclude Include="sourcecode\resourceFramebuffer.h" />
+    <ClInclude Include="sourcecode\resourceManager.h" />
+    <ClInclude Include="sourcecode\resourceShader.h" />
+    <ClInclude Include="sourcecode\resourceTexture2D.h" />
+    <ClInclude Include="sourcecode\resourceVertexbuffer.h" />
+    <ClInclude Include="sourcecode\resourceFont.h" />
+    <ClInclude Include="sourcecode\resourceVertexbufferLine.h" />
+    <ClInclude Include="sourcecode\SMEntityVertexbuffer.h" />
+    <ClInclude Include="sourcecode\SMEntityBase.h" />
+    <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h" />
+    <ClInclude Include="sourcecode\SMLightDirectional.h" />
+    <ClInclude Include="sourcecode\SMLightPoint.h" />
+    <ClInclude Include="sourcecode\SMMaterial.h" />
+    <ClInclude Include="sourcecode\SMSimple.h" />
+    <ClInclude Include="sourcecode\window.h" />
+    <ClInclude Include="sourcecode\log.h" />
+    <ClInclude Include="sourcecode\PCH.h" />
+    <ClInclude Include="sourcecode\singleton.h" />
+    <ClInclude Include="sourcecode\timer.h" />
+    <ClInclude Include="sourcecode\utilities.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

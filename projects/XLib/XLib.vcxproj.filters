@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Applications">
+      <UniqueIdentifier>{aea42c93-5f37-4179-af72-32dae8e9f6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{925a94a3-1d89-4be9-a9b0-b72317b2955e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{9f37bd66-2429-485d-a2d2-ea8b86a54c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{6a3d61fa-510f-4117-a486-b79c23572887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9f69bee0-2b3a-4a56-ae3a-44a32520e4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneManager">
+      <UniqueIdentifier>{725ff4ea-dae3-4fe6-a608-5dea63553f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{fb10734b-bd47-4dda-a5df-55d06f057a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{7b60c26f-e31f-4d2c-aaa2-4e840cc74c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{a946d6b2-3490-4f8f-a6d8-730875098b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{30930f28-af09-48c8-986b-b056a207f254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\TODO">
+      <UniqueIdentifier>{29a893ac-a9c1-4364-9d18-2414c52e6e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{8f36b270-3a79-497a-a92f-8205d9b73a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cc27cd10-6453-41bb-a605-8514a51e5eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{cca17d79-4315-431d-aaad-162af7e7cfd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpatialPartitioning">
+      <UniqueIdentifier>{5f921690-5480-4031-83fc-c1236eda6e81}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="applicationManager.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="applicationBase.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="openGLExtensions.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputJoystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputKeyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputMouse.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityBase.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityTriangle.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMEntityLine.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMLightDirectional.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMLightPoint.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMMaterial.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SMSimple.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="audioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="X.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="OpenGL\glcorearb.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\glext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\khrplatform.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\wgl.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\wglext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContainer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageAnimated.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILineGraph.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIProgressBar.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISlider.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIText.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITheme.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIBaseObject.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableDock.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDraggableItem.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIMenu.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITab.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITabContainer.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITaskbar.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageFramebuffer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextScroll.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIButtonImage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageDepthbuffer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITooltip.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="2DRenderer.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DLayer.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntity.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="frustum.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3f.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="physicsManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3d.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="2DWorld.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCamera.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntityComplex.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3r.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="precision.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="colour.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2r.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="imageAtlas.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2f.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2d.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceBase.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceDepthbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFramebuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceShader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DAtlas.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DFromFile.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DFromImage.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTriangle.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="2DLayerComplex.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="finiteStateMachine.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="stringUtils.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vector4f.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="rect.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTree.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="octTree.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTreeEntity.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTreeNode.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="neuralNetFeedForward.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="geneticAlgorithm.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceLoadingScreen.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="octTreeNode.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="octTreeEntity.h">
+      <Filter>SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="SMCamera.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="aStarPathfinding.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="2DMap.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="applicationBase.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="applicationManager.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="openGLExtensions.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputJoystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputKeyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputMouse.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityBase.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityTriangle.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMEntityLine.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMLightDirectional.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMLightPoint.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMMaterial.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SMSimple.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="audioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContainer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageAnimated.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILineGraph.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIProgressBar.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISlider.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIText.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextEdit.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITheme.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIBaseObject.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableDock.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDraggableItem.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIMenu.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITab.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITabContainer.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITaskbar.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageFramebuffer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextScroll.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButtonImage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageDepthbuffer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITooltip.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="2DRenderer.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DLayer.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntity.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="frustum.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3f.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="physicsManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3d.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="2DWorld.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCamera.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntityComplex.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3r.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="colour.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2r.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="imageAtlas.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2f.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2d.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceDepthbuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFramebuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceShader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DAtlas.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromFile.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromImage.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTriangle.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="2DLayerComplex.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="quaternion.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="finiteStateMachine.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="stringUtils.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="vector4f.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="rect.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTree.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="octTree.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTreeEntity.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTreeNode.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="neuralNetFeedForward.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="geneticAlgorithm.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceLoadingScreen.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="octTreeNode.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="octTreeEntity.cpp">
+      <Filter>SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="SMCamera.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="aStarPathfinding.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMap.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md" />
+    <None Include="..\..\data\X\shaders\DRNE.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\DRNE.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\font.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\font.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\line.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\line.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\shadow_depthmap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\shadow_depthmap.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\pos_col_tex.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\pos_col_tex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\gui.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\gui.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2D.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2D.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

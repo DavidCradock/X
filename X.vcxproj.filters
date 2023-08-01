@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="SceneManager">
+      <UniqueIdentifier>{ffe137dc-bd95-4225-9b52-984e354687d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3c6489c0-7451-40ef-8d0a-2a032e09e1fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{8945d49c-366a-474c-a40d-36f3cee12717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications">
+      <UniqueIdentifier>{2832a56b-f37a-4e1d-bfd1-9dc00deb1a05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{a9bbba5e-7382-4304-8dca-7fe4c2485a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{b1d7a6b8-a464-4636-aeed-83c39b118f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{ffaa8e79-59d2-43b4-92fe-bc1dc3bb6c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\OpenGL">
+      <UniqueIdentifier>{8f48e650-26e5-4a1a-a1d0-6cbd87b6a76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ba3204b3-f3c6-454e-91cb-c87c07424cc6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sourcecode\WinMain.cpp" />
+    <ClCompile Include="sourcecode\PCH.cpp" />
+    <ClCompile Include="sourcecode\applicationDevelopment.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applicationGame.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\audioManager.cpp" />
+    <ClCompile Include="sourcecode\renderQueue.cpp" />
+    <ClCompile Include="sourcecode\SMEntityBase.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMEntityVertexbuffer.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMLightDirectional.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMLightPoint.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMSimple.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\camera.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceFramebuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceShader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceTexture2D.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\resourceVertexbuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\inputJoystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\inputKeyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\inputMouse.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applicationBase.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applicationManager.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\image.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\log.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\openGLExtensions.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\timer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\utilities.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\window.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\frustum.cpp" />
+    <ClCompile Include="sourcecode\plane.cpp" />
+    <ClCompile Include="sourcecode\resourceVertexbufferLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMEntityVertexbufferLine.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\SMMaterial.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="shaders\font.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\font.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\DRNE.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\DRNE.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\line.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\line.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sourcecode\PCH.h" />
+    <ClInclude Include="sourcecode\applicationDevelopment.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applicationGame.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\audioManager.h" />
+    <ClInclude Include="sourcecode\renderQueue.h" />
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h">
+      <Filter>Dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\glext.h">
+      <Filter>Dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h">
+      <Filter>Dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wgl.h">
+      <Filter>Dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wglext.h">
+      <Filter>Dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\stb_image.h">
+      <Filter>Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\stb_image_write.h">
+      <Filter>Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMEntityBase.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMEntityVertexbuffer.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMLightDirectional.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMLightPoint.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMSimple.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\camera.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceBase.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceFramebuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceShader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceTexture2D.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\resourceVertexbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\inputJoystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\inputKeyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\inputMouse.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applicationManager.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applicationBase.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\log.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\openGLExtensions.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\utilities.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\window.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\frustum.h" />
+    <ClInclude Include="sourcecode\plane.h" />
+    <ClInclude Include="sourcecode\resourceVertexbufferLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMEntityVertexbufferLine.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\SMMaterial.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

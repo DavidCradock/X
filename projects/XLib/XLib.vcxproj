@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="2DCamera.h" />
+    <ClInclude Include="2DEntity.h" />
+    <ClInclude Include="2DEntityComplex.h" />
+    <ClInclude Include="2DLayer.h" />
+    <ClInclude Include="2DLayerComplex.h" />
+    <ClInclude Include="2DMap.h" />
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="aStarPathfinding.h" />
+    <ClInclude Include="geneticAlgorithm.h" />
+    <ClInclude Include="neuralNetFeedForward.h" />
+    <ClInclude Include="octTree.h" />
+    <ClInclude Include="2DRenderer.h" />
+    <ClInclude Include="2DWorld.h" />
+    <ClInclude Include="applicationBase.h" />
+    <ClInclude Include="applicationManager.h" />
+    <ClInclude Include="audioManager.h" />
+    <ClInclude Include="colour.h" />
+    <ClInclude Include="finiteStateMachine.h" />
+    <ClInclude Include="GUIBaseObject.h" />
+    <ClInclude Include="GUIButton.h" />
+    <ClInclude Include="GUIButtonImage.h" />
+    <ClInclude Include="GUIContainer.h" />
+    <ClInclude Include="GUIDraggableDock.h" />
+    <ClInclude Include="GUIDraggableItem.h" />
+    <ClInclude Include="GUIImageDepthbuffer.h" />
+    <ClInclude Include="GUIImageFramebuffer.h" />
+    <ClInclude Include="GUIImage.h" />
+    <ClInclude Include="GUIImageAnimated.h" />
+    <ClInclude Include="GUILineGraph.h" />
+    <ClInclude Include="GUIManager.h" />
+    <ClInclude Include="GUIMenu.h" />
+    <ClInclude Include="GUIProgressBar.h" />
+    <ClInclude Include="GUISlider.h" />
+    <ClInclude Include="GUITab.h" />
+    <ClInclude Include="GUITabContainer.h" />
+    <ClInclude Include="GUITaskbar.h" />
+    <ClInclude Include="GUIText.h" />
+    <ClInclude Include="GUITextEdit.h" />
+    <ClInclude Include="GUITextScroll.h" />
+    <ClInclude Include="GUITheme.h" />
+    <ClInclude Include="GUITooltip.h" />
+    <ClInclude Include="imageAtlas.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="octTreeEntity.h" />
+    <ClInclude Include="octTreeNode.h" />
+    <ClInclude Include="physicsManager.h" />
+    <ClInclude Include="precision.h" />
+    <ClInclude Include="quadTree.h" />
+    <ClInclude Include="quadTreeEntity.h" />
+    <ClInclude Include="quadTreeNode.h" />
+    <ClInclude Include="quaternion.h" />
+    <ClInclude Include="rect.h" />
+    <ClInclude Include="resourceDepthbuffer.h" />
+    <ClInclude Include="resourceLoadingScreen.h" />
+    <ClInclude Include="resourceTexture2DAtlas.h" />
+    <ClInclude Include="resourceTexture2DFromImage.h" />
+    <ClInclude Include="SMCamera.h" />
+    <ClInclude Include="frustum.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="inputJoystick.h" />
+    <ClInclude Include="inputKeyboard.h" />
+    <ClInclude Include="inputMouse.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="openGLExtensions.h" />
+    <ClInclude Include="OpenGL\glcorearb.h" />
+    <ClInclude Include="OpenGL\glext.h" />
+    <ClInclude Include="OpenGL\khrplatform.h" />
+    <ClInclude Include="OpenGL\wgl.h" />
+    <ClInclude Include="OpenGL\wglext.h" />
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="plane.h" />
+    <ClInclude Include="resourceBase.h" />
+    <ClInclude Include="resourceFont.h" />
+    <ClInclude Include="resourceFramebuffer.h" />
+    <ClInclude Include="resourceManager.h" />
+    <ClInclude Include="resourceShader.h" />
+    <ClInclude Include="resourceTexture2DFromFile.h" />
+    <ClInclude Include="resourceTriangle.h" />
+    <ClInclude Include="resourceLine.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="SMEntityBase.h" />
+    <ClInclude Include="SMEntityTriangle.h" />
+    <ClInclude Include="SMEntityLine.h" />
+    <ClInclude Include="SMLightDirectional.h" />
+    <ClInclude Include="SMLightPoint.h" />
+    <ClInclude Include="SMMaterial.h" />
+    <ClInclude Include="SMSimple.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="stringUtils.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="utilities.h" />
+    <ClInclude Include="vector2d.h" />
+    <ClInclude Include="vector2f.h" />
+    <ClInclude Include="vector2r.h" />
+    <ClInclude Include="vector3d.h" />
+    <ClInclude Include="vector3f.h" />
+    <ClInclude Include="vector3r.h" />
+    <ClInclude Include="vector4f.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="X.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="2DCamera.cpp" />
+    <ClCompile Include="2DEntity.cpp" />
+    <ClCompile Include="2DEntityComplex.cpp" />
+    <ClCompile Include="2DLayer.cpp" />
+    <ClCompile Include="2DLayerComplex.cpp" />
+    <ClCompile Include="2DMap.cpp" />
+    <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="aStarPathfinding.cpp" />
+    <ClCompile Include="geneticAlgorithm.cpp" />
+    <ClCompile Include="neuralNetFeedForward.cpp" />
+    <ClCompile Include="octTree.cpp" />
+    <ClCompile Include="2DRenderer.cpp" />
+    <ClCompile Include="2DWorld.cpp" />
+    <ClCompile Include="applicationBase.cpp" />
+    <ClCompile Include="applicationManager.cpp" />
+    <ClCompile Include="audioManager.cpp" />
+    <ClCompile Include="colour.cpp" />
+    <ClCompile Include="finiteStateMachine.cpp" />
+    <ClCompile Include="GUIBaseObject.cpp" />
+    <ClCompile Include="GUIButton.cpp" />
+    <ClCompile Include="GUIButtonImage.cpp" />
+    <ClCompile Include="GUIContainer.cpp" />
+    <ClCompile Include="GUIDraggableDock.cpp" />
+    <ClCompile Include="GUIDraggableItem.cpp" />
+    <ClCompile Include="GUIImageDepthbuffer.cpp" />
+    <ClCompile Include="GUIImageFramebuffer.cpp" />
+    <ClCompile Include="GUIImage.cpp" />
+    <ClCompile Include="GUIImageAnimated.cpp" />
+    <ClCompile Include="GUILineGraph.cpp" />
+    <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="GUIMenu.cpp" />
+    <ClCompile Include="GUIProgressBar.cpp" />
+    <ClCompile Include="GUISlider.cpp" />
+    <ClCompile Include="GUITab.cpp" />
+    <ClCompile Include="GUITabContainer.cpp" />
+    <ClCompile Include="GUITaskbar.cpp" />
+    <ClCompile Include="GUIText.cpp" />
+    <ClCompile Include="GUITextEdit.cpp" />
+    <ClCompile Include="GUITextScroll.cpp" />
+    <ClCompile Include="GUITheme.cpp" />
+    <ClCompile Include="GUITooltip.cpp" />
+    <ClCompile Include="imageAtlas.cpp" />
+    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="octTreeEntity.cpp" />
+    <ClCompile Include="octTreeNode.cpp" />
+    <ClCompile Include="physicsManager.cpp" />
+    <ClCompile Include="quadTree.cpp" />
+    <ClCompile Include="quadTreeEntity.cpp" />
+    <ClCompile Include="quadTreeNode.cpp" />
+    <ClCompile Include="quaternion.cpp" />
+    <ClCompile Include="rect.cpp" />
+    <ClCompile Include="resourceDepthbuffer.cpp" />
+    <ClCompile Include="resourceLoadingScreen.cpp" />
+    <ClCompile Include="resourceTexture2DAtlas.cpp" />
+    <ClCompile Include="resourceTexture2DFromImage.cpp" />
+    <ClCompile Include="SMCamera.cpp" />
+    <ClCompile Include="frustum.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="input.cpp" />
+    <ClCompile Include="inputJoystick.cpp" />
+    <ClCompile Include="inputKeyboard.cpp" />
+    <ClCompile Include="inputMouse.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="openGLExtensions.cpp" />
+    <ClCompile Include="PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="plane.cpp" />
+    <ClCompile Include="resourceFont.cpp" />
+    <ClCompile Include="resourceFramebuffer.cpp" />
+    <ClCompile Include="resourceManager.cpp" />
+    <ClCompile Include="resourceShader.cpp" />
+    <ClCompile Include="resourceTexture2DFromFile.cpp" />
+    <ClCompile Include="resourceTriangle.cpp" />
+    <ClCompile Include="resourceLine.cpp" />
+    <ClCompile Include="SMEntityBase.cpp" />
+    <ClCompile Include="SMEntityTriangle.cpp" />
+    <ClCompile Include="SMEntityLine.cpp" />
+    <ClCompile Include="SMLightDirectional.cpp" />
+    <ClCompile Include="SMLightPoint.cpp" />
+    <ClCompile Include="SMMaterial.cpp" />
+    <ClCompile Include="SMSimple.cpp" />
+    <ClCompile Include="stringUtils.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="vector2d.cpp" />
+    <ClCompile Include="vector2f.cpp" />
+    <ClCompile Include="vector2r.cpp" />
+    <ClCompile Include="vector3d.cpp" />
+    <ClCompile Include="vector3f.cpp" />
+    <ClCompile Include="vector3r.cpp" />
+    <ClCompile Include="vector4f.cpp" />
+    <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\data\X\shaders\2D.frag" />
+    <None Include="..\..\data\X\shaders\2D.vert" />
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.frag" />
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert" />
+    <None Include="..\..\data\X\shaders\DRNE.frag" />
+    <None Include="..\..\data\X\shaders\DRNE.vert" />
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.frag" />
+    <None Include="..\..\data\X\shaders\DRNE_noshadows.vert" />
+    <None Include="..\..\data\X\shaders\font.frag" />
+    <None Include="..\..\data\X\shaders\font.vert" />
+    <None Include="..\..\data\X\shaders\gui.frag" />
+    <None Include="..\..\data\X\shaders\gui.vert" />
+    <None Include="..\..\data\X\shaders\line.frag" />
+    <None Include="..\..\data\X\shaders\line.vert" />
+    <None Include="..\..\data\X\shaders\pos_col_tex.frag" />
+    <None Include="..\..\data\X\shaders\pos_col_tex.vert" />
+    <None Include="..\..\data\X\shaders\shadow_depthmap.frag" />
+    <None Include="..\..\data\X\shaders\shadow_depthmap.vert" />
+    <None Include="..\..\README.md" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{4e0ae536-4aea-4c4a-af8d-f2b9e692d359}</ProjectGuid>
+    <RootNamespace>XLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

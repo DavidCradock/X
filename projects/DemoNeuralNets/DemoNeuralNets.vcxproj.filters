@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="state0.cpp" />
+    <ClCompile Include="state1.cpp" />
+    <ClCompile Include="GUIstateSelectionUpdate.cpp" />
+    <ClCompile Include="state2.cpp" />
+    <ClCompile Include="state3.cpp" />
+    <ClCompile Include="PCH.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h" />
+    <ClInclude Include="state0.h" />
+    <ClInclude Include="state1.h" />
+    <ClInclude Include="GUIstateSelectionUpdate.h" />
+    <ClInclude Include="state2.h" />
+    <ClInclude Include="state3.h" />
+    <ClInclude Include="PCH.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
