@@ -202,14 +202,6 @@ namespace X
 					pTri->draw(false);
 					pTri->removeGeom();
 
-					// For each C2DEntityComplex in layer
-//					std::map<std::string, C2DEntityComplex*>::iterator itEntityComplex = pLayer->_mmapEntityComplexs.begin();
-//					while (itEntityComplex != pLayer->_mmapEntityComplexs.end())
-//					{
-//						itEntityComplex->second->render();
-//						itEntityComplex++;
-//					}
-
 					// For each C2DEntityRot in layer
 					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
 					while (itEntityRot != pLayer->_mmapEntityRots.end())

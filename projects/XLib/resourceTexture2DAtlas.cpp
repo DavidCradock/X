@@ -319,6 +319,11 @@ namespace X
 		return _mAtlases.getImageDetails(strImageName);
 	}
 
+	unsigned int CResourceTexture2DAtlas::getImageTextureID(const std::string& strImageName) const
+	{
+		return 
+	}
+
 	bool CResourceTexture2DAtlas::getImageNameExists(const std::string& strImageName) const
 	{
 		return _mAtlases.getImageExists(strImageName);

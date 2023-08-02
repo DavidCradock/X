@@ -104,12 +104,18 @@ namespace X
 		// If an invalid image name is given, an exception occurs
 		CImageAtlasDetails getImageDetails(const std::string& strImageName) const;
 
+		// Returns OpenGL texture ID for the named image stored within the texture atlas.
+		// As an atlas can have more than one texture to store all of it's images, different images within an atlas may have a different texture ID
+		// If an invalid image name is given, an exception occurs.
+		unsigned int getImageTextureID(const std::string& strImageName) const;
+
 		// Returns whether the named image name exists or not
 		bool getImageNameExists(const std::string& strImageName) const;
 
 		// Renders the contents of this texture atlas to a 2D quad with specified position and dimensions
 		// uiAtlasImageNumber should be a valid number (Use getNumAtlases()) otherwise an exception occurs
 		void renderAtlasTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, unsigned int uiAtlasImageNumber, CColour colour = CColour());
+
 	private:
 		mutable CImageAtlasPacker _mAtlases;			// Holds one or more atlas images containing all images
 		std::vector<unsigned int> _mvAtlasTextureIDs;	// OpenGL texture ID for each generated atlas texture holding the smaller images.
