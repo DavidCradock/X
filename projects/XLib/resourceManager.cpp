@@ -409,6 +409,46 @@ namespace X
 		DeleteDC(hDC);
 	}
 
+	void SCResourceManager::addDefaultResources(void)
+	{
+		// NOTE:
+		// When adding resources here, remember to add the resource to the comments at the top of SCResourceManager class in resourceManager.h
+
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+
+		// Shaders
+		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
+		pRM->addShader("X:line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
+		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
+		pRM->addShader("X:DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag");
+		pRM->addShader("X:pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
+		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
+		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
+		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag");
+		pRM->addShader("X:2D", "data/X/shaders/2D.vert", "data/X/shaders/2D.frag");
+
+		// Textures
+		pRM->addTexture2DFromFile("X:default_particle", "data/X/textures/particle0.png");
+		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png");
+		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png");
+		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png");
+		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png");
+		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png");
+
+		// Depth buffers
+		pRM->addDepthbuffer("X:shadows", 2048, 2048);
+
+		// Triangle resources
+		pRM->addTriangle("X:default");
+
+		// Framebuffers
+		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
+
+		// Line vertex buffers
+		pRM->addLine("X:default");
+	}
+
 	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
 	{
 		// If resource already exists

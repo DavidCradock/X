@@ -55,8 +55,7 @@ namespace X
 		// Returns false if the application wants to shutdown
 		bool callCurrentApp_onUpdate(void);
 
-		// Adds default required resources to the resource manager, called during startup from mainLoop
-		void addDefaultResources(void);
+		
 
 		mutable std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
 		std::string mstrCurrentApp;										// Application name of the current application.

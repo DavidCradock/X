@@ -30,6 +30,8 @@ Screenshot of Benchmark application showing lots of 2D images being rendered...
 - Add mouse wheel support for CGUITextScroll object.
 - Add physics engine.
 - GUI...
+- GUI: Implement Checkbox
+- GUI: Implement Listbox
 - GUI: Implement DraggableDock.
 - GUI: Implement DraggableItem.
 - GUI: Implement Menu.

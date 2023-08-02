@@ -5,8 +5,10 @@
 
 namespace X
 {
-	// A layer stores entities and each layer is ordered by rendering order (in the C2DWorld objects) so that we can
+	// A layer stores entities of various types and each layer is ordered by rendering order (in the C2DWorld objects) so that we can
 	// have some control over which entities get rendered on top of others.
+	// When adding entities to layers, try to keep different entity types in their own layers and if entities use different texture
+	// resources, keep them in seperate layers too. They don't have to, but it helps to reduce texture re-bindings which slows things down.
 	class C2DLayer
 	{
 	public:
