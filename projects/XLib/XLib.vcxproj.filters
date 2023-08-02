@@ -229,9 +229,6 @@
     <ClInclude Include="2DCamera.h">
       <Filter>2D</Filter>
     </ClInclude>
-    <ClInclude Include="2DEntityComplex.h">
-      <Filter>2D</Filter>
-    </ClInclude>
     <ClInclude Include="vector3r.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -285,9 +282,6 @@
     </ClInclude>
     <ClInclude Include="resourceTriangle.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="2DLayerComplex.h">
-      <Filter>2D</Filter>
     </ClInclude>
     <ClInclude Include="matrix.h">
       <Filter>Math</Filter>
@@ -511,9 +505,6 @@
     <ClCompile Include="2DCamera.cpp">
       <Filter>2D</Filter>
     </ClCompile>
-    <ClCompile Include="2DEntityComplex.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
     <ClCompile Include="vector3r.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -561,9 +552,6 @@
     </ClCompile>
     <ClCompile Include="resourceTriangle.cpp">
       <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="2DLayerComplex.cpp">
-      <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="matrix.cpp">
       <Filter>Math</Filter>

@@ -5,10 +5,8 @@
 // 2D
 #include "2DCamera.h"
 #include "2DEntity.h"
-#include "2DEntityComplex.h"
 #include "2DEntityRot.h"
 #include "2DLayer.h"
-#include "2DLayerComplex.h"
 #include "2DRenderer.h"
 #include "2DWorld.h"
 // AI

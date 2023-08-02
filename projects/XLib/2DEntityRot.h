@@ -6,6 +6,15 @@
 
 namespace X
 {
+	// A C2DEntityRot is an entity which holds an individual entity to be rendered to a layer and holds it's
+	// position, scale and image stored in a texture atlas to use whilst rendering itself.
+	// This also contains rotation.
+	// A C2DEntityRot is similar to a C2DEntity except that it can be rotated.
+	// Because of this ability, these entities are slower to render in large batches than the C2DEntity object.
+	// Does the rotation get performed on the CPU or the GPU?
+	// If performing rotation on the CPU, this allows batching before sending to the GPU.
+	// If performing rotation on the GPU, no batching is possible, but spares the CPU for other tasks.
+	// As CPU cycles are precious, I decided to go with performing the rotation on the GPU.
 	class C2DEntityRot
 	{
 	public:

@@ -23,10 +23,5 @@ namespace X
 		// Background CEntity
 		float mfEntityBackgroundDegrees[1000];
 		float mfEntityRotDir[1000];
-
-		// Controllable CEntityComplex
-		CVector2f mvEntityPos;
-		float mfEntityVel;
-		CVector2f mvEntityDir;
 	};
 }

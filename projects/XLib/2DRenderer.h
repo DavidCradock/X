@@ -9,7 +9,6 @@ namespace X
 	// This is responsible for rendering 2D objects.
 	// Physics and other such things such as AI is kept seperate from this. This is solely for rendering of 2D objects.
 	// 2D objects can be simple diffuse coloured (with vertex colours)
-	// We can create parent/child relationships between individual objects to create correct rotation/position of child objects.
 	// 
 	// The manager works with multiple objects including worlds, cameras, layers and entities
 	// Each object is stored in a hashmap, so they can be accessed via a unique name for each object and
@@ -17,14 +16,6 @@ namespace X
 	// 
 	// We go here to create everything 2D related, except the CResourceTexture2DAtlas objects (which the entities use),
 	// which are created with the SCResourceManager->addTexture2DAtlas() method.
-	//
-	// I decided against rotation capabilities of the entities for performance reasons.
-	// I did try using a world matrix holding the rotation transformations, but it required calling pTri->draw()
-	// for each entity otherwise the world transform matrix wouldn't affect the entity individually.
-	// Not being able to batch quads before passing onto the GPU was too slow.
-	// I did think of performing the rotation on the CPU instead, but that would be slow too.
-	// Instead, just use the loads of memory we have available and store the image used by the entity, rotated for a set amount
-	// of degress and set the image frame number based upon the entity's rotation.
 	// 
 	// When rendering an animation sequence of .png files in Blender, to make sure the images have alpha channel,
 	// not only goto render properties, film and enable transparent, but also make sure in the compositor 
