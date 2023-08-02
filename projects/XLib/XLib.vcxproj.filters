@@ -664,10 +664,16 @@
     <None Include="..\..\data\X\shaders\gui.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2D.frag">
+    <None Include="..\..\data\X\shaders\2DEntity.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2D.vert">
+    <None Include="..\..\data\X\shaders\2DEntity.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DEntityRot.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DEntityRot.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

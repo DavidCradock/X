@@ -28,8 +28,8 @@ namespace X
 		_mvLoadingCompleteTextPos.set(pWindow->getDimensions().x * 0.5f, pWindow->getDimensions().y * 0.5f);
 
 		// Default resources
-		_mstrFontSmall = "data/X/fonts/ultimateserial-medium-regular_32";
-		_mstrFontLarge = "data/X/fonts/ultimateserial-medium-regular_100";
+		_mstrFontSmall = "data/X/fonts/satoshi_20";
+		_mstrFontLarge = "data/X/fonts/satoshi_20";
 		_mstrBackgroundImage = "data/X/textures/default_loading_screenBG.png";
 	}
 

@@ -116,13 +116,14 @@ namespace X
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTriangle* pTri = pRM->getTriangle("X:default");
-		CResourceShader* pShader = pRM->getShader("X:2D");
+		CResourceShader* pShaderEntity = pRM->getShader("X:2DEntity");
+		CResourceShader* pShaderEntityRot = pRM->getShader("X:2DEntityRot");
 
 		pTri->removeGeom();
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->bind();
-		pShader->setInt("texture0", 0);
+		pShaderEntity->bind();
+		pShaderEntity->setInt("texture0", 0);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -163,7 +164,7 @@ namespace X
 				CVector2f vFBDims = pFB->getDimensions();
 				CMatrix matrixProjection;
 				matrixProjection.setProjectionOrthographic(0.0f, vFBDims.x, 0.0f, vFBDims.y, -1.0f, 1.0f);
-				pShader->setMat4("matrixProjection", matrixProjection);
+				pShaderEntity->setMat4("matrixProjection", matrixProjection);
 
 				// Set matrix view from camera
 				CMatrix matrixView;
@@ -172,7 +173,7 @@ namespace X
 				v3CameraPos.x *= -1.0f;
 				v3CameraPos.y *= -1.0f;
 				matrixView.setTranslation(v3CameraPos);
-				pShader->setMat4("matrixView", matrixView);
+				pShaderEntity->setMat4("matrixView", matrixView);
 
 				// For each layer in world
 				for (unsigned int uiLayerZorder = 0; uiLayerZorder < itWorld->second->_mvecLayerNameZOrder.size(); ++uiLayerZorder)

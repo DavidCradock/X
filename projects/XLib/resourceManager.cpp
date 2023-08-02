@@ -166,7 +166,7 @@ namespace X
 		}
 	}
 
-	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout) const
+	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create an image holding each characters' image and saves the image to disk.
@@ -183,9 +183,9 @@ namespace X
 			iAntiAliased = NONANTIALIASED_QUALITY;
 		int iActualHeight = -(int)iFontHeight;
 
-		int iWeight = 400;	// 800 for BOLD
-		if (bBold)
-			iWeight = 800;
+//		int iWeight = 400;	// 800 for BOLD
+//		if (bBold)
+//			iWeight = 800;
 
 		// Attempt to generate font
 		font = CreateFont(iActualHeight,// Height Of Font
@@ -416,36 +416,70 @@ namespace X
 
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 
+		/******************************************************************************************************************************
 		// Shaders
+		******************************************************************************************************************************/
+		// A shader used by the CResourceFont class to render text.
 		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
+		// A shader used by the CResourceLine class to render lines.
 		pRM->addShader("X:line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
+		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
 		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
+		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
 		pRM->addShader("X:DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag");
+		// A shader which accepts vertex position, colour and texture coodinates
 		pRM->addShader("X:pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
+		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
+		// A shader used by the scene manager to render the depth map used for rendering shadows
 		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
+		// A shader used by the GUI to render everything.
 		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag");
-		pRM->addShader("X:2D", "data/X/shaders/2D.vert", "data/X/shaders/2D.frag");
+		// A shader used by SC2DRenderer for C2DEntity
+		pRM->addShader("X:2DEntity", "data/X/shaders/2DEntity.vert", "data/X/shaders/2DEntity.frag");
+		// A shader used by SC2DRenderer for C2DEntityRot
+		pRM->addShader("X:2DEntityRot", "data/X/shaders/2DEntityRot.vert", "data/X/shaders/2DEntityRot.frag");
 
+		/******************************************************************************************************************************
 		// Textures
+		******************************************************************************************************************************/
+		// A texture for use with rendering generic particles
 		pRM->addTexture2DFromFile("X:default_particle", "data/X/textures/particle0.png");
+		// A texture which is tiny and white.
 		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png");
+		// A texture which is grey for diffuse, used if not set
 		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png");
+		// A texture which is black for emission, used if not set
 		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png");
+		// A texture which is a flat normal map, used if not set
 		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png");
+		// A texture which is black for roughness used if not set
 		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png");
 
+		/******************************************************************************************************************************
 		// Depth buffers
+		******************************************************************************************************************************/
+		// A depth buffer which is used by scene managers to render shadows
 		pRM->addDepthbuffer("X:shadows", 2048, 2048);
 
+		/******************************************************************************************************************************
 		// Triangle resources
+		******************************************************************************************************************************/
+		// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 		pRM->addTriangle("X:default");
 
+		/******************************************************************************************************************************
 		// Framebuffers
+		******************************************************************************************************************************/
+		// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		// A framebuffer the GUI tooltips are rendered to
 		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
 
+		/******************************************************************************************************************************
 		// Line vertex buffers
+		******************************************************************************************************************************/
+		// A line vertex buffer resource used by the GUI when rendering lines
 		pRM->addLine("X:default");
 	}
 

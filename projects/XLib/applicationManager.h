@@ -55,8 +55,6 @@ namespace X
 		// Returns false if the application wants to shutdown
 		bool callCurrentApp_onUpdate(void);
 
-		
-
 		mutable std::map<std::string, CApplicationBase*> mApplications;	// Hash map which holds each named application
 		std::string mstrCurrentApp;										// Application name of the current application.
 		CTimer mTimer;													// Used to update application running time.

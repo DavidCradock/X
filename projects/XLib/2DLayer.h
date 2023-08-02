@@ -30,6 +30,7 @@ namespace X
 		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
 		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
 		// Returns a pointer to the newly added object
+		// See C2DEntity in 2DEntity.h for more information.
 		C2DEntity* addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
 
 		// Returns true if an object exists, else false
@@ -61,6 +62,7 @@ namespace X
 		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this entity's image data.
 		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
 		// Returns a pointer to the newly added object
+		// See C2DEntityRot in 2DEntityRot.h for more information.
 		C2DEntityRot* addEntityRot(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName);
 
 		// Returns true if an object exists, else false

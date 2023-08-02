@@ -13,7 +13,11 @@ Screenshot of the development application showing GUI and simple 3D scene manage
 Screenshot of Benchmark application showing lots of 2D images being rendered...
 ![Screenshot of Benchmark application showing lots of 2D images being rendered.](https://github.com/DavidCradock/X/blob/e0d565a4164a812c36f54f97c38803a583d7033d/github_images/github_screenshot_2023_07_13.png)
 
+Screenshot of "X:Default:FontGenerator" container window...
+![Screenshot of Benchmark application showing lots of 2D images being rendered.](https://github.com/DavidCradock/X/blob/e0d565a4164a812c36f54f97c38803a583d7033d/github_images/github_screenshot_2023_07_13.png)
+
 ** TODO **
+- Add FontGenerator container window
 - Add 2DEntityRot which has its geometry rotated by a matrix prior to being sent to the GPU to allow rotations
 - Add 2DEntityLine which uses lines to render itself. Mainly used for debugging.
 - Make sure 2d world etal is using 0,0 at origin and allow negative values, where +x is to the right and +y is up.
@@ -30,8 +34,10 @@ Screenshot of Benchmark application showing lots of 2D images being rendered...
 - Add mouse wheel support for CGUITextScroll object.
 - Add physics engine.
 - GUI...
+- GUI: Change default theme font to a bit bigger as commas don’t render right.
 - GUI: Implement Checkbox
 - GUI: Implement Listbox
+- GUI: Implement Colour selector
 - GUI: Implement DraggableDock.
 - GUI: Implement DraggableItem.
 - GUI: Implement Menu.

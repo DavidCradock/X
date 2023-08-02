@@ -315,6 +315,26 @@ namespace X
 
 	void SCGUIManager::_createDefaultContainers(void)
 	{
+		_createDefaultContainerStatistics();
+		_createDefaultContainerFontGenerator();
+	}
+
+	void SCGUIManager::_updateDefaultContainers(void)
+	{
+		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
+		CGUIContainer* pCont;
+
+		pCont = getContainer("X:Default:Statistics");
+		if (pCont->getVisible())
+			_updateDefaultContainerStatistics();
+
+		pCont = getContainer("X:Default:FontGenerator");
+		if (pCont->getVisible())
+			_updateDefaultContainerFontGenerator();
+	}
+
+	void SCGUIManager::_createDefaultContainerStatistics(void)
+	{
 		CGUIContainer* pCont = addContainer("X:Default:Statistics");
 		CGUITheme* pTheme = pCont->getTheme();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -351,98 +371,321 @@ namespace X
 		pButton->mpTooltip->setAsText("Close window.");
 	}
 
-	void SCGUIManager::_updateDefaultContainers(void)
+	void SCGUIManager::_updateDefaultContainerStatistics(void)
 	{
 		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
 		CGUIContainer* pCont = getContainer("X:Default:Statistics");
 		CGUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 
-		if (pCont->getVisible())
+		CGUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
+		SCWindow* pWindow = SCWindow::getPointer();
+
+		// Add new value to linegraph data set
+		_mDefContStatistics.fAddValueToLinegraphDataset += _mTimer.getSecondsPast();
+		if (_mDefContStatistics.fAddValueToLinegraphDataset >= 0.1f)
 		{
-			CGUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
-			SCWindow* pWindow = SCWindow::getPointer();
+			_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
+			CGUILineGraphDataSet* pDataSetFPS = pLineGraph->getDataset("FPS");
+			CGUILineGraphDataSet* pDataSetFPSAVR = pLineGraph->getDataset("FPSAVR");
+			pDataSetFPS->addValue(_mTimer.getFPS());
+			pDataSetFPSAVR->addValue(_mTimer.getFPSAveraged());
 
-			// Add new value to linegraph data set
-			_mDefContStatistics.fAddValueToLinegraphDataset += _mTimer.getSecondsPast();
-			if (_mDefContStatistics.fAddValueToLinegraphDataset >= 0.1f)
+			while (pDataSetFPS->getNumValues() > 60)
+				pDataSetFPS->removeValue();
+			while (pDataSetFPSAVR->getNumValues() > 60)
+				pDataSetFPSAVR->removeValue();
+
+			// Set min and max text
+			float fMaxFPS = pDataSetFPS->getHighestValue();
+			float fMaxFPSAVR = pDataSetFPSAVR->getHighestValue();
+			float fMax = fMaxFPS;
+			if (fMax < fMaxFPSAVR)
+				fMax = fMaxFPSAVR;
+
+			std::string str = "FPSMax: " + std::to_string((int)fMax);
+			pCont->getText("Text_FPSMax")->setText(str);
+
+			float fMinFPS = pDataSetFPS->getLowestValue();
+			float fMinFPSAVR = pDataSetFPSAVR->getLowestValue();
+			float fMin = fMinFPS;
+			if (fMin < fMinFPSAVR)
+				fMin = fMinFPSAVR;
+
+			str = "FPSMin: " + std::to_string((int)fMin);
+			CGUIText* pText = pCont->getText("Text_FPSMin");
+			pText->setText(str);
+
+			// Set Text_FPSMin position
+			float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
+			pText->mfPositionY = 120.0f - fTextHeight;
+
+			// Set text values
+			pText = pCont->getText("Text_FPS");
+			pText->setText("FPS: " + std::to_string((int)_mTimer.getFPS()));
+			pText->mfPositionY = 60.0f - (fTextHeight * 1.0f);
+			pText = pCont->getText("Text_FPSAVR");
+			pText->setText("FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged()));
+			pText->mfPositionY = 60.0f - (fTextHeight * 0.0f);
+
+			// VSync text
+			std::string strTxt;
+			if (pWindow->getVSyncEnabled())
 			{
-				_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
-				CGUILineGraphDataSet* pDataSetFPS = pLineGraph->getDataset("FPS");
-				CGUILineGraphDataSet* pDataSetFPSAVR = pLineGraph->getDataset("FPSAVR");
-
-				pDataSetFPS->addValue(_mTimer.getFPS());
-				pDataSetFPSAVR->addValue(_mTimer.getFPSAveraged());
-
-				while (pDataSetFPS->getNumValues() > 60)
-					pDataSetFPS->removeValue();
-				while (pDataSetFPSAVR->getNumValues() > 60)
-					pDataSetFPSAVR->removeValue();
-
-				// Set min and max text
-				float fMaxFPS = pDataSetFPS->getHighestValue();
-				float fMaxFPSAVR = pDataSetFPSAVR->getHighestValue();
-				float fMax = fMaxFPS;
-				if (fMax < fMaxFPSAVR)
-					fMax = fMaxFPSAVR;
-
-				std::string str = "FPSMax: " + std::to_string((int)fMax);
-				pCont->getText("Text_FPSMax")->setText(str);
-
-				float fMinFPS = pDataSetFPS->getLowestValue();
-				float fMinFPSAVR = pDataSetFPSAVR->getLowestValue();
-				float fMin = fMinFPS;
-				if (fMin < fMinFPSAVR)
-					fMin = fMinFPSAVR;
-
-				str = "FPSMin: " + std::to_string((int)fMin);
-				CGUIText* pText = pCont->getText("Text_FPSMin");
-				pText->setText(str);
-
-				// Set Text_FPSMin position
-				float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
-				pText->mfPositionY = 120.0f - fTextHeight;
-
-				// Set text values
-				pText = pCont->getText("Text_FPS");
-				pText->setText("FPS: " + std::to_string((int)_mTimer.getFPS()));
-				pText->mfPositionY = 60.0f - (fTextHeight * 1.0f);
-				pText = pCont->getText("Text_FPSAVR");
-				pText->setText("FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged()));
-				pText->mfPositionY = 60.0f - (fTextHeight * 0.0f);
-
-				// VSync text
-				std::string strTxt;
-				if (pWindow->getVSyncEnabled())
-				{
-					strTxt = "VSync: On. Desktop HZ: ";
-					StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
-					pCont->getText("VSyncONOFF")->setText(strTxt);
-				}
-				else
-				{
-					strTxt = "VSync: Off. Desktop HZ: ";
-					StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
-					pCont->getText("VSyncONOFF")->setText(strTxt);
-				}
-
-				// CPU info
-				strTxt = "CPU Logical Cores Count: ";
-				StringUtils::appendInt(strTxt, getCPULogicalCores());
-				pCont->getText("CPU_info")->setText(strTxt);
-
-				// Memory text
-				SMemInfo memInfo;
-				getMemInfo(memInfo);
-				pCont->getText("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
-				pCont->getText("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
+				strTxt = "VSync: On. Desktop HZ: ";
+				StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+				pCont->getText("VSyncONOFF")->setText(strTxt);
 			}
+			else
+			{
+				strTxt = "VSync: Off. Desktop HZ: ";
+				StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+				pCont->getText("VSyncONOFF")->setText(strTxt);
+			}
+
+			// CPU info
+			strTxt = "CPU Logical Cores Count: ";
+			StringUtils::appendInt(strTxt, getCPULogicalCores());
+			pCont->getText("CPU_info")->setText(strTxt);
+
+			// Memory text
+			SMemInfo memInfo;
+			getMemInfo(memInfo);
+			pCont->getText("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
+			pCont->getText("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
 
 			// Close button
 			CGUIButton* pButton = pCont->getButton("Close");
 			if (pButton->getClicked())
 				pCont->setVisible(false);
 		}
+	}
+
+	void SCGUIManager::_createDefaultContainerFontGenerator(void)
+	{
+		CGUIContainer* pCont = addContainer("X:Default:FontGenerator");
+		CGUITheme* pTheme = pCont->getTheme();
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		float fTextHeight = pFont->getTextHeight(1.0f);
+		CGUIButton* pButton;
+		CGUITextEdit* pTextEdit;
+
+		pCont->setDimensions(640.0f, 435.0f);
+		pCont->setPosition(100000.0f, 0.0f);
+		pCont->setVisible(false);
+		pCont->mstrTitleText = "Font Generator";
+
+		float fYpos = 0;
+
+		// Set settings
+		_mDefContFontGen.bAntiAliasingOn = true;
+		_mDefContFontGen.bItalicsOn = false;
+		_mDefContFontGen.bStrikeoutOn = false;
+		_mDefContFontGen.bUnderliningOn = false;
+		_mDefContFontGen.iHeight = 20;
+		_mDefContFontGen.iWeight = 400;
+		_mDefContFontGen.strFontName = "arial";
+		
+		// Text explaining stuff
+		CGUITextScroll* pTextScroll = pCont->addTextScroll("X:Default:FontGenerator:TextScroll", 0, 0, 420, 435, "");
+		std::string strTxt = "This Font Generator window is used to create, preview and save files for use with the SCResourceManager and it's CResourceFont class.\n \n";
+		strTxt += "Start by typing the name of the font installed on the operating system, then set the height and weight in the text edit boxes and toggle anti-aliasing, italics, underling and strikeout with the buttons and then click the generate button to create the font and see a preview.\n";
+		strTxt += "This also saves out the pair of font files to this application's root directory.\n";
+		strTxt += "Happy font creating! :)";
+		pTextScroll->setText(strTxt);
+
+		// Text edit box for font name
+		pTextEdit = pCont->addTextEdit("textedit:fontname", 440, fYpos, 200, 40, _mDefContFontGen.strFontName);
+		pTextEdit->mpTooltip->setAsText("Type the name of the full font installed on your operating system here.");
+		pTextEdit->setMaxChars(64);
+		fYpos += 45;
+
+		// Text edit box for font height
+		strTxt.clear();
+		StringUtils::appendInt(strTxt, _mDefContFontGen.iHeight);
+		pTextEdit = pCont->addTextEdit("textedit:fontheight", 440, fYpos, 200, 40, strTxt);
+		pTextEdit->mpTooltip->setAsText("Type the height of the font here.");
+		fYpos += 45;
+
+		// Text edit box for font weight
+		strTxt.clear();
+		StringUtils::appendInt(strTxt, _mDefContFontGen.iWeight);
+		pTextEdit = pCont->addTextEdit("textedit:fontweight", 440, fYpos, 200, 40, strTxt);
+		pTextEdit->mpTooltip->setAsText("Type the font weight to use when generating the font here. Values of 400-800 are typical.");
+		fYpos += 55;
+
+		// Button to toggle anti-aliasing on/off
+		pButton = pCont->addButton("antialiasing", 440, fYpos, 200, 40, "Anti aliasing");
+		pButton->mpTooltip->setAsText("Toggle anti-aliasing on/off. (Currently on)");
+		fYpos += 50;
+
+		// Button to toggle italic on/off
+		pButton = pCont->addButton("italic", 440, fYpos, 200, 40, "Toggle Italics");
+		pButton->mpTooltip->setAsText("Toggle italics on/off. (Currently off)");
+		fYpos += 50;
+
+		// Button to toggle underline on/off
+		pButton = pCont->addButton("underline", 440, fYpos, 200, 40, "Toggle Underlining");
+		pButton->mpTooltip->setAsText("Toggle underlining on/off.  (Currently off)");
+		fYpos += 50;
+
+		// Button to toggle strikeout on/off
+		pButton = pCont->addButton("strikeout", 440, fYpos, 200, 40, "Toggle Strikeout");
+		pButton->mpTooltip->setAsText("Toggle strikeout on/off.  (Currently off)");
+		fYpos += 50;
+
+		// Button to attempt to generate the font
+		pButton = pCont->addButton("generate", 440, fYpos, 200, 40, "Generate Font");
+		pButton->mpTooltip->setAsText("Click here to attempt to generate the font with the current settings.");
+		fYpos += 50;
+
+		// Close button
+		pButton = pCont->addButton("Close", 440, fYpos, 200, 40, "Close");
+		pButton->mpTooltip->setAsText("Close window.");
+		fYpos += 50;
+
+		// Create the preview font
+		_mDefContFontGen.pFont = new CResourceFont("data/X/fonts/satoshi_20");
+	}
+
+	void SCGUIManager::_updateDefaultContainerFontGenerator(void)
+	{
+		CGUIContainer* pCont = getContainer("X:Default:FontGenerator");
+		SCWindow* pWindow = SCWindow::getPointer();
+		int iTotalRenderedHeight;
+		
+		// Close button
+		CGUIButton* pButton = pCont->getButton("Close");
+		if (pButton->getClicked())
+			pCont->setVisible(false);
+
+		// Fontname textedit
+		CGUITextEdit* pTE;
+		pTE = pCont->getTextEdit("textedit:fontname");
+		if (pTE->getEnterPressed())
+		{
+			_mDefContFontGen.strFontName = pTE->mstrText;
+			_defaultContainerFontGeneratorBuildFont();
+		}
+
+		// Fontheight textedit
+		pTE = pCont->getTextEdit("textedit:fontheight");
+		if (pTE->getEnterPressed())
+		{
+			if (StringUtils::representsNumber(pTE->mstrText))
+			{
+				_mDefContFontGen.iHeight = stoi(pTE->mstrText);
+				_defaultContainerFontGeneratorBuildFont();
+			}
+		}
+
+		// Fontweight textedit
+		pTE = pCont->getTextEdit("textedit:fontweight");
+		if (pTE->getEnterPressed())
+		{
+			if (StringUtils::representsNumber(pTE->mstrText))
+			{
+				_mDefContFontGen.iWeight = stoi(pTE->mstrText);
+				_defaultContainerFontGeneratorBuildFont();
+			}
+		}
+
+		// Button to toggle anti-aliasing on/off
+		pButton = pCont->getButton("antialiasing");
+		if (pButton->getClicked())
+		{
+			_mDefContFontGen.bAntiAliasingOn = !_mDefContFontGen.bAntiAliasingOn;
+			if (_mDefContFontGen.bAntiAliasingOn)
+				pButton->mpTooltip->setAsText("Toggle anti-aliasing on/off. (Currently on)");
+			else
+				pButton->mpTooltip->setAsText("Toggle anti-aliasing on/off. (Currently off)");
+			_defaultContainerFontGeneratorBuildFont();
+		}
+
+		// Button to toggle italic on/off
+		pButton = pCont->getButton("italic");
+		if (pButton->getClicked())
+		{
+			_mDefContFontGen.bItalicsOn = !_mDefContFontGen.bItalicsOn;
+			if (_mDefContFontGen.bItalicsOn)
+				pButton->mpTooltip->setAsText("Toggle italics on/off. (Currently on)");
+			else
+				pButton->mpTooltip->setAsText("Toggle italics on/off. (Currently off)");
+			_defaultContainerFontGeneratorBuildFont();
+		}
+
+		// Button to toggle underline on/off
+		pButton = pCont->getButton("underline");
+		if (pButton->getClicked())
+		{
+			_mDefContFontGen.bUnderliningOn = !_mDefContFontGen.bUnderliningOn;
+			if (_mDefContFontGen.bUnderliningOn)
+				pButton->mpTooltip->setAsText("Toggle underlining on/off. (Currently on)");
+			else
+				pButton->mpTooltip->setAsText("Toggle underlining on/off. (Currently off)");
+			_defaultContainerFontGeneratorBuildFont();
+		}
+
+		// Button to toggle strikeout on/off
+		pButton = pCont->getButton("strikeout");
+		if (pButton->getClicked())
+		{
+			_mDefContFontGen.bStrikeoutOn = !_mDefContFontGen.bStrikeoutOn;
+			if (_mDefContFontGen.bStrikeoutOn)
+				pButton->mpTooltip->setAsText("Toggle strikeout on/off. (Currently on)");
+			else
+				pButton->mpTooltip->setAsText("Toggle strikeout on/off. (Currently off)");
+			_defaultContainerFontGeneratorBuildFont();
+		}
+
+		// Button to attempt to generate the font
+		pButton = pCont->getButton("generate");
+		if (pButton->getClicked())
+			_defaultContainerFontGeneratorBuildFont();
+
+		// Render preview font
+		std::string strTxt;
+		strTxt = "Here is the Font Generator window's preview font being rendered with some text, no ipsum stuff here!\n";
+		strTxt += "Let's see what numbers look like... 0123456789 and with a space in between... 0 1 2 3 4 5 6 7 8 9\n";
+		strTxt += "Not all fonts have these symbols... Shift key + number keys... !\"$%^&*()_+\n";
+		strTxt += "Some more symbols...\n";
+		strTxt += "Minus:- Plus:+ Underscore:_ Equals:= Four brackets: []{}\n";
+		strTxt += "Semi colon: ; Colon: : Apostophe: ' At Symbol: @ Tilde: '\n";
+		strTxt += "Less than: < More than: > Question mark: ? Forward slash: /\n";
+		strTxt += "Letters lower and uppercase: AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\n";
+		std::vector<std::string> vecStrLines;
+		_mDefContFontGen.pFont->printInRectNewline(
+			true,
+			strTxt,
+			0,
+			0,
+			pWindow->getWidth(),
+			pWindow->getHeight(),
+			vecStrLines,
+			iTotalRenderedHeight,
+			"\n",
+			1.0f,
+			CColour());
+
+	}
+
+	void SCGUIManager::_defaultContainerFontGeneratorBuildFont(void)
+	{
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		pRM->buildFontFiles(
+			"font_output",
+			_mDefContFontGen.strFontName,
+			_mDefContFontGen.iHeight,
+			_mDefContFontGen.iWeight,
+			_mDefContFontGen.bAntiAliasingOn,
+			_mDefContFontGen.bItalicsOn,
+			_mDefContFontGen.bUnderliningOn,
+			_mDefContFontGen.bStrikeoutOn);
+		delete _mDefContFontGen.pFont;
+		std::string strFontFilename = "font_output_";
+		StringUtils::appendInt(strFontFilename, _mDefContFontGen.iHeight);
+		_mDefContFontGen.pFont = new CResourceFont(strFontFilename);
 	}
 
 	void SCGUIManager::setTooltipDelay(float fSeconds)

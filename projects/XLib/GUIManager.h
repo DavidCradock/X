@@ -26,6 +26,7 @@
 #include "GUITooltip.h"
 #include "timer.h"
 #include "utilities.h"
+#include "resourceFont.h"
 
 namespace X
 {
@@ -90,7 +91,9 @@ namespace X
 	// any value.
 	//
 	// There are also some default containers which can be shown (hidden by default) and they are named as follows...
-	// X:Default:Statistics		// This shows FPS counter, also as a graph
+	// X:Default:Statistics		// This shows FPS counter, also has a graph
+	// X:Default:FontGenerator	// A container with functionality to generate font files from fonts stored in the operating system
+	// 
 	// They are created in SCGUIManager::_createDefaultContainers()
 	// 
 	// Implementation details:
@@ -227,6 +230,24 @@ namespace X
 			float fAddValueToLinegraphDataset;
 		};
 		SDefaultContainerStatistics _mDefContStatistics;
+		void _createDefaultContainerStatistics(void);
+		void _updateDefaultContainerStatistics(void);
 
+		struct SDefaultContainerFontGenerator
+		{
+			CResourceFont* pFont;
+			int iHeight;
+			int iWeight;
+			bool bAntiAliasingOn;
+			bool bItalicsOn;
+			bool bUnderliningOn;
+			bool bStrikeoutOn;
+			std::string strFontName;
+		};
+		SDefaultContainerFontGenerator _mDefContFontGen;
+
+		void _createDefaultContainerFontGenerator(void);
+		void _updateDefaultContainerFontGenerator(void);
+		void _defaultContainerFontGeneratorBuildFont(void);
 	};
 }

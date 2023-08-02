@@ -25,7 +25,8 @@ namespace X
 	// X:depthbuffer_debug		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 	// X:shadowdepthmap			// A shader used by the scene manager to render the depth map used for rendering shadows
 	// X:gui					// A shader used by the GUI to render everything.
-	// X:2D						// A shader used by SC2DRenderer for entities
+	// X:2DEntity				// A shader used by SC2DRenderer for C2DEntity
+	// X:2DEntityRot			// A shader used by SC2DRenderer for C2DEntityRot
 	// X:default_particle		// A texture for use with rendering generic particles
 	// X:default_white			// A texture which is tiny and white.
 	// X:default_diffuse		// A texture which is grey for diffuse, used if not set
@@ -35,7 +36,7 @@ namespace X
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
 	// X:default				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-	// X:guitooltipFB			// A framebuffer the tooltips are rendered to
+	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
 	// X:default				// A line vertex buffer resource used by the GUI when rendering lines
 	// They are loaded by this class's addDefaultResources() method which is called from SCApplicationManager::mainLoop()
 	class SCResourceManager : public CSingleton<SCResourceManager>
@@ -57,11 +58,12 @@ namespace X
 		// strFontName is the name of the font which is installed on the operating system which is used to generate the font
 		// iFontHeight is the size of the font
 		// bAntialiased is whether to perform antialiasing when generating the font's character images.
-		// bBold, bItalic, bUnderlines and bStrikeout define the style of the font.
+		// iWeight is how "bold" the font is, a value of around 400 is "normal", 800 is considered "bold"
+		// bItalic, bUnderlines and bStrikeout define the style of the font.
 		// If an error occurred, an error message is shown and execution ends.
-		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout) const;
+		void buildFontFiles(const std::string& strOutputBaseName = "arial", const std::string& strFontName = "arial", unsigned int iFontHeight = 20, int iWeight = 400, bool bAntialiased = true, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false) const;
 
-		// Adds default required resources to the resource manager, called during startup from mainLoop
+		// Adds default required resources to the resource manager, called during startup from SCCApplicationManager::mainLoop()
 		void addDefaultResources(void);
 
 		// Adds a new depthbuffer object to the manager.

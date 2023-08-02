@@ -8,6 +8,7 @@ namespace X
 		// Use the resource loading screen
 		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
 		pLS->onInit(0);
+		pLS->setFadeOut(0.5f);
 
 		// Set window title bar text and set icon
 		SCWindow* pWindow = SCWindow::getPointer();
@@ -15,6 +16,16 @@ namespace X
 		pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
 		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+
+		// Show FontGenerator window
+		// TEMP MAKE FONTS
+		SCResourceManager::getPointer()->buildFontFiles("data/X/fonts/technor", "technor variable black", 20, 400, true, false, false, false);
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUI->getContainer("X:Default:FontGenerator");
+		pCont->setVisible(true);
+		pCont->setPositionCentreWindow();
+		pGUI->setContainerAsActive("X:Default:FontGenerator");
+		
 
 		// End of loading screen
 		pLS->onInitEnd();
