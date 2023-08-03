@@ -36,11 +36,11 @@ namespace X
 		mImages.buttonImageBGNormal = "data/X/GUI/default/buttonImageBGnormal.png";
 
 		// Fonts
-		mFonts.containerTitle = "data/X/fonts/technor_20";
-		mFonts.button = "data/X/fonts/technor_20";
-		mFonts.text = "data/X/fonts/technor_20";
-		mFonts.textEdit = "data/X/fonts/technor_20";
-		mFonts.textScroll = "data/X/fonts/technor_20";
+		mFonts.containerTitle = "data/X/fonts/satoshi_22";
+		mFonts.button = "data/X/fonts/satoshi_22";
+		mFonts.text = "data/X/fonts/satoshi_22";
+		mFonts.textEdit = "data/X/fonts/satoshi_22";
+		mFonts.textScroll = "data/X/fonts/satoshi_22";
 
 		// Colours
 		mColours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);

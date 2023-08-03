@@ -61,7 +61,7 @@ namespace X
 		// iWeight is how "bold" the font is, a value of around 400 is "normal", 800 is considered "bold"
 		// bItalic, bUnderlines and bStrikeout define the style of the font.
 		// If an error occurred, an error message is shown and execution ends.
-		void buildFontFiles(const std::string& strOutputBaseName = "arial", const std::string& strFontName = "arial", unsigned int iFontHeight = 20, int iWeight = 400, bool bAntialiased = true, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false) const;
+		void buildFontFiles(const std::string& strOutputBaseName = "arial", const std::string& strFontName = "arial", unsigned int iFontHeight = 20, int iWeight = 400, bool bAntialiased = true, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false, bool bAppendHeightToFilename = true) const;
 
 		// Adds default required resources to the resource manager, called during startup from SCCApplicationManager::mainLoop()
 		void addDefaultResources(void);

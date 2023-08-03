@@ -180,7 +180,7 @@ namespace X
 		// Returns true if the key has changed from the up state, to the down state since last call to update()
 		bool once(unsigned char KC_KEYCODE) const;
 
-		// Returns a const reference to the CText object, which the key being pressed represents.
+		// Returns a const reference to the string object object, which the key being pressed represents.
 		// The string has zero length if no key has been pressed.
 		// Only returns a char if the key has been toggled from off to on since previous call to update(), not if the key is held down.
 		// Upper and lower case chars are supported with shift keys.

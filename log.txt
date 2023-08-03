@@ -21,14 +21,14 @@
 0w:0d:0h:0m:00s : SCAudioManager creating mastering voice.
 0w:0d:0h:0m:00s : SCAudioManager initialisation complete.
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() calling App's onStart()
-0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:36m:23s : SCApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() called.
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() releasing window's device context.
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() closing and destroying the window.
-0w:0d:0h:36m:23s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() unregistering window class.
-0w:0d:0h:36m:23s : SCWindow::destroyWindow() complete.
-0w:0d:0h:36m:23s : Total runtime: 23sec 36min 0hr 0days 0weeks.
+0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() calling App's onStart()
+0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:19s : SCApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() called.
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:19s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() unregistering window class.
+0w:0d:0h:0m:19s : SCWindow::destroyWindow() complete.
+0w:0d:0h:0m:19s : Total runtime: 19sec 0min 0hr 0days 0weeks.

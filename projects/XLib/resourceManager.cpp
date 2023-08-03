@@ -166,7 +166,7 @@ namespace X
 		}
 	}
 
-	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout) const
+	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout, bool bAppendHeightToFilename) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create an image holding each characters' image and saves the image to disk.
@@ -336,9 +336,11 @@ namespace X
 		// Compute filenames for the texture
 		std::string strOutputNameBase = strOutputBaseName;
 		transform(strOutputNameBase.begin(), strOutputNameBase.end(), strOutputNameBase.begin(), ::tolower);
-		strOutputNameBase.append("_");
-		strOutputNameBase.append(std::to_string(iFontHeight));
-
+		if (bAppendHeightToFilename)
+		{
+			strOutputNameBase.append("_");
+			strOutputNameBase.append(std::to_string(iFontHeight));
+		}
 		unsigned char ucColour;
 		unsigned int iIndex;
 		for (int iX = 0; iX < (int)vFinalTextureDims.x; iX++)

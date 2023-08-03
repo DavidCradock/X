@@ -210,6 +210,16 @@ namespace X
 			case KC_8:			keyOnce2Char.append("8"); break;
 			case KC_9:			keyOnce2Char.append("9"); break;
 			case KC_0:			keyOnce2Char.append("0"); break;
+			case KC_NUMPAD0:	keyOnce2Char.append("0"); break;
+			case KC_NUMPAD1:	keyOnce2Char.append("1"); break;
+			case KC_NUMPAD2:	keyOnce2Char.append("2"); break;
+			case KC_NUMPAD3:	keyOnce2Char.append("3"); break;
+			case KC_NUMPAD4:	keyOnce2Char.append("4"); break;
+			case KC_NUMPAD5:	keyOnce2Char.append("5"); break;
+			case KC_NUMPAD6:	keyOnce2Char.append("6"); break;
+			case KC_NUMPAD7:	keyOnce2Char.append("7"); break;
+			case KC_NUMPAD8:	keyOnce2Char.append("8"); break;
+			case KC_NUMPAD9:	keyOnce2Char.append("9"); break;
 			case KC_SLASH:		keyOnce2Char.append("/"); break;
 			case KC_PERIOD:		keyOnce2Char.append("."); break;
 			case KC_COMMA:		keyOnce2Char.append(","); break;

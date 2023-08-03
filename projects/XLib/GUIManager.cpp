@@ -471,7 +471,7 @@ namespace X
 		CGUIButton* pButton;
 		CGUITextEdit* pTextEdit;
 
-		pCont->setDimensions(640.0f, 435.0f);
+		pCont->setDimensions(640.0f, 385.0f);
 		pCont->setPosition(100000.0f, 0.0f);
 		pCont->setVisible(false);
 		pCont->mstrTitleText = "Font Generator";
@@ -488,10 +488,10 @@ namespace X
 		_mDefContFontGen.strFontName = "arial";
 		
 		// Text explaining stuff
-		CGUITextScroll* pTextScroll = pCont->addTextScroll("X:Default:FontGenerator:TextScroll", 0, 0, 420, 435, "");
+		CGUITextScroll* pTextScroll = pCont->addTextScroll("X:Default:FontGenerator:TextScroll", 0, 0, 420, 385, "");
 		std::string strTxt = "This Font Generator window is used to create, preview and save files for use with the SCResourceManager and it's CResourceFont class.\n \n";
-		strTxt += "Start by typing the name of the font installed on the operating system, then set the height and weight in the text edit boxes and toggle anti-aliasing, italics, underling and strikeout with the buttons and then click the generate button to create the font and see a preview.\n";
-		strTxt += "This also saves out the pair of font files to this application's root directory.\n";
+		strTxt += "Start by typing the name of the font installed on the operating system, then set the height and weight in the text edit boxes and toggle anti-aliasing, italics, underling and strikeout with the buttons.\n";
+		strTxt += "Whenever you change a setting, the the pair of font files \"font_output.fnt\" and \"font_output.png\" are saved to this application's root directory.\n";
 		strTxt += "Happy font creating! :)";
 		pTextScroll->setText(strTxt);
 
@@ -535,18 +535,13 @@ namespace X
 		pButton->mpTooltip->setAsText("Toggle strikeout on/off.  (Currently off)");
 		fYpos += 50;
 
-		// Button to attempt to generate the font
-		pButton = pCont->addButton("generate", 440, fYpos, 200, 40, "Generate Font");
-		pButton->mpTooltip->setAsText("Click here to attempt to generate the font with the current settings.");
-		fYpos += 50;
-
 		// Close button
 		pButton = pCont->addButton("Close", 440, fYpos, 200, 40, "Close");
 		pButton->mpTooltip->setAsText("Close window.");
 		fYpos += 50;
 
 		// Create the preview font
-		_mDefContFontGen.pFont = new CResourceFont("data/X/fonts/satoshi_20");
+		_mDefContFontGen.pFont = new CResourceFont("data/X/fonts/satoshi_22");
 	}
 
 	void SCGUIManager::_updateDefaultContainerFontGenerator(void)
@@ -639,21 +634,18 @@ namespace X
 			_defaultContainerFontGeneratorBuildFont();
 		}
 
-		// Button to attempt to generate the font
-		pButton = pCont->getButton("generate");
-		if (pButton->getClicked())
-			_defaultContainerFontGeneratorBuildFont();
-
 		// Render preview font
 		std::string strTxt;
 		strTxt = "Here is the Font Generator window's preview font being rendered with some text, no ipsum stuff here!\n";
 		strTxt += "Let's see what numbers look like... 0123456789 and with a space in between... 0 1 2 3 4 5 6 7 8 9\n";
 		strTxt += "Not all fonts have these symbols... Shift key + number keys... !\"$%^&*()_+\n";
 		strTxt += "Some more symbols...\n";
-		strTxt += "Minus:- Plus:+ Underscore:_ Equals:= Four brackets: []{}\n";
-		strTxt += "Semi colon: ; Colon: : Apostophe: ' At Symbol: @ Tilde: '\n";
-		strTxt += "Less than: < More than: > Question mark: ? Forward slash: /\n";
-		strTxt += "Letters lower and uppercase: AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\n";
+		strTxt += "- + _ : []{} <--- minus, plus, underscore, equals and four brackets. \n";
+		strTxt += ": ; ' @ ' <--- Semi colon, colon, apostrophe, at symbol and tilde.\n";
+		strTxt += "< > ? / <--- Less than, more than, question mark and forward slash.\n";
+		strTxt += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz. <--- Letters lower and uppercase.\n";
+		strTxt += ",,,, .... <--- Commas and full periods.\n";
+
 		std::vector<std::string> vecStrLines;
 		_mDefContFontGen.pFont->printInRectNewline(
 			true,
@@ -681,10 +673,11 @@ namespace X
 			_mDefContFontGen.bAntiAliasingOn,
 			_mDefContFontGen.bItalicsOn,
 			_mDefContFontGen.bUnderliningOn,
-			_mDefContFontGen.bStrikeoutOn);
+			_mDefContFontGen.bStrikeoutOn,
+			false);
 		delete _mDefContFontGen.pFont;
-		std::string strFontFilename = "font_output_";
-		StringUtils::appendInt(strFontFilename, _mDefContFontGen.iHeight);
+		std::string strFontFilename = "font_output";
+//		StringUtils::appendInt(strFontFilename, _mDefContFontGen.iHeight);
 		_mDefContFontGen.pFont = new CResourceFont(strFontFilename);
 	}
 
