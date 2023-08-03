@@ -87,8 +87,12 @@ namespace X
 
 		// Renders this entity.
 		// It's called from the SC2DRenderer::render() method.
-		// TODO do this
-		void render(void);
+		void render(
+			std::string& strPreviouslyBoundAtlasName,
+			unsigned int& uiPreviouslyBoundAtlasImageNumber,
+			CResourceTriangle* pTri,
+			CResourceShader* pShader,
+			unsigned int& uiNumTextureBindingsPerLoop);
 	private:
 		CVector2f _mv2fPosition;						// Position of this entity in the world
 		CVector2f _mv2fScale;							// Scale of this entity

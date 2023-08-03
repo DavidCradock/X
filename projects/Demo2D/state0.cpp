@@ -6,9 +6,9 @@ namespace X
 	void CState0::onEnter(void)
 	{
 		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();		// Obtain pointer to 2D renderer
-		C2DWorld* pWorld = p2DRenderer->addWorld("Scene0World");		// Add a new world to contain everything
-		C2DLayer* pLayer = pWorld->addLayer("Scene0Layer");				// Add a new layer to the world
-		C2DCamera* pCamera = pWorld->addCamera("Scene0Camera");			// Add a new camera to the world
+		C2DWorld* pWorld = p2DRenderer->addWorld("Scene0World");	// Add a new world to contain everything
+		C2DLayer* pLayer = pWorld->addLayer("Scene0Layer");			// Add a new layer to the world
+		C2DCamera* pCamera = pWorld->addCamera("Scene0Camera");		// Add a new camera to the world
 		SCWindow* pWindow = SCWindow::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCGUIManager* pGUI = SCGUIManager::getPointer();

@@ -124,7 +124,13 @@ namespace X
 
 		// Sets the matrix to hold a rotation transformation
 		// The rotation is specified from the give amount of rotation in degrees around the given axis.
-		void setFromAxisAngle(const CVector3f& vAxis, float fAngleDegrees);
+		// Working with degrees is slightly slower than working in radians as when using degrees, deg2rad() is called.
+		void setFromAxisAngleDegrees(const CVector3f& vAxis, float fAngleDegrees);
+
+		// Sets the matrix to hold a rotation transformation
+		// The rotation is specified from the give amount of rotation in radians around the given axis.
+		// Working with radians is slightly faster than working in degress as when using degrees, deg2rad() is called.
+		void setFromAxisAngleRadians(const CVector3f& vAxis, float fAngleRadians);
 
 		// Sets the matrix to hold a rotation transformation from a quaternion
 		void setFromQuaternion(const CQuaternion& quaternion);

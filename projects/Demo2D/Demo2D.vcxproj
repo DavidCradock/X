@@ -104,6 +104,7 @@
     <ClCompile Include="state0.cpp" />
     <ClCompile Include="state1.cpp" />
     <ClCompile Include="state2.cpp" />
+    <ClCompile Include="state3.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +114,7 @@
     <ClInclude Include="state0.h" />
     <ClInclude Include="state1.h" />
     <ClInclude Include="state2.h" />
+    <ClInclude Include="state3.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

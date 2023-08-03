@@ -3,7 +3,7 @@
 
 namespace X
 {
-	class CState1 : public CFiniteStateBase
+	class CState3 : public CFiniteStateBase
 	{
 	public:
 		// This is called when this state is first entered.
@@ -16,14 +16,5 @@ namespace X
 		// pFSM is a pointer to the CFiniteStateMachine this state is stored in.
 		// This is usefull to allow the state to change to another named state by calling pFSM->switchToState()
 		void onActive(CFiniteStateMachine* pFSM);
-
-	private:
-		CTimer timer;
-		float mfEntityBodyRotationRadians[500];
-		float mfEntityBodyRotationRadiansDir[500];
-
-		float mfEntityTurretRotationRadians[500];
-		float mfEntityTurretRotationRadiansDir[500];
-		
 	};
 }

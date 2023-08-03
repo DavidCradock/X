@@ -140,8 +140,80 @@ namespace X
 		return _mbVisible;
 	}
 
-	void C2DEntityRot::render(void)
+	void C2DEntityRot::render(
+		std::string& strPreviouslyBoundAtlasName,
+		unsigned int& uiPreviouslyBoundAtlasImageNumber,
+		CResourceTriangle* pTri,
+		CResourceShader* pShader,
+		unsigned int& uiNumTextureBindingsPerLoop)
 	{
+		// If this entity is set as invisible, do nuffin'
+		if (!_mbVisible)
+			return;
 
+		// Make sure the images this entity uses have been set, if not, throw an exception
+		ThrowIfFalse(_mbImagesAreSet, "C2DEntityRot::render() failed. Entity has not had either setImagesSingle() or setImagesMultiple() called.");
+
+		// Determine whether texture atlas has changed since rendering of any previous entity
+		bool bNeedToBindTexture = false;
+		if (strPreviouslyBoundAtlasName != _mstrResourceTexture2DAtlasName)
+		{
+			strPreviouslyBoundAtlasName = _mstrResourceTexture2DAtlasName;
+			bNeedToBindTexture = true;
+		}
+		// Determine whether texture atlas's texture number has changed since rendering of any previous entity as texture atlases can have multiple textures
+		if (uiPreviouslyBoundAtlasImageNumber != _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage)
+		{
+			uiPreviouslyBoundAtlasImageNumber = _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage;
+			bNeedToBindTexture = true;
+		}
+
+		// Bind the texture
+		if (bNeedToBindTexture)
+		{
+			SCResourceManager* pRM = SCResourceManager::getPointer();
+			// Get CResourceTexture2DAtlas the entity is set to use
+			CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+			// Bind the atlas texture containing the entity's currently set frame number's image
+			pAtlas->bindAtlas(0, _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage);
+			uiNumTextureBindingsPerLoop++;
+		}
+
+		// Create translation matrix
+		CMatrix matTrans;
+		matTrans.setTranslation(_mv2fPosition.x, _mv2fPosition.y, 0.0f);
+
+		CVector2f v2fDims = _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions;
+		CVector2f v2fPos;
+
+		// Scale sprite if needed
+		if (_mv2fScale.x != 1.0f || _mv2fScale.y != 1.0f)
+		{
+			v2fDims.x *= _mv2fScale.x;
+			v2fDims.y *= _mv2fScale.y;
+		}
+
+		// Offset position from top left to center of entity
+		v2fPos -= v2fDims * 0.5f;
+
+		pTri->removeGeom();
+		pTri->addQuad2D(
+			v2fPos,											// Position
+			v2fDims,										// Dimensions
+			_mColour,										// Colour
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
+		pTri->update();
+
+		// Setup world matrix for this entity and sent to shader
+		CMatrix matWorld;
+		CMatrix matRot;
+		matRot.setFromAxisAngleRadians(CVector3f(0.0f, 0.0f, 1.0f), _mfRotationRadians);
+		matWorld = matTrans * matRot;
+		pShader->setMat4("matrixWorld", matWorld);			// Set world matrix for shader for this entity
+
+		pTri->draw(false);
 	}
 }

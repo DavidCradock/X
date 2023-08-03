@@ -121,10 +121,6 @@ namespace X
 
 		pTri->removeGeom();
 
-		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShaderEntity->bind();
-		pShaderEntity->setInt("texture0", 0);
-
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
@@ -164,16 +160,14 @@ namespace X
 				CVector2f vFBDims = pFB->getDimensions();
 				CMatrix matrixProjection;
 				matrixProjection.setProjectionOrthographic(0.0f, vFBDims.x, 0.0f, vFBDims.y, -1.0f, 1.0f);
-				pShaderEntity->setMat4("matrixProjection", matrixProjection);
 
-				// Set matrix view from camera
+				// Set view matrix from camera
 				CMatrix matrixView;
 				CVector2f v2CameraPos = itCamera->second->getPosition();
 				CVector3f v3CameraPos(v2CameraPos.x, v2CameraPos.y, 0.0f);
 				v3CameraPos.x *= -1.0f;
 				v3CameraPos.y *= -1.0f;
 				matrixView.setTranslation(v3CameraPos);
-				pShaderEntity->setMat4("matrixView", matrixView);
 
 				// For each layer in world
 				for (unsigned int uiLayerZorder = 0; uiLayerZorder < itWorld->second->_mvecLayerNameZOrder.size(); ++uiLayerZorder)
@@ -186,8 +180,12 @@ namespace X
 						continue;
 
 					// For each C2DEntity in layer
-					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;	// Used to reduce rebinding of same atlas texture
-					std::string strPreviouslyBoundAtlasName;					// Used to reduce rebinding of same atlas texture
+					pShaderEntity->bind();											// Bind correct shader
+					pShaderEntity->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
+					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					pShaderEntity->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;		// Used to reduce rebinding of same atlas texture
+					std::string strPreviouslyBoundAtlasName;						// Used to reduce rebinding of same atlas texture
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
 					while (itEntity != pLayer->_mmapEntities.end())
 					{
@@ -204,10 +202,20 @@ namespace X
 					pTri->removeGeom();
 
 					// For each C2DEntityRot in layer
+					pShaderEntityRot->bind();											// Bind correct shader
+					pShaderEntityRot->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
+					pShaderEntityRot->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					pShaderEntityRot->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					
 					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
 					while (itEntityRot != pLayer->_mmapEntityRots.end())
 					{
-						itEntityRot->second->render();
+						itEntityRot->second->render(
+							strPreviouslyBoundAtlasName,
+							uiPreviouslyBoundAtlasImageNumber,
+							pTri,
+							pShaderEntityRot,
+							_muiNumTextureBindingsPerLoop);
 						itEntityRot++;
 					}
 

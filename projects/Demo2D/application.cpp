@@ -4,6 +4,7 @@
 #include "state0.h"
 #include "state1.h"
 #include "state2.h"
+#include "state3.h"
 
 namespace X
 {
@@ -26,12 +27,13 @@ namespace X
 		// Create GUI shared between states
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("State Selection.");
-		pCont->setDimensions(150, 120);
+		pCont->setDimensions(150, 150);
 		pCont->setPosition(999999, 999999);
 		float fYpos = 5;
 		pCont->addButton("state0", 0, fYpos, 150, 30, "State 0")->mpTooltip->setAsText("Click me to switch to state zero."); fYpos += 40;
 		pCont->addButton("state1", 0, fYpos, 150, 30, "State 1")->mpTooltip->setAsText("Click me to switch to state one."); fYpos += 40;
 		pCont->addButton("state2", 0, fYpos, 150, 30, "State 2")->mpTooltip->setAsText("Click me to switch to state two."); fYpos += 40;
+		pCont->addButton("state3", 0, fYpos, 150, 30, "State 3")->mpTooltip->setAsText("Click me to switch to state three."); fYpos += 40;
 
 		// Create all resources for each of the states
 		SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -40,17 +42,21 @@ namespace X
 		// Top down creature rotation images
 		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demo2D/images/creature_top_down/");	// Get filenames 
 		pRM->addTexture2DAtlas("Scene0Creatures", vstrImageFilenames, true, 1);												// Create texture atlas
-		// Space ship hull rotation images
-		vstrImageFilenames = StringUtils::getFilesInDir("data/Demo2D/images/spaceship_hull/");								// Get filenames 
-		pRM->addTexture2DAtlas("Scene0SpaceshipHull", vstrImageFilenames, true, 1);												// Create texture atlas
-		// Space ship turret rotation images
-		vstrImageFilenames = StringUtils::getFilesInDir("data/Demo2D/images/spaceship_turret/");							// Get filenames 
-		pRM->addTexture2DAtlas("Scene0SpaceshipTurrets", vstrImageFilenames, true, 1);											// Create texture atlas
 
+		// State1
+		// Tank body and turret image
+		vstrImageFilenames.clear();
+		vstrImageFilenames.push_back("data/Demo2D/images/tank_body.png");
+		vstrImageFilenames.push_back("data/Demo2D/images/tank_turret.png");
+		pRM->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
+
+		// State2
+		
 		// Create the application states
 		CState0* pState0 = new CState0;	_mFSM.addState("state0", pState0);
 		CState1* pState1 = new CState1;	_mFSM.addState("state1", pState1);
 		CState2* pState2 = new CState2;	_mFSM.addState("state2", pState2);
+		CState3* pState3 = new CState3;	_mFSM.addState("state3", pState3);
 		_mFSM.switchToState("state1");
 
 		// End of loading screen
@@ -87,6 +93,12 @@ namespace X
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state2");
+			pGUI->setContainerAsActive("State Selection.");
+		}
+		pBut = pCont->getButton("state3");
+		if (pBut->getClicked())
+		{
+			_mFSM.switchToState("state3");
 			pGUI->setContainerAsActive("State Selection.");
 		}
 

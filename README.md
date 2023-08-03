@@ -17,6 +17,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+- Add instancing
 - Add 2DEntityRot which has its geometry rotated by a matrix prior to being sent to the GPU to allow rotations
 - Add 2DEntityLine which uses lines to render itself. Mainly used for debugging.
 - Make sure 2d world etal is using 0,0 at origin and allow negative values, where +x is to the right and +y is up.

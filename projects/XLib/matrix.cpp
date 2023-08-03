@@ -169,9 +169,27 @@ namespace X
 		m[10] = vVec.z;
 	}
 
-	void CMatrix::setFromAxisAngle(const CVector3f& vAxis, float fAngleDegrees)
+	void CMatrix::setFromAxisAngleDegrees(const CVector3f& vAxis, float fAngleDegrees)
 	{
 		float fAngleRadians = deg2rad(fAngleDegrees);
+		float fCos = cosf(fAngleRadians);
+		float fSin = sinf(fAngleRadians);
+		float fOMC = 1.0f - fCos;
+
+		m[0] = fCos + (vAxis.x * vAxis.x) * fOMC;
+		m[5] = fCos + (vAxis.y * vAxis.y) * fOMC;
+		m[10] = fCos + (vAxis.z * vAxis.z) * fOMC;
+		m[15] = 1.0f;
+		m[4] = vAxis.x * vAxis.y * fOMC + vAxis.z * fSin;
+		m[1] = vAxis.x * vAxis.y * fOMC - vAxis.z * fSin;
+		m[8] = vAxis.x * vAxis.z * fOMC + vAxis.y * fSin;
+		m[2] = vAxis.x * vAxis.z * fOMC - vAxis.y * fSin;
+		m[9] = vAxis.y * vAxis.z * fOMC + vAxis.x * fSin;
+		m[6] = vAxis.y * vAxis.z * fOMC - vAxis.x * fSin;
+	}
+
+	void CMatrix::setFromAxisAngleRadians(const CVector3f& vAxis, float fAngleRadians)
+	{
 		float fCos = cosf(fAngleRadians);
 		float fSin = sinf(fAngleRadians);
 		float fOMC = 1.0f - fCos;
