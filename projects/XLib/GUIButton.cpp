@@ -12,6 +12,7 @@ namespace X
 	CGUIButton::CGUIButton()
 	{
 		_mfCurrentTextCol[0] = _mfCurrentTextCol[1] = _mfCurrentTextCol[2] = _mfCurrentTextCol[3] = 0.0f;
+		_mfCurrentBGCol[0] = _mfCurrentBGCol[1] = _mfCurrentBGCol[2] = _mfCurrentBGCol[3] = 0.0f;
 		_mState = state::up;
 		_mStatePrevious = state::up;
 		_mbClicked = false;
@@ -28,7 +29,7 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
-		CColour col;
+		CColour col(_mfCurrentBGCol[0], _mfCurrentBGCol[1], _mfCurrentBGCol[2], _mfCurrentBGCol[3]);
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal, col);
 
 		// Get required resources needed to render
@@ -85,74 +86,135 @@ namespace X
 			_mState = state::up;
 		}
 
-		// Depending upon state, compute text colour
-		float fCol[4];
+		// Depending upon state, compute text and BG colours
+		float fColTxt[4];
+		float fColBG[4];
 		if (state::up == _mState)
 		{
-			fCol[0] = pTheme->mColours.buttonTextUp.red;
-			fCol[1] = pTheme->mColours.buttonTextUp.green;
-			fCol[2] = pTheme->mColours.buttonTextUp.blue;
-			fCol[3] = pTheme->mColours.buttonTextUp.alpha;
+			fColTxt[0] = pTheme->mColours.buttonTextUp.red;
+			fColTxt[1] = pTheme->mColours.buttonTextUp.green;
+			fColTxt[2] = pTheme->mColours.buttonTextUp.blue;
+			fColTxt[3] = pTheme->mColours.buttonTextUp.alpha;
+			fColBG[0] = pTheme->mColours.buttonBGUp.red;
+			fColBG[1] = pTheme->mColours.buttonBGUp.green;
+			fColBG[2] = pTheme->mColours.buttonBGUp.blue;
+			fColBG[3] = pTheme->mColours.buttonBGUp.alpha;
 
 			for (int iCol = 0; iCol < 4; ++iCol)
 			{
-				if (_mfCurrentTextCol[iCol] < fCol[iCol])
+				// Text
+				if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] > fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
 				}
-				else if (_mfCurrentTextCol[iCol] > fCol[iCol])
+				else if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] < fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
+				}
+				// BG
+				if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
+				}
+				else if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
 				}
 			}
 		}
 		else if (state::over == _mState)
 		{
-			fCol[0] = pTheme->mColours.buttonTextOver.red;
-			fCol[1] = pTheme->mColours.buttonTextOver.green;
-			fCol[2] = pTheme->mColours.buttonTextOver.blue;
-			fCol[3] = pTheme->mColours.buttonTextOver.alpha;
+			fColTxt[0] = pTheme->mColours.buttonTextOver.red;
+			fColTxt[1] = pTheme->mColours.buttonTextOver.green;
+			fColTxt[2] = pTheme->mColours.buttonTextOver.blue;
+			fColTxt[3] = pTheme->mColours.buttonTextOver.alpha;
+			fColBG[0] = pTheme->mColours.buttonBGOver.red;
+			fColBG[1] = pTheme->mColours.buttonBGOver.green;
+			fColBG[2] = pTheme->mColours.buttonBGOver.blue;
+			fColBG[3] = pTheme->mColours.buttonBGOver.alpha;
 
+			// Text
 			for (int iCol = 0; iCol < 4; ++iCol)
 			{
-				if (_mfCurrentTextCol[iCol] < fCol[iCol])
+				if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] > fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
 				}
-				else if (_mfCurrentTextCol[iCol] > fCol[iCol])
+				else if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] < fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
+				}
+			}
+			// BG
+			for (int iCol = 0; iCol < 4; ++iCol)
+			{
+				if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
+				}
+				else if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
 				}
 			}
 		}
 		else if (state::down == _mState)
 		{
-			fCol[0] = pTheme->mColours.buttonTextDown.red;
-			fCol[1] = pTheme->mColours.buttonTextDown.green;
-			fCol[2] = pTheme->mColours.buttonTextDown.blue;
-			fCol[3] = pTheme->mColours.buttonTextDown.alpha;
+			fColTxt[0] = pTheme->mColours.buttonTextDown.red;
+			fColTxt[1] = pTheme->mColours.buttonTextDown.green;
+			fColTxt[2] = pTheme->mColours.buttonTextDown.blue;
+			fColTxt[3] = pTheme->mColours.buttonTextDown.alpha;
+			fColBG[0] = pTheme->mColours.buttonBGDown.red;
+			fColBG[1] = pTheme->mColours.buttonBGDown.green;
+			fColBG[2] = pTheme->mColours.buttonBGDown.blue;
+			fColBG[3] = pTheme->mColours.buttonBGDown.alpha;
 
+			// Text
 			for (int iCol = 0; iCol < 4; ++iCol)
 			{
-				if (_mfCurrentTextCol[iCol] < fCol[iCol])
+				if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] > fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
 				}
-				else if (_mfCurrentTextCol[iCol] > fCol[iCol])
+				else if (_mfCurrentTextCol[iCol] > fColTxt[iCol])
 				{
-					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonTextFadeSpeed;
-					if (_mfCurrentTextCol[iCol] < fCol[iCol])
-						_mfCurrentTextCol[iCol] = fCol[iCol];
+					_mfCurrentTextCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentTextCol[iCol] < fColTxt[iCol])
+						_mfCurrentTextCol[iCol] = fColTxt[iCol];
+				}
+			}
+			// BG
+			for (int iCol = 0; iCol < 4; ++iCol)
+			{
+				if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] += fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
+				}
+				else if (_mfCurrentBGCol[iCol] > fColBG[iCol])
+				{
+					_mfCurrentBGCol[iCol] -= fSecondsPast * pTheme->mfButtonFadeSpeed;
+					if (_mfCurrentBGCol[iCol] < fColBG[iCol])
+						_mfCurrentBGCol[iCol] = fColBG[iCol];
 				}
 			}
 		}

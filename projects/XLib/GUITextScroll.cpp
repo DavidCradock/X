@@ -170,12 +170,6 @@ namespace X
 		_mbFBNeedsUpdating = true;
 	}
 
-	void CGUITextScroll::setTextColour(float fRed, float fGreen, float fBlue, float fAlpha)
-	{
-		_mTextColour.set(fRed, fGreen, fBlue, fAlpha);
-		_mbFBNeedsUpdating = true;
-	}
-
 	void CGUITextScroll::_renderFramebuffer(void* pParentContainer)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
@@ -197,12 +191,12 @@ namespace X
 			pFB->resize(uiRequiredFBWidth, unsigned int (mfHeight - (pTex->mvDimensions.y * 0.6666666f)));
 
 		// Set framebuffer as render target and clear it
-		pFB->bindAsRenderTarget(true, false);
+		pFB->bindAsRenderTarget(true, false, pTheme->mColours.textScrollBackground);
 
 		// Do not render, but obtain each line of text and the total height of all text which is rendered.
 		std::vector<std::string> vstrLines;
 		int iTextTotalHeight;
-		pFont->printInRectNewline(false, _mstrText, 0, 0, (int)pFB->getWidth(), (int)pFB->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f, _mTextColour);
+		pFont->printInRectNewline(false, _mstrText, 0, 0, (int)pFB->getWidth(), (int)pFB->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f);
 
 		// If the text fits inside the height of the TextScroll object, prevent scrolling
 		if (float(iTextTotalHeight <= mfHeight))
@@ -221,7 +215,7 @@ namespace X
 			fTabRatio = mfHeight / float(iTextTotalHeight);
 		_mSlider.setTabRatio(fTabRatio);
 
-		pFont->printInRectNewline(true, _mstrText, 0, (int)fTextPosY, (int)pFB->getWidth(), (int)pFB->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f, _mTextColour);
+		pFont->printInRectNewline(true, _mstrText, 0, (int)fTextPosY, (int)pFB->getWidth(), (int)pFB->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f, pTheme->mColours.textScrollText);
 		pFB->unbindAsRenderTarget();
 		_mbFBNeedsUpdating = false;
 

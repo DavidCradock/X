@@ -43,27 +43,32 @@ namespace X
 		mFonts.textScroll = "data/X/fonts/satoshi_22";
 
 		// Colours
-		mColours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.containerTitlebarTextInFocus.set(0.0f, 0.0f, 0.0f, 1.0f);
 		mColours.containerTitlebarTextNotInFocus.set(0.9f, 0.9f, 0.9f, 0.5f);
 		mColours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 0.75f);
-		mColours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 0.5f);
-		mColours.text.set(1.0f, 1.0f, 1.0f, 0.75f);
-		mColours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.textEditInactive.set(1.0f, 1.0f, 1.0f, 0.75f);
+		mColours.buttonTextOver.set(0.0f, 0.0f, 0.0f, 0.75f);
+		mColours.buttonTextUp.set(0.0f, 0.0f, 0.0f, 0.5f);
+		mColours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 0.5f);
+		mColours.buttonBGOver.set(1.0f, 0.5f, 0.0f, 1.0f);
+		mColours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.text.set(0.0f, 0.0f, 0.0f, 0.75f);
+		mColours.textEditActive.set(0.0f, 0.0f, 0.0f, 1.0f);
+		mColours.textEditInactive.set(0.0f, 0.0f, 0.0f, 0.75f);
 		mColours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
-		mColours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.sliderTabOver.set(1.0f, 0.5f, 0.0f, 1.0f);
+		mColours.progressBarFiller.set(0.0f, 0.0f, 0.0f, 1.0f);
 		mColours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 0.75f);
 		mColours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 0.5f);
-		mColours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.textScrollBackground.set(1.0f, 1.0f, 1.0f, 1.0f);
+		mColours.textScrollText.set(0.0f, 0.0f, 0.0f, 1.0f);
+		mColours.tooltipText.set(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Floats
 		mfNormalAmount = 0.1f;
 		mfReflectionAmount = 0.025f;
 		mfMouseCursorDistance = 50.0f;
-		mfButtonTextFadeSpeed = 5.0f;
+		mfButtonFadeSpeed = 5.0f;
 		mfTextEditFlashSpeed = 4.0f;
 		mfSliderTabFadeSpeed = 5.0f;
 		mfTextScrollSliderWidth = 20.0f;
@@ -150,6 +155,9 @@ namespace X
 		_readColourInfo(file, mColours.buttonTextDown);
 		_readColourInfo(file, mColours.buttonTextOver);
 		_readColourInfo(file, mColours.buttonTextUp);
+		_readColourInfo(file, mColours.buttonBGDown);
+		_readColourInfo(file, mColours.buttonBGOver);
+		_readColourInfo(file, mColours.buttonBGUp);
 		_readColourInfo(file, mColours.text);
 		_readColourInfo(file, mColours.textEditActive);
 		_readColourInfo(file, mColours.textEditInactive);
@@ -159,6 +167,8 @@ namespace X
 		_readColourInfo(file, mColours.buttonImageDown);
 		_readColourInfo(file, mColours.buttonImageOver);
 		_readColourInfo(file, mColours.buttonImageUp);
+		_readColourInfo(file, mColours.textScrollBackground);
+		_readColourInfo(file, mColours.textScrollText);
 		_readColourInfo(file, mColours.tooltipText);
 
 		// Floats
@@ -168,7 +178,7 @@ namespace X
 		_readFloatInfo(file, mfNormalAmount);
 		_readFloatInfo(file, mfReflectionAmount);
 		_readFloatInfo(file, mfMouseCursorDistance);
-		_readFloatInfo(file, mfButtonTextFadeSpeed);
+		_readFloatInfo(file, mfButtonFadeSpeed);
 		_readFloatInfo(file, mfTextEditFlashSpeed);
 		_readFloatInfo(file, mfSliderTabFadeSpeed);
 		_readFloatInfo(file, mfTextScrollSliderWidth);
@@ -254,6 +264,9 @@ namespace X
 		_writeColourInfo(file, "buttonTextDown", mColours.buttonTextDown);
 		_writeColourInfo(file, "buttonTextOver", mColours.buttonTextOver);
 		_writeColourInfo(file, "buttonTextUp", mColours.buttonTextUp);
+		_writeColourInfo(file, "buttonTextDown", mColours.buttonBGDown);
+		_writeColourInfo(file, "buttonTextOver", mColours.buttonBGOver);
+		_writeColourInfo(file, "buttonTextUp", mColours.buttonBGUp);
 		_writeColourInfo(file, "text", mColours.text);
 		_writeColourInfo(file, "textEditActive", mColours.textEditActive);
 		_writeColourInfo(file, "textEditInactive", mColours.textEditInactive);
@@ -263,6 +276,8 @@ namespace X
 		_writeColourInfo(file, "buttonImageDown", mColours.buttonImageDown);
 		_writeColourInfo(file, "buttonImageOver", mColours.buttonImageOver);
 		_writeColourInfo(file, "buttonImageUp", mColours.buttonImageUp);
+		_writeColourInfo(file, "textScrollBackground", mColours.textScrollBackground);
+		_writeColourInfo(file, "textScrollText", mColours.textScrollText);
 		_writeColourInfo(file, "buttonImageUp", mColours.tooltipText);
 
 		// Floats
@@ -270,7 +285,7 @@ namespace X
 		_writeFloatInfo(file, "normalAmount", mfNormalAmount);
 		_writeFloatInfo(file, "reflectionAmount", mfReflectionAmount);
 		_writeFloatInfo(file, "mouseCursorDistance", mfMouseCursorDistance);
-		_writeFloatInfo(file, "buttonTextFadeSpeed", mfButtonTextFadeSpeed);
+		_writeFloatInfo(file, "buttonFadeSpeed", mfButtonFadeSpeed);
 		_writeFloatInfo(file, "textEditCursorFlashSpeed", mfTextEditFlashSpeed);
 		_writeFloatInfo(file, "sliderTabFadeSpeed", mfSliderTabFadeSpeed);
 		_writeFloatInfo(file, "textScrollSliderWidth", mfTextScrollSliderWidth);

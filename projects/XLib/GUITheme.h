@@ -109,6 +109,9 @@ namespace X
 			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
 			CColour buttonTextOver;						// Colour of a button's text when mouse is over
 			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
+			CColour buttonBGDown;						// Colour of a button's BG when mouse is over and clicked
+			CColour buttonBGOver;						// Colour of a button's BG when mouse is over
+			CColour buttonBGUp;							// Colour of a button's BG when mouse is not over
 			CColour text;								// CGUIText font colour
 			CColour textEditInactive;
 			CColour textEditActive;
@@ -118,6 +121,8 @@ namespace X
 			CColour buttonImageDown;
 			CColour buttonImageOver;
 			CColour buttonImageUp;
+			CColour textScrollBackground;
+			CColour textScrollText;
 			CColour tooltipText;
 		};
 		// Holds all the colours used by the theme
@@ -161,7 +166,7 @@ namespace X
 		float mfNormalAmount;				// 1.0f = max normal, 0.0f = none
 		float mfReflectionAmount;			// 1.0f = max reflection, 0.0f = none
 		float mfMouseCursorDistance;		// Distance the mouse cursor is the fragments when computing the bump mapping
-		float mfButtonTextFadeSpeed;		// Rate at which button text colours interpolate between
+		float mfButtonFadeSpeed;			// Rate at which button text and BG colours interpolate between
 		float mfTextEditFlashSpeed;			// Rate at which the additional character that flashes when a text edit is active.
 		float mfSliderTabFadeSpeed;			// Rate at which slider's tab colours interpolate between
 		float mfTextScrollSliderWidth;		// Width of a CGUITextScroll object's vertical slider.

@@ -71,7 +71,7 @@ namespace X
 		}
 	}
 
-	void CResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions)
+	void CResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions, const CColour& backgroundClearColour)
 	{
 		if (bResizeToWindowDimensions)
 		{
@@ -88,7 +88,7 @@ namespace X
 		
 		if (bClearbuffer)
 		{
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			glClearColor(backgroundClearColour.red, backgroundClearColour.green, backgroundClearColour.blue, backgroundClearColour.alpha);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		}
 		glViewport(0, 0, _muiWidth, _muiHeight);

@@ -1,0 +1,81 @@
+data/x/gui/grey.theme
+ThemeName: Grey theme
+
+Images
+ContainerBGColour: data/X/GUI/grey/containerBGcolour.png
+ContainerBGNormal: data/X/GUI/grey/containerBGnormal.png
+ButtonBGColour: data/X/GUI/grey/buttonBGcolour.png
+ButtonBGNormal: data/X/GUI/grey/buttonBGnormal.png
+Reflection: data/X/GUI/grey/reflection.png
+TextEditBGColour: data/X/GUI/grey/texteditBGcolour.png
+TextEditBGNormal: data/X/GUI/grey/texteditBGnormal.png
+SliderBGColour: data/X/GUI/grey/sliderBGcolour.png
+SliderBGNormal: data/X/GUI/grey/sliderBGnormal.png
+SliderTabColour: data/X/GUI/grey/slider_tab_colour.png
+SliderTabNormal: data/X/GUI/grey/slider_tab_normal.png
+LineGraphBGColour: data/X/GUI/grey/linegraphBGcolour.png
+LineGraphBGNormal: data/X/GUI/grey/linegraphBGnormal.png
+TooltipBGColour: data/X/GUI/grey/tooltipBGcolour.png
+ProgressBarBGColour: data/X/GUI/grey/progressBarBGcolour.png
+ProgressBarBGNormal: data/X/GUI/grey/progressBarBGnormal.png
+ProgressBarFillerColour: data/X/GUI/grey/progressBarFillercolour.png
+ProgressBarFillerNormal: data/X/GUI/grey/progressBarFillernormal.png
+TextScrollBGColour: data/X/GUI/grey/textscrollBGcolour.png
+TextScrollBGNormal: data/X/GUI/grey/textscrollBGnormal.png
+ButtonImageBGColour: data/X/GUI/grey/buttonImageBGcolour.png
+ButtonImageBGNormal: data/X/GUI/grey/buttonImageBGnormal.png
+
+Fonts
+containerTitle: data/X/fonts/satoshi_22
+button: data/X/fonts/satoshi_22
+text: data/X/fonts/satoshi_22
+textEdit: data/X/fonts/satoshi_22
+textEdit: data/X/fonts/satoshi_22
+
+Colours
+containerTitlebarTextInFocus: 1.000000 1.000000 1.000000 1.000000
+containerTitlebarTextNotInFocus: 0.900000 0.900000 0.900000 0.500000
+buttonTextDown: 1.000000 1.000000 1.000000 1.000000
+buttonTextOver: 1.000000 1.000000 1.000000 0.750000
+buttonTextUp: 1.000000 1.000000 1.000000 0.500000
+text: 1.000000 1.000000 1.000000 0.750000
+textEditActive: 1.000000 1.000000 1.000000 1.000000
+textEditInactive: 1.000000 1.000000 1.000000 0.750000
+textEditInactive: 1.000000 1.000000 1.000000 0.500000
+textEditInactive: 1.000000 1.000000 1.000000 1.000000
+progreebarFiller: 1.000000 1.000000 1.000000 1.000000
+buttonImageDown: 1.000000 1.000000 1.000000 1.000000
+buttonImageOver: 1.000000 1.000000 1.000000 0.750000
+buttonImageUp: 1.000000 1.000000 1.000000 0.500000
+buttonImageUp: 1.000000 1.000000 1.000000 1.000000
+
+Floats
+normalAmount: 0.100000
+reflectionAmount: 0.025000
+mouseCursorDistance: 50.000000
+buttonTextFadeSpeed: 5.000000
+textEditCursorFlashSpeed: 4.000000
+sliderTabFadeSpeed: 5.000000
+textScrollSliderWidth: 20.000000
+buttonImageFadeSpeed: 5.000000
+tooltipFadeSpeed: 2.000000
+
+Offsets
+ContainerTitlebarText: 1 10
+TextEditText: 1 1
+
+Audio
+buttonClickedName: data/X/gui/grey/click.wav
+buttonClickedVolPitch: 0.800000 1.000000
+textEditTextAddName: data/X/gui/grey/click.wav
+textEditTextAddVolPitch: 0.800000 1.000000
+textEditBackspaceName: data/X/gui/grey/click.wav
+textEditBackspaceVolPitch: 0.200000 1.000000
+textEditReturnName: data/X/gui/grey/click.wav
+textEditReturnVolPitch: 0.800000 1.000000
+textEditActivateName: data/X/gui/grey/click.wav
+textEditActivateVolPitch: 0.800000 1.000000
+textEditNoMoreCharSpaceName: data/X/gui/grey/click.wav
+textEditNoMoreCharSpaceVolPitch: 0.200000 1.000000
+buttonImageClickedName: data/X/gui/grey/click.wav
+buttonImageClickedVolPitch: 0.800000 1.000000

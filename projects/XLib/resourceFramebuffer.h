@@ -22,7 +22,7 @@ namespace X
 		// Bind this framebuffer object so that all render operations use this as the target.
 		// Also clears the render target by default and sets viewport to match render target
 		// May also detect current dimensions and resize to the window's dims.
-		void bindAsRenderTarget(bool bClearbuffer = true, bool bResizeToWindowDimensions = false);
+		void bindAsRenderTarget(bool bClearbuffer = true, bool bResizeToWindowDimensions = false, const CColour& backgroundClearColour = CColour(0,0,0,0));
 
 		// Unbind the framebuffer object so that all render operations use the window's backbuffer as the target.
 		// Also calls glViewport to reset to the window's dimensions
