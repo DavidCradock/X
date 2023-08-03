@@ -207,7 +207,7 @@ namespace X
 			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
 		pTri->update();
 
-		// Setup world matrix for this entity and sent to shader
+		// Setup world matrix for this entity and send to shader
 		CMatrix matWorld;
 		CMatrix matRot;
 		matRot.setFromAxisAngleRadians(CVector3f(0.0f, 0.0f, 1.0f), _mfRotationRadians);

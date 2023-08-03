@@ -16,6 +16,7 @@
     <ClInclude Include="2DEntityRot.h" />
     <ClInclude Include="2DLayer.h" />
     <ClInclude Include="2DMap.h" />
+    <ClInclude Include="2DParticleSystem.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="aStarPathfinding.h" />
     <ClInclude Include="geneticAlgorithm.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="2DEntityRot.cpp" />
     <ClCompile Include="2DLayer.cpp" />
     <ClCompile Include="2DMap.cpp" />
+    <ClCompile Include="2DParticleSystem.cpp" />
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="aStarPathfinding.cpp" />
     <ClCompile Include="geneticAlgorithm.cpp" />
