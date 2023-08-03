@@ -28,7 +28,7 @@ namespace X
 		_mvLoadingCompleteTextPos.set(pWindow->getDimensions().x * 0.5f, pWindow->getDimensions().y * 0.5f);
 
 		// Default resources
-		_mstrFontSmall = "data/X/fonts/tanker_80";
+		_mstrFontSmall = "data/X/fonts/satoshi_22";
 		_mstrFontLarge = "data/X/fonts/tanker_80";
 		_mstrBackgroundImage = "data/X/textures/default_loading_screenBG.png";
 	}

@@ -43,26 +43,26 @@ namespace X
 		mFonts.textScroll = "data/X/fonts/satoshi_22";
 
 		// Colours
-		mColours.containerTitlebarTextInFocus.set(0.0f, 0.0f, 0.0f, 1.0f);
+		mColours.containerTitlebarTextInFocus.set(0.9f, 0.9f, 0.9f, 1.0f);
 		mColours.containerTitlebarTextNotInFocus.set(0.9f, 0.9f, 0.9f, 0.5f);
-		mColours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.buttonTextOver.set(0.0f, 0.0f, 0.0f, 0.75f);
-		mColours.buttonTextUp.set(0.0f, 0.0f, 0.0f, 0.5f);
+		mColours.buttonTextDown.set(0.9f, 0.9f, 0.9f, 1.0f);
+		mColours.buttonTextOver.set(0.9f, 0.9f, 0.9f, 0.75f);
+		mColours.buttonTextUp.set(0.9f, 0.9f, 0.9f, 0.5f);
 		mColours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 0.5f);
-		mColours.buttonBGOver.set(1.0f, 0.5f, 0.0f, 1.0f);
+		mColours.buttonBGOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		mColours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.text.set(0.0f, 0.0f, 0.0f, 0.75f);
+		mColours.text.set(0.7f, 0.7f, 0.7f, 1.0f);
 		mColours.textEditActive.set(0.0f, 0.0f, 0.0f, 1.0f);
 		mColours.textEditInactive.set(0.0f, 0.0f, 0.0f, 0.75f);
 		mColours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		mColours.sliderTabOver.set(1.0f, 0.5f, 0.0f, 1.0f);
-		mColours.progressBarFiller.set(0.0f, 0.0f, 0.0f, 1.0f);
+		mColours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 0.75f);
 		mColours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 0.5f);
-		mColours.textScrollBackground.set(1.0f, 1.0f, 1.0f, 1.0f);
-		mColours.textScrollText.set(0.0f, 0.0f, 0.0f, 1.0f);
-		mColours.tooltipText.set(0.0f, 0.0f, 0.0f, 1.0f);
+		mColours.textScrollBackground.set(0.1f, 0.1f, 0.1f, 1.0f);
+		mColours.textScrollText.set(0.7f, 0.7f, 0.7f, 1.0f);
+		mColours.tooltipText.set(0.7f, 0.7f, 0.7f, 1.0f);
 
 		// Floats
 		mfNormalAmount = 0.1f;

@@ -21,8 +21,8 @@
 0w:0d:0h:0m:00s : SCAudioManager creating mastering voice.
 0w:0d:0h:0m:00s : SCAudioManager initialisation complete.
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() calling App's onStart()
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:02s : SCApplicationManager::mainLoop() calling App's onStart()
+0w:0d:0h:0m:02s : SCApplicationManager::mainLoop() is entering main loop...
 0w:0d:0h:0m:10s : SCApplicationManager::mainLoop() is shutting down...
 0w:0d:0h:0m:10s : SCWindow::destroyWindow() called.
 0w:0d:0h:0m:10s : SCWindow::destroyWindow() releasing OpenGL rendering context.

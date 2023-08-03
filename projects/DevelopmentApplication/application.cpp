@@ -17,14 +17,6 @@ namespace X
 		// Set mouse cursor
 		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
-		// Show FontGenerator window
-		// TEMP MAKE FONTS
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("X:Default:FontGenerator");
-		pCont->setVisible(true);
-		pCont->setPositionCentreWindow();
-		pGUI->setContainerAsActive("X:Default:FontGenerator");
-		
 		// End of loading screen
 		pLS->onInitEnd();
 	}
