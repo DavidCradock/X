@@ -30,7 +30,7 @@ namespace X
 	private:
 		CTimer _mTimer;
 		float _mfCurrentTextCol[4];	// Current text colour (fading between up/over/down states)
-		FLOAT _mfCurrentBGCol[4];	// Current BG colour (fading between up/over/down states)
+		float _mfCurrentBGCol[4];	// Current BG colour (fading between up/over/down states)
 		enum state
 		{
 			up,

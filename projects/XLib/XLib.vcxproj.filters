@@ -46,6 +46,9 @@
     <Filter Include="SpatialPartitioning">
       <UniqueIdentifier>{5f921690-5480-4031-83fc-c1236eda6e81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2D\Particles">
+      <UniqueIdentifier>{0c5febab-ffaf-4c07-ac14-c6ee80eb96ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -343,8 +346,20 @@
     <ClInclude Include="2DEntityRot.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="2DParticle.h">
+      <Filter>2D\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="2DParticleAffector.h">
+      <Filter>2D\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="2DParticleEmitter.h">
+      <Filter>2D\Particles</Filter>
+    </ClInclude>
     <ClInclude Include="2DParticleSystem.h">
-      <Filter>2D</Filter>
+      <Filter>2D\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="2DParticleType.h">
+      <Filter>2D\Particles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -616,8 +631,20 @@
     <ClCompile Include="2DEntityRot.cpp">
       <Filter>2D</Filter>
     </ClCompile>
+    <ClCompile Include="2DParticle.cpp">
+      <Filter>2D\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="2DParticleAffector.cpp">
+      <Filter>2D\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="2DParticleEmitter.cpp">
+      <Filter>2D\Particles</Filter>
+    </ClCompile>
     <ClCompile Include="2DParticleSystem.cpp">
-      <Filter>2D</Filter>
+      <Filter>2D\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="2DParticleType.cpp">
+      <Filter>2D\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

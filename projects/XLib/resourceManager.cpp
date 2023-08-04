@@ -445,8 +445,6 @@ namespace X
 		/******************************************************************************************************************************
 		// Textures
 		******************************************************************************************************************************/
-		// A texture for use with rendering generic particles
-		pRM->addTexture2DFromFile("X:default_particle", "data/X/textures/particle0.png");
 		// A texture which is tiny and white.
 		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png");
 		// A texture which is grey for diffuse, used if not set
@@ -458,6 +456,13 @@ namespace X
 		// A texture which is black for roughness used if not set
 		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png");
 
+		/******************************************************************************************************************************
+		// Texture atlases
+		******************************************************************************************************************************/
+		// An atlas for use with rendering generic particles
+		std::vector<std::string> vStrParticleImages = StringUtils::getFilesInDir("data/x/textures/particles/");
+		pRM->addTexture2DAtlas("X:default_particle", vStrParticleImages, true, 1);
+		
 		/******************************************************************************************************************************
 		// Depth buffers
 		******************************************************************************************************************************/

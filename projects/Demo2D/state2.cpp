@@ -14,7 +14,7 @@ namespace X
 		// Add text scroll
 		std::string strTxt;
 		strTxt += "Welcome to state 2.\n";
-		strTxt += "This state shows ?\n";
+		strTxt += "This state shows particle systems in action.\n";
 		strTxt += "Controls...\n";
 		strTxt += "Details...\n";
 		pCont->addTextScroll("TextScroll2", 0, 0, 640, 240, strTxt);

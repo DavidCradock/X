@@ -57,7 +57,7 @@ namespace X
 		CState1* pState1 = new CState1;	_mFSM.addState("state1", pState1);
 		CState2* pState2 = new CState2;	_mFSM.addState("state2", pState2);
 		CState3* pState3 = new CState3;	_mFSM.addState("state3", pState3);
-		_mFSM.switchToState("state1");
+		_mFSM.switchToState("state2");
 
 		// End of loading screen
 		pLS->onInitEnd();

@@ -7,6 +7,11 @@
 #include "2DEntity.h"
 #include "2DEntityRot.h"
 #include "2DLayer.h"
+#include "2DParticle.h"
+#include "2DParticleAffector.h"
+#include "2DParticleEmitter.h"
+#include "2DParticleSystem.h"
+#include "2DParticleType.h"
 #include "2DRenderer.h"
 #include "2DWorld.h"
 // AI
