@@ -236,9 +236,9 @@ namespace X
 
 		// Now we're done with adding triangle entities.
 		// Let's add some line entities
-		CResourceLine* pLine = pRM->addLine("line");
+		CResourceVertexBufferLine* pLine = pRM->addVertexBufferLine("line");
 		pLine->setDrawModeAsLineList();
-		CResourceLine::Vertex lineVertex;
+		CResourceVertexBufferLine::Vertex lineVertex;
 		// + Y
 		lineVertex.colour = CColour(0.0f, 1.0f, 0.0f, 1.0f);
 		lineVertex.position = CVector3f(0.0f, 0.0f, 0.0f);		pLine->addLinePoint(lineVertex);

@@ -32,9 +32,9 @@ namespace X
 		pVB->update();
 
 		// Cube line
-		CResourceLine* pLine = pRM->addLine("axis");
+		CResourceVertexBufferLine* pLine = pRM->addVertexBufferLine("axis");
 		pLine->setDrawModeAsLineList();
-		CResourceLine::Vertex v;
+		CResourceVertexBufferLine::Vertex v;
 		pLine->addAxis(CVector3f(0.0f, 0.0f, 0.0f), 2.0f);
 		pLine->update();
 

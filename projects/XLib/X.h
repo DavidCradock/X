@@ -85,7 +85,6 @@
 #include "resourceDepthbuffer.h"
 #include "resourceFont.h"
 #include "resourceFramebuffer.h"
-#include "resourceLine.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
 #include "resourceShader.h"
@@ -93,6 +92,8 @@
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBuffer.h"
+#include "resourceVertexBufferLine.h"
+#include "resourceVertexBufferBNT.h"
 // Scene manager
 #include "SMCamera.h"
 #include "SMEntityBase.h"

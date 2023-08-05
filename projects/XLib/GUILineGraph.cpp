@@ -75,7 +75,7 @@ namespace X
 
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceLine* pLine = pRM->getLine("X:default");
+		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
 		CResourceShader* pShader = pRM->getShader("X:line");
 		SCWindow* pWindow = SCWindow::getPointer();
 
@@ -142,7 +142,7 @@ namespace X
 
 			pLine->removeGeom();
 			pLine->setDrawModeAsLineStrip();
-			CResourceLine::Vertex vert;
+			CResourceVertexBufferLine::Vertex vert;
 
 			// For each data set (line)
 			it = _mmapDataSets.begin();

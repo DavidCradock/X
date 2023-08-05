@@ -7,16 +7,16 @@
 
 namespace X
 {
-	// Line strip vertex buffer used for rendering lines
+	// Line strip/list vertex buffer used for rendering lines
 	// We need to add at least 2 vertices, they will form the first line and then
 	// each vertex added after those will form an additional line using the new vertex and the previous one.
 	// That's the default mode, but we can call setDrawModeAsLineList() in which case, each pair of added vertices
 	// then represent a single line.
-	class CResourceLine : public CResourceBase
+	class CResourceVertexBufferLine : public CResourceBase
 	{
 	public:
-		CResourceLine();
-		~CResourceLine();
+		CResourceVertexBufferLine();
+		~CResourceVertexBufferLine();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -462,7 +462,7 @@ namespace X
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
-		CResourceLine* pLine;
+		CResourceVertexBufferLine* pLine;
 		CResourceTexture2DFromFile* pTexColour = 0;
 
 		pShader->bind();
@@ -486,7 +486,7 @@ namespace X
 		while (it != mmapEntitiesLine.end())
 		{
 			// Get vertex buffer and textures used by each entity
-			pLine = pRM->getLine(it->second->mstrLineName);
+			pLine = pRM->getVertexBufferLine(it->second->mstrLineName);
 			pTexColour = pRM->getTexture2DFromFile(it->second->mstrTextureName);
 
 			// Bind texture to sampler unit

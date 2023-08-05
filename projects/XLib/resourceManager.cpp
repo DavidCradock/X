@@ -40,14 +40,6 @@ namespace X
 			itFramebuffer++;
 		}
 
-		// Lines
-		std::map<std::string, SResourceLine>::iterator itLine = _mmapResLines.begin();
-		while (itLine != _mmapResLines.end())
-		{
-			itLine->second.pResource->onGLContextToBeDestroyed();
-			itLine++;
-		}
-
 		// Shaders
 		std::map<std::string, SResourceShader>::iterator itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
@@ -95,6 +87,14 @@ namespace X
 			itResourceVertexBufferBNT->second.pResource->onGLContextToBeDestroyed();
 			itResourceVertexBufferBNT++;
 		}
+
+		// Vertex buffer lines
+		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
+		{
+			itVertexBufferLine->second.pResource->onGLContextToBeDestroyed();
+			itVertexBufferLine++;
+		}
 	}
 
 	void SCResourceManager::onGLContextRecreated(void)
@@ -123,14 +123,6 @@ namespace X
 		{
 			itFramebuffer->second.pResource->onGLContextCreated();
 			itFramebuffer++;
-		}
-
-		// Lines
-		std::map<std::string, SResourceLine>::iterator itLine = _mmapResLines.begin();
-		while (itLine != _mmapResLines.end())
-		{
-			itLine->second.pResource->onGLContextCreated();
-			itLine++;
 		}
 
 		// Shaders
@@ -179,6 +171,14 @@ namespace X
 		{
 			itResourceVertexBufferBNT->second.pResource->onGLContextCreated();
 			itResourceVertexBufferBNT++;
+		}
+
+		// Vertex buffer lines
+		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
+		{
+			itVertexBufferLine->second.pResource->onGLContextCreated();
+			itVertexBufferLine++;
 		}
 	}
 
@@ -488,6 +488,14 @@ namespace X
 		pRM->addDepthbuffer("X:shadows", 2048, 2048);
 
 		/******************************************************************************************************************************
+		// Framebuffers
+		******************************************************************************************************************************/
+		// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
+		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		// A framebuffer the GUI tooltips are rendered to
+		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
+
+		/******************************************************************************************************************************
 		// Vertex buffers
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
@@ -500,18 +508,10 @@ namespace X
 		pRM->addVertexBufferBNT("X:default");
 
 		/******************************************************************************************************************************
-		// Framebuffers
-		******************************************************************************************************************************/
-		// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
-		// A framebuffer the GUI tooltips are rendered to
-		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
-
-		/******************************************************************************************************************************
-		// Line vertex buffers
+		// Vertex buffers line
 		******************************************************************************************************************************/
 		// A line vertex buffer resource used by the GUI when rendering lines
-		pRM->addLine("X:default");
+		pRM->addVertexBufferLine("X:default");
 	}
 
 	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
@@ -644,49 +644,6 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResFramebuffers.erase(it);
-	}
-
-	CResourceLine* SCResourceManager::addLine(const std::string& strResourceName)
-	{
-		// If resource already exists
-		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
-		if (it != _mmapResLines.end())
-		{
-			it->second.uiCount++;
-			return it->second.pResource;
-		}
-		SResourceLine newRes;
-		newRes.uiCount = 1;
-		newRes.pResource = new CResourceLine();
-		ThrowIfFalse(newRes.pResource, "SCResourceManager::addLine(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResLines[strResourceName] = newRes;
-		return newRes.pResource;
-	}
-
-	CResourceLine* SCResourceManager::getLine(const std::string& strResourceName)
-	{
-		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
-		ThrowIfTrue(it == _mmapResLines.end(), "SCResourceManager::getLine(" + strResourceName + ") failed. Named resource doesn't exist.");
-		return it->second.pResource;
-	}
-
-	bool SCResourceManager::getLineExists(const std::string& strResourceName)
-	{
-		return _mmapResLines.find(strResourceName) != _mmapResLines.end();
-	}
-
-	void SCResourceManager::removeLine(const std::string& strResourceName)
-	{
-		std::map<std::string, SResourceLine>::iterator it = _mmapResLines.find(strResourceName);
-		if (it == _mmapResLines.end())
-			return;	// Doesn't exist.
-		if (it->second.uiCount > 1)
-		{
-			it->second.uiCount--;
-			return;
-		}
-		delete it->second.pResource;
-		_mmapResLines.erase(it);
 	}
 
 	CResourceShader* SCResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
@@ -952,5 +909,48 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResVertexBufferBNTs.erase(it);
+	}
+
+	CResourceVertexBufferLine* SCResourceManager::addVertexBufferLine(const std::string& strResourceName)
+	{
+		// If resource already exists
+		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		if (it != _mmapResVertexBufferLines.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceVertexBufferLine newRes;
+		newRes.uiCount = 1;
+		newRes.pResource = new CResourceVertexBufferLine();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferLine(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexBufferLines[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	CResourceVertexBufferLine* SCResourceManager::getVertexBufferLine(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexBufferLines.end(), "SCResourceManager::getVertexBufferLine(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool SCResourceManager::getVertexBufferLineExists(const std::string& strResourceName)
+	{
+		return _mmapResVertexBufferLines.find(strResourceName) != _mmapResVertexBufferLines.end();
+	}
+
+	void SCResourceManager::removeVertexBufferLine(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		if (it == _mmapResVertexBufferLines.end())
+			return;	// Doesn't exist.
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResVertexBufferLines.erase(it);
 	}
 }

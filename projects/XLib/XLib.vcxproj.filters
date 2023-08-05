@@ -265,7 +265,7 @@
     <ClInclude Include="resourceFramebuffer.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceLine.h">
+    <ClInclude Include="resourceVertexBufferLine.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="resourceManager.h">
@@ -553,7 +553,7 @@
     <ClCompile Include="resourceFramebuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceLine.cpp">
+    <ClCompile Include="resourceVertexBufferLine.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="resourceManager.cpp">

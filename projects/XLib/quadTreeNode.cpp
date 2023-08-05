@@ -36,7 +36,7 @@ namespace X
 		}
 	}
 
-	void CQuadTreeNode::debugRenderNodes(CResourceLine* pLine, CResourceLine::Vertex& vertex, CColour colour) const
+	void CQuadTreeNode::debugRenderNodes(CResourceVertexBufferLine* pLine, CResourceVertexBufferLine::Vertex& vertex, CColour colour) const
 	{
 		// Compute colour
 		float fDepthCol = (float)_mpQuadTree->_muiMaxNodeDepth - float(_muiNodeDepth);
@@ -82,7 +82,7 @@ namespace X
 		}
 	}
 
-	void CQuadTreeNode::debugRenderEntities(CResourceLine* pLine, int iCircleRadius, unsigned int uiCircleNumSegments) const
+	void CQuadTreeNode::debugRenderEntities(CResourceVertexBufferLine* pLine, int iCircleRadius, unsigned int uiCircleNumSegments) const
 	{
 		// For each entity in this node
 		std::map<std::string, CQuadTreeEntity*>::iterator it = _mmapEntities.begin();

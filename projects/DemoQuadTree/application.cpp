@@ -266,7 +266,7 @@ namespace X
 	{
 		// Obtain required resources needed to render the node's as lines.
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceLine* pLine = pRM->getLine("X:default");
+		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
 		CResourceShader* pShader = pRM->getShader("X:line");
 		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
 
@@ -301,7 +301,7 @@ namespace X
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Setup vertex we'll be using to render with
-		CResourceLine::Vertex vertex;
+		CResourceVertexBufferLine::Vertex vertex;
 		vertex.colour.set(1.0f, 0.75f, 0.0f, 1.0f);
 
 		// Add quad representing the range finder

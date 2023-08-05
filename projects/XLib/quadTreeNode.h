@@ -39,11 +39,11 @@ namespace X
 		// Debug renders this node and it's child nodes', node boundaries
 		// pLine is the CResourceLine object which is being used to add vertices to be rendered
 		// vertex is the vertex object we're using to add vertices using the pLine object.
-		void debugRenderNodes(CResourceLine* pLine, CResourceLine::Vertex& vertex, CColour colour) const;
+		void debugRenderNodes(CResourceVertexBufferLine* pLine, CResourceVertexBufferLine::Vertex& vertex, CColour colour) const;
 
 		// Debug renders this node and it's child nodes' entities
 		// pLine is the CResourceLine object which is being used to add vertices to be rendered
-		void debugRenderEntities(CResourceLine* pLine, int iCircleRadius, unsigned int uiCircleNumSegments) const;
+		void debugRenderEntities(CResourceVertexBufferLine* pLine, int iCircleRadius, unsigned int uiCircleNumSegments) const;
 
 		// Returns true if this node has the specified child node
 		bool hasChildNode(ChildNode childNode) const;

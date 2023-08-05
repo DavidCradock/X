@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceLine.h"
+#include "resourceVertexBufferLine.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceLine::CResourceLine()
+	CResourceVertexBufferLine::CResourceVertexBufferLine()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -15,17 +15,17 @@ namespace X
 		muiLineMode = GL_LINE_STRIP;
 	}
 
-	CResourceLine::~CResourceLine()
+	CResourceVertexBufferLine::~CResourceVertexBufferLine()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceLine::onGLContextCreated(void)
+	void CResourceVertexBufferLine::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceLine::onGLContextToBeDestroyed(void)
+	void CResourceVertexBufferLine::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -44,14 +44,14 @@ namespace X
 		}
 	}
 
-	void CResourceLine::removeGeom(void)
+	void CResourceVertexBufferLine::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 		muiIndex = 0;
 	}
 
-	void CResourceLine::update(void)
+	void CResourceVertexBufferLine::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -112,7 +112,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceLine::draw(void) const
+	void CResourceVertexBufferLine::draw(void) const
 	{
 		if (!vertexArrayObject)
 			return;
@@ -134,16 +134,16 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceLine::addLinePoint(const Vertex& newVertex)
+	void CResourceVertexBufferLine::addLinePoint(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 		indices.push_back(muiIndex);
 		muiIndex++;
 	}
 
-	void CResourceLine::addCircle(const CVector2f& vCentrePosition, float fRadius, unsigned int uiNumSegments, const CColour &colour)
+	void CResourceVertexBufferLine::addCircle(const CVector2f& vCentrePosition, float fRadius, unsigned int uiNumSegments, const CColour &colour)
 	{
-		ThrowIfFalse(uiNumSegments, "CResourceLine::addCircle() failed. given zero number of segments");
+		ThrowIfFalse(uiNumSegments, "CResourceVertexBufferLine::addCircle() failed. given zero number of segments");
 		Vertex v;
 		v.colour = colour;
 		float fAngDeltaPerSeg = k2Pi / float(uiNumSegments);
@@ -184,14 +184,14 @@ namespace X
 		}
 	}
 
-	void CResourceLine::addCircle(int iCentrePosX, int iCentrePosY, float fRadius, unsigned int uiNumSegments, const CColour& colour)
+	void CResourceVertexBufferLine::addCircle(int iCentrePosX, int iCentrePosY, float fRadius, unsigned int uiNumSegments, const CColour& colour)
 	{
 		CVector2f vCentrePos;
 		vCentrePos.set(float(iCentrePosX), float(iCentrePosY));
 		addCircle(vCentrePos, fRadius, uiNumSegments, colour);
 	}
 
-	void CResourceLine::addQuad(const CVector2f& vCentrePosition, float fWidth, float fHeight, const CColour& colour)
+	void CResourceVertexBufferLine::addQuad(const CVector2f& vCentrePosition, float fWidth, float fHeight, const CColour& colour)
 	{
 		// Set colour and positions of each of the four vertices which represent the quad
 		Vertex vBL, vBR, vTL, vTR;
@@ -236,7 +236,7 @@ namespace X
 		}
 	}
 
-	void CResourceLine::addAxis(const CVector3f& vCentrePosition, float fLineLength)
+	void CResourceVertexBufferLine::addAxis(const CVector3f& vCentrePosition, float fLineLength)
 	{
 		Vertex v;
 
@@ -295,12 +295,12 @@ namespace X
 		}
 	}
 
-	void CResourceLine::setDrawModeAsLineStrip(void)
+	void CResourceVertexBufferLine::setDrawModeAsLineStrip(void)
 	{
 		muiLineMode = GL_LINE_STRIP;
 	}
 	
-	void CResourceLine::setDrawModeAsLineList(void)
+	void CResourceVertexBufferLine::setDrawModeAsLineList(void)
 	{
 		muiLineMode = GL_LINES;
 	}

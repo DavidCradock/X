@@ -95,7 +95,7 @@
     <ClInclude Include="resourceShader.h" />
     <ClInclude Include="resourceTexture2DFromFile.h" />
     <ClInclude Include="resourceVertexBuffer.h" />
-    <ClInclude Include="resourceLine.h" />
+    <ClInclude Include="resourceVertexBufferLine.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="SMEntityBase.h" />
     <ClInclude Include="SMEntityTriangle.h" />
@@ -200,7 +200,7 @@
     <ClCompile Include="resourceShader.cpp" />
     <ClCompile Include="resourceTexture2DFromFile.cpp" />
     <ClCompile Include="resourceVertexBuffer.cpp" />
-    <ClCompile Include="resourceLine.cpp" />
+    <ClCompile Include="resourceVertexBufferLine.cpp" />
     <ClCompile Include="SMEntityBase.cpp" />
     <ClCompile Include="SMEntityTriangle.cpp" />
     <ClCompile Include="SMEntityLine.cpp" />

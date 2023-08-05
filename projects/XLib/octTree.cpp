@@ -66,7 +66,7 @@ namespace X
 	{
 		// Obtain required resources needed to render the node's as lines.
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceLine* pLine = pRM->getLine("X:default");
+		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
 		CResourceShader* pShader = pRM->getShader("X:line");
 		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
 

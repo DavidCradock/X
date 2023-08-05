@@ -37,7 +37,7 @@ namespace X
 	}
 
 
-	void COctTreeNode::debugRenderNodes(CResourceLine* pLine, CColour colour) const
+	void COctTreeNode::debugRenderNodes(CResourceVertexBufferLine* pLine, CColour colour) const
 	{
 		// Compute colour
 		float fDepthCol = (float)_mpOctTree->_muiMaxNodeDepth - float(_muiNodeDepth);
@@ -45,7 +45,7 @@ namespace X
 		clamp(fDepthCol, 0.75f, 1.0f);
 
 		// Compute vertex positions for the AABB
-		CResourceLine::Vertex v[8];
+		CResourceVertexBufferLine::Vertex v[8];
 		for (int i = 0; i < 8; i++)
 		{
 			v[i].colour.red = colour.red;

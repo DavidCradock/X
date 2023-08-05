@@ -45,7 +45,7 @@ namespace X
 		// Debug renders this node and it's child nodes', node boundaries
 		// pLine is the CResourceLine object which is being used to add vertices to be rendered
 		// vertex is the vertex object we're using to add vertices using the pLine object.
-		void debugRenderNodes(CResourceLine* pLine, CColour colour) const;
+		void debugRenderNodes(CResourceVertexBufferLine* pLine, CColour colour) const;
 
 		/*
 		// Debug renders this node and it's child nodes' entities

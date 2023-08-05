@@ -10,7 +10,7 @@
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBuffer.h"
 #include "resourceVertexBufferBNT.h"
-#include "resourceLine.h"
+#include "resourceVertexBufferLine.h"
 
 namespace X
 {
@@ -40,7 +40,7 @@ namespace X
 	// X:default				// A vertex buffer BNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
-	// X:default				// A line vertex buffer resource used by the GUI when rendering lines
+	// X:default				// A vertex buffer line resource used by the GUI when rendering lines
 	// They are loaded by this class's addDefaultResources() method which is called from SCApplicationManager::mainLoop()
 	class SCResourceManager : public CSingleton<SCResourceManager>
 	{
@@ -134,27 +134,6 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFramebuffer(const std::string& strResourceName);
-
-		/**************************************************************************************************************************************************
-		Vertex buffer, line rendering
-		**************************************************************************************************************************************************/
-
-		// Adds a new line vertex buffer object to the manager.
-		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		CResourceLine* addLine(const std::string& strResourceName);
-
-		// Returns a pointer to an existing resource
-		// If the resource couldn't be found, an exception is thrown
-		CResourceLine* getLine(const std::string& strResourceName);
-
-		// Returns whether a named resource exists
-		bool getLineExists(const std::string& strResourceName);
-
-		// Removes a previously added resource from this manager
-		// If the resource doesn't exist, this silently fails.
-		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeLine(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
 		Shader programs
@@ -272,7 +251,7 @@ namespace X
 		Vertex buffer BNT (Binormal, Normal and Tangent)
 		**************************************************************************************************************************************************/
 
-		// Adds a new vertex buffer object to the manager.
+		// Adds a new vertex buffer BNT (Binormal, Normal and Tangent) object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		CResourceVertexBufferBNT* addVertexBufferBNT(const std::string& strResourceName);
@@ -288,6 +267,27 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeVertexBufferBNT(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Vertex buffer, line rendering
+		**************************************************************************************************************************************************/
+
+		// Adds a new line vertex buffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		CResourceVertexBufferLine* addVertexBufferLine(const std::string& strResourceName);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceVertexBufferLine* getVertexBufferLine(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getVertexBufferLineExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeVertexBufferLine(const std::string& strResourceName);
 	private:
 		struct SResourceDepthbuffer
 		{
@@ -310,12 +310,12 @@ namespace X
 		};
 		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
 
-		struct SResourceLine
+		struct SResourceVertexBufferLine
 		{
-			CResourceLine* pResource;	// Pointer to the resource
-			unsigned int uiCount;		// Number of times the resource has been added
+			CResourceVertexBufferLine* pResource;	// Pointer to the resource
+			unsigned int uiCount;					// Number of times the resource has been added
 		};
-		std::map<std::string, SResourceLine> _mmapResLines;
+		std::map<std::string, SResourceVertexBufferLine> _mmapResVertexBufferLines;
 
 		struct SResourceShader
 		{
