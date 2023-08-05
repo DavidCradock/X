@@ -361,6 +361,9 @@
     <ClInclude Include="2DParticleType.h">
       <Filter>2D\Particles</Filter>
     </ClInclude>
+    <ClInclude Include="resourceVertexBufferBNT.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -645,6 +648,9 @@
     </ClCompile>
     <ClCompile Include="2DParticleType.cpp">
       <Filter>2D\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexBufferBNT.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

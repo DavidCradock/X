@@ -9,6 +9,7 @@
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBuffer.h"
+#include "resourceVertexBufferBNT.h"
 #include "resourceLine.h"
 
 namespace X
@@ -36,6 +37,7 @@ namespace X
 	// X:default_roughness		// A texture which is black for roughness used if not set
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
 	// X:default				// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+	// X:default				// A vertex buffer BNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
 	// X:default				// A line vertex buffer resource used by the GUI when rendering lines
@@ -67,6 +69,10 @@ namespace X
 		// Adds default required resources to the resource manager, called during startup from SCCApplicationManager::mainLoop()
 		void addDefaultResources(void);
 
+		/**************************************************************************************************************************************************
+		Depth buffers
+		**************************************************************************************************************************************************/
+
 		// Adds a new depthbuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the depthbuffer
@@ -84,6 +90,10 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeDepthbuffer(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Fonts
+		**************************************************************************************************************************************************/
 
 		// Adds a new font object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -103,6 +113,10 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFont(const std::string& strResourceName);
 
+		/**************************************************************************************************************************************************
+		Frame buffers
+		**************************************************************************************************************************************************/
+
 		// Adds a new framebuffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// uiWidth and uiHeight are the dimensions of the framebuffer
@@ -121,6 +135,10 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeFramebuffer(const std::string& strResourceName);
 
+		/**************************************************************************************************************************************************
+		Vertex buffer, line rendering
+		**************************************************************************************************************************************************/
+
 		// Adds a new line vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
@@ -137,6 +155,10 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeLine(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Shader programs
+		**************************************************************************************************************************************************/
 
 		// Adds a new shader object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -155,6 +177,10 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeShader(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Texture atlas
+		**************************************************************************************************************************************************/
 
 		// Adds a new texture2D atlas object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -175,6 +201,10 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2DAtlas(const std::string& strResourceName);
 
+		/**************************************************************************************************************************************************
+		Texture 2D from file
+		**************************************************************************************************************************************************/
+
 		// Adds a new texture2DFromFile object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strImageFilename is the name of the file which holds the image data for the texture.
@@ -193,6 +223,10 @@ namespace X
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2DFromFile(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Texture 2D from image
+		**************************************************************************************************************************************************/
 
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -213,6 +247,10 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2DFromImage(const std::string& strResourceName);
 
+		/**************************************************************************************************************************************************
+		Vertex buffer
+		**************************************************************************************************************************************************/
+
 		// Adds a new vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
@@ -230,6 +268,26 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeVertexBuffer(const std::string& strResourceName);
 
+		/**************************************************************************************************************************************************
+		Vertex buffer BNT (Binormal, Normal and Tangent)
+		**************************************************************************************************************************************************/
+
+		// Adds a new vertex buffer object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		CResourceVertexBufferBNT* addVertexBufferBNT(const std::string& strResourceName);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceVertexBufferBNT* getVertexBufferBNT(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getVertexBufferBNTExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		void removeVertexBufferBNT(const std::string& strResourceName);
 	private:
 		struct SResourceDepthbuffer
 		{
@@ -293,6 +351,13 @@ namespace X
 			unsigned int uiCount;				// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceVertexBuffer> _mmapResVertexBuffers;
+
+		struct SResourceVertexBufferBNT
+		{
+			CResourceVertexBufferBNT* pResource;	// Pointer to the resource
+			unsigned int uiCount;					// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceVertexBufferBNT> _mmapResVertexBufferBNTs;
 	};
 
 }

@@ -7,12 +7,12 @@
 
 namespace X
 {
-	// Resource used by SCResourceManager, a vertex buffer with position, colour, texture coordinates and normal
-	class CResourceVertexBuffer : public CResourceBase
+	// Resource used by SCResourceManager, a vertex buffer with position, colour, texture coordinates, Binormal, Normal and Tangents
+	class CResourceVertexBufferBNT : public CResourceBase
 	{
 	public:
-		CResourceVertexBuffer();
-		~CResourceVertexBuffer();
+		CResourceVertexBufferBNT();
+		~CResourceVertexBufferBNT();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

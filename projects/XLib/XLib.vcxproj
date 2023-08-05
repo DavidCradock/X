@@ -71,6 +71,7 @@
     <ClInclude Include="resourceLoadingScreen.h" />
     <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
+    <ClInclude Include="resourceVertexBufferBNT.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
     <ClInclude Include="image.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="resourceLoadingScreen.cpp" />
     <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />
+    <ClCompile Include="resourceVertexBufferBNT.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />
     <ClCompile Include="image.cpp" />

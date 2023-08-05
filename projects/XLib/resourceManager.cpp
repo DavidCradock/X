@@ -87,6 +87,14 @@ namespace X
 			itResourceVertexBuffer->second.pResource->onGLContextToBeDestroyed();
 			itResourceVertexBuffer++;
 		}
+
+		// Vertex buffers BNT
+		std::map<std::string, SResourceVertexBufferBNT>::iterator itResourceVertexBufferBNT = _mmapResVertexBufferBNTs.begin();
+		while (itResourceVertexBufferBNT != _mmapResVertexBufferBNTs.end())
+		{
+			itResourceVertexBufferBNT->second.pResource->onGLContextToBeDestroyed();
+			itResourceVertexBufferBNT++;
+		}
 	}
 
 	void SCResourceManager::onGLContextRecreated(void)
@@ -163,6 +171,14 @@ namespace X
 		{
 			itResourceVertexBuffer->second.pResource->onGLContextCreated();
 			itResourceVertexBuffer++;
+		}
+
+		// Vertex buffers BNT
+		std::map<std::string, SResourceVertexBufferBNT>::iterator itResourceVertexBufferBNT = _mmapResVertexBufferBNTs.begin();
+		while (itResourceVertexBufferBNT != _mmapResVertexBufferBNTs.end())
+		{
+			itResourceVertexBufferBNT->second.pResource->onGLContextCreated();
+			itResourceVertexBufferBNT++;
 		}
 	}
 
@@ -476,6 +492,12 @@ namespace X
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 		pRM->addVertexBuffer("X:default");
+
+		/******************************************************************************************************************************
+		// Vertex buffers BNT
+		******************************************************************************************************************************/
+		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+		pRM->addVertexBufferBNT("X:default");
 
 		/******************************************************************************************************************************
 		// Framebuffers
@@ -887,5 +909,48 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResVertexBuffers.erase(it);
+	}
+
+	CResourceVertexBufferBNT* SCResourceManager::addVertexBufferBNT(const std::string& strResourceName)
+	{
+		// If resource already exists
+		std::map<std::string, SResourceVertexBufferBNT>::iterator it = _mmapResVertexBufferBNTs.find(strResourceName);
+		if (it != _mmapResVertexBufferBNTs.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceVertexBufferBNT newRes;
+		newRes.uiCount = 1;
+		newRes.pResource = new CResourceVertexBufferBNT();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferBNT(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexBufferBNTs[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	CResourceVertexBufferBNT* SCResourceManager::getVertexBufferBNT(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferBNT>::iterator it = _mmapResVertexBufferBNTs.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexBufferBNTs.end(), "SCResourceManager::getVertexBufferBNT(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool SCResourceManager::getVertexBufferBNTExists(const std::string& strResourceName)
+	{
+		return _mmapResVertexBufferBNTs.find(strResourceName) != _mmapResVertexBufferBNTs.end();
+	}
+
+	void SCResourceManager::removeVertexBufferBNT(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferBNT>::iterator it = _mmapResVertexBufferBNTs.find(strResourceName);
+		if (it == _mmapResVertexBufferBNTs.end())
+			return;	// Doesn't exist.
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResVertexBufferBNTs.erase(it);
 	}
 }
