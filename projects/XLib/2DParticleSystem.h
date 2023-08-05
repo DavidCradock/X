@@ -14,30 +14,12 @@ namespace X
 	// We use just one particle system which holds all particles. This way, all particles being spawned will be able to be sorted correctly, otherwise
 	// if we have multiple systems, each one, when being rendered near each other would have no way of sorting their own particles by depth of the other particle systems.
 	// There is already a texture atlas created upon startup called "X:default_particle" and contains all the images stored in "data/x/textures/particles/".
-	// By default, each particle type is set to use this texture atlas.
+	// This is the default texture atlas for the particle system when it is created.
 	// You can set your own texture atlas which you can create with the SCResourceManager class.
 	// For performance reasons, only one texture atlas can be set for the entire particle system.
 	// 
-	// Emitters...
-	// There can be multiple emitters and they are responsible for inserting particles into the system.
-	// They have a position, a shape, birth rate and particle type.
-	//
-	// Particle types...
-	// A particle type stores settings which are used to render a particle throughout it's life.
-	// An emitter is set to emit particles of a given type.
-	// A type can have multiple stages which represent a particle's appearance thoughout specific stages in a particle's life.
-	// Each stage has colour, radius and image used for their apperance and also have physical properties such as mass.
-	// 
-	// Affectors...
-	// These affect all particles within the system in certain ways, typically adjusting their velocity.
-	// A common affector is gravity, where it applies a constant for downwards upon the particles to simulate gravity.
-	// Affectors, as well as affecting all particles globally, can be assigned to particles by their particle type so that they
-	// affect other particles too.
-	// 
-	// Particles...
-	// The stars of the show! (Quite literally if given a star shaped texture :))
-	// A particle has it's current position in it's lifespan, position, velocity, it's type given to it upon it's birth via an emitter.
-	//
+	// See each of the classes for more information.
+	// 	
 	// Implementation details
 	// To deal with the multiple textures, a texture atlas is used and in the shaders, different texture coordinates are used
 	// to lookup the correct texture image this reduces texture bindings.
@@ -54,6 +36,14 @@ namespace X
 		// Removes everything from the particle system.
 		// Removes all particles, particle affectors, particle emitters and particle types
 		void removeAll(void);
+
+		// Sets the texture atlas stored in SCResourceManager which all particle types use for the images.
+		// By default, this is set to "X:default_particle" which stores all the images found in "data/x/textures/particles/"
+		void setTextureAtlas(const std::string strName);
+
+
+
+
 
 		// Adds a new affector and returns a pointer to it
 		// If the named affector already exists, a pointer to that object is returned.
@@ -134,7 +124,7 @@ namespace X
 		// Struct to hold a particle system's settings
 		struct SSettings
 		{
-
+			std::string strTextureAtlasName;		// The name of the texture atlas stored in SCResourceManager used by this particle system.
 		};
 		SSettings _mSettings;
 				

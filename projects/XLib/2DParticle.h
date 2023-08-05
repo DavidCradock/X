@@ -5,6 +5,8 @@
 namespace X
 {
 	// A particle system used with the C2DParticleSystem class
+	// The stars of the show! (Quite literally if given a star shaped texture :))
+	// A particle has it's current position in it's lifespan, velocity, it's type given to it upon it's birth via an emitter.
 	class C2DParticle
 	{
 	public:

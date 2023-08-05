@@ -29,6 +29,11 @@ namespace X
 		removeAllParticleTypes();
 	}
 
+	void C2DParticleSystem::setTextureAtlas(const std::string strName)
+	{
+		_mSettings.strTextureAtlasName = strName;
+	}
+
 	C2DParticleAffector* C2DParticleSystem::addAffector(const std::string& strName)
 	{
 		// Attempt to find by name
