@@ -310,13 +310,6 @@ namespace X
 		};
 		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
 
-		struct SResourceVertexBufferLine
-		{
-			CResourceVertexBufferLine* pResource;	// Pointer to the resource
-			unsigned int uiCount;					// Number of times the resource has been added
-		};
-		std::map<std::string, SResourceVertexBufferLine> _mmapResVertexBufferLines;
-
 		struct SResourceShader
 		{
 			CResourceShader* pResource;	// Pointer to the resource
@@ -358,6 +351,13 @@ namespace X
 			unsigned int uiCount;					// Number of times the resource has been added
 		};
 		std::map<std::string, SResourceVertexBufferBNT> _mmapResVertexBufferBNTs;
+
+		struct SResourceVertexBufferLine
+		{
+			CResourceVertexBufferLine* pResource;	// Pointer to the resource
+			unsigned int uiCount;					// Number of times the resource has been added
+		};
+		std::map<std::string, SResourceVertexBufferLine> _mmapResVertexBufferLines;
 	};
 
 }

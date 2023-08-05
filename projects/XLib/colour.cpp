@@ -90,4 +90,27 @@ namespace X
 		clamp(green, 0.0f, 1.0f);
 		clamp(blue, 0.0f, 1.0f);
 	}
+
+	CColour CColour::interpolate(const CColour other, float fValue) const
+	{
+		clamp(fValue, 0.0f, 1.0f);
+
+		CColour colour;
+		float fDiff = red - other.red;		// -1.0f (This is 0.0f and other is 1.0f) to 1.0f (This is 1.0f and other is 0.0f)
+		fDiff *= -1.0f;						// 1.0f (This is 0.0f and other is 1.0f) to -1.0f (This is 1.0f and other is 0.0f)
+		colour.red = red + (fDiff * fValue);
+
+		fDiff = green - other.green;
+		fDiff *= -1.0f;
+		colour.green = green + (fDiff * fValue);
+
+		fDiff = blue - other.blue;
+		fDiff *= -1.0f;
+		colour.blue = blue + (fDiff * fValue);
+
+		fDiff = alpha - other.alpha;
+		fDiff *= -1.0f;
+		colour.alpha = alpha + (fDiff * fValue);
+		return colour;
+	}
 }

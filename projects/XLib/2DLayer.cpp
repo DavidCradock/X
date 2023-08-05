@@ -14,6 +14,7 @@ namespace X
 	{
 		removeAllEntities();
 		removeAllEntityRots();
+		removeAllParticleSystems();
 	}
 
 	void C2DLayer::setVisible(bool bVisible)

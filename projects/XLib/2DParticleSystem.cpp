@@ -8,16 +8,82 @@ namespace X
 {
 	C2DParticleSystem::C2DParticleSystem()
 	{
-		
+		// Create default particle type
+		C2DParticleType* pType = addParticleType("default");
+		//pType->	// Just use defaults set in constructor
+
+		// Create gravity affector
+		C2DParticleAffector* pAffector = addAffector("gravity");
+		//pAffector->	// Just use defaults set in constructor
+
+		// Create emitter and disable it
+		C2DParticleEmitter* pEmitter = addEmitter("default");
+//		pEmitter->
+
+		_mbPaused = false;
+
+		_mSettings.strTextureAtlasName = "X:default_particle";
 	}
 
 	void C2DParticleSystem::render(const CMatrix& matrixView, const CMatrix& matrixProjection)
 	{
+		_mTimer.update();
+		float fTimeDeltaSeconds = _mTimer.getSecondsPast();
+		if (_mbPaused)
+			fTimeDeltaSeconds = 0.0f;
+
 		// Update everything
+
+		// For each particle emitter, emit new particles...
+		std::map<std::string, C2DParticleEmitter*>::iterator itEmitter = _mmapEmitters.begin();
+		while (itEmitter != _mmapEmitters.end())
+		{
+			itEmitter->second->_update(fTimeDeltaSeconds);
+			itEmitter++;
+		}
 
 		// If there's no particles, return.
 		if (!_mvParticles.size())
 			return;
+
+		// Update all the particles
+		CVector2f vForce;
+		for (int iParticle = 0; iParticle < _mvParticles.size(); iParticle++)
+		{
+			// If particle is dead
+			if (_mvParticles[iParticle].fAge > 1.0f)
+				continue;
+
+			// Update particle's age
+			_mvParticles[iParticle].fAge += fTimeDeltaSeconds;
+
+			// Update particle's mass based upon it's age
+			_mvParticles[iParticle].fMass = interpolate(_mvParticles[iParticle].fMassBirth, _mvParticles[iParticle].fMassDeath, _mvParticles[iParticle].fAge);
+
+			// Update particle's velocity
+			std::map<std::string, C2DParticleAffector*>::iterator itAffector = _mmapAffectors.begin();
+			while (itAffector != _mmapAffectors.end())
+			{
+				// This affector is directional
+				if (C2DParticleAffector::Type::directional == itAffector->second->_mType)
+				{
+					vForce.x = itAffector->second->vForce.x / _mvParticles[iParticle].fMass;
+					vForce.x *= fTimeDeltaSeconds;
+					vForce.y = itAffector->second->vForce.y / _mvParticles[iParticle].fMass;
+					vForce.y *= fTimeDeltaSeconds;
+					_mvParticles[iParticle].vVelocity += vForce;
+				}
+				itAffector++;
+			}
+
+			// Update particle's position
+			_mvParticles[iParticle].vPosition.x += _mvParticles[iParticle].vVelocity.x * fTimeDeltaSeconds;
+			_mvParticles[iParticle].vPosition.y += _mvParticles[iParticle].vVelocity.y * fTimeDeltaSeconds;
+
+			// Update particle's radius based upon it's age
+			_mvParticles[iParticle].fRadius = interpolate(_mvParticles[iParticle].fRadiusAtBirth, _mvParticles[iParticle].fRadiusAtDeath, _mvParticles[iParticle].fAge);
+		}
+		// Render all the particles
 
 		// Get resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -32,6 +98,49 @@ namespace X
 		pShader->setMat4("viewMatrix", matrixView);
 		pShader->setMat4("projectionMatrix", matrixProjection);
 
+		// Bind texture atlas to texture units
+		pAtlas->bindAtlas(0, 0);
+		pAtlas->bindAtlas(1, 0);
+
+		// Clear vertex buffer
+		pVB->removeGeom();
+
+		glDisable(GL_DEPTH_TEST);
+
+		CResourceVertexBuffer::Vertex vBL, vBR, vTR, vTL;
+		vBL.normal.set(0.0f, 0.0f, 1.0f);
+		vBR.normal.set(0.0f, 0.0f, 1.0f);
+		vTR.normal.set(0.0f, 0.0f, 1.0f);
+		vTL.normal.set(0.0f, 0.0f, 1.0f);
+		vBL.texCoord.set(0.0f, 0.0f);
+		vBR.texCoord.set(1.0f, 0.0f);
+		vTR.texCoord.set(1.0f, 1.0f);
+		vTL.texCoord.set(0.0f, 1.0f);
+		for (int iParticle = 0; iParticle < _mvParticles.size(); iParticle++)
+		{
+			vBL.colour = _mvParticles[iParticle].colourAtBirth.interpolate(_mvParticles[iParticle].colourAtDeath, _mvParticles[iParticle].fAge);
+			vBR.colour = vTR.colour = vTL.colour = vBL.colour;
+
+			vBL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
+			vBL.position.y = _mvParticles[iParticle].vPosition.y - _mvParticles[iParticle].fRadius;
+
+			vBR.position.x = _mvParticles[iParticle].vPosition.x + _mvParticles[iParticle].fRadius;
+			vBR.position.y = _mvParticles[iParticle].vPosition.y - _mvParticles[iParticle].fRadius;
+
+			vTR.position.x = _mvParticles[iParticle].vPosition.x + _mvParticles[iParticle].fRadius;
+			vTR.position.y = _mvParticles[iParticle].vPosition.y + _mvParticles[iParticle].fRadius;
+
+			vTL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
+			vTL.position.y = _mvParticles[iParticle].vPosition.y + _mvParticles[iParticle].fRadius;
+
+			pVB->addVertex(vBL);
+			pVB->addVertex(vBR);
+			pVB->addVertex(vTR);
+			pVB->addVertex(vTL);
+
+		}
+		pVB->update();
+		pVB->draw();
 
 		pAtlas->unbindAll();
 		pShader->unbind();
@@ -128,7 +237,7 @@ namespace X
 			return it->second;
 
 		// Allocate the new object
-		C2DParticleEmitter* pNew = new C2DParticleEmitter;
+		C2DParticleEmitter* pNew = new C2DParticleEmitter(this);
 		ThrowIfFalse(pNew, "C2DParticleSystem::addEmitter(" + strName + ") failed. Unable to allocate memory for the new emitter.");
 
 		// Place in the hashmap

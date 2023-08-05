@@ -20,6 +20,14 @@ namespace X
 		return (abs(A - B) < kdEpsilon);
 	}
 
+	// Interpolate between two given values, given a position value between 0.0f and 1.0f
+	inline float interpolate(float fValA, float fValB, float fPosition)
+	{
+		float fDiff = fValA - fValB;
+		fDiff *= -1.0f;
+		return fValA + (fDiff * fPosition);
+	}
+
 	// Sigmoid function
 	// Given a value, takes that and scales it so that the values lie upon an S curve.
 	// dResponse curve specified the shape of the curve.

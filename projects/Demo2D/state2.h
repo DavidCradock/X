@@ -16,5 +16,8 @@ namespace X
 		// pFSM is a pointer to the CFiniteStateMachine this state is stored in.
 		// This is usefull to allow the state to change to another named state by calling pFSM->switchToState()
 		void onActive(CFiniteStateMachine* pFSM);
+
+	private:
+		CTimer timer;
 	};
 }

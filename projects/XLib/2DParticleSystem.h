@@ -5,6 +5,7 @@
 #include "2DParticleEmitter.h"
 #include "2DParticleType.h"
 #include "matrix.h"
+#include "timer.h"
 
 namespace X
 {
@@ -27,6 +28,7 @@ namespace X
 	// A particle system contains many quads rendered to the screen using instancing for reduced draw calls for great performance.
 	class C2DParticleSystem
 	{
+		friend class C2DParticleEmitter;
 	public:
 		// Default constructor, sets particle system to default settings.
 		C2DParticleSystem();
@@ -43,9 +45,9 @@ namespace X
 		// By default, this is set to "X:default_particle" which stores all the images found in "data/x/textures/particles/"
 		void setTextureAtlas(const std::string strName);
 
-
-
-		/* Affectors ************************************************************************************/
+		/**************************************************************************************************************************************************
+		Affectors
+		**************************************************************************************************************************************************/
 
 		// Adds a new affector and returns a pointer to it
 		// If the named affector already exists, a pointer to that object is returned.
@@ -72,7 +74,9 @@ namespace X
 		// If an invalid index is given, an exception occurs.
 		std::string getAffectorName(int iIndex) const;
 
-		/* Emitters ************************************************************************************/
+		/**************************************************************************************************************************************************
+		Emitters
+		**************************************************************************************************************************************************/
 
 		// Adds a new emitter and returns a pointer to it
 		// If the named emitter already exists, a pointer to that object is returned.
@@ -99,7 +103,9 @@ namespace X
 		// If an invalid index is given, an exception occurs.
 		std::string getEmitterName(int iIndex) const;
 
-		/* Particle types ************************************************************************************/
+		/**************************************************************************************************************************************************
+		Particle types
+		**************************************************************************************************************************************************/
 
 		// Adds a new particle type and returns a pointer to it
 		// If the named particle type already exists, a pointer to that object is returned.
@@ -126,6 +132,7 @@ namespace X
 		// If an invalid index is given, an exception occurs.
 		std::string getParticleTypeName(int iIndex) const;
 	private:
+		CTimer _mTimer;
 
 		// Struct to hold a particle system's settings
 		struct SSettings
@@ -139,5 +146,7 @@ namespace X
 		mutable std::map<std::string, C2DParticleAffector*> _mmapAffectors;		// A map holding each uniquely named particle affector within the system.
 		mutable std::map<std::string, C2DParticleEmitter*> _mmapEmitters;		// A map holding each uniquely named particle emitter within the system.
 		mutable std::map<std::string, C2DParticleType*> _mmapTypes;				// A map holding each uniquely named particle type used by the particles.
+
+		bool _mbPaused;		// Whether the particle system is paused or not
 	};
 }
