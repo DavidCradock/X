@@ -42,19 +42,19 @@ namespace X
 		pRM->addTexture2DFromFile("food_diffuse", "data/DemoNeuralNets/textures/food_diffuse.png", true);
 
 		// Create geometry
-		CResourceTriangle* pTri;
+		CResourceVertexBuffer* pVB;
 		// Critter
-		pTri = pRM->addTriangle("critter");
+		pVB = pRM->addVertexBuffer("critter");
 //		pTri->convertObj("data/DemoNeuralNets/geometry/critter.obj");
-		pTri->addFromFile("data/DemoNeuralNets/geometry/critter.geom");
+		pVB->addFromFile("data/DemoNeuralNets/geometry/critter.geom");
 		// Food
-		pTri = pRM->addTriangle("food");
+		pVB = pRM->addVertexBuffer("food");
 //		pTri->convertObj("data/DemoNeuralNets/geometry/food.obj");
-		pTri->addFromFile("data/DemoNeuralNets/geometry/food.geom");
+		pVB->addFromFile("data/DemoNeuralNets/geometry/food.geom");
 		// Back "plane" (Has to be a solid object for shadows to render correctly, so it's actually a cube)
-		pTri = pRM->addTriangle("background");
-		pTri->addCube(CVector3f(0.0f, 0.0f, -0.5f), CVector3f(500.0f, 500.0f, 1.0f));
-		pTri->update();
+		pVB = pRM->addVertexBuffer("background");
+		pVB->addCube(CVector3f(0.0f, 0.0f, -0.5f), CVector3f(500.0f, 500.0f, 1.0f));
+		pVB->update();
 
 		// Setup finite state machine
 		// Create and add all states

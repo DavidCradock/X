@@ -92,7 +92,7 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
-#include "resourceTriangle.h"
+#include "resourceVertexBuffer.h"
 // Scene manager
 #include "SMCamera.h"
 #include "SMEntityBase.h"

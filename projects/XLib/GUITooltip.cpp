@@ -46,7 +46,7 @@ namespace X
 		pFB->bindAsRenderTarget(true, false);
 
 		// Render the background of the tooltip
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 		pShader->bind();
 
@@ -68,9 +68,9 @@ namespace X
 		// Render the centre
 		CVector2f vPos(0.0f, 0.0f);
 		CColour colWhite;
-		pTri->removeGeom();
+		pVB->removeGeom();
 
-		pTri->addQuad2D(vTexDimsPoint3,		// Position
+		pVB->addQuad2D(vTexDimsPoint3,		// Position
 			CVector2f(mfWidth, mfHeight),	// Dimensions
 			colWhite,
 			mTC.centre.BL,
@@ -79,7 +79,7 @@ namespace X
 			mTC.centre.TL);
 
 		// Render the left edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(0.0f,							// Position X
 				vTexDimsPoint3.y),					// Position Y
 			CVector2f(vTexDimsPoint3.x, mfHeight),	// Dimensions
@@ -90,7 +90,7 @@ namespace X
 			mTC.left.TL);
 
 		// Render the right edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfWidth + vTexDimsPoint3.x,	// Position X
 				vTexDimsPoint3.y),					// Position Y
 			CVector2f(vTexDimsPoint3.x, mfHeight),	// Dimensions
@@ -101,7 +101,7 @@ namespace X
 			mTC.right.TL);
 
 		// Render the top edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				vTexDimsPoint3.x,					// Position X
 				0.0f),								// Position Y
@@ -113,7 +113,7 @@ namespace X
 			mTC.top.TL);
 
 		// Render the bottom edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				vTexDimsPoint3.x,					// Position X
 				mfHeight + vTexDimsPoint3.y),		// Position Y
@@ -125,7 +125,7 @@ namespace X
 			mTC.bottom.TL);
 
 		// Render the top left corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				0.0f,										// Position X
 				0.0f),										// Position Y
@@ -137,7 +137,7 @@ namespace X
 			mTC.topLeft.TL);
 
 		// Render the top right corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				mfWidth + vTexDimsPoint3.x,					// Position X
 				0.0f),										// Position Y
@@ -149,7 +149,7 @@ namespace X
 			mTC.topRight.TL);
 
 		// Render the bottom left corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				0.0f,										// Position X
 				mfHeight + vTexDimsPoint3.y),				// Position Y
@@ -161,7 +161,7 @@ namespace X
 			mTC.bottomLeft.TL);
 
 		// Render the bottom right corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(
 				mfWidth + vTexDimsPoint3.x,					// Position X
 				mfHeight + vTexDimsPoint3.y),				// Position Y
@@ -172,8 +172,8 @@ namespace X
 			mTC.bottomRight.TR,
 			mTC.bottomRight.TL);
 
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

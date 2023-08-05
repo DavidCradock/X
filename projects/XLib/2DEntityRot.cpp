@@ -143,7 +143,7 @@ namespace X
 	void C2DEntityRot::render(
 		std::string& strPreviouslyBoundAtlasName,
 		unsigned int& uiPreviouslyBoundAtlasImageNumber,
-		CResourceTriangle* pTri,
+		CResourceVertexBuffer* pVB,
 		CResourceShader* pShader,
 		unsigned int& uiNumTextureBindingsPerLoop)
 	{
@@ -196,8 +196,8 @@ namespace X
 		// Offset position from top left to center of entity
 		v2fPos -= v2fDims * 0.5f;
 
-		pTri->removeGeom();
-		pTri->addQuad2D(
+		pVB->removeGeom();
+		pVB->addQuad2D(
 			v2fPos,											// Position
 			v2fDims,										// Dimensions
 			_mColour,										// Colour
@@ -205,7 +205,7 @@ namespace X
 			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
 			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
 			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
-		pTri->update();
+		pVB->update();
 
 		// Setup world matrix for this entity and send to shader
 		CMatrix matWorld;
@@ -214,6 +214,6 @@ namespace X
 		matWorld = matTrans * matRot;
 		pShader->setMat4("matrixWorld", matWorld);			// Set world matrix for shader for this entity
 
-		pTri->draw(false);
+		pVB->draw(false);
 	}
 }

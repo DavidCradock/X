@@ -16,7 +16,7 @@ namespace X
 	{
 		// For each of the resources, call their onGLContextToBeDestroyed() methods.
 
-		// Depthbuffers
+		// Depth buffers
 		std::map<std::string, SResourceDepthbuffer>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
 		while (itDepthbuffer != _mmapResDepthbuffers.end())
 		{
@@ -80,12 +80,12 @@ namespace X
 			itTextures2DFromImage++;
 		}
 
-		// Triangle
-		std::map<std::string, SResourceTriangle>::iterator itResourceTriangles = _mmapResTriangles.begin();
-		while (itResourceTriangles != _mmapResTriangles.end())
+		// Vertex buffers
+		std::map<std::string, SResourceVertexBuffer>::iterator itResourceVertexBuffer = _mmapResVertexBuffers.begin();
+		while (itResourceVertexBuffer != _mmapResVertexBuffers.end())
 		{
-			itResourceTriangles->second.pResource->onGLContextToBeDestroyed();
-			itResourceTriangles++;
+			itResourceVertexBuffer->second.pResource->onGLContextToBeDestroyed();
+			itResourceVertexBuffer++;
 		}
 	}
 
@@ -93,7 +93,7 @@ namespace X
 	{
 		// For each of the resources, call their onGLContextCreated() methods.
 
-		// Depthbuffers
+		// Depth buffers
 		std::map<std::string, SResourceDepthbuffer>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
 		while (itDepthbuffer != _mmapResDepthbuffers.end())
 		{
@@ -157,12 +157,12 @@ namespace X
 			itTextures2DFromImage++;
 		}
 
-		// Triangle
-		std::map<std::string, SResourceTriangle>::iterator itResourceTriangles = _mmapResTriangles.begin();
-		while (itResourceTriangles != _mmapResTriangles.end())
+		// Vertex buffers
+		std::map<std::string, SResourceVertexBuffer>::iterator itResourceVertexBuffer = _mmapResVertexBuffers.begin();
+		while (itResourceVertexBuffer != _mmapResVertexBuffers.end())
 		{
-			itResourceTriangles->second.pResource->onGLContextCreated();
-			itResourceTriangles++;
+			itResourceVertexBuffer->second.pResource->onGLContextCreated();
+			itResourceVertexBuffer++;
 		}
 	}
 
@@ -441,6 +441,8 @@ namespace X
 		pRM->addShader("X:2DEntity", "data/X/shaders/2DEntity.vert", "data/X/shaders/2DEntity.frag");
 		// A shader used by SC2DRenderer for C2DEntityRot
 		pRM->addShader("X:2DEntityRot", "data/X/shaders/2DEntityRot.vert", "data/X/shaders/2DEntityRot.frag");
+		// A shader used be C2DParticleSystem to render non-instanced particles.
+		pRM->addShader("X:2DParticleNoInst", "data/X/shaders/2DParticleNoInstancing.vert", "data/X/shaders/2DParticleNoInstancing.frag");
 
 		/******************************************************************************************************************************
 		// Textures
@@ -470,10 +472,10 @@ namespace X
 		pRM->addDepthbuffer("X:shadows", 2048, 2048);
 
 		/******************************************************************************************************************************
-		// Triangle resources
+		// Vertex buffers
 		******************************************************************************************************************************/
-		// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addTriangle("X:default");
+		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+		pRM->addVertexBuffer("X:default");
 
 		/******************************************************************************************************************************
 		// Framebuffers
@@ -844,39 +846,39 @@ namespace X
 		_mmapResTextures2DFromImage.erase(it);
 	}
 
-	CResourceTriangle* SCResourceManager::addTriangle(const std::string& strResourceName)
+	CResourceVertexBuffer* SCResourceManager::addVertexBuffer(const std::string& strResourceName)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
-		if (it != _mmapResTriangles.end())
+		std::map<std::string, SResourceVertexBuffer>::iterator it = _mmapResVertexBuffers.find(strResourceName);
+		if (it != _mmapResVertexBuffers.end())
 		{
 			it->second.uiCount++;
 			return it->second.pResource;
 		}
-		SResourceTriangle newRes;
+		SResourceVertexBuffer newRes;
 		newRes.uiCount = 1;
-		newRes.pResource = new CResourceTriangle();
-		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTriangle(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResTriangles[strResourceName] = newRes;
+		newRes.pResource = new CResourceVertexBuffer();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBuffer(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexBuffers[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	CResourceTriangle* SCResourceManager::getTriangle(const std::string& strResourceName)
+	CResourceVertexBuffer* SCResourceManager::getVertexBuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
-		ThrowIfTrue(it == _mmapResTriangles.end(), "SCResourceManager::getTriangle(" + strResourceName + ") failed. Named resource doesn't exist.");
+		std::map<std::string, SResourceVertexBuffer>::iterator it = _mmapResVertexBuffers.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexBuffers.end(), "SCResourceManager::getVertexBuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool SCResourceManager::getTriangleExists(const std::string& strResourceName)
+	bool SCResourceManager::getVertexBufferExists(const std::string& strResourceName)
 	{
-		return _mmapResTriangles.find(strResourceName) != _mmapResTriangles.end();
+		return _mmapResVertexBuffers.find(strResourceName) != _mmapResVertexBuffers.end();
 	}
 
-	void SCResourceManager::removeTriangle(const std::string& strResourceName)
+	void SCResourceManager::removeVertexBuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTriangle>::iterator it = _mmapResTriangles.find(strResourceName);
-		if (it == _mmapResTriangles.end())
+		std::map<std::string, SResourceVertexBuffer>::iterator it = _mmapResVertexBuffers.find(strResourceName);
+		if (it == _mmapResVertexBuffers.end())
 			return;	// Doesn't exist.
 		if (it->second.uiCount > 1)
 		{
@@ -884,6 +886,6 @@ namespace X
 			return;
 		}
 		delete it->second.pResource;
-		_mmapResTriangles.erase(it);
+		_mmapResVertexBuffers.erase(it);
 	}
 }

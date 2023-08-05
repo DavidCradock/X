@@ -136,7 +136,7 @@ namespace X
 	void C2DEntity::render(
 		std::string& strPreviouslyBoundAtlasName,
 		unsigned int& uiPreviouslyBoundAtlasImageNumber,
-		CResourceTriangle* pTri,
+		CResourceVertexBuffer* pVB,
 		unsigned int& uiNumTextureBindingsPerLoop)
 	{
 		// If this entity is set as invisible, do nuffin'
@@ -163,9 +163,9 @@ namespace X
 		// We need to send any existing vertex data to be rendered IF the atlas texture is to be changed
 		if (bNeedToBindTexture)	// If the atlas texture has changed
 		{
-			pTri->update();
-			pTri->draw(false);
-			pTri->removeGeom();
+			pVB->update();
+			pVB->draw(false);
+			pVB->removeGeom();
 		}
 
 		// Bind the texture AFTER rendering the above vertices, otherwise the above vertices will use the new texture
@@ -192,7 +192,7 @@ namespace X
 		// Offset position from top left to center of entity
 		v2fPos -= v2fDims * 0.5f;
 
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			v2fPos,											// Position
 			v2fDims,										// Dimensions
 			_mColour,										// Colour

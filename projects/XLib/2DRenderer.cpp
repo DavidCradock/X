@@ -115,11 +115,11 @@ namespace X
 
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShaderEntity = pRM->getShader("X:2DEntity");
 		CResourceShader* pShaderEntityRot = pRM->getShader("X:2DEntityRot");
 
-		pTri->removeGeom();
+		pVB->removeGeom();
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -192,14 +192,14 @@ namespace X
 						itEntity->second->render(
 							strPreviouslyBoundAtlasName,
 							uiPreviouslyBoundAtlasImageNumber,
-							pTri,
+							pVB,
 							_muiNumTextureBindingsPerLoop);
 						itEntity++;
 					}
 					// Send remaining vertex data to GPU to be rendered
-					pTri->update();
-					pTri->draw(false);
-					pTri->removeGeom();
+					pVB->update();
+					pVB->draw(false);
+					pVB->removeGeom();
 
 					// For each C2DEntityRot in layer
 					pShaderEntityRot->bind();											// Bind correct shader
@@ -213,10 +213,18 @@ namespace X
 						itEntityRot->second->render(
 							strPreviouslyBoundAtlasName,
 							uiPreviouslyBoundAtlasImageNumber,
-							pTri,
+							pVB,
 							pShaderEntityRot,
 							_muiNumTextureBindingsPerLoop);
 						itEntityRot++;
+					}
+
+					// For each particle system
+					std::map<std::string, C2DParticleSystem*>::iterator itParticleSystem = pLayer->_mmapParticleSystems.begin();
+					while (itParticleSystem != pLayer->_mmapParticleSystems.end())
+					{
+						itParticleSystem->second->render(matrixView, matrixProjection);
+						itParticleSystem++;
 					}
 
 				}	// Each layer

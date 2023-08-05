@@ -3,5 +3,8 @@
 
 namespace X
 {
+	C2DParticleType::C2DParticleType()
+	{
 
+	}
 }

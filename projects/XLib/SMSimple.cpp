@@ -330,7 +330,7 @@ namespace X
 		else
 			pShader = pRM->getShader("X:DRNE_noshadows");
 
-		CResourceTriangle* pResTri;
+		CResourceVertexBuffer* pVB;
 		CResourceTexture2DFromFile* pTexDiffuse = 0;
 		CResourceTexture2DFromFile* pTexRoughness = 0;
 		CResourceTexture2DFromFile* pTexNormal = 0;
@@ -419,7 +419,7 @@ namespace X
 			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
 
 			// Get vertex buffer and textures used by each entity
-			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
+			pVB = pRM->getVertexBuffer(it->second->mstrTriangleName);
 			pTexDiffuse = pRM->getTexture2DFromFile(pMaterial->getDiffuseTextureName());
 			pTexRoughness = pRM->getTexture2DFromFile(pMaterial->getRoughnessTextureName());
 			pTexNormal = pRM->getTexture2DFromFile(pMaterial->getNormalmapTextureName());
@@ -439,7 +439,7 @@ namespace X
 			pShader->setFloat("fSpecularStrength", pMaterial->getSpecularStrength());
 
 			// Render the vertex buffer
-			pResTri->draw(false);
+			pVB->draw(false);
 			it++;
 		}
 
@@ -561,13 +561,13 @@ namespace X
 		pShader->setMat4("lightSpace", _mmatShadowsDirectionalLightViewProj);
 
 		// Triangle entities
-		CResourceTriangle* pResTri;
+		CResourceVertexBuffer* pVB;
 		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
 		while (it != mmapEntitiesTriangles.end())
 		{
-			pResTri = pRM->getTriangle(it->second->mstrTriangleName);
+			pVB = pRM->getVertexBuffer(it->second->mstrTriangleName);
 			pShader->setMat4("model", it->second->getWorldMatrix());
-			pResTri->draw(false);
+			pVB->draw(false);
 			it++;
 		}
 		glCullFace(GL_BACK);

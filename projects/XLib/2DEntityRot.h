@@ -90,7 +90,7 @@ namespace X
 		void render(
 			std::string& strPreviouslyBoundAtlasName,
 			unsigned int& uiPreviouslyBoundAtlasImageNumber,
-			CResourceTriangle* pTri,
+			CResourceVertexBuffer* pVB,
 			CResourceShader* pShader,
 			unsigned int& uiNumTextureBindingsPerLoop);
 	private:

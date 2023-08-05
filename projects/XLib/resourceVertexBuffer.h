@@ -7,11 +7,11 @@
 
 namespace X
 {
-	class CResourceTriangle : public CResourceBase
+	class CResourceVertexBuffer : public CResourceBase
 	{
 	public:
-		CResourceTriangle();
-		~CResourceTriangle();
+		CResourceVertexBuffer();
+		~CResourceVertexBuffer();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -8,16 +8,33 @@ namespace X
 {
 	C2DParticleSystem::C2DParticleSystem()
 	{
-
+		
 	}
 
-	void C2DParticleSystem::render(void)
+	void C2DParticleSystem::render(const CMatrix& matrixView, const CMatrix& matrixProjection)
 	{
 		// Update everything
 
 		// If there's no particles, return.
 		if (!_mvParticles.size())
 			return;
+
+		// Get resources needed to render
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mSettings.strTextureAtlasName);
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceShader* pShader = pRM->getShader("X:2DParticleNoInst");
+
+		// Bind shader and set some uniforms
+		pShader->bind();
+		pShader->setInt("textureBirth", 0);
+		pShader->setInt("textureDeath", 1);
+		pShader->setMat4("viewMatrix", matrixView);
+		pShader->setMat4("projectionMatrix", matrixProjection);
+
+
+		pAtlas->unbindAll();
+		pShader->unbind();
 	}
 
 	void C2DParticleSystem::removeAll(void)

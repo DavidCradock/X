@@ -589,7 +589,7 @@ namespace X
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
 		SCInputManager* pInput = SCInputManager::getPointer();
@@ -631,8 +631,8 @@ namespace X
 		pFBSample->bindAsTexture(3);
 
 		// Render the container centre
-		pTri->removeGeom();
-		pTri->addQuad2D(
+		pVB->removeGeom();
+		pVB->addQuad2D(
 			CVector2f(mfPositionX, mfPositionY),	// Position
 			CVector2f(mfWidth, mfHeight),			// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
@@ -643,7 +643,7 @@ namespace X
 
 		// Render the left edge
 		CVector2f vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX - vTexDimsDiv3.x, mfPositionY),	// Position
 			CVector2f(vTexDimsDiv3.x, mfHeight),					// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
@@ -653,7 +653,7 @@ namespace X
 			mTC.left.TL);
 
 		// Render the right edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX + mfWidth, mfPositionY),	// Position
 			CVector2f(vTexDimsDiv3.x, mfHeight),			// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),				// Vertex colour
@@ -663,7 +663,7 @@ namespace X
 			mTC.right.TL);
 
 		// Render the top edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX, mfPositionY - vTexDimsDiv3.y),	// Position
 			CVector2f(mfWidth, vTexDimsDiv3.y),						// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),						// Vertex colour
@@ -673,7 +673,7 @@ namespace X
 			mTC.top.TL);
 
 		// Render the bottom edge
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX, mfPositionY + mfHeight),		// Position
 			CVector2f(mfWidth, vTexDimsDiv3.y),					// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),					// Vertex colour
@@ -683,7 +683,7 @@ namespace X
 			mTC.bottom.TL);
 
 		// Render the top left corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX - vTexDimsDiv3.x, mfPositionY - vTexDimsDiv3.y),	// Position
 			CVector2f(vTexDimsDiv3.x, vTexDimsDiv3.y),								// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),										// Vertex colour
@@ -693,7 +693,7 @@ namespace X
 			mTC.topLeft.TL);
 
 		// Render the top right corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX + mfWidth, mfPositionY - vTexDimsDiv3.y),	// Position
 			CVector2f(vTexDimsDiv3.x, vTexDimsDiv3.y),						// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),								// Vertex colour
@@ -703,7 +703,7 @@ namespace X
 			mTC.topRight.TL);
 
 		// Render the bottom left corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX - vTexDimsDiv3.x, mfPositionY + mfHeight),	// Position
 			CVector2f(vTexDimsDiv3.x, vTexDimsDiv3.y),							// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),									// Vertex colour
@@ -713,7 +713,7 @@ namespace X
 			mTC.bottomLeft.TL);
 
 		// Render the bottom right corner
-		pTri->addQuad2D(
+		pVB->addQuad2D(
 			CVector2f(mfPositionX + mfWidth, mfPositionY + mfHeight),	// Position
 			CVector2f(vTexDimsDiv3.x, vTexDimsDiv3.y),					// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),							// Vertex colour
@@ -722,8 +722,8 @@ namespace X
 			mTC.bottomRight.TR,
 			mTC.bottomRight.TL);
 
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

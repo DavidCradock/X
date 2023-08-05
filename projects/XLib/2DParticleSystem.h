@@ -4,6 +4,7 @@
 #include "2DParticleAffector.h"
 #include "2DParticleEmitter.h"
 #include "2DParticleType.h"
+#include "matrix.h"
 
 namespace X
 {
@@ -31,7 +32,8 @@ namespace X
 		C2DParticleSystem();
 
 		// Updates and renders the particle system
-		void render(void);
+		// Matricies are given from SC2DRenderer::render(), the orthographic projection has already been set.
+		void render(const CMatrix& matrixView, const CMatrix& matrixProjection);
 
 		// Removes everything from the particle system.
 		// Removes all particles, particle affectors, particle emitters and particle types
@@ -43,7 +45,7 @@ namespace X
 
 
 
-
+		/* Affectors ************************************************************************************/
 
 		// Adds a new affector and returns a pointer to it
 		// If the named affector already exists, a pointer to that object is returned.
@@ -70,6 +72,8 @@ namespace X
 		// If an invalid index is given, an exception occurs.
 		std::string getAffectorName(int iIndex) const;
 
+		/* Emitters ************************************************************************************/
+
 		// Adds a new emitter and returns a pointer to it
 		// If the named emitter already exists, a pointer to that object is returned.
 		C2DParticleEmitter* addEmitter(const std::string& strName);
@@ -94,6 +98,8 @@ namespace X
 		// Returns the name of an emitter at the specified index.
 		// If an invalid index is given, an exception occurs.
 		std::string getEmitterName(int iIndex) const;
+
+		/* Particle types ************************************************************************************/
 
 		// Adds a new particle type and returns a pointer to it
 		// If the named particle type already exists, a pointer to that object is returned.

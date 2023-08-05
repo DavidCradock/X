@@ -8,7 +8,7 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
-#include "resourceTriangle.h"
+#include "resourceVertexBuffer.h"
 #include "resourceLine.h"
 
 namespace X
@@ -27,6 +27,7 @@ namespace X
 	// X:gui					// A shader used by the GUI to render everything.
 	// X:2DEntity				// A shader used by SC2DRenderer for C2DEntity
 	// X:2DEntityRot			// A shader used by SC2DRenderer for C2DEntityRot
+	// X:2DParticleNoInst		// A shader used be C2DParticleSystem to render non-instanced particles.
 	// X:default_particle		// A texture atlas for use with rendering generic particles
 	// X:default_white			// A texture which is tiny and white.
 	// X:default_diffuse		// A texture which is grey for diffuse, used if not set
@@ -34,7 +35,7 @@ namespace X
 	// X:default_normal			// A texture which is a flat normal map, used if not set
 	// X:default_roughness		// A texture which is black for roughness used if not set
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
-	// X:default				// A triangle resource (vertex buffer) used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+	// X:default				// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
 	// X:default				// A line vertex buffer resource used by the GUI when rendering lines
@@ -212,22 +213,22 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		void removeTexture2DFromImage(const std::string& strResourceName);
 
-		// Adds a new triangle object to the manager.
+		// Adds a new vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
-		CResourceTriangle* addTriangle(const std::string& strResourceName);
+		CResourceVertexBuffer* addVertexBuffer(const std::string& strResourceName);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceTriangle* getTriangle(const std::string& strResourceName);
+		CResourceVertexBuffer* getVertexBuffer(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getTriangleExists(const std::string& strResourceName);
+		bool getVertexBufferExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
-		void removeTriangle(const std::string& strResourceName);
+		void removeVertexBuffer(const std::string& strResourceName);
 
 	private:
 		struct SResourceDepthbuffer
@@ -286,12 +287,12 @@ namespace X
 		};
 		std::map<std::string, SResourceTexture2DFromImage> _mmapResTextures2DFromImage;
 
-		struct SResourceTriangle
+		struct SResourceVertexBuffer
 		{
-			CResourceTriangle* pResource;	// Pointer to the resource
-			unsigned int uiCount;			// Number of times the resource has been added
+			CResourceVertexBuffer* pResource;	// Pointer to the resource
+			unsigned int uiCount;				// Number of times the resource has been added
 		};
-		std::map<std::string, SResourceTriangle> _mmapResTriangles;
+		std::map<std::string, SResourceVertexBuffer> _mmapResVertexBuffers;
 	};
 
 }

@@ -48,7 +48,7 @@ namespace X
 
 		// Get required resources needed to render
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 
 		// Render the frame buffer over the top of the background
@@ -73,8 +73,8 @@ namespace X
 		pTexColour->bindAsTexture(0);
 
 		// Render the image
-		pTri->removeGeom();
-		pTri->addQuad2D(
+		pVB->removeGeom();
+		pVB->addQuad2D(
 			CVector2f(pContainer->mfPositionX + mfPositionX + vBGDimsPoint3.x, pContainer->mfPositionY + mfPositionY + vBGDimsPoint3.y),	// Position
 			CVector2f(mfWidth - vBGDimsPoint6.x - pTheme->mfTextScrollSliderWidth, mfHeight - vBGDimsPoint6.y),								// Dimensions
 			CColour(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
@@ -83,8 +83,8 @@ namespace X
 			CVector2f(1.0f, 1.0f),
 			CVector2f(0.0f, 1.0f));
 
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindTexture();	// Unbind textures
 		pShader->unbind();				// Unbind the GUI shader

@@ -27,9 +27,9 @@ namespace X
 		pRM->addTexture2DFromFile("ground", "data/DemoOctTree/textures/ground.png");
 
 		// Cube triangle
-		CResourceTriangle* pTri = pRM->addTriangle("cube1x1x1");
-		pTri->addCube(CVector3f(0.0f, 0.0f, 0.0f), CVector3f(1.0f, 1.0f, 1.0f));
-		pTri->update();
+		CResourceVertexBuffer* pVB = pRM->addVertexBuffer("cube1x1x1");
+		pVB->addCube(CVector3f(0.0f, 0.0f, 0.0f), CVector3f(1.0f, 1.0f, 1.0f));
+		pVB->update();
 
 		// Cube line
 		CResourceLine* pLine = pRM->addLine("axis");
@@ -39,9 +39,9 @@ namespace X
 		pLine->update();
 
 		// Ground triangle
-		pTri = pRM->addTriangle("ground");
-		pTri->addCube(CVector3f(0.0f, -0.5f, 0.0f), CVector3f(64.0f, 1.0f, 64.0f), CVector2f(32.0f, 32.0f));
-		pTri->update();
+		pVB = pRM->addVertexBuffer("ground");
+		pVB->addCube(CVector3f(0.0f, -0.5f, 0.0f), CVector3f(64.0f, 1.0f, 64.0f), CVector2f(32.0f, 32.0f));
+		pVB->update();
 
 		// Create materials
 		_mSM.addMaterial("mat0_default");

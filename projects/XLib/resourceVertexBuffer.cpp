@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceTriangle.h"
+#include "resourceVertexBuffer.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceTriangle::CResourceTriangle()
+	CResourceVertexBuffer::CResourceVertexBuffer()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	CResourceTriangle::~CResourceTriangle()
+	CResourceVertexBuffer::~CResourceVertexBuffer()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceTriangle::onGLContextCreated(void)
+	void CResourceVertexBuffer::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceTriangle::onGLContextToBeDestroyed(void)
+	void CResourceVertexBuffer::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void CResourceTriangle::removeGeom(void)
+	void CResourceVertexBuffer::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 	}
 
-	void CResourceTriangle::_computeTangentsAndBinormals(void)
+	void CResourceVertexBuffer::_computeTangentsAndBinormals(void)
 	{
 		if (!vertices.size())
 			return;
@@ -72,10 +72,9 @@ namespace X
 			vertices[indices[iIndex]].binormal.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
 			vertices[indices[iIndex]].binormal.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
 		}
-
 	}
 
-	void CResourceTriangle::update(void)
+	void CResourceVertexBuffer::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -165,7 +164,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceTriangle::draw(bool bWireframeMode) const
+	void CResourceVertexBuffer::draw(bool bWireframeMode) const
 	{
 		if (!vertexArrayObject)
 			return;
@@ -190,17 +189,17 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceTriangle::addVertex(const Vertex& newVertex)
+	void CResourceVertexBuffer::addVertex(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 	}
 
-	void CResourceTriangle::addIndex(int newIndex)
+	void CResourceVertexBuffer::addIndex(int newIndex)
 	{
 		indices.push_back(newIndex);
 	}
 
-	void CResourceTriangle::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
+	void CResourceVertexBuffer::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -237,7 +236,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceTriangle::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
+	void CResourceVertexBuffer::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -277,7 +276,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceTriangle::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
+	void CResourceVertexBuffer::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
 	{
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
@@ -345,18 +344,18 @@ namespace X
 
 	}
 
-	void CResourceTriangle::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
+	void CResourceVertexBuffer::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
 
 		err = fopen_s(&file, strGeometryFilename.c_str(), "r+b");
-		ThrowIfTrue(bool(err != 0), "CResourceTriangle::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
 
 		// Read in number of vertices
 		unsigned int iNumVertices = 0;
 		size_t read = fread(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == read), "CResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(bool(0 == read), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
 
 		// Read in a vertex at a time, adding one at a time..
 		/*
@@ -364,7 +363,7 @@ namespace X
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
 			read = fread(&vertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == read), "CResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
+			ThrowIfTrue(bool(0 == read), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
 			addVertex(vertex);
 			addIndex(i);
 		}
@@ -372,7 +371,7 @@ namespace X
 		// Load in all vertex data
 		vertices.resize(iNumVertices);
 		indices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceTriangle::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
 		vertices.resize(iNumVertices);
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
@@ -385,17 +384,17 @@ namespace X
 			update();
 	}
 
-	size_t CResourceTriangle::getNumVertices(void) const
+	size_t CResourceVertexBuffer::getNumVertices(void) const
 	{
 		return vertices.size();
 	}
 
-	size_t CResourceTriangle::getNumIndicies(void) const
+	size_t CResourceVertexBuffer::getNumIndicies(void) const
 	{
 		return indices.size();
 	}
 
-	void CResourceTriangle::convertObj(const std::string filename) const
+	void CResourceVertexBuffer::convertObj(const std::string filename) const
 	{
 		// Used to temporarily hold each line of data from file
 		CVector3f vertex;
@@ -414,7 +413,7 @@ namespace X
 		FILE* file = 0;
 		errno_t err;
 		err = fopen_s(&file, filename.c_str(), "r");
-		ThrowIfTrue(bool(err != 0), "CResourceTriangle::convertObj() failed to open file " + filename);
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::convertObj() failed to open file " + filename);
 
 		char strLine[255] = { 0 };
 		char ch = 0;
@@ -479,13 +478,13 @@ namespace X
 		}
 		strOutputFilename += "geom";
 		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
-		ThrowIfTrue(bool(err != 0), "CResourceTriangle::convertObj() failed to open file " + filename + " for saving.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::convertObj() failed to open file " + filename + " for saving.");
 
 		// Loop through each face
 		Vertex geomVertex;
 		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
 		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == written), "CResourceTriangle::convertObj() failed to write to file " + filename);
+		ThrowIfTrue(bool(0 == written), "CResourceVertexBuffer::convertObj() failed to write to file " + filename);
 
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
@@ -496,7 +495,7 @@ namespace X
 			geomVertex.binormal = CVector3f(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			geomVertex.tangent = CVector3f(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == written), "CResourceTriangle::convertObj() failed to write to file " + filename);
+			ThrowIfTrue(bool(0 == written), "CResourceVertexBuffer::convertObj() failed to write to file " + filename);
 		}
 		fclose(file);
 	}

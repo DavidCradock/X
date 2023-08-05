@@ -27,7 +27,7 @@ namespace X
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 
 		pShader->bind();
@@ -54,8 +54,8 @@ namespace X
 		pTexColour->getTextureCoords((int)_mfCurrentFrame, vTCMin, vTCMax);
 
 		// Render the image
-		pTri->removeGeom();
-		pTri->addQuad2D(
+		pVB->removeGeom();
+		pVB->addQuad2D(
 			CVector2f(pContainer->mfPositionX + mfPositionX, pContainer->mfPositionY + mfPositionY),	// Position
 			CVector2f(mfWidth, mfHeight),			// Dimensions
 			mColour,							// Vertex colour
@@ -64,8 +64,8 @@ namespace X
 			CVector2f(vTCMax.x, vTCMin.y),
 			CVector2f(vTCMin.x, vTCMin.y));
 
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

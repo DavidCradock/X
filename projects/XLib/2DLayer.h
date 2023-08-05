@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "2DEntity.h"
 #include "2DEntityRot.h"
+#include "2DParticleSystem.h"
 
 namespace X
 {
@@ -87,9 +88,39 @@ namespace X
 
 		// Returns the total number of added objects
 		unsigned int getNumEntityRots(void) const;
+
+		// Add a new named particle system
+		// If the object name already exists, an exception occurs
+		// Returns a pointer to the newly added object
+		// See C2DParticleSystem for more information.
+		C2DParticleSystem* addParticleSystem(const std::string& strUniqueName);
+
+		// Returns true if an object exists, else false
+		bool getParticleSystemExists(const std::string& strUniqueName) const;
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DParticleSystem* getParticleSystem(const std::string& strUniqueName) const;
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DParticleSystem* getParticleSystem(unsigned int uiIndex) const;
+
+		// Removes an object
+		// If the object's name given doesn't exist, an exception occurs
+		void removeParticleSystem(const std::string& strUniqueName);
+
+		// Removes an object
+		// If an invalid index is given, an exception occurs
+		void removeParticleSystem(unsigned int uiIndex);
+
+		// Removes all objects
+		void removeAllParticleSystems(void);
+
+		// Returns the total number of added objects
+		unsigned int getNumParticleSystems(void) const;
 	private:
-		mutable std::map<std::string, C2DEntity*> _mmapEntities;				// Each named C2DEntity
-		mutable std::map<std::string, C2DEntityRot*> _mmapEntityRots;			// Each namde C2DEntityRot
+		mutable std::map<std::string, C2DEntity*> _mmapEntities;					// Each named C2DEntity
+		mutable std::map<std::string, C2DEntityRot*> _mmapEntityRots;				// Each named C2DEntityRot
+		mutable std::map<std::string, C2DParticleSystem*> _mmapParticleSystems;		// Each named C2DParticleSystem
 
 		bool _mbVisible;														// Whether this layer is visible and rendered or not
 

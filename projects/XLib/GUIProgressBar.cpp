@@ -33,7 +33,7 @@ namespace X
 		// Get required resources needed to render the tab
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		SCInputManager* pInput = SCInputManager::getPointer();
 
@@ -88,8 +88,8 @@ namespace X
 			vFillerDims.y = mfHeight - vTexDimsPoint6.y;
 
 			// Render the filler centre
-			pTri->removeGeom();
-			pTri->addQuad2D(
+			pVB->removeGeom();
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,							// Position X
 					vFillerPos.y),							// Position Y
@@ -101,7 +101,7 @@ namespace X
 				mTC.centre.TL);
 
 			// Render the left edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,						// Position X
 					vFillerPos.y),											// Position Y
@@ -113,7 +113,7 @@ namespace X
 				mTC.left.TL);
 
 			// Render the right edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,							// Position X
 					vFillerPos.y),											// Position Y
@@ -125,7 +125,7 @@ namespace X
 				mTC.right.TL);
 
 			// Render the top edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,							// Position X
 					vFillerPos.y - vTexDimsPoint3.y),		// Position Y
@@ -137,7 +137,7 @@ namespace X
 				mTC.top.TL);
 
 			// Render the bottom edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,							// Position X
 					vFillerPos.y + vFillerDims.y),			// Position Y
@@ -149,7 +149,7 @@ namespace X
 				mTC.bottom.TL);
 
 			// Render the top left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,			// Position X
 					vFillerPos.y - vTexDimsPoint3.y),			// Position Y
@@ -161,7 +161,7 @@ namespace X
 				mTC.topLeft.TL);
 
 			// Render the top right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,				// Position X
 					vFillerPos.y - vTexDimsPoint3.y),			// Position Y
@@ -173,7 +173,7 @@ namespace X
 				mTC.topRight.TL);
 
 			// Render the bottom left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,			// Position X
 					vFillerPos.y + vFillerDims.y),				// Position Y
@@ -185,7 +185,7 @@ namespace X
 				mTC.bottomLeft.TL);
 
 			// Render the bottom right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,				// Position X
 					vFillerPos.y + vFillerDims.y),				// Position Y
@@ -205,8 +205,8 @@ namespace X
 			vFillerDims.y = -_mfProgress * (mfHeight - vTexDimsPoint6.x);
 
 			// Render the slider tab centre
-			pTri->removeGeom();
-			pTri->addQuad2D(
+			pVB->removeGeom();
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,							// Position X
 					vFillerPos.y),							// Position Y
@@ -218,7 +218,7 @@ namespace X
 				mTC.centre.TL);
 
 			// Render the left edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,		// Position X
 					vFillerPos.y),							// Position Y
@@ -230,7 +230,7 @@ namespace X
 				mTC.left.TL);
 
 			// Render the right edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,			// Position X
 					vFillerPos.y),							// Position Y
@@ -242,7 +242,7 @@ namespace X
 				mTC.right.TL);
 
 			// Render the top edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,										// Position X
 					vFillerPos.y + vFillerDims.y - vTexDimsPoint3.y),	// Position Y
@@ -254,7 +254,7 @@ namespace X
 				mTC.top.TL);
 
 			// Render the bottom edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x,							// Position X
 					vFillerPos.y),							// Position Y
@@ -266,7 +266,7 @@ namespace X
 				mTC.bottom.TL);
 
 			// Render the top left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,					// Position X
 					vFillerPos.y + vFillerDims.y - vTexDimsPoint3.y),	// Position Y
@@ -278,7 +278,7 @@ namespace X
 				mTC.topLeft.TL);
 
 			// Render the top right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,						// Position X
 					vFillerPos.y + vFillerDims.y - vTexDimsPoint3.y),	// Position Y
@@ -290,7 +290,7 @@ namespace X
 				mTC.topRight.TL);
 		
 			// Render the bottom left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x - vTexDimsPoint3.x,			// Position X
 					vFillerPos.y),								// Position Y
@@ -302,7 +302,7 @@ namespace X
 				mTC.bottomLeft.TL);
 
 			// Render the bottom right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					vFillerPos.x + vFillerDims.x,				// Position X
 					vFillerPos.y),								// Position Y
@@ -314,8 +314,8 @@ namespace X
 				mTC.bottomRight.TL);
 
 		}
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

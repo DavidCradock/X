@@ -133,16 +133,16 @@ namespace X
 	void CResourceTexture2DFromImage::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
 		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Setup triangle geometry
-		pTri->removeGeom();
-		pTri->addQuad2D(CVector2f(float(iPosX), float(iPosY)), CVector2f(float(iWidth), float(iHeight)),
+		pVB->removeGeom();
+		pVB->addQuad2D(CVector2f(float(iPosX), float(iPosY)), CVector2f(float(iWidth), float(iHeight)),
 			colour,	// Colour
 			CVector2f(0, 0), CVector2f(1, 0), CVector2f(1, 1), CVector2f(0, 1));	// Texture coordinates
-		pTri->update();
+		pVB->update();
 
 		CMatrix matProjection;
 		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
@@ -153,7 +153,7 @@ namespace X
 		bind(0);
 		glDisable(GL_DEPTH_TEST);
 //		glEnable(GL_BLEND);
-		pTri->draw();
+		pVB->draw();
 		pShader->unbind();
 		unbind(0);
 	}

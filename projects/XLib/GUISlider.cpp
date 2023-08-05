@@ -35,7 +35,7 @@ namespace X
 		// Get required resources needed to render the tab
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTriangle* pTri = pRM->getTriangle("X:default");
+		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		SCInputManager* pInput = SCInputManager::getPointer();
 
@@ -82,8 +82,8 @@ namespace X
 		if (_mbOrientationIsHorizontal)
 		{
 			// Render the slider tab centre
-			pTri->removeGeom();
-			pTri->addQuad2D(
+			pVB->removeGeom();
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1]),							// Position Y
@@ -95,7 +95,7 @@ namespace X
 				mTC.centre.TL);
 
 			// Render the left edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,						// Position X
 					_mfTabPos[1]),											// Position Y
@@ -107,7 +107,7 @@ namespace X
 				mTC.left.TL);
 
 			// Render the right edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],							// Position X
 					_mfTabPos[1]),											// Position Y
@@ -119,7 +119,7 @@ namespace X
 				mTC.right.TL);
 
 			// Render the top edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),		// Position Y
@@ -131,7 +131,7 @@ namespace X
 				mTC.top.TL);
 
 			// Render the bottom edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
@@ -143,7 +143,7 @@ namespace X
 				mTC.bottom.TL);
 
 			// Render the top left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,			// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),			// Position Y
@@ -155,7 +155,7 @@ namespace X
 				mTC.topLeft.TL);
 
 			// Render the top right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],				// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),			// Position Y
@@ -167,7 +167,7 @@ namespace X
 				mTC.topRight.TL);
 
 			// Render the bottom left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,			// Position X
 					_mfTabPos[1] + _mfTabDims[1]),				// Position Y
@@ -179,7 +179,7 @@ namespace X
 				mTC.bottomLeft.TL);
 
 			// Render the bottom right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],				// Position X
 					_mfTabPos[1] + _mfTabDims[1]),				// Position Y
@@ -194,8 +194,8 @@ namespace X
 		else  // Vertical
 		{
 			// Render the slider tab centre
-			pTri->removeGeom();
-			pTri->addQuad2D(
+			pVB->removeGeom();
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1]),							// Position Y
@@ -207,7 +207,7 @@ namespace X
 				mTC.centre.TL);
 
 			// Render the left edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,		// Position X
 					_mfTabPos[1]),							// Position Y
@@ -219,7 +219,7 @@ namespace X
 				mTC.left.TL);
 
 			// Render the right edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],			// Position X
 					_mfTabPos[1]),							// Position Y
@@ -231,7 +231,7 @@ namespace X
 				mTC.right.TL);
 
 			// Render the top edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),		// Position Y
@@ -243,7 +243,7 @@ namespace X
 				mTC.top.TL);
 
 			// Render the bottom edge
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0],							// Position X
 					_mfTabPos[1] + _mfTabDims[1]),			// Position Y
@@ -255,7 +255,7 @@ namespace X
 				mTC.bottom.TL);
 
 			// Render the top left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,			// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),			// Position Y
@@ -267,7 +267,7 @@ namespace X
 				mTC.topLeft.TL);
 
 			// Render the top right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],				// Position X
 					_mfTabPos[1] - vTexDimsPoint3.y),			// Position Y
@@ -279,7 +279,7 @@ namespace X
 				mTC.topRight.TL);
 
 			// Render the bottom left corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] - vTexDimsPoint3.x,			// Position X
 					_mfTabPos[1] + _mfTabDims[1]),				// Position Y
@@ -291,7 +291,7 @@ namespace X
 				mTC.bottomLeft.TL);
 
 			// Render the bottom right corner
-			pTri->addQuad2D(
+			pVB->addQuad2D(
 				CVector2f(
 					_mfTabPos[0] + _mfTabDims[0],				// Position X
 					_mfTabPos[1] + _mfTabDims[1]),				// Position Y
@@ -302,8 +302,8 @@ namespace X
 				mTC.bottomRight.TR,
 				mTC.bottomRight.TL);
 		}
-		pTri->update();
-		pTri->draw();
+		pVB->update();
+		pVB->draw();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader
