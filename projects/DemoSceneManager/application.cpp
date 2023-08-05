@@ -162,13 +162,13 @@ namespace X
 		// Create needed triangles
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// Cube
-		CResourceVertexBuffer* pVB = pRM->addVertexBuffer("cube");
+		CResourceVertexBufferBNT* pVB = pRM->addVertexBufferBNT("cube");
 		pVB->addFromFile("data/DemoSceneManager/geometry/cube.geom", true);
 		// Point lights to show where they are
-		pVB = pRM->addVertexBuffer("icosphere_radius_0.01");
+		pVB = pRM->addVertexBufferBNT("icosphere_radius_0.01");
 		pVB->addFromFile("data/DemoSceneManager/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
-		pVB = pRM->addVertexBuffer("groundplane");
+		pVB = pRM->addVertexBufferBNT("groundplane");
 		pVB->addFromFile("data/DemoSceneManager/geometry/ground_plane_200x200x1.geom", true);
 
 		// Load in a textures

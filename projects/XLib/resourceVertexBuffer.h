@@ -27,8 +27,6 @@ namespace X
 			CColour colour;			// Vertex colour
 			CVector2f texCoord;		// Vertex texture coordinate
 			CVector3f normal;		// Vertex normal
-			CVector3f tangent;		// Tangent vector for bump/normal mapping
-			CVector3f binormal;		// Binormal vector for bump/normal mapping
 		};
 
 		// Removes all previously added vertices
@@ -80,8 +78,5 @@ namespace X
 		std::vector<Vertex> vertices;		// Vector holding each unique vertex
 		std::vector<int> indices;			// Vector holding indicies to each unique vertex
 
-		// Compute tangents and binormals from currently added geometry.
-		// Called from update()
-		void _computeTangentsAndBinormals(void);
 	};
 }
