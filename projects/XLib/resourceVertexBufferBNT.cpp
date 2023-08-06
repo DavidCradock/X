@@ -164,7 +164,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBufferBNT::draw(bool bWireframeMode) const
+	void CResourceVertexBufferBNT::render(bool bWireframeMode) const
 	{
 		if (!vertexArrayObject)
 			return;

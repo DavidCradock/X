@@ -164,7 +164,7 @@ namespace X
 		if (bNeedToBindTexture)	// If the atlas texture has changed
 		{
 			pVB->update();
-			pVB->draw(false);
+			pVB->render(false);
 			pVB->removeGeom();
 		}
 

@@ -116,7 +116,7 @@ namespace X
 
 		// Send geometry to be rendered
 		pLine->update();
-		pLine->draw();
+		pLine->render();
 
 		// Cleanup
 		glDisable(GL_BLEND);

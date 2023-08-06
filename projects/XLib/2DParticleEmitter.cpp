@@ -9,14 +9,14 @@ namespace X
 	{
 		_mpPS = pSystem;
 		_mvPosition.set(0.0f, 0.0f);
-		_mfBirthRatePerSecond = 100.0f;
+		_mfBirthRatePerSecond = 250.0f;
 		_mfMinRangeFromPos = 0.0f;
 		_mfMaxRangeFromPos = 50.0f;
 		_mstrParticleTypeName = "default";
 		_mpParticleType = 0;
 		_mbEmitting = true;
 		_mvMinVelocity.set(1.0f, 1.0f);
-		_mvMaxVelocity.set(100.0f, 100.0f);
+		_mvMaxVelocity.set(200.0f, 200.0f);
 		_mfTimeUntilNextEmission = 0.0f;
 	}
 
@@ -69,8 +69,14 @@ namespace X
 				_mpPS->_mvParticles[iIndexToNewParticle].vPosition.x += randf(_mfMinRangeFromPos, _mfMaxRangeFromPos);
 				_mpPS->_mvParticles[iIndexToNewParticle].vPosition.y += randf(_mfMinRangeFromPos, _mfMaxRangeFromPos);
 				// Velocity
-				_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.x = randf(_mvMinVelocity.x, _mvMaxVelocity.x);
-				_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.y = randf(_mvMinVelocity.y, _mvMaxVelocity.y);
+				if (randBool())
+					_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.x = randf(-abs(_mvMinVelocity.x), _mvMaxVelocity.x);
+				else
+					_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.x = -randf(-abs(_mvMinVelocity.x), _mvMaxVelocity.x);
+				if (randBool())
+					_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.y = randf(-abs(_mvMinVelocity.x), _mvMaxVelocity.x);
+				else
+					_mpPS->_mvParticles[iIndexToNewParticle].vVelocity.y = -randf(-abs(_mvMinVelocity.x), _mvMaxVelocity.x);
 				// Mass
 				_mpPS->_mvParticles[iIndexToNewParticle].fMassBirth = randf(_mpParticleType->stageBirth.fMassMin, _mpParticleType->stageBirth.fMassMax);
 				_mpPS->_mvParticles[iIndexToNewParticle].fMassDeath = randf(_mpParticleType->stageDeath.fMassMin, _mpParticleType->stageDeath.fMassMax);
@@ -80,6 +86,8 @@ namespace X
 				// Radius
 				_mpPS->_mvParticles[iIndexToNewParticle].fRadiusAtBirth = interpolate(_mpParticleType->stageBirth.fRadiusMin, _mpParticleType->stageBirth.fRadiusMax, randf(0.0f, 1.0f));
 				_mpPS->_mvParticles[iIndexToNewParticle].fRadiusAtDeath = interpolate(_mpParticleType->stageDeath.fRadiusMin, _mpParticleType->stageDeath.fRadiusMax, randf(0.0f, 1.0f));
+				// fAgingRate
+				_mpPS->_mvParticles[iIndexToNewParticle].fAgingRate = 1.0f / randf(_mpParticleType->fLifeSpanMinSeconds, _mpParticleType->fLifeSpanMaxSeconds);
 			}
 		}	// _mbEmitting?
 	}

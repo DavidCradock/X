@@ -70,7 +70,7 @@ namespace X
 			CVector2f(0.0f, 0.0f));
 
 		pVB->update();
-		pVB->draw();
+		pVB->render();
 
 		// Unbind textures
 		if (_mbImageIsFromFile)

@@ -112,7 +112,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBufferLine::draw(void) const
+	void CResourceVertexBufferLine::render(void) const
 	{
 		if (!vertexArrayObject)
 			return;

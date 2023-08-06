@@ -198,7 +198,7 @@ namespace X
 					}
 					// Send remaining vertex data to GPU to be rendered
 					pVB->update();
-					pVB->draw(false);
+					pVB->render(false);
 					pVB->removeGeom();
 
 					// For each C2DEntityRot in layer

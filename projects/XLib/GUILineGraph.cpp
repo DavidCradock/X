@@ -166,7 +166,7 @@ namespace X
 				}
 				it++;
 				pLine->update();
-				pLine->draw();
+				pLine->render();
 			}
 
 			

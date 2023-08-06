@@ -65,7 +65,7 @@ namespace X
 			CVector2f(vTCMin.x, vTCMin.y));
 
 		pVB->update();
-		pVB->draw();
+		pVB->render();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

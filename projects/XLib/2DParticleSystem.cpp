@@ -55,7 +55,7 @@ namespace X
 				continue;
 
 			// Update particle's age
-			_mvParticles[iParticle].fAge += fTimeDeltaSeconds;
+			_mvParticles[iParticle].fAge += fTimeDeltaSeconds * _mvParticles[iParticle].fAgingRate;
 
 			// Update particle's mass based upon it's age
 			_mvParticles[iParticle].fMass = interpolate(_mvParticles[iParticle].fMassBirth, _mvParticles[iParticle].fMassDeath, _mvParticles[iParticle].fAge);
@@ -116,10 +116,13 @@ namespace X
 		vBR.texCoord.set(1.0f, 0.0f);
 		vTR.texCoord.set(1.0f, 1.0f);
 		vTL.texCoord.set(0.0f, 1.0f);
+		CVector2f vDims;
+		CColour colour;
+		CVector2f vTexCoordsA;
+		CVector2f vTexCoordsB;
 		for (int iParticle = 0; iParticle < _mvParticles.size(); iParticle++)
 		{
-			vBL.colour = _mvParticles[iParticle].colourAtBirth.interpolate(_mvParticles[iParticle].colourAtDeath, _mvParticles[iParticle].fAge);
-			vBR.colour = vTR.colour = vTL.colour = vBL.colour;
+			colour = _mvParticles[iParticle].colourAtBirth.interpolate(_mvParticles[iParticle].colourAtDeath, _mvParticles[iParticle].fAge);
 
 			vBL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
 			vBL.position.y = _mvParticles[iParticle].vPosition.y - _mvParticles[iParticle].fRadius;
@@ -133,14 +136,19 @@ namespace X
 			vTL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
 			vTL.position.y = _mvParticles[iParticle].vPosition.y + _mvParticles[iParticle].fRadius;
 
-			pVB->addVertex(vBL);
-			pVB->addVertex(vBR);
-			pVB->addVertex(vTR);
-			pVB->addVertex(vTL);
+			//_mvParticles[iParticle].pType->stageBirth.
+			vDims.x = _mvParticles[iParticle].fRadius * 2.0f;
+			vDims.y = vDims.x;
+			pVB->addQuad2D(
+				_mvParticles[iParticle].vPosition,
+				vDims,
+				colour,
+				vBL.texCoord, vBR.texCoord, vTR.texCoord, vTL.texCoord);
+
 
 		}
 		pVB->update();
-		pVB->draw();
+		pVB->render();
 
 		pAtlas->unbindAll();
 		pShader->unbind();

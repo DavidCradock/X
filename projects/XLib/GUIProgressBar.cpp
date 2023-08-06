@@ -315,7 +315,7 @@ namespace X
 
 		}
 		pVB->update();
-		pVB->draw();
+		pVB->render();
 
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader

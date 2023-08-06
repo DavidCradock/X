@@ -439,7 +439,7 @@ namespace X
 			pShader->setFloat("fSpecularStrength", pMaterial->getSpecularStrength());
 
 			// Render the vertex buffer
-			pVB->draw(false);
+			pVB->render(false);
 			it++;
 		}
 
@@ -496,7 +496,7 @@ namespace X
 			pShader->setMat4("matrixWorld", it->second->getWorldMatrix());
 
 			// Render the vertex buffer
-			pLine->draw();
+			pLine->render();
 			it++;
 		}
 
@@ -567,7 +567,7 @@ namespace X
 		{
 			pVB = pRM->getVertexBufferBNT(it->second->mstrTriangleName);
 			pShader->setMat4("model", it->second->getWorldMatrix());
-			pVB->draw(false);
+			pVB->render(false);
 			it++;
 		}
 		glCullFace(GL_BACK);

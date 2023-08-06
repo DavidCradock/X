@@ -353,7 +353,7 @@ namespace X
 		bindAtlas(0, uiAtlasImageNumber);
 		glDisable(GL_DEPTH_TEST);
 //		glEnable(GL_BLEND);
-		pVB->draw();
+		pVB->render();
 		pShader->unbind();
 		unbind(0);
 	}

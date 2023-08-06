@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexBuffer.h"
+#include "resourceVertexBufferInstanced.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceVertexBuffer::CResourceVertexBuffer()
+	CResourceVertexBufferInstanced::CResourceVertexBufferInstanced()
 	{
 		vertexBufferObject = 0;
 		vertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	CResourceVertexBuffer::~CResourceVertexBuffer()
+	CResourceVertexBufferInstanced::~CResourceVertexBufferInstanced()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceVertexBuffer::onGLContextCreated(void)
+	void CResourceVertexBufferInstanced::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceVertexBuffer::onGLContextToBeDestroyed(void)
+	void CResourceVertexBufferInstanced::onGLContextToBeDestroyed(void)
 	{
 		if (vertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void CResourceVertexBuffer::removeGeom(void)
+	void CResourceVertexBufferInstanced::removeGeom(void)
 	{
 		vertices.clear();
 		indices.clear();
 	}
 
-	void CResourceVertexBuffer::update(void)
+	void CResourceVertexBufferInstanced::update(void)
 	{
 		if (!vertices.size())
 			return;
@@ -118,7 +118,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBuffer::render(bool bWireframeMode) const
+	void CResourceVertexBufferInstanced::render(bool bWireframeMode) const
 	{
 		if (!vertexArrayObject)
 			return;
@@ -143,17 +143,17 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceVertexBuffer::addVertex(const Vertex& newVertex)
+	void CResourceVertexBufferInstanced::addVertex(const Vertex& newVertex)
 	{
 		vertices.push_back(newVertex);
 	}
 
-	void CResourceVertexBuffer::addIndex(int newIndex)
+	void CResourceVertexBufferInstanced::addIndex(int newIndex)
 	{
 		indices.push_back(newIndex);
 	}
 
-	void CResourceVertexBuffer::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
+	void CResourceVertexBufferInstanced::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -191,7 +191,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBuffer::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
+	void CResourceVertexBufferInstanced::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)vertices.size();
@@ -232,7 +232,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBuffer::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
+	void CResourceVertexBufferInstanced::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
 	{
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
@@ -297,21 +297,20 @@ namespace X
 		vTL.position.set(vPosition.x - vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vBL.normal.set(0.0f, -1.0f, 0.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
-
 	}
 
-	void CResourceVertexBuffer::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
+	void CResourceVertexBufferInstanced::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
 
 		err = fopen_s(&file, strGeometryFilename.c_str(), "r+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferInstanced::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
 
 		// Read in number of vertices
 		unsigned int iNumVertices = 0;
 		size_t read = fread(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == read), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(bool(0 == read), "CResourceVertexBufferInstanced::addFromFile() failed to read from file " + strGeometryFilename);
 
 		// Read in a vertex at a time, adding one at a time..
 		/*
@@ -319,7 +318,7 @@ namespace X
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
 			read = fread(&vertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == read), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
+			ThrowIfTrue(bool(0 == read), "CResourceVertexBufferInstanced::addFromFile() failed to read from file " + strGeometryFilename);
 			addVertex(vertex);
 			addIndex(i);
 		}
@@ -327,7 +326,7 @@ namespace X
 		// Load in all vertex data
 		vertices.resize(iNumVertices);
 		indices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBufferInstanced::addFromFile() failed to read from file " + strGeometryFilename);
 		vertices.resize(iNumVertices);
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
@@ -340,17 +339,17 @@ namespace X
 			update();
 	}
 
-	size_t CResourceVertexBuffer::getNumVertices(void) const
+	size_t CResourceVertexBufferInstanced::getNumVertices(void) const
 	{
 		return vertices.size();
 	}
 
-	size_t CResourceVertexBuffer::getNumIndicies(void) const
+	size_t CResourceVertexBufferInstanced::getNumIndicies(void) const
 	{
 		return indices.size();
 	}
 
-	void CResourceVertexBuffer::convertObj(const std::string filename) const
+	void CResourceVertexBufferInstanced::convertObj(const std::string filename) const
 	{
 		// Used to temporarily hold each line of data from file
 		CVector3f vertex;
@@ -369,7 +368,7 @@ namespace X
 		FILE* file = 0;
 		errno_t err;
 		err = fopen_s(&file, filename.c_str(), "r");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::convertObj() failed to open file " + filename);
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferInstanced::convertObj() failed to open file " + filename);
 
 		char strLine[255] = { 0 };
 		char ch = 0;
@@ -434,13 +433,13 @@ namespace X
 		}
 		strOutputFilename += "geom";
 		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBuffer::convertObj() failed to open file " + filename + " for saving.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferInstanced::convertObj() failed to open file " + filename + " for saving.");
 
 		// Loop through each face
 		Vertex geomVertex;
 		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
 		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == written), "CResourceVertexBuffer::convertObj() failed to write to file " + filename);
+		ThrowIfTrue(bool(0 == written), "CResourceVertexBufferInstanced::convertObj() failed to write to file " + filename);
 
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
@@ -449,7 +448,7 @@ namespace X
 			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
 			geomVertex.colour = CColour(1.0f, 1.0f, 1.0f, 1.0f);
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == written), "CResourceVertexBuffer::convertObj() failed to write to file " + filename);
+			ThrowIfTrue(bool(0 == written), "CResourceVertexBufferInstanced::convertObj() failed to write to file " + filename);
 		}
 		fclose(file);
 	}

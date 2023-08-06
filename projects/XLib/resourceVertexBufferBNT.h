@@ -41,7 +41,7 @@ namespace X
 
 		// Binds the vertexArrayObject and calls glDrawElements()
 		// If there's no vertex data, this silently fails.
-		void draw(bool bWireframeMode = false) const;
+		void render(bool bWireframeMode = false) const;
 
 		// Adds a new vertex
 		void addVertex(const Vertex& newVertex);

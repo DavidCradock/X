@@ -19,6 +19,7 @@ namespace X
 		float fMassBirth;		// Mass of this particle at birth, given by the emitter
 		float fMassDeath;		// Mass of this particle at death, given by the emitter
 		float fAge;				// Current age of the particle. Starts at 0.0f when born and proceeds towards 1.0f when the particle dies.
+		float fAgingRate;		// The rate at which the particle ages.
 		C2DParticleType* pType;	// Pointer to particle type stored in C2DParticleSystem, given to particle by CParticleEmitter upon birth.
 		CColour colourAtBirth;	// Colour this particle was given by the emitter for it's birth
 		CColour colourAtDeath;	// Colour this particle was given by the emitter for it's death

@@ -146,7 +146,7 @@ namespace X
 		bind(0);
 		glDisable(GL_DEPTH_TEST);
 //		glEnable(GL_BLEND);
-		pVB->draw();
+		pVB->render();
 		pShader->unbind();
 		unbind(0);
 	}

@@ -364,6 +364,9 @@
     <ClInclude Include="resourceVertexBufferBNT.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="resourceVertexBufferInstanced.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -652,6 +655,9 @@
     <ClCompile Include="resourceVertexBufferBNT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="resourceVertexBufferInstanced.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
@@ -719,6 +725,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\2DParticleNoInstancing.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DParticleInstancing.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DParticleInstancing.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

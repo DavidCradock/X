@@ -189,7 +189,7 @@ namespace X
 		pShader->setMat4("transform", matProjection);
 		bindAsTexture(0);
 		glDisable(GL_DEPTH_TEST);
-		pVB->draw();
+		pVB->render();
 		pShader->unbind();
 		unbindTexture(0);
 	}

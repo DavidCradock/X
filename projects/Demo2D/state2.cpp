@@ -25,8 +25,8 @@ namespace X
 		C2DCamera* pCamera = pWorld->addCamera("camera");
 		SCWindow* pWindow = SCWindow::getPointer();
 		CVector2f vWndDims = pWindow->getDimensions();
-//		CVector2f vCameraPosition(vWndDims.x * -0.5f, vWndDims.y * -0.5f);
-//		pCamera->setPosition(vCameraPosition);
+		CVector2f vCameraPosition(vWndDims.x * -0.5f, vWndDims.y * -0.5f);
+		pCamera->setPosition(vCameraPosition);
 		C2DLayer* pLayer = pWorld->addLayer("layer0");
 		C2DParticleSystem* pParticleSystem = pLayer->addParticleSystem("particleSystem0");
 

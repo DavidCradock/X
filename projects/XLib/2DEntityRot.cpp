@@ -214,6 +214,6 @@ namespace X
 		matWorld = matTrans * matRot;
 		pShader->setMat4("matrixWorld", matWorld);			// Set world matrix for shader for this entity
 
-		pVB->draw(false);
+		pVB->render(false);
 	}
 }
