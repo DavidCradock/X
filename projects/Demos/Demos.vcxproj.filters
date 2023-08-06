@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Demos">
+      <UniqueIdentifier>{24dea7c9-67bb-4192-beaf-e000161413d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\NeuralNets">
+      <UniqueIdentifier>{c9a1cf50-51f0-456e-9553-9f7dba78f109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\2D">
+      <UniqueIdentifier>{48c84bf0-faa0-4015-8cb7-c46209cca810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OctTree">
+      <UniqueIdentifier>{acc8409a-6362-485c-a8bd-3fbaf38256ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Physics">
+      <UniqueIdentifier>{023d607c-f539-46fd-a504-44141b2aa26d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\SceneManager">
+      <UniqueIdentifier>{eafb0861-2ce3-4366-a6ae-9474746fff27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\QuadTree">
+      <UniqueIdentifier>{ba71d3da-38e2-4573-957e-5e8fa5a8bdbb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="demoPhysics.cpp">
+      <Filter>Demos\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="demoOctTree.cpp">
+      <Filter>Demos\OctTree</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNets.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2D.cpp">
+      <Filter>Demos\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="demoQuadTree.cpp">
+      <Filter>Demos\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="demoSceneManager.cpp">
+      <Filter>Demos\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2Dstate0.cpp">
+      <Filter>Demos\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2Dstate1.cpp">
+      <Filter>Demos\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2Dstate2.cpp">
+      <Filter>Demos\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2Dstate3.cpp">
+      <Filter>Demos\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNetsState0.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNetsState1.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNetsState2.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNetsState3.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demoNeuralNetsGUIstateSelectionUpdate.cpp">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="application.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="demoPhysics.h">
+      <Filter>Demos\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="demoOctTree.h">
+      <Filter>Demos\OctTree</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNets.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2D.h">
+      <Filter>Demos\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="demoQuadTree.h">
+      <Filter>Demos\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="demoSceneManager.h">
+      <Filter>Demos\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2Dstate0.h">
+      <Filter>Demos\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2Dstate1.h">
+      <Filter>Demos\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2Dstate2.h">
+      <Filter>Demos\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2Dstate3.h">
+      <Filter>Demos\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNetsState0.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNetsState1.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNetsState2.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNetsState3.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demoNeuralNetsGUIstateSelectionUpdate.h">
+      <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

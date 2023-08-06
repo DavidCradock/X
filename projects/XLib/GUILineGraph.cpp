@@ -91,7 +91,7 @@ namespace X
 		pShader->setMat4("matrixProjection", matProjection);
 		
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_colour", 0);
+		pShader->setInt("texture0", 0);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);

@@ -8,5 +8,4 @@ uniform mat4 model;
 void main()
 {
     gl_Position = lightSpace * model * vec4(aPos, 1.0);
-    
 }   

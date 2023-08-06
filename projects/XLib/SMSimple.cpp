@@ -24,6 +24,9 @@ namespace X
 	CSceneManagerSimple::~CSceneManagerSimple()
 	{
 		removeAllCameras();
+		removeAllMaterials();
+		removeAllEnititiesTriangle();
+		removeAllEntitiesLine();
 	}
 
 	CSMCamera* CSceneManagerSimple::addCamera(const std::string& strName, const std::string& strFramebufferTargetResourceName)
@@ -87,6 +90,7 @@ namespace X
 			_mmapCameras.erase(it);
 			it = _mmapCameras.begin();
 		}
+		_mmapCameras.clear();
 	}
 
 	void CSceneManagerSimple::render(void)
@@ -468,7 +472,7 @@ namespace X
 		pShader->bind();
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_colour", 0);
+		pShader->setInt("texture0", 0);
 
 		// Set blending/depth testing
 		glDisable(GL_BLEND);

@@ -473,8 +473,8 @@ namespace X
 		pRM->addShader("X:2DEntity", "data/X/shaders/2DEntity.vert", "data/X/shaders/2DEntity.frag");
 		// A shader used by SC2DRenderer for C2DEntityRot
 		pRM->addShader("X:2DEntityRot", "data/X/shaders/2DEntityRot.vert", "data/X/shaders/2DEntityRot.frag");
-		// A shader used be C2DParticleSystem to render non-instanced particles.
-		pRM->addShader("X:2DParticleNoInst", "data/X/shaders/2DParticleNoInstancing.vert", "data/X/shaders/2DParticleNoInstancing.frag");
+		// A shader used be C2DParticleSystem to render instanced particles.
+		pRM->addShader("X:2DParticle", "data/X/shaders/2DParticle.vert", "data/X/shaders/2DParticle.frag");
 
 		/******************************************************************************************************************************
 		// Textures

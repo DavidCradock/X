@@ -142,6 +142,9 @@ namespace X
 
 		// Also remove container containing progress bar
 		SCGUIManager::getPointer()->removeContainer("LoadingScreen");
+
+		// Reset number of resources loaded
+		_miNumResourcesLoaded = 0;
 	}
 
 	void SCResourceLoadingScreen::_renderLoadingScreen(const std::string& strResourceTypeName, const std::string& strResourceName, int iState)

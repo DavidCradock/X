@@ -2,7 +2,7 @@
 #version 330 core
 out vec4 FragColour;  
 in vec4 colour;
-in vec2 texCoordVertex;
+in vec2 textureCoordinate;
 
 uniform sampler2D texture0_colour;
 uniform sampler2D texture1_normal;
@@ -30,10 +30,10 @@ void main()
     v2ReflectionCoords /= v2ReflectionTextureDims;
 
     // Now get colour values from the textures
-    vec4 v4Col = texture(texture0_colour, texCoordVertex);
+    vec4 v4Col = texture(texture0_colour, textureCoordinate);
     vec3 v3ColBG = texture(texture3_background, v2BGCoords).rgb;
     vec3 v3ColReflection = texture(texture2_reflection, v2ReflectionCoords).rgb;
-    vec3 v3Normal = texture(texture1_normal, texCoordVertex).rgb;
+    vec3 v3Normal = texture(texture1_normal, textureCoordinate).rgb;
 
     // Convert normal from 0.0f-1.0f to -1.0f to 1.0f
     v3Normal.x *= 2.0f;

@@ -5,7 +5,7 @@ layout (location = 1) in vec4 aColour;
 layout (location = 2) in vec2 aTexCoord;
 
 out vec4 colour;
-out vec2 texCoordVertex;        // Vertex texture coordinate
+out vec2 textureCoordinate;
 
 uniform mat4 transform;
 
@@ -13,5 +13,5 @@ void main()
 {
     gl_Position = transform * vec4(aPos, 1.0f);
     colour = aColour;
-    texCoordVertex = aTexCoord;
+    textureCoordinate = aTexCoord;
 }   

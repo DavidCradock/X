@@ -56,6 +56,14 @@ namespace X
 	{
 		std::map<std::string, CFiniteStateBase*>::iterator it = _mmapStates.find(strStateName);
 		ThrowIfTrue(it == _mmapStates.end(), "CFiniteStateMachine::removeState(\"" + strStateName + "\") failed. State name doesn't exist.");
+
+		// If this is the currently set state, call it's onExit method
+		if (_mstrCurrentState == it->first)
+		{
+			it->second->onExit();
+			_mstrCurrentState.clear();
+		}
+
 		delete it->second;
 		_mmapStates.erase(it);
 	}
@@ -71,9 +79,17 @@ namespace X
 		std::map<std::string, CFiniteStateBase*>::iterator it = _mmapStates.begin();
 		while (it != _mmapStates.end())
 		{
+			// If this is the currently set state, call it's onExit method
+			if (_mstrCurrentState == it->first)
+			{
+				it->second->onExit();
+				_mstrCurrentState.clear();
+			}
+
 			delete it->second;
 			_mmapStates.erase(it);
 			it = _mmapStates.begin();
 		}
+		_mmapStates.clear();
 	}
 }

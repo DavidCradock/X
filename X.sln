@@ -45,6 +45,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoOctTree", "projects\Dem
 		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demos", "projects\Demos\Demos.vcxproj", "{56CA96DA-FC68-4E49-9173-1F6DE11F4D08}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359} = {4E0AE536-4AEA-4C4A-AF8D-F2B9E692D359}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -87,6 +92,10 @@ Global
 		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Debug|x64.Build.0 = Debug|x64
 		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Release|x64.ActiveCfg = Release|x64
 		{A1AFD652-0AD8-4322-AA78-4ABC17ACA46B}.Release|x64.Build.0 = Release|x64
+		{56CA96DA-FC68-4E49-9173-1F6DE11F4D08}.Debug|x64.ActiveCfg = Debug|x64
+		{56CA96DA-FC68-4E49-9173-1F6DE11F4D08}.Debug|x64.Build.0 = Debug|x64
+		{56CA96DA-FC68-4E49-9173-1F6DE11F4D08}.Release|x64.ActiveCfg = Release|x64
+		{56CA96DA-FC68-4E49-9173-1F6DE11F4D08}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

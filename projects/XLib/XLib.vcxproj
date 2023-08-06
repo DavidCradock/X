@@ -227,10 +227,8 @@
     <None Include="..\..\data\X\shaders\2DEntity.vert" />
     <None Include="..\..\data\X\shaders\2DEntityRot.frag" />
     <None Include="..\..\data\X\shaders\2DEntityRot.vert" />
-    <None Include="..\..\data\X\shaders\2DParticleInstancing.frag" />
-    <None Include="..\..\data\X\shaders\2DParticleInstancing.vert" />
-    <None Include="..\..\data\X\shaders\2DParticleNoInstancing.frag" />
-    <None Include="..\..\data\X\shaders\2DParticleNoInstancing.vert" />
+    <None Include="..\..\data\X\shaders\2DParticle.frag" />
+    <None Include="..\..\data\X\shaders\2DParticle.vert" />
     <None Include="..\..\data\X\shaders\depthbuffer_debug.frag" />
     <None Include="..\..\data\X\shaders\depthbuffer_debug.vert" />
     <None Include="..\..\data\X\shaders\DRNE.frag" />

@@ -116,6 +116,7 @@ namespace X
 			_mmapEntities.erase(it);
 			it = _mmapEntities.begin();
 		}
+		_mmapEntities.clear();
 	}
 
 	unsigned int C2DLayer::getNumEntities(void) const
@@ -212,6 +213,7 @@ namespace X
 			_mmapEntityRots.erase(it);
 			it = _mmapEntityRots.begin();
 		}
+		_mmapEntityRots.clear();
 	}
 
 	unsigned int C2DLayer::getNumEntityRots(void) const
@@ -304,6 +306,7 @@ namespace X
 			_mmapParticleSystems.erase(it);
 			it = _mmapParticleSystems.begin();
 		}
+		_mmapParticleSystems.clear();
 	}
 
 	unsigned int C2DLayer::getNumParticleSystems(void) const

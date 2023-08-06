@@ -1,9 +1,9 @@
 #include "PCH.h"
-#include "state2.h"
+#include "demo2Dstate2.h"
 
 namespace X
 {
-	void CState2::onEnter(void)
+	void CDemo2DState2::onEnter(void)
 	{
 		// Create state window
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
@@ -32,16 +32,16 @@ namespace X
 
 	}
 
-	void CState2::onExit(void)
+	void CDemo2DState2::onExit(void)
 	{
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		pGUI->removeContainer("state2");
 
 		// Remove world
-		SC2DRenderer::getPointer()->removeAllWorlds();
+		SC2DRenderer::getPointer()->removeWorld("world");
 	}
 
-	void CState2::onActive(CFiniteStateMachine* pFSM)
+	void CDemo2DState2::onActive(CFiniteStateMachine* pFSM)
 	{
 		// Timer delta
 		timer.update();

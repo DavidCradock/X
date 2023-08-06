@@ -29,7 +29,7 @@ namespace X
 	// X:gui					// A shader used by the GUI to render everything.
 	// X:2DEntity				// A shader used by SC2DRenderer for C2DEntity
 	// X:2DEntityRot			// A shader used by SC2DRenderer for C2DEntityRot
-	// X:2DParticleNoInst		// A shader used be C2DParticleSystem to render non-instanced particles.
+	// X:2DParticle				// A shader used be C2DParticleSystem to render instanced particles.
 	// X:default_particle		// A texture atlas for use with rendering generic particles
 	// X:default_white			// A texture which is tiny and white.
 	// X:default_diffuse		// A texture which is grey for diffuse, used if not set

@@ -91,7 +91,7 @@ namespace X
 		pShader->setMat4("matrixProjection", matrixProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_colour", 0);
+		pShader->setInt("texture0", 0);
 
 		// And bind the texture...
 		pTexture->bind();

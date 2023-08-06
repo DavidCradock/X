@@ -1,22 +1,16 @@
-#include "application.h"
-#include "resource.h"
+#include "PCH.h"
+#include "demoQuadTree.h"
 
 namespace X
 {
-	void CApplication::initOnce(void)
+	void CStateDemoQuadTree::onEnter(void)
 	{
 		// Use the resource loading screen
 		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
 		pLS->onInit(0);
 
-		// Set window title bar text and set icon
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X: DemoQuadTree. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
-		pWindow->setIcon(IDI_ICON1);
-		// Set mouse cursor
-		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
-
 		// Create quad tree
+		SCWindow* pWindow = SCWindow::getPointer();
 		CVector2f vQuadTreeMax((float)pWindow->getWidth() - 50.0f, (float)pWindow->getHeight() - 50.0f);
 		CVector2f vQuadTreeMin(50, 50);
 		_mpQuadTree = new CQuadTree(10, 2);
@@ -27,7 +21,7 @@ namespace X
 		for (int i = 0; i < (int)_muiNumEntities; i++)
 		{
 			std::string strName = "Ent: " + std::to_string(i);
-			int iPosX = randInt(0,  50);
+			int iPosX = randInt(0, 50);
 			int iPosY = randInt(50, (int)pWindow->getHeight() - 50);
 			CVector2f vPos;
 			vPos.x = (float)iPosX;
@@ -51,7 +45,7 @@ namespace X
 		CGUIContainer* pCont;
 		// Show statistics window and obtain it's dimensions
 		pCont = pGUIMan->getContainer("X:Default:Statistics");
-		pCont->setVisible(true);
+//		pCont->setVisible(true);
 		CVector2f vStatsWindowDims = pCont->getDimensions();
 
 		// Window for application to show various information
@@ -104,15 +98,17 @@ namespace X
 		pLS->onInitEnd();
 	}
 
-	void CApplication::onStart(void)
+	void CStateDemoQuadTree::onExit(void)
 	{
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		pGUI->removeContainer("GUI");
+
+		delete _mpQuadTree;
+		_mpQuadTree = 0;
+		_mvecEntityPos.clear();
 	}
 
-	void CApplication::onStop(void)
-	{
-	}
-
-	bool CApplication::onUpdate(void)
+	void CStateDemoQuadTree::onActive(CFiniteStateMachine* pFSM)
 	{
 		SCInputManager* pInput = SCInputManager::getPointer();
 
@@ -130,9 +126,9 @@ namespace X
 			if (_mvecEntityPos[i].y > 2000.0f)
 				_mvecEntityPos[i].y = -2000.0f;
 			if (_mvecEntityPos[i].x < -2000.0f)
-				_mvecEntityPos[i].x =  2000.0f;
+				_mvecEntityPos[i].x = 2000.0f;
 			if (_mvecEntityPos[i].y < -2000.0f)
-				_mvecEntityPos[i].y =  2000.0f;
+				_mvecEntityPos[i].y = 2000.0f;
 
 			std::string strName = "Ent: " + std::to_string(i);
 			_mpQuadTree->setEntityPosition(strName, (int)_mvecEntityPos[i].x, (int)_mvecEntityPos[i].y);
@@ -240,29 +236,9 @@ namespace X
 			_mvCameraPosition.z -= timer.getSecondsPast() * 1000.0f;
 		if (pInput->key.pressed(KC_F))
 			_mvCameraPosition.z += timer.getSecondsPast() * 1000.0f;
-
-		// Escape key to exit
-		if (pInput->key.pressed(KC_ESCAPE))
-			return false;
-
-		// Toggle fullscreen
-		if (pInput->key.once(KC_F1))
-			SCWindow::getPointer()->toggleFullscreen();
-
-		// Toggle vertical sync
-		if (pInput->key.once(KC_F2))
-			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
-
-		// Toggle statistics window
-		if (pInput->key.once(KC_F3))
-		{
-			CGUIContainer* pStatsCont = SCGUIManager::getPointer()->getContainer("X:Default:Statistics");
-			pStatsCont->setVisible(!pStatsCont->getVisible());
-		}
-		return true;
 	}
 
-	void CApplication::_renderRangeFinder(void)
+	void CStateDemoQuadTree::_renderRangeFinder(void)
 	{
 		// Obtain required resources needed to render the node's as lines.
 		SCResourceManager* pRM = SCResourceManager::getPointer();

@@ -667,15 +667,6 @@
     <None Include="..\..\data\X\shaders\DRNE.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\font.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\font.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\line.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\line.vert">
       <Filter>Shaders</Filter>
     </None>
@@ -685,16 +676,7 @@
     <None Include="..\..\data\X\shaders\shadow_depthmap.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\pos_col_tex.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\pos_col_tex.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\depthbuffer_debug.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\DRNE_noshadows.frag">
@@ -706,31 +688,43 @@
     <None Include="..\..\data\X\shaders\gui.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\gui.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DEntity.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\2DEntity.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DEntityRot.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\2DEntityRot.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DParticleNoInstancing.frag">
+    <None Include="..\..\data\X\shaders\2DParticle.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DParticleNoInstancing.vert">
+    <None Include="..\..\data\X\shaders\2DParticle.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DParticleInstancing.frag">
+    <None Include="..\..\data\X\shaders\pos_col_tex.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DParticleInstancing.vert">
+    <None Include="..\..\data\X\shaders\line.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\font.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DEntityRot.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\2DEntity.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\pos_col_tex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\gui.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\font.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

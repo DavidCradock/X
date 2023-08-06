@@ -89,7 +89,7 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mSettings.strTextureAtlasName);
 		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
-		CResourceShader* pShader = pRM->getShader("X:2DParticleNoInst");
+		CResourceShader* pShader = pRM->getShader("X:2DParticle");
 
 		// Bind shader and set some uniforms
 		pShader->bind();
