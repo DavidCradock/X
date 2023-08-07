@@ -134,7 +134,7 @@ namespace X
 		pCont->setPositionCentreWindow();
 
 		// Add animated image
-		std::vector<std::string> vstrImages = StringUtils::getFilesInDir("data/DemoBenchmark/Images/disc/");
+		std::vector<std::string> vstrImages = StringUtils::getFilesInDir("data/Benchmark/Images/disc/");
 		CGUIImageAnimated* pImageAnim = pCont->addImageAnimated("Anim", -16, -16, vstrImages, 16, 16);
 
 		// Add scroll text
@@ -210,7 +210,7 @@ namespace X
 		C2DLayer* pLayer = pWorld->addLayer("Layer1");
 		// Create texture atlas holding each of the 360 images
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		vstrImages = StringUtils::getFilesInDir("data/DemoBenchmark/images/disc/");
+		vstrImages = StringUtils::getFilesInDir("data/Benchmark/images/disc/");
 		CResourceTexture2DAtlas* pAtlas = pRM->addTexture2DAtlas("Atlas1", vstrImages);
 
 		// Create scaled up centered entity

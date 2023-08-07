@@ -15,8 +15,8 @@ namespace X
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 
 		// Set filename of each image for the top down tank
-		std::string strTankBody = "data/Demo2D/images/tank_body.png";
-		std::string strTankTurret = "data/Demo2D/images/tank_turret.png";
+		std::string strTankBody = "data/Demos/Demo2D/images/tank_body.png";
+		std::string strTankTurret = "data/Demos/Demo2D/images/tank_turret.png";
 
 		// Add 1000 entities (500 body and 500 turret)
 		std::string strEntityName;

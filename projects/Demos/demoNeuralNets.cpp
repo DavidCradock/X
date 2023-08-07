@@ -16,11 +16,11 @@ namespace X
 		// Create resources used by the states
 
 		// Used in state0 and state1
-		std::vector<std::string> vecstrImageNamesEntity = StringUtils::getFilesInDir("data/DemoNeuralNets/images/creature_top_down/");
-		std::vector<std::string> vecstrImageNamesFood = StringUtils::getFilesInDir("data/DemoNeuralNets/images/food/");
-		std::vector<std::string> vecstrImageNamesTiles = StringUtils::getFilesInDir("data/DemoNeuralNets/images/floor_tiles/");
+		std::vector<std::string> vecstrImageNamesEntity = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down/");
+		std::vector<std::string> vecstrImageNamesFood = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/food/");
+		std::vector<std::string> vecstrImageNamesTiles = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/floor_tiles/");
 		// Used in state1
-		std::vector<std::string> vecstrImageNamesEntityEvil = StringUtils::getFilesInDir("data/DemoNeuralNets/images/creature_top_down_evil/");
+		std::vector<std::string> vecstrImageNamesEntityEvil = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down_evil/");
 
 		// Create texture atlases and entities
 		SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -30,21 +30,21 @@ namespace X
 		pRM->addTexture2DAtlas("creature_top_down_evil", vecstrImageNamesEntityEvil);
 
 		// Create textures
-		pRM->addTexture2DFromFile("critter_diffuse", "data/DemoNeuralNets/textures/critter_diffuse.png", true);
-		pRM->addTexture2DFromFile("food_diffuse", "data/DemoNeuralNets/textures/food_diffuse.png", true);
+		pRM->addTexture2DFromFile("critter_diffuse", "data/Demos/DemoNeuralNets/textures/critter_diffuse.png", true);
+		pRM->addTexture2DFromFile("food_diffuse", "data/Demos/DemoNeuralNets/textures/food_diffuse.png", true);
 
 		// Create geometry
-		CResourceVertexBufferBNT* pVB;
+		CResourceVertexBufferCPTBNT* pVB;
 		// Critter
-		pVB = pRM->addVertexBufferBNT("critter");
+		pVB = pRM->addVertexBufferCPTBNT("critter");
 		//		pTri->convertObj("data/DemoNeuralNets/geometry/critter.obj");
-		pVB->addFromFile("data/DemoNeuralNets/geometry/critter.geom");
+		pVB->addFromFile("data/Demos/DemoNeuralNets/geometry/critter.geom");
 		// Food
-		pVB = pRM->addVertexBufferBNT("food");
+		pVB = pRM->addVertexBufferCPTBNT("food");
 		//		pTri->convertObj("data/DemoNeuralNets/geometry/food.obj");
-		pVB->addFromFile("data/DemoNeuralNets/geometry/food.geom");
+		pVB->addFromFile("data/Demos/DemoNeuralNets/geometry/food.geom");
 		// Back "plane" (Has to be a solid object for shadows to render correctly, so it's actually a cube)
-		pVB = pRM->addVertexBufferBNT("background");
+		pVB = pRM->addVertexBufferCPTBNT("background");
 		pVB->addCube(CVector3f(0.0f, 0.0f, -0.5f), CVector3f(500.0f, 500.0f, 1.0f));
 		pVB->update();
 

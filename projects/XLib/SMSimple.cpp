@@ -334,7 +334,7 @@ namespace X
 		else
 			pShader = pRM->getShader("X:DRNE_noshadows");
 
-		CResourceVertexBufferBNT* pVB;
+		CResourceVertexBufferCPTBNT* pVB;
 		CResourceTexture2DFromFile* pTexDiffuse = 0;
 		CResourceTexture2DFromFile* pTexRoughness = 0;
 		CResourceTexture2DFromFile* pTexNormal = 0;
@@ -423,7 +423,7 @@ namespace X
 			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
 
 			// Get vertex buffer and textures used by each entity
-			pVB = pRM->getVertexBufferBNT(it->second->mstrVertexBufferName);
+			pVB = pRM->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
 			pTexDiffuse = pRM->getTexture2DFromFile(pMaterial->getDiffuseTextureName());
 			pTexRoughness = pRM->getTexture2DFromFile(pMaterial->getRoughnessTextureName());
 			pTexNormal = pRM->getTexture2DFromFile(pMaterial->getNormalmapTextureName());
@@ -565,11 +565,11 @@ namespace X
 		pShader->setMat4("lightSpace", _mmatShadowsDirectionalLightViewProj);
 
 		// Vertex buffer entities
-		CResourceVertexBufferBNT* pVB;
+		CResourceVertexBufferCPTBNT* pVB;
 		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.begin();
 		while (it != _mmapEntitiesVertexBuffers.end())
 		{
-			pVB = pRM->getVertexBufferBNT(it->second->mstrVertexBufferName);
+			pVB = pRM->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
 			pShader->setMat4("model", it->second->getWorldMatrix());
 			pVB->render(false);
 			it++;

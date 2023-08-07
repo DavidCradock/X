@@ -14,7 +14,7 @@ namespace X
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 
 		// Get filenames of each image for the top down creature and it's rotations
-		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demo2D/images/creature_top_down/");
+		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demos/Demo2D/images/creature_top_down/");
 
 		// Add 1000 entities
 		for (int i = 0; i < 1000; i++)

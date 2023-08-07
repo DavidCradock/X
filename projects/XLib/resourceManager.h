@@ -9,7 +9,7 @@
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBufferCPT.h"
-#include "resourceVertexBufferBNT.h"
+#include "resourceVertexBufferCPTBNT.h"
 #include "resourceVertexBufferCPTInst.h"
 #include "resourceVertexBufferLine.h"
 
@@ -38,8 +38,8 @@ namespace X
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
 	// 
 	// X:default				// A vertex buffer CPT resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-	// X:default				// A vertex buffer BNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
-	// X:default				// A vertex buffer instanced used for rendering various things such as the C2DParticleSystem's particles
+	// X:default				// A vertex buffer CPT instanced resource used for rendering various things such as the C2DParticleSystem's particles
+	// X:default				// A vertex buffer CPTBNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
 	// X:default				// A vertex buffer line resource used by the GUI when rendering lines
 	// 
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
@@ -270,27 +270,27 @@ namespace X
 		void removeVertexBufferCPT(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
-		Vertex buffer BNT (Binormal, Normal and Tangent)
+		Vertex buffer CPT BNT (Colour, Position, Texture coordinate, Binormal, Normal and Tangent)
 		**************************************************************************************************************************************************/
 
-		// Adds a new vertex buffer BNT (Binormal, Normal and Tangent) object to the manager.
+		// Adds a new vertex buffer CPT BNT (Colour, Position, Texture coordinate, Binormal, Normal and Tangent) object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
-		CResourceVertexBufferBNT* addVertexBufferBNT(const std::string& strResourceName, bool bLocked = false);
+		CResourceVertexBufferCPTBNT* addVertexBufferCPTBNT(const std::string& strResourceName, bool bLocked = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceVertexBufferBNT* getVertexBufferBNT(const std::string& strResourceName);
+		CResourceVertexBufferCPTBNT* getVertexBufferCPTBNT(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getVertexBufferBNTExists(const std::string& strResourceName);
+		bool getVertexBufferCPTBNTExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		// If the resource has been marked as locked, which is done when they are added and bLocked is true, it is not removed.
-		void removeVertexBufferBNT(const std::string& strResourceName);
+		void removeVertexBufferCPTBNT(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
 		Vertex buffer instanced
@@ -402,13 +402,13 @@ namespace X
 		};
 		std::map<std::string, SResourceVertexBufferCPT> _mmapResVertexBufferCPTs;
 
-		struct SResourceVertexBufferBNT
+		struct SResourceVertexBufferCPTBNT
 		{
-			CResourceVertexBufferBNT* pResource;	// Pointer to the resource
+			CResourceVertexBufferCPTBNT* pResource;	// Pointer to the resource
 			unsigned int uiCount;					// Number of times the resource has been added
 			bool bLocked;							// Given to add method to prevent removal of this resource.
 		};
-		std::map<std::string, SResourceVertexBufferBNT> _mmapResVertexBufferBNTs;
+		std::map<std::string, SResourceVertexBufferCPTBNT> _mmapResVertexBufferCPTBNTs;
 
 		struct SResourceVertexBufferCPTInst
 		{

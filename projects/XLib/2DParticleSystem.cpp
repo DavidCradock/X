@@ -108,10 +108,6 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		CResourceVertexBufferCPT::Vertex vBL, vBR, vTR, vTL;
-		vBL.normal.set(0.0f, 0.0f, 1.0f);
-		vBR.normal.set(0.0f, 0.0f, 1.0f);
-		vTR.normal.set(0.0f, 0.0f, 1.0f);
-		vTL.normal.set(0.0f, 0.0f, 1.0f);
 		vBL.texCoord.set(0.0f, 0.0f);
 		vBR.texCoord.set(1.0f, 0.0f);
 		vTR.texCoord.set(1.0f, 1.0f);

@@ -26,7 +26,6 @@ namespace X
 			CVector3f position;		// Vertex position
 			CColour colour;			// Vertex colour
 			CVector2f texCoord;		// Vertex texture coordinate
-			CVector3f normal;		// Vertex normal
 		};
 
 		// Removes all previously added vertices

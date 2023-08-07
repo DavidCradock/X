@@ -253,39 +253,6 @@
     <ClInclude Include="vector2d.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="resourceBase.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceDepthbuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceFont.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceFramebuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceVertexBufferLine.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceManager.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceShader.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTexture2DAtlas.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTexture2DFromFile.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceTexture2DFromImage.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceVertexBufferCPT.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="matrix.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -321,9 +288,6 @@
     </ClInclude>
     <ClInclude Include="geneticAlgorithm.h">
       <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="resourceLoadingScreen.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>Math</Filter>
@@ -361,10 +325,46 @@
     <ClInclude Include="2DParticleType.h">
       <Filter>2D\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="resourceVertexBufferBNT.h">
+    <ClInclude Include="resourceBase.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceDepthbuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceFramebuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceLoadingScreen.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceShader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DAtlas.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DFromFile.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTexture2DFromImage.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceVertexBufferCPT.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="resourceVertexBufferCPTInst.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceVertexBufferLine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceVertexBufferCPTBNT.h">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
@@ -547,36 +547,6 @@
     <ClCompile Include="vector2d.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="resourceDepthbuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceFont.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceFramebuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceVertexBufferLine.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceShader.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2DAtlas.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2DFromFile.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceTexture2DFromImage.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceVertexBufferCPT.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="matrix.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -612,9 +582,6 @@
     </ClCompile>
     <ClCompile Include="geneticAlgorithm.cpp">
       <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="resourceLoadingScreen.cpp">
-      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="AABB.cpp">
       <Filter>Math</Filter>
@@ -652,10 +619,43 @@
     <ClCompile Include="2DParticleType.cpp">
       <Filter>2D\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="resourceVertexBufferBNT.cpp">
+    <ClCompile Include="resourceDepthbuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceFramebuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceLoadingScreen.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceShader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DAtlas.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromFile.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTexture2DFromImage.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexBufferCPT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="resourceVertexBufferCPTInst.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexBufferLine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceVertexBufferCPTBNT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -697,10 +697,10 @@
     <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\vertexBufferInstanced.frag">
+    <None Include="..\..\data\X\shaders\vertexBufferCPTInst.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\vertexBufferInstanced.vert">
+    <None Include="..\..\data\X\shaders\vertexBufferCPTInst.vert">
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\vertexBufferCPT.frag">

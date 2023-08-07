@@ -14,10 +14,10 @@ namespace X
 
 		// Create resources used by scene manager
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->addTexture2DFromFile("ground", "data/DemoOctTree/textures/ground.png");
+		pRM->addTexture2DFromFile("ground", "data/Demos/DemoOctTree/textures/ground.png");
 
 		// Cube triangle
-		CResourceVertexBufferBNT* pVB = pRM->addVertexBufferBNT("cube1x1x1");
+		CResourceVertexBufferCPTBNT* pVB = pRM->addVertexBufferCPTBNT("cube1x1x1");
 		pVB->addCube(CVector3f(0.0f, 0.0f, 0.0f), CVector3f(1.0f, 1.0f, 1.0f));
 		pVB->update();
 
@@ -29,7 +29,7 @@ namespace X
 		pLine->update();
 
 		// Ground triangle
-		pVB = pRM->addVertexBufferBNT("ground");
+		pVB = pRM->addVertexBufferCPTBNT("ground");
 		pVB->addCube(CVector3f(0.0f, -0.5f, 0.0f), CVector3f(64.0f, 1.0f, 64.0f), CVector2f(32.0f, 32.0f));
 		pVB->update();
 

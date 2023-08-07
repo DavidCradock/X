@@ -103,15 +103,6 @@ namespace X
 			(void*)(7 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 		glEnableVertexAttribArray(2);
 
-		// Normal
-		glVertexAttribPointer(3,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
-			3,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
-			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
-			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
-			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
-			(void*)(9 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
-		glEnableVertexAttribArray(3);
-
 		// Unbind stuff as we're done
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
@@ -172,7 +163,6 @@ namespace X
 		vertex.position.z = 0.0f;
 		vertex.colour = colour;
 		vertex.texCoord = textureCoordinateBottomLeft;
-		vertex.normal.set(0.0f, 0.0f, 1.0f);
 		addVertex(vertex);
 
 		// Top left
@@ -213,7 +203,6 @@ namespace X
 		vertex.position.z = vPosition.z + vHalfDims.y;
 		vertex.colour = colour;
 		vertex.texCoord = textureCoordinateFrontLeft;
-		vertex.normal.set(0.0f, 1.0f, 0.0f);
 		addVertex(vertex);
 
 		// Back left
@@ -260,21 +249,18 @@ namespace X
 		vBR.position.set(vPosition.x - vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTR.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTL.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
-		vBL.normal.set(-1.0f, 0.0f, 0.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 		// Right faces
 		vBL.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vBR.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z + vHalfDims.z);
 		vTR.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
 		vTL.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
-		vBL.normal.set( 1.0f, 0.0f, 0.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 		// Front faces
 		vBL.position.set(vPosition.x - vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vBR.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTR.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTL.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
-		vBL.normal.set(0.0f, 0.0f, 1.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 		// Back faces
 		vBL.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z + vHalfDims.z);
@@ -282,22 +268,18 @@ namespace X
 		vTR.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
 		vTL.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
-		vBL.normal.set(0.0f, 0.0f, -1.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		// Top faces
 		vBL.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
 		vBR.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTR.position.set(vPosition.x + vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
 		vTL.position.set(vPosition.x - vHalfDims.x, vPosition.y + vHalfDims.y, vPosition.z + vHalfDims.z);
-		vBL.normal.set(0.0f, 1.0f, 0.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 		// Bottom faces
 		vBL.position.set(vPosition.x - vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z + vHalfDims.z);
 		vBR.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z + vHalfDims.z);
 		vTR.position.set(vPosition.x + vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
 		vTL.position.set(vPosition.x - vHalfDims.x, vPosition.y - vHalfDims.y, vPosition.z - vHalfDims.z);
-		vBL.normal.set(0.0f, -1.0f, 0.0f);	vBR.normal = vBL.normal;	vTR.normal = vBL.normal;	vTL.normal = vBL.normal;
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
-
 	}
 
 	void CResourceVertexBufferCPT::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
@@ -445,7 +427,6 @@ namespace X
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
 			geomVertex.position = vVertices[vIndicesVertices[i] - 1];	// Vertex position
-			geomVertex.normal = vNormals[vIndicesNormals[i] - 1];		// Normal
 			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
 			geomVertex.colour = CColour(1.0f, 1.0f, 1.0f, 1.0f);
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);

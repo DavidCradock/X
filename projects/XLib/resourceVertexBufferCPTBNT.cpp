@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexBufferBNT.h"
+#include "resourceVertexBufferCPTBNT.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceVertexBufferBNT::CResourceVertexBufferBNT()
+	CResourceVertexBufferCPTBNT::CResourceVertexBufferCPTBNT()
 	{
 		_mVertexBufferObject = 0;
 		_mVertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	CResourceVertexBufferBNT::~CResourceVertexBufferBNT()
+	CResourceVertexBufferCPTBNT::~CResourceVertexBufferCPTBNT()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceVertexBufferBNT::onGLContextCreated(void)
+	void CResourceVertexBufferCPTBNT::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceVertexBufferBNT::onGLContextToBeDestroyed(void)
+	void CResourceVertexBufferCPTBNT::onGLContextToBeDestroyed(void)
 	{
 		if (_mVertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void CResourceVertexBufferBNT::removeGeom(void)
+	void CResourceVertexBufferCPTBNT::removeGeom(void)
 	{
 		_mvecVertices.clear();
 		_mvecIndices.clear();
 	}
 
-	void CResourceVertexBufferBNT::_computeTangentsAndBinormals(void)
+	void CResourceVertexBufferCPTBNT::_computeTangentsAndBinormals(void)
 	{
 		if (!_mvecVertices.size())
 			return;
@@ -74,7 +74,7 @@ namespace X
 		}
 	}
 
-	void CResourceVertexBufferBNT::update(void)
+	void CResourceVertexBufferCPTBNT::update(void)
 	{
 		if (!_mvecVertices.size())
 			return;
@@ -164,7 +164,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBufferBNT::render(bool bWireframeMode) const
+	void CResourceVertexBufferCPTBNT::render(bool bWireframeMode) const
 	{
 		if (!_mVertexArrayObject)
 			return;
@@ -189,17 +189,17 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceVertexBufferBNT::addVertex(const Vertex& newVertex)
+	void CResourceVertexBufferCPTBNT::addVertex(const Vertex& newVertex)
 	{
 		_mvecVertices.push_back(newVertex);
 	}
 
-	void CResourceVertexBufferBNT::addIndex(int newIndex)
+	void CResourceVertexBufferCPTBNT::addIndex(int newIndex)
 	{
 		_mvecIndices.push_back(newIndex);
 	}
 
-	void CResourceVertexBufferBNT::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
+	void CResourceVertexBufferCPTBNT::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -236,7 +236,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferBNT::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
+	void CResourceVertexBufferCPTBNT::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -276,7 +276,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferBNT::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
+	void CResourceVertexBufferCPTBNT::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
 	{
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
@@ -344,18 +344,18 @@ namespace X
 
 	}
 
-	void CResourceVertexBufferBNT::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
+	void CResourceVertexBufferCPTBNT::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
 
 		err = fopen_s(&file, strGeometryFilename.c_str(), "r+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferBNT::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPTBNT::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
 
 		// Read in number of vertices
 		unsigned int iNumVertices = 0;
 		size_t read = fread(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == read), "CResourceVertexBufferBNT::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(bool(0 == read), "CResourceVertexBufferCPTBNT::addFromFile() failed to read from file " + strGeometryFilename);
 
 		// Read in a vertex at a time, adding one at a time..
 		/*
@@ -363,7 +363,7 @@ namespace X
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
 			read = fread(&vertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == read), "CResourceVertexBufferBNT::addFromFile() failed to read from file " + strGeometryFilename);
+			ThrowIfTrue(bool(0 == read), "CResourceVertexBufferCPTBNT::addFromFile() failed to read from file " + strGeometryFilename);
 			addVertex(vertex);
 			addIndex(i);
 		}
@@ -371,7 +371,7 @@ namespace X
 		// Load in all vertex data
 		_mvecVertices.resize(iNumVertices);
 		_mvecIndices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(_mvecVertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBufferBNT::addFromFile() failed to read from file " + strGeometryFilename);
+		ThrowIfTrue(iNumVertices != fread(_mvecVertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBufferCPTBNT::addFromFile() failed to read from file " + strGeometryFilename);
 		_mvecVertices.resize(iNumVertices);
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
@@ -384,17 +384,17 @@ namespace X
 			update();
 	}
 
-	size_t CResourceVertexBufferBNT::getNumVertices(void) const
+	size_t CResourceVertexBufferCPTBNT::getNumVertices(void) const
 	{
 		return _mvecVertices.size();
 	}
 
-	size_t CResourceVertexBufferBNT::getNumIndicies(void) const
+	size_t CResourceVertexBufferCPTBNT::getNumIndicies(void) const
 	{
 		return _mvecIndices.size();
 	}
 
-	void CResourceVertexBufferBNT::convertObj(const std::string filename) const
+	void CResourceVertexBufferCPTBNT::convertObj(const std::string filename) const
 	{
 		// Used to temporarily hold each line of data from file
 		CVector3f vertex;
@@ -413,7 +413,7 @@ namespace X
 		FILE* file = 0;
 		errno_t err;
 		err = fopen_s(&file, filename.c_str(), "r");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferBNT::convertObj() failed to open file " + filename);
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPTBNT::convertObj() failed to open file " + filename);
 
 		char strLine[255] = { 0 };
 		char ch = 0;
@@ -478,13 +478,13 @@ namespace X
 		}
 		strOutputFilename += "geom";
 		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferBNT::convertObj() failed to open file " + filename + " for saving.");
+		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPTBNT::convertObj() failed to open file " + filename + " for saving.");
 
 		// Loop through each face
 		Vertex geomVertex;
 		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
 		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == written), "CResourceVertexBufferBNT::convertObj() failed to write to file " + filename);
+		ThrowIfTrue(bool(0 == written), "CResourceVertexBufferCPTBNT::convertObj() failed to write to file " + filename);
 
 		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
 		{
@@ -495,7 +495,7 @@ namespace X
 			geomVertex.binormal = CVector3f(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			geomVertex.tangent = CVector3f(0.0f, 1.0f, 0.0f);	// Just set to whatever as calculated during call to update()
 			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == written), "CResourceVertexBufferBNT::convertObj() failed to write to file " + filename);
+			ThrowIfTrue(bool(0 == written), "CResourceVertexBufferCPTBNT::convertObj() failed to write to file " + filename);
 		}
 		fclose(file);
 	}

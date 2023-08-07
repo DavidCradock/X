@@ -92,7 +92,7 @@
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBufferCPT.h"
-#include "resourceVertexBufferBNT.h"
+#include "resourceVertexBufferCPTBNT.h"
 #include "resourceVertexBufferCPTInst.h"
 #include "resourceVertexBufferLine.h"
 // Scene manager

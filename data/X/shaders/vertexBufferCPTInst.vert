@@ -1,4 +1,4 @@
-// vertexBufferInstanced.vert
+// vertexBufferCPTInst.vert
 // For use with CResourceVertexBufferInstanced
 #version 330 core
 layout (location = 0) in vec3 aPos;

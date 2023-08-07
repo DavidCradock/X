@@ -113,9 +113,9 @@ namespace X
 		C2DCamera* pCamera = pWorld->addCamera("camera");
 
 		// Get filenames for each of the images for the various texture atlases
-		mvecstrImageNamesEntity = StringUtils::getFilesInDir("data/DemoNeuralNets/images/creature_top_down/");
-		mvecstrImageNamesFood = StringUtils::getFilesInDir("data/DemoNeuralNets/images/food/");
-		mvecstrImageNamesTiles = StringUtils::getFilesInDir("data/DemoNeuralNets/images/floor_tiles/");
+		mvecstrImageNamesEntity = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down/");
+		mvecstrImageNamesFood = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/food/");
+		mvecstrImageNamesTiles = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/floor_tiles/");
 
 		// Floor tiles
 		int iCnt = 0;

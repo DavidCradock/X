@@ -22,14 +22,14 @@ namespace X
 	{
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeVertexBufferBNT("cube");
-		pRM->removeVertexBufferBNT("icosphere_radius_0.01");
-		pRM->removeVertexBufferBNT("groundplane");
+		pRM->removeVertexBufferCPTBNT("cube");
+		pRM->removeVertexBufferCPTBNT("icosphere_radius_0.01");
+		pRM->removeVertexBufferCPTBNT("groundplane");
 		pRM->removeVertexBufferLine("line");
-		pRM->removeTexture2DFromFile("data/DemoSceneManager/textures/cube_BaseColor.png");
-		pRM->removeTexture2DFromFile("data/DemoSceneManager/textures/cube_Roughness.png");
-		pRM->removeTexture2DFromFile("data/DemoSceneManager/textures/cube_Normal.png");
-		pRM->removeTexture2DFromFile("data/DemoSceneManager/textures/groundplane.png");
+		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png");
+		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png");
+		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png");
+		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png");
 		
 
 //		mSceneManagerSimple.removeAllCameras();
@@ -147,30 +147,30 @@ namespace X
 		// Create needed triangles
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// Cube
-		CResourceVertexBufferBNT* pVB = pRM->addVertexBufferBNT("cube");
-		pVB->addFromFile("data/DemoSceneManager/geometry/cube.geom", true);
+		CResourceVertexBufferCPTBNT* pVB = pRM->addVertexBufferCPTBNT("cube");
+		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/cube.geom", true);
 		// Point lights to show where they are
-		pVB = pRM->addVertexBufferBNT("icosphere_radius_0.01");
-		pVB->addFromFile("data/DemoSceneManager/geometry/icosphere_radius_0.01.geom", true);
+		pVB = pRM->addVertexBufferCPTBNT("icosphere_radius_0.01");
+		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
-		pVB = pRM->addVertexBufferBNT("groundplane");
-		pVB->addFromFile("data/DemoSceneManager/geometry/ground_plane_200x200x1.geom", true);
+		pVB = pRM->addVertexBufferCPTBNT("groundplane");
+		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/ground_plane_200x200x1.geom", true);
 
 		// Load in a textures
 		// Cubes
-		pRM->addTexture2DFromFile("data/DemoSceneManager/textures/cube_BaseColor.png", "data/DemoSceneManager/textures/cube_BaseColor.png", true);
-		pRM->addTexture2DFromFile("data/DemoSceneManager/textures/cube_Roughness.png", "data/DemoSceneManager/textures/cube_Roughness.png", true);
-		pRM->addTexture2DFromFile("data/DemoSceneManager/textures/cube_Normal.png", "data/DemoSceneManager/textures/cube_Normal.png", true);
+		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png", "data/Demos/DemoSceneManager/textures/cube_BaseColor.png", true);
+		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png", "data/Demos/DemoSceneManager/textures/cube_Roughness.png", true);
+		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png", "data/Demos/DemoSceneManager/textures/cube_Normal.png", true);
 		// Point light entities
-		pRM->addTexture2DFromFile("data/DemoSceneManager/textures/groundplane.png", "data/DemoSceneManager/textures/groundplane.png", true);
+		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png", "data/Demos/DemoSceneManager/textures/groundplane.png", true);
 
 		// Create materials
-		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/DemoSceneManager/textures/cube_BaseColor.png", "data/DemoSceneManager/textures/cube_Roughness.png", 0.75f, "data/DemoSceneManager/textures/cube_Normal.png", "X:default_emission");
+		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/Demos/DemoSceneManager/textures/cube_BaseColor.png", "data/Demos/DemoSceneManager/textures/cube_Roughness.png", 0.75f, "data/Demos/DemoSceneManager/textures/cube_Normal.png", "X:default_emission");
 		mSceneManagerSimple.addMaterial("mat_white", 0.05f, "X:default_white", "X:default_white", 0.5f, "X:default_normal", "X:default_white");
 		mSceneManagerSimple.addMaterial(
 			"mat_groundplane",						// Material name
 			0.25f,									// Ambient strength
-			"data/DemoSceneManager/textures/groundplane.png",	// Diffuse texture
+			"data/Demos/DemoSceneManager/textures/groundplane.png",	// Diffuse texture
 			"X:default_roughness",					// Roughness texture (grey)
 			1.0f,									// Specular strength
 			"X:default_normal",						// Normal texture (float)

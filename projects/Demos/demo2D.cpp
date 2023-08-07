@@ -32,14 +32,14 @@ namespace X
 
 		// State0
 		// Top down creature rotation images
-		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demo2D/images/creature_top_down/");	// Get filenames 
+		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demos/Demo2D/images/creature_top_down/");	// Get filenames 
 		pRM->addTexture2DAtlas("Scene0Creatures", vstrImageFilenames, true, 1);												// Create texture atlas
 
 		// State1
 		// Tank body and turret image
 		vstrImageFilenames.clear();
-		vstrImageFilenames.push_back("data/Demo2D/images/tank_body.png");
-		vstrImageFilenames.push_back("data/Demo2D/images/tank_turret.png");
+		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_body.png");
+		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_turret.png");
 		pRM->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
 
 		// State2

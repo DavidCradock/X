@@ -43,7 +43,7 @@ namespace X
 		// Debug CResourceVertexBufferInstanced
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
-		CResourceShader* pShader = pRM->getShader("X:2DParticle");
+		CResourceShader* pShader = pRM->getShader("X:VBCPTInst");
 		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
 		pTexture->bind(0);
 		CMatrix matView;
@@ -57,7 +57,6 @@ namespace X
 		pShader->setMat4("viewMatrix", matView);
 		pShader->setMat4("projectionMatrix", matProj);
 		pVBI->addQuad2D(CVector2f(0.0f, 0.0f), CVector2f(100, 100));
-
 
 		// Now add instance data
 		for (int i = 0; i < 100; i++)
