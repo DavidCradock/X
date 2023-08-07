@@ -74,14 +74,20 @@ namespace X
 	{
 		// Get shader used to render the text
 		SCResourceManager* pResourceManager = SCResourceManager::getPointer();
-		CResourceShader* pShader = pResourceManager->getShader("X:font");
+		CResourceShader* pShader = pResourceManager->getShader("X:VBCPT");
 		
 		// Setup the projection matrix as orthographic
 		_mmatProjection.setProjectionOrthographic(0.0f, float(iRenderTargetWidth), 0.0f, float(iRenderTargetHeight), -1.0f, 1.0f);
 
 		// Setup shader
 		pShader->bind();
-		pShader->setMat4("transform", _mmatProjection);
+		CMatrix matrixWorld, matrixView;
+		pShader->setMat4("matrixWorld", matrixWorld);
+		pShader->setMat4("matrixView", matrixView);
+		pShader->setMat4("matrixProjection", _mmatProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
 
 		// Bind texture
 		_mpResTexture->bind(0);

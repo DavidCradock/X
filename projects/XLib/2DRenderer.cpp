@@ -115,9 +115,8 @@ namespace X
 
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
-		CResourceShader* pShaderEntity = pRM->getShader("X:2DEntity");
-		CResourceShader* pShaderEntityRot = pRM->getShader("X:2DEntityRot");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
+		CResourceShader* pShaderEntity = pRM->getShader("X:VBCPT");
 
 		pVB->removeGeom();
 
@@ -169,6 +168,9 @@ namespace X
 				v3CameraPos.y *= -1.0f;
 				matrixView.setTranslation(v3CameraPos);
 
+				// Identity world matrix
+				CMatrix matrixWorld;
+
 				// For each layer in world
 				for (unsigned int uiLayerZorder = 0; uiLayerZorder < itWorld->second->_mvecLayerNameZOrder.size(); ++uiLayerZorder)
 				{
@@ -182,8 +184,10 @@ namespace X
 					// For each C2DEntity in layer
 					pShaderEntity->bind();											// Bind correct shader
 					pShaderEntity->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
-					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					pShaderEntity->setMat4("matrixWorld", matrixWorld);
 					pShaderEntity->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;		// Used to reduce rebinding of same atlas texture
 					std::string strPreviouslyBoundAtlasName;						// Used to reduce rebinding of same atlas texture
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
@@ -202,10 +206,10 @@ namespace X
 					pVB->removeGeom();
 
 					// For each C2DEntityRot in layer
-					pShaderEntityRot->bind();											// Bind correct shader
-					pShaderEntityRot->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
-					pShaderEntityRot->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
-					pShaderEntityRot->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					pShaderEntity->bind();											// Bind correct shader
+					pShaderEntity->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
+					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					pShaderEntity->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
 					
 					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
 					while (itEntityRot != pLayer->_mmapEntityRots.end())
@@ -214,7 +218,7 @@ namespace X
 							strPreviouslyBoundAtlasName,
 							uiPreviouslyBoundAtlasImageNumber,
 							pVB,
-							pShaderEntityRot,
+							pShaderEntity,
 							_muiNumTextureBindingsPerLoop);
 						itEntityRot++;
 					}

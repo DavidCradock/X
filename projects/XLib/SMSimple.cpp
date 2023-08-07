@@ -465,7 +465,7 @@ namespace X
 	void CSceneManagerSimple::_renderLineEntities(CSMCamera* pCamera)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceShader* pShader = pRM->getShader("X:line");		// Shader used to render the vertex buffer line entities
+		CResourceShader* pShader = pRM->getShader("X:VBCPT");
 		CResourceVertexBufferLine* pLine;
 		CResourceTexture2DFromFile* pTexColour = 0;
 

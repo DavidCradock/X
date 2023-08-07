@@ -42,17 +42,17 @@ namespace X
 		pRM->addTexture2DFromFile("food_diffuse", "data/DemoNeuralNets/textures/food_diffuse.png", true);
 
 		// Create geometry
-		CResourceVertexBuffer* pVB;
+		CResourceVertexBufferCPT* pVB;
 		// Critter
-		pVB = pRM->addVertexBuffer("critter");
+		pVB = pRM->addVertexBufferCPT("critter");
 //		pTri->convertObj("data/DemoNeuralNets/geometry/critter.obj");
 		pVB->addFromFile("data/DemoNeuralNets/geometry/critter.geom");
 		// Food
-		pVB = pRM->addVertexBuffer("food");
+		pVB = pRM->addVertexBufferCPT("food");
 //		pTri->convertObj("data/DemoNeuralNets/geometry/food.obj");
 		pVB->addFromFile("data/DemoNeuralNets/geometry/food.geom");
 		// Back "plane" (Has to be a solid object for shadows to render correctly, so it's actually a cube)
-		pVB = pRM->addVertexBuffer("background");
+		pVB = pRM->addVertexBufferCPT("background");
 		pVB->addCube(CVector3f(0.0f, 0.0f, -0.5f), CVector3f(500.0f, 500.0f, 1.0f));
 		pVB->update();
 

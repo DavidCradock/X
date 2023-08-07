@@ -8,7 +8,7 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
-#include "resourceVertexBuffer.h"
+#include "resourceVertexBufferCPT.h"
 #include "resourceVertexBufferBNT.h"
 #include "resourceVertexBufferInstanced.h"
 #include "resourceVertexBufferLine.h"
@@ -19,17 +19,13 @@ namespace X
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the CResourceBase class and have the pure virtual methods defined in their own files.
 	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:font					// A shader used by the CResourceFont class to render text.
-	// X:line					// A shader used by the CResourceLine class to render lines.
 	// X:DRNE					// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
 	// X:DRNE_noshadows			// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
-	// X:pos_col_tex			// A shader which accepts vertex position, colour and texture coodinates
 	// X:depthbuffer_debug		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 	// X:shadowdepthmap			// A shader used by the scene manager to render the depth map used for rendering shadows
 	// X:gui					// A shader used by the GUI to render everything.
-	// X:2DEntity				// A shader used by SC2DRenderer for C2DEntity
-	// X:2DEntityRot			// A shader used by SC2DRenderer for C2DEntityRot
 	// X:2DParticle				// A shader used be C2DParticleSystem to render instanced particles.
+	// X:VBCPT					// A shader used with CResourceVertexBufferCPT
 	// X:default_particle		// A texture atlas for use with rendering generic particles
 	// X:default_white			// A texture which is tiny and white.
 	// X:default_diffuse		// A texture which is grey for diffuse, used if not set
@@ -37,7 +33,7 @@ namespace X
 	// X:default_normal			// A texture which is a flat normal map, used if not set
 	// X:default_roughness		// A texture which is black for roughness used if not set
 	// X:shadows				// A depth buffer which is used by scene managers to render shadows
-	// X:default				// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+	// X:default				// A vertex buffer CPT resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 	// X:default				// A vertex buffer BNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
 	// X:default				// A vertex buffer instanced used for rendering various things such as the C2DParticleSystem's particles
 	// X:default				// A vertex buffer line resource used by the GUI when rendering lines
@@ -246,27 +242,27 @@ namespace X
 		void removeTexture2DFromImage(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
-		Vertex buffer
+		Vertex buffer CPT (Colour, Position and Texture coordinates)
 		**************************************************************************************************************************************************/
 
 		// Adds a new vertex buffer object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
-		CResourceVertexBuffer* addVertexBuffer(const std::string& strResourceName, bool bLocked = false);
+		CResourceVertexBufferCPT* addVertexBufferCPT(const std::string& strResourceName, bool bLocked = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown
-		CResourceVertexBuffer* getVertexBuffer(const std::string& strResourceName);
+		CResourceVertexBufferCPT* getVertexBufferCPT(const std::string& strResourceName);
 
 		// Returns whether a named resource exists
-		bool getVertexBufferExists(const std::string& strResourceName);
+		bool getVertexBufferCPTExists(const std::string& strResourceName);
 
 		// Removes a previously added resource from this manager
 		// If the resource doesn't exist, this silently fails.
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		// If the resource has been marked as locked, which is done when they are added and bLocked is true, it is not removed.
-		void removeVertexBuffer(const std::string& strResourceName);
+		void removeVertexBufferCPT(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
 		Vertex buffer BNT (Binormal, Normal and Tangent)
@@ -393,13 +389,13 @@ namespace X
 		};
 		std::map<std::string, SResourceTexture2DFromImage> _mmapResTextures2DFromImage;
 
-		struct SResourceVertexBuffer
+		struct SResourceVertexBufferCPT
 		{
-			CResourceVertexBuffer* pResource;	// Pointer to the resource
-			unsigned int uiCount;				// Number of times the resource has been added
-			bool bLocked;						// Given to add method to prevent removal of this resource.
+			CResourceVertexBufferCPT* pResource;	// Pointer to the resource
+			unsigned int uiCount;					// Number of times the resource has been added
+			bool bLocked;							// Given to add method to prevent removal of this resource.
 		};
-		std::map<std::string, SResourceVertexBuffer> _mmapResVertexBuffers;
+		std::map<std::string, SResourceVertexBufferCPT> _mmapResVertexBufferCPTs;
 
 		struct SResourceVertexBufferBNT
 		{

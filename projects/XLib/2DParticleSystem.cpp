@@ -88,7 +88,7 @@ namespace X
 		// Get resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mSettings.strTextureAtlasName);
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShader = pRM->getShader("X:2DParticle");
 
 		// Bind shader and set some uniforms
@@ -107,7 +107,7 @@ namespace X
 
 		glDisable(GL_DEPTH_TEST);
 
-		CResourceVertexBuffer::Vertex vBL, vBR, vTR, vTL;
+		CResourceVertexBufferCPT::Vertex vBL, vBR, vTR, vTL;
 		vBL.normal.set(0.0f, 0.0f, 1.0f);
 		vBR.normal.set(0.0f, 0.0f, 1.0f);
 		vTR.normal.set(0.0f, 0.0f, 1.0f);

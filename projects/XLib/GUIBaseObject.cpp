@@ -145,7 +145,7 @@ namespace X
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		CGUITheme* pTheme = pContainer->getTheme();
 		SCInputManager* pInput = SCInputManager::getPointer();

@@ -172,7 +172,7 @@ namespace X
 	void CResourceDepthbuffer::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, const CColour& colour)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
 		SCWindow* pWindow = SCWindow::getPointer();
 		

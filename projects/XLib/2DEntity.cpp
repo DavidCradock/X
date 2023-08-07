@@ -136,7 +136,7 @@ namespace X
 	void C2DEntity::render(
 		std::string& strPreviouslyBoundAtlasName,
 		unsigned int& uiPreviouslyBoundAtlasImageNumber,
-		CResourceVertexBuffer* pVB,
+		CResourceVertexBufferCPT* pVB,
 		unsigned int& uiNumTextureBindingsPerLoop)
 	{
 		// If this entity is set as invisible, do nuffin'

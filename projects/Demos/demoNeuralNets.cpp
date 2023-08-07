@@ -98,9 +98,9 @@ namespace X
 		pRM->removeTexture2DFromFile("critter_diffuse");
 		pRM->removeTexture2DFromFile("food_diffuse");
 
-		pRM->removeVertexBuffer("critter");
-		pRM->removeVertexBuffer("food");
-		pRM->removeVertexBuffer("background");
+		pRM->removeVertexBufferCPT("critter");
+		pRM->removeVertexBufferCPT("food");
+		pRM->removeVertexBufferCPT("background");
 
 		// Remove states
 		_mFSM.removeAllStates();

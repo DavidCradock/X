@@ -126,8 +126,8 @@ namespace X
 	void CResourceTexture2DFromFile::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour)
 	{
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
-		CResourceShader* pShader = pRM->getShader("X:pos_col_tex");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = pRM->getShader("X:VBCPT");
 		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Setup triangle geometry
@@ -137,10 +137,16 @@ namespace X
 			CVector2f(0, 0), CVector2f(1, 0), CVector2f(1, 1), CVector2f(0, 1));	// Texture coordinates
 		pVB->update();
 
+		// Setup the matrices
+		CMatrix matWorld, matView;
 		CMatrix matProjection;
 		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->bind();
-		pShader->setMat4("transform", matProjection);
+		pShader->setMat4("matrixWorld", matWorld);
+		pShader->setMat4("matrixView", matView);
+		pShader->setMat4("matrixProjection", matProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0", 0);
 
 		bind(0);

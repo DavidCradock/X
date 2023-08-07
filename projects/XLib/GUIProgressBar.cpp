@@ -33,7 +33,7 @@ namespace X
 		// Get required resources needed to render the tab
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShader = pRM->getShader("X:gui");
 		SCInputManager* pInput = SCInputManager::getPointer();
 

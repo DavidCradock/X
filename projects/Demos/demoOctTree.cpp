@@ -128,9 +128,9 @@ namespace X
 
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		pRM->removeTexture2DFromFile("ground");
-		pRM->removeVertexBuffer("cube1x1x1");
+		pRM->removeVertexBufferCPT("cube1x1x1");
 		pRM->removeVertexBufferLine("axis");
-		pRM->removeVertexBuffer("ground");
+		pRM->removeVertexBufferCPT("ground");
 
 		_mSM.removeAllMaterials();
 //		_mSM.removeAllCameras();

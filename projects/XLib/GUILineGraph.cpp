@@ -76,7 +76,7 @@ namespace X
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
-		CResourceShader* pShader = pRM->getShader("X:line");
+		CResourceShader* pShader = pRM->getShader("X:VBCPT");
 		SCWindow* pWindow = SCWindow::getPointer();
 
 		pShader->bind();

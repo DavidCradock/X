@@ -9,7 +9,7 @@
 namespace X
 {
 	// Renders text using data stored in a pair of font files created from this class's buildFontFiles() method.
-	// Requires a shader from the SCResourceManager called "X:font" which is loaded during startup. (See SCApplicationManager::mainLoop())
+	// Requires a shader from the SCResourceManager called "X:VBCPT" which is loaded during startup. (See SCApplicationManager::mainLoop())
 	class CResourceFont : public CResourceBase
 	{
 	public:

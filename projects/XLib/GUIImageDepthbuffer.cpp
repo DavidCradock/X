@@ -25,7 +25,7 @@ namespace X
 		// Get required resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBuffer* pVB = pRM->getVertexBuffer("X:default");
+		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
 
 		pShader->bind();

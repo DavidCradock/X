@@ -283,7 +283,7 @@
     <ClInclude Include="resourceTexture2DFromImage.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceVertexBuffer.h">
+    <ClInclude Include="resourceVertexBufferCPT.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="matrix.h">
@@ -574,7 +574,7 @@
     <ClCompile Include="resourceTexture2DFromImage.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceVertexBuffer.cpp">
+    <ClCompile Include="resourceVertexBufferCPT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="matrix.cpp">
@@ -667,9 +667,6 @@
     <None Include="..\..\data\X\shaders\DRNE.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\line.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\shadow_depthmap.frag">
       <Filter>Shaders</Filter>
     </None>
@@ -688,43 +685,28 @@
     <None Include="..\..\data\X\shaders\gui.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DEntity.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DEntityRot.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\2DParticle.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\2DParticle.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\pos_col_tex.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\line.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\font.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DEntityRot.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DEntity.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\pos_col_tex.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\gui.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\font.vert">
+    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\depthbuffer_debug.vert">
+    <None Include="..\..\data\X\shaders\vertexBufferInstanced.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\vertexBufferInstanced.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\vertexBufferCPT.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\vertexBufferCPT.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

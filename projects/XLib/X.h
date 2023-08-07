@@ -91,7 +91,7 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
-#include "resourceVertexBuffer.h"
+#include "resourceVertexBufferCPT.h"
 #include "resourceVertexBufferBNT.h"
 #include "resourceVertexBufferInstanced.h"
 #include "resourceVertexBufferLine.h"

@@ -103,7 +103,7 @@ namespace X
 		void render(
 			std::string& strPreviouslyBoundAtlasName,
 			unsigned int& uiPreviouslyBoundAtlasImageNumber,
-			CResourceVertexBuffer* pVB,
+			CResourceVertexBufferCPT* pVB,
 			unsigned int& uiNumTextureBindingsPerLoop);
 	private:
 		CVector2f _mv2fPosition;						// Position of this entity in the world
