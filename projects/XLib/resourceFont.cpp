@@ -10,9 +10,9 @@ namespace X
 	CResourceFont::CResourceFont(const std::string& strFontFilename)
 	{
 		// Vertex buffer stuff
-		vertexBufferObject = 0;
-		vertexArrayObject = 0;
-		elementBufferObject = 0;
+		_mVertexBufferObject = 0;
+		_mVertexArrayObject = 0;
+		_mElementBufferObject = 0;
 
 		// Compute filename pairs from parsed filename base
 		std::string strFontFNTFilename = strFontFilename;
@@ -53,20 +53,20 @@ namespace X
 	{
 		_mpResTexture->onGLContextToBeDestroyed();
 
-		if (vertexBufferObject)
+		if (_mVertexBufferObject)
 		{
-			glDeleteBuffers(1, &vertexBufferObject);
-			vertexBufferObject = 0;
+			glDeleteBuffers(1, &_mVertexBufferObject);
+			_mVertexBufferObject = 0;
 		}
-		if (vertexArrayObject)
+		if (_mVertexArrayObject)
 		{
-			glDeleteVertexArrays(1, &vertexArrayObject);
-			vertexArrayObject = 0;
+			glDeleteVertexArrays(1, &_mVertexArrayObject);
+			_mVertexArrayObject = 0;
 		}
-		if (elementBufferObject)
+		if (_mElementBufferObject)
 		{
-			glDeleteBuffers(1, &elementBufferObject);
-			elementBufferObject = 0;
+			glDeleteBuffers(1, &_mElementBufferObject);
+			_mElementBufferObject = 0;
 		}
 	}
 
@@ -102,8 +102,8 @@ namespace X
 		CVector2f tcBL, tcBR, tcTR, tcTL;
 
 		// Remove all geometry from vertex buffer
-		vertices.clear();
-		indices.clear();
+		_mvecVertices.clear();
+		_mvecIndices.clear();
 		for (unsigned int i = 0; i < strText.length(); ++i)
 		{
 			// Obtain character index
@@ -125,14 +125,14 @@ namespace X
 			// Add quad to vertex buffer
 
 			// Indicies
-			unsigned int iIndex = (unsigned int)vertices.size();
-			indices.push_back(iIndex);		// BL
-			indices.push_back(iIndex + 1);	// TL
-			indices.push_back(iIndex + 2);	// TR
+			unsigned int iIndex = (unsigned int)_mvecVertices.size();
+			_mvecIndices.push_back(iIndex);		// BL
+			_mvecIndices.push_back(iIndex + 1);	// TL
+			_mvecIndices.push_back(iIndex + 2);	// TR
 
-			indices.push_back(iIndex + 2);	// TR
-			indices.push_back(iIndex + 3);	// BR
-			indices.push_back(iIndex);		// BL
+			_mvecIndices.push_back(iIndex + 2);	// TR
+			_mvecIndices.push_back(iIndex + 3);	// BR
+			_mvecIndices.push_back(iIndex);		// BL
 
 			// Bottom left
 			Vertex vertex;	// Holds a vertex's data before adding to the vector
@@ -141,47 +141,47 @@ namespace X
 			vertex.position.z = 0.0f;
 			vertex.colour = colour;
 			vertex.texCoord = tcBL;
-			vertices.push_back(vertex);
+			_mvecVertices.push_back(vertex);
 
 			// Top left
 			vertex.position.y = vPosition.y;
 			vertex.texCoord = tcTL;
-			vertices.push_back(vertex);
+			_mvecVertices.push_back(vertex);
 
 			// Top right
 			vertex.position.x = vPosition.x + vDimensions.x;
 			vertex.texCoord = tcTR;
-			vertices.push_back(vertex);
+			_mvecVertices.push_back(vertex);
 
 			// Bottom right
 			vertex.position.y = vPosition.y + vDimensions.y;
 			vertex.texCoord = tcBR;
-			vertices.push_back(vertex);
+			_mvecVertices.push_back(vertex);
 
 			vPosition.x += (fontTypes.charDesc[charIndex].fABCb + fontTypes.charDesc[charIndex].fABCc) * fFontScaling;
 		}
 		// Then finally upload to the GPU and draw everything.
-//		if (!vertices.size())	// No need to check both vertices and indices
+//		if (!_mvecVertices.size())	// No need to check both vertices and indices
 //			return;
-		if (!indices.size())
+		if (!_mvecIndices.size())
 			return;
 
-		if (!vertexBufferObject)
-			glGenBuffers(1, &vertexBufferObject);
-		if (!vertexArrayObject)
-			glGenVertexArrays(1, &vertexArrayObject);
-		if (!elementBufferObject)
-			glGenBuffers(1, &elementBufferObject);
+		if (!_mVertexBufferObject)
+			glGenBuffers(1, &_mVertexBufferObject);
+		if (!_mVertexArrayObject)
+			glGenVertexArrays(1, &_mVertexArrayObject);
+		if (!_mElementBufferObject)
+			glGenBuffers(1, &_mElementBufferObject);
 
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 
 		// Bind VBO and upload vertex data
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, _mVertexBufferObject);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * _mvecVertices.size(), &_mvecVertices[0], GL_DYNAMIC_DRAW);
 
 		// Indicies
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mElementBufferObject);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _mvecIndices.size(), &_mvecIndices[0], GL_DYNAMIC_DRAW);
 
 		// Position
 		glVertexAttribPointer(0,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
@@ -216,15 +216,15 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		// Draw everything
-		if (!vertexArrayObject)
+		if (!_mVertexArrayObject)
 			return;
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 		glDrawElements(
-			GL_TRIANGLES,				// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
-			(GLsizei)indices.size(),	// Count. Specifies the number of elements to be rendered.
-			GL_UNSIGNED_INT,			// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
-			0);							// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
+			GL_TRIANGLES,					// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
+			(GLsizei)_mvecIndices.size(),	// Count. Specifies the number of elements to be rendered.
+			GL_UNSIGNED_INT,				// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
+			0);								// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
 		glBindVertexArray(0);
 
 		// Unbind everything and reset states

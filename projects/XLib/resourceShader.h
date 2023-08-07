@@ -62,6 +62,7 @@ namespace X
 		// Set uniform vec4 from CColour (call after bind())
 		void setVec4(const std::string& name, const CColour& colour) const;
 
+	private:
 		std::string _mstrVertexShaderFilename;
 		std::string _mstrFragmentShaderFilename;
 		unsigned int _muiProgramID;

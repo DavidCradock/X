@@ -7,9 +7,9 @@ namespace X
 
 	CResourceVertexBuffer::CResourceVertexBuffer()
 	{
-		vertexBufferObject = 0;
-		vertexArrayObject = 0;
-		elementBufferObject = 0;
+		_mVertexBufferObject = 0;
+		_mVertexArrayObject = 0;
+		_mElementBufferObject = 0;
 		//onGLContextCreated();
 	}
 
@@ -25,56 +25,56 @@ namespace X
 
 	void CResourceVertexBuffer::onGLContextToBeDestroyed(void)
 	{
-		if (vertexBufferObject)
+		if (_mVertexBufferObject)
 		{
-			glDeleteBuffers(1, &vertexBufferObject);
-			vertexBufferObject = 0;
+			glDeleteBuffers(1, &_mVertexBufferObject);
+			_mVertexBufferObject = 0;
 		}
-		if (vertexArrayObject)
+		if (_mVertexArrayObject)
 		{
-			glDeleteVertexArrays(1, &vertexArrayObject);
-			vertexArrayObject = 0;
+			glDeleteVertexArrays(1, &_mVertexArrayObject);
+			_mVertexArrayObject = 0;
 		}
-		if (elementBufferObject)
+		if (_mElementBufferObject)
 		{
-			glDeleteBuffers(1, &elementBufferObject);
-			elementBufferObject = 0;
+			glDeleteBuffers(1, &_mElementBufferObject);
+			_mElementBufferObject = 0;
 		}
 	}
 
 	void CResourceVertexBuffer::removeGeom(void)
 	{
-		vertices.clear();
-		indices.clear();
+		_mvecVertices.clear();
+		_mvecIndices.clear();
 	}
 
 	void CResourceVertexBuffer::update(void)
 	{
-		if (!vertices.size())
+		if (!_mvecVertices.size())
 			return;
-		if (!indices.size())
+		if (!_mvecIndices.size())
 			return;
 
-		if (!vertexBufferObject)
-			glGenBuffers(1, &vertexBufferObject);
-		if (!vertexArrayObject)
-			glGenVertexArrays(1, &vertexArrayObject);
-		if (!elementBufferObject)
-			glGenBuffers(1, &elementBufferObject);
+		if (!_mVertexBufferObject)
+			glGenBuffers(1, &_mVertexBufferObject);
+		if (!_mVertexArrayObject)
+			glGenVertexArrays(1, &_mVertexArrayObject);
+		if (!_mElementBufferObject)
+			glGenBuffers(1, &_mElementBufferObject);
 
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 
 		// GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
 		// GL_STATIC_DRAW: the data is set only once and used many times.
 		// GL_DYNAMIC_DRAW : the data is changed a lot and used many times.
 
 		// Bind VBO and upload vertex data
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, _mVertexBufferObject);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * _mvecVertices.size(), &_mvecVertices[0], GL_STATIC_DRAW);
 
 		// Indicies
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mElementBufferObject);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _mvecIndices.size(), &_mvecIndices[0], GL_STATIC_DRAW);
 
 		// Position
 		glVertexAttribPointer(0,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
@@ -120,13 +120,13 @@ namespace X
 
 	void CResourceVertexBuffer::render(bool bWireframeMode) const
 	{
-		if (!vertexArrayObject)
+		if (!_mVertexArrayObject)
 			return;
 
-		if (0 == indices.size())
+		if (0 == _mvecIndices.size())
 			return;
 
-		if (0 == vertices.size())
+		if (0 == _mvecVertices.size())
 			return;
 
 		if (bWireframeMode)
@@ -134,10 +134,10 @@ namespace X
 		else
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 		glDrawElements(
 			GL_TRIANGLES,				// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
-			(GLsizei)indices.size(),	// Count. Specifies the number of elements to be rendered.
+			(GLsizei)_mvecIndices.size(),	// Count. Specifies the number of elements to be rendered.
 			GL_UNSIGNED_INT,			// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
 			0);							// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
 		glBindVertexArray(0);
@@ -145,18 +145,18 @@ namespace X
 
 	void CResourceVertexBuffer::addVertex(const Vertex& newVertex)
 	{
-		vertices.push_back(newVertex);
+		_mvecVertices.push_back(newVertex);
 	}
 
 	void CResourceVertexBuffer::addIndex(int newIndex)
 	{
-		indices.push_back(newIndex);
+		_mvecIndices.push_back(newIndex);
 	}
 
 	void CResourceVertexBuffer::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
 	{
 		// Indicies
-		unsigned int iIndex = (unsigned int)vertices.size();
+		unsigned int iIndex = (unsigned int)_mvecVertices.size();
 		addIndex(iIndex);		// BL
 		addIndex(iIndex + 1);	// TL
 		addIndex(iIndex + 2);	// TR
@@ -194,7 +194,7 @@ namespace X
 	void CResourceVertexBuffer::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
 	{
 		// Indicies
-		unsigned int iIndex = (unsigned int)vertices.size();
+		unsigned int iIndex = (unsigned int)_mvecVertices.size();
 		addIndex(iIndex);		// BL
 		addIndex(iIndex + 1);	// TL
 		addIndex(iIndex + 2);	// TR
@@ -237,8 +237,8 @@ namespace X
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
 		// Each tri is obviously 3 vertices and therefore a cube needs a total of 36 vertices.
-		unsigned int iIndex = (unsigned int)vertices.size();	// Start after last added index
-		for (unsigned int iIndex = (unsigned int)vertices.size(); iIndex < (unsigned int)vertices.size() + 36; iIndex++)
+		unsigned int iIndex = (unsigned int)_mvecVertices.size();	// Start after last added index
+		for (unsigned int iIndex = (unsigned int)_mvecVertices.size(); iIndex < (unsigned int)_mvecVertices.size() + 36; iIndex++)
 		{
 			addIndex(iIndex);
 		}
@@ -325,13 +325,13 @@ namespace X
 		}
 		*/
 		// Load in all vertex data
-		vertices.resize(iNumVertices);
-		indices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(vertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
-		vertices.resize(iNumVertices);
+		_mvecVertices.resize(iNumVertices);
+		_mvecIndices.resize(iNumVertices);
+		ThrowIfTrue(iNumVertices != fread(_mvecVertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBuffer::addFromFile() failed to read from file " + strGeometryFilename);
+		_mvecVertices.resize(iNumVertices);
 		for (unsigned int i = 0; i < iNumVertices; i++)
 		{
-			indices.push_back(i);
+			_mvecIndices.push_back(i);
 		}
 
 		fclose(file);
@@ -342,12 +342,12 @@ namespace X
 
 	size_t CResourceVertexBuffer::getNumVertices(void) const
 	{
-		return vertices.size();
+		return _mvecVertices.size();
 	}
 
 	size_t CResourceVertexBuffer::getNumIndicies(void) const
 	{
-		return indices.size();
+		return _mvecIndices.size();
 	}
 
 	void CResourceVertexBuffer::convertObj(const std::string filename) const

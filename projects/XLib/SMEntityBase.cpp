@@ -15,7 +15,7 @@ namespace X
 	{
 		if (_mbWorldNeedsUpdate)
 			_updateWorldMatrix();
-		return matrixWorld;
+		return _matrixWorld;
 	}
 
 	void CSMEntityBase::setWorldPosition(CVector3f vNewPosition)
@@ -138,7 +138,7 @@ namespace X
 		CMatrix rotation;
 		rotation.setFromQuaternion(_mqRotation);
 
-		matrixWorld = trans * scale * rotation;
+		_matrixWorld = trans * scale * rotation;
 		_mbWorldNeedsUpdate = false;
 	}
 

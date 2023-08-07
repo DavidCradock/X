@@ -37,8 +37,8 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		SCWindow* pWindow = SCWindow::getPointer();
 		CResourceTexture2DFromFile* pTex = pRM->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
-		CVector2f vTexDimsPoint3 = pTex->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTex->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTex->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTex->getDimensions() * 0.6666666f;
 
 		// Now render the font stuff
 		int iRTDims[2];
@@ -105,7 +105,7 @@ namespace X
 
 		
 		CResourceTexture2DFromFile* pColourTex = pResMan->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
-		CVector2f vTexDimsDiv3 = pColourTex->mvDimensions * 0.3333333f;
+		CVector2f vTexDimsDiv3 = pColourTex->getDimensions() * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{

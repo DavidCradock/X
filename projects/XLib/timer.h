@@ -62,25 +62,24 @@ namespace X
         // Based on current runtime, returns current runtime as a string holding seconds, minutes, hours, days and weeks
         std::string getClock(void) const;
     private:
-        std::chrono::duration<double> mdTimeDeltaSec;
-        std::chrono::time_point<std::chrono::steady_clock> mdTimePointOld, mdTimePointNew;
+        std::chrono::duration<double> _mdTimeDeltaSec;
+        std::chrono::time_point<std::chrono::steady_clock> _mdTimePointOld, _mdTimePointNew;
 
-        double mdDeltaSec;                // Holds time delta since last call to update() method in seconds.
+        double _mdDeltaSec;             // Holds time delta since last call to update() method in seconds.
 
-        bool mbPaused;                   // pause() and resume()
+        bool _mbPaused;                 // pause() and resume()
 
         // Members for FPS
-        double mdFPS;                   // Holds computed current frames per second value
-        double mdFPSFrameTime;          // Used to compute FPS stuff
-        unsigned int muiNumFrames;      // Used to compute FPS stuff        
+        double _mdFPS;                  // Holds computed current frames per second value
+        double _mdFPSFrameTime;         // Used to compute FPS stuff
+        unsigned int _muiNumFrames;     // Used to compute FPS stuff        
 
         // Members for FPS averaged
-        double mdFPSAveraged;                   // Holds computed averaged frames per second value
-        double mdFPSAveragedRate;               // Number of times per second in which is the delay until unpdating the value returned by getFPSAveraged() method.
-        double mdFPSAveragedTimeCount;          // Used to compute FPSAveraged stuff
-        int miFPSAveragedNumCallsPerSec;        // Used to compute FPSAveraged stuff
-        double mdFPSAveragedAccum;              // Used to compute FPSAveraged stuff
-
-        double mdRuntimeInSeconds;              // Number of seconds we've been calling update()
+        double _mdFPSAveraged;                  // Holds computed averaged frames per second value
+        double _mdFPSAveragedRate;              // Number of times per second in which is the delay until unpdating the value returned by getFPSAveraged() method.
+        double _mdFPSAveragedTimeCount;         // Used to compute FPSAveraged stuff
+        int _miFPSAveragedNumCallsPerSec;       // Used to compute FPSAveraged stuff
+        double _mdFPSAveragedAccum;             // Used to compute FPSAveraged stuff
+        double _mdRuntimeInSeconds;             // Number of seconds we've been calling update()
     };
 }

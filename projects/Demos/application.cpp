@@ -17,7 +17,7 @@ namespace X
 		// Use the resource loading screen
 		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
 		pLS->onInit(0);
-		pLS->setFadeOut(1.0f);
+		pLS->setFadeOut(0.0f);
 
 		// Set window title bar text and set icon
 		SCWindow* pWindow = SCWindow::getPointer();

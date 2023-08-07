@@ -24,8 +24,8 @@ namespace X
 	{
 		CImage image;
 		ThrowIfFalse(image.load(_mstrImageFilename, _mbFlipYaxis), "CResourceTexture2DFromFile::onGLContextCreated() failed to load image from file (" + _mstrImageFilename + ") containing image data.");
-		mvDimensions.x = (float)image.getWidth();
-		mvDimensions.y = (float)image.getHeight();
+		_mvDimensions.x = (float)image.getWidth();
+		_mvDimensions.y = (float)image.getHeight();
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -149,5 +149,10 @@ namespace X
 		pVB->render();
 		pShader->unbind();
 		unbind(0);
+	}
+
+	CVector2f CResourceTexture2DFromFile::getDimensions(void) const
+	{
+		return _mvDimensions;
 	}
 }

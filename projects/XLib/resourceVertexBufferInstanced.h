@@ -4,6 +4,7 @@
 #include "vector2f.h"
 #include "vector3f.h"
 #include "colour.h"
+#include "matrix.h"
 
 namespace X
 {
@@ -50,6 +51,12 @@ namespace X
 		// If there's no vertex data, this silently fails.
 		void render(bool bWireframeMode = false) const;
 
+		// Adds a transformation matrix for one of the instances rendered during a call to render()
+		void addInstanceMatrix(const CMatrix& matrixInstanceTransformation);
+
+		// Removes all previously added instance matrices
+		void removeAllInstanceMatrices(void);
+
 		// Adds a new vertex
 		void addVertex(const Vertex& newVertex);
 
@@ -81,11 +88,12 @@ namespace X
 		// Converts an .obj file to our custom geometry file format and saves to disk
 		void convertObj(const std::string filename) const;
 	private:
-		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
-		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
-		unsigned int elementBufferObject;	// OpenGL element buffer object ID
-		std::vector<Vertex> vertices;		// Vector holding each unique vertex
-		std::vector<int> indices;			// Vector holding indicies to each unique vertex
+		unsigned int _mVertexBufferObject;		// OpenGL vertex buffer object ID
+		unsigned int _mVertexArrayObject;		// OpenGL vertex array object ID
+		unsigned int _mElementBufferObject;		// OpenGL element buffer object ID
+		std::vector<Vertex> _mvecVertices;		// Vector holding each unique vertex
+		std::vector<int> _mvecIndices;			// Vector holding indicies to each unique vertex
+		std::vector<CMatrix> _mInstanceMatrix;	// Each matrix holding transformation for an instance to be rendered.
 
 	};
 }

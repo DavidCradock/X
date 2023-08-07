@@ -99,8 +99,8 @@ namespace X
 		// Get textures
 		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile("X:default_white");
 		CResourceTexture2DFromFile* pTexBG = pRM->getTexture2DFromFile(pTheme->mImages.lineGraphBGColour);
-		CVector2f vTexDimsPoint3 = pTexBG->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTexBG->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTexBG->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTexBG->getDimensions() * 0.6666666f;
 
 		// Bind textures
 		pTexColour->bind(0);

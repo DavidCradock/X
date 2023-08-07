@@ -34,18 +34,18 @@ namespace X
 
 	bool CInputJoystick::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
 	{
-		joystickDetected = true;
-		forcefeedbackDetected = true;
-		numButtons = 0;
-		numPOVS = 0;
-		numAxis = 0;
+		_mbJoystickDetected = true;
+		_mbForcefeedbackDetected = true;
+		_miNumButtons = 0;
+		_miNumPOVS = 0;
+		_miNumAxis = 0;
 		HRESULT hr;
 
 		directInput = pMainDirectXinputDevice;
 		if (!directInput)
 		{
-			joystickDetected = false;
-			forcefeedbackDetected = false;
+			_mbJoystickDetected = false;
+			_mbForcefeedbackDetected = false;
 			return false;
 		}
 
@@ -54,10 +54,10 @@ namespace X
 		if (FAILED(hr = directInput->EnumDevices(DI8DEVCLASS_GAMECTRL, enumJoysticksCallback, NULL, DIEDFL_FORCEFEEDBACK | DIEDFL_ATTACHEDONLY)))
 		{
 			// No force feedback, check for normal joystick
-			forcefeedbackDetected = false;
+			_mbForcefeedbackDetected = false;
 			if (FAILED(hr = directInput->EnumDevices(DI8DEVCLASS_GAMECTRL, enumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY)))
 			{
-				joystickDetected = false;
+				_mbJoystickDetected = false;
 				return true;
 			}
 		}
@@ -65,8 +65,8 @@ namespace X
 		// Do we have a joystick?
 		if (device == NULL)
 		{
-			joystickDetected = false;
-			forcefeedbackDetected = false;
+			_mbJoystickDetected = false;
+			_mbForcefeedbackDetected = false;
 			return true;
 		}
 
@@ -74,8 +74,8 @@ namespace X
 		hr = device->SetDataFormat(&c_dfDIJoystick2);
 		if (FAILED(hr))
 		{
-			joystickDetected = false;
-			forcefeedbackDetected = false;
+			_mbJoystickDetected = false;
+			_mbForcefeedbackDetected = false;
 			return false;
 		}
 
@@ -83,8 +83,8 @@ namespace X
 		hr = device->SetCooperativeLevel(hApplicationWindow, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
 		if (FAILED(hr))
 		{
-			joystickDetected = false;
-			forcefeedbackDetected = false;
+			_mbJoystickDetected = false;
+			_mbForcefeedbackDetected = false;
 			return false;
 		}
 
@@ -94,15 +94,15 @@ namespace X
 		hr = device->GetCapabilities(&capsJ);
 		if (FAILED(hr))
 		{
-			joystickDetected = false;
-			forcefeedbackDetected = false;
+			_mbJoystickDetected = false;
+			_mbForcefeedbackDetected = false;
 			return false;
 		}
 
 		// Set joystick capability members
-		numButtons = capsJ.dwButtons;
-		numPOVS = capsJ.dwPOVs;
-		numAxis = capsJ.dwAxes;
+		_miNumButtons = capsJ.dwButtons;
+		_miNumPOVS = capsJ.dwPOVs;
+		_miNumAxis = capsJ.dwAxes;
 
 		// Set ranges -1000 to 1000
 		DIPROPRANGE diprg;
@@ -115,7 +115,7 @@ namespace X
 		device->SetProperty(DIPROP_RANGE, &diprg.diph);
 
 		// Turn off auto center if force feedback
-		if (forcefeedbackDetected == true)
+		if (_mbForcefeedbackDetected == true)
 		{
 			DIPROPDWORD DIPropAutoCenter;
 			DIPropAutoCenter.diph.dwSize = sizeof(DIPropAutoCenter);
@@ -167,12 +167,12 @@ namespace X
 
 	bool CInputJoystick::getJoystickDetected(void) const
 	{
-		return joystickDetected;
+		return _mbJoystickDetected;
 	}
 
 	bool CInputJoystick::getForcefeedbackDetected(void) const
 	{ 
-		return forcefeedbackDetected;
+		return _mbForcefeedbackDetected;
 	}
 
 	long CInputJoystick::axisX(void) const
@@ -218,16 +218,16 @@ namespace X
 
 	int CInputJoystick::getNumButtons(void) const
 	{
-		return numButtons;
+		return _miNumButtons;
 	}
 
 	int CInputJoystick::getNumPOVS(void) const
 	{
-		return numPOVS;
+		return _miNumPOVS;
 	}
 
 	int CInputJoystick::getNumAxis(void) const
 	{
-		return numAxis;
+		return _miNumAxis;
 	}
 }

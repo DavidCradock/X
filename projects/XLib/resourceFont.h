@@ -100,10 +100,10 @@ namespace X
 			CColour colour;			// Vertex colour
 			CVector2f texCoord;		// Vertex texture coordinate
 		};
-		mutable unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
-		mutable unsigned int vertexArrayObject;		// OpenGL vertex array object ID
-		mutable unsigned int elementBufferObject;	// OpenGL element buffer object ID
-		mutable std::vector<Vertex> vertices;		// Vector holding each unique vertex
-		mutable std::vector<int> indices;			// Vector holding indicies to each unique vertex
+		mutable unsigned int _mVertexBufferObject;	// OpenGL vertex buffer object ID
+		mutable unsigned int _mVertexArrayObject;	// OpenGL vertex array object ID
+		mutable unsigned int _mElementBufferObject;	// OpenGL element buffer object ID
+		mutable std::vector<Vertex> _mvecVertices;	// Vector holding each unique vertex
+		mutable std::vector<int> _mvecIndices;		// Vector holding indicies to each unique vertex
 	};
 }

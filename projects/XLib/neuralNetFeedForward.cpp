@@ -44,40 +44,40 @@ namespace X
 		ThrowIfTrue(iNumNeuronsPerLayer < 1 && iNumLayers > 0, "CNeuralNetworkFeedForward::create() given invalid number of neurons per layer. Must be at least 1 if iNumLayers is > 0");
 
 		// Clear everything
-		mvecLayers.clear();
+		_mvecLayers.clear();
 
 		// Set given parameters
-		miNumInputs = iNumInputs;
-		miNumOutputs = iNumOutputs;
-		miNumLayers = iNumLayers;
-		miNumNeuronsPerLayer = iNumNeuronsPerLayer;
+		_miNumInputs = iNumInputs;
+		_miNumOutputs = iNumOutputs;
+		_miNumLayers = iNumLayers;
+		_miNumNeuronsPerLayer = iNumNeuronsPerLayer;
 
 		// Set default bias
-		mdBias = -1;
+		_mdBias = -1;
 
 		// Set default sigmoid response
-		mdSigmoidResponse = 1;
+		_mdSigmoidResponse = 1;
 
-		if (miNumLayers)
+		if (_miNumLayers)
 		{
 			// Create the first layer of neurons which have the number of inputs set to the number of inputs of the network.
-			mvecLayers.push_back(CNeuronLayer(miNumNeuronsPerLayer, miNumInputs));
+			_mvecLayers.push_back(CNeuronLayer(_miNumNeuronsPerLayer, _miNumInputs));
 
 			// Create the other layers
 			// iNumLayers -1 because we've already created a layer above
-			for (int i = 0; i < miNumLayers - 1; i++)
+			for (int i = 0; i < _miNumLayers - 1; i++)
 			{
 				// Create the layer, using the number of inputs set to the number of neurons per layer
-				mvecLayers.push_back(CNeuronLayer(miNumNeuronsPerLayer, miNumNeuronsPerLayer));
+				_mvecLayers.push_back(CNeuronLayer(_miNumNeuronsPerLayer, _miNumNeuronsPerLayer));
 			}
 
 			// Create the output layer
-			mvecLayers.push_back(CNeuronLayer(miNumOutputs, miNumNeuronsPerLayer));
+			_mvecLayers.push_back(CNeuronLayer(_miNumOutputs, _miNumNeuronsPerLayer));
 		}
 		else
 		{
 			// Create the output layer
-			mvecLayers.push_back(CNeuronLayer(miNumOutputs, miNumInputs));
+			_mvecLayers.push_back(CNeuronLayer(_miNumOutputs, _miNumInputs));
 		}
 	}
 
@@ -86,15 +86,15 @@ namespace X
 		std::vector<double> vecWeights;
 
 		// For each layer (+1 as we are also returning the output layer)
-		for (int iLayer = 0; iLayer < miNumLayers + 1; iLayer++)
+		for (int iLayer = 0; iLayer < _miNumLayers + 1; iLayer++)
 		{
 			// For each neuron in each layer
-			for (int iNeuron = 0; iNeuron < mvecLayers[iLayer].miNumNeurons; iNeuron++)
+			for (int iNeuron = 0; iNeuron < _mvecLayers[iLayer].miNumNeurons; iNeuron++)
 			{
 				// For each weight in each neuron, not including the bias of the neuron
-				for (int iWeight = 0; iWeight < mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
+				for (int iWeight = 0; iWeight < _mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
 				{
-					vecWeights.push_back(mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight]);
+					vecWeights.push_back(_mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight]);
 				}
 			}
 		}
@@ -105,13 +105,13 @@ namespace X
 	{
 		int iNumberOfWeights = 0;
 		// For each layer (+1 as we are also returning the output layer)
-		for (int iLayer = 0; iLayer < miNumLayers + 1; iLayer++)
+		for (int iLayer = 0; iLayer < _miNumLayers + 1; iLayer++)
 		{
 			// For each neuron in each layer
-			for (int iNeuron = 0; iNeuron < mvecLayers[iLayer].miNumNeurons; iNeuron++)
+			for (int iNeuron = 0; iNeuron < _mvecLayers[iLayer].miNumNeurons; iNeuron++)
 			{
 				// For each weight in each neuron, not including the bias of the neuron
-				for (int iWeight = 0; iWeight < mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
+				for (int iWeight = 0; iWeight < _mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
 				{
 					iNumberOfWeights++;
 				}
@@ -125,15 +125,15 @@ namespace X
 		int iIndex = 0;
 
 		// For each layer (+1 as we are also replacing the output layer)
-		for (int iLayer = 0; iLayer < miNumLayers + 1; iLayer++)
+		for (int iLayer = 0; iLayer < _miNumLayers + 1; iLayer++)
 		{
 			// For each neuron in each layer
-			for (int iNeuron = 0; iNeuron < mvecLayers[iLayer].miNumNeurons; iNeuron++)
+			for (int iNeuron = 0; iNeuron < _mvecLayers[iLayer].miNumNeurons; iNeuron++)
 			{
 				// For each weight in each neuron, not including the bias of the neuron
-				for (int iWeight = 0; iWeight < mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
+				for (int iWeight = 0; iWeight < _mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
 				{
-					mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight] = newWeights[iIndex++];
+					_mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight] = newWeights[iIndex++];
 				}
 			}
 		}
@@ -141,13 +141,13 @@ namespace X
 
 	std::vector<double> CNeuralNetworkFeedForward::update(std::vector<double>& vecInputs)
 	{
-		ThrowIfTrue(vecInputs.size() != miNumInputs, "CNeuralNetworkFeedForward::update() failed. Was given a vector of inputs which are not equal to in size of the network's number of inputs");
+		ThrowIfTrue(vecInputs.size() != _miNumInputs, "CNeuralNetworkFeedForward::update() failed. Was given a vector of inputs which are not equal to in size of the network's number of inputs");
 		std::vector<double> vecOutputs;
 
 		int cWeight = 0;
 
 		// For each layer (+1 as we are also updating the output layer)
-		for (int iLayer = 0; iLayer < miNumLayers + 1; iLayer++)
+		for (int iLayer = 0; iLayer < _miNumLayers + 1; iLayer++)
 		{
 			// If we've used the inputs, we need to set the inputs to be the outputs of the previous layer
 			if (iLayer > 0)
@@ -164,23 +164,23 @@ namespace X
 			// For each neuron in each layer
 			// multiply the input by the weight for that input, then use the sigmoid
 			// function to smooth it out to get the final output.
-			for (int iNeuron = 0; iNeuron < mvecLayers[iLayer].miNumNeurons; iNeuron++)
+			for (int iNeuron = 0; iNeuron < _mvecLayers[iLayer].miNumNeurons; iNeuron++)
 			{
 				double dAccumulatedInput = 0;
-				iNumInputs = mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs;
+				iNumInputs = _mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs;
 
 				// For each weight, not including the bias (the -1)
 				for (int iWeight = 0; iWeight < iNumInputs - 1; iWeight++)
 				{
-					dAccumulatedInput += mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight] * vecInputs[cWeight++];
+					dAccumulatedInput += _mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iWeight] * vecInputs[cWeight++];
 				}
 
 				// Multiply by the bias
-				dAccumulatedInput += mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iNumInputs - 1] * mdBias;
+				dAccumulatedInput += _mvecLayers[iLayer].mvecNeurons[iNeuron].mvecInputWeights[iNumInputs - 1] * _mdBias;
 
 				// Pass the final computed input value, multiplied by the weights, with the bias applied, to the sigmoid function to
 				// obtain the final output value and store that in the vector of outputs.
-				vecOutputs.push_back(sigmoid(dAccumulatedInput, mdSigmoidResponse));
+				vecOutputs.push_back(sigmoid(dAccumulatedInput, _mdSigmoidResponse));
 
 				cWeight = 0;
 			}
@@ -190,13 +190,13 @@ namespace X
 
 	void CNeuralNetworkFeedForward::setWeightBias(double dWeightBias)
 	{
-		mdBias = dWeightBias;
+		_mdBias = dWeightBias;
 	}
 
 	void CNeuralNetworkFeedForward::setSigmoidResponse(double dResponse)
 	{
 		ThrowIfTrue(areDoublesEqual(0, dResponse), "CNeuralNetworkFeedForward::setSigmoidResponse() failed. The given value should not be zero. Otherwise a divide by zero error occurs.");
-		mdSigmoidResponse = dResponse;
+		_mdSigmoidResponse = dResponse;
 	}
 
 	std::vector<int> CNeuralNetworkFeedForward::calculateSplitPoints(void)
@@ -206,13 +206,13 @@ namespace X
 		int iWeightCounter = 0;
 
 		// For each layer (+1 as we are also giving the output layer)
-		for (int iLayer = 0; iLayer < miNumLayers + 1; iLayer++)
+		for (int iLayer = 0; iLayer < _miNumLayers + 1; iLayer++)
 		{
 			// For each neuron in each layer
-			for (int iNeuron = 0; iNeuron < mvecLayers[iLayer].miNumNeurons; iNeuron++)
+			for (int iNeuron = 0; iNeuron < _mvecLayers[iLayer].miNumNeurons; iNeuron++)
 			{
 				// For each weight in each neuron, not including the bias of the neuron
-				for (int iWeight = 0; iWeight < mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
+				for (int iWeight = 0; iWeight < _mvecLayers[iLayer].mvecNeurons[iNeuron].miNumInputs; iWeight++)
 				{
 					iWeightCounter++;
 				}

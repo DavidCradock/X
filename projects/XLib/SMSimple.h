@@ -157,9 +157,9 @@ namespace X
 		CSMLightPoint mvLightPoint[4];			// The point lights for this scene
 		int miNumPointLights;					// The number of point lights to use. Can be between (default)0 and 4
 	private:
-		mutable std::map<std::string, CSMEntityVertexBuffer*>	mmapEntitiesVertexBuffers;	// Each named vertex buffer entity in this scene.
-		mutable std::map<std::string, CSMEntityLine*>			mmapEntitiesLines;			// Each named line entity in this scene.
-		mutable std::map<std::string, CSMMaterial*>				mmapMaterials;				// Each named material in this scene.
+		mutable std::map<std::string, CSMEntityVertexBuffer*>	_mmapEntitiesVertexBuffers;	// Each named vertex buffer entity in this scene.
+		mutable std::map<std::string, CSMEntityLine*>			_mmapEntitiesLines;			// Each named line entity in this scene.
+		mutable std::map<std::string, CSMMaterial*>				_mmapMaterials;				// Each named material in this scene.
 		
 		// Variables used for rendering the depth map for the directional light
 		CMatrix _mmatShadowsDirectionalLightViewProj;	// The view projection matrix for the directional light. Set when rendering the scene to the camera's framebuffer

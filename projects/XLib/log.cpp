@@ -8,7 +8,7 @@ namespace X
 		std::fstream fs;
 		fs.open("log.txt", std::ios::out | std::ios::trunc);
 		fs.close();
-		mlogEntry.clear();
+		_mlogEntry.clear();
 	}
 
 	void CLog::add(const std::string& string, bool bAddNewLine, bool bAddTime)
@@ -17,10 +17,10 @@ namespace X
 		fs.open("log.txt", std::ios::out | std::ios::app);
 		if (bAddTime)
 		{
-			timer.update();
+			_timer.update();
 			float fClockSec;
 			int iClockMin, iClockHours, iClockDays, iClockWeeks;
-			timer.getClock(fClockSec, iClockMin, iClockHours, iClockDays, iClockWeeks);
+			_timer.getClock(fClockSec, iClockMin, iClockHours, iClockDays, iClockWeeks);
 			std::string strClock;
 			strClock += std::to_string(iClockWeeks) + "w:";
 			strClock += std::to_string(iClockDays) + "d:";
@@ -36,17 +36,17 @@ namespace X
 			fs << "\n";
 		fs.close();
 
-		mlogEntry.push_back(string);
+		_mlogEntry.push_back(string);
 	}
 
 	size_t CLog::getNumEntries(void) const
 	{
-		return mlogEntry.size();
+		return _mlogEntry.size();
 	}
 
 	std::string CLog::getEntryText(size_t entryIndex) const
 	{
-		ThrowIfTrue(entryIndex >= mlogEntry.size(), "CLog::getEntryText() with given index of " + std::to_string(entryIndex) + " failed as given index is invalid.");
-		return mlogEntry[entryIndex];
+		ThrowIfTrue(entryIndex >= _mlogEntry.size(), "CLog::getEntryText() with given index of " + std::to_string(entryIndex) + " failed as given index is invalid.");
+		return _mlogEntry[entryIndex];
 	}
 }

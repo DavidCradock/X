@@ -59,8 +59,8 @@ namespace X
 		else if (state::down == _mState)
 			pTexColour = pRM->getTexture2DFromFile(_mstrTextureDown);
 
-		CVector2f vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 
 		// Bind textures
 		pTexColour->bind(0);

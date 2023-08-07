@@ -164,7 +164,7 @@ namespace X
 			IXAudio2SourceVoice* pVoice;
 			// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
 			// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
-			ThrowIfTrue(FAILED(hr = SCAudioManager::getPointer()->mpXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&wfx)), "CAudioEmitter::CAudioEmitter() failed to create source voice.");
+			ThrowIfTrue(FAILED(hr = SCAudioManager::getPointer()->_mpXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&wfx)), "CAudioEmitter::CAudioEmitter() failed to create source voice.");
 			_mvecVoices.push_back(pVoice);
 		}
 
@@ -345,12 +345,12 @@ namespace X
 		ThrowIfTrue(FAILED(hr), "SCAudioManager() failed to initialise COM.");
 
 		pLog->add("SCAudioManager creating XAudio2 engine instance.");
-		mpXAudio2 = nullptr;
-		ThrowIfTrue(FAILED(hr = XAudio2Create(&mpXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR)), "SCAudioManager() failed to create instance of the XAudio2 engine.");
+		_mpXAudio2 = nullptr;
+		ThrowIfTrue(FAILED(hr = XAudio2Create(&_mpXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR)), "SCAudioManager() failed to create instance of the XAudio2 engine.");
 
 		pLog->add("SCAudioManager creating mastering voice.");
-		mpMasterVoice = nullptr;
-		ThrowIfTrue(FAILED(hr = mpXAudio2->CreateMasteringVoice(&mpMasterVoice)), "SCAudioManager() failed to create mastering voice.");
+		_mpMasterVoice = nullptr;
+		ThrowIfTrue(FAILED(hr = _mpXAudio2->CreateMasteringVoice(&_mpMasterVoice)), "SCAudioManager() failed to create mastering voice.");
 
 		addNewSampleGroup("default");
 		pLog->add("SCAudioManager initialisation complete.");
@@ -358,7 +358,7 @@ namespace X
 
 	unsigned int SCAudioManager::getNumSampleGroups(void)
 	{
-		return (unsigned int)mmapGroup.size();
+		return (unsigned int)_mmapGroup.size();
 	}
 
 	unsigned int SCAudioManager::getNumSamplesInGroup(const std::string& strGroupName)
@@ -370,7 +370,7 @@ namespace X
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
 		return (unsigned int)itg->second->mmapResource.size();;
 	}
 
@@ -383,7 +383,7 @@ namespace X
 			err.append("\") failed. The group doesn't exist.");
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
 
 		unsigned int iResLoadedTotal = 0;
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.begin();
@@ -398,7 +398,7 @@ namespace X
 
 	const std::string& SCAudioManager::getSampleGroupName(unsigned int iGroupIndex)
 	{
-		if (iGroupIndex >= mmapGroup.size())
+		if (iGroupIndex >= _mmapGroup.size())
 		{
 			std::string err("SCAudioManager::getSampleGroupName(");
 
@@ -407,7 +407,7 @@ namespace X
 			err.append(std::to_string(getNumSampleGroups()));
 			ThrowIfTrue(1, err);
 		}
-		std::map<std::string, Group*>::iterator itg = mmapGroup.begin();
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.begin();
 		unsigned int i = 0;
 		while (i < iGroupIndex)
 		{
@@ -424,13 +424,13 @@ namespace X
 			return;
 		}
 		Group* pNewGroup = new Group;
-		mmapGroup[strNewGroupName] = pNewGroup;
+		_mmapGroup[strNewGroupName] = pNewGroup;
 	}
 
 	bool SCAudioManager::sampleGroupExists(const std::string& strGroupName)
 	{
-		std::map<std::string, Group*>::iterator it = mmapGroup.find(strGroupName);
-		if (it == mmapGroup.end())
+		std::map<std::string, Group*>::iterator it = _mmapGroup.find(strGroupName);
+		if (it == _mmapGroup.end())
 			return false;
 		return true;
 	}
@@ -447,7 +447,7 @@ namespace X
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
 
 		// For each resource in this group...
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.begin();
@@ -474,7 +474,7 @@ namespace X
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
 
 		// For each resource in this group...
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.begin();
@@ -502,7 +502,7 @@ namespace X
 		}
 
 		// Unload any loaded resources within the group
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
 
 		// For each resource in this group...
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.begin();
@@ -536,7 +536,7 @@ namespace X
 		}
 
 		// Resource already exists in the group?
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);								// Get iterator to the group (we know it exists)
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);									// Get iterator to the group (we know it exists)
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strNewResourceName);		// Try to find the named resource in the group
 		if (itg->second->mmapResource.end() != it)
 		{
@@ -575,7 +575,7 @@ namespace X
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);								// Get iterator to the group (we know it exists)
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);							// Get iterator to the group (we know it exists)
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
 		if (itg->second->mmapResource.end() == it)
 		{
@@ -602,8 +602,8 @@ namespace X
 
 	bool SCAudioManager::getExistsSample(const std::string& strResourceName, const std::string& strGroupName)
 	{
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
-		if (itg == mmapGroup.end())
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
+		if (itg == _mmapGroup.end())
 			return false;
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);
 		if (it == itg->second->mmapResource.end())
@@ -613,8 +613,8 @@ namespace X
 
 	bool SCAudioManager::getSampleLoaded(const std::string& strResourceName, const std::string& strGroupName)
 	{
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);
-		if (itg == mmapGroup.end())
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);
+		if (itg == _mmapGroup.end())
 			return false;
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);
 		if (it == itg->second->mmapResource.end())
@@ -638,7 +638,7 @@ namespace X
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strGroupName);								// Get iterator to the group (we know it exists)
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strGroupName);							// Get iterator to the group (we know it exists)
 		std::map<std::string, ResourceSample*>::iterator it = itg->second->mmapResource.find(strResourceName);	// Try to find the named resource in the group
 		if (itg->second->mmapResource.end() == it)
 		{
@@ -675,7 +675,7 @@ namespace X
 	unsigned int SCAudioManager::getMemoryUsage(void)
 	{
 		XAUDIO2_PERFORMANCE_DATA pPerformanceData;// = 0;
-		mpXAudio2->GetPerformanceData(&pPerformanceData);
+		_mpXAudio2->GetPerformanceData(&pPerformanceData);
 		return pPerformanceData.MemoryUsageInBytes;
 	}
 
@@ -685,8 +685,8 @@ namespace X
 		std::string strErr("SCAudioManager::addEmitter(");
 		strErr += strEmitterName + ", " + strSampleName + ", " + std::to_string(iMaxSimultaneousInstances) + ", " + strSampleGroupname + ") ";
 		// Make sure the named group exists
-		std::map<std::string, Group*>::iterator itg = mmapGroup.find(strSampleGroupname);
-		if (itg == mmapGroup.end())
+		std::map<std::string, Group*>::iterator itg = _mmapGroup.find(strSampleGroupname);
+		if (itg == _mmapGroup.end())
 		{
 			strErr += "failed as the named group doesn't exist.";
 			ThrowIfTrue(1, strErr);

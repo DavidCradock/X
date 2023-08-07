@@ -35,8 +35,8 @@ namespace X
 		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
 		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:guitooltipFB");
 		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
-		CVector2f vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 		SCWindow* pWindow = SCWindow::getPointer();
 		SCInputManager* pInput = SCInputManager::getPointer();
 
@@ -588,9 +588,9 @@ namespace X
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->mvDimensions.x;
+			pNewRes->mfWidth = pTex->getDimensions().x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->mvDimensions.y;
+			pNewRes->mfHeight = pTex->getDimensions().y;
 
 		return pNewRes;
 	}

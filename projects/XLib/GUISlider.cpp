@@ -76,8 +76,8 @@ namespace X
 		pFBSample->bindAsTexture(3);
 
 
-		CVector2f vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 
 		if (_mbOrientationIsHorizontal)
 		{
@@ -324,8 +324,8 @@ namespace X
 			fSecondsPast = 0.1f;
 		CGUITheme* pTheme = pContainer->getTheme();
 		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.sliderTabColour);
-		CVector2f vSliderTabTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
-		CVector2f vSliderTabTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		CVector2f vSliderTabTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
+		CVector2f vSliderTabTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 
 		// Compute slider orientation
 		_mbOrientationIsHorizontal = false;

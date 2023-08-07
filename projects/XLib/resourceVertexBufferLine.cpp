@@ -7,12 +7,12 @@ namespace X
 
 	CResourceVertexBufferLine::CResourceVertexBufferLine()
 	{
-		vertexBufferObject = 0;
-		vertexArrayObject = 0;
-		elementBufferObject = 0;
-		muiIndex = 0;
+		_mVertexBufferObject = 0;
+		_mVertexArrayObject = 0;
+		_mElementBufferObject = 0;
+		_muiIndex = 0;
 		//onGLContextCreated();
-		muiLineMode = GL_LINE_STRIP;
+		_muiLineMode = GL_LINE_STRIP;
 	}
 
 	CResourceVertexBufferLine::~CResourceVertexBufferLine()
@@ -27,57 +27,57 @@ namespace X
 
 	void CResourceVertexBufferLine::onGLContextToBeDestroyed(void)
 	{
-		if (vertexBufferObject)
+		if (_mVertexBufferObject)
 		{
-			glDeleteBuffers(1, &vertexBufferObject);
-			vertexBufferObject = 0;
+			glDeleteBuffers(1, &_mVertexBufferObject);
+			_mVertexBufferObject = 0;
 		}
-		if (vertexArrayObject)
+		if (_mVertexArrayObject)
 		{
-			glDeleteVertexArrays(1, &vertexArrayObject);
-			vertexArrayObject = 0;
+			glDeleteVertexArrays(1, &_mVertexArrayObject);
+			_mVertexArrayObject = 0;
 		}
-		if (elementBufferObject)
+		if (_mElementBufferObject)
 		{
-			glDeleteBuffers(1, &elementBufferObject);
-			elementBufferObject = 0;
+			glDeleteBuffers(1, &_mElementBufferObject);
+			_mElementBufferObject = 0;
 		}
 	}
 
 	void CResourceVertexBufferLine::removeGeom(void)
 	{
-		vertices.clear();
-		indices.clear();
-		muiIndex = 0;
+		_mvecVertices.clear();
+		_mvecIndices.clear();
+		_muiIndex = 0;
 	}
 
 	void CResourceVertexBufferLine::update(void)
 	{
-		if (!vertices.size())
+		if (!_mvecVertices.size())
 			return;
-		if (!indices.size())
+		if (!_mvecIndices.size())
 			return;
 
-		if (!vertexBufferObject)
-			glGenBuffers(1, &vertexBufferObject);
-		if (!vertexArrayObject)
-			glGenVertexArrays(1, &vertexArrayObject);
-		if (!elementBufferObject)
-			glGenBuffers(1, &elementBufferObject);
+		if (!_mVertexBufferObject)
+			glGenBuffers(1, &_mVertexBufferObject);
+		if (!_mVertexArrayObject)
+			glGenVertexArrays(1, &_mVertexArrayObject);
+		if (!_mElementBufferObject)
+			glGenBuffers(1, &_mElementBufferObject);
 
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 
 		// GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
 		// GL_STATIC_DRAW: the data is set only once and used many times.
 		// GL_DYNAMIC_DRAW : the data is changed a lot and used many times.
 
 		// Bind VBO and upload vertex data
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, _mVertexBufferObject);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * _mvecVertices.size(), &_mvecVertices[0], GL_STATIC_DRAW);
 
 		// Indicies
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mElementBufferObject);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _mvecIndices.size(), &_mvecIndices[0], GL_STATIC_DRAW);
 
 		// Position
 		glVertexAttribPointer(0,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
@@ -114,31 +114,31 @@ namespace X
 
 	void CResourceVertexBufferLine::render(void) const
 	{
-		if (!vertexArrayObject)
+		if (!_mVertexArrayObject)
 			return;
 
-		if (0 == indices.size())
+		if (0 == _mvecIndices.size())
 			return;
 
-		if (0 == vertices.size())
+		if (0 == _mvecVertices.size())
 			return;
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		glBindVertexArray(vertexArrayObject);
+		glBindVertexArray(_mVertexArrayObject);
 		glDrawElements(
-			muiLineMode,				// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
-			(GLsizei)indices.size(),	// Count. Specifies the number of elements to be rendered.
-			GL_UNSIGNED_INT,			// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
-			0);							// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
+			_muiLineMode,					// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
+			(GLsizei)_mvecIndices.size(),	// Count. Specifies the number of elements to be rendered.
+			GL_UNSIGNED_INT,				// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
+			0);								// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
 		glBindVertexArray(0);
 	}
 
 	void CResourceVertexBufferLine::addLinePoint(const Vertex& newVertex)
 	{
-		vertices.push_back(newVertex);
-		indices.push_back(muiIndex);
-		muiIndex++;
+		_mvecVertices.push_back(newVertex);
+		_mvecIndices.push_back(_muiIndex);
+		_muiIndex++;
 	}
 
 	void CResourceVertexBufferLine::addCircle(const CVector2f& vCentrePosition, float fRadius, unsigned int uiNumSegments, const CColour &colour)
@@ -147,7 +147,7 @@ namespace X
 		Vertex v;
 		v.colour = colour;
 		float fAngDeltaPerSeg = k2Pi / float(uiNumSegments);
-		if (GL_LINE_STRIP == muiLineMode)
+		if (GL_LINE_STRIP == _muiLineMode)
 		{
 			float fAng = 0.0f;
 			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments; uiSegment++)
@@ -155,13 +155,13 @@ namespace X
 				v.position.x = vCentrePosition.x + (sinf(fAng) * fRadius);
 				v.position.y = vCentrePosition.y + (cosf(fAng) * fRadius);
 
-				vertices.push_back(v);
-				indices.push_back(muiIndex);
-				muiIndex++;
+				_mvecVertices.push_back(v);
+				_mvecIndices.push_back(_muiIndex);
+				_muiIndex++;
 				fAng += fAngDeltaPerSeg;
 			}
 		}
-		else if (GL_LINES == muiLineMode)
+		else if (GL_LINES == _muiLineMode)
 		{
 			float fAng = 0.0f;
 			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments; uiSegment++)
@@ -169,15 +169,15 @@ namespace X
 				v.position.x = vCentrePosition.x + (sinf(fAng) * fRadius);
 				v.position.y = vCentrePosition.y + (cosf(fAng) * fRadius);
 
-				vertices.push_back(v);
-				indices.push_back(muiIndex);
-				muiIndex++;
+				_mvecVertices.push_back(v);
+				_mvecIndices.push_back(_muiIndex);
+				_muiIndex++;
 
 				v.position.x = vCentrePosition.x + (sinf(fAng + fAngDeltaPerSeg) * fRadius);
 				v.position.y = vCentrePosition.y + (cosf(fAng + fAngDeltaPerSeg) * fRadius);
-				vertices.push_back(v);
-				indices.push_back(muiIndex);
-				muiIndex++;
+				_mvecVertices.push_back(v);
+				_mvecIndices.push_back(_muiIndex);
+				_muiIndex++;
 
 				fAng += fAngDeltaPerSeg;
 			}
@@ -212,27 +212,27 @@ namespace X
 		vTL.position.x = vBL.position.x;
 		vTL.position.y = vTR.position.y;
 
-		if (GL_LINE_STRIP == muiLineMode)
+		if (GL_LINE_STRIP == _muiLineMode)
 		{
-			vertices.push_back(vBL);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vTL);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vTR);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vBR);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vBL);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(vBL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vTL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vTR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vBR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vBL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 		}
-		else if (GL_LINES == muiLineMode)
+		else if (GL_LINES == _muiLineMode)
 		{
-			vertices.push_back(vBL);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vTL);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(vBL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vTL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
-			vertices.push_back(vTL);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vTR);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(vTL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vTR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
-			vertices.push_back(vTR);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vBR);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(vTR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vBR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
-			vertices.push_back(vBR);	indices.push_back(muiIndex);	muiIndex++;
-			vertices.push_back(vBL);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(vBR);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
+			_mvecVertices.push_back(vBL);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 		}
 	}
 
@@ -240,68 +240,78 @@ namespace X
 	{
 		Vertex v;
 
-		if (GL_LINE_STRIP == muiLineMode)
+		if (GL_LINE_STRIP == _muiLineMode)
 		{
 			// X
 			v.colour.set(1.0f, 0.0f, 0.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.x += fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
 			// Y
 			v.colour.set(0.0f, 1.0f, 0.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.y += fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
 			// Z
 			v.colour.set(0.0f, 0.0f, 1.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.z -= fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
 		}
-		else if (GL_LINES == muiLineMode)
+		else if (GL_LINES == _muiLineMode)
 		{
 			// X
 			v.colour.set(1.0f, 0.0f, 0.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.x += fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.x = vCentrePosition.x;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
 			// Y
 			v.colour.set(0.0f, 1.0f, 0.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.y += fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.y = vCentrePosition.y;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 
 			// Z
 			v.colour.set(0.0f, 0.0f, 1.0f, 1.0f);
 			v.position = vCentrePosition;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.z -= fLineLength;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 			v.position.z = vCentrePosition.z;
-			vertices.push_back(v);	indices.push_back(muiIndex);	muiIndex++;
+			_mvecVertices.push_back(v);	_mvecIndices.push_back(_muiIndex);	_muiIndex++;
 		}
 	}
 
 	void CResourceVertexBufferLine::setDrawModeAsLineStrip(void)
 	{
-		muiLineMode = GL_LINE_STRIP;
+		_muiLineMode = GL_LINE_STRIP;
 	}
 	
 	void CResourceVertexBufferLine::setDrawModeAsLineList(void)
 	{
-		muiLineMode = GL_LINES;
+		_muiLineMode = GL_LINES;
+	}
+
+	size_t CResourceVertexBufferLine::getNumVertices(void) const
+	{
+		return _mvecVertices.size();
+	}
+
+	size_t CResourceVertexBufferLine::getNumIndicies(void) const
+	{
+		return _mvecIndices.size();
 	}
 }

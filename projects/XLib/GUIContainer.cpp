@@ -241,7 +241,7 @@ namespace X
 
 		SCInputManager* pInput = SCInputManager::getPointer();
 		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		CVector2f vTexDimsDiv3 = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour)->mvDimensions * 0.3333333f;
+		CVector2f vTexDimsDiv3 = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour)->getDimensions() * 0.3333333f;
 
 		// Determine whether mouse cursor is over this container
 		bool bMouseOver = false;
@@ -327,7 +327,7 @@ namespace X
 		{
 			// Get a texture so we can determine dimensions
 			CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour);
-			CVector2f vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
+			CVector2f vTexDimsDiv3 = pTexColour->getDimensions() * 0.3333333f;
 			if (mfPositionX < vTexDimsDiv3.x)
 				mfPositionX = vTexDimsDiv3.x;
 			else if (mfPositionX + mfWidth + vTexDimsDiv3.x > vWindowDims.x)
@@ -642,7 +642,7 @@ namespace X
 			mTC.centre.TL);
 
 		// Render the left edge
-		CVector2f vTexDimsDiv3 = pTexColour->mvDimensions * 0.3333333f;
+		CVector2f vTexDimsDiv3 = pTexColour->getDimensions() * 0.3333333f;
 		pVB->addQuad2D(
 			CVector2f(mfPositionX - vTexDimsDiv3.x, mfPositionY),	// Position
 			CVector2f(vTexDimsDiv3.x, mfHeight),					// Dimensions
@@ -1017,9 +1017,9 @@ namespace X
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->mvDimensions.x;
+			pNewRes->mfWidth = pTex->getDimensions().x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->mvDimensions.y;
+			pNewRes->mfHeight = pTex->getDimensions().y;
 
 		return pNewRes;
 	}
@@ -1045,9 +1045,9 @@ namespace X
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->mvDimensions.x;
+			pNewRes->mfWidth = pTex->getDimensions().x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->mvDimensions.y;
+			pNewRes->mfHeight = pTex->getDimensions().y;
 
 		return pNewRes;
 	}
@@ -1289,9 +1289,9 @@ namespace X
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
-			pNewRes->mfWidth = pTex->mvDimensions.x;
+			pNewRes->mfWidth = pTex->getDimensions().x;
 		if (fHeight < 0)
-			pNewRes->mfHeight = pTex->mvDimensions.y;
+			pNewRes->mfHeight = pTex->getDimensions().y;
 
 		return pNewRes;
 	}

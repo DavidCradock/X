@@ -207,11 +207,11 @@ namespace X
 		// If this image contains no data, an exception occurs.
 		void normalmap(CImage& outputImage, float fScale = 1.0f) const;
 	private:
-		unsigned char* pData;
-		unsigned int dataSize;
-		int width;
-		int height;
-		int numChannels;
+		unsigned char* _mpData;
+		unsigned int _muiDataSize;
+		int _miWidth;
+		int _miHeight;
+		int _miNumChannels;
 
 		// Used by edgeDetect()
 		inline bool _isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b);
@@ -229,56 +229,56 @@ namespace X
 
 	inline void CImage::setPixel(int iX, int iY, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 	{
-		if (iX >= width)
+		if (iX >= _miWidth)
 			return;
-		if (iY >= height)
+		if (iY >= _miHeight)
 			return;
 
-		unsigned int iIndex = iX + (iY * width);
-		iIndex *= numChannels;
-		switch (numChannels)
+		unsigned int iIndex = iX + (iY * _miWidth);
+		iIndex *= _miNumChannels;
+		switch (_miNumChannels)
 		{
 		case 1:
-			pData[iIndex] = r;
+			_mpData[iIndex] = r;
 			break;
 		case 3:
-			pData[iIndex] = r;
-			pData[iIndex + 1] = g;
-			pData[iIndex + 2] = b;
+			_mpData[iIndex] = r;
+			_mpData[iIndex + 1] = g;
+			_mpData[iIndex + 2] = b;
 			break;
 		case 4:
-			pData[iIndex] = r;
-			pData[iIndex + 1] = g;
-			pData[iIndex + 2] = b;
-			pData[iIndex + 3] = a;
+			_mpData[iIndex] = r;
+			_mpData[iIndex + 1] = g;
+			_mpData[iIndex + 2] = b;
+			_mpData[iIndex + 3] = a;
 			break;
 		}
 	}
 
 	inline void CImage::getPixel(int iX, int iY, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a) const
 	{
-		if (iX >= width)
+		if (iX >= _miWidth)
 			return;
-		if (iY >= height)
+		if (iY >= _miHeight)
 			return;
 
-		unsigned int iIndex = iX + (iY * width);
-		iIndex *= numChannels;
-		switch (numChannels)
+		unsigned int iIndex = iX + (iY * _miWidth);
+		iIndex *= _miNumChannels;
+		switch (_miNumChannels)
 		{
 		case 1:
-			r = pData[iIndex];
+			r = _mpData[iIndex];
 			break;
 		case 3:
-			r = pData[iIndex];
-			g = pData[iIndex + 1];
-			b = pData[iIndex + 2];
+			r = _mpData[iIndex];
+			g = _mpData[iIndex + 1];
+			b = _mpData[iIndex + 2];
 			break;
 		case 4:
-			r = pData[iIndex];
-			g = pData[iIndex + 1];
-			b = pData[iIndex + 2];
-			a = pData[iIndex + 3];
+			r = _mpData[iIndex];
+			g = _mpData[iIndex + 1];
+			b = _mpData[iIndex + 2];
+			a = _mpData[iIndex + 3];
 			break;
 		}
 	}
@@ -290,9 +290,9 @@ namespace X
 			return false;
 		if (iPosY == 0)
 			return false;
-		if (iPosX >= int(width) - 1)
+		if (iPosX >= int(_miWidth) - 1)
 			return false;
-		if (iPosY >= int(height) - 1)
+		if (iPosY >= int(_miHeight) - 1)
 			return false;
 
 		// Get center pixel colour values

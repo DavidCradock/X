@@ -29,9 +29,9 @@ namespace X
 		CInputMouse	mouse;	// Mouse object
 	private:
 
-		LPDIRECTINPUT8 directInput;	// Main DirectX input object
-		HINSTANCE instance;		// Handle to application's instance
-		HWND windowHandle;			// Handle to application's window
+		LPDIRECTINPUT8 _mDirectInput;	// Main DirectX input object
+		HINSTANCE _mInstance;			// Handle to application's instance
+		HWND _mWindowHandle;			// Handle to application's window
 
 	};
 

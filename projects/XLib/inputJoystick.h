@@ -64,14 +64,14 @@ namespace X
 		inline int getNumAxis(void) const;
 
 		LPDIRECTINPUT8			directInput;			// Pointer to main DirectX input object
-		LPDIRECTINPUTDEVICE8	device;	// DirectX input device object for the joystick
+		LPDIRECTINPUTDEVICE8	device;					// DirectX input device object for the joystick
 	private:
-		bool joystickDetected;
-		bool forcefeedbackDetected;
+		bool _mbJoystickDetected;
+		bool _mbForcefeedbackDetected;
 		DIJOYSTATE2 _mjs;	// Joystick states
-		int numButtons;
-		int numPOVS;
-		int numAxis;
+		int _miNumButtons;
+		int _miNumPOVS;
+		int _miNumAxis;
 	};
 
 }

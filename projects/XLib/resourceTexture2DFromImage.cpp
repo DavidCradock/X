@@ -23,8 +23,8 @@ namespace X
 	void CResourceTexture2DFromImage::onGLContextCreated(void)
 	{
 		ThrowIfTrue(0 == _mImage.getWidth() || 0 == _mImage.getHeight(), "CResourceTexture2DFromImage::onGLContextCreated() failed. Passed image has zero dimensions.");
-		mvDimensions.x = (float)_mImage.getWidth();
-		mvDimensions.y = (float)_mImage.getHeight();
+		_mvDimensions.x = (float)_mImage.getWidth();
+		_mvDimensions.y = (float)_mImage.getHeight();
 		glGenTextures(1, &_muiTextureID);
 		glBindTexture(GL_TEXTURE_2D, _muiTextureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -156,5 +156,10 @@ namespace X
 		pVB->render();
 		pShader->unbind();
 		unbind(0);
+	}
+
+	CVector2f CResourceTexture2DFromImage::getDimensions(void) const
+	{
+		return _mvDimensions;
 	}
 }

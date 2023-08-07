@@ -226,29 +226,29 @@ namespace X
 	private:
 
 		// The number of inputs this network has
-		int miNumInputs;
+		int _miNumInputs;
 
 		// The number of outputs this network has
-		int miNumOutputs;
+		int _miNumOutputs;
 
 		// The number of layers of neurons this network has
 		// If this is zero, mvecLayers still contains the output layer.
-		int miNumLayers;
+		int _miNumLayers;
 
 		// The number of neurons per layer this network has
-		int miNumNeuronsPerLayer;
+		int _miNumNeuronsPerLayer;
 
 		// The bias which is multiplied to the results of a neuron's weight * input during update.
 		// It is typically set to -1
-		double mdBias;
+		double _mdBias;
 
 		// Holds the response value used by the sigmoid function
-		double mdSigmoidResponse;
+		double _mdSigmoidResponse;
 
 		// Vector holding each layer of neurons (if any)
 		// The final layer is the outputs.
 		// If the number of layers is set to zero, then there will only be one
 		// layer, the output layer.
-		std::vector<CNeuronLayer> mvecLayers;
+		std::vector<CNeuronLayer> _mvecLayers;
 	};
 }

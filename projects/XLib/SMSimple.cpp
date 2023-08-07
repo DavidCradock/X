@@ -183,41 +183,41 @@ namespace X
 		pNewMaterial->setAmbientStrength(fAmbientStrength);
 
 		// Place in the hashmap
-		mmapMaterials[strMaterialName] = pNewMaterial;
+		_mmapMaterials[strMaterialName] = pNewMaterial;
 		return pNewMaterial;
 	}
 
 	CSMMaterial* CSceneManagerSimple::getMaterial(const std::string& strMaterialName) const
 	{
-		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
-		ThrowIfTrue(it == mmapMaterials.end(), "CSceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
+		std::map<std::string, CSMMaterial*>::iterator it = _mmapMaterials.find(strMaterialName);
+		ThrowIfTrue(it == _mmapMaterials.end(), "CSceneManagerSimple::getMaterial(" + strMaterialName + ") failed. Material doesn't exist.");
 		return it->second;
 	}
 
 	bool CSceneManagerSimple::getMaterialExists(const std::string& strMaterialName) const
 	{
-		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
-		return it != mmapMaterials.end();
+		std::map<std::string, CSMMaterial*>::iterator it = _mmapMaterials.find(strMaterialName);
+		return it != _mmapMaterials.end();
 	}
 
 	void CSceneManagerSimple::removeMaterial(const std::string& strMaterialName)
 	{
-		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.find(strMaterialName);
-		if (it == mmapMaterials.end())
+		std::map<std::string, CSMMaterial*>::iterator it = _mmapMaterials.find(strMaterialName);
+		if (it == _mmapMaterials.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		mmapMaterials.erase(it);
+		_mmapMaterials.erase(it);
 	}
 
 	void CSceneManagerSimple::removeAllMaterials(void)
 	{
-		std::map<std::string, CSMMaterial*>::iterator it = mmapMaterials.begin();
-		while (it != mmapMaterials.end())
+		std::map<std::string, CSMMaterial*>::iterator it = _mmapMaterials.begin();
+		while (it != _mmapMaterials.end())
 		{
 			delete it->second;
 			it++;
 		}
-		mmapMaterials.clear();
+		_mmapMaterials.clear();
 	}
 
 	CSMEntityVertexBuffer* CSceneManagerSimple::addEntityVertexBuffer(
@@ -237,41 +237,41 @@ namespace X
 		pNewEntity->mstrMaterialName = strMaterialName;
 
 		// Place in the hashmap
-		mmapEntitiesVertexBuffers[strEntityName] = pNewEntity;
+		_mmapEntitiesVertexBuffers[strEntityName] = pNewEntity;
 		return pNewEntity;
 	}
 
 	CSMEntityVertexBuffer* CSceneManagerSimple::getEntityVertexBuffer(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesVertexBuffers.end(), "CSceneManagerSimple::getEntityVertexBuffer(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.find(strEntityName);
+		ThrowIfTrue(it == _mmapEntitiesVertexBuffers.end(), "CSceneManagerSimple::getEntityVertexBuffer(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
 	bool CSceneManagerSimple::getEntityVertexBufferExists(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
-		return it != mmapEntitiesVertexBuffers.end();
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.find(strEntityName);
+		return it != _mmapEntitiesVertexBuffers.end();
 	}
 
 	void CSceneManagerSimple::removeEntityVertexBuffer(const std::string& strEntityName)
 	{
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
-		if (it == mmapEntitiesVertexBuffers.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.find(strEntityName);
+		if (it == _mmapEntitiesVertexBuffers.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		mmapEntitiesVertexBuffers.erase(it);
+		_mmapEntitiesVertexBuffers.erase(it);
 	}
 
 	void CSceneManagerSimple::removeAllEnititiesVertexBuffer(void)
 	{
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
-		while (it != mmapEntitiesVertexBuffers.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.begin();
+		while (it != _mmapEntitiesVertexBuffers.end())
 		{
 			delete it->second;
 			it++;
 		}
-		mmapEntitiesVertexBuffers.clear();
+		_mmapEntitiesVertexBuffers.clear();
 	}
 
 	CSMEntityLine* CSceneManagerSimple::addEntityLine(const std::string& strEntityName, const std::string& strLineName,	const std::string& strTextureName)
@@ -288,41 +288,41 @@ namespace X
 		pNewEntity->mstrTextureName = strTextureName;
 
 		// Place in the hashmap
-		mmapEntitiesLines[strEntityName] = pNewEntity;
+		_mmapEntitiesLines[strEntityName] = pNewEntity;
 		return pNewEntity;
 	}
 
 	CSMEntityLine* CSceneManagerSimple::getEntityLine(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesLines.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityLine*>::iterator it = _mmapEntitiesLines.find(strEntityName);
+		ThrowIfTrue(it == _mmapEntitiesLines.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
 	bool CSceneManagerSimple::getEntityLineExists(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
-		return it != mmapEntitiesLines.end();
+		std::map<std::string, CSMEntityLine*>::iterator it = _mmapEntitiesLines.find(strEntityName);
+		return it != _mmapEntitiesLines.end();
 	}
 
 	void CSceneManagerSimple::removeEntityLine(const std::string& strEntityName)
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
-		if (it == mmapEntitiesLines.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = _mmapEntitiesLines.find(strEntityName);
+		if (it == _mmapEntitiesLines.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		mmapEntitiesLines.erase(it);
+		_mmapEntitiesLines.erase(it);
 	}
 
 	void CSceneManagerSimple::removeAllEntitiesLine(void)
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.begin();
-		while (it != mmapEntitiesLines.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = _mmapEntitiesLines.begin();
+		while (it != _mmapEntitiesLines.end())
 		{
 			delete it->second;
 			it++;
 		}
-		mmapEntitiesLines.clear();
+		_mmapEntitiesLines.clear();
 	}
 
 	void CSceneManagerSimple::_renderTriangleEntities(CSMCamera* pCamera)
@@ -416,8 +416,8 @@ namespace X
 		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
 		// Vertex buffer entities
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
-		while (it != mmapEntitiesVertexBuffers.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.begin();
+		while (it != _mmapEntitiesVertexBuffers.end())
 		{
 			// Get entity material
 			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
@@ -486,8 +486,8 @@ namespace X
 		pShader->setMat4("matrixView", pCamera->getViewMatrix());
 
 		// Vertex buffer line entities
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.begin();
-		while (it != mmapEntitiesLines.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = _mmapEntitiesLines.begin();
+		while (it != _mmapEntitiesLines.end())
 		{
 			// Get vertex buffer and textures used by each entity
 			pLine = pRM->getVertexBufferLine(it->second->mstrLineName);
@@ -566,8 +566,8 @@ namespace X
 
 		// Vertex buffer entities
 		CResourceVertexBufferBNT* pVB;
-		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
-		while (it != mmapEntitiesVertexBuffers.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.begin();
+		while (it != _mmapEntitiesVertexBuffers.end())
 		{
 			pVB = pRM->getVertexBufferBNT(it->second->mstrVertexBufferName);
 			pShader->setMat4("model", it->second->getWorldMatrix());

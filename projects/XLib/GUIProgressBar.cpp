@@ -75,8 +75,8 @@ namespace X
 		pTexReflection->bind(2);
 		pFBSample->bindAsTexture(3);
 
-		CVector2f vTexDimsPoint3 = pTexColour->mvDimensions * 0.3333333f;
-		CVector2f vTexDimsPoint6 = pTexColour->mvDimensions * 0.6666666f;
+		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
+		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 		CVector2f vFillerPos;
 		CVector2f vFillerDims;
 		

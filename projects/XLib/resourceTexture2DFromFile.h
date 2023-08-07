@@ -32,9 +32,12 @@ namespace X
 		// Renders the contents of this texture to a 2D quad with specified position and dimensions
 		void renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour = CColour());
 
+		// Returns dimensions of the texture
+		CVector2f getDimensions(void) const;
+	private:
 		std::string _mstrImageFilename;
 		unsigned int _muiTextureID;
 		bool _mbFlipYaxis;	// Whether to flip the image data in during loading or not.
-		CVector2f mvDimensions;	// Dimensions of the texture
+		CVector2f _mvDimensions;	// Dimensions of the texture
 	};
 }

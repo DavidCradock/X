@@ -65,7 +65,7 @@ namespace X
 		// Updates the world matrix ragardless of _mbWorldNeedsUpdate value
 		void _updateWorldMatrix(void);
 
-		CMatrix matrixWorld;		// Holds the world transform of this entity
+		CMatrix _matrixWorld;		// Holds the world transform of this entity
 		bool _mbWorldNeedsUpdate;	// Whether the world matrix of this entity needs updating
 		
 		CVector3f _mvPosition;		// Position of this entity in world space

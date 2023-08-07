@@ -10,56 +10,56 @@ namespace X
 
     void CTimer::pause(void)
     {
-        mbPaused = true;
+        _mbPaused = true;
     }
 
     void CTimer::resume(void)
     {
-        mbPaused = false;
+        _mbPaused = false;
     }
 
     float CTimer::getSecondsPast(void) const
     {
-        if (mbPaused)
+        if (_mbPaused)
             return 0.0f;
-        return (float)mdDeltaSec;
+        return (float)_mdDeltaSec;
     }
 
     void CTimer::update(void)
     {
-        mdTimePointNew = std::chrono::steady_clock::now();
-        mdTimeDeltaSec = mdTimePointNew - mdTimePointOld;
-        mdTimePointOld = mdTimePointNew;// std::chrono::steady_clock::now();
+        _mdTimePointNew = std::chrono::steady_clock::now();
+        _mdTimeDeltaSec = _mdTimePointNew - _mdTimePointOld;
+        _mdTimePointOld = _mdTimePointNew;// std::chrono::steady_clock::now();
 
-        mdDeltaSec = mdTimeDeltaSec.count();
+        _mdDeltaSec = _mdTimeDeltaSec.count();
 
         // Compute FPS
-        ++muiNumFrames;
-        mdFPSFrameTime += mdDeltaSec * 1000.0;
-        if (mdFPSFrameTime > 0.0)
+        ++_muiNumFrames;
+        _mdFPSFrameTime += _mdDeltaSec * 1000.0;
+        if (_mdFPSFrameTime > 0.0)
         {
-            mdFPS = muiNumFrames * (1000.0 / mdFPSFrameTime);
+           _mdFPS = _muiNumFrames * (1000.0 / _mdFPSFrameTime);
             
-            muiNumFrames = 0;
-            mdFPSFrameTime = 0.0;
+           _muiNumFrames = 0;
+          _mdFPSFrameTime = 0.0;
         }
 
         // Compute FPS smoothed
-        mdFPSAveragedTimeCount += mdDeltaSec;
-        ++miFPSAveragedNumCallsPerSec;
-        mdFPSAveragedAccum += mdFPS;
-        if (mdFPSAveragedTimeCount > mdFPSAveragedRate)
+        _mdFPSAveragedTimeCount += _mdDeltaSec;
+        ++_miFPSAveragedNumCallsPerSec;
+        _mdFPSAveragedAccum += _mdFPS;
+        if (_mdFPSAveragedTimeCount > _mdFPSAveragedRate)
         {
-            if (miFPSAveragedNumCallsPerSec < 1)
-                miFPSAveragedNumCallsPerSec = 1;
-            mdFPSAveraged = mdFPSAveragedAccum / miFPSAveragedNumCallsPerSec;
-            mdFPSAveragedTimeCount = 0;
-            miFPSAveragedNumCallsPerSec = 0;
-            mdFPSAveragedAccum = 0;
+            if (_miFPSAveragedNumCallsPerSec < 1)
+                _miFPSAveragedNumCallsPerSec = 1;
+            _mdFPSAveraged = _mdFPSAveragedAccum / _miFPSAveragedNumCallsPerSec;
+            _mdFPSAveragedTimeCount = 0;
+            _miFPSAveragedNumCallsPerSec = 0;
+            _mdFPSAveragedAccum = 0;
         }
 
         // Runtime
-        mdRuntimeInSeconds += mdDeltaSec;
+        _mdRuntimeInSeconds += _mdDeltaSec;
     }
 
     void CTimer::sleep(unsigned int uiMilliseconds) const
@@ -69,52 +69,52 @@ namespace X
 
     void CTimer::setAveragedFPSRate(float fSecondsBetweenUpdates)
     {
-        mdFPSAveragedRate = (double)fSecondsBetweenUpdates;
-        if (mdFPSAveragedRate <= 0)
-            mdFPSAveragedRate = 0.001;
+        _mdFPSAveragedRate = (double)fSecondsBetweenUpdates;
+        if (_mdFPSAveragedRate <= 0)
+            _mdFPSAveragedRate = 0.001;
     }
 
     float CTimer::getAveragedFPSRate(void) const
     {
-        return (float)mdFPSAveragedRate;
+        return (float)_mdFPSAveragedRate;
     }
 
     float CTimer::getFPS(void) const
     {
-         return (float)mdFPS;
+        return (float)_mdFPS;
     }
 
     float CTimer::getFPSAveraged(void) const
     {
-        return (float)mdFPSAveraged;
+        return (float)_mdFPSAveraged;
     }
 
     void CTimer::reset(void)
     {
-        mbPaused = false;
-        mdTimePointNew = std::chrono::steady_clock::now();
-        mdTimePointOld = mdTimePointNew;// std::chrono::steady_clock::now();
-        mdTimeDeltaSec = mdTimePointNew - mdTimePointOld;
-        mdDeltaSec = mdTimeDeltaSec.count();
+        _mbPaused = false;
+        _mdTimePointNew = std::chrono::steady_clock::now();
+        _mdTimePointOld = _mdTimePointNew;// std::chrono::steady_clock::now();
+        _mdTimeDeltaSec = _mdTimePointNew - _mdTimePointOld;
+        _mdDeltaSec = _mdTimeDeltaSec.count();
 
         // Stuff for FPS
-        mdFPS = 1.0;                // Holds computed current frames per second value
-        muiNumFrames = 0;           // Used to compute FPS stuff        
-        mdFPSFrameTime = 0;         // Used to compute FPS stuff
+        _mdFPS = 1.0;                // Holds computed current frames per second value
+        _muiNumFrames = 0;           // Used to compute FPS stuff        
+        _mdFPSFrameTime = 0;         // Used to compute FPS stuff
         
         // Stuff for FPS averaged
-        mdFPSAveraged = 1.0;                    // Holds computed averaged frames per second value
-        mdFPSAveragedRate = 3.0;                // Number of seconds between updating the value returned by getFPSAveraged() method.
-        mdFPSAveragedTimeCount = 0;             // Used to compute FPSAveraged stuff
-        miFPSAveragedNumCallsPerSec = 0;        // Used to compute FPSAveraged stuff
-        mdFPSAveragedAccum = 0;                 // Used to compute FPSAveraged stuff
+        _mdFPSAveraged = 1.0;                    // Holds computed averaged frames per second value
+        _mdFPSAveragedRate = 3.0;                // Number of seconds between updating the value returned by getFPSAveraged() method.
+        _mdFPSAveragedTimeCount = 0;             // Used to compute FPSAveraged stuff
+        _miFPSAveragedNumCallsPerSec = 0;        // Used to compute FPSAveraged stuff
+        _mdFPSAveragedAccum = 0;                 // Used to compute FPSAveraged stuff
 
-        mdRuntimeInSeconds = 0;
+        _mdRuntimeInSeconds = 0;
     }
 
     float CTimer::getRuntimeSeconds(void) const
     { 
-        return (float)mdRuntimeInSeconds;
+        return (float)_mdRuntimeInSeconds;
     }
 
     void CTimer::getClock(float& fSeconds, int& iMinutes, int& iHours, int& iDays, int &iWeeks) const
@@ -130,7 +130,7 @@ namespace X
         // 60 * 60 = 3600 seconds per hour
         // 3600 * 24 = 86400 seconds in a day
         // 86400 * 7 = 604800 seconds in a week
-        double seconds = mdRuntimeInSeconds;
+        double seconds = _mdRuntimeInSeconds;
         while (seconds >= 604800)   // Weeks
         {
             seconds -= 604800;

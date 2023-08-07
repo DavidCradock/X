@@ -72,11 +72,11 @@ namespace X
 		// Converts an .obj file to our custom geometry file format and saves to disk
 		void convertObj(const std::string filename) const;
 	private:
-		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
-		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
-		unsigned int elementBufferObject;	// OpenGL element buffer object ID
-		std::vector<Vertex> vertices;		// Vector holding each unique vertex
-		std::vector<int> indices;			// Vector holding indicies to each unique vertex
+		unsigned int _mVertexBufferObject;	// OpenGL vertex buffer object ID
+		unsigned int _mVertexArrayObject;	// OpenGL vertex array object ID
+		unsigned int _mElementBufferObject;	// OpenGL element buffer object ID
+		std::vector<Vertex> _mvecVertices;	// Vector holding each unique vertex
+		std::vector<int> _mvecIndices;		// Vector holding indicies to each unique vertex
 
 	};
 }

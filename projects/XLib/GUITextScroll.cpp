@@ -65,7 +65,7 @@ namespace X
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
-		CVector2f vBGdims = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour)->mvDimensions;
+		CVector2f vBGdims = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour)->getDimensions();
 		CVector2f vBGDimsPoint3 = vBGdims * 0.3333333f;
 		CVector2f vBGDimsPoint6 = vBGdims * 0.6666666f;
 
@@ -186,9 +186,9 @@ namespace X
 
 		// Resize framebuffer if needed to make room for the slider
 		unsigned int uiFBWidth = pFB->getWidth();
-		unsigned int uiRequiredFBWidth = unsigned int (mfWidth - pTheme->mfTextScrollSliderWidth - (pTex->mvDimensions.x * 0.6666666f));
+		unsigned int uiRequiredFBWidth = unsigned int (mfWidth - pTheme->mfTextScrollSliderWidth - (pTex->getDimensions().x * 0.6666666f));
 		if (uiFBWidth != uiRequiredFBWidth)
-			pFB->resize(uiRequiredFBWidth, unsigned int (mfHeight - (pTex->mvDimensions.y * 0.6666666f)));
+			pFB->resize(uiRequiredFBWidth, unsigned int (mfHeight - (pTex->getDimensions().y * 0.6666666f)));
 
 		// Set framebuffer as render target and clear it
 		pFB->bindAsRenderTarget(true, false, pTheme->mColours.textScrollBackground);

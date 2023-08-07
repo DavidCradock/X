@@ -39,6 +39,7 @@ namespace X
 	// An audio emitter which emits sounds from loaded audio samples
 	class CAudioEmitter
 	{
+		friend class SCAudioManager;
 	public:
 		CAudioEmitter(WAVEFORMATEXTENSIBLE &wfx, unsigned int iMaxSimultaneousInstances = 8);
 		~CAudioEmitter();
@@ -74,6 +75,7 @@ namespace X
 		// If an invalid index is given, an exception occurs
 		float getFrequency(unsigned int uiIndex) const;
 
+	private:
 		unsigned int _muiMaxSimultaneousInstances;		// Maximum number of sounds which can be played back simultaneously
 		std::vector<IXAudio2SourceVoice*> _mvecVoices;	// Multiple instances playback
 		unsigned int _muiVecVoicesIndex;				// Which voice index to play next
@@ -203,13 +205,12 @@ namespace X
 		// An audio sample resource group holding each resource
 		struct Group
 		{
-		public:
 			std::map<std::string, ResourceSample*> mmapResource;	// Hash map holding named resource
 		};
-		std::map<std::string, Group*> mmapGroup;					// Hash map holding named resource groups
+		std::map<std::string, Group*> _mmapGroup;					// Hash map holding named resource groups
 
-		IXAudio2* mpXAudio2;						// Main XAudio2 interface
-		IXAudio2MasteringVoice* mpMasterVoice;		// Mastering voice
+		IXAudio2* _mpXAudio2;						// Main XAudio2 interface
+		IXAudio2MasteringVoice* _mpMasterVoice;		// Mastering voice
 
 		std::map<std::string, CAudioEmitter*> _mmapEmitters;		// Holds each named emitter
 	};

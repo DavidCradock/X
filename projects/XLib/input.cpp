@@ -7,29 +7,29 @@ namespace X
 
 	SCInputManager::SCInputManager()
 	{
-		directInput = NULL;
+		_mDirectInput = NULL;
 	}
 
 	void SCInputManager::init(HWND hApplicationWindow)
 	{
-		instance = GetModuleHandle(NULL);
-		windowHandle = hApplicationWindow;
-		ThrowIfTrue(!instance, "SCInputManager::init() failed. Unable to obtain application instance handle.");
+		_mInstance = GetModuleHandle(NULL);
+		_mWindowHandle = hApplicationWindow;
+		ThrowIfTrue(!_mInstance, "SCInputManager::init() failed. Unable to obtain application instance handle.");
 
 		// Init main directX input object
-		if (DI_OK != DirectInput8Create(instance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, NULL))
+		if (DI_OK != DirectInput8Create(_mInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&_mDirectInput, NULL))
 			ThrowIfTrue(1, "SCInputManager::init() failed. Unable to create main DirectX input object.");
 
 		// Init joystick
-		if (!joy.init(directInput, windowHandle))// Error only returned if joystick detected, but init failed.
+		if (!joy.init(_mDirectInput, _mWindowHandle))// Error only returned if joystick detected, but init failed.
 			ThrowIfTrue(1, "SCInputManager::init() failed. Joystick detected, but unable to initialise it.");
 
 		// Init keyboard
-		if (!key.init(directInput, windowHandle))
+		if (!key.init(_mDirectInput, _mWindowHandle))
 			ThrowIfTrue(1, "SCInputManager::init() failed. Unable to initialise keyboard.");
 
 		// Init mouse
-		if (!mouse.init(directInput, windowHandle))
+		if (!mouse.init(_mDirectInput, _mWindowHandle))
 			ThrowIfTrue(1, "SCInputManager::init() failed. Unable to initialise mouse.");
 	}
 
@@ -38,10 +38,10 @@ namespace X
 		joy.release();
 		key.release();
 		mouse.release();
-		if (directInput)
+		if (_mDirectInput)
 		{
-			directInput->Release();
-			directInput = NULL;
+			_mDirectInput->Release();
+			_mDirectInput = NULL;
 		}
 	}
 

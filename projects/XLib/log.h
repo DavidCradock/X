@@ -57,7 +57,7 @@ namespace X
 		// If entryIndex is out of bounds, an exception occurs
 		std::string getEntryText(size_t entryIndex) const;
 	private:
-		std::vector<std::string> mlogEntry;	// A vector of strings, to hold each entry added by add() method
-		CTimer timer;						// For adding time to the beginning of each entry
+		std::vector<std::string> _mlogEntry;	// A vector of strings, to hold each entry added by add() method
+		CTimer _timer;							// For adding time to the beginning of each entry
 	};
 }

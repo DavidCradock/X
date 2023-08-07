@@ -116,7 +116,7 @@ namespace X
 			Orbit,
 			None
 		};
-		Mode mMode;	// Which mode is currently set
+		Mode _mMode;	// Which mode is currently set
 
 		// Holds variables used for the orbit mode
 		struct ModeOrbit
@@ -135,7 +135,7 @@ namespace X
 			float fAngleUp;						// Angle up/down
 			bool bLimitYupToPositive;			// Does what it says on the tin
 		};
-		ModeOrbit modeOrbit;
+		ModeOrbit _modeOrbit;
 		
 		// Called from update if mode is set to orbit
 		void _updateModeOrbit(void);
@@ -158,13 +158,13 @@ namespace X
 			float fYaw;							// Rotation around Y axis
 			float fPitch;						// Rotation around right vector
 		};
-		ModeFPS modeFPS;
+		ModeFPS _modeFPS;
 
 		// Called from update if mode is set to FPS
 		void _updateModeFPS(void);
 
-		CMatrix matrixView;
-		CMatrix matrixProjection;
+		CMatrix _matrixView;
+		CMatrix _matrixProjection;
 
 		std::string _mstrFramebufferTargetName;		// Name of the framebuffer stored in SCResourceManager which this camera uses to render to.
 		bool _mbActive;								// Whether this camera is active or not and thereby rendered or not.

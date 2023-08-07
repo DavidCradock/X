@@ -91,18 +91,18 @@ namespace X
 		// Returns the filename previously set by setMouseCursorImage()
 		std::string getSetMouseCursorFilename(void);
 	private:
-		WNDCLASS mWindowClass;			// Window class used to create the window
-		HINSTANCE mhInstance;			// Application instance handle
-		HWND mhWindowHandle;			// Window handle
-		std::string mstrWindowTitle;	// Window's title text
-		unsigned int muiWindowWidth;		// Width of window
-		unsigned int muiWindowHeight;	// Height of window
-		bool mbWindowFullscreen;		// Fullscreen or windowed
-		bool mbVsyncEnabled;			// Vsync enabled or not
-		CColour mClearColour;			// The clear colour set by setClearColour();
-		HGLRC mhGLRenderContext;		// OpenGL rendering context
-		HDC mhDeviceContext;			// Device context for the window
-		std::string mstrCursorName;		// Holds the cursor name given to setMouseCursorImage() so it is re-loaded on fullscreen toggle
+		WNDCLASS _mWindowClass;			// Window class used to create the window
+		HINSTANCE _mhInstance;			// Application instance handle
+		HWND _mhWindowHandle;			// Window handle
+		std::string _mstrWindowTitle;	// Window's title text
+		unsigned int _muiWindowWidth;	// Width of window
+		unsigned int _muiWindowHeight;	// Height of window
+		bool _mbWindowFullscreen;		// Fullscreen or windowed
+		bool _mbVsyncEnabled;			// Vsync enabled or not
+		CColour _mClearColour;			// The clear colour set by setClearColour();
+		HGLRC _mhGLRenderContext;		// OpenGL rendering context
+		HDC _mhDeviceContext;			// Device context for the window
+		std::string _mstrCursorName;	// Holds the cursor name given to setMouseCursorImage() so it is re-loaded on fullscreen toggle
 		// Resize the window's OpenGL viewport
 		void _resizeOpenGLViewport(unsigned int iNewWidth, unsigned int iNewHeight);
 	};

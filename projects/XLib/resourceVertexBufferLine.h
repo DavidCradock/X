@@ -73,30 +73,24 @@ namespace X
 		void addAxis(const CVector3f& vCentrePosition, float fLineLength);
 
 		// Return number of vertices which have been added so far.
-		inline size_t getNumVertices(void) const
-		{
-			return vertices.size();
-		}
-
+		size_t getNumVertices(void) const;
+		
 		// Return nummber of indices which have been added so far.
-		inline size_t getNumIndicies(void) const
-		{
-			return indices.size();
-		}
-
+		size_t getNumIndicies(void) const;
+		
 	private:
 
-		unsigned int vertexBufferObject;	// OpenGL vertex buffer object ID
-		unsigned int vertexArrayObject;		// OpenGL vertex array object ID
-		unsigned int elementBufferObject;	// OpenGL element buffer object ID
-		std::vector<Vertex> vertices;		// Vector holding each unique vertex
-		std::vector<int> indices;			// Vector holding indicies to each unique vertex
+		unsigned int _mVertexBufferObject;		// OpenGL vertex buffer object ID
+		unsigned int _mVertexArrayObject;		// OpenGL vertex array object ID
+		unsigned int _mElementBufferObject;		// OpenGL element buffer object ID
+		std::vector<Vertex> _mvecVertices;		// Vector holding each unique vertex
+		std::vector<int> _mvecIndices;			// Vector holding indicies to each unique vertex
 
-		unsigned int muiIndex;				// Used by addLinePoint and addCircle to keep track of indicies
+		unsigned int _muiIndex;				// Used by addLinePoint and addCircle to keep track of indicies
 
 		// Holds either GL_LINE_STRIP or GL_LINES which is used for the drawing mode.
 		// GL_LINE_STRIP sets drawing of each added vertex as a strip of lines where each additional vertex draws an additional line (This is the default mode)
 		// GL_LINES sets drawing of each pair of added vertices as a single line.
-		unsigned int muiLineMode;
+		unsigned int _muiLineMode;
 	};
 }

@@ -228,8 +228,8 @@ namespace X
 		std::string txt;
 
 		// Determine background image's position and dimensions
-		int iBGWidth = int(pTextureBG->mvDimensions.x);
-		int iBGHeight = int(pTextureBG->mvDimensions.y);
+		int iBGWidth = int(pTextureBG->getDimensions().x);
+		int iBGHeight = int(pTextureBG->getDimensions().y);
 		int iBGposX = int(iWindowCentrePosX) - (iBGWidth / 2);
 		int iBGposY = int(iWindowCentrePosY) - (iBGHeight / 2);
 		

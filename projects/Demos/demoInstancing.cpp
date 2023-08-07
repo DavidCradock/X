@@ -5,16 +5,41 @@ namespace X
 {
 	void CStateDemoInstancing::onEnter(void)
 	{
-
+		// Add container which enables toggling between instanced and non-instanced rendering
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUI->addContainer("toggleInstanced");
+		pCont->setDimensions(320, 250);
+		std::string strTxt;
+		strTxt += "Toggle between instanced and non-instanced rendering with the button below.\n";
+		strTxt += "Press F3 to show the statistics window and F2 to toggle VSync on or off.";
+		pCont->addTextScroll("instanceText", 0, 0, 320, 170, strTxt);
+		pCont->addButton("toggleInstanced", 0, 180, 320, 40, "Toggle Instanced")->mpTooltip->setAsText("Toggle beween instanced and non-instanced rendering here.");
+		pCont->addText("instancingMode", 0, 230, "Instancing is ON.");
+		_mbInstancedEnabled = true;
 	}
 
 	void CStateDemoInstancing::onExit(void)
 	{
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		pGUI->removeContainer("toggleInstanced");
 	}
 
 	void CStateDemoInstancing::onActive(CFiniteStateMachine* pFSM)
 	{
+		// Toggle instancing
+		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		CGUIContainer* pCont = pGUI->getContainer("toggleInstanced");
+		CGUIButton* pButton = pCont->getButton("toggleInstanced");
+		if (pButton->getClicked())
+		{
+			_mbInstancedEnabled = !_mbInstancedEnabled;
+			CGUIText* pText = pCont->getText("instancingMode");
+			if (_mbInstancedEnabled)
+				pText->setText("Instancing is ON.");
+			else
+				pText->setText("Instancing is OFF.");
+		}
+
 		// Debug CResourceVertexBufferInstanced
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceVertexBufferInstanced* pVBI = pRM->getVertexBufferInstanced("X:default");

@@ -36,8 +36,11 @@ namespace X
 		// Renders the contents of this texture to a 2D quad with specified position and dimensions
 		void renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour = CColour());
 
+		// Returns dimensions of the texture
+		CVector2f getDimensions(void) const;
+	private:
 		CImage _mImage;				// Image holding the textures image data
 		unsigned int _muiTextureID;	// OpenGL texture ID
-		CVector2f mvDimensions;		// Dimensions of the texture
+		CVector2f _mvDimensions;	// Dimensions of the texture
 	};
 }
