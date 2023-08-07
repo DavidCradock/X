@@ -182,7 +182,7 @@ namespace X
 		}
 	}
 
-	CGUIContainer* SCGUIManager::addContainer(const std::string& strName)
+	CGUIContainer* SCGUIManager::addContainer(const std::string& strName, bool bLocked)
 	{
 		// Add container name to the Z order list
 		_mlistContainerZOrder.push_back(strName);
@@ -196,6 +196,8 @@ namespace X
 		// Allocate the new object
 		CGUIContainer* pNew = new CGUIContainer;
 		ThrowIfFalse(pNew, "SCGUIManager::addContainer(" + strName + ") failed. Unable to allocate memory for the new container.");
+
+		pNew->_mbLocked = bLocked;
 
 		pNew->mstrTitleText = strName;
 
@@ -236,32 +238,41 @@ namespace X
 
 	void SCGUIManager::removeContainer(const std::string& strName)
 	{
+		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
+		if (it == _mmapContainers.end())
+			return;	// Doesn't exist.
+		
+		if (it->second->_mbLocked)	// If it was locked upon being added, do not remove this container
+			return;
+
+		// Delete the container
+		delete it->second;
+		_mmapContainers.erase(it);
+
 		// Remove container name from the Z order list
 		std::list<std::string>::iterator itlist = std::find(_mlistContainerZOrder.begin(), _mlistContainerZOrder.end(), strName);
 		if (itlist != _mlistContainerZOrder.end())
 		{
 			_mlistContainerZOrder.erase(itlist);
 		}
-
-		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.find(strName);
-		if (it == _mmapContainers.end())
-			return;	// Doesn't exist.
-		delete it->second;
-		_mmapContainers.erase(it);
 	}
 
 	void SCGUIManager::removeAllContainers(void)
 	{
-		// Clear the list holding Zordering
-		_mlistContainerZOrder.clear();
-
 		std::map<std::string, CGUIContainer*>::iterator it = _mmapContainers.begin();
 		while (it != _mmapContainers.end())
 		{
-			delete it->second;
-			it++;
+			// If it was locked upon being added, do not remove this container
+			if (it->second->_mbLocked)
+			{
+				it++;
+				continue;
+			}
+
+			// Remove the container
+			removeContainer(it->first);
+			it = _mmapContainers.begin();
 		}
-		_mmapContainers.clear();
 	}
 
 	int SCGUIManager::getNumberOfContainers(void) const

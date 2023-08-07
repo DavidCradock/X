@@ -150,7 +150,8 @@ namespace X
 
 		// Adds a new container and returns a pointer to it
 		// If the named container already exists, a pointer to that object is returned.
-		CGUIContainer* addContainer(const std::string& strName);
+		// If bLocked is true, this container will NOT be removed when calling any of the remove container methods. This is to prevent removal of the default containers.
+		CGUIContainer* addContainer(const std::string& strName, bool bLocked = false);
 
 		// Returns a pointer to a named container.
 		// If the named container doesn't exist, an exception occurs.
@@ -161,9 +162,11 @@ namespace X
 
 		// Removes the named container.
 		// If the named container doesn't exist, this silently fails.
+		// If bLocked was true when this container was added with addContainer, then this container is not removed.
 		void removeContainer(const std::string& strName);
 
 		// Removes all containers.
+		// Any containers added where bLocked was true when the container was added are not removed.
 		void removeAllContainers(void);
 
 		// Returns the number of containers

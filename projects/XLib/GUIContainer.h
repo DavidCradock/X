@@ -293,6 +293,7 @@ namespace X
 
 		std::string mstrTitleText;	// Title text
 	private:
+		bool _mbLocked;				// When added via SCGUIManager, this may be set to true to prevent removal of this container. It's used to prevent removal of the default containers.
 		std::string mstrThemename;	// Theme name used by this container
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
@@ -310,7 +311,7 @@ namespace X
 		mutable std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
 		mutable std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
 		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
-		CColour _mTextColour;	// Current colour of the titlebar text
+		CColour _mTextColour;		// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 
 		// Called from render() to render this container
