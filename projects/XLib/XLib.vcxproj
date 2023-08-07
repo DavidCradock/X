@@ -99,7 +99,7 @@
     <ClInclude Include="resourceVertexBufferLine.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="SMEntityBase.h" />
-    <ClInclude Include="SMEntityTriangle.h" />
+    <ClInclude Include="SMEntityVertexBuffer.h" />
     <ClInclude Include="SMEntityLine.h" />
     <ClInclude Include="SMLightDirectional.h" />
     <ClInclude Include="SMLightPoint.h" />
@@ -204,7 +204,7 @@
     <ClCompile Include="resourceVertexBuffer.cpp" />
     <ClCompile Include="resourceVertexBufferLine.cpp" />
     <ClCompile Include="SMEntityBase.cpp" />
-    <ClCompile Include="SMEntityTriangle.cpp" />
+    <ClCompile Include="SMEntityVertexBuffer.cpp" />
     <ClCompile Include="SMEntityLine.cpp" />
     <ClCompile Include="SMLightDirectional.cpp" />
     <ClCompile Include="SMLightPoint.cpp" />

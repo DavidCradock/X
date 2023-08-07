@@ -346,7 +346,7 @@ namespace X
 
 	void SCGUIManager::_createDefaultContainerStatistics(void)
 	{
-		CGUIContainer* pCont = addContainer("X:Default:Statistics");
+		CGUIContainer* pCont = addContainer("X:Default:Statistics", true);
 		CGUITheme* pTheme = pCont->getTheme();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
@@ -474,7 +474,7 @@ namespace X
 
 	void SCGUIManager::_createDefaultContainerFontGenerator(void)
 	{
-		CGUIContainer* pCont = addContainer("X:Default:FontGenerator");
+		CGUIContainer* pCont = addContainer("X:Default:FontGenerator", true);
 		CGUITheme* pTheme = pCont->getTheme();
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);

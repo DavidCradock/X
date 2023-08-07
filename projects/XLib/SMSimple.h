@@ -2,7 +2,7 @@
 #include "PCH.h"
 #include "SMLightDirectional.h"
 #include "SMLightPoint.h"
-#include "SMEntityTriangle.h"
+#include "SMEntityVertexBuffer.h"
 #include "SMEntityLine.h"
 #include "SMCamera.h"
 #include "SMMaterial.h"
@@ -85,27 +85,27 @@ namespace X
 		// Removes all materials
 		void removeAllMaterials(void);
 
-		// Adds a new uniquely named triangle entity to this scene and returns a pointer to it if needed
+		// Adds a new uniquely named vertex buffer entity to this scene and returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
-		CSMEntityTriangle* addEntityTriangle(
+		CSMEntityVertexBuffer* addEntityVertexBuffer(
 			const std::string& strEntityName,				// The unique name of this entity
-			const std::string& strTriangleName,				// The triangle resource located in the SCResourceManager used when rendering this entity
+			const std::string& strVertexBufferName,			// The vertex buffer resource located in the SCResourceManager used when rendering this entity
 			const std::string& strMaterialName				// The material in the scene manager to use whilst rendering the entity
 		);
 
-		// Returns a pointer to the named triangle entity.
-		// If the enitity doesn't exist, an exception occurs.
-		CSMEntityTriangle* getEntityTriangle(const std::string& strEntityName) const;
+		// Returns a pointer to the named vertex buffer entity.
+		// If the entity doesn't exist, an exception occurs.
+		CSMEntityVertexBuffer* getEntityVertexBuffer(const std::string& strEntityName) const;
 
-		// Returns whether the named triangle entity exists or not
-		bool getEntityTriangleExists(const std::string& strEntityName) const;
+		// Returns whether the named vertex buffer entity exists or not
+		bool getEntityVertexBufferExists(const std::string& strEntityName) const;
 
 		// Attempts to remove the named entity from the scene
 		// If the entity doesn't exist, this silently fails
-		void removeEntityTriangle(const std::string& strEntityName);
+		void removeEntityVertexBuffer(const std::string& strEntityName);
 
-		// Removes all entites of type triangle
-		void removeAllEnititiesTriangle(void);
+		// Removes all entities of type vertex buffer
+		void removeAllEnititiesVertexBuffer(void);
 
 		// Adds a new uniquely named line entity to this scene and returns a pointer to it if needed
 		// If the named entity already exists, an exception occurs
@@ -116,7 +116,7 @@ namespace X
 		);
 
 		// Returns a pointer to the named line entity.
-		// If the enitity doesn't exist, an exception occurs.
+		// If the entity doesn't exist, an exception occurs.
 		CSMEntityLine* getEntityLine(const std::string& strEntityName) const;
 
 		// Returns whether the named line entity exists or not
@@ -157,9 +157,9 @@ namespace X
 		CSMLightPoint mvLightPoint[4];			// The point lights for this scene
 		int miNumPointLights;					// The number of point lights to use. Can be between (default)0 and 4
 	private:
-		mutable std::map<std::string, CSMEntityTriangle*>	mmapEntitiesTriangles;	// Each named triangle entity in this scene.
-		mutable std::map<std::string, CSMEntityLine*>		mmapEntitiesLine;		// Each named line entity in this scene.
-		mutable std::map<std::string, CSMMaterial*>			mmapMaterials;			// Each named material in this scene.
+		mutable std::map<std::string, CSMEntityVertexBuffer*>	mmapEntitiesVertexBuffers;	// Each named vertex buffer entity in this scene.
+		mutable std::map<std::string, CSMEntityLine*>			mmapEntitiesLines;			// Each named line entity in this scene.
+		mutable std::map<std::string, CSMMaterial*>				mmapMaterials;				// Each named material in this scene.
 		
 		// Variables used for rendering the depth map for the directional light
 		CMatrix _mmatShadowsDirectionalLightViewProj;	// The view projection matrix for the directional light. Set when rendering the scene to the camera's framebuffer

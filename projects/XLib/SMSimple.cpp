@@ -25,7 +25,7 @@ namespace X
 	{
 		removeAllCameras();
 		removeAllMaterials();
-		removeAllEnititiesTriangle();
+		removeAllEnititiesVertexBuffer();
 		removeAllEntitiesLine();
 	}
 
@@ -220,58 +220,58 @@ namespace X
 		mmapMaterials.clear();
 	}
 
-	CSMEntityTriangle* CSceneManagerSimple::addEntityTriangle(
+	CSMEntityVertexBuffer* CSceneManagerSimple::addEntityVertexBuffer(
 		const std::string& strEntityName,			// The unique name of this entity
-		const std::string& strTriangleName,			// The triangle resource located in the SCResourceManager used when rendering this entity
+		const std::string& strVertexBufferName,		// The vertex buffer resource located in the SCResourceManager used when rendering this entity
 		const std::string& strMaterialName)			// Material name (added to scene manager) which this entity uses for rendering
 	{
 		// Make sure the entity doesn't already exist
-		ThrowIfTrue(getEntityTriangleExists(strEntityName), "CSceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. The named entity already exists.");
+		ThrowIfTrue(getEntityVertexBufferExists(strEntityName), "CSceneManagerSimple::addEntityVertexBuffer(" + strEntityName + ") failed. The named entity already exists.");
 
 		// Allocate the new entity
-		CSMEntityTriangle* pNewEntity = new CSMEntityTriangle;
-		ThrowIfFalse(pNewEntity, "CSceneManagerSimple::addEntityTriangle(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
+		CSMEntityVertexBuffer* pNewEntity = new CSMEntityVertexBuffer;
+		ThrowIfFalse(pNewEntity, "CSceneManagerSimple::addEntityVertexBuffer(" + strEntityName + ") failed. Unable to allocate memory for the new entity.");
 
 		// Set passed values
-		pNewEntity->mstrTriangleName = strTriangleName;
+		pNewEntity->mstrVertexBufferName = strVertexBufferName;
 		pNewEntity->mstrMaterialName = strMaterialName;
 
 		// Place in the hashmap
-		mmapEntitiesTriangles[strEntityName] = pNewEntity;
+		mmapEntitiesVertexBuffers[strEntityName] = pNewEntity;
 		return pNewEntity;
 	}
 
-	CSMEntityTriangle* CSceneManagerSimple::getEntityTriangle(const std::string& strEntityName) const
+	CSMEntityVertexBuffer* CSceneManagerSimple::getEntityVertexBuffer(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesTriangles.end(), "CSceneManagerSimple::getEntityTriangle(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesVertexBuffers.end(), "CSceneManagerSimple::getEntityVertexBuffer(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
-	bool CSceneManagerSimple::getEntityTriangleExists(const std::string& strEntityName) const
+	bool CSceneManagerSimple::getEntityVertexBufferExists(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
-		return it != mmapEntitiesTriangles.end();
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
+		return it != mmapEntitiesVertexBuffers.end();
 	}
 
-	void CSceneManagerSimple::removeEntityTriangle(const std::string& strEntityName)
+	void CSceneManagerSimple::removeEntityVertexBuffer(const std::string& strEntityName)
 	{
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.find(strEntityName);
-		if (it == mmapEntitiesTriangles.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.find(strEntityName);
+		if (it == mmapEntitiesVertexBuffers.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		mmapEntitiesTriangles.erase(it);
+		mmapEntitiesVertexBuffers.erase(it);
 	}
 
-	void CSceneManagerSimple::removeAllEnititiesTriangle(void)
+	void CSceneManagerSimple::removeAllEnititiesVertexBuffer(void)
 	{
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
-		while (it != mmapEntitiesTriangles.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
+		while (it != mmapEntitiesVertexBuffers.end())
 		{
 			delete it->second;
 			it++;
 		}
-		mmapEntitiesTriangles.clear();
+		mmapEntitiesVertexBuffers.clear();
 	}
 
 	CSMEntityLine* CSceneManagerSimple::addEntityLine(const std::string& strEntityName, const std::string& strLineName,	const std::string& strTextureName)
@@ -288,41 +288,41 @@ namespace X
 		pNewEntity->mstrTextureName = strTextureName;
 
 		// Place in the hashmap
-		mmapEntitiesLine[strEntityName] = pNewEntity;
+		mmapEntitiesLines[strEntityName] = pNewEntity;
 		return pNewEntity;
 	}
 
 	CSMEntityLine* CSceneManagerSimple::getEntityLine(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
-		ThrowIfTrue(it == mmapEntitiesLine.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
+		ThrowIfTrue(it == mmapEntitiesLines.end(), "CSceneManagerSimple::getEntityLine(" + strEntityName + ") failed. Entity doesn't exist.");
 		return it->second;
 	}
 
 	bool CSceneManagerSimple::getEntityLineExists(const std::string& strEntityName) const
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
-		return it != mmapEntitiesLine.end();
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
+		return it != mmapEntitiesLines.end();
 	}
 
 	void CSceneManagerSimple::removeEntityLine(const std::string& strEntityName)
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.find(strEntityName);
-		if (it == mmapEntitiesLine.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.find(strEntityName);
+		if (it == mmapEntitiesLines.end())
 			return;	// Doesn't exist.
 		delete it->second;
-		mmapEntitiesLine.erase(it);
+		mmapEntitiesLines.erase(it);
 	}
 
 	void CSceneManagerSimple::removeAllEntitiesLine(void)
 	{
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.begin();
-		while (it != mmapEntitiesLine.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.begin();
+		while (it != mmapEntitiesLines.end())
 		{
 			delete it->second;
 			it++;
 		}
-		mmapEntitiesLine.clear();
+		mmapEntitiesLines.clear();
 	}
 
 	void CSceneManagerSimple::_renderTriangleEntities(CSMCamera* pCamera)
@@ -415,15 +415,15 @@ namespace X
 		CVector3f cameraWorldPos = matViewInverse.multiply(CVector3f(0.0f, 0.0f, 0.0f));
 		pShader->setVec3("v3CameraPositionWorld", cameraWorldPos);
 
-		// Triangle entities
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
-		while (it != mmapEntitiesTriangles.end())
+		// Vertex buffer entities
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
+		while (it != mmapEntitiesVertexBuffers.end())
 		{
 			// Get entity material
 			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
 
 			// Get vertex buffer and textures used by each entity
-			pVB = pRM->getVertexBufferBNT(it->second->mstrTriangleName);
+			pVB = pRM->getVertexBufferBNT(it->second->mstrVertexBufferName);
 			pTexDiffuse = pRM->getTexture2DFromFile(pMaterial->getDiffuseTextureName());
 			pTexRoughness = pRM->getTexture2DFromFile(pMaterial->getRoughnessTextureName());
 			pTexNormal = pRM->getTexture2DFromFile(pMaterial->getNormalmapTextureName());
@@ -486,8 +486,8 @@ namespace X
 		pShader->setMat4("matrixView", pCamera->getViewMatrix());
 
 		// Vertex buffer line entities
-		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLine.begin();
-		while (it != mmapEntitiesLine.end())
+		std::map<std::string, CSMEntityLine*>::iterator it = mmapEntitiesLines.begin();
+		while (it != mmapEntitiesLines.end())
 		{
 			// Get vertex buffer and textures used by each entity
 			pLine = pRM->getVertexBufferLine(it->second->mstrLineName);
@@ -564,12 +564,12 @@ namespace X
 		_mmatShadowsDirectionalLightViewProj = _mmatDirectionallightProjection * lightView;
 		pShader->setMat4("lightSpace", _mmatShadowsDirectionalLightViewProj);
 
-		// Triangle entities
+		// Vertex buffer entities
 		CResourceVertexBufferBNT* pVB;
-		std::map<std::string, CSMEntityTriangle*>::iterator it = mmapEntitiesTriangles.begin();
-		while (it != mmapEntitiesTriangles.end())
+		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = mmapEntitiesVertexBuffers.begin();
+		while (it != mmapEntitiesVertexBuffers.end())
 		{
-			pVB = pRM->getVertexBufferBNT(it->second->mstrTriangleName);
+			pVB = pRM->getVertexBufferBNT(it->second->mstrVertexBufferName);
 			pShader->setMat4("model", it->second->getWorldMatrix());
 			pVB->render(false);
 			it++;

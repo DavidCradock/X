@@ -94,7 +94,7 @@
     <ClInclude Include="SMEntityBase.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SMEntityTriangle.h">
+    <ClInclude Include="SMEntityVertexBuffer.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="SMEntityLine.h">
@@ -409,7 +409,7 @@
     <ClCompile Include="SMEntityBase.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SMEntityTriangle.cpp">
+    <ClCompile Include="SMEntityVertexBuffer.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="SMEntityLine.cpp">
