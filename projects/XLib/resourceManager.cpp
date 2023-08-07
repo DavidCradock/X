@@ -454,89 +454,247 @@ namespace X
 		// Shaders
 		******************************************************************************************************************************/
 		// A shader used by the CResourceFont class to render text.
-		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag");
+		pRM->addShader("X:font", "data/X/shaders/font.vert", "data/X/shaders/font.frag", true);
 		// A shader used by the CResourceLine class to render lines.
-		pRM->addShader("X:line", "data/X/shaders/line.vert", "data/X/shaders/line.frag");
+		pRM->addShader("X:line", "data/X/shaders/line.vert", "data/X/shaders/line.frag", true);
 		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
-		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag");
+		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag", true);
 		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
-		pRM->addShader("X:DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag");
+		pRM->addShader("X:DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag", true);
 		// A shader which accepts vertex position, colour and texture coodinates
-		pRM->addShader("X:pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag");
+		pRM->addShader("X:pos_col_tex", "data/X/shaders/pos_col_tex.vert", "data/X/shaders/pos_col_tex.frag", true);
 		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
-		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag");
+		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag", true);
 		// A shader used by the scene manager to render the depth map used for rendering shadows
-		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag");
+		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag", true);
 		// A shader used by the GUI to render everything.
-		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag");
+		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag", true);
 		// A shader used by SC2DRenderer for C2DEntity
-		pRM->addShader("X:2DEntity", "data/X/shaders/2DEntity.vert", "data/X/shaders/2DEntity.frag");
+		pRM->addShader("X:2DEntity", "data/X/shaders/2DEntity.vert", "data/X/shaders/2DEntity.frag", true);
 		// A shader used by SC2DRenderer for C2DEntityRot
-		pRM->addShader("X:2DEntityRot", "data/X/shaders/2DEntityRot.vert", "data/X/shaders/2DEntityRot.frag");
+		pRM->addShader("X:2DEntityRot", "data/X/shaders/2DEntityRot.vert", "data/X/shaders/2DEntityRot.frag", true);
 		// A shader used be C2DParticleSystem to render instanced particles.
-		pRM->addShader("X:2DParticle", "data/X/shaders/2DParticle.vert", "data/X/shaders/2DParticle.frag");
+		pRM->addShader("X:2DParticle", "data/X/shaders/2DParticle.vert", "data/X/shaders/2DParticle.frag", true);
 
 		/******************************************************************************************************************************
 		// Textures
 		******************************************************************************************************************************/
 		// A texture which is tiny and white.
-		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png");
+		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png", false, true);
 		// A texture which is grey for diffuse, used if not set
-		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png");
+		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png", false, true);
 		// A texture which is black for emission, used if not set
-		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png");
+		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png", false, true);
 		// A texture which is a flat normal map, used if not set
-		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png");
+		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png", false, true);
 		// A texture which is black for roughness used if not set
-		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png");
+		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png", false, true);
 
 		/******************************************************************************************************************************
 		// Texture atlases
 		******************************************************************************************************************************/
 		// An atlas for use with rendering generic particles
 		std::vector<std::string> vStrParticleImages = StringUtils::getFilesInDir("data/x/textures/particles/");
-		pRM->addTexture2DAtlas("X:default_particle", vStrParticleImages, true, 1);
+		pRM->addTexture2DAtlas("X:default_particle", vStrParticleImages, true, 1, true);
 		
 		/******************************************************************************************************************************
 		// Depth buffers
 		******************************************************************************************************************************/
 		// A depth buffer which is used by scene managers to render shadows
-		pRM->addDepthbuffer("X:shadows", 2048, 2048);
+		pRM->addDepthbuffer("X:shadows", 2048, 2048, true);
 
 		/******************************************************************************************************************************
 		// Framebuffers
 		******************************************************************************************************************************/
 		// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-		pRM->addFramebuffer("X:backbuffer_FB", 512, 512);	// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer("X:backbuffer_FB", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 		// A framebuffer the GUI tooltips are rendered to
-		pRM->addFramebuffer("X:guitooltipFB", 512, 512);	// Dims are set when rendering each tooltip's contents
+		pRM->addFramebuffer("X:guitooltipFB", 512, 512, true);	// Dims are set when rendering each tooltip's contents
 
 		/******************************************************************************************************************************
 		// Vertex buffers
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBuffer("X:default");
+		pRM->addVertexBuffer("X:default", true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers instanced
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferInstanced("X:default");
+		pRM->addVertexBufferInstanced("X:default", true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers BNT
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferBNT("X:default");
+		pRM->addVertexBufferBNT("X:default", true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers line
 		******************************************************************************************************************************/
 		// A line vertex buffer resource used by the GUI when rendering lines
-		pRM->addVertexBufferLine("X:default");
+		pRM->addVertexBufferLine("X:default", true);
 	}
 
-	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	void SCResourceManager::removeAllResources(void)
+	{
+		// Depth buffers
+		std::map<std::string, SResourceDepthbuffer>::iterator itDepthBuffer = _mmapResDepthbuffers.begin();
+		while (itDepthBuffer != _mmapResDepthbuffers.end())
+		{
+			if (itDepthBuffer->second.bLocked)	// Do not remove this resource
+			{
+				itDepthBuffer++;
+				continue;
+			}
+			delete itDepthBuffer->second.pResource;
+			_mmapResDepthbuffers.erase(itDepthBuffer);
+			itDepthBuffer = _mmapResDepthbuffers.begin();
+		}
+
+		// Fonts
+		std::map<std::string, SResourceFont>::iterator itFonts = _mmapResFonts.begin();
+		while (itFonts != _mmapResFonts.end())
+		{
+			if (itFonts->second.bLocked)	// Do not remove this resource
+			{
+				itFonts++;
+				continue;
+			}
+			delete itFonts->second.pResource;
+			_mmapResFonts.erase(itFonts);
+			itFonts = _mmapResFonts.begin();
+		}
+
+		// Frame buffers
+		std::map<std::string, SResourceFramebuffer>::iterator itFrameBuffer = _mmapResFramebuffers.begin();
+		while (itFrameBuffer != _mmapResFramebuffers.end())
+		{
+			if (itFrameBuffer->second.bLocked)	// Do not remove this resource
+			{
+				itFrameBuffer++;
+				continue;
+			}
+			delete itFrameBuffer->second.pResource;
+			_mmapResFramebuffers.erase(itFrameBuffer);
+			itFrameBuffer = _mmapResFramebuffers.begin();
+		}
+
+		// Shaders
+		std::map<std::string, SResourceShader>::iterator itShader = _mmapResShaders.begin();
+		while (itShader != _mmapResShaders.end())
+		{
+			if (itShader->second.bLocked)	// Do not remove this resource
+			{
+				itShader++;
+				continue;
+			}
+			delete itShader->second.pResource;
+			_mmapResShaders.erase(itShader);
+			itShader = _mmapResShaders.begin();
+		}
+
+		// Texture atlases
+		std::map<std::string, SResourceTexture2DAtlas>::iterator itAtlas = _mmapResTextures2DAtlases.begin();
+		while (itAtlas != _mmapResTextures2DAtlases.end())
+		{
+			if (itAtlas->second.bLocked)	// Do not remove this resource
+			{
+				itAtlas++;
+				continue;
+			}
+			delete itAtlas->second.pResource;
+			_mmapResTextures2DAtlases.erase(itAtlas);
+			itAtlas = _mmapResTextures2DAtlases.begin();
+		}
+
+		// Textures from file
+		std::map<std::string, SResourceTexture2DFromFile>::iterator itTextureFile = _mmapResTextures2D.begin();
+		while (itTextureFile != _mmapResTextures2D.end())
+		{
+			if (itTextureFile->second.bLocked)	// Do not remove this resource
+			{
+				itTextureFile++;
+				continue;
+			}
+			delete itTextureFile->second.pResource;
+			_mmapResTextures2D.erase(itTextureFile);
+			itTextureFile = _mmapResTextures2D.begin();
+		}
+
+		// Textures from image
+		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextureImage = _mmapResTextures2DFromImage.begin();
+		while (itTextureImage != _mmapResTextures2DFromImage.end())
+		{
+			if (itTextureImage->second.bLocked)	// Do not remove this resource
+			{
+				itTextureImage++;
+				continue;
+			}
+			delete itTextureImage->second.pResource;
+			_mmapResTextures2DFromImage.erase(itTextureImage);
+			itTextureImage = _mmapResTextures2DFromImage.begin();
+		}
+
+		// Vertex buffers
+		std::map<std::string, SResourceVertexBuffer>::iterator itVertexBuffer = _mmapResVertexBuffers.begin();
+		while (itVertexBuffer != _mmapResVertexBuffers.end())
+		{
+			if (itVertexBuffer->second.bLocked)	// Do not remove this resource
+			{
+				itVertexBuffer++;
+				continue;
+			}
+			delete itVertexBuffer->second.pResource;
+			_mmapResVertexBuffers.erase(itVertexBuffer);
+			itVertexBuffer = _mmapResVertexBuffers.begin();
+		}
+
+		// Vertex buffers BNT
+		std::map<std::string, SResourceVertexBufferBNT>::iterator itVertexBufferBNT = _mmapResVertexBufferBNTs.begin();
+		while (itVertexBufferBNT != _mmapResVertexBufferBNTs.end())
+		{
+			if (itVertexBufferBNT->second.bLocked)	// Do not remove this resource
+			{
+				itVertexBufferBNT++;
+				continue;
+			}
+			delete itVertexBufferBNT->second.pResource;
+			_mmapResVertexBufferBNTs.erase(itVertexBufferBNT);
+			itVertexBufferBNT = _mmapResVertexBufferBNTs.begin();
+		}
+
+		// Vertex buffers instanced
+		std::map<std::string, SResourceVertexBufferInstanced>::iterator itVertexBufferInstance = _mmapResVertexBufferInstanceds.begin();
+		while (itVertexBufferInstance != _mmapResVertexBufferInstanceds.end())
+		{
+			if (itVertexBufferInstance->second.bLocked)	// Do not remove this resource
+			{
+				itVertexBufferInstance++;
+				continue;
+			}
+			delete itVertexBufferInstance->second.pResource;
+			_mmapResVertexBufferInstanceds.erase(itVertexBufferInstance);
+			itVertexBufferInstance = _mmapResVertexBufferInstanceds.begin();
+		}
+
+		// Vertex buffers lines
+		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
+		{
+			if (itVertexBufferLine->second.bLocked)	// Do not remove this resource
+			{
+				itVertexBufferLine++;
+				continue;
+			}
+			delete itVertexBufferLine->second.pResource;
+			_mmapResVertexBufferLines.erase(itVertexBufferLine);
+			itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		}
+
+	}
+
+	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
@@ -546,6 +704,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceDepthbuffer newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceDepthbuffer(uiWidth, uiHeight);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addDepthbuffer(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -570,6 +729,8 @@ namespace X
 		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
 		if (it == _mmapResDepthbuffers.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -579,7 +740,7 @@ namespace X
 		_mmapResDepthbuffers.erase(it);
 	}
 
-	CResourceFont* SCResourceManager::addFont(const std::string& strResourceName, const std::string& strFontFilename)
+	CResourceFont* SCResourceManager::addFont(const std::string& strResourceName, const std::string& strFontFilename, bool bLocked)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Font", strResourceName);
@@ -592,6 +753,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceFont newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceFont(strFontFilename);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addFont(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -616,6 +778,8 @@ namespace X
 		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
 		if (it == _mmapResFonts.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -625,7 +789,7 @@ namespace X
 		_mmapResFonts.erase(it);
 	}
 
-	CResourceFramebuffer* SCResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight)
+	CResourceFramebuffer* SCResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
@@ -635,6 +799,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceFramebuffer newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceFramebuffer(uiWidth, uiHeight);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addFramebuffer(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -659,6 +824,8 @@ namespace X
 		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
 		if (it == _mmapResFramebuffers.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -668,7 +835,7 @@ namespace X
 		_mmapResFramebuffers.erase(it);
 	}
 
-	CResourceShader* SCResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename)
+	CResourceShader* SCResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
@@ -678,6 +845,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceShader newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceShader(strVertexProgramFilename, strFragmentProgramFilename);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addShader(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -702,6 +870,8 @@ namespace X
 		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
 		if (it == _mmapResShaders.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -711,7 +881,7 @@ namespace X
 		_mmapResShaders.erase(it);
 	}
 
-	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing)
+	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing, bool bLocked)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Texture2DAtlas", strResourceName);
@@ -724,6 +894,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceTexture2DAtlas newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceTexture2DAtlas(vecStrImageFilenames, bAllowRotationOfImages, uiImageSpacing);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DAtlas(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -748,6 +919,8 @@ namespace X
 		std::map<std::string, SResourceTexture2DAtlas>::iterator it = _mmapResTextures2DAtlases.find(strResourceName);
 		if (it == _mmapResTextures2DAtlases.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -758,7 +931,7 @@ namespace X
 		_mmapResTextures2DAtlases.erase(it);
 	}
 
-	CResourceTexture2DFromFile* SCResourceManager::addTexture2DFromFile(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis)
+	CResourceTexture2DFromFile* SCResourceManager::addTexture2DFromFile(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis, bool bLocked)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Texture2DFromFile", strResourceName);
@@ -771,6 +944,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceTexture2DFromFile newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceTexture2DFromFile(strImageFilename, bFlipYaxis);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DFromFile(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -795,6 +969,8 @@ namespace X
 		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
 		if (it == _mmapResTextures2D.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -804,7 +980,7 @@ namespace X
 		_mmapResTextures2D.erase(it);
 	}
 
-	CResourceTexture2DFromImage* SCResourceManager::addTexture2DFromImage(const std::string& strResourceName, const CImage& image)
+	CResourceTexture2DFromImage* SCResourceManager::addTexture2DFromImage(const std::string& strResourceName, const CImage& image, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
@@ -814,6 +990,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceTexture2DFromImage newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceTexture2DFromImage(image);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DFromImage(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -838,6 +1015,8 @@ namespace X
 		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
 		if (it == _mmapResTextures2DFromImage.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -847,7 +1026,7 @@ namespace X
 		_mmapResTextures2DFromImage.erase(it);
 	}
 
-	CResourceVertexBuffer* SCResourceManager::addVertexBuffer(const std::string& strResourceName)
+	CResourceVertexBuffer* SCResourceManager::addVertexBuffer(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceVertexBuffer>::iterator it = _mmapResVertexBuffers.find(strResourceName);
@@ -857,6 +1036,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceVertexBuffer newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceVertexBuffer();
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBuffer(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -881,6 +1061,8 @@ namespace X
 		std::map<std::string, SResourceVertexBuffer>::iterator it = _mmapResVertexBuffers.find(strResourceName);
 		if (it == _mmapResVertexBuffers.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -890,7 +1072,7 @@ namespace X
 		_mmapResVertexBuffers.erase(it);
 	}
 
-	CResourceVertexBufferBNT* SCResourceManager::addVertexBufferBNT(const std::string& strResourceName)
+	CResourceVertexBufferBNT* SCResourceManager::addVertexBufferBNT(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceVertexBufferBNT>::iterator it = _mmapResVertexBufferBNTs.find(strResourceName);
@@ -900,6 +1082,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceVertexBufferBNT newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceVertexBufferBNT();
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferBNT(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -924,6 +1107,8 @@ namespace X
 		std::map<std::string, SResourceVertexBufferBNT>::iterator it = _mmapResVertexBufferBNTs.find(strResourceName);
 		if (it == _mmapResVertexBufferBNTs.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -933,7 +1118,7 @@ namespace X
 		_mmapResVertexBufferBNTs.erase(it);
 	}
 
-	CResourceVertexBufferInstanced* SCResourceManager::addVertexBufferInstanced(const std::string& strResourceName)
+	CResourceVertexBufferInstanced* SCResourceManager::addVertexBufferInstanced(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceVertexBufferInstanced>::iterator it = _mmapResVertexBufferInstanceds.find(strResourceName);
@@ -943,6 +1128,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceVertexBufferInstanced newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceVertexBufferInstanced();
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferInstanced(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -967,6 +1153,8 @@ namespace X
 		std::map<std::string, SResourceVertexBufferInstanced>::iterator it = _mmapResVertexBufferInstanceds.find(strResourceName);
 		if (it == _mmapResVertexBufferInstanceds.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;
@@ -976,7 +1164,7 @@ namespace X
 		_mmapResVertexBufferInstanceds.erase(it);
 	}
 
-	CResourceVertexBufferLine* SCResourceManager::addVertexBufferLine(const std::string& strResourceName)
+	CResourceVertexBufferLine* SCResourceManager::addVertexBufferLine(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
 		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
@@ -986,6 +1174,7 @@ namespace X
 			return it->second.pResource;
 		}
 		SResourceVertexBufferLine newRes;
+		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
 		newRes.pResource = new CResourceVertexBufferLine();
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferLine(" + strResourceName + ") failed to allocate memory for new resource.");
@@ -1010,6 +1199,8 @@ namespace X
 		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
 		if (it == _mmapResVertexBufferLines.end())
 			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
 		if (it->second.uiCount > 1)
 		{
 			it->second.uiCount--;

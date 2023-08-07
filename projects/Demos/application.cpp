@@ -2,6 +2,8 @@
 #include "application.h"
 #include "resource.h"
 #include "demo2D.h"
+#include "demoEmpty.h"
+#include "demoInstancing.h"
 #include "demoNeuralNets.h"
 #include "demoOctTree.h"
 #include "demoPhysics.h"
@@ -24,14 +26,6 @@ namespace X
 		// Set mouse cursor
 		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
-		// Create the demo states
-		CStateDemo2D* pStateDemo2D = new CStateDemo2D;								_mFSM.addState("demo2D", pStateDemo2D);
-		CStateDemoNeuralNets* pStateNeuralNets = new CStateDemoNeuralNets;			_mFSM.addState("demoNeuralNets", pStateNeuralNets);
-		CStateDemoOctTree* pStateOctTree = new CStateDemoOctTree;					_mFSM.addState("demoOctTree", pStateOctTree);
-		CStateDemoPhysics* pStateDemoPhysics = new CStateDemoPhysics;				_mFSM.addState("demoPhysics", pStateDemoPhysics);
-		CStateDemoQuadTree* pStateQuadTree = new CStateDemoQuadTree;				_mFSM.addState("demoQuadTree", pStateQuadTree);
-		CStateDemoSceneManager* pStateSceneManager = new CStateDemoSceneManager;	_mFSM.addState("demoSceneManager", pStateSceneManager);
-
 		// Create GUI to switch between states
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUIContainer* pCont = pGUI->addContainer("DemoStates");
@@ -44,13 +38,42 @@ namespace X
 		strTxt += "Once a demo state has been entered, you can bring up this window again with the \"Demo States\" button found at the lower right corner of the screen.\n";
 		CGUITextScroll* pTextScroll = pCont->addTextScroll("DemoStatesTextScroll", 0, 0, 640, 200, strTxt);
 		CGUIButton* pBut;
-		float fPosY = 210.0f;
-		pBut = pCont->addButton("2D", 0, fPosY, 200, 30, "2D"); fPosY += 40;
-		pBut = pCont->addButton("Neural Networks", 0, fPosY, 200, 30, "Neural Networks"); fPosY += 40;
-		pBut = pCont->addButton("Oct Tree", 0, fPosY, 200, 30, "Oct Tree"); fPosY += 40;
-		pBut = pCont->addButton("Physics", 0, fPosY, 200, 30, "Physics"); fPosY += 40;
-		pBut = pCont->addButton("Quad Tree", 0, fPosY, 200, 30, "Quad Tree"); fPosY += 40;
-		pBut = pCont->addButton("Scene Manager", 0, fPosY, 200, 30, "Scene Manager"); fPosY += 40;
+		CVector2f vTxtPos(0.0f, 210.0f);
+		pBut = pCont->addButton("2D", vTxtPos.x, vTxtPos.y, 200, 30, "2D"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("2D rendering of stuff.");
+		pBut = pCont->addButton("Empty", vTxtPos.x, vTxtPos.y, 200, 30, "Empty"); vTxtPos.y += 40;							pBut->mpTooltip->setAsText("An empty demo which does nothing. I use this as a template when adding new demos.");
+		pBut = pCont->addButton("Instancing", vTxtPos.x, vTxtPos.y, 200, 30, "Instancing"); vTxtPos.y += 40;				pBut->mpTooltip->setAsText("Massive speed ups with instancing.");
+		pBut = pCont->addButton("Neural Networks", vTxtPos.x, vTxtPos.y, 200, 30, "Neural Networks"); vTxtPos.y += 40;		pBut->mpTooltip->setAsText("AI Neural networks and their training.");
+		pBut = pCont->addButton("Oct Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Oct Tree"); vTxtPos.y += 40;					pBut->mpTooltip->setAsText("Oct tree for culling.");
+		pBut = pCont->addButton("Physics", vTxtPos.x, vTxtPos.y, 200, 30, "Physics"); vTxtPos.y += 40;						pBut->mpTooltip->setAsText("Testing the physics engine here.");
+		pBut = pCont->addButton("Quad Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Quad Tree"); vTxtPos.set(220, 210);			pBut->mpTooltip->setAsText("Quad tree for culling.");
+		pBut = pCont->addButton("Scene Manager", vTxtPos.x, vTxtPos.y, 200, 30, "Scene Manager"); 	vTxtPos.y += 40;		pBut->mpTooltip->setAsText("3D Scene manager testing.");
+
+		// Create the demo states
+		CStateDemo2D* pStateDemo2D = new CStateDemo2D;
+		_mFSM.addState("demo2D", pStateDemo2D);
+
+		CStateDemoEmpty* pStateDemoEmpty = new CStateDemoEmpty;
+		_mFSM.addState("demoEmpty", pStateDemoEmpty);
+
+		CStateDemoInstancing* pStateDemoInstancing = new CStateDemoInstancing;
+		_mFSM.addState("demoInstancing", pStateDemoInstancing);
+
+		CStateDemoNeuralNets* pStateNeuralNets = new CStateDemoNeuralNets;
+		_mFSM.addState("demoNeuralNets", pStateNeuralNets);
+
+		CStateDemoOctTree* pStateOctTree = new CStateDemoOctTree;
+		_mFSM.addState("demoOctTree", pStateOctTree);
+
+		CStateDemoPhysics* pStateDemoPhysics = new CStateDemoPhysics;
+		_mFSM.addState("demoPhysics", pStateDemoPhysics);
+
+		CStateDemoQuadTree* pStateQuadTree = new CStateDemoQuadTree;
+		_mFSM.addState("demoQuadTree", pStateQuadTree);
+
+		CStateDemoSceneManager* pStateSceneManager = new CStateDemoSceneManager;
+		_mFSM.addState("demoSceneManager", pStateSceneManager);
+
+		
 
 		// Add button in lower right to show demo states container
 		pCont = pGUI->addContainer("DemoStatesButton");
@@ -61,6 +84,11 @@ namespace X
 
 		// End of loading screen
 		pLS->onInitEnd();
+
+		// TEMP
+		// Switch to state 2D straight away, not showing the Demo states container
+		_mFSM.switchToState("demoInstancing");
+		pGUI->getContainer("DemoStates")->setVisible(false);
 	}
 
 	void CApplication::onStart(void)
@@ -86,6 +114,18 @@ namespace X
 			if (pBut->getClicked())
 			{
 				_mFSM.switchToState("demo2D");
+				pCont->setVisible(false);
+			}
+			pBut = pCont->getButton("Empty");
+			if (pBut->getClicked())
+			{
+				_mFSM.switchToState("demoEmpty");
+				pCont->setVisible(false);
+			}
+			pBut = pCont->getButton("Instancing");
+			if (pBut->getClicked())
+			{
+				_mFSM.switchToState("demoInstancing");
 				pCont->setVisible(false);
 			}
 			pBut = pCont->getButton("Neural Networks");

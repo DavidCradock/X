@@ -8,9 +8,6 @@
     <Filter Include="Demos">
       <UniqueIdentifier>{24dea7c9-67bb-4192-beaf-e000161413d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Demos\NeuralNets">
-      <UniqueIdentifier>{c9a1cf50-51f0-456e-9553-9f7dba78f109}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Demos\2D">
       <UniqueIdentifier>{48c84bf0-faa0-4015-8cb7-c46209cca810}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,15 @@
     </Filter>
     <Filter Include="Demos\QuadTree">
       <UniqueIdentifier>{ba71d3da-38e2-4573-957e-5e8fa5a8bdbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\NeuralNets">
+      <UniqueIdentifier>{c9a1cf50-51f0-456e-9553-9f7dba78f109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Instancing">
+      <UniqueIdentifier>{db963930-3c36-4659-8ccd-284622135624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Empty">
+      <UniqueIdentifier>{820c640f-d4ff-488f-81f8-3f4bf313e208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +81,12 @@
     </ClCompile>
     <ClCompile Include="demoNeuralNetsGUIstateSelectionUpdate.cpp">
       <Filter>Demos\NeuralNets</Filter>
+    </ClCompile>
+    <ClCompile Include="demoInstancing.cpp">
+      <Filter>Demos\Instancing</Filter>
+    </ClCompile>
+    <ClCompile Include="demoEmpty.cpp">
+      <Filter>Demos\Empty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="demoNeuralNetsGUIstateSelectionUpdate.h">
       <Filter>Demos\NeuralNets</Filter>
+    </ClInclude>
+    <ClInclude Include="demoInstancing.h">
+      <Filter>Demos\Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="demoEmpty.h">
+      <Filter>Demos\Empty</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
