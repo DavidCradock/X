@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexBufferInstanced.h"
+#include "resourceVertexBufferCPTInst.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceVertexBufferInstanced::CResourceVertexBufferInstanced()
+	CResourceVertexBufferCPTInst::CResourceVertexBufferCPTInst()
 	{
 		_mVertexBufferObject = 0;
 		_mVertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	CResourceVertexBufferInstanced::~CResourceVertexBufferInstanced()
+	CResourceVertexBufferCPTInst::~CResourceVertexBufferCPTInst()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceVertexBufferInstanced::onGLContextCreated(void)
+	void CResourceVertexBufferCPTInst::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceVertexBufferInstanced::onGLContextToBeDestroyed(void)
+	void CResourceVertexBufferCPTInst::onGLContextToBeDestroyed(void)
 	{
 		if (_mVertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void CResourceVertexBufferInstanced::removeGeom(void)
+	void CResourceVertexBufferCPTInst::removeGeom(void)
 	{
 		_mvecVertices.clear();
 		_mvecIndices.clear();
 	}
 
-	void CResourceVertexBufferInstanced::update(void)
+	void CResourceVertexBufferCPTInst::update(void)
 	{
 		if (!_mvecVertices.size())
 			return;
@@ -118,7 +118,7 @@ namespace X
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBufferInstanced::render(bool bWireframeMode) const
+	void CResourceVertexBufferCPTInst::render(bool bWireframeMode) const
 	{
 		if (!_mVertexArrayObject)
 			return;
@@ -143,17 +143,17 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceVertexBufferInstanced::addVertex(const Vertex& newVertex)
+	void CResourceVertexBufferCPTInst::addVertex(const Vertex& newVertex)
 	{
 		_mvecVertices.push_back(newVertex);
 	}
 
-	void CResourceVertexBufferInstanced::addIndex(int newIndex)
+	void CResourceVertexBufferCPTInst::addIndex(int newIndex)
 	{
 		_mvecIndices.push_back(newIndex);
 	}
 
-	void CResourceVertexBufferInstanced::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
+	void CResourceVertexBufferCPTInst::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -191,7 +191,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferInstanced::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
+	void CResourceVertexBufferCPTInst::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -232,7 +232,7 @@ namespace X
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferInstanced::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
+	void CResourceVertexBufferCPTInst::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
 	{
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
@@ -299,7 +299,7 @@ namespace X
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 	}
 
-	void CResourceVertexBufferInstanced::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
+	void CResourceVertexBufferCPTInst::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
 	{
 		FILE* file = 0;
 		errno_t err;
@@ -339,17 +339,17 @@ namespace X
 			update();
 	}
 
-	size_t CResourceVertexBufferInstanced::getNumVertices(void) const
+	size_t CResourceVertexBufferCPTInst::getNumVertices(void) const
 	{
 		return _mvecVertices.size();
 	}
 
-	size_t CResourceVertexBufferInstanced::getNumIndicies(void) const
+	size_t CResourceVertexBufferCPTInst::getNumIndicies(void) const
 	{
 		return _mvecIndices.size();
 	}
 
-	void CResourceVertexBufferInstanced::convertObj(const std::string filename) const
+	void CResourceVertexBufferCPTInst::convertObj(const std::string filename) const
 	{
 		// Used to temporarily hold each line of data from file
 		CVector3f vertex;
@@ -453,12 +453,12 @@ namespace X
 		fclose(file);
 	}
 
-	void CResourceVertexBufferInstanced::addInstanceMatrix(const CMatrix& matrixInstanceTransformation)
+	void CResourceVertexBufferCPTInst::addInstanceMatrix(const CMatrix& matrixInstanceTransformation)
 	{
 
 	}
 
-	void CResourceVertexBufferInstanced::removeAllInstanceMatrices(void)
+	void CResourceVertexBufferCPTInst::removeAllInstanceMatrices(void)
 	{
 
 	}

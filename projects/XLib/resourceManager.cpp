@@ -89,8 +89,8 @@ namespace X
 		}
 
 		// Vertex buffers instanced
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferInstanceds.begin();
-		while (itResourceVertexBufferInstanced != _mmapResVertexBufferInstanceds.end())
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
+		while (itResourceVertexBufferInstanced != _mmapResVertexBufferCPTInsts.end())
 		{
 			itResourceVertexBufferInstanced->second.pResource->onGLContextToBeDestroyed();
 			itResourceVertexBufferInstanced++;
@@ -182,8 +182,8 @@ namespace X
 		}
 
 		// Vertex buffers
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferInstanceds.begin();
-		while (itResourceVertexBufferInstanced != _mmapResVertexBufferInstanceds.end())
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
+		while (itResourceVertexBufferInstanced != _mmapResVertexBufferCPTInsts.end())
 		{
 			itResourceVertexBufferInstanced->second.pResource->onGLContextCreated();
 			itResourceVertexBufferInstanced++;
@@ -513,7 +513,7 @@ namespace X
 		// Vertex buffers instanced
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferInstanced("X:default", true);
+		pRM->addVertexBufferCPTInst("X:default", true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers BNT
@@ -657,8 +657,8 @@ namespace X
 		}
 
 		// Vertex buffers instanced
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator itVertexBufferInstance = _mmapResVertexBufferInstanceds.begin();
-		while (itVertexBufferInstance != _mmapResVertexBufferInstanceds.end())
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itVertexBufferInstance = _mmapResVertexBufferCPTInsts.begin();
+		while (itVertexBufferInstance != _mmapResVertexBufferCPTInsts.end())
 		{
 			if (itVertexBufferInstance->second.bLocked)	// Do not remove this resource
 			{
@@ -666,8 +666,8 @@ namespace X
 				continue;
 			}
 			delete itVertexBufferInstance->second.pResource;
-			_mmapResVertexBufferInstanceds.erase(itVertexBufferInstance);
-			itVertexBufferInstance = _mmapResVertexBufferInstanceds.begin();
+			_mmapResVertexBufferCPTInsts.erase(itVertexBufferInstance);
+			itVertexBufferInstance = _mmapResVertexBufferCPTInsts.begin();
 		}
 
 		// Vertex buffers lines
@@ -1110,40 +1110,40 @@ namespace X
 		_mmapResVertexBufferBNTs.erase(it);
 	}
 
-	CResourceVertexBufferInstanced* SCResourceManager::addVertexBufferInstanced(const std::string& strResourceName, bool bLocked)
+	CResourceVertexBufferCPTInst* SCResourceManager::addVertexBufferCPTInst(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator it = _mmapResVertexBufferInstanceds.find(strResourceName);
-		if (it != _mmapResVertexBufferInstanceds.end())
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		if (it != _mmapResVertexBufferCPTInsts.end())
 		{
 			it->second.uiCount++;
 			return it->second.pResource;
 		}
-		SResourceVertexBufferInstanced newRes;
+		SResourceVertexBufferCPTInst newRes;
 		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
-		newRes.pResource = new CResourceVertexBufferInstanced();
-		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferInstanced(" + strResourceName + ") failed to allocate memory for new resource.");
-		_mmapResVertexBufferInstanceds[strResourceName] = newRes;
+		newRes.pResource = new CResourceVertexBufferCPTInst();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferCPTInst(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexBufferCPTInsts[strResourceName] = newRes;
 		return newRes.pResource;
 	}
 
-	CResourceVertexBufferInstanced* SCResourceManager::getVertexBufferInstanced(const std::string& strResourceName)
+	CResourceVertexBufferCPTInst* SCResourceManager::getVertexBufferCPTInst(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator it = _mmapResVertexBufferInstanceds.find(strResourceName);
-		ThrowIfTrue(it == _mmapResVertexBufferInstanceds.end(), "SCResourceManager::getVertexBufferInstanced(" + strResourceName + ") failed. Named resource doesn't exist.");
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexBufferCPTInsts.end(), "SCResourceManager::getVertexBufferCPTInst(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
 
-	bool SCResourceManager::getVertexBufferInstancedExists(const std::string& strResourceName)
+	bool SCResourceManager::getVertexBufferCPTInstExists(const std::string& strResourceName)
 	{
-		return _mmapResVertexBufferInstanceds.find(strResourceName) != _mmapResVertexBufferInstanceds.end();
+		return _mmapResVertexBufferCPTInsts.find(strResourceName) != _mmapResVertexBufferCPTInsts.end();
 	}
 
-	void SCResourceManager::removeVertexBufferInstanced(const std::string& strResourceName)
+	void SCResourceManager::removeVertexBufferCPTInst(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferInstanced>::iterator it = _mmapResVertexBufferInstanceds.find(strResourceName);
-		if (it == _mmapResVertexBufferInstanceds.end())
+		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		if (it == _mmapResVertexBufferCPTInsts.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
 			return;
@@ -1153,7 +1153,7 @@ namespace X
 			return;
 		}
 		delete it->second.pResource;
-		_mmapResVertexBufferInstanceds.erase(it);
+		_mmapResVertexBufferCPTInsts.erase(it);
 	}
 
 	CResourceVertexBufferLine* SCResourceManager::addVertexBufferLine(const std::string& strResourceName, bool bLocked)

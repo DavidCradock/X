@@ -9,8 +9,8 @@
 namespace X
 {
 	// Resource used by SCResourceManager, a vertex buffer with position, colour, texture coordinates and normal.
-	// Just like the non instanced vertex buffer CResourceVertexbuffer resource, we add vertices as normal.
-	// The difference is that if we're rendering multiple objects, with the CResourceVertexBuffer we'd either make multiple
+	// Just like the non instanced vertex buffer CResourceVertexbufferCPT resource, we add vertices as normal.
+	// The difference is that if we're rendering multiple objects, with the CResourceVertexBufferCPT we'd either make multiple
 	// calls to render(), or add all the geometry multiple times before calling render.
 	// This is a waste of CPU/GPU cycles as we'd have to add a ton of vertices and send them over to the GPU, or call render many times.
 	// With instancing however, we add just one set of vertices used to represent an object to be rendered multiple times and then
@@ -18,11 +18,11 @@ namespace X
 	// then call render just once and then the GPU uses the data stored in this instance data to render the added geometry multiple times.
 	// This instanced data is a world matrix which holds translation, rotation and scale of each instance.
 	// Once the vertex data is added, we call addInstanceMatrix() for each instance of the vertex data we wish to render.
-	class CResourceVertexBufferInstanced : public CResourceBase
+	class CResourceVertexBufferCPTInst : public CResourceBase
 	{
 	public:
-		CResourceVertexBufferInstanced();
-		~CResourceVertexBufferInstanced();
+		CResourceVertexBufferCPTInst();
+		~CResourceVertexBufferCPTInst();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
 		void onGLContextCreated(void);

@@ -364,7 +364,7 @@
     <ClInclude Include="resourceVertexBufferBNT.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resourceVertexBufferInstanced.h">
+    <ClInclude Include="resourceVertexBufferCPTInst.h">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
@@ -655,7 +655,7 @@
     <ClCompile Include="resourceVertexBufferBNT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="resourceVertexBufferInstanced.cpp">
+    <ClCompile Include="resourceVertexBufferCPTInst.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>

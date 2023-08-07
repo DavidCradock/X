@@ -42,7 +42,7 @@ namespace X
 
 		// Debug CResourceVertexBufferInstanced
 		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferInstanced* pVBI = pRM->getVertexBufferInstanced("X:default");
+		CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
 		CResourceShader* pShader = pRM->getShader("X:2DParticle");
 		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
 		pTexture->bind(0);
