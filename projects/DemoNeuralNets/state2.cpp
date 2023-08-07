@@ -116,9 +116,9 @@ namespace X
 		pMat->setSpecularStrength(1.0f);
 		
 		// Entities
-		CSMEntityTriangle* pEnt;
+		CSMEntityVertexBuffer* pEnt;
 		// Background
-		_mSM.addEntityTriangle("background", "background", "background");
+		_mSM.addEntityVertexBuffer("background", "background", "background");
 		
 
 		// Set camera position
@@ -141,7 +141,7 @@ namespace X
 
 			// Create food entity
 			std::string strName = std::to_string(i) + "_entFood";
-			pEnt = _mSM.addEntityTriangle(strName, "food", "food");
+			pEnt = _mSM.addEntityVertexBuffer(strName, "food", "food");
 			pEnt->setWorldPosition(CVector3f(vFoodPos.x, vFoodPos.y, 0.0f));
 
 			// Create food object
@@ -163,7 +163,7 @@ namespace X
 
 			// Create creature entity
 			std::string strName = std::to_string(i) + "_ent";
-			pEnt = _mSM.addEntityTriangle(strName, "critter", "critter");
+			pEnt = _mSM.addEntityVertexBuffer(strName, "critter", "critter");
 			pEnt->setWorldPosition(CVector3f(vEntityPos.x, vEntityPos.y, 0.3f));
 
 			// Create creature object
@@ -236,7 +236,7 @@ namespace X
 		_mSM.removeAllMaterials();
 
 		// Remove all entities
-		_mSM.removeAllEnititiesTriangle();
+		_mSM.removeAllEnititiesVertexBuffer();
 
 		// Clear food and entities
 		mvecFood.clear();

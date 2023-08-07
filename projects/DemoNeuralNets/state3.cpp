@@ -53,9 +53,9 @@ namespace X
 		pMat->setSpecularStrength(1.0f);
 
 		// Entities
-		CSMEntityTriangle* pEnt;
+		CSMEntityVertexBuffer* pEnt;
 		// Background
-		_mSM.addEntityTriangle("background", "background", "background");
+		_mSM.addEntityVertexBuffer("background", "background", "background");
 
 		// Set camera position
 		CSMCamera* pCamera = _mSM.getCamera(0);
@@ -78,7 +78,7 @@ namespace X
 
 			// Create creature entity
 			std::string strName = std::to_string(i) + "_ent";
-			pEnt = _mSM.addEntityTriangle(strName, "critter", "entity");
+			pEnt = _mSM.addEntityVertexBuffer(strName, "critter", "entity");
 			pEnt->setWorldPosition(CVector3f(vEntityPos.x, vEntityPos.y, 0.3f));
 
 			// Create creature object
@@ -150,7 +150,7 @@ namespace X
 		_mSM.removeAllMaterials();
 
 		// Remove all entities
-		_mSM.removeAllEnititiesTriangle();
+		_mSM.removeAllEnititiesVertexBuffer();
 
 		// Clear entities
 		mvecEntities.clear();

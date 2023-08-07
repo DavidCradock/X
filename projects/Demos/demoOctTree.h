@@ -28,7 +28,7 @@ namespace X
 			CVector3f vRot;
 			std::string strName;
 			CSMEntityLine* pEntLine;
-			CSMEntityTriangle* pEntTri;
+			CSMEntityVertexBuffer* pEntTri;
 		};
 		std::vector<SEntity> _mvEntities;
 

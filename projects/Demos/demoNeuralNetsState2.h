@@ -8,7 +8,7 @@ namespace X
 	{
 	public:
 		CVector2f vPos;				// Position of food
-		CSMEntityTriangle* pEntity;	// Holds pointer to entity
+		CSMEntityVertexBuffer* pEntity;	// Holds pointer to entity
 	};
 
 	// Represents an entity looking for food
@@ -24,7 +24,7 @@ namespace X
 		CVector2f vPos;		// Position in the world
 		CVector2f vDir;		// Lookat direction
 		double dFitness;	// Each time an entity gets towards food, it's fitness increases
-		CSMEntityTriangle* pEntity;	// Holds pointer to entity
+		CSMEntityVertexBuffer* pEntity;	// Holds pointer to entity
 		double dMaxTurnRate;	// Maximum value to clamp the outputs of the NN to, set in constructor
 		double dMaxSpeed;		// Maximum value to clamp the outputs of the NN to, set in constructor
 	};

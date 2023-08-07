@@ -50,9 +50,9 @@ namespace X
 		// Set shadow stuff
 //		_mSM.setShadowMatrixManual();
 
-		// Add entity triangle
+		// Add entity vertex buffer
 		CVector3f vEntityPos(0.0f, 0.5f, 0.0f);
-		CSMEntityTriangle* pEntityTri = _mSM.addEntityTriangle("cube", "cube1x1x1", "mat0_default");
+		CSMEntityVertexBuffer* pEntityTri = _mSM.addEntityVertexBuffer("cube", "cube1x1x1", "mat0_default");
 		pEntityTri->setWorldPosition(vEntityPos);
 
 		// Add entity line
@@ -63,7 +63,7 @@ namespace X
 		_mOctTree.addEntity("entity", vEntityPos);
 
 		// Add ground entity
-		_mSM.addEntityTriangle("ent_ground", "ground", "mat1_ground");
+		_mSM.addEntityVertexBuffer("ent_ground", "ground", "mat1_ground");
 
 		// Now create 50 entities which rotate and move around randomly
 		for (int i = 0; i < 50; i++)
@@ -75,7 +75,7 @@ namespace X
 			entity.vPos.set(randf(-10.0f, 10.0f), randf(-10.0f, 10.0f), randf(-10.0f, 10.0f));
 			entity.vRot.set(randf(-1.0f, 1.0f), randf(-1.0f, 1.0f), randf(-1.0f, 1.0f));
 			entity.pEntLine = _mSM.addEntityLine(strEntityName, "axis");
-			entity.pEntTri = _mSM.addEntityTriangle(strEntityName, "cube1x1x1", "mat0_default");
+			entity.pEntTri = _mSM.addEntityVertexBuffer(strEntityName, "cube1x1x1", "mat0_default");
 			entity.pEntLine->setWorldPosition(entity.vPos);
 			entity.pEntTri->setWorldPosition(entity.vPos);
 
@@ -134,7 +134,7 @@ namespace X
 
 		_mSM.removeAllMaterials();
 //		_mSM.removeAllCameras();
-		_mSM.removeAllEnititiesTriangle();
+		_mSM.removeAllEnititiesVertexBuffer();
 		_mSM.removeAllEntitiesLine();
 
 		_mvEntities.clear();
@@ -176,7 +176,7 @@ namespace X
 		if (bTranslate)
 		{
 			CSMEntityLine* pEntityLine = _mSM.getEntityLine("axis");
-			CSMEntityTriangle* pEntityTri = _mSM.getEntityTriangle("cube");
+			CSMEntityVertexBuffer* pEntityTri = _mSM.getEntityVertexBuffer("cube");
 			pEntityLine->translateLocal(fTransForward, fTransUp, fTransRight);
 			pEntityTri->translateLocal(fTransForward, fTransUp, fTransRight);
 
@@ -196,7 +196,7 @@ namespace X
 		if (bRotate)
 		{
 			CSMEntityLine* pEntityLine = _mSM.getEntityLine("axis");
-			CSMEntityTriangle* pEntityTri = _mSM.getEntityTriangle("cube");
+			CSMEntityVertexBuffer* pEntityTri = _mSM.getEntityVertexBuffer("cube");
 			pEntityLine->rotateLocal(fRotPitch, fRotYaw, fRotRoll);
 			pEntityTri->rotateLocal(fRotPitch, fRotYaw, fRotRoll);
 

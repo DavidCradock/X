@@ -120,7 +120,7 @@ namespace X
 			_mvEntityRot[i].z += deg2rad(45.0f) * timer.getSecondsPast();
 
 			std::string strEntity = "entity_" + std::to_string(i);
-			CSMEntityTriangle* pEntity = mSceneManagerSimple.getEntityTriangle(strEntity);
+			CSMEntityVertexBuffer* pEntity = mSceneManagerSimple.getEntityVertexBuffer(strEntity);
 
 			CQuaternion qRot;
 			qRot.setFromEuler(_mvEntityRot[i].x, _mvEntityRot[i].y, _mvEntityRot[i].z);
@@ -191,7 +191,7 @@ namespace X
 			"X:default_normal",						// Normal texture (float)
 			"X:default_emission");					// Emission texture (black)
 
-		CSMEntityTriangle* pEntity = mSceneManagerSimple.addEntityTriangle("centre", "cube", "mat_cubes");
+		CSMEntityVertexBuffer* pEntity = mSceneManagerSimple.addEntityVertexBuffer("centre", "cube", "mat_cubes");
 		pEntity->setWorldPosition(CVector3f(0.0f, 0.0f, 0.0f));
 
 		for (int i = 0; i < 100; ++i)
@@ -202,11 +202,11 @@ namespace X
 			_mvEntityRot[i].z += float(i) * 1.0f;
 
 			std::string strEntity = "entity_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityTriangle(strEntity, "cube", "mat_cubes");
+			pEntity = mSceneManagerSimple.addEntityVertexBuffer(strEntity, "cube", "mat_cubes");
 			pEntity->setWorldPosition(CVector3f(randf(-19.0f, 19.0f), 0.5f, randf(-19.0f, 19.0f)));
 		}
 		// Ground plane
-		pEntity = mSceneManagerSimple.addEntityTriangle("groundplane", "groundplane", "mat_groundplane");
+		pEntity = mSceneManagerSimple.addEntityVertexBuffer("groundplane", "groundplane", "mat_groundplane");
 
 		// Directional light settings
 		mSceneManagerSimple.setDirectionalLightColour(CColour(1.0f, 1.0f, 1.0f, 1.0f));
@@ -226,7 +226,7 @@ namespace X
 		for (int i = 0; i < mSceneManagerSimple.miNumPointLights; i++)
 		{
 			std::string strEntity = "point_light_" + std::to_string(i);
-			pEntity = mSceneManagerSimple.addEntityTriangle(strEntity, "icosphere_radius_0.01", "mat_white");
+			pEntity = mSceneManagerSimple.addEntityVertexBuffer(strEntity, "icosphere_radius_0.01", "mat_white");
 			CVector3f vPos;
 			vPos.x = mSceneManagerSimple.mvLightPoint[i].mvPosition.x;
 			vPos.y = mSceneManagerSimple.mvLightPoint[i].mvPosition.y;
@@ -234,7 +234,7 @@ namespace X
 			pEntity->setWorldPosition(vPos);
 		}
 
-		// Now we're done with adding triangle entities.
+		// Now we're done with adding vertex buffer entities.
 		// Let's add some line entities
 		CResourceVertexBufferLine* pLine = pRM->addVertexBufferLine("line");
 		pLine->setDrawModeAsLineList();

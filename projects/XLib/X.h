@@ -99,7 +99,7 @@
 #include "SMCamera.h"
 #include "SMEntityBase.h"
 #include "SMEntityLine.h"
-#include "SMEntityTriangle.h"
+#include "SMEntityVertexBuffer.h"
 #include "SMLightDirectional.h"
 #include "SMLightPoint.h"
 #include "SMMaterial.h"
