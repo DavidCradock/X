@@ -56,6 +56,9 @@ namespace X
 		// Removes all previously added instance matrices
 		void removeAllInstanceMatrices(void);
 
+		// Removes both any added matrices and the geometry
+		void removeAll(void);
+
 		// Adds a new vertex
 		void addVertex(const Vertex& newVertex);
 
@@ -90,6 +93,7 @@ namespace X
 		unsigned int _mVertexBufferObject;		// OpenGL vertex buffer object ID
 		unsigned int _mVertexArrayObject;		// OpenGL vertex array object ID
 		unsigned int _mElementBufferObject;		// OpenGL element buffer object ID
+		unsigned int _mInstanceVBO;				// OpenGL instance array buffer object ID
 		std::vector<Vertex> _mvecVertices;		// Vector holding each unique vertex
 		std::vector<int> _mvecIndices;			// Vector holding indicies to each unique vertex
 		std::vector<CMatrix> _mInstanceMatrix;	// Each matrix holding transformation for an instance to be rendered.

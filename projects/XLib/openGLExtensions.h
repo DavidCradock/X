@@ -95,5 +95,8 @@ namespace X
 	extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 	extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 	extern PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
+	// Instancing
+	extern PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced;
+	extern PFNGLVERTEXATTRIBDIVISORPROC glVertexAttribDivisor;
 
 }

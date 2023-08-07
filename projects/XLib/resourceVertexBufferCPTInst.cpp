@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "resourceVertexBufferCPTInst.h"
 #include "log.h"
+#include "vector4f.h"
 
 namespace X
 {
@@ -10,6 +11,7 @@ namespace X
 		_mVertexBufferObject = 0;
 		_mVertexArrayObject = 0;
 		_mElementBufferObject = 0;
+		_mInstanceVBO = 0;
 		//onGLContextCreated();
 	}
 
@@ -40,6 +42,11 @@ namespace X
 			glDeleteBuffers(1, &_mElementBufferObject);
 			_mElementBufferObject = 0;
 		}
+		if (_mInstanceVBO)
+		{
+			glDeleteBuffers(1, &_mInstanceVBO);
+			_mInstanceVBO = 0;
+		}
 	}
 
 	void CResourceVertexBufferCPTInst::removeGeom(void)
@@ -61,6 +68,8 @@ namespace X
 			glGenVertexArrays(1, &_mVertexArrayObject);
 		if (!_mElementBufferObject)
 			glGenBuffers(1, &_mElementBufferObject);
+		if (!_mInstanceVBO)
+			glGenBuffers(1, &_mInstanceVBO);
 
 		glBindVertexArray(_mVertexArrayObject);
 
@@ -103,6 +112,48 @@ namespace X
 			(void*)(7 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 		glEnableVertexAttribArray(2);
 
+		// Instance array
+		glBindBuffer(GL_ARRAY_BUFFER, _mInstanceVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(CMatrix) * _mInstanceMatrix.size(), &_mInstanceMatrix[0], GL_STATIC_DRAW);
+		GLsizei vec4Size = sizeof(CVector4f);
+		glVertexAttribPointer(3,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)0);						// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+
+		glVertexAttribPointer(4,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(1 * vec4Size));			// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+
+		glVertexAttribPointer(5,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(2 * vec4Size));			// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+
+		glVertexAttribPointer(6,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(3 * vec4Size));			// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+
+		glVertexAttribDivisor(3, 1);		// 3 as it's the third index and 1 to update instance data once for each instance
+		glVertexAttribDivisor(4, 1);		// 4 as it's the third index and 1 to update instance data once for each instance
+		glVertexAttribDivisor(5, 1);		// 5 as it's the third index and 1 to update instance data once for each instance
+		glVertexAttribDivisor(6, 1);		// 6 as it's the third index and 1 to update instance data once for each instance
+
+		glEnableVertexAttribArray(3);
+		glEnableVertexAttribArray(4);
+		glEnableVertexAttribArray(5);
+		glEnableVertexAttribArray(6);
+
 		// Unbind stuff as we're done
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
@@ -126,11 +177,12 @@ namespace X
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		glBindVertexArray(_mVertexArrayObject);
-		glDrawElements(
-			GL_TRIANGLES,					// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
-			(GLsizei)_mvecIndices.size(),	// Count. Specifies the number of elements to be rendered.
-			GL_UNSIGNED_INT,				// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
-			0);								// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
+		glDrawElementsInstanced(
+			GL_TRIANGLES,						// Mode. Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
+			(GLsizei)_mvecIndices.size(),		// Count. Specifies the number of elements to be rendered.
+			GL_UNSIGNED_INT,					// Type. Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
+			0,									// Indicies. Specifies a pointer to the location where the indices are stored. NOTE: We're using element buffer objects and using the indicies in that, so this is 0.
+			(GLsizei)_mInstanceMatrix.size());	// Number of instances
 		glBindVertexArray(0);
 	}
 
@@ -437,11 +489,17 @@ namespace X
 
 	void CResourceVertexBufferCPTInst::addInstanceMatrix(const CMatrix& matrixInstanceTransformation)
 	{
-
+		_mInstanceMatrix.push_back(matrixInstanceTransformation);
 	}
 
 	void CResourceVertexBufferCPTInst::removeAllInstanceMatrices(void)
 	{
+		_mInstanceMatrix.clear();
+	}
 
+	void CResourceVertexBufferCPTInst::removeAll(void)
+	{
+		removeGeom();
+		removeAllInstanceMatrices();
 	}
 }

@@ -17,6 +17,17 @@ namespace X
 		// This is usefull to allow the state to change to another named state by calling pFSM->switchToState()
 		void onActive(CFiniteStateMachine* pFSM);
 	private:
+		// Timing object
+		CTimer _mTimer;
+
+		// For toggling between the two rendering modes
 		bool _mbInstancedEnabled;
+
+		// Holds positions of all the objects being rendered
+		std::vector<CVector2f> _mvecPosition;		// For the non-indexed vertex buffer
+		std::vector<CVector3f> _mvecPositionIndex;	// For the indexed vertex buffer
+
+		// Stores random velocity of all the objects being rendered
+		std::vector<CVector2f> _mvecVelocity;
 	};
 }

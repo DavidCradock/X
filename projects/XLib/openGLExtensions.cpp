@@ -85,6 +85,9 @@ namespace X
 	PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 	PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 	PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
+	// Instancing
+	PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced;
+	PFNGLVERTEXATTRIBDIVISORPROC glVertexAttribDivisor;
 
 	void checkOpenGLExtension(void* extension, const std::string strExtensionName, bool bLogExtensions)
 	{
@@ -190,7 +193,9 @@ namespace X
 		glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays");	checkOpenGLExtension(glGenVertexArrays, "glGenVertexArrays", bLogExtensions);
 		glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray");	checkOpenGLExtension(glBindVertexArray, "glBindVertexArray", bLogExtensions);
 		glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");	checkOpenGLExtension(glDeleteVertexArrays, "glDeleteVertexArrays", bLogExtensions);
-
+		// Instancing
+		glDrawElementsInstanced = (PFNGLDRAWELEMENTSINSTANCEDPROC)wglGetProcAddress("glDrawElementsInstanced");	checkOpenGLExtension(glDrawElementsInstanced, "glDrawElementsInstanced", bLogExtensions);
+		glVertexAttribDivisor = (PFNGLVERTEXATTRIBDIVISORPROC)wglGetProcAddress("glVertexAttribDivisor");	checkOpenGLExtension(glVertexAttribDivisor, "glVertexAttribDivisor", bLogExtensions);
 		pLog->add("setupOpenGLExtensions() complete.");
 	}
 }
