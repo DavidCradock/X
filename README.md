@@ -17,7 +17,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-- Add 2DEntityLine which uses lines to render itself. Mainly used for debugging.
 - Add quad tree culling of all entities.
 - Create and add C2DMap to layers.
 - Add QuadTree to 2D world/layers
