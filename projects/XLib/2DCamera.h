@@ -19,6 +19,9 @@ namespace X
 		// Sets the camera position in the world
 		void setPosition(const CVector2f& vPosition);
 
+		// Sets the camera position in the world
+		void setPosition(float fPositionX, float fPositionY);
+
 		// Sets whether this camera is enabled and rendering to it's framebuffer or not.
 		bool getEnabled(void) const;
 

@@ -6,7 +6,7 @@
 
 namespace X
 {
-	// A C2DEntityRot is an entity which holds an individual entity to be rendered to a layer and holds it's
+	// A C2DEntity is an entity which holds an individual entity to be rendered to a layer and holds it's
 	// position, scale and image stored in a texture atlas to use whilst rendering itself.
 	// A C2DEntity is fast to render lots of entities, but has a limitation.
 	// The limitation is that the entity can not be rotated.

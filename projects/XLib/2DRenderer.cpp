@@ -121,6 +121,11 @@ namespace X
 		CResourceShader* pShaderEntity = pRM->getShader("X:VBCPT");
 		pVB->removeGeom();
 
+		// For line entities
+		CResourceVertexBufferLine* pVBLine = pRM->getVertexBufferLine("X:default");
+		CResourceShader* pShaderLine = pRM->getShader("X:VBCPT");
+		CResourceTexture2DFromFile* pTextureLine = pRM->getTexture2DFromFile("X:default_white");
+
 		// For instance entities
 		CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
 		pVBI->removeAll();
@@ -213,6 +218,7 @@ namespace X
 					pVB->update();
 					pVB->render(false);
 					pVB->removeGeom();
+					pShaderEntity->unbind();
 
 					// Bind and setup shader for C2DEntityRot objects
 					pShaderEntityRot->bind();
@@ -220,7 +226,6 @@ namespace X
 					// We do not set world view as world matrix is given as instance data.
 					pShaderEntityRot->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
 					pShaderEntityRot->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
-					pVBI->removeAll();
 					
 					// For each C2DEntityRot in layer
 					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
@@ -246,6 +251,28 @@ namespace X
 						itParticleSystem++;
 					}
 
+					// Bind and setup shader for C2DEntityLine objects
+					pShaderLine->bind();										// Bind correct shader
+					pShaderLine->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
+					pShaderLine->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					pShaderLine->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+
+					// Bind white texture
+					pTextureLine->bind();
+
+					// For each C2DEntityLine in layer
+					std::map<std::string, C2DEntityLine*>::iterator itEntityLine = pLayer->_mmapEntityLines.begin();
+					while (itEntityLine != pLayer->_mmapEntityLines.end())
+					{
+						itEntityLine->second->render(pVBLine, pShaderLine);
+						itEntityLine++;
+					}
+					// Send remaining vertex data to GPU to be rendered and cleanup
+					pVB->update();
+					pVB->render(false);
+					pVB->removeGeom();
+					pShaderLine->unbind();
+					pTextureLine->unbind();
 				}	// Each layer
 
 				itCamera++;

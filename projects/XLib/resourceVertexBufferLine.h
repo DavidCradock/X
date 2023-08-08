@@ -63,7 +63,7 @@ namespace X
 		// Don't forget to call update() if you're done.
 		void addCircle(int iCentrePosX, int iCentrePosY, float fRadius, unsigned int uiNumSegments = 6, const CColour& colour = CColour(1.0f, 1.0f, 1.0f, 1.0f));
 
-		// Adds a quad, centred along the Z axis
+		// Adds a quad, centered along the Z axis
 		// Don't forget to call update() if you're done.
 		void addQuad(const CVector2f& vCentrePosition, float fWidth, float fHeight, const CColour& colour = CColour(1.0f, 1.0f, 1.0f, 1.0f));
 

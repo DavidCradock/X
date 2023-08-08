@@ -26,7 +26,6 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 		
-		CGUIText* pText;
 		float fYpos = 260;
 		pCont->addText("PSinfo0", 0, fYpos, "");	fYpos += pFont->getTextHeight();
 		pCont->addText("PSinfo1", 0, fYpos, "");

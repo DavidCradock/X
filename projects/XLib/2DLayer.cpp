@@ -15,6 +15,7 @@ namespace X
 		removeAllEntities();
 		removeAllEntityRots();
 		removeAllParticleSystems();
+		removeAllEntityLines();
 	}
 
 	void C2DLayer::setVisible(bool bVisible)
@@ -312,5 +313,98 @@ namespace X
 	unsigned int C2DLayer::getNumParticleSystems(void) const
 	{
 		return int(_mmapParticleSystems.size());
+	}
+
+	C2DEntityLine* C2DLayer::addEntityLine(const std::string& strUniqueName)
+	{
+		// Attempt to find if the object name already exists
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.find(strUniqueName);
+		ThrowIfTrue(it != _mmapEntityLines.end(), "C2DLayer::addEntityLine(\"" + strUniqueName + "\") failed. The object already exists.");
+
+		// Allocate memory for new object
+		C2DEntityLine* pNew = new C2DEntityLine();
+		ThrowIfFalse(pNew, "C2DLayer::addEntityLine(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
+
+		// Add object to hash map
+		_mmapEntityLines[strUniqueName] = pNew;
+		return pNew;
+	}
+
+	bool C2DLayer::getEntityLineExists(const std::string& strUniqueName) const
+	{
+		if (_mmapEntityLines.find(strUniqueName) == _mmapEntityLines.end())
+			return false;
+		return true;
+	}
+
+	C2DEntityLine* C2DLayer::getEntityLine(const std::string& strUniqueName) const
+	{
+		// Attempt to find if the name already exists
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntityLines.end(), "C2DLayer::getEntityLine(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
+		return it->second;
+	}
+
+	C2DEntityLine* C2DLayer::getEntityLine(unsigned int uiIndex) const
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapEntityLines.size(), "C2DLayer::getEntityLine(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		return it->second;
+	}
+
+	void C2DLayer::removeEntityLine(const std::string& strUniqueName)
+	{
+		// Attempt to find if the layer name already exists
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.find(strUniqueName);
+		ThrowIfTrue(it == _mmapEntityLines.end(), "C2DLayer::removeEntityLine(\"" + strUniqueName + "\") failed. The object doesn't exist.");
+
+		// De-allocate memory
+		delete it->second;
+
+		// Remove from hash map
+		_mmapEntityLines.erase(it);
+	}
+
+	void C2DLayer::removeEntityLine(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapEntityLines.size(), "C2DLayer::removeEntityLine(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		// De-allocate memory for the object
+		delete it->second;
+
+		// Remove object from hash map
+		_mmapEntityLines.erase(it);
+	}
+
+	void C2DLayer::removeAllEntityLines(void)
+	{
+		// Remove all objects
+		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.begin();
+		while (it != _mmapEntityLines.end())
+		{
+			delete it->second;
+			_mmapEntityLines.erase(it);
+			it = _mmapEntityLines.begin();
+		}
+		_mmapEntityLines.clear();
+	}
+
+	unsigned int C2DLayer::getNumEntityLines(void) const
+	{
+		return int(_mmapEntityLines.size());
 	}
 }

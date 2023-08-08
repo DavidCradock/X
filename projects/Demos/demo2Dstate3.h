@@ -16,5 +16,11 @@ namespace X
 		// pFSM is a pointer to the CFiniteStateMachine this state is stored in.
 		// This is usefull to allow the state to change to another named state by calling pFSM->switchToState()
 		void onActive(CFiniteStateMachine* pFSM);
+
+	private:
+		CTimer _mTimer;
+		std::vector<CVector2f> _mvEntityPosition;	// Each line entity's position
+		std::vector<CVector2f> _mvEntityVelocity;	// Each line entity's velocity
+		std::vector<float> _mvEntityRotationAmount;	// Each line entity's amount of rotation
 	};
 }

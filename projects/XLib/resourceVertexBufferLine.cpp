@@ -150,7 +150,7 @@ namespace X
 		if (GL_LINE_STRIP == _muiLineMode)
 		{
 			float fAng = 0.0f;
-			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments; uiSegment++)
+			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments + 1; uiSegment++)
 			{
 				v.position.x = vCentrePosition.x + (sinf(fAng) * fRadius);
 				v.position.y = vCentrePosition.y + (cosf(fAng) * fRadius);
@@ -164,7 +164,7 @@ namespace X
 		else if (GL_LINES == _muiLineMode)
 		{
 			float fAng = 0.0f;
-			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments; uiSegment++)
+			for (unsigned int uiSegment = 0; uiSegment < uiNumSegments + 1; uiSegment++)
 			{
 				v.position.x = vCentrePosition.x + (sinf(fAng) * fRadius);
 				v.position.y = vCentrePosition.y + (cosf(fAng) * fRadius);

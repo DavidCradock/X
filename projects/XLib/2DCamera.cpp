@@ -25,6 +25,12 @@ namespace X
 		_mv2fPosition = vPosition;
 	}
 
+	void C2DCamera::setPosition(float fPositionX, float fPositionY)
+	{
+		_mv2fPosition.x = fPositionX;
+		_mv2fPosition.y = fPositionY;
+	}
+
 	bool C2DCamera::getEnabled(void) const
 	{
 		return _mbEnabled;

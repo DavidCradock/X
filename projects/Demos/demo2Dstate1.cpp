@@ -73,9 +73,9 @@ namespace X
 		strTxt += "Controls...\n";
 		strTxt += "The cursor keys move the camera.\n \n";
 		strTxt += "Details...\n";
-		strTxt += "As CEntityRot objects cannot be batched before being sent to the GPU as they each have their own world matrix which is used for the rotations, ";
-		strTxt += "they are a lot slower to render. But that's OK, they're not meant to be used for rendering things such as particle systems! No, we use particle systems for those lol.\n";
-		strTxt += "The added ability to be rotated is worth it.\n";
+		strTxt += "As CEntityRot objects have the addition of rotation, this needs to be sent to the GPU per object.\n";
+		strTxt += "Because of this, although they use instancing, they are still slower to render than the simpler C2DEntity object.\n";
+		strTxt += "But that is OK! The added ability of rotation is worth it\n";
 		strTxt += "Try switching between state 0 and 1 and notice the framerate differences.\n";
 		pCont->addTextScroll("TextScroll1", 0, 0, 640, 640, strTxt);
 	}

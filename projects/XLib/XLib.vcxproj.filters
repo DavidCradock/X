@@ -202,15 +202,6 @@
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="2DRenderer.h">
-      <Filter>2D</Filter>
-    </ClInclude>
-    <ClInclude Include="2DLayer.h">
-      <Filter>2D</Filter>
-    </ClInclude>
-    <ClInclude Include="2DEntity.h">
-      <Filter>2D</Filter>
-    </ClInclude>
     <ClInclude Include="frustum.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -225,12 +216,6 @@
     </ClInclude>
     <ClInclude Include="vector3d.h">
       <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="2DWorld.h">
-      <Filter>2D</Filter>
-    </ClInclude>
-    <ClInclude Include="2DCamera.h">
-      <Filter>2D</Filter>
     </ClInclude>
     <ClInclude Include="vector3r.h">
       <Filter>Math</Filter>
@@ -304,12 +289,6 @@
     <ClInclude Include="aStarPathfinding.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="2DMap.h">
-      <Filter>2D</Filter>
-    </ClInclude>
-    <ClInclude Include="2DEntityRot.h">
-      <Filter>2D</Filter>
-    </ClInclude>
     <ClInclude Include="2DParticle.h">
       <Filter>2D\Particles</Filter>
     </ClInclude>
@@ -369,6 +348,30 @@
     </ClInclude>
     <ClInclude Include="resourceVertexBufferCPT2.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCamera.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntity.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntityLine.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DEntityRot.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DLayer.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DMap.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DRenderer.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DWorld.h">
+      <Filter>2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -502,15 +505,6 @@
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="2DRenderer.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DLayer.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DEntity.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
     <ClCompile Include="frustum.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -525,12 +519,6 @@
     </ClCompile>
     <ClCompile Include="vector3d.cpp">
       <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="2DWorld.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DCamera.cpp">
-      <Filter>2D</Filter>
     </ClCompile>
     <ClCompile Include="vector3r.cpp">
       <Filter>Math</Filter>
@@ -601,12 +589,6 @@
     <ClCompile Include="aStarPathfinding.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="2DMap.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
-    <ClCompile Include="2DEntityRot.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
     <ClCompile Include="2DParticle.cpp">
       <Filter>2D\Particles</Filter>
     </ClCompile>
@@ -663,6 +645,30 @@
     </ClCompile>
     <ClCompile Include="resourceVertexBufferCPT2.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCamera.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntity.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntityLine.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DEntityRot.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DLayer.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMap.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DRenderer.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DWorld.cpp">
+      <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

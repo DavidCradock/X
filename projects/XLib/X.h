@@ -5,6 +5,7 @@
 // 2D
 #include "2DCamera.h"
 #include "2DEntity.h"
+#include "2DEntityLine.h"
 #include "2DEntityRot.h"
 #include "2DLayer.h"
 #include "2DParticle.h"

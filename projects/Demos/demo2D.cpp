@@ -51,7 +51,7 @@ namespace X
 		CDemo2DState3* pState3 = new CDemo2DState3;	_mFSM.addState("state3", pState3);
 
 		// Switch to state
-		_mFSM.switchToState("state1");
+		_mFSM.switchToState("state3");
 
 		// End of loading screen
 		pLS->onInitEnd();

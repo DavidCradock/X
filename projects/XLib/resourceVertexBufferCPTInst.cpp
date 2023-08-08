@@ -61,6 +61,8 @@ namespace X
 			return;
 		if (!_mvecIndices.size())
 			return;
+		if (!_mInstanceMatrix.size())
+			return;
 
 		if (!_mVertexBufferObject)
 			glGenBuffers(1, &_mVertexBufferObject);
@@ -123,6 +125,9 @@ namespace X
 			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
 			(void*)0);						// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 
+		#pragma warning(push)
+		#pragma warning( disable : 4312 )
+
 		glVertexAttribPointer(4,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
 			4,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
 			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
@@ -143,6 +148,8 @@ namespace X
 			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
 			4 * vec4Size,					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
 			(void*)(3 * vec4Size));			// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+
+		#pragma warning(pop)
 
 		glVertexAttribDivisor(3, 1);		// 3 as it's the third index and 1 to update instance data once for each instance
 		glVertexAttribDivisor(4, 1);		// 4 as it's the third index and 1 to update instance data once for each instance
