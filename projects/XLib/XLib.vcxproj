@@ -71,6 +71,7 @@
     <ClInclude Include="resourceLoadingScreen.h" />
     <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
+    <ClInclude Include="resourceVertexBufferCPT2.h" />
     <ClInclude Include="resourceVertexBufferCPTBNT.h" />
     <ClInclude Include="resourceVertexBufferCPTInst.h" />
     <ClInclude Include="SMCamera.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="resourceLoadingScreen.cpp" />
     <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />
+    <ClCompile Include="resourceVertexBufferCPT2.cpp" />
     <ClCompile Include="resourceVertexBufferCPTBNT.cpp" />
     <ClCompile Include="resourceVertexBufferCPTInst.cpp" />
     <ClCompile Include="SMCamera.cpp" />
@@ -223,8 +225,6 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\data\X\shaders\2DParticle.frag" />
-    <None Include="..\..\data\X\shaders\2DParticle.vert" />
     <None Include="..\..\data\X\shaders\depthbuffer_debug.frag" />
     <None Include="..\..\data\X\shaders\depthbuffer_debug.vert" />
     <None Include="..\..\data\X\shaders\DRNE.frag" />
@@ -237,6 +237,8 @@
     <None Include="..\..\data\X\shaders\shadow_depthmap.vert" />
     <None Include="..\..\data\X\shaders\vertexBufferCPT.frag" />
     <None Include="..\..\data\X\shaders\vertexBufferCPT.vert" />
+    <None Include="..\..\data\X\shaders\vertexBufferCPT2.frag" />
+    <None Include="..\..\data\X\shaders\vertexBufferCPT2.vert" />
     <None Include="..\..\data\X\shaders\vertexBufferCPTInst.frag" />
     <None Include="..\..\data\X\shaders\vertexBufferCPTInst.vert" />
     <None Include="..\..\README.md" />

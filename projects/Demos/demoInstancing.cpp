@@ -16,7 +16,7 @@ namespace X
 		pCont->addButton("toggleInstanced", 0, 180, 320, 40, "Toggle Instanced")->mpTooltip->setAsText("Toggle beween instanced and non-instanced rendering here.");
 		pCont->addText("instancingMode", 0, 230, "Instancing is ON.");
 		_mbInstancedEnabled = true;
-
+		
 		// Create positions of each of the objects
 		SCWindow* pWindow = SCWindow::getPointer();
 		CVector2f vWndDims = pWindow->getDimensions() * 0.5f;
@@ -35,12 +35,18 @@ namespace X
 			// Compute random velocity
 			_mvecVelocity.push_back(CVector2f(randf(-100.0f, 100.0f), randf(-100.0f, 100.0f)));
 		}
+
+		// Add a texture for use when rendering the quads
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		pRM->addTexture2DFromFile("particle", "data/X/textures/particles/particle0.png");
 	}
 
 	void CStateDemoInstancing::onExit(void)
 	{
 		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		pGUI->removeContainer("toggleInstanced");
+		SCResourceManager* pRM = SCResourceManager::getPointer();
+		pRM->removeTexture2DFromFile("particle");
 	}
 
 	void CStateDemoInstancing::onActive(CFiniteStateMachine* pFSM)
@@ -87,8 +93,12 @@ namespace X
 		// Get pointers to things we need
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 
+		// Enable blending and disable depth testing
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+
 		// Obtain and bind texture
-		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
+		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("particle");
 		pTexture->bind(0);
 		
 		// Create matrices
@@ -108,7 +118,7 @@ namespace X
 			CMatrix matInstance;
 			for (int i = 0; i < (int)_mvecPositionIndex.size(); i++)
 			{
-				matInstance.setIdentity();
+//				matInstance.setIdentity();	// No need to set this each time as setTranslation only changes the 3 translation values in the matrix.
 				matInstance.setTranslation(_mvecPositionIndex[i]);
 				pVBI->addInstanceMatrix(matInstance);
 			}

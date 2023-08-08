@@ -92,6 +92,7 @@
 #include "resourceTexture2DFromFile.h"
 #include "resourceTexture2DFromImage.h"
 #include "resourceVertexBufferCPT.h"
+#include "resourceVertexBufferCPT2.h"
 #include "resourceVertexBufferCPTBNT.h"
 #include "resourceVertexBufferCPTInst.h"
 #include "resourceVertexBufferLine.h"

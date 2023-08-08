@@ -80,6 +80,14 @@ namespace X
 			itResourceVertexBufferCPT++;
 		}
 
+		// Vertex buffers CPT2
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		while (itResourceVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
+		{
+			itResourceVertexBufferCPT2->second.pResource->onGLContextToBeDestroyed();
+			itResourceVertexBufferCPT2++;
+		}
+
 		// Vertex buffers BNT
 		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator itResourceVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
 		while (itResourceVertexBufferCPTBNT != _mmapResVertexBufferCPTBNTs.end())
@@ -171,6 +179,14 @@ namespace X
 		{
 			itResourceVertexBufferCPT->second.pResource->onGLContextCreated();
 			itResourceVertexBufferCPT++;
+		}
+
+		// Vertex buffers CPT2
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		while (itResourceVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
+		{
+			itResourceVertexBufferCPT2->second.pResource->onGLContextCreated();
+			itResourceVertexBufferCPT2++;
 		}
 
 		// Vertex buffers BNT
@@ -463,10 +479,10 @@ namespace X
 		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag", true);
 		// A shader used by the GUI to render everything.
 		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag", true);
-		// A shader used be C2DParticleSystem to render instanced particles.
-		pRM->addShader("X:2DParticle", "data/X/shaders/2DParticle.vert", "data/X/shaders/2DParticle.frag", true);
 		// A shader used with CResourceVertexBufferCPT
 		pRM->addShader("X:VBCPT", "data/X/shaders/vertexBufferCPT.vert", "data/X/shaders/vertexBufferCPT.frag", true);
+		// A shader used with CResourceVertexBufferCPT2
+		pRM->addShader("X:VBCPT2", "data/X/shaders/vertexBufferCPT2.vert", "data/X/shaders/vertexBufferCPT2.frag", true);
 		// A shader used with CResourceVertexBufferCPT
 		pRM->addShader("X:VBCPTInst", "data/X/shaders/vertexBufferCPTInst.vert", "data/X/shaders/vertexBufferCPTInst.frag", true);
 	
@@ -510,6 +526,12 @@ namespace X
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
 		pRM->addVertexBufferCPT("X:default", true);
+
+		/******************************************************************************************************************************
+		// Vertex buffers CPT2
+		******************************************************************************************************************************/
+		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+		pRM->addVertexBufferCPT2("X:default", true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers instanced
@@ -642,6 +664,20 @@ namespace X
 			delete itVertexBufferCPT->second.pResource;
 			_mmapResVertexBufferCPTs.erase(itVertexBufferCPT);
 			itVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
+		}
+
+		// Vertex buffers CPT2
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator itVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		while (itVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
+		{
+			if (itVertexBufferCPT2->second.bLocked)	// Do not remove this resource
+			{
+				itVertexBufferCPT2++;
+				continue;
+			}
+			delete itVertexBufferCPT2->second.pResource;
+			_mmapResVertexBufferCPT2s.erase(itVertexBufferCPT2);
+			itVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
 		}
 
 		// Vertex buffers CPTBNT
@@ -1064,6 +1100,52 @@ namespace X
 		}
 		delete it->second.pResource;
 		_mmapResVertexBufferCPTs.erase(it);
+	}
+
+	CResourceVertexBufferCPT2* SCResourceManager::addVertexBufferCPT2(const std::string& strResourceName, bool bLocked)
+	{
+		// If resource already exists
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		if (it != _mmapResVertexBufferCPT2s.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceVertexBufferCPT2 newRes;
+		newRes.bLocked = bLocked;
+		newRes.uiCount = 1;
+		newRes.pResource = new CResourceVertexBufferCPT2();
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addVertexBufferCPT2(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResVertexBufferCPT2s[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	CResourceVertexBufferCPT2* SCResourceManager::getVertexBufferCPT2(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		ThrowIfTrue(it == _mmapResVertexBufferCPT2s.end(), "SCResourceManager::getVertexBufferCPT2(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool SCResourceManager::getVertexBufferCPT2Exists(const std::string& strResourceName)
+	{
+		return _mmapResVertexBufferCPT2s.find(strResourceName) != _mmapResVertexBufferCPT2s.end();
+	}
+
+	void SCResourceManager::removeVertexBufferCPT2(const std::string& strResourceName)
+	{
+		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		if (it == _mmapResVertexBufferCPT2s.end())
+			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResVertexBufferCPT2s.erase(it);
 	}
 
 	CResourceVertexBufferCPTBNT* SCResourceManager::addVertexBufferCPTBNT(const std::string& strResourceName, bool bLocked)

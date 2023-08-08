@@ -87,7 +87,7 @@ namespace X
 
 		// TEMP
 		// Switch to state 2D straight away, not showing the Demo states container
-		_mFSM.switchToState("demoInstancing");
+		_mFSM.switchToState("demo2D");
 		pGUI->getContainer("DemoStates")->setVisible(false);
 	}
 

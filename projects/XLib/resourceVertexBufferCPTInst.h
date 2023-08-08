@@ -8,6 +8,49 @@
 
 namespace X
 {
+	/* TODO Get rid of the weird binding of matrices to four vertex locations and use shader storage buffer objects instead.
+	* Here's some code I ripped from the internet, but research!
+	* 
+	* With OpenGL 4.2, all the model matrices could also be stored inside one big SSBO(Shader Storage Buffer Object), like this:
+
+		In the main
+
+		GLuint ssboModelMatrices;
+		glGenBuffers(1, &ssboModelMatrices);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssboModelMatrices);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(glm::mat4) * modelMatrices.size(), modelMatrices.data(), GL_STATIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssboModelMatrices);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		In the vertex shader:
+
+		layout(location = 0) in vec3 inPos;
+		layout(location = 1) in vec2 inTexCoords;
+
+		layout(std430, binding = 0) buffer modelMatrices
+		{
+		mat4 model[];
+		};
+
+		layout(std140, binding = 1) uniform viewProjMatrices
+		{
+		mat4 view;
+		mat4 proj;
+		};
+
+		out vec2 texCoords;
+
+		void main()
+		{
+		texCoords = inTexCoords;
+
+		gl_Position = proj * view * model[gl_InstanceID] * vec4(inPos, 1.f);
+		}
+
+		I think this is a much cleaner solution than accessing the model VAO, as it uses much less code and has no performance impact
+	
+	*/
+
 	// Resource used by SCResourceManager, a vertex buffer with position, colour, texture coordinates and normal.
 	// Just like the non instanced vertex buffer CResourceVertexbufferCPT resource, we add vertices as normal.
 	// The difference is that if we're rendering multiple objects, with the CResourceVertexBufferCPT we'd either make multiple

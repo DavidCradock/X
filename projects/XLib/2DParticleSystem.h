@@ -25,7 +25,6 @@ namespace X
 	// Implementation details
 	// To deal with the multiple textures, a texture atlas is used and in the shaders, different texture coordinates are used
 	// to lookup the correct texture image this reduces texture bindings.
-	// A particle system contains many quads rendered to the screen using instancing for reduced draw calls for great performance.
 	class C2DParticleSystem
 	{
 		friend class C2DParticleEmitter;

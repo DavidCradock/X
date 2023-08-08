@@ -1,11 +1,11 @@
 #include "PCH.h"
-#include "resourceVertexBufferCPT.h"
+#include "resourceVertexBufferCPT2.h"
 #include "log.h"
 
 namespace X
 {
 
-	CResourceVertexBufferCPT::CResourceVertexBufferCPT()
+	CResourceVertexBufferCPT2::CResourceVertexBufferCPT2()
 	{
 		_mVertexBufferObject = 0;
 		_mVertexArrayObject = 0;
@@ -13,17 +13,17 @@ namespace X
 		//onGLContextCreated();
 	}
 
-	CResourceVertexBufferCPT::~CResourceVertexBufferCPT()
+	CResourceVertexBufferCPT2::~CResourceVertexBufferCPT2()
 	{
 		onGLContextToBeDestroyed();
 	}
 
-	void CResourceVertexBufferCPT::onGLContextCreated(void)
+	void CResourceVertexBufferCPT2::onGLContextCreated(void)
 	{
 		update();
 	}
 
-	void CResourceVertexBufferCPT::onGLContextToBeDestroyed(void)
+	void CResourceVertexBufferCPT2::onGLContextToBeDestroyed(void)
 	{
 		if (_mVertexBufferObject)
 		{
@@ -42,13 +42,13 @@ namespace X
 		}
 	}
 
-	void CResourceVertexBufferCPT::removeGeom(void)
+	void CResourceVertexBufferCPT2::removeGeom(void)
 	{
 		_mvecVertices.clear();
 		_mvecIndices.clear();
 	}
 
-	void CResourceVertexBufferCPT::update(void)
+	void CResourceVertexBufferCPT2::update(void)
 	{
 		if (!_mvecVertices.size())
 			return;
@@ -103,13 +103,22 @@ namespace X
 			(void*)(7 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
 		glEnableVertexAttribArray(2);
 
+		// 2nd Texture coordinates
+		glVertexAttribPointer(3,			// Index. Specifies the index in the shader of the generic vertex attribute to be modified.
+			2,								// Size. Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4.
+			GL_FLOAT,						// Type. Specifies the data type of each component in the array. The symbolic constants GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT and GL_UNSIGNED_INT are accepted
+			GL_FALSE,						// Normalized. Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+			sizeof(Vertex),					// Stride. Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
+			(void*)(9 * sizeof(float)));	// Pointer. Specifies an offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
+		glEnableVertexAttribArray(3);
+
 		// Unbind stuff as we're done
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void CResourceVertexBufferCPT::render(bool bWireframeMode) const
+	void CResourceVertexBufferCPT2::render(bool bWireframeMode) const
 	{
 		if (!_mVertexArrayObject)
 			return;
@@ -134,17 +143,29 @@ namespace X
 		glBindVertexArray(0);
 	}
 
-	void CResourceVertexBufferCPT::addVertex(const Vertex& newVertex)
+	void CResourceVertexBufferCPT2::addVertex(const Vertex& newVertex)
 	{
 		_mvecVertices.push_back(newVertex);
 	}
 
-	void CResourceVertexBufferCPT::addIndex(int newIndex)
+	void CResourceVertexBufferCPT2::addIndex(int newIndex)
 	{
 		_mvecIndices.push_back(newIndex);
 	}
 
-	void CResourceVertexBufferCPT::addQuad2D(const CVector2f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateBottomLeft, const CVector2f& textureCoordinateBottomRight, const CVector2f& textureCoordinateTopRight, const CVector2f& textureCoordinateTopLeft)
+	void CResourceVertexBufferCPT2::addQuad2D(
+		const CVector2f& vPosition,
+		const CVector2f& vDimensions,
+		const CColour& colour,
+		const CVector2f& textureCoordinateBottomLeft,
+		const CVector2f& textureCoordinateBottomRight,
+		const CVector2f& textureCoordinateTopRight,
+		const CVector2f& textureCoordinateTopLeft,
+		const CVector2f& textureCoordinate2BottomLeft,
+		const CVector2f& textureCoordinate2BottomRight,
+		const CVector2f& textureCoordinate2TopRight,
+		const CVector2f& textureCoordinate2TopLeft
+	)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -163,25 +184,40 @@ namespace X
 		vertex.position.z = 0.0f;
 		vertex.colour = colour;
 		vertex.texCoord = textureCoordinateBottomLeft;
+		vertex.texCoord2 = textureCoordinate2BottomLeft;
 		addVertex(vertex);
 
 		// Top left
 		vertex.position.y = vPosition.y;
 		vertex.texCoord = textureCoordinateTopLeft;
+		vertex.texCoord2 = textureCoordinate2TopLeft;
 		addVertex(vertex);
 
 		// Top right
 		vertex.position.x = vPosition.x + vDimensions.x;
 		vertex.texCoord = textureCoordinateTopRight;
+		vertex.texCoord2 = textureCoordinate2TopRight;
 		addVertex(vertex);
 
 		// Bottom right
 		vertex.position.y = vPosition.y + vDimensions.y;
 		vertex.texCoord = textureCoordinateBottomRight;
+		vertex.texCoord2 = textureCoordinate2BottomRight;
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferCPT::addGroundplane(const CVector3f& vPosition, const CVector2f& vDimensions, const CColour& colour, const CVector2f& textureCoordinateFrontLeft, const CVector2f& textureCoordinateFrontRight, const CVector2f& textureCoordinateBackRight, const CVector2f& textureCoordinateBackLeft)
+	void CResourceVertexBufferCPT2::addGroundplane(
+		const CVector3f& vPosition,
+		const CVector2f& vDimensions,
+		const CColour& colour,
+		const CVector2f& textureCoordinateFrontLeft,
+		const CVector2f& textureCoordinateFrontRight,
+		const CVector2f& textureCoordinateBackRight,
+		const CVector2f& textureCoordinateBackLeft,
+		const CVector2f& textureCoordinate2FrontLeft,
+		const CVector2f& textureCoordinate2FrontRight,
+		const CVector2f& textureCoordinate2BackRight,
+		const CVector2f& textureCoordinate2BackLeft)
 	{
 		// Indicies
 		unsigned int iIndex = (unsigned int)_mvecVertices.size();
@@ -203,25 +239,29 @@ namespace X
 		vertex.position.z = vPosition.z + vHalfDims.y;
 		vertex.colour = colour;
 		vertex.texCoord = textureCoordinateFrontLeft;
+		vertex.texCoord2 = textureCoordinate2FrontLeft;
 		addVertex(vertex);
 
 		// Back left
 		vertex.position.z = vPosition.z - vHalfDims.y;
 		vertex.texCoord = textureCoordinateBackLeft;
+		vertex.texCoord2 = textureCoordinate2BackLeft;
 		addVertex(vertex);
 
 		// Back right
 		vertex.position.x = vPosition.x - vHalfDims.x;
 		vertex.texCoord = textureCoordinateBackRight;
+		vertex.texCoord2 = textureCoordinate2BackRight;
 		addVertex(vertex);
 
 		// Front right
 		vertex.position.z = vPosition.z + vHalfDims.x;
 		vertex.texCoord = textureCoordinateFrontRight;
+		vertex.texCoord2 = textureCoordinate2FrontRight;
 		addVertex(vertex);
 	}
 
-	void CResourceVertexBufferCPT::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
+	void CResourceVertexBufferCPT2::addCube(const CVector3f& vPosition, const CVector3f& vDimensions, const CVector2f& vTextureRepeat, const CColour& colour)
 	{
 		// Indicies
 		// A cube contains 2 triangles per face and 6 faces for a total of 12 triangles.
@@ -240,6 +280,10 @@ namespace X
 		vBR.texCoord.set(vTextureRepeat.x, 0.0f);
 		vTR.texCoord.set(vTextureRepeat.x, vTextureRepeat.y);
 		vTL.texCoord.set(0.0f, vTextureRepeat.y);
+		vBL.texCoord2 = vBL.texCoord;
+		vBR.texCoord2 = vBR.texCoord;
+		vTR.texCoord2 = vTR.texCoord;
+		vTL.texCoord2 = vTL.texCoord;
 		// Colour
 		vBL.colour = vBR.colour = vTR.colour = vTL.colour = colour;
 		// Positions...
@@ -282,156 +326,15 @@ namespace X
 		addVertex(vBL);	addVertex(vTL);	addVertex(vTR);	addVertex(vTR);	addVertex(vBR);	addVertex(vBL);
 	}
 
-	void CResourceVertexBufferCPT::addFromFile(const std::string& strGeometryFilename, bool bCallUpdate)
-	{
-		FILE* file = 0;
-		errno_t err;
-
-		err = fopen_s(&file, strGeometryFilename.c_str(), "r+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPT::addFromFile() failed to open file " + strGeometryFilename + " for loading.");
-
-		// Read in number of vertices
-		unsigned int iNumVertices = 0;
-		size_t read = fread(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == read), "CResourceVertexBufferCPT::addFromFile() failed to read from file " + strGeometryFilename);
-
-		// Read in a vertex at a time, adding one at a time..
-		/*
-		Vertex vertex;
-		for (unsigned int i = 0; i < iNumVertices; i++)
-		{
-			read = fread(&vertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == read), "CResourceVertexBufferCPT::addFromFile() failed to read from file " + strGeometryFilename);
-			addVertex(vertex);
-			addIndex(i);
-		}
-		*/
-		// Load in all vertex data
-		_mvecVertices.resize(iNumVertices);
-		_mvecIndices.resize(iNumVertices);
-		ThrowIfTrue(iNumVertices != fread(_mvecVertices.data(), sizeof(Vertex), iNumVertices, file), "CResourceVertexBufferCPT::addFromFile() failed to read from file " + strGeometryFilename);
-		_mvecVertices.resize(iNumVertices);
-		for (unsigned int i = 0; i < iNumVertices; i++)
-		{
-			_mvecIndices.push_back(i);
-		}
-
-		fclose(file);
-
-		if (bCallUpdate)
-			update();
-	}
-
-	size_t CResourceVertexBufferCPT::getNumVertices(void) const
+	size_t CResourceVertexBufferCPT2::getNumVertices(void) const
 	{
 		return _mvecVertices.size();
 	}
 
-	size_t CResourceVertexBufferCPT::getNumIndicies(void) const
+	size_t CResourceVertexBufferCPT2::getNumIndicies(void) const
 	{
 		return _mvecIndices.size();
 	}
 
-	void CResourceVertexBufferCPT::convertObj(const std::string filename) const
-	{
-		// Used to temporarily hold each line of data from file
-		CVector3f vertex;
-		CVector3f normal;
-		CVector2f texCoord;
-		unsigned int index[9];	// Index to vertex, texcoord, normal
 
-		// Used to temporarily hold all unique items from the file
-		std::vector<CVector3f> vVertices;
-		std::vector<CVector3f> vNormals;
-		std::vector<CVector2f> vTexCoords;
-		std::vector<unsigned int> vIndicesVertices;
-		std::vector<unsigned int> vIndicesNormals;
-		std::vector<unsigned int> vIndicesTexCoords;
-
-		FILE* file = 0;
-		errno_t err;
-		err = fopen_s(&file, filename.c_str(), "r");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPT::convertObj() failed to open file " + filename);
-
-		char strLine[255] = { 0 };
-		char ch = 0;
-		// Go through entire file, loading everything to the above vectors
-		while (!feof(file))
-		{
-			// Get the beginning character of the current line in the file
-			ch = fgetc(file);
-
-			if ('v' == ch)	// Could be v(vertex), vn(normal or vt(texcoord)
-			{
-				ch = fgetc(file);
-				if (' ' == ch)	// v(vertex)
-				{
-					fscanf_s(file, "%f %f %f", &vertex.x, &vertex.y, &vertex.z);
-					fgets(strLine, 255, file);	// Read the rest of the line
-					vVertices.push_back(vertex);
-				}
-				else if ('n' == ch)	// n(normal)
-				{
-					fscanf_s(file, "%f %f %f", &normal.x, &normal.y, &normal.z);
-					fgets(strLine, 255, file);	// Read the rest of the line
-					vNormals.push_back(normal);
-				}
-				else if ('t' == ch)	// t(texcoord)
-				{
-					fscanf_s(file, "%f %f", &texCoord.x, &texCoord.y);
-					fgets(strLine, 255, file);	// Read the rest of the line
-					vTexCoords.push_back(texCoord);
-				}
-			}
-			else if ('f' == ch)	// f vertex/texcoord/normal indicies
-			{
-				fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &index[0], &index[1], &index[2], &index[3], &index[4], &index[5], &index[6], &index[7], &index[8]);
-				fgets(strLine, 255, file);	// Read the rest of the line
-				vIndicesVertices.push_back(index[0]);
-				vIndicesTexCoords.push_back(index[1]);
-				vIndicesNormals.push_back(index[2]);
-				vIndicesVertices.push_back(index[3]);
-				vIndicesTexCoords.push_back(index[4]);
-				vIndicesNormals.push_back(index[5]);
-				vIndicesVertices.push_back(index[6]);
-				vIndicesTexCoords.push_back(index[7]);
-				vIndicesNormals.push_back(index[8]);
-			}
-			else if ('\n' == ch)	// Newline
-			{
-			}
-			else // Don't care
-			{
-				fgets(strLine, 255, file);	// Read the rest of the line
-			}
-		}
-		fclose(file);
-
-		// Now we have everything loaded from the file,
-		// save out to binary file.
-		std::string strOutputFilename = filename;
-		for (int i = 0; i < 3; ++i)
-		{
-			strOutputFilename.pop_back();
-		}
-		strOutputFilename += "geom";
-		err = fopen_s(&file, strOutputFilename.c_str(), "w+b");
-		ThrowIfTrue(bool(err != 0), "CResourceVertexBufferCPT::convertObj() failed to open file " + filename + " for saving.");
-
-		// Loop through each face
-		Vertex geomVertex;
-		unsigned int iNumVertices = (unsigned int)vIndicesVertices.size();
-		size_t written = fwrite(&iNumVertices, sizeof(unsigned int), 1, file);
-		ThrowIfTrue(bool(0 == written), "CResourceVertexBufferCPT::convertObj() failed to write to file " + filename);
-
-		for (unsigned int i = 0; i < vIndicesVertices.size(); ++i)
-		{
-			geomVertex.position = vVertices[vIndicesVertices[i] - 1];	// Vertex position
-			geomVertex.texCoord = vTexCoords[vIndicesTexCoords[i] - 1];	// Texture coordinates
-			geomVertex.colour = CColour(1.0f, 1.0f, 1.0f, 1.0f);
-			written = fwrite(&geomVertex, sizeof(Vertex), 1, file);
-			ThrowIfTrue(bool(0 == written), "CResourceVertexBufferCPT::convertObj() failed to write to file " + filename);
-		}
-		fclose(file);
-	}
 }

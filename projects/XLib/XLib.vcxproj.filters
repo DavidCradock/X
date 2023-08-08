@@ -367,6 +367,9 @@
     <ClInclude Include="resourceVertexBufferCPTBNT.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="resourceVertexBufferCPT2.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -658,6 +661,9 @@
     <ClCompile Include="resourceVertexBufferCPTBNT.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="resourceVertexBufferCPT2.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
@@ -685,12 +691,6 @@
     <None Include="..\..\data\X\shaders\gui.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\data\X\shaders\2DParticle.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\2DParticle.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\data\X\shaders\gui.vert">
       <Filter>Shaders</Filter>
     </None>
@@ -707,6 +707,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\vertexBufferCPT.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\vertexBufferCPT2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\vertexBufferCPT2.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
