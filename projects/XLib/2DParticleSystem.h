@@ -11,6 +11,8 @@ namespace X
 {
 	// A 2D particle system class used with the SC2DRenderer class.
 	// 
+	// This particle system is NOT fast, but it is quite flexible.
+	// 
 	// Particle system...
 	// The particle system consists of multiple objects including emitters, affectors, particle types and the particles themselves.
 	// We use just one particle system which holds all particles. This way, all particles being spawned will be able to be sorted correctly, otherwise
@@ -130,6 +132,12 @@ namespace X
 		// Returns the name of a particle type at the specified index.
 		// If an invalid index is given, an exception occurs.
 		std::string getParticleTypeName(int iIndex) const;
+
+		// Returns the size of the particle vector which may contain dead particles
+		int getNumParticles(void) {	return (int)_mvParticles.size();	}
+
+		// Returns the size of the vector which holds indicies to dead particles in the vector which holds all particles, dead or alive
+		int getNumDeadParticles(void) {	return (int)_mvIndiciesToDeadParticles.size();	}
 	private:
 		CTimer _mTimer;
 

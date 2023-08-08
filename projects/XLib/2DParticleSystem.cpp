@@ -17,7 +17,7 @@ namespace X
 		//pAffector->	// Just use defaults set in constructor
 
 		// Create emitter and disable it
-		C2DParticleEmitter* pEmitter = addEmitter("default");
+//		C2DParticleEmitter* pEmitter = addEmitter("default");
 //		pEmitter->
 
 		_mbPaused = false;
@@ -57,6 +57,13 @@ namespace X
 			// Update particle's age
 			_mvParticles[iParticle].fAge += fTimeDeltaSeconds * _mvParticles[iParticle].fAgingRate;
 
+			// If it is now dead, add to dead list
+			if (_mvParticles[iParticle].fAge > 1.0f)
+			{
+				_mvIndiciesToDeadParticles.push_back(iParticle);
+				continue;
+			}
+
 			// Update particle's mass based upon it's age
 			_mvParticles[iParticle].fMass = interpolate(_mvParticles[iParticle].fMassBirth, _mvParticles[iParticle].fMassDeath, _mvParticles[iParticle].fAge);
 
@@ -67,9 +74,9 @@ namespace X
 				// This affector is directional
 				if (C2DParticleAffector::Type::directional == itAffector->second->_mType)
 				{
-					vForce.x = itAffector->second->vForce.x / _mvParticles[iParticle].fMass;
+					vForce.x = itAffector->second->_mvForce.x / _mvParticles[iParticle].fMass;
 					vForce.x *= fTimeDeltaSeconds;
-					vForce.y = itAffector->second->vForce.y / _mvParticles[iParticle].fMass;
+					vForce.y = itAffector->second->_mvForce.y / _mvParticles[iParticle].fMass;
 					vForce.y *= fTimeDeltaSeconds;
 					_mvParticles[iParticle].vVelocity += vForce;
 				}
@@ -78,7 +85,7 @@ namespace X
 
 			// Update particle's position
 			_mvParticles[iParticle].vPosition.x += _mvParticles[iParticle].vVelocity.x * fTimeDeltaSeconds;
-			_mvParticles[iParticle].vPosition.y += _mvParticles[iParticle].vVelocity.y * fTimeDeltaSeconds;
+			_mvParticles[iParticle].vPosition.y -= _mvParticles[iParticle].vVelocity.y * fTimeDeltaSeconds;
 
 			// Update particle's radius based upon it's age
 			_mvParticles[iParticle].fRadius = interpolate(_mvParticles[iParticle].fRadiusAtBirth, _mvParticles[iParticle].fRadiusAtDeath, _mvParticles[iParticle].fAge);
@@ -88,63 +95,81 @@ namespace X
 		// Get resources needed to render
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mSettings.strTextureAtlasName);
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:2DParticle");
+		CResourceVertexBufferCPT2* pVB = pRM->getVertexBufferCPT2("X:default");
+		CResourceShader* pShader = pRM->getShader("X:VBCPT2");
 
+		CMatrix matrixWorld;
 		// Bind shader and set some uniforms
 		pShader->bind();
-		pShader->setInt("textureBirth", 0);
-		pShader->setInt("textureDeath", 1);
-		pShader->setMat4("viewMatrix", matrixView);
-		pShader->setMat4("projectionMatrix", matrixProjection);
+		pShader->setInt("texture0", 0);
+		pShader->setInt("texture1", 1);
+		pShader->setMat4("matrixWorld", matrixWorld);
+		pShader->setMat4("matrixView", matrixView);
+		pShader->setMat4("matrixProjection", matrixProjection);
 
 		// Bind texture atlas to texture units
 		pAtlas->bindAtlas(0, 0);
 		pAtlas->bindAtlas(1, 0);
 
-		// Clear vertex buffer
-		pVB->removeGeom();
+		
 
 		glDisable(GL_DEPTH_TEST);
 
-		CResourceVertexBufferCPT::Vertex vBL, vBR, vTR, vTL;
-		vBL.texCoord.set(0.0f, 0.0f);
-		vBR.texCoord.set(1.0f, 0.0f);
-		vTR.texCoord.set(1.0f, 1.0f);
-		vTL.texCoord.set(0.0f, 1.0f);
+		CResourceVertexBufferCPT2::Vertex vBL, vBR, vTR, vTL;
 		CVector2f vDims;
 		CColour colour;
 		CVector2f vTexCoordsA;
 		CVector2f vTexCoordsB;
+		
 		for (int iParticle = 0; iParticle < _mvParticles.size(); iParticle++)
 		{
+			// Clear vertex buffer
+			pVB->removeGeom();
+
+			// Get image details for this particle at birth and death
+			CImageAtlasDetails imageDetailsBirth = pAtlas->getImageDetails(_mvParticles[iParticle].pType->stageBirth.strTextureAtlasImageName);
+			CImageAtlasDetails imageDetailsDeath = pAtlas->getImageDetails(_mvParticles[iParticle].pType->stageDeath.strTextureAtlasImageName);
+			
+			// Set texture coordinates within texture atlas for both sets
+			vBL.texCoord = imageDetailsBirth.sTexCoords.bottom_left;
+			vBR.texCoord = imageDetailsBirth.sTexCoords.bottom_right;
+			vTL.texCoord = imageDetailsBirth.sTexCoords.top_left;
+			vTR.texCoord = imageDetailsBirth.sTexCoords.top_right;
+			vBL.texCoord2 = imageDetailsDeath.sTexCoords.bottom_left;
+			vBR.texCoord2 = imageDetailsDeath.sTexCoords.bottom_right;
+			vTL.texCoord2 = imageDetailsDeath.sTexCoords.top_left;
+			vTR.texCoord2 = imageDetailsDeath.sTexCoords.top_right;
+
+			// Set amount of each texture to use for the shader
+			pShader->setFloat("fTextureContribution", _mvParticles[iParticle].fAge);
+
+			// Compute colour based upon age
 			colour = _mvParticles[iParticle].colourAtBirth.interpolate(_mvParticles[iParticle].colourAtDeath, _mvParticles[iParticle].fAge);
 
+			// Compute position
 			vBL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
 			vBL.position.y = _mvParticles[iParticle].vPosition.y - _mvParticles[iParticle].fRadius;
-
 			vBR.position.x = _mvParticles[iParticle].vPosition.x + _mvParticles[iParticle].fRadius;
 			vBR.position.y = _mvParticles[iParticle].vPosition.y - _mvParticles[iParticle].fRadius;
-
 			vTR.position.x = _mvParticles[iParticle].vPosition.x + _mvParticles[iParticle].fRadius;
 			vTR.position.y = _mvParticles[iParticle].vPosition.y + _mvParticles[iParticle].fRadius;
-
 			vTL.position.x = _mvParticles[iParticle].vPosition.x - _mvParticles[iParticle].fRadius;
 			vTL.position.y = _mvParticles[iParticle].vPosition.y + _mvParticles[iParticle].fRadius;
 
-			//_mvParticles[iParticle].pType->stageBirth.
+			// Add the geometry
 			vDims.x = _mvParticles[iParticle].fRadius * 2.0f;
 			vDims.y = vDims.x;
 			pVB->addQuad2D(
 				_mvParticles[iParticle].vPosition,
 				vDims,
 				colour,
-				vBL.texCoord, vBR.texCoord, vTR.texCoord, vTL.texCoord);
+				vBL.texCoord, vBR.texCoord, vTR.texCoord, vTL.texCoord,
+				vBL.texCoord2, vBR.texCoord2, vTR.texCoord2, vTL.texCoord2);
 
-
+			pVB->update();
+			pVB->render();
 		}
-		pVB->update();
-		pVB->render();
+		
 
 		pAtlas->unbindAll();
 		pShader->unbind();

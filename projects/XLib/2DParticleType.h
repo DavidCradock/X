@@ -24,10 +24,13 @@ namespace X
 		{
 			CColour colourMin;	// Minimum colour of a particle (RGBA)
 			CColour colourMax;	// Maximum colour of a particle (RGBA)
+
 			float fMassMin;		// Minimum mass of a particle
 			float fMassMax;		// Maximum mass of a particle
+
 			float fRadiusMin;	// Minimum radius of a particle
 			float fRadiusMax;	// Maximum radius of a particle
+
 			std::string strTextureAtlasImageName;	// Name of the image stored within the texture atlas which is used for a particle.
 		};
 
