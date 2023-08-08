@@ -115,10 +115,16 @@ namespace X
 
 		// Get required resources needed to render stuff
 		SCResourceManager* pRM = SCResourceManager::getPointer();
+
+		// For entities
 		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
 		CResourceShader* pShaderEntity = pRM->getShader("X:VBCPT");
-
 		pVB->removeGeom();
+
+		// For instance entities
+		CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
+		pVBI->removeAll();
+		CResourceShader* pShaderEntityRot = pRM->getShader("X:VBCPTInst");
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -181,15 +187,18 @@ namespace X
 					if (!pLayer->_mbVisible)
 						continue;
 
-					// For each C2DEntity in layer
+					// Set previously bound stuff to nothing
+					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;		// Used to reduce rebinding of same atlas texture
+					std::string strPreviouslyBoundAtlasName;						// Used to reduce rebinding of same atlas texture
+
+					// Bind and setup shader for C2DEntity objects
 					pShaderEntity->bind();											// Bind correct shader
 					pShaderEntity->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
 					pShaderEntity->setMat4("matrixWorld", matrixWorld);
 					pShaderEntity->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
 					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
-					
-					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;		// Used to reduce rebinding of same atlas texture
-					std::string strPreviouslyBoundAtlasName;						// Used to reduce rebinding of same atlas texture
+
+					// For each C2DEntity in layer
 					std::map<std::string, C2DEntity*>::iterator itEntity = pLayer->_mmapEntities.begin();
 					while (itEntity != pLayer->_mmapEntities.end())
 					{
@@ -205,23 +214,29 @@ namespace X
 					pVB->render(false);
 					pVB->removeGeom();
 
-					// For each C2DEntityRot in layer
-					pShaderEntity->bind();											// Bind correct shader
-					pShaderEntity->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
-					pShaderEntity->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
-					pShaderEntity->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					// Bind and setup shader for C2DEntityRot objects
+					pShaderEntityRot->bind();
+					pShaderEntityRot->setInt("texture0", 0);							// Tell OpenGL, for each sampler, to which texture unit it belongs to
+					// We do not set world view as world matrix is given as instance data.
+					pShaderEntityRot->setMat4("matrixView", matrixView);				// Set matrix view from camera for shader
+					pShaderEntityRot->setMat4("matrixProjection", matrixProjection);	// Set projection matrix for shader
+					pVBI->removeAll();
 					
+					// For each C2DEntityRot in layer
 					std::map<std::string, C2DEntityRot*>::iterator itEntityRot = pLayer->_mmapEntityRots.begin();
 					while (itEntityRot != pLayer->_mmapEntityRots.end())
 					{
 						itEntityRot->second->render(
 							strPreviouslyBoundAtlasName,
 							uiPreviouslyBoundAtlasImageNumber,
-							pVB,
-							pShaderEntity,
+							pVBI,
+							pShaderEntityRot,
 							_muiNumTextureBindingsPerLoop);
 						itEntityRot++;
 					}
+					pVBI->update();
+					pVBI->render(false);
+					pVBI->removeAll();
 
 					// For each particle system
 					std::map<std::string, C2DParticleSystem*>::iterator itParticleSystem = pLayer->_mmapParticleSystems.begin();

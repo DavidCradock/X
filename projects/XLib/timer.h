@@ -49,6 +49,9 @@ namespace X
         // Returns computed Frames Per Second averaged value.
         float getFPSAveraged(void) const;
 
+        // Returns the number of seconds until the next time the FPSAveraged value is updated.
+        float getFPSAveragedTimeUntilNextUpdate(void) const;
+
         // Resets all values to sane values, including the member set by setAveragedFPSRate()
         // Also, if this timer has been paused, it is unpaused.
         void reset(void);

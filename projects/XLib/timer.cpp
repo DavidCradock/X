@@ -89,6 +89,11 @@ namespace X
         return (float)_mdFPSAveraged;
     }
 
+    float CTimer::getFPSAveragedTimeUntilNextUpdate(void) const
+    {
+        return float(_mdFPSAveragedRate - _mdFPSAveragedTimeCount);
+    }
+
     void CTimer::reset(void)
     {
         _mbPaused = false;

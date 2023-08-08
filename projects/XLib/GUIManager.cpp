@@ -352,23 +352,28 @@ namespace X
 		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 		float fTextHeight = pFont->getTextHeight(1.0f);
 
-		pCont->setDimensions(450.0f, 270.0f);
+		pCont->setDimensions(450.0f, 330.0f);
 		pCont->setPosition(100000.0f, 0.0f);
 		pCont->setVisible(false);
 		pCont->mstrTitleText = "Statistics";
 
-		CGUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 320, 120);
+		CGUILineGraph* pLineGraph = pCont->addLineGraph("Stats_FPS_Linegraph", 0, 0, 450, 120);
 		CColour col;
 		col.set(1.0f, 1.0f, 1.0f, 0.5f);	pLineGraph->addDataset("FPS", col);
 		col.set(1.0f, 1.0f, 1.0f, 1.0f);	pLineGraph->addDataset("FPSAVR", col);
-		pCont->addText("Text_FPSMax", 330, 0, "FPSMax: ")->setColour(false, CColour(1.0f, 1.0f, 1.0f, 1.0f));
-		pCont->addText("Text_FPSMin", 330, 120, "FPSMin: ")->setColour(false, CColour(1.0f, 1.0f, 1.0f, 1.0f));
-		pCont->addText("Text_FPS", 330, 100, "FPS: ")->setColour(false, CColour(1.0f, 1.0f, 1.0f, 0.5f));
-		pCont->addText("Text_FPSAVR", 330, 140, "FPSAVR: ")->setColour(false, CColour(1.0f, 1.0f, 1.0f, 1.0f));
+		float fYpos = 140.0f;
+
+		pCont->addText("Text_FPSMin", 0, fYpos, "FPSMin: ");
+		pCont->addText("Text_FPS", 0, fYpos, "FPS: ");
+		pCont->addText("Text_FPSMax", 0, fYpos, "FPSMax: ");
+		fYpos += fTextHeight;
+		
+		pCont->addText("Text_FPSAVR", 0, fYpos, "FPSAVR: ");
+		fYpos += fTextHeight;
+
 		_mDefContStatistics.fAddValueToLinegraphDataset = 0.0f;
 
 		// VSync enabled/disabled and desktop Hz
-		float fYpos = 140.0f;
 		pCont->addText("VSyncONOFF", 0, fYpos, "VSync: ON");	fYpos += fTextHeight;
 		pCont->addText("Text_Mem1", 0, fYpos, "");	fYpos += fTextHeight;
 		pCont->addText("Text_Mem2", 0, fYpos, "");	fYpos += fTextHeight;
@@ -388,9 +393,11 @@ namespace X
 		CGUIContainer* pCont = getContainer("X:Default:Statistics");
 		CGUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
 		SCResourceManager* pRM = SCResourceManager::getPointer();
+		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
 
 		CGUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
 		SCWindow* pWindow = SCWindow::getPointer();
+		CGUIText* pText;
 
 		// Add new value to linegraph data set
 		_mDefContStatistics.fAddValueToLinegraphDataset += _mTimer.getSecondsPast();
@@ -414,62 +421,78 @@ namespace X
 			if (fMax < fMaxFPSAVR)
 				fMax = fMaxFPSAVR;
 
-			std::string str = "FPSMax: " + std::to_string((int)fMax);
-			pCont->getText("Text_FPSMax")->setText(str);
-
 			float fMinFPS = pDataSetFPS->getLowestValue();
 			float fMinFPSAVR = pDataSetFPSAVR->getLowestValue();
 			float fMin = fMinFPS;
 			if (fMin < fMinFPSAVR)
 				fMin = fMinFPSAVR;
 
-			str = "FPSMin: " + std::to_string((int)fMin);
-			CGUIText* pText = pCont->getText("Text_FPSMin");
+			std::string str = "FPS Max: " + std::to_string((int)fMax);
+			
+			pText = pCont->getText("Text_FPSMax");
 			pText->setText(str);
+			// Set position
+			CVector2f vNewPos = pText->getPosition();
+			vNewPos.x = 450 - pFont->getTextWidth(str);
+			pText->setPosition(vNewPos);
 
-			// Set Text_FPSMin position
-			float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight();
-			pText->mfPositionY = 120.0f - fTextHeight;
-
-			// Set text values
-			pText = pCont->getText("Text_FPS");
-			pText->setText("FPS: " + std::to_string((int)_mTimer.getFPS()));
-			pText->mfPositionY = 60.0f - (fTextHeight * 1.0f);
-			pText = pCont->getText("Text_FPSAVR");
-			pText->setText("FPSAVR: " + std::to_string((int)_mTimer.getFPSAveraged()));
-			pText->mfPositionY = 60.0f - (fTextHeight * 0.0f);
-
-			// VSync text
-			std::string strTxt;
-			if (pWindow->getVSyncEnabled())
-			{
-				strTxt = "VSync: On. Desktop HZ: ";
-				StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
-				pCont->getText("VSyncONOFF")->setText(strTxt);
-			}
-			else
-			{
-				strTxt = "VSync: Off. Desktop HZ: ";
-				StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
-				pCont->getText("VSyncONOFF")->setText(strTxt);
-			}
-
-			// CPU info
-			strTxt = "CPU Logical Cores Count: ";
-			StringUtils::appendInt(strTxt, getCPULogicalCores());
-			pCont->getText("CPU_info")->setText(strTxt);
-
-			// Memory text
-			SMemInfo memInfo;
-			getMemInfo(memInfo);
-			pCont->getText("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
-			pCont->getText("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
-
-			// Close button
-			CGUIButton* pButton = pCont->getButton("Close");
-			if (pButton->getClicked())
-				pCont->setVisible(false);
+			str = "FPS Min: " + std::to_string((int)fMin);
+			pText = pCont->getText("Text_FPSMin");
+			pText->setText(str);
 		}
+
+		// Update text values, "Text_FPSMax" and  "Text_FPSMin" have been updated above
+		std::string strTxt;
+		strTxt = "FPS: ";
+		StringUtils::appendFloat(strTxt, _mTimer.getFPS(), 1);
+		pText = pCont->getText("Text_FPS");
+		pText->setText(strTxt);
+		// Also set position
+		CVector2f vNewPos = pText->getPosition();
+		vNewPos.x = 225 - (0.5f * pFont->getTextWidth(strTxt));
+		pText->setPosition(vNewPos);
+
+		strTxt = "FPS Average: ";
+		StringUtils::appendFloat(strTxt, _mTimer.getFPSAveraged(), 1);
+		strTxt += " (";
+		StringUtils::appendFloat(strTxt, _mTimer.getFPSAveragedTimeUntilNextUpdate(), 1);
+		strTxt += ")";
+		pCont->getText("Text_FPSAVR")->setText(strTxt);
+		// Also update colour based on whether it's above or below refresh rate
+		CColour col(0.0f, 1.0f, 0.0f, 1.0f);
+		if (_mTimer.getFPSAveraged() < (float)pWindow->getRefreshRate() - 1)
+			col.set(1.0f, 0.0f, 0.0f, 1.0f);
+		pCont->getText("Text_FPSAVR")->setColour(false, col);
+
+		// VSync text
+		if (pWindow->getVSyncEnabled())
+		{
+			strTxt = "VSync: On. Desktop Hz: ";
+			StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+			pCont->getText("VSyncONOFF")->setText(strTxt);
+		}
+		else
+		{
+			strTxt = "VSync: Off. Desktop Hz: ";
+			StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+			pCont->getText("VSyncONOFF")->setText(strTxt);
+		}
+
+		// CPU info
+		strTxt = "CPU Logical Cores Count: ";
+		StringUtils::appendInt(strTxt, getCPULogicalCores());
+		pCont->getText("CPU_info")->setText(strTxt);
+
+		// Memory text
+		SMemInfo memInfo;
+		getMemInfo(memInfo);
+		pCont->getText("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
+		pCont->getText("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
+
+		// Close button
+		CGUIButton* pButton = pCont->getButton("Close");
+		if (pButton->getClicked())
+			pCont->setVisible(false);
 	}
 
 	void SCGUIManager::_createDefaultContainerFontGenerator(void)

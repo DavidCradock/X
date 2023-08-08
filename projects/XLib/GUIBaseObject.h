@@ -14,8 +14,14 @@ namespace X
 		// Set position of object
 		void setPosition(float fPosX, float fPosY);
 		
+		// Set position of object
+		void setPosition(const CVector2f& vNewPosition) {	mfPositionX = vNewPosition.x;	mfPositionY = vNewPosition.y;	}
+
 		// Set position to centre of window
 		void setPositionCentreWindow(void);
+
+		// Returns currently set position
+		CVector2f getPosition(void) const {	return CVector2f(mfPositionX, mfPositionY);	}
 
 		// Set dimensions of object
 		void setDimensions(float fWidth, float fHeight);

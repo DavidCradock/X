@@ -143,7 +143,7 @@ namespace X
 	void C2DEntityRot::render(
 		std::string& strPreviouslyBoundAtlasName,
 		unsigned int& uiPreviouslyBoundAtlasImageNumber,
-		CResourceVertexBufferCPT* pVB,
+		CResourceVertexBufferCPTInst* pVBI,
 		CResourceShader* pShader,
 		unsigned int& uiNumTextureBindingsPerLoop)
 	{
@@ -168,7 +168,7 @@ namespace X
 			bNeedToBindTexture = true;
 		}
 
-		// Bind the texture
+		// Bind the texture (And also create geometry with correct texture coordinates
 		if (bNeedToBindTexture)
 		{
 			SCResourceManager* pRM = SCResourceManager::getPointer();
@@ -177,43 +177,44 @@ namespace X
 			// Bind the atlas texture containing the entity's currently set frame number's image
 			pAtlas->bindAtlas(0, _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage);
 			uiNumTextureBindingsPerLoop++;
+
+			// Render any existing data
+			pVBI->render();
+
+			// Build geometry with correct texture coordinates
+			pVBI->removeAll();
+			pVBI->addQuad2D(
+				CVector2f(-0.5f, -0.5f),
+				CVector2f(1, 1),
+				_mColour,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);
+			pVBI->update();
 		}
 
-		// Create translation matrix
-		CMatrix matTrans;
-		matTrans.setTranslation(_mv2fPosition.x, _mv2fPosition.y, 0.0f);
+		// Create rotation matrix for this entity
+		CMatrix matrixRotation;
+		matrixRotation.setFromAxisAngleRadians(CVector3f(0.0f, 0.0f, 1.0f), _mfRotationRadians);
 
-		CVector2f v2fDims = _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions;
-		CVector2f v2fPos;
+		// Create scale matrix for this entity
+		CMatrix matrixScale;
+		CVector3f v3fScale(_mv2fScale.x, _mv2fScale.y, 1.0f);
+		v3fScale.x *= _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions.x;
+		v3fScale.y *= _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions.y;
+		matrixScale.setScale(v3fScale);
 
-		// Scale sprite if needed
-		if (_mv2fScale.x != 1.0f || _mv2fScale.y != 1.0f)
-		{
-			v2fDims.x *= _mv2fScale.x;
-			v2fDims.y *= _mv2fScale.y;
-		}
+		// Create translation matrix for this entity
+		CMatrix matrixTranslation;
+		CVector3f v3fPosition = v3fScale * -0.5f;	// Offset position from top left to center of entity
+		matrixTranslation.setTranslation(_mv2fPosition.x, _mv2fPosition.y, 0.0f);
 
-		// Offset position from top left to center of entity
-		v2fPos -= v2fDims * 0.5f;
+		// Create world matrix
+		CMatrix matrixWorld = matrixTranslation * matrixRotation *matrixScale;
 
-		pVB->removeGeom();
-		pVB->addQuad2D(
-			v2fPos,											// Position
-			v2fDims,										// Dimensions
-			_mColour,										// Colour
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
-		pVB->update();
+		// Add instance data to the instanced vertex buffer
+		pVBI->addInstanceMatrix(matrixWorld);
 
-		// Setup world matrix for this entity and send to shader
-		CMatrix matWorld;
-		CMatrix matRot;
-		matRot.setFromAxisAngleRadians(CVector3f(0.0f, 0.0f, 1.0f), _mfRotationRadians);
-		matWorld = matTrans * matRot;
-		pShader->setMat4("matrixWorld", matWorld);			// Set world matrix for shader for this entity
-
-		pVB->render(false);
 	}
 }
