@@ -38,7 +38,7 @@ namespace X
 		// // do stuff here
 		// // text contains the text within the text edit box
 		// }
-		// CGUITextEdit *p = SCGUIManager::getPointer()->getTextEdit("MyTextEdit");
+		// CGUITextEdit *p = x->pGUI->getTextEdit("MyTextEdit");
 		// p->setOnEnter(MyFunc);
 		void setOnEnter(void (*func)(const std::string& text));
 

@@ -1,10 +1,8 @@
 #include "PCH.h"
 #include "GUIImageDepthbuffer.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -23,16 +21,14 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:depthbuffer_debug");
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
@@ -42,7 +38,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceDepthbuffer* pTexColour = pRM->getDepthbuffer(_mstrDBname);
+		CResourceDepthbuffer* pTexColour = x->pResource->getDepthbuffer(_mstrDBname);
 
 		// Bind textures
 		pTexColour->bindAsTexture(0);
@@ -70,8 +66,7 @@ namespace X
 	void CGUIImageDepthbuffer::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

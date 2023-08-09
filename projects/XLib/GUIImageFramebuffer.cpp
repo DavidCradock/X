@@ -1,10 +1,8 @@
 #include "PCH.h"
 #include "GUIImageFramebuffer.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -23,17 +21,15 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		pShader->bind();
 
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
@@ -45,7 +41,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBname);
+		CResourceFramebuffer* pTexColour = x->pResource->getFramebuffer(_mstrFBname);
 
 		// Bind textures
 		pTexColour->bindAsTexture(0);
@@ -73,8 +69,7 @@ namespace X
 	void CGUIImageFramebuffer::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

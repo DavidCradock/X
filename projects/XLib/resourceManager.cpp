@@ -9,7 +9,8 @@ namespace X
 {
 	SCResourceManager::SCResourceManager()
 	{
-
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCResourceManager::SCResourceManager() called.");
 	}
 
 	void SCResourceManager::onGLContextToBeDestroyed(void)
@@ -463,6 +464,9 @@ namespace X
 	{
 		// NOTE:
 		// When adding resources here, remember to add the resource to the comments at the top of SCResourceManager class in resourceManager.h
+		//
+		// NOTE 2:
+		// This is called from the SCSingletons constructor and therefore cannot use the global x object
 
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 

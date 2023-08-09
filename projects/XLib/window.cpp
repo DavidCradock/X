@@ -1,12 +1,8 @@
 #include "PCH.h"
 #include "window.h"
-#include "log.h"
 #include "openGLExtensions.h"
-#include "input.h"
-//#include "utilities.h"
-// Managers (for toggleFullscreen)
-#include "resourceManager.h"
 #include "stringUtils.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -17,21 +13,28 @@ namespace X
 
 	SCWindow::SCWindow(void)
 	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCWindow::SCWindow() called.");
+
 		_mhInstance = GetModuleHandle(NULL);
 		_mhWindowHandle = NULL;
 		_mhGLRenderContext = NULL;
 		_mhDeviceContext = NULL;
 		_mWindowClass = WNDCLASS{};
-		_mbVsyncEnabled = true;
-		_mbWindowFullscreen = false;
+		_mClearColour.set(0.0f, 0.0f, 0.0f, 0.0f);
 		_muiWindowWidth = 640;
 		_muiWindowHeight = 480;
-		_mClearColour.set(0.0f, 0.0f, 0.0f, 0.0f);
+
+		// Set settings from settings file
+		SCSettings* pSettings = SCSettings::getPointer();
+		_mbVsyncEnabled = pSettings->getWindowVSync();
+		_mbWindowFullscreen = pSettings->getWindowFullscreen();
 	}
 
 	void SCWindow::createWindow(std::string strWindowTitle)
 	{
-		CLog* pLog = CLog::getPointer();
+		// Called from SCSingletons() so can't use x->
+		SCLog* pLog = SCLog::getPointer();
 		pLog->add("SCWindow::createWindow() called.");
 
 		// Store passed parameters
@@ -213,24 +216,22 @@ namespace X
 
 	void SCWindow::destroyWindow(void)
 	{
-		CLog* pLog = CLog::getPointer();
-		pLog->add("SCWindow::destroyWindow() called.");
+		x->pLog->add("SCWindow::destroyWindow() called.");
 
 		// Shutdown input manager
-		SCInputManager* pInputManager = SCInputManager::getPointer();
-		pInputManager->shutdown();
+		x->pInput->shutdown();
 
 		// Reset screen mode
 		if (_mbWindowFullscreen)
 		{
-			pLog->add("SCWindow::destroyWindow() changing display mode back to normal.");
+			x->pLog->add("SCWindow::destroyWindow() changing display mode back to normal.");
 			ShowCursor(true);
 		}
 
 		// Release OpenGL rendering context
 		if (_mhGLRenderContext)
 		{
-			pLog->add("SCWindow::destroyWindow() releasing OpenGL rendering context.");
+			x->pLog->add("SCWindow::destroyWindow() releasing OpenGL rendering context.");
 			// Detach OpenGL rendering context from device context
 			ThrowIfTrue(!wglMakeCurrent(NULL, NULL), "SCWindow::destroyWindow() unable to detach OpenGL rendering context from device context.");
 
@@ -241,7 +242,7 @@ namespace X
 		// Release window's device context
 		if (_mhDeviceContext)
 		{
-			pLog->add("SCWindow::destroyWindow() releasing window's device context.");
+			x->pLog->add("SCWindow::destroyWindow() releasing window's device context.");
 			ThrowIfTrue(!ReleaseDC(_mhWindowHandle, _mhDeviceContext), "SCWindow::destroyWindow() unable to release the window's device context.");
 			_mhDeviceContext = NULL;
 		}
@@ -249,23 +250,21 @@ namespace X
 		// Close window
 		if (_mhWindowHandle)
 		{
-			pLog->add("SCWindow::destroyWindow() closing and destroying the window.");
+			x->pLog->add("SCWindow::destroyWindow() closing and destroying the window.");
 			ThrowIfTrue(!CloseWindow(_mhWindowHandle), "SCWindow::destroyWindow() unable to close window.");
 			ThrowIfTrue(!DestroyWindow(_mhWindowHandle), "SCWindow::destroyWindow() unable to destroy window.");
 			_mhWindowHandle = NULL;
 		}
 
 		// Unregister window class
-		pLog->add("SCWindow::destroyWindow() unregistering window class.");
+		x->pLog->add("SCWindow::destroyWindow() unregistering window class.");
 		ThrowIfTrue(!UnregisterClassW(L"XWindowClassName", _mhInstance), "SCWindow::destroyWindow() unable to unregister window class.");
 		_mhInstance = NULL;
-		pLog->add("SCWindow::destroyWindow() complete.");
+		x->pLog->add("SCWindow::destroyWindow() complete.");
 	}
 
 	LRESULT SCWindow::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		CLog* pLog = CLog::getPointer();
-
 		switch (msg)
 		{
 		case WM_ACTIVATE:	// WM_ACTIVATE is sent when the window is activated or deactivated.
@@ -323,8 +322,7 @@ namespace X
 		}
 
 		// Update the input manager
-		SCInputManager* pInputManager = SCInputManager::getPointer();
-		pInputManager->update(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
+		x->pInput->update(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
 		return true;
 	}
 
@@ -376,7 +374,7 @@ namespace X
 
 	void SCWindow::_resizeOpenGLViewport(unsigned int uiNewWidth, unsigned int uiNewHeight)
 	{
-		CLog::getPointer()->add("SCWindow::_resizeOpenGLViewport( " + std::to_string(uiNewWidth) + ", " + std::to_string(uiNewHeight) + ") called.");
+		SCLog::getPointer()->add("SCWindow::_resizeOpenGLViewport( " + std::to_string(uiNewWidth) + ", " + std::to_string(uiNewHeight) + ") called.");
 		if (uiNewWidth < 1)
 			uiNewWidth = 1;
 		if (uiNewHeight < 1)
@@ -407,8 +405,7 @@ namespace X
 	void SCWindow::toggleFullscreen(void)
 	{
 		// With the resource manager, call the method which removes all resources from the GPU which require an OpenGL context
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->onGLContextToBeDestroyed();
+		x->pResource->onGLContextToBeDestroyed();
 
 		// Now destroy and recreate the window, toggling fullscreen mode whilst doing so
 		destroyWindow();
@@ -419,7 +416,7 @@ namespace X
 		setMouseCursorImage(_mstrCursorName);
 
 		// Now call the method which recreates all resources to the GPU which require an OpenGL context, putting everything back again to the original state.
-		pResMan->onGLContextRecreated();
+		x->pResource->onGLContextRecreated();
 
 	}
 
@@ -461,20 +458,19 @@ namespace X
 
 		std::string strCursorFilename = strAniFilename;
 		HCURSOR hCursor = NULL;
-		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Load default arrow
 		if (!strAniFilename.size())
 		{
 			hCursor = LoadCursor(NULL, IDC_ARROW);
-			SetClassLongPtr(pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
+			SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
 			SetCursor(hCursor);
 			return;
 		}
 
 		hCursor = LoadCursorFromFile(StringUtils::stringToWide(strCursorFilename).c_str());
 		ThrowIfTrue(!hCursor, "CInputMouse::setMouseCursorImage() failed. The given filename of " + strAniFilename + " could not be loaded with LoadCursorFromFile().");
-		SetClassLongPtr(pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
+		SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
 		SetCursor(hCursor);
 	}
 

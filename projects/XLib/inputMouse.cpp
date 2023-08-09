@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "inputMouse.h"
-#include "window.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -193,10 +193,10 @@ namespace X
 		}
 	}
 
-	void CInputMouse::setMousePos(int x, int y)
+	void CInputMouse::setMousePos(int ix, int iy)
 	{
-		mouseX = float(x);
-		mouseY = float(y);
+		mouseX = float(ix);
+		mouseY = float(iy);
 		mouseXold = mouseX;
 		mouseYold = mouseY;
 		mouseDeltaX = mouseDeltaY = 0;
@@ -207,13 +207,13 @@ namespace X
 		// Modify the rcWindow value to take into account the app's title bar
 		AdjustWindowRect(&wiWindow.rcWindow, WS_POPUPWINDOW | WS_CAPTION, false);
 		POINT mPos;
-		mPos.x = wiWindow.rcClient.left + (int)x;
-		mPos.y = wiWindow.rcClient.top + (int)y;
+		mPos.x = wiWindow.rcClient.left + (int)ix;
+		mPos.y = wiWindow.rcClient.top + (int)iy;
 		SetCursorPos(mPos.x, mPos.y);
 	}
 
 	void CInputMouse::setMouseCursorImage(const std::string& strAniFilename)
 	{
-		SCWindow::getPointer()->setMouseCursorImage(strAniFilename);
+		x->pWindow->setMouseCursorImage(strAniFilename);
 	}
 }

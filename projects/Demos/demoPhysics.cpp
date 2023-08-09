@@ -10,7 +10,7 @@ namespace X
 
 	void CStateDemoPhysics::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
+
 	}
 
 	void CStateDemoPhysics::onActive(CFiniteStateMachine* pFSM)

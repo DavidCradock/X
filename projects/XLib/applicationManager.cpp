@@ -1,29 +1,37 @@
 #include "PCH.h"
 #include "applicationManager.h"
-#include "log.h"
-#include "window.h"
-#include "input.h"
-#include "resourceManager.h"
-#include "GUIManager.h"
-#include "2DRenderer.h"
+//#include "log.h"
+//#include "window.h"
+//#include "input.h"
+//#include "resourceManager.h"
+//#include "GUIManager.h"
+//#include "2DRenderer.h"
 #include "stringUtils.h"
-#include "resourceLoadingScreen.h"
+//#include "resourceLoadingScreen.h"
+//#include "settings.h"
+#include "singletons.h"
 
 // Include each application
 
 
 namespace X
 {
+	SCApplicationManager::SCApplicationManager()
+	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCApplicationManager::SCApplicationManager() called.");
+	}
+
 	void SCApplicationManager::mainLoop(void)
 	{
 		try
 		{
 			// Here's the program's main loop called from WinMain.
 
-			// Clear the log file
-			CLog* pLog = CLog::getPointer();
-			pLog->clear();
-			pLog->add("SCApplicationManager::mainLoop() called.");
+			// Get a pointer to the global x SCSingletons class object to initialise all the singleton classes in the correct order
+			x = SCSingletons::getPointer();
+
+			x->pLog->add("SCApplicationManager::mainLoop() called.");
 
 			// Create objects to each of the application classes which inherit from CApplicationBase
 //			ApplicationGUIThemeEditor* pAppGUIThemeEditor = new ApplicationGUIThemeEditor;
@@ -32,53 +40,32 @@ namespace X
 			// Add each application to this manager
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
-			// Create window
-			SCWindow* pWindow = SCWindow::getPointer();
-			pWindow->createWindow("X - F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle shadows.");
-			
-			// Get pointer to input manager
-			SCInputManager* pInputManager = SCInputManager::getPointer();
-			
-			// Set mouse cursor to be located in the centre of the window
-			pInputManager->mouse.setMousePos(pWindow->getWidth() / 2, pWindow->getHeight() / 2);
+			CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
 
-			// Add default resources used in various places
-			pLog->add("SCApplicationManager::mainLoop() adding default resources to SCResourceManager.");
-			SCResourceManager* pRM = SCResourceManager::getPointer();
-			pRM->addDefaultResources();
-			CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
-
-			// Initialise GUI
-			SCGUIManager* pGUI = SCGUIManager::getPointer();
-			pGUI->_createDefaultContainers();
-
-			// Initialise 2D renderer
-			SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();
-
-			// Initalise the loading screen
-			SCResourceLoadingScreen::getPointer();
+			// Create default GUI containers
+			x->pGUI->_createDefaultContainers();
 
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
 
 			// Call currently set application's onStart method
 			std::string strLog = "SCApplicationManager::mainLoop() calling " + _mstrCurrentApp + "'s onStart()";
-			pLog->add(strLog);
+			x->pLog->add(strLog);
 			std::map<std::string, CApplicationBase*>::iterator it = _mApplications.find(_mstrCurrentApp);
 			ThrowIfTrue(it == _mApplications.end(), "SCApplicationManager::mainLoop() unable to find the current application called " + _mstrCurrentApp);
 			it->second->onStart();
 
 			// Enter main loop...
-			pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
+			x->pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
 			_mTimer.update();
 			
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
-			while (pWindow->checkMessages())
+			while (x->pWindow->checkMessages())
 			{
 				_mTimer.update();
 
 				// Clear the backbuffer
-				pWindow->clearBackbuffer();
+				x->pWindow->clearBackbuffer();
 
 				// Bind the X:backbuffer_FB to render target
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
@@ -89,10 +76,10 @@ namespace X
 				}
 
 				// Update and render the 2DRenderer to the "X:backbuffer_FB" and any various other framebuffers each of it's cameras are set to render to
-				p2DRenderer->render();
+				x->p2dRenderer->render();
 
 				// Update and render the GUI to the "X:backbuffer_FB" framebuffer, using the "X:backbuffer_FB" as the sample source
-				pGUI->render("X:backbuffer_FB");
+				x->pGUI->render("X:backbuffer_FB");
 
 				// Unbind the X:backbuffer_FB and render to the back buffer
 				pBGFB->unbindAsRenderTarget();
@@ -100,38 +87,37 @@ namespace X
 				// Now render the "X:backbuffer_FB" to the backbuffer
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
-				pBGFB->renderTo2DQuad(0, 0, pWindow->getWidth(), pWindow->getHeight());
+				pBGFB->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 				glDisable(GL_BLEND);
 
 				// Swap buffers
-				pWindow->swapBuffers();
+				x->pWindow->swapBuffers();
 			}
 
 			// Last current app's onStop method
-			pLog->add("SCApplicationManager::mainLoop() is shutting down...");
+			x->pLog->add("SCApplicationManager::mainLoop() is shutting down...");
 			it = _mApplications.find(_mstrCurrentApp);
 			ThrowIfTrue(it == _mApplications.end(), "unable to find the current application called " + _mstrCurrentApp);
 			it->second->onStop();
 
 			// Now close the window
-			pWindow->destroyWindow();
+			x->pWindow->destroyWindow();
 		}
 		catch (CException &exception)
 		{
-			CLog::getPointer()->add("Total runtime: " + _mTimer.getClock());
-			CLog::getPointer()->add(exception.mstrException, true);
+			x->pLog->add("Total runtime: " + _mTimer.getClock());
+			x->pLog->add(exception.mstrException, true);
 			std::wstring strw = StringUtils::stringToWide(exception.mstrException);
-			MessageBox(SCWindow::getPointer()->getWindowHandle(), strw.c_str(), L"Sorry, an exception has been thrown...", MB_OK);
+			MessageBox(x->pWindow->getWindowHandle(), strw.c_str(), L"Sorry, an exception has been thrown...", MB_OK);
 			__debugbreak();
 		}
-		CLog::getPointer()->add("Total runtime: " + _mTimer.getClock());
+		x->pLog->add("Total runtime: " + _mTimer.getClock());
 	}
 
 	void SCApplicationManager::addApp(const std::string& applicationName, CApplicationBase* pTheApplication)
 	{
-		CLog *pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::addApp(" + applicationName + ") called.";
-		CLog::getPointer()->add(strLog);
+		SCLog::getPointer()->add(strLog);
 
 		// Make sure it doesn't already exist
 		std::map<std::string, CApplicationBase*>::iterator it = _mApplications.find(applicationName);
@@ -154,9 +140,8 @@ namespace X
 
 	const std::string& SCApplicationManager::getAppName(unsigned int index) const
 	{
-		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::getAppName() with index " + std::to_string(index) + " called.";
-		CLog::getPointer()->add(strLog);
+		x->pLog->add(strLog);
 
 		ThrowIfTrue(index >= _mApplications.size(), "SCApplicationManager::getAppName(" + std::to_string(index) + ") failed. Invalid index given, maximum number of added applications is " + std::to_string(_mApplications.size()));
 
@@ -170,9 +155,8 @@ namespace X
 
 	void SCApplicationManager::switchToApp(const std::string& applicationToSwitchTo)
 	{
-		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::switchToApp(" + applicationToSwitchTo + " called.";
-		CLog::getPointer()->add(strLog);
+		x->pLog->add(strLog);
 
 		// Attempt to find the application we're trying to switch to
 		std::map<std::string, CApplicationBase*>::iterator itNewApp = _mApplications.find(applicationToSwitchTo);
@@ -190,9 +174,8 @@ namespace X
 
 	void SCApplicationManager::switchToNextApp(void)
 	{
-		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::SwitchToNextApp() called.";
-		CLog::getPointer()->add(strLog);
+		x->pLog->add(strLog);
 
 		// If no apps are currently set
 		ThrowIfTrue(0 == _mstrCurrentApp.size(), "SCApplicationManager::switchToNextApp() failed. There is no currently set application name.");
@@ -226,9 +209,8 @@ namespace X
 
 	void SCApplicationManager::callAllApps_initOnce(void)
 	{
-		CLog* pLog = CLog::getPointer();
 		std::string strLog = "SCApplicationManager::callAllApps_initOnce() called.";
-		CLog::getPointer()->add(strLog);
+		x->pLog->add(strLog);
 
 		std::map<std::string, CApplicationBase*>::iterator it = _mApplications.begin();
 		while (it != _mApplications.end())

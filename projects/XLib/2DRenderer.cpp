@@ -1,12 +1,14 @@
 #include "PCH.h"
 #include "2DRenderer.h"
-#include "log.h"
-#include "resourceManager.h"
+#include "singletons.h"
 
 namespace X
 {
 	SC2DRenderer::SC2DRenderer()
 	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SC2DRenderer::SC2DRenderer() called.");
+
 		_muiNumTextureBindingsPerLoop = 0;
 	}
 
@@ -113,23 +115,20 @@ namespace X
 		// It's used for statistical purposes only
 		_muiNumTextureBindingsPerLoop = 0;
 
-		// Get required resources needed to render stuff
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-
 		// For entities
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShaderEntity = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShaderEntity = x->pResource->getShader("X:VBCPT");
 		pVB->removeGeom();
 
 		// For line entities
-		CResourceVertexBufferLine* pVBLine = pRM->getVertexBufferLine("X:default");
-		CResourceShader* pShaderLine = pRM->getShader("X:VBCPT");
-		CResourceTexture2DFromFile* pTextureLine = pRM->getTexture2DFromFile("X:default_white");
+		CResourceVertexBufferLine* pVBLine = x->pResource->getVertexBufferLine("X:default");
+		CResourceShader* pShaderLine = x->pResource->getShader("X:VBCPT");
+		CResourceTexture2DFromFile* pTextureLine = x->pResource->getTexture2DFromFile("X:default_white");
 
 		// For instance entities
-		CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
+		CResourceVertexBufferCPTInst* pVBI = x->pResource->getVertexBufferCPTInst("X:default");
 		pVBI->removeAll();
-		CResourceShader* pShaderEntityRot = pRM->getShader("X:VBCPTInst");
+		CResourceShader* pShaderEntityRot = x->pResource->getShader("X:VBCPTInst");
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -157,7 +156,7 @@ namespace X
 				}
 
 				// Get framebuffer to render to
-				CResourceFramebuffer* pFB = pRM->getFramebuffer(itCamera->second->getFramebufferTargetName());
+				CResourceFramebuffer* pFB = x->pResource->getFramebuffer(itCamera->second->getFramebufferTargetName());
 				
 				// Set framebuffer as render target
 				// Only clear the framebuffer if it isn't "X:backbuffer_fb"
@@ -282,7 +281,7 @@ namespace X
 
 
 		// Reset framebuffer to render to the "X:backbuffer_FB"
-		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer("X:backbuffer_FB");
 		pFB->bindAsRenderTarget(false, false);
 
 		glDisable(GL_BLEND);

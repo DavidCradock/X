@@ -1,11 +1,8 @@
 #include "PCH.h"
 #include "GUITextEdit.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
-#include "audioManager.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -28,23 +25,20 @@ namespace X
 	void CGUITextEdit::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textEditBGNormal, col);
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceTexture2DFromFile* pTex = pRM->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
+		CResourceTexture2DFromFile* pTex = x->pResource->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
 		CVector2f vTexDimsPoint3 = pTex->getDimensions() * 0.3333333f;
 		CVector2f vTexDimsPoint6 = pTex->getDimensions() * 0.6666666f;
 
 		// Now render the font stuff
 		int iRTDims[2];
-		iRTDims[0] = int(pWindow->getWidth());
-		iRTDims[1] = int(pWindow->getHeight());
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textEdit);
+		iRTDims[0] = int(x->pWindow->getWidth());
+		iRTDims[1] = int(x->pWindow->getHeight());
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.textEdit);
 
 		// Simply update to determine whether we add the flashing character when the state is active
 		std::string strFinalText = mstrText;
@@ -88,13 +82,9 @@ namespace X
 	{
 		_mbWasActiveEnterPressed = false;
 
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		CGUITheme* pTheme = pContainer->getTheme();
-		SCAudioManager* pAudio = SCAudioManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
@@ -104,7 +94,7 @@ namespace X
 			_mfAddFlashingCursor -= 2.0f;
 
 		
-		CResourceTexture2DFromFile* pColourTex = pResMan->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
+		CResourceTexture2DFromFile* pColourTex = x->pResource->getTexture2DFromFile(pTheme->mImages.textEditBGColour);
 		CVector2f vTexDimsDiv3 = pColourTex->getDimensions() * 0.3333333f;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
@@ -120,18 +110,18 @@ namespace X
 			// Mouse clicking on or off to activate/deactivate
 			if (bMouseOver)
 			{
-				if (pInput->mouse.leftButtonOnce())
+				if (x->pInput->mouse.leftButtonOnce())
 				{
 					if (_mState != state::active)
 					{
 						_mState = state::active;
-						pAudio->getEmitter(pTheme->mAudio.textEditActivate.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditActivate.fVolume, pTheme->mAudio.textEditActivate.fPitch);
+						x->pAudio->getEmitter(pTheme->mAudio.textEditActivate.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditActivate.fVolume, pTheme->mAudio.textEditActivate.fPitch);
 					}
 				}
 			}
 			else
 			{
-				if (pInput->mouse.leftButDown())
+				if (x->pInput->mouse.leftButDown())
 				{
 					_mState = state::inactive;
 
@@ -166,10 +156,10 @@ namespace X
 		// Now add/remove characters to the text based on keyboard input
 		if (state::active == _mState)
 		{
-			if (pInput->key.once(KC_RETURN) || pInput->key.once(KC_NUMPADENTER))
+			if (x->pInput->key.once(KC_RETURN) || x->pInput->key.once(KC_NUMPADENTER))
 			{
 				_mState = state::inactive;
-				pAudio->getEmitter(pTheme->mAudio.textEditReturn.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditReturn.fVolume, pTheme->mAudio.textEditReturn.fPitch);
+				x->pAudio->getEmitter(pTheme->mAudio.textEditReturn.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditReturn.fVolume, pTheme->mAudio.textEditReturn.fPitch);
 				// Check to see if we're only accepting numbers with _mbNumberInputOnly and if so, check the string and empty it if it isn't a number
 				if (_mbIntegerInputOnly)
 				{
@@ -181,41 +171,41 @@ namespace X
 				if (_mfuncOnEnterPressed != NULL)
 					_mfuncOnEnterPressed(mstrText);
 			}
-			else if (pInput->key.anyPressed())
+			else if (x->pInput->key.anyPressed())
 			{
-				if (pInput->key.repeat(KC_BACK))
+				if (x->pInput->key.repeat(KC_BACK))
 				{
 					if (mstrText.length() > 0)
 					{
 						mstrText.pop_back();
-						pAudio->getEmitter(pTheme->mAudio.textEditBackspace.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditBackspace.fVolume, pTheme->mAudio.textEditBackspace.fPitch);
+						x->pAudio->getEmitter(pTheme->mAudio.textEditBackspace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditBackspace.fVolume, pTheme->mAudio.textEditBackspace.fPitch);
 					}
 				}
 				else
 				{
-					std::string strNewChar = pInput->key.once2Char();
+					std::string strNewChar = x->pInput->key.once2Char();
 					if (strNewChar.length() > 0)
 					{
 						if (mstrText.length() < _muiMaxChars)
 						{
 							mstrText += strNewChar;
-							pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
+							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
 						}
 						else
 						{
-							pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
+							x->pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
 						}
 					}
-					if (pInput->key.repeat(KC_SPACE))
+					if (x->pInput->key.repeat(KC_SPACE))
 					{
 						if (mstrText.length() < _muiMaxChars)
 						{
 							mstrText += " ";
-							pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
+							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
 						}
 						else
 						{
-							pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(pGUIMan->getAudioVol()* pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
+							x->pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(x->pGUI->getAudioVol()* pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
 						}
 					}
 				}

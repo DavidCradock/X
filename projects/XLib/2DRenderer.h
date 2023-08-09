@@ -23,14 +23,12 @@ namespace X
 	// 
 	// Usage example to get a single entity rendered...
 	// // First, create the C2DTexture2DAtlas resource which the entity will use for it's image data.
-	// SCResourceManager* pResourceManager = SCResourceManager::getPointer();	// Obtain pointer to the resource manager.
 	// Fill in a std::vector<std::string> to hold all the images the entity will use, in this case, just one single image.
 	// std::vector<std::string> vstrImageFilenames;
 	// vstrImageFilenames.push_back("data/Demo2D/images/creature_top_down.png");
 	// // Now create the texture atlas with the resource manager...
-	// pResourceManager->addTexture2DAtlas("MyTextureAtlas", vstrImageFilenames, true, 1);
-	// SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();					// Obtain pointer to this object
-	// C2DWorld* pWorld = p2DRenderer->addWorld("MyWorld");						// Add a new world to contain everything
+	// x->pResource->addTexture2DAtlas("MyTextureAtlas", vstrImageFilenames, true, 1);
+	// C2DWorld* pWorld = x->p2dRenderer->addWorld("MyWorld");						// Add a new world to contain everything
 	// C2DLayer* pLayer = pWorld->addLayer("MyLayer");							// Add a new layer to the world
 	// C2DCamera* pCamera = pWorld->addCamera("MyCamera");						// Add a new camera to the world
 	// Add the entity to the layer, of the world, specifying which texture atlas it will get it's image data from...

@@ -47,7 +47,7 @@ namespace X
 	// 
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
-	// They are loaded by this class's addDefaultResources() method which is called from SCApplicationManager::mainLoop()
+	// They are loaded by this class's addDefaultResources() method which is called from SCSingletons constructor
 	class SCResourceManager : public CSingleton<SCResourceManager>
 	{
 	public:

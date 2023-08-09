@@ -1,9 +1,8 @@
 #include "PCH.h"
 #include "resourceFont.h"
 #include "utilities.h"
-#include "log.h"
-#include "resourceManager.h"
 #include "stringUtils.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -73,8 +72,7 @@ namespace X
 	void CResourceFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, float fFontScaling, CColour colour) const
 	{
 		// Get shader used to render the text
-		SCResourceManager* pResourceManager = SCResourceManager::getPointer();
-		CResourceShader* pShader = pResourceManager->getShader("X:VBCPT");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 		
 		// Setup the projection matrix as orthographic
 		_mmatProjection.setProjectionOrthographic(0.0f, float(iRenderTargetWidth), 0.0f, float(iRenderTargetHeight), -1.0f, 1.0f);

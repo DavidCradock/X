@@ -5,8 +5,7 @@ namespace X
 {
 	void DemoNNGUIstateSelectionUpdate(CFiniteStateMachine* pFSM)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("Application state selection.");
+		CGUIContainer* pCont = x->pGUI->getContainer("Application state selection.");
 		CGUIButton* pBut;
 		
 		pBut = pCont->getButton("state0");

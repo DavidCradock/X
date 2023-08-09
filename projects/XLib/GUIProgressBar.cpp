@@ -1,11 +1,9 @@
 #include "PCH.h"
 #include "GUIProgressBar.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
 #include "utilities.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -24,18 +22,14 @@ namespace X
 	void CGUIProgressBar::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		col.alpha *= _mfAlpha;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.progressBarBGColour, pTheme->mImages.progressBarBGNormal, col);
 
 		// Get required resources needed to render the tab
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:gui");
-		SCInputManager* pInput = SCInputManager::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:gui");
 
 		CColour colFiller = pTheme->mColours.progressBarFiller;
 		colFiller.alpha *= _mfAlpha;
@@ -43,7 +37,7 @@ namespace X
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
@@ -56,18 +50,18 @@ namespace X
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
 
 		// Set mouse position, inverting Y position
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
 		pShader->setVec2("v2MousePos", vMousePos);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.progressBarFillerColour);
-		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2DFromFile(pTheme->mImages.progressBarFillerNormal);
-		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2DFromFile(pTheme->mImages.reflection);
-		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.progressBarFillerColour);
+		CResourceTexture2DFromFile* pTexNormal = x->pResource->getTexture2DFromFile(pTheme->mImages.progressBarFillerNormal);
+		CResourceTexture2DFromFile* pTexReflection = x->pResource->getTexture2DFromFile(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = x->pResource->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -332,8 +326,7 @@ namespace X
 		}
 
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

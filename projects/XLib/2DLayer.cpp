@@ -1,7 +1,6 @@
 #include "PCH.h"
 #include "2DLayer.h"
-#include "log.h"
-#include "resourceManager.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -39,8 +38,7 @@ namespace X
 		ThrowIfFalse(pNew, "C2DLayer::addEntity(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
 
 		// Make sure the named atlas resource exists, otherwise throw an exception
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfFalse(pRM->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntity(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntity(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
 		
 		// Add object to hash map
 		_mmapEntities[strUniqueName] = pNew;
@@ -136,8 +134,7 @@ namespace X
 		ThrowIfFalse(pNew, "C2DLayer::addEntityRot(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
 
 		// Make sure the named atlas resource exists, otherwise throw an exception
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfFalse(pRM->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityRot(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityRot(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
 
 		// Add object to hash map
 		_mmapEntityRots[strUniqueName] = pNew;

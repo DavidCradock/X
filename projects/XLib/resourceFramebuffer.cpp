@@ -1,9 +1,7 @@
 #include "PCH.h"
 #include "resourceFramebuffer.h"
 #include "openGLExtensions.h"
-#include "log.h"
-#include "resourceManager.h"
-#include "window.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -75,9 +73,8 @@ namespace X
 	{
 		if (bResizeToWindowDimensions)
 		{
-			SCWindow* pWindow = SCWindow::getPointer();
-			unsigned int iWindowWidth = (unsigned int)pWindow->getWidth();
-			unsigned int iWindowHeight = (unsigned int)pWindow->getHeight();
+			unsigned int iWindowWidth = (unsigned int)x->pWindow->getWidth();
+			unsigned int iWindowHeight = (unsigned int)x->pWindow->getHeight();
 			if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
 			{
 				resize(iWindowWidth, iWindowHeight);
@@ -97,8 +94,7 @@ namespace X
 	void CResourceFramebuffer::unbindAsRenderTarget(void) const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		SCWindow* pWnd = SCWindow::getPointer();
-		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
+		glViewport(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 		glFlush();
 		glFinish();
 	}
@@ -201,10 +197,8 @@ namespace X
 
 	void CResourceFramebuffer::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		SCWindow* pWindow = SCWindow::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		// Setup triangle geometry
 		pVB->removeGeom();
@@ -216,7 +210,7 @@ namespace X
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->bind();
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);

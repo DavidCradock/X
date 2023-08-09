@@ -32,6 +32,9 @@
     <Filter Include="Demos\Empty">
       <UniqueIdentifier>{820c640f-d4ff-488f-81f8-3f4bf313e208}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Demos\GUI">
+      <UniqueIdentifier>{38b343f8-f012-45a3-b180-c97aa4cb9851}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
@@ -87,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="demoEmpty.cpp">
       <Filter>Demos\Empty</Filter>
+    </ClCompile>
+    <ClCompile Include="demoGUI.cpp">
+      <Filter>Demos\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="demoEmpty.h">
       <Filter>Demos\Empty</Filter>
+    </ClInclude>
+    <ClInclude Include="demoGUI.h">
+      <Filter>Demos\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

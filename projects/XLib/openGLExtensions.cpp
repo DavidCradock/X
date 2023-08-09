@@ -97,7 +97,7 @@ namespace X
 		if (bLogExtensions)
 		{
 			std::string strFound = "Extension name: " + strExtensionName + " found.";
-			CLog::getPointer()->add(strFound);
+			SCLog::getPointer()->add(strFound);
 		}
 	}
 
@@ -108,7 +108,7 @@ namespace X
 			return;
 		bDoneThisBefore = true;
 
-		CLog* pLog = CLog::getPointer();
+		SCLog* pLog = SCLog::getPointer();
 		pLog->add("setupOpenGLExtensions() called...");
 
 		// VSync

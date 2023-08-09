@@ -1,19 +1,18 @@
 #include "PCH.h"
 #include "GUIManager.h"
-#include "log.h"
-#include "input.h"
-#include "window.h"
-#include "resourceManager.h"
-#include "audioManager.h"
 #include "stringUtils.h"
+#include "singletons.h"
 
 namespace X
 {
 	SCGUIManager::SCGUIManager()
 	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCGUIManager::SCGUIManager() called.");
+
 		_mfScale = 1.0f;
 		// Add default theme
-		CGUITheme *pTheme = addTheme("default");
+		CGUITheme* pTheme = addTheme("default");
 		pTheme->loadTextures();
 		pTheme->addFontsToManager();
 
@@ -27,8 +26,6 @@ namespace X
 
 	void SCGUIManager::render(const std::string& strFramebufferToSampleFrom)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Update the timer object
 		_mTimer.update();
 
@@ -49,7 +46,7 @@ namespace X
 			if (pContainer->update(bMouseIsOverContainerWhichIsAboveThisOne))
 			{
 				// If clicked upon and mouse over this container, mark as wanting to be placed on top
-				if (pInput->mouse.leftButDown())
+				if (x->pInput->mouse.leftButDown())
 				{
 					strWindowWantsToBePlacedInFront = *it;
 				}
@@ -332,7 +329,6 @@ namespace X
 
 	void SCGUIManager::_updateDefaultContainers(void)
 	{
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
 		CGUIContainer* pCont;
 
 		pCont = getContainer("X:Default:Statistics");
@@ -348,8 +344,7 @@ namespace X
 	{
 		CGUIContainer* pCont = addContainer("X:Default:Statistics", true);
 		CGUITheme* pTheme = pCont->getTheme();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 		float fTextHeight = pFont->getTextHeight(1.0f);
 
 		pCont->setDimensions(450.0f, 330.0f);
@@ -389,14 +384,11 @@ namespace X
 
 	void SCGUIManager::_updateDefaultContainerStatistics(void)
 	{
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
 		CGUIContainer* pCont = getContainer("X:Default:Statistics");
-		CGUITheme* pTheme = pGUIMan->getTheme(pCont->mstrThemename);
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CGUITheme* pTheme = x->pGUI->getTheme(pCont->mstrThemename);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 
 		CGUILineGraph* pLineGraph = pCont->getLineGraph("Stats_FPS_Linegraph");
-		SCWindow* pWindow = SCWindow::getPointer();
 		CGUIText* pText;
 
 		// Add new value to linegraph data set
@@ -460,21 +452,21 @@ namespace X
 		pCont->getText("Text_FPSAVR")->setText(strTxt);
 		// Also update colour based on whether it's above or below refresh rate
 		CColour col(0.0f, 1.0f, 0.0f, 1.0f);
-		if (_mTimer.getFPSAveraged() < (float)pWindow->getRefreshRate() - 1)
+		if (_mTimer.getFPSAveraged() < (float)x->pWindow->getRefreshRate() - 1)
 			col.set(1.0f, 0.0f, 0.0f, 1.0f);
 		pCont->getText("Text_FPSAVR")->setColour(false, col);
 
 		// VSync text
-		if (pWindow->getVSyncEnabled())
+		if (x->pWindow->getVSyncEnabled())
 		{
 			strTxt = "VSync: On. Desktop Hz: ";
-			StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
 			pCont->getText("VSyncONOFF")->setText(strTxt);
 		}
 		else
 		{
 			strTxt = "VSync: Off. Desktop Hz: ";
-			StringUtils::appendUInt(strTxt, pWindow->getRefreshRate());
+			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
 			pCont->getText("VSyncONOFF")->setText(strTxt);
 		}
 
@@ -499,8 +491,7 @@ namespace X
 	{
 		CGUIContainer* pCont = addContainer("X:Default:FontGenerator", true);
 		CGUITheme* pTheme = pCont->getTheme();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 		float fTextHeight = pFont->getTextHeight(1.0f);
 		CGUIButton* pButton;
 		CGUITextEdit* pTextEdit;
@@ -581,7 +572,6 @@ namespace X
 	void SCGUIManager::_updateDefaultContainerFontGenerator(void)
 	{
 		CGUIContainer* pCont = getContainer("X:Default:FontGenerator");
-		SCWindow* pWindow = SCWindow::getPointer();
 		int iTotalRenderedHeight;
 		
 		// Close button
@@ -686,8 +676,8 @@ namespace X
 			strTxt,
 			0,
 			0,
-			pWindow->getWidth(),
-			pWindow->getHeight(),
+			x->pWindow->getWidth(),
+			x->pWindow->getHeight(),
 			vecStrLines,
 			iTotalRenderedHeight,
 			"\n",
@@ -698,8 +688,7 @@ namespace X
 
 	void SCGUIManager::_defaultContainerFontGeneratorBuildFont(void)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->buildFontFiles(
+		x->pResource->buildFontFiles(
 			"font_output",
 			_mDefContFontGen.strFontName,
 			_mDefContFontGen.iHeight,

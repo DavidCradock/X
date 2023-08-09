@@ -113,9 +113,9 @@ namespace X
 		// To query the width, height and component count of an image without having to
 		// decode the full file, you can use the stbi_info family of functions:
 		//
-		//   int x,y,n,ok;
-		//   ok = stbi_info(filename, &x, &y, &n);
-		//   // returns ok=1 and sets x, y, n if image is a supported format,
+		//   int ix,iy,n,ok;
+		//   ok = stbi_info(filename, &ix, &iy, &n);
+		//   // returns ok=1 and sets ix, iy, n if image is a supported format,
 		//   // 0 otherwise.
 		return (bool)STB::stbi_info(strFilename.c_str(), &iWidth, &iHeight, &componentCount);
 	}
@@ -648,14 +648,14 @@ namespace X
 		float fLength;
 		for (int y = 0; y < _miHeight; y++)
 		{
-			for (int x = 0; x < _miWidth; x++)
+			for (int ix = 0; ix < _miWidth; ix++)
 			{
 				// we add +1 to imageGreyscale pixel positions as it has a border
 
 				// Get height values of centre and surrounding pixels
-				imageGreyscale.getPixel(x + 1, y + 1, r[0], g[0], b[0], a);	// Current pixel
-				imageGreyscale.getPixel(x, y + 1, r[1], g[1], b[1], a);		// Left pixel
-				imageGreyscale.getPixel(x + 1, y + 2, r[2], g[2], b[2], a);	// Above pixel
+				imageGreyscale.getPixel(ix + 1, y + 1, r[0], g[0], b[0], a);	// Current pixel
+				imageGreyscale.getPixel(ix, y + 1, r[1], g[1], b[1], a);		// Left pixel
+				imageGreyscale.getPixel(ix + 1, y + 2, r[2], g[2], b[2], a);	// Above pixel
 				
 				fX = float(r[1] - r[0]) / 255.0f;	// Convert to -1.0f to 1.0f
 				fY = float(r[2] - r[0]) / 255.0f;	// ....
@@ -683,7 +683,7 @@ namespace X
 				r[0] = unsigned char(fX);
 				g[0] = unsigned char(fY);
 				b[0] = unsigned char(fZ);
-				outputImage.setPixel(x, y, r[0], g[0], b[0], a);
+				outputImage.setPixel(ix, y, r[0], g[0], b[0], a);
 			}
 		}
 	}

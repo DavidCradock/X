@@ -10,8 +10,7 @@ namespace X
 	void CStateDemoNeuralNets::onEnter(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(6);
+		x->pLoadingScreen->onInit(6);
 
 		// Create resources used by the states
 
@@ -23,28 +22,27 @@ namespace X
 		std::vector<std::string> vecstrImageNamesEntityEvil = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down_evil/");
 
 		// Create texture atlases and entities
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->addTexture2DAtlas("creature_top_down", vecstrImageNamesEntity);
-		pRM->addTexture2DAtlas("food", vecstrImageNamesFood);
-		pRM->addTexture2DAtlas("tiles", vecstrImageNamesTiles);
-		pRM->addTexture2DAtlas("creature_top_down_evil", vecstrImageNamesEntityEvil);
+		x->pResource->addTexture2DAtlas("creature_top_down", vecstrImageNamesEntity);
+		x->pResource->addTexture2DAtlas("food", vecstrImageNamesFood);
+		x->pResource->addTexture2DAtlas("tiles", vecstrImageNamesTiles);
+		x->pResource->addTexture2DAtlas("creature_top_down_evil", vecstrImageNamesEntityEvil);
 
 		// Create textures
-		pRM->addTexture2DFromFile("critter_diffuse", "data/Demos/DemoNeuralNets/textures/critter_diffuse.png", true);
-		pRM->addTexture2DFromFile("food_diffuse", "data/Demos/DemoNeuralNets/textures/food_diffuse.png", true);
+		x->pResource->addTexture2DFromFile("critter_diffuse", "data/Demos/DemoNeuralNets/textures/critter_diffuse.png", true);
+		x->pResource->addTexture2DFromFile("food_diffuse", "data/Demos/DemoNeuralNets/textures/food_diffuse.png", true);
 
 		// Create geometry
 		CResourceVertexBufferCPTBNT* pVB;
 		// Critter
-		pVB = pRM->addVertexBufferCPTBNT("critter");
+		pVB = x->pResource->addVertexBufferCPTBNT("critter");
 		//		pTri->convertObj("data/DemoNeuralNets/geometry/critter.obj");
 		pVB->addFromFile("data/Demos/DemoNeuralNets/geometry/critter.geom");
 		// Food
-		pVB = pRM->addVertexBufferCPTBNT("food");
+		pVB = x->pResource->addVertexBufferCPTBNT("food");
 		//		pTri->convertObj("data/DemoNeuralNets/geometry/food.obj");
 		pVB->addFromFile("data/Demos/DemoNeuralNets/geometry/food.geom");
 		// Back "plane" (Has to be a solid object for shadows to render correctly, so it's actually a cube)
-		pVB = pRM->addVertexBufferCPTBNT("background");
+		pVB = x->pResource->addVertexBufferCPTBNT("background");
 		pVB->addCube(CVector3f(0.0f, 0.0f, -0.5f), CVector3f(500.0f, 500.0f, 1.0f));
 		pVB->update();
 
@@ -59,8 +57,7 @@ namespace X
 		_mFSM.switchToState("state0");
 
 		// Setup GUI stuff which is shared between states
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("Application state selection.");
+		CGUIContainer* pCont = x->pGUI->addContainer("Application state selection.");
 		pCont->setDimensions(450, 300);
 		// Add state buttons
 		float fYpos = 30;
@@ -81,26 +78,24 @@ namespace X
 		pCont->addTextScroll("desc", 110, 0, 340, 300, strTxt);
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CStateDemoNeuralNets::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("Application state selection.");
+		x->pGUI->removeContainer("Application state selection.");
 
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DAtlas("creature_top_down" );
-		pRM->removeTexture2DAtlas("food");
-		pRM->removeTexture2DAtlas("tiles");
-		pRM->removeTexture2DAtlas("creature_top_down_evil");
+		x->pResource->removeTexture2DAtlas("creature_top_down" );
+		x->pResource->removeTexture2DAtlas("food");
+		x->pResource->removeTexture2DAtlas("tiles");
+		x->pResource->removeTexture2DAtlas("creature_top_down_evil");
 
-		pRM->removeTexture2DFromFile("critter_diffuse");
-		pRM->removeTexture2DFromFile("food_diffuse");
+		x->pResource->removeTexture2DFromFile("critter_diffuse");
+		x->pResource->removeTexture2DFromFile("food_diffuse");
 
-		pRM->removeVertexBufferCPT("critter");
-		pRM->removeVertexBufferCPT("food");
-		pRM->removeVertexBufferCPT("background");
+		x->pResource->removeVertexBufferCPT("critter");
+		x->pResource->removeVertexBufferCPT("food");
+		x->pResource->removeVertexBufferCPT("background");
 
 		// Remove states
 		_mFSM.removeAllStates();
@@ -109,8 +104,6 @@ namespace X
 
 	void CStateDemoNeuralNets::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Timer delta
 		timer.update();
 

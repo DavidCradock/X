@@ -1,12 +1,9 @@
 #include "PCH.h"
 #include "GUISlider.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
-#include "audioManager.h"
 #include "utilities.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -27,23 +24,19 @@ namespace X
 	void CGUISlider::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.sliderBGColour, pTheme->mImages.sliderBGNormal, col);
 
 		// Get required resources needed to render the tab
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:gui");
-		SCInputManager* pInput = SCInputManager::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:gui");
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
@@ -56,18 +49,18 @@ namespace X
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
 
 		// Set mouse position, inverting Y position
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
 		pShader->setVec2("v2MousePos", vMousePos);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.sliderTabColour);
-		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2DFromFile(pTheme->mImages.sliderTabNormal);
-		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2DFromFile(pTheme->mImages.reflection);
-		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.sliderTabColour);
+		CResourceTexture2DFromFile* pTexNormal = x->pResource->getTexture2DFromFile(pTheme->mImages.sliderTabNormal);
+		CResourceTexture2DFromFile* pTexReflection = x->pResource->getTexture2DFromFile(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = x->pResource->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -313,17 +306,14 @@ namespace X
 
 	void CGUISlider::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
 			fSecondsPast = 0.1f;
 		CGUITheme* pTheme = pContainer->getTheme();
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.sliderTabColour);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.sliderTabColour);
 		CVector2f vSliderTabTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
 		CVector2f vSliderTabTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
 
@@ -387,7 +377,7 @@ namespace X
 							bMouseOver = true;
 			if (bMouseOver)
 			{
-				if (pInput->mouse.leftButtonOnce())
+				if (x->pInput->mouse.leftButtonOnce())
 				{
 					_mbTabBeingMoved = true;
 				}
@@ -395,13 +385,13 @@ namespace X
 			
 			if (_mbTabBeingMoved)
 			{
-				if (!pInput->mouse.leftButDown())
+				if (!x->pInput->mouse.leftButDown())
 					_mbTabBeingMoved = false;
 				else
 				{
 					// Move tab position
 					// As tab position is in range of 0-1, we need to compute movement based upon mouse delta and slider dims
-					CVector2f vMouseDelta = pInput->mouse.getMouseDeltaGUI();
+					CVector2f vMouseDelta = x->pInput->mouse.getMouseDeltaGUI();
 					float fTabPosOffset = 0;
 					if (_mbOrientationIsHorizontal)
 					{

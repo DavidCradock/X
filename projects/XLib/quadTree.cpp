@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "quadTree.h"
-#include "log.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -69,10 +69,9 @@ namespace X
 			return;
 
 		// Obtain required resources needed to render the node's as lines.
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
+		CResourceVertexBufferLine* pLine = x->pResource->getVertexBufferLine("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
+		CResourceTexture2DFromFile* pTexture = x->pResource->getTexture2DFromFile("X:default_white");
 
 		// Setup orthographic projection matrix
 		CMatrix matrixWorld;

@@ -1,8 +1,7 @@
 #include "PCH.h"
 #include "audioManager.h"
-#include "log.h"
 #include "stringUtils.h"
-#include "resourceLoadingScreen.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -101,7 +100,6 @@ namespace X
 
 	HRESULT CAudioSample::_findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 	{
-		CLog* pLog = CLog::getPointer();
 		HRESULT hr = S_OK;
 		ThrowIfTrue(INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN), "CAudioSample::_findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
 		DWORD dwChunkType;
@@ -182,15 +180,14 @@ namespace X
 	void CAudioEmitter::play(float fVolume, float fPlaybackSpeed, bool bLoop)
 	{
 		// Find the sample which this emitter uses
-		SCAudioManager* pAudioManager = SCAudioManager::getPointer();
-		if (!pAudioManager->getExistsSample(_mstrSampleName, _mstrSampleGroupname))
+		if (!x->pAudio->getExistsSample(_mstrSampleName, _mstrSampleGroupname))
 		{
 			std::string strErr("CAudioEmitter::play() failed as it's set sample of ");
 			strErr += _mstrSampleName + " in group " + _mstrSampleGroupname + " doesn't exist in the audio manager.";
 			ThrowIfTrue(1, strErr);
 		}
 		// Make sure the audio sample is loaded
-		if (false == pAudioManager->getSampleLoaded(_mstrSampleName, _mstrSampleGroupname))
+		if (false == x->pAudio->getSampleLoaded(_mstrSampleName, _mstrSampleGroupname))
 			return;
 
 		// Before playing from the current voice index, stop it from playing incase it is so
@@ -199,7 +196,7 @@ namespace X
 		pSourceVoice->FlushSourceBuffers();
 
 		// Get pointer to the audio sample
-		CAudioSample* pAudioSample = SCAudioManager::getPointer()->getSample(_mstrSampleName, _mstrSampleGroupname);
+		CAudioSample* pAudioSample = x->pAudio->getSample(_mstrSampleName, _mstrSampleGroupname);
 
 		// Set the sample's loop variables
 		if (bLoop)	// Loop the thing?
@@ -337,8 +334,9 @@ namespace X
 
 	SCAudioManager::SCAudioManager()
 	{
-		CLog* pLog = CLog::getPointer();
-		pLog->add("SCAudioManager constructor called.");
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCAudioManager::SCAudioManager() called.");
+
 		pLog->add("SCAudioManager initialising COM.");
 		HRESULT hr;
 		hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);

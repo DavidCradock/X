@@ -1,10 +1,8 @@
 #include "PCH.h"
 #include "GUIImageAnimated.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -25,17 +23,15 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		pShader->bind();
 
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
@@ -47,7 +43,7 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DAtlas* pTexColour = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+		CResourceTexture2DAtlas* pTexColour = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 
 		// Bind textures
 		pTexColour->bind(0, (int)_mfCurrentFrame);
@@ -78,8 +74,7 @@ namespace X
 
 	void CGUIImageAnimated::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceTexture2DAtlas* pTex = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+		CResourceTexture2DAtlas* pTex = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 
 		_mTimer.update();
 		float fSecPast = _mTimer.getSecondsPast();
@@ -89,8 +84,7 @@ namespace X
 			_mfCurrentFrame -= fNumFrames;
 
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

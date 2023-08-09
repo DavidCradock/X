@@ -50,8 +50,7 @@ namespace X
 		if (fDistanceToFood < 5.0f)
 		{
 			dFitness += 0.1f;
-			SCWindow* pWindow = SCWindow::getPointer();
-			CVector2f vNewFoodPos = pWindow->getDimensions();
+			CVector2f vNewFoodPos = x->pWindow->getDimensions();
 			vNewFoodPos *= 0.5f;
 			vNewFoodPos.x += randf(-1000.0f, 1000.0f);
 			vNewFoodPos.y += randf(-1000.0f, 1000.0f);
@@ -102,11 +101,8 @@ namespace X
 
 	void CDemoNeuralNetsState0::onEnter(void)
 	{
-		SCWindow* pWindow = SCWindow::getPointer();
-
 		// Setup 2D rendering stuff
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2D->addWorld("world");
+		C2DWorld* pWorld = x->p2dRenderer->addWorld("world");
 		C2DLayer *pLayer = pWorld->addLayer("floor");
 		pLayer = pWorld->addLayer("food");
 		pLayer = pWorld->addLayer("entities");
@@ -120,14 +116,14 @@ namespace X
 		// Floor tiles
 		int iCnt = 0;
 		pLayer = pWorld->getLayer("floor");
-		for (int x = 0; x < (int)pWindow->getWidth() + 1024; x += 256)
+		for (int ix = 0; ix < (int)x->pWindow->getWidth() + 1024; ix += 256)
 		{
-			for (int y = 0; y < (int)pWindow->getHeight() + 1024; y += 256)
+			for (int y = 0; y < (int)x->pWindow->getHeight() + 1024; y += 256)
 			{
 				std::string strName = std::to_string(iCnt) + "_floorTile"; iCnt++;
 				C2DEntity* pEntity = pLayer->addEntity(strName, "tiles");
 				pEntity->setImagesMultiple(mvecstrImageNamesTiles);
-				pEntity->setPosition(CVector2f(float(x), float(y)));
+				pEntity->setPosition(CVector2f(float(ix), float(y)));
 				pEntity->setFrameBasedOnAngle(randf(0, 360));
 			}
 		}
@@ -137,7 +133,7 @@ namespace X
 		for (int i = 0; i < 100; i++)
 		{
 			// Compute intial position of food
-			CVector2f vFoodPos = pWindow->getDimensions();
+			CVector2f vFoodPos = x->pWindow->getDimensions();
 			vFoodPos *= 0.5f;
 			vFoodPos.x += randf(-1000.0f, 1000.0f);
 			vFoodPos.y += randf(-1000.0f, 1000.0f);
@@ -165,7 +161,7 @@ namespace X
 		{
 			// Compute initial position of entity
 			CVector2f vEntityPos;
-			vEntityPos = pWindow->getDimensions();
+			vEntityPos = x->pWindow->getDimensions();
 			vEntityPos *= 0.5f;
 			vEntityPos.x += randf(-500.0f, 500.0f);
 			vEntityPos.y += randf(-500.0f, 500.0f);
@@ -200,10 +196,9 @@ namespace X
 		CColour colAverage(1.0f, 0.5f, 0.0f, 1.0f);
 		CColour colWorst(1.0f, 0.0f, 0.0f, 1.0f);
 
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("state0");
+		CGUIContainer* pCont = x->pGUI->addContainer("state0");
 		pCont->setDimensions(650, 300);
-		pCont->setPosition(999999, float(pWindow->getHeight()) - 380);
+		pCont->setPosition(999999, float(x->pWindow->getHeight()) - 380);
 		// Add text scroll describing this state.
 		std::string strTxt = "State0\n \n";
 		strTxt += "This state shows training of a neural network whereby some networks try to eat as much food as possible.\n \n";
@@ -245,12 +240,10 @@ namespace X
 	void CDemoNeuralNetsState0::onExit(void)
 	{
 		// Remove GUI objects
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("state0");
+		x->pGUI->removeContainer("state0");
 
 		// Remove 2D rendering stuff
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		p2D->removeWorld("world");
+		x->p2dRenderer->removeWorld("world");
 
 		// Clear food and entities
 		mvecFood.clear();
@@ -261,8 +254,7 @@ namespace X
 	{
 		mTimer.update();
 
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("state0");
+		CGUIContainer* pCont = x->pGUI->getContainer("state0");
 		std::string strTxt;
 
 		// Compute current worst, average and best fitness of population
@@ -310,7 +302,6 @@ namespace X
 				0.1/*crossover rate*/);
 
 			// Now we have the new generation of weights for the new population, place them into each of the existing networks
-			SCWindow* pWindow = SCWindow::getPointer();
 			CVector2f vNewEntityPos;
 			for (int i = 0; i < mvecCritters.size(); i++)
 			{
@@ -319,7 +310,7 @@ namespace X
 
 				// Give the entity a new random position and direction
 
-				vNewEntityPos = pWindow->getDimensions();
+				vNewEntityPos = x->pWindow->getDimensions();
 				vNewEntityPos *= 0.5f;
 				vNewEntityPos.x += randf(-500.0f, 500.0f);
 				vNewEntityPos.y += randf(-500.0f, 500.0f);
@@ -363,30 +354,27 @@ namespace X
 			strTxt += " PAUSED.";
 		pCont->getText("next_gen_time")->setText(strTxt);
 
-		SCInputManager* pInput = SCInputManager::getPointer();
-
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2D->getWorld("world");
+		C2DWorld* pWorld = x->p2dRenderer->getWorld("world");
 		C2DCamera* pCamera = pWorld->getCamera("camera");
 
 		// Now move camera
 		CVector2f vCamPos = pCamera->getPosition();
-		if (pInput->key.pressed(KC_UP))
+		if (x->pInput->key.pressed(KC_UP))
 			vCamPos.y -= mTimer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_DOWN))
+		if (x->pInput->key.pressed(KC_DOWN))
 			vCamPos.y += mTimer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_LEFT))
+		if (x->pInput->key.pressed(KC_LEFT))
 			vCamPos.x -= mTimer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_RIGHT))
+		if (x->pInput->key.pressed(KC_RIGHT))
 			vCamPos.x += mTimer.getSecondsPast() * 150.0f;
 		pCamera->setPosition(vCamPos);
 
 		// Pause/resume next generation
-		if (pInput->key.once(KC_SPACE))
+		if (x->pInput->key.once(KC_SPACE))
 			_mbPerformNextGenCountdown = !_mbPerformNextGenCountdown;
 
 		// Turbo mode toggle
-		if (pInput->key.once(KC_RETURN))
+		if (x->pInput->key.once(KC_RETURN))
 		{
 			_mbTurboMode = !_mbTurboMode;
 			CGUIText* pTurboTxt = pCont->getText("turbo");
@@ -407,8 +395,7 @@ namespace X
 		// Compute maximum amount of time that's allowed to pass before we need to update the screen
 		if (_mbTurboMode)
 		{
-			SCWindow* pWindow = SCWindow::getPointer();
-			float fTimeUntilUpdateScreen = 1.0f / (float)pWindow->getRefreshRate();
+			float fTimeUntilUpdateScreen = 1.0f / (float)x->pWindow->getRefreshRate();
 			float fTimePassed = 0.0f;
 			float fTimePerUpdate = 1.0f / 30.0f;
 			CTimer timerTurbo;

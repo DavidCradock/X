@@ -1,11 +1,8 @@
 #include "PCH.h"
 #include "GUILineGraph.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
-#include "log.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -68,22 +65,19 @@ namespace X
 	void CGUILineGraph::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.lineGraphBGColour, pTheme->mImages.lineGraphBGNormal, col);
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		SCWindow* pWindow = SCWindow::getPointer();
+		CResourceVertexBufferLine* pLine = x->pResource->getVertexBufferLine("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		CMatrix matIdentity;
 
 		pShader->setMat4("matrixWorld", matIdentity);
@@ -97,8 +91,8 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile("X:default_white");
-		CResourceTexture2DFromFile* pTexBG = pRM->getTexture2DFromFile(pTheme->mImages.lineGraphBGColour);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile("X:default_white");
+		CResourceTexture2DFromFile* pTexBG = x->pResource->getTexture2DFromFile(pTheme->mImages.lineGraphBGColour);
 		CVector2f vTexDimsPoint3 = pTexBG->getDimensions() * 0.3333333f;
 		CVector2f vTexDimsPoint6 = pTexBG->getDimensions() * 0.6666666f;
 
@@ -182,8 +176,7 @@ namespace X
 		_mTimer.update();
 
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

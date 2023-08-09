@@ -3,7 +3,7 @@
 
 namespace X
 {
-	void CLog::clear(void)
+	void SCLog::clear(void)
 	{
 		std::fstream fs;
 		fs.open("log.txt", std::ios::out | std::ios::trunc);
@@ -11,7 +11,7 @@ namespace X
 		_mlogEntry.clear();
 	}
 
-	void CLog::add(const std::string& string, bool bAddNewLine, bool bAddTime)
+	void SCLog::add(const std::string& string, bool bAddNewLine, bool bAddTime)
 	{
 		std::fstream fs;
 		fs.open("log.txt", std::ios::out | std::ios::app);
@@ -39,14 +39,14 @@ namespace X
 		_mlogEntry.push_back(string);
 	}
 
-	size_t CLog::getNumEntries(void) const
+	size_t SCLog::getNumEntries(void) const
 	{
 		return _mlogEntry.size();
 	}
 
-	std::string CLog::getEntryText(size_t entryIndex) const
+	std::string SCLog::getEntryText(size_t entryIndex) const
 	{
-		ThrowIfTrue(entryIndex >= _mlogEntry.size(), "CLog::getEntryText() with given index of " + std::to_string(entryIndex) + " failed as given index is invalid.");
+		ThrowIfTrue(entryIndex >= _mlogEntry.size(), "SCLog::getEntryText() with given index of " + std::to_string(entryIndex) + " failed as given index is invalid.");
 		return _mlogEntry[entryIndex];
 	}
 }

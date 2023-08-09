@@ -34,7 +34,7 @@ namespace X
 	// It works on the concept of a container, which holds various GUI widgets and can be set to act as a moveable window or not.
 	// 
 	// Containers:
-	// A container by default set to behave as a window which can be dragged around the screen, closed and minimized with z-order supoort.
+	// A container by default set to behave as a window which can be dragged around the screen, closed and minimized with z-order support.
 	// A container can also be set to be an empty container without all the window decorations, invisible by itself, used to add various widgets to.
 	// This behaviour is set with a call to CGUIContainer::setBehaviour()
 	// If a container is set as a window, it has width and height dimensions. When setting a container's dimensions, the dimensions

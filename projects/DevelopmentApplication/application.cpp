@@ -6,19 +6,17 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(0);
-		pLS->setFadeOut(1.0f);
+		x->pLoadingScreen->onInit(0);
+		x->pLoadingScreen->setFadeOut(1.0f);
 
 		// Set window title bar text and set icon
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
-		pWindow->setIcon(IDI_ICON1);
+		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		x->pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
 		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CApplication::onStart(void)
@@ -31,28 +29,25 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-		// Get pointers to needed managers
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Timer delta
 		timer.update();
 
 		// Escape key to exit
-		if (pInput->key.pressed(KC_ESCAPE))
+		if (x->pInput->key.pressed(KC_ESCAPE))
 			return false;
 
 		// Toggle fullscreen
-		if (pInput->key.once(KC_F1))
+		if (x->pInput->key.once(KC_F1))
 			SCWindow::getPointer()->toggleFullscreen();
 
 		// Toggle vertical sync
-		if (pInput->key.once(KC_F2))
+		if (x->pInput->key.once(KC_F2))
 			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
 
 		// Toggle statistics window
-		if (pInput->key.once(KC_F3))
+		if (x->pInput->key.once(KC_F3))
 		{
-			CGUIContainer* pStatsCont = SCGUIManager::getPointer()->getContainer("X:Default:Statistics");
+			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;

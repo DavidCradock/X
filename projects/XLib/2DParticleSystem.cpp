@@ -1,8 +1,6 @@
 #include "PCH.h"
 #include "2DParticleSystem.h"
-#include "log.h"
-
-#include "resourceManager.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -93,10 +91,9 @@ namespace X
 		// Render all the particles
 
 		// Get resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mSettings.strTextureAtlasName);
-		CResourceVertexBufferCPT2* pVB = pRM->getVertexBufferCPT2("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT2");
+		CResourceTexture2DAtlas* pAtlas = x->pResource->getTexture2DAtlas(_mSettings.strTextureAtlasName);
+		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT2");
 
 		CMatrix matrixWorld;
 		// Bind shader and set some uniforms

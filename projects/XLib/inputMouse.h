@@ -59,7 +59,7 @@ namespace X
 		inline float deltaZ(void) const { return mouseDeltaZ; }
 
 		// Sets the mouse position on screen
-		void setMousePos(int x, int y);
+		void setMousePos(int ix, int iy);
 
 		// Gets mouse cursor delta, for GUI
 		inline CVector2f getMouseDeltaGUI(void) const { return CVector2f(mouseX - mouseXold, mouseY - mouseYold); }

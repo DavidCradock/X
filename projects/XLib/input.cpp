@@ -7,6 +7,9 @@ namespace X
 
 	SCInputManager::SCInputManager()
 	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCInputManager::SCInputManager() called.");
+
 		_mDirectInput = NULL;
 	}
 

@@ -1,11 +1,8 @@
 #include "PCH.h"
 #include "GUIContainer.h"
-#include "input.h"
-#include "resourceManager.h"
 #include "GUIManager.h"
-#include "window.h"
-#include "log.h"
 #include "GUITheme.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -15,7 +12,7 @@ namespace X
 		_mbContainerIsWindow = true;
 		_mbWindowBeingMoved = false;
 		_mbVisible = true;
-		_mTextColour = SCGUIManager::getPointer()->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
+		_mTextColour = x->pGUI->getTheme("default")->mColours.containerTitlebarTextNotInFocus;
 	}
 
 	CGUIContainer::~CGUIContainer()
@@ -233,15 +230,10 @@ namespace X
 		if (!_mbVisible)
 			return false;
 
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		SCWindow* pWindow = SCWindow::getPointer();
-		CVector2f vWindowDims = pWindow->getDimensions();
-
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		CVector2f vTexDimsDiv3 = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour)->getDimensions() * 0.3333333f;
+		CGUITheme* pTheme = x->pGUI->getTheme(mstrThemename);
+		CVector2f vWindowDims = x->pWindow->getDimensions();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		CVector2f vTexDimsDiv3 = x->pResource->getTexture2DFromFile(pTheme->mImages.containerBGColour)->getDimensions() * 0.3333333f;
 
 		// Determine whether mouse cursor is over this container
 		bool bMouseOver = false;
@@ -277,11 +269,11 @@ namespace X
 			// Dragging of window?
 			if (_mbContainerIsWindow)
 			{
-				if (pInput->mouse.leftButtonOnce())
+				if (x->pInput->mouse.leftButtonOnce())
 				{
 					// Set colour of all other containers
-					std::map<std::string, CGUIContainer*>::iterator itCont = pGUI->_mmapContainers.begin();
-					while (itCont != pGUI->_mmapContainers.end())
+					std::map<std::string, CGUIContainer*>::iterator itCont = x->pGUI->_mmapContainers.begin();
+					while (itCont != x->pGUI->_mmapContainers.end())
 					{
 						itCont->second->_mTextColour = pTheme->mColours.containerTitlebarTextNotInFocus;
 						itCont++;
@@ -292,10 +284,10 @@ namespace X
 					// Only move window if mouse is over titlebar
 					if (vMousePos.y > mfPositionY - vTexDimsDiv3.y && vMousePos.y < mfPositionY)
 					{
-						if (!pGUI->getWindowBeingMoved())
+						if (!x->pGUI->getWindowBeingMoved())
 						{
 							_mbWindowBeingMoved = true;
-							pGUI->setWindowBeingMoved(true);
+							x->pGUI->setWindowBeingMoved(true);
 						}
 					}
 				}
@@ -309,24 +301,24 @@ namespace X
 		// Stop dragging if mouse button is no longer down
 		if (_mbWindowBeingMoved)
 		{
-			if (!pInput->mouse.leftButDown())
+			if (!x->pInput->mouse.leftButDown())
 			{
 				_mbWindowBeingMoved = false;
-				pGUI->setWindowBeingMoved(false);
+				x->pGUI->setWindowBeingMoved(false);
 			}
 		}
 
 		if (_mbWindowBeingMoved)
 		{
-			mfPositionX += pInput->mouse.getMouseDeltaGUI().x;
-			mfPositionY += pInput->mouse.getMouseDeltaGUI().y;
+			mfPositionX += x->pInput->mouse.getMouseDeltaGUI().x;
+			mfPositionY += x->pInput->mouse.getMouseDeltaGUI().y;
 		}
 
 		// Clamp the container's position so that it's borders are viewable IF the container is set as a window
 		if (_mbContainerIsWindow)
 		{
 			// Get a texture so we can determine dimensions
-			CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour);
+			CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.containerBGColour);
 			CVector2f vTexDimsDiv3 = pTexColour->getDimensions() * 0.3333333f;
 			if (mfPositionX < vTexDimsDiv3.x)
 				mfPositionX = vTexDimsDiv3.x;
@@ -456,7 +448,7 @@ namespace X
 
 	CGUITheme* CGUIContainer::getTheme(void) const
 	{
-		return SCGUIManager::getPointer()->getTheme(mstrThemename);
+		return x->pGUI->getTheme(mstrThemename);
 	}
 
 	void CGUIContainer::setThemeName(const std::string& strThemeToUse)
@@ -586,19 +578,15 @@ namespace X
 			return;	// No point rendering anything
 
 		// Get required resources needed to render
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:gui");
-		CGUITheme* pTheme = pGUI->getTheme(mstrThemename);
-		SCInputManager* pInput = SCInputManager::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:gui");
+		CGUITheme* pTheme = x->pGUI->getTheme(mstrThemename);
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
@@ -611,18 +599,18 @@ namespace X
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
 
 		// Set mouse position, inverting Y position
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
 		pShader->setVec2("v2MousePos", vMousePos);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures and background sample framebuffer
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.containerBGColour);
-		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2DFromFile(pTheme->mImages.containerBGNormal);
-		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2DFromFile(pTheme->mImages.reflection);
-		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.containerBGColour);
+		CResourceTexture2DFromFile* pTexNormal = x->pResource->getTexture2DFromFile(pTheme->mImages.containerBGNormal);
+		CResourceTexture2DFromFile* pTexReflection = x->pResource->getTexture2DFromFile(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = x->pResource->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);
@@ -731,9 +719,9 @@ namespace X
 
 		// Container title
 		int iRTDims[2];
-		iRTDims[0] = int(pWindow->getWidth());
-		iRTDims[1] = int(pWindow->getHeight());
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.containerTitle);
+		iRTDims[0] = int(x->pWindow->getWidth());
+		iRTDims[1] = int(x->pWindow->getHeight());
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.containerTitle);
 		pFont->print(mstrTitleText,
 			int(mfPositionX) + pTheme->mOffsets.containerTitlebarText.iOffsetX,
 			int(mfPositionY - vTexDimsDiv3.y) + pTheme->mOffsets.containerTitlebarText.iOffsetY,
@@ -1012,8 +1000,7 @@ namespace X
 		_mmapImages[strName] = pNewRes;
 
 		// Add strImageFilename to the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DFromFile *pTex = pResMan->addTexture2DFromFile(strImageFilename, strImageFilename);
+		CResourceTexture2DFromFile *pTex = x->pResource->addTexture2DFromFile(strImageFilename, strImageFilename);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1040,8 +1027,7 @@ namespace X
 		_mmapImages[strName] = pNewRes;
 
 		// Get image from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DFromImage* pTex = pResMan->getTexture2DFromImage(strCResourceTexture2DFromImage);
+		CResourceTexture2DFromImage* pTex = x->pResource->getTexture2DFromImage(strCResourceTexture2DFromImage);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1068,8 +1054,7 @@ namespace X
 		// Remove _mstrTextureResourceName from the resource manager
 		if (it->second->_mbImageIsFromFile)
 		{
-			SCResourceManager* pResMan = SCResourceManager::getPointer();
-			pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+			x->pResource->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
 		}
 
 		delete it->second;
@@ -1079,13 +1064,12 @@ namespace X
 	void CGUIContainer::removeAllImages(void)
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.begin();
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		while (it != _mmapImages.end())
 		{
 			// Remove _mstrTextureResourceName from the resource manager
 			if (it->second->_mbImageIsFromFile)
 			{
-				pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+				x->pResource->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
 			}
 			delete it->second;
 			_mmapImages.erase(it);
@@ -1108,8 +1092,7 @@ namespace X
 		_mmapImageAnimateds[strName] = pNewRes;
 
 		// Add CResourceTexture2DAnimation to the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DAtlas* pTex = pResMan->addTexture2DAtlas(strName, vecStrImageFilenames, false, 1);
+		CResourceTexture2DAtlas* pTex = x->pResource->addTexture2DAtlas(strName, vecStrImageFilenames, false, 1);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1134,8 +1117,7 @@ namespace X
 			return;
 
 		// Remove CResourceTexture2DAtlas from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DAtlas(it->second->_mstrResourceTexture2DAtlasName);
+		x->pResource->removeTexture2DAtlas(it->second->_mstrResourceTexture2DAtlasName);
 
 		delete it->second;
 		_mmapImageAnimateds.erase(it);
@@ -1167,8 +1149,7 @@ namespace X
 		_mmapImageFramebuffers[strName] = pNewRes;
 
 		// Get CResourceFramebuffer from the resource manager to set size of this object
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceFramebuffer* pFB = pResMan->getFramebuffer(strFBname);
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer(strFBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1223,11 +1204,10 @@ namespace X
 		pNewRes->_mstrFBName = "GUITextScrollFB_" + _mstrName + "_" + strName;
 
 		// Check to see if the framebuffer resource name already exists
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfTrue(pRM->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
+		ThrowIfTrue(x->pResource->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
 
 		// Create framebuffer in SCResourceManager
-		pRM->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fWidth), unsigned int(fHeight));
+		x->pResource->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fWidth), unsigned int(fHeight));
 
 		_mmapTextScrolls[strName] = pNewRes;
 		return pNewRes;
@@ -1247,8 +1227,7 @@ namespace X
 			return;
 
 		// Remove framebuffer resource from resource manager
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeFramebuffer(it->second->_mstrFBName);
+		x->pResource->removeFramebuffer(it->second->_mstrFBName);
 
 		delete it->second;
 		_mmapTextScrolls.erase(it);
@@ -1282,10 +1261,9 @@ namespace X
 		_mmapButtonImages[strName] = pNewRes;
 
 		// Add images to the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DFromFile* pTex = pResMan->addTexture2DFromFile(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
-		pTex = pResMan->addTexture2DFromFile(pNewRes->_mstrTextureOver, pNewRes->_mstrTextureOver);
-		pTex = pResMan->addTexture2DFromFile(pNewRes->_mstrTextureUp, pNewRes->_mstrTextureUp);
+		CResourceTexture2DFromFile* pTex = x->pResource->addTexture2DFromFile(pNewRes->_mstrTextureDown, pNewRes->_mstrTextureDown);
+		pTex = x->pResource->addTexture2DFromFile(pNewRes->_mstrTextureOver, pNewRes->_mstrTextureOver);
+		pTex = x->pResource->addTexture2DFromFile(pNewRes->_mstrTextureUp, pNewRes->_mstrTextureUp);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -1310,10 +1288,9 @@ namespace X
 			return;
 
 		// Remove images from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DFromFile(it->second->_mstrTextureDown);
-		pResMan->removeTexture2DFromFile(it->second->_mstrTextureOver);
-		pResMan->removeTexture2DFromFile(it->second->_mstrTextureUp);
+		x->pResource->removeTexture2DFromFile(it->second->_mstrTextureDown);
+		x->pResource->removeTexture2DFromFile(it->second->_mstrTextureOver);
+		x->pResource->removeTexture2DFromFile(it->second->_mstrTextureUp);
 
 		delete it->second;
 		_mmapButtonImages.erase(it);
@@ -1345,8 +1322,7 @@ namespace X
 		_mmapImageDepthbuffers[strName] = pNewRes;
 
 		// Get CResourceFramebuffer from the resource manager to set size of this object
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceDepthbuffer* pDB = pResMan->getDepthbuffer(strDBname);
+		CResourceDepthbuffer* pDB = x->pResource->getDepthbuffer(strDBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)

@@ -6,9 +6,7 @@ namespace X
 	void CDemo2DState3::onEnter(void)
 	{
 		// Create state window
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("state3");
+		CGUIContainer* pCont = x->pGUI->addContainer("state3");
 		pCont->setDimensions(640, 240);
 		pCont->setPosition(0, 0);
 		pCont->mstrTitleText = "State three.";
@@ -22,7 +20,7 @@ namespace X
 		pCont->addTextScroll("TextScroll3", 0, 0, 640, 240, strTxt);
 
 		// Create entity's random position and velocity
-		CVector2f vWndDims = pWindow->getDimensions();
+		CVector2f vWndDims = x->pWindow->getDimensions();
 		CVector2f vWndDimsHalf = vWndDims * 0.5f;
 		// Set each entity's position and velocity
 		for (int i = 0; i < 100; i++)
@@ -36,8 +34,7 @@ namespace X
 		}
 
 		// Setup 2D renderer
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2D->addWorld("world");
+		C2DWorld* pWorld = x->p2dRenderer->addWorld("world");
 		C2DCamera* pCamera = pWorld->addCamera("camera");
 		pCamera->setPosition(-vWndDimsHalf.x, -vWndDimsHalf.y);
 
@@ -56,26 +53,19 @@ namespace X
 
 	void CDemo2DState3::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("state3");
-
-		// Cleanup 2D renderer
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		p2D->removeWorld("world");
+		x->pGUI->removeContainer("state3");
+		x->p2dRenderer->removeWorld("world");
 	}
 
 	void CDemo2DState3::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CVector2f vWndDims = pWindow->getDimensions();
+		CVector2f vWndDims = x->pWindow->getDimensions();
 		CVector2f vWndDimsHalf = vWndDims * 0.5f;
 
 		_mTimer.update();
 		float fTimeDelta = _mTimer.getSecondsPast();
 
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2D->getWorld("world");
+		C2DWorld* pWorld = x->p2dRenderer->getWorld("world");
 		C2DCamera* pCamera = pWorld->getCamera("camera");
 		C2DLayer* pLayer = pWorld->getLayer("layer");
 		C2DEntityLine* pEntityLine;
@@ -103,16 +93,16 @@ namespace X
 		}
 
 		CVector2f vCamPos = pCamera->getPosition();
-		if (pInput->key.pressed(KC_UP))
+		if (x->pInput->key.pressed(KC_UP))
 			vCamPos.y -= _mTimer.getSecondsPast() * 250.0f;
-		if (pInput->key.pressed(KC_DOWN))
+		if (x->pInput->key.pressed(KC_DOWN))
 			vCamPos.y += _mTimer.getSecondsPast() * 250.0f;
-		if (pInput->key.pressed(KC_LEFT))
+		if (x->pInput->key.pressed(KC_LEFT))
 			vCamPos.x -= _mTimer.getSecondsPast() * 250.0f;
-		if (pInput->key.pressed(KC_RIGHT))
+		if (x->pInput->key.pressed(KC_RIGHT))
 			vCamPos.x += _mTimer.getSecondsPast() * 250.0f;
 		pCamera->setPosition(vCamPos);
 
-		p2D->render();
+		x->p2dRenderer->render();
 	}
 }

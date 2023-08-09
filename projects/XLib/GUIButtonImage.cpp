@@ -1,11 +1,8 @@
 #include "PCH.h"
 #include "GUIButtonImage.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
-#include "audioManager.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -26,25 +23,19 @@ namespace X
 	void CGUIButtonImage::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonImageBGColour, pTheme->mImages.buttonImageBGNormal, col);
 
-		// Get required resources needed to render
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		//SCInputManager* pInput = SCInputManager::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		pShader->bind();
 
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
@@ -56,11 +47,11 @@ namespace X
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(_mstrTextureUp);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(_mstrTextureUp);
 		if (state::over == _mState)
-			pTexColour = pRM->getTexture2DFromFile(_mstrTextureOver);
+			pTexColour = x->pResource->getTexture2DFromFile(_mstrTextureOver);
 		else if (state::down == _mState)
-			pTexColour = pRM->getTexture2DFromFile(_mstrTextureDown);
+			pTexColour = x->pResource->getTexture2DFromFile(_mstrTextureDown);
 
 		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
 		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
@@ -89,10 +80,8 @@ namespace X
 
 	void CGUIButtonImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
@@ -112,7 +101,7 @@ namespace X
 			if (bMouseOver)
 			{
 				_mState = state::over;
-				if (pInput->mouse.leftButDown())
+				if (x->pInput->mouse.leftButDown())
 				{
 					_mState = state::down;
 				}
@@ -198,10 +187,10 @@ namespace X
 		_mbClicked = false;
 		if (state::down == _mStatePrevious)
 		{
-			if (!pInput->mouse.leftButDown())
+			if (!x->pInput->mouse.leftButDown())
 			{
 				_mbClicked = true;
-				SCAudioManager::getPointer()->getEmitter(pTheme->mAudio.buttonImageClicked.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.buttonImageClicked.fVolume, pTheme->mAudio.buttonImageClicked.fPitch);
+				x->pAudio->getEmitter(pTheme->mAudio.buttonImageClicked.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.buttonImageClicked.fVolume, pTheme->mAudio.buttonImageClicked.fPitch);
 			}
 		}
 		// Store current state to detect mouse clicks

@@ -1,10 +1,7 @@
 #include "PCH.h"
 #include "SMCamera.h"
-#include "window.h"
-#include "input.h"
 #include "utilities.h"
-#include "resourceManager.h"	// For debug text
-#include "log.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -72,9 +69,8 @@ namespace X
 	{
 		if (fWidth < 0.0f || fHeight < 0.0f)
 		{
-			SCWindow* pWindow = SCWindow::getPointer();
-			fWidth = (float)pWindow->getWidth();
-			fHeight = (float)pWindow->getHeight();
+			fWidth = (float)x->pWindow->getWidth();
+			fHeight = (float)x->pWindow->getHeight();
 		}
 		_matrixProjection.setProjectionPerspective(fFOVdegrees, fZNear, fZFar, fWidth / fHeight);
 	}
@@ -137,12 +133,11 @@ namespace X
 	void CSMCamera::_updateModeOrbit(void)
 	{
 		// Get input from mouse, multiply by time delta and sensitivity settings of the mode
-		SCInputManager* pInput = SCInputManager::getPointer();
 		_modeOrbit.timer.update();
 		float fDeltaSec = _modeOrbit.timer.getSecondsPast();
-		float fDeltaX = pInput->mouse.deltaX() * _modeOrbit.fMouseSensitivityX;
-		float fDeltaY = pInput->mouse.deltaY() * _modeOrbit.fMouseSensitivityY;
-		float fDeltaWheel = -pInput->mouse.deltaZ() * _modeOrbit.fMouseSensitivityWheel;
+		float fDeltaX = x->pInput->mouse.deltaX() * _modeOrbit.fMouseSensitivityX;
+		float fDeltaY = x->pInput->mouse.deltaY() * _modeOrbit.fMouseSensitivityY;
+		float fDeltaWheel = -x->pInput->mouse.deltaZ() * _modeOrbit.fMouseSensitivityWheel;
 
 		// Adjust angles
 		_modeOrbit.fAngleY += fDeltaX;
@@ -215,22 +210,21 @@ namespace X
 	void CSMCamera::_updateModeFPS(void)
 	{
 		// Get input from mouse, multiply by time delta and sensitivity settings of the mode
-		SCInputManager* pInput = SCInputManager::getPointer();
 		_modeFPS.timer.update();
 		float fDeltaSec = _modeFPS.timer.getSecondsPast();
 		// Rotation with mouse
-		float fDeltaX = pInput->mouse.deltaX() * _modeFPS.fMouseSensitivityX;
-		float fDeltaY = pInput->mouse.deltaY() * _modeFPS.fMouseSensitivityY;
+		float fDeltaX = x->pInput->mouse.deltaX() * _modeFPS.fMouseSensitivityX;
+		float fDeltaY = x->pInput->mouse.deltaY() * _modeFPS.fMouseSensitivityY;
 		// Translation with WSADRF keys
 		CVector3f v3Translation = CVector3f(0.0f, 0.0f, 0.0f);
 		float fMultiplierShiftKey = 1.0f;
-		if (pInput->key.pressed(KC_LSHIFT))	fMultiplierShiftKey = _modeFPS.fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_S)) v3Translation.z = -_modeFPS.fSensitivityTranslateForward * fDeltaSec * fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_W)) v3Translation.z = _modeFPS.fSensitivityTranslateForward * fDeltaSec * fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_A)) v3Translation.x = _modeFPS.fSensitivityTranslateStrafe * fDeltaSec * fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_D)) v3Translation.x = -_modeFPS.fSensitivityTranslateStrafe * fDeltaSec * fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_R)) v3Translation.y = _modeFPS.fSensitivityTranslateUp * fDeltaSec * fMultiplierShiftKey;
-		if (pInput->key.pressed(KC_F)) v3Translation.y = -_modeFPS.fSensitivityTranslateUp * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_LSHIFT))	fMultiplierShiftKey = _modeFPS.fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_S)) v3Translation.z = -_modeFPS.fSensitivityTranslateForward * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_W)) v3Translation.z = _modeFPS.fSensitivityTranslateForward * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_A)) v3Translation.x = _modeFPS.fSensitivityTranslateStrafe * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_D)) v3Translation.x = -_modeFPS.fSensitivityTranslateStrafe * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_R)) v3Translation.y = _modeFPS.fSensitivityTranslateUp * fDeltaSec * fMultiplierShiftKey;
+		if (x->pInput->key.pressed(KC_F)) v3Translation.y = -_modeFPS.fSensitivityTranslateUp * fDeltaSec * fMultiplierShiftKey;
 		// Translation now holds the AMOUNT to move forwards/backwards/left/right/up/down
 
 		// Adjust position

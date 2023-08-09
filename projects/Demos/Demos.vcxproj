@@ -103,6 +103,7 @@
     <ClCompile Include="demo2Dstate2.cpp" />
     <ClCompile Include="demo2Dstate3.cpp" />
     <ClCompile Include="demoEmpty.cpp" />
+    <ClCompile Include="demoGUI.cpp" />
     <ClCompile Include="demoInstancing.cpp" />
     <ClCompile Include="demoNeuralNets.cpp" />
     <ClCompile Include="demoNeuralNetsGUIstateSelectionUpdate.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="demo2Dstate2.h" />
     <ClInclude Include="demo2Dstate3.h" />
     <ClInclude Include="demoEmpty.h" />
+    <ClInclude Include="demoGUI.h" />
     <ClInclude Include="demoInstancing.h" />
     <ClInclude Include="demoNeuralNets.h" />
     <ClInclude Include="demoNeuralNetsGUIstateSelectionUpdate.h" />

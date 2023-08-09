@@ -9,6 +9,7 @@ namespace X
 	class SCPhysicsManager : public CSingleton<SCPhysicsManager>
 	{
 	public:
+		SCPhysicsManager();
 
 	};
 }

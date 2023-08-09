@@ -147,7 +147,7 @@ namespace X
 	}
 
 	// Returns a random integer between x and y
-	inline int randInt(int x, int y) { return rand() % (y - x + 1) + x; }
+	inline int randInt(int ix, int iy) { return rand() % (iy - ix + 1) + ix; }
 
 	// Returns a random float between zero and 1
 	inline float randFloat() { return float(rand()) / float(RAND_MAX + 1.0f); }

@@ -41,9 +41,10 @@ namespace X
 
 	// Logging of information to "log.txt" file and storage of each added log entry into memory
 	// Call clear() on application startup, otherwise "log.txt" will be appended to, holding previous run's logging.
-	class CLog : public CSingleton<CLog>
+	class SCLog : public CSingleton<SCLog>
 	{
 	public:
+
 		// Clear the log file and all log entries in memory
 		void clear(void);
 

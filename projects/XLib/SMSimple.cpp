@@ -1,9 +1,7 @@
 #include "PCH.h"
 #include "SMSimple.h"
-#include "log.h"
-#include "resourceManager.h"
-#include "window.h"
 #include "stringUtils.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -95,12 +93,9 @@ namespace X
 
 	void CSceneManagerSimple::render(void)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// The application manager has X:backbuffer_FB set to render target, so unbind this first
-		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
 		pBGFB->unbindAsRenderTarget();
-
-		SCWindow* pWindow = SCWindow::getPointer();
 
 		// For each camera
 		std::map<std::string, CSMCamera*>::iterator itCamera = _mmapCameras.begin();
@@ -124,7 +119,7 @@ namespace X
 			}
 
 			// Get the camera's framebuffer target
-			CResourceFramebuffer* pFramebuffer = pRM->getFramebuffer(itCamera->second->getSMFramebufferTarget());
+			CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer(itCamera->second->getSMFramebufferTarget());
 			
 			// If the buffer is the back buffer, resize it to the window dimensions
 			bool bResizeFramebufferToWindowDims = false;
@@ -327,12 +322,11 @@ namespace X
 
 	void CSceneManagerSimple::_renderTriangleEntities(CSMCamera* pCamera)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CResourceShader* pShader;
 		if (_mbShadowsCastFromDirectionalLight)
-			pShader = pRM->getShader("X:DRNE");
+			pShader = x->pResource->getShader("X:DRNE");
 		else
-			pShader = pRM->getShader("X:DRNE_noshadows");
+			pShader = x->pResource->getShader("X:DRNE_noshadows");
 
 		CResourceVertexBufferCPTBNT* pVB;
 		CResourceTexture2DFromFile* pTexDiffuse = 0;
@@ -365,7 +359,7 @@ namespace X
 		pShader->setVec3("v3LightDirectionalDirection", _mvLightDirectional.mvDirection);
 
 		// If we're rendering shadows, using the DRNE shader, set additional stuff for that
-		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
+		CResourceDepthbuffer* pDepthbuffer = x->pResource->getDepthbuffer("X:shadows");
 		if (_mbShadowsCastFromDirectionalLight)
 		{
 			pShader->setMat4("matrixLightViewProjection", _mmatShadowsDirectionalLightViewProj);
@@ -423,11 +417,11 @@ namespace X
 			CSMMaterial* pMaterial = getMaterial(it->second->mstrMaterialName);
 
 			// Get vertex buffer and textures used by each entity
-			pVB = pRM->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
-			pTexDiffuse = pRM->getTexture2DFromFile(pMaterial->getDiffuseTextureName());
-			pTexRoughness = pRM->getTexture2DFromFile(pMaterial->getRoughnessTextureName());
-			pTexNormal = pRM->getTexture2DFromFile(pMaterial->getNormalmapTextureName());
-			pTexEmission = pRM->getTexture2DFromFile(pMaterial->getEmissionTextureName());
+			pVB = x->pResource->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
+			pTexDiffuse = x->pResource->getTexture2DFromFile(pMaterial->getDiffuseTextureName());
+			pTexRoughness = x->pResource->getTexture2DFromFile(pMaterial->getRoughnessTextureName());
+			pTexNormal = x->pResource->getTexture2DFromFile(pMaterial->getNormalmapTextureName());
+			pTexEmission = x->pResource->getTexture2DFromFile(pMaterial->getEmissionTextureName());
 
 			// Bind each texture to each sampler unit
 			pTexDiffuse->bind(0);
@@ -464,8 +458,7 @@ namespace X
 
 	void CSceneManagerSimple::_renderLineEntities(CSMCamera* pCamera)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 		CResourceVertexBufferLine* pLine;
 		CResourceTexture2DFromFile* pTexColour = 0;
 
@@ -490,8 +483,8 @@ namespace X
 		while (it != _mmapEntitiesLines.end())
 		{
 			// Get vertex buffer and textures used by each entity
-			pLine = pRM->getVertexBufferLine(it->second->mstrLineName);
-			pTexColour = pRM->getTexture2DFromFile(it->second->mstrTextureName);
+			pLine = x->pResource->getVertexBufferLine(it->second->mstrLineName);
+			pTexColour = x->pResource->getTexture2DFromFile(it->second->mstrTextureName);
 
 			// Bind texture to sampler unit
 			pTexColour->bind(0);
@@ -511,10 +504,9 @@ namespace X
 
 	void CSceneManagerSimple::_renderDepthmapForDirectionalLight(const CMatrix& cameraViewMatrix, const CMatrix& cameraProjectionMatrix)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceShader* pShader = pRM->getShader("X:shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
+		CResourceShader* pShader = x->pResource->getShader("X:shadowdepthmap");		// Shader used to render the vertex buffer entities to the depth buffer
 		pShader->bind();
-		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
+		CResourceDepthbuffer* pDepthbuffer = x->pResource->getDepthbuffer("X:shadows");
 		pDepthbuffer->bindAsRenderTarget();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, pDepthbuffer->getWidth(), pDepthbuffer->getHeight());
@@ -569,7 +561,7 @@ namespace X
 		std::map<std::string, CSMEntityVertexBuffer*>::iterator it = _mmapEntitiesVertexBuffers.begin();
 		while (it != _mmapEntitiesVertexBuffers.end())
 		{
-			pVB = pRM->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
+			pVB = x->pResource->getVertexBufferCPTBNT(it->second->mstrVertexBufferName);
 			pShader->setMat4("model", it->second->getWorldMatrix());
 			pVB->render(false);
 			it++;
@@ -579,8 +571,7 @@ namespace X
 		pShader->unbind();
 		pDepthbuffer->unbindAsRenderTarget();
 		// Reset viewport
-		SCWindow* pWindow = SCWindow::getPointer();
-		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
+		glViewport(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 	}
 
 	void CSceneManagerSimple::setDirectionalLightDir(const CVector3f& vDirection)
@@ -619,12 +610,10 @@ namespace X
 
 	void CSceneManagerSimple::debugRenderShadowmap(int iDims, bool bRightEdgeOfScreen, float fAlpha) const
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
-		SCWindow* pWindow = SCWindow::getPointer();
+		CResourceDepthbuffer* pDepthbuffer = x->pResource->getDepthbuffer("X:shadows");
 		int iXpos = 0;
 		if (bRightEdgeOfScreen)
-			iXpos = pWindow->getWidth() - iDims;
+			iXpos = x->pWindow->getWidth() - iDims;
 		pDepthbuffer->renderTo2DQuad(iXpos, 0, iDims, iDims, CColour(1, 1, 1, fAlpha));
 	}
 }

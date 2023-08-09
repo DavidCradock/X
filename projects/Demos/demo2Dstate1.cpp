@@ -5,14 +5,10 @@ namespace X
 {
 	void CDemo2DState1::onEnter(void)
 	{
-		SC2DRenderer* p2DRenderer = SC2DRenderer::getPointer();		// Obtain pointer to 2D renderer
-		C2DWorld* pWorld = p2DRenderer->addWorld("Scene1World");	// Add a new world to contain everything
+		C2DWorld* pWorld = x->p2dRenderer->addWorld("Scene1World");	// Add a new world to contain everything
 		C2DLayer* pLayer0 = pWorld->addLayer("Scene1Layer0");		// Add a new layer to the world
 		C2DLayer* pLayer1 = pWorld->addLayer("Scene1Layer1");		// Add a new layer to the world
 		C2DCamera* pCamera = pWorld->addCamera("Scene1Camera");		// Add a new camera to the world
-		SCWindow* pWindow = SCWindow::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
 
 		// Set filename of each image for the top down tank
 		std::string strTankBody = "data/Demos/Demo2D/images/tank_body.png";
@@ -29,7 +25,7 @@ namespace X
 			pEntityBody->setImagesSingle(strTankBody);							// Set which image the entity will be using
 
 			// Set random position
-			CVector2f vPos(randf(0, (float)pWindow->getWidth()), randf(0, (float)pWindow->getHeight()));
+			CVector2f vPos(randf(0, (float)x->pWindow->getWidth()), randf(0, (float)x->pWindow->getHeight()));
 			pEntityBody->setPosition(vPos);
 
 			// Set scale
@@ -59,7 +55,7 @@ namespace X
 		}
 
 		// Create state window
-		CGUIContainer* pCont = pGUI->addContainer("state1");
+		CGUIContainer* pCont = x->pGUI->addContainer("state1");
 		pCont->setDimensions(640, 640);
 		pCont->setPosition(0, 0);
 		pCont->mstrTitleText = "State one.";
@@ -82,10 +78,8 @@ namespace X
 
 	void CDemo2DState1::onExit(void)
 	{
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		p2D->removeWorld("Scene1World");
-		pGUI->removeContainer("state1");
+		x->p2dRenderer->removeWorld("Scene1World");
+		x->pGUI->removeContainer("state1");
 	}
 
 	void CDemo2DState1::onActive(CFiniteStateMachine* pFSM)
@@ -93,12 +87,8 @@ namespace X
 		// Timer delta
 		timer.update();
 
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Rotate entities
-		C2DWorld* pWorld = p2D->getWorld("Scene1World");
+		C2DWorld* pWorld = x->p2dRenderer->getWorld("Scene1World");
 		C2DLayer* pLayer0 = pWorld->getLayer("Scene1Layer0");
 		C2DLayer* pLayer1 = pWorld->getLayer("Scene1Layer1");
 		std::string strEntityName;
@@ -127,13 +117,13 @@ namespace X
 		// Now move camera
 		C2DCamera* pCamera = pWorld->getCamera(0);
 		CVector2f vCamPos = pCamera->getPosition();
-		if (pInput->key.pressed(KC_UP))
+		if (x->pInput->key.pressed(KC_UP))
 			vCamPos.y -= timer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_DOWN))
+		if (x->pInput->key.pressed(KC_DOWN))
 			vCamPos.y += timer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_LEFT))
+		if (x->pInput->key.pressed(KC_LEFT))
 			vCamPos.x -= timer.getSecondsPast() * 150.0f;
-		if (pInput->key.pressed(KC_RIGHT))
+		if (x->pInput->key.pressed(KC_RIGHT))
 			vCamPos.x += timer.getSecondsPast() * 150.0f;
 		pCamera->setPosition(vCamPos);
 	}

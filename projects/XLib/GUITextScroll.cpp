@@ -1,11 +1,9 @@
 #include "PCH.h"
 #include "GUITextScroll.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
 #include "utilities.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -22,19 +20,16 @@ namespace X
 		delete mpTooltip;
 
 		// Also remove the framebuffer used from the resource manager
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeFramebuffer(_mstrFBName);
+		x->pResource->removeFramebuffer(_mstrFBName);
 	}
 
 	void CGUITextScroll::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col;
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.textEditBGColour, pTheme->mImages.textScrollBGNormal, col);
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceFramebuffer* pTexColour = pRM->getFramebuffer(_mstrFBName);
+		CResourceFramebuffer* pTexColour = x->pResource->getFramebuffer(_mstrFBName);
 
 		// Does the frame buffer need updating (Like when the OpenGL context has been lost)
 		if (pTexColour->mbNeedsUpdating)
@@ -47,9 +42,8 @@ namespace X
 			_renderFramebuffer(pParentContainer);
 
 		// Get required resources needed to render
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		// Render the frame buffer over the top of the background
 		pShader->bind();
@@ -57,7 +51,7 @@ namespace X
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
@@ -68,7 +62,7 @@ namespace X
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
-		CVector2f vBGdims = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour)->getDimensions();
+		CVector2f vBGdims = x->pResource->getTexture2DFromFile(pTheme->mImages.textScrollBGColour)->getDimensions();
 		CVector2f vBGDimsPoint3 = vBGdims * 0.3333333f;
 		CVector2f vBGDimsPoint6 = vBGdims * 0.6666666f;
 
@@ -99,7 +93,6 @@ namespace X
 	void CGUITextScroll::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 
 		// Update the slider
@@ -118,8 +111,7 @@ namespace X
 		}
 
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)
 		{
@@ -134,14 +126,14 @@ namespace X
 		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 
 		// Also accept mousewheel movement to move the slider if mouse cursor is over the text/slider
-		if (pInput->mouse.deltaZ())
+		if (x->pInput->mouse.deltaZ())
 		{
 			if (bMouseOver)
 			{
 				float fTabPosOffset = 0;
 				if (_mSlider.getOrientationHorizontal())
 				{
-					float fMouseWheel = -pInput->mouse.deltaZ() * 12.0f;	// Positive for scroll up, negative for scroll down
+					float fMouseWheel = -x->pInput->mouse.deltaZ() * 12.0f;	// Positive for scroll up, negative for scroll down
 					float fTabTotalMovementAmount = _mSlider.mfWidth - _mSlider.getTabDims().x;
 					if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
 						fTabTotalMovementAmount = 0.0001f;
@@ -149,7 +141,7 @@ namespace X
 				}
 				else
 				{
-					float fMouseWheel = -pInput->mouse.deltaZ() * 12.0f;	// Positive for scroll up, negative for scroll down
+					float fMouseWheel = -x->pInput->mouse.deltaZ() * 12.0f;	// Positive for scroll up, negative for scroll down
 					float fTabTotalMovementAmount = _mSlider.mfHeight - _mSlider.getTabDims().y;
 					if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
 						fTabTotalMovementAmount = 0.0001f;
@@ -176,15 +168,13 @@ namespace X
 	void CGUITextScroll::_renderFramebuffer(void* pParentContainer)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.textScroll);
-		CResourceFramebuffer* pFB = pRM->getFramebuffer(_mstrFBName);
-		CResourceTexture2DFromFile* pTex = pRM->getTexture2DFromFile(pTheme->mImages.textScrollBGColour);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.textScroll);
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer(_mstrFBName);
+		CResourceTexture2DFromFile* pTex = x->pResource->getTexture2DFromFile(pTheme->mImages.textScrollBGColour);
 
 		// Unbind the render target which the GUI is currently rendering to.
-		CResourceFramebuffer* pFBGUITarget = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:backbuffer_FB");
 		pFBGUITarget->unbindAsRenderTarget();
 
 		// Resize framebuffer if needed to make room for the slider

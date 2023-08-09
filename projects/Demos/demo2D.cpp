@@ -10,17 +10,12 @@ namespace X
 	void CStateDemo2D::onEnter(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(3);
-
-		// Set window title bar text and set icon
-		SCWindow* pWindow = SCWindow::getPointer();
+		x->pLoadingScreen->onInit(3);
 
 		// Create GUI shared between states
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("State Selection.");
+		CGUIContainer* pCont = x->pGUI->addContainer("State Selection.");
 		pCont->setDimensions(150, 150);
-		pCont->setPosition(999999, float(pWindow->getHeight())-220);
+		pCont->setPosition(999999, float(x->pWindow->getHeight())-220);
 		float fYpos = 5;
 		pCont->addButton("state0", 0, fYpos, 150, 30, "State 0")->mpTooltip->setAsText("Click me to switch to state zero."); fYpos += 40;
 		pCont->addButton("state1", 0, fYpos, 150, 30, "State 1")->mpTooltip->setAsText("Click me to switch to state one."); fYpos += 40;
@@ -28,19 +23,18 @@ namespace X
 		pCont->addButton("state3", 0, fYpos, 150, 30, "State 3")->mpTooltip->setAsText("Click me to switch to state three."); fYpos += 40;
 
 		// Create all resources for each of the states
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		// State0
 		// Top down creature rotation images
 		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demos/Demo2D/images/creature_top_down/");	// Get filenames 
-		pRM->addTexture2DAtlas("Scene0Creatures", vstrImageFilenames, true, 1);												// Create texture atlas
+		x->pResource->addTexture2DAtlas("Scene0Creatures", vstrImageFilenames, true, 1);												// Create texture atlas
 
 		// State1
 		// Tank body and turret image
 		vstrImageFilenames.clear();
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_body.png");
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_turret.png");
-		pRM->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
+		x->pResource->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
 
 		// State2
 
@@ -54,48 +48,45 @@ namespace X
 		_mFSM.switchToState("state3");
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CStateDemo2D::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("State Selection.");
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DAtlas("Scene0Creatures");
-		pRM->removeTexture2DAtlas("Scene1Tank");
+		x->pGUI->removeContainer("State Selection.");
+		x->pResource->removeTexture2DAtlas("Scene0Creatures");
+		x->pResource->removeTexture2DAtlas("Scene1Tank");
 		_mFSM.removeAllStates();
 	}
 
 	void CStateDemo2D::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("State Selection.");
+		CGUIContainer* pCont = x->pGUI->getContainer("State Selection.");
 		CGUIButton* pBut;
 
 		pBut = pCont->getButton("state0");
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state0");
-			pGUI->setContainerAsActive("State Selection.");
+			x->pGUI->setContainerAsActive("State Selection.");
 		}
 		pBut = pCont->getButton("state1");
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state1");
-			pGUI->setContainerAsActive("State Selection.");
+			x->pGUI->setContainerAsActive("State Selection.");
 		}
 		pBut = pCont->getButton("state2");
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state2");
-			pGUI->setContainerAsActive("State Selection.");
+			x->pGUI->setContainerAsActive("State Selection.");
 		}
 		pBut = pCont->getButton("state3");
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state3");
-			pGUI->setContainerAsActive("State Selection.");
+			x->pGUI->setContainerAsActive("State Selection.");
 		}
 
 		// Update current state

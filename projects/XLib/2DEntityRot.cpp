@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "2DEntityRot.h"
-#include "log.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -74,10 +74,9 @@ namespace X
 	void C2DEntityRot::setImagesSingle(const std::string& strImageFilenameInAtlas)
 	{
 		// Make sure the set atlas exists
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfFalse(pRM->getTexture2DAtlasExists(_mstrResourceTexture2DAtlasName), "C2DEntityRot::setSingleImage() failed. The entity's currently set C2DTextureAtlas resource of " + _mstrResourceTexture2DAtlasName + " couldn't be found.");
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(_mstrResourceTexture2DAtlasName), "C2DEntityRot::setSingleImage() failed. The entity's currently set C2DTextureAtlas resource of " + _mstrResourceTexture2DAtlasName + " couldn't be found.");
 		// Make sure the named image exists within the atlas
-		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+		CResourceTexture2DAtlas* pAtlas = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 		ThrowIfFalse(pAtlas->getImageNameExists(strImageFilenameInAtlas), "C2DEntityRot::setSingleImage() failed. The named image of " + strImageFilenameInAtlas + " does not exist within the entity's currently set texture atlas resource.");
 
 		// If we get here, everything exists, set the entity to use the image...
@@ -93,9 +92,8 @@ namespace X
 	void C2DEntityRot::setImagesMultiple(const std::vector<std::string>& strImageFilenamesInAtlas)
 	{
 		// Make sure the set atlas exists
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		ThrowIfFalse(pRM->getTexture2DAtlasExists(_mstrResourceTexture2DAtlasName), "C2DEntityRot::setImagesMultiple() failed. The entity's currently set C2DTextureAtlas resource of " + _mstrResourceTexture2DAtlasName + " couldn't be found.");
-		CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(_mstrResourceTexture2DAtlasName), "C2DEntityRot::setImagesMultiple() failed. The entity's currently set C2DTextureAtlas resource of " + _mstrResourceTexture2DAtlasName + " couldn't be found.");
+		CResourceTexture2DAtlas* pAtlas = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 
 		_mbUseAnimationFrames = true;
 		_mvstrImageNames.clear();	// Clear stored image names
@@ -171,9 +169,8 @@ namespace X
 		// Bind the texture (And also create geometry with correct texture coordinates
 		if (bNeedToBindTexture)
 		{
-			SCResourceManager* pRM = SCResourceManager::getPointer();
 			// Get CResourceTexture2DAtlas the entity is set to use
-			CResourceTexture2DAtlas* pAtlas = pRM->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+			CResourceTexture2DAtlas* pAtlas = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
 			// Bind the atlas texture containing the entity's currently set frame number's image
 			pAtlas->bindAtlas(0, _mvImageDetails[_muiCurrentFrameNumber].uiAtlasImage);
 			uiNumTextureBindingsPerLoop++;

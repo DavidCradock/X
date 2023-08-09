@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "demo2D.h"
 #include "demoEmpty.h"
+#include "demoGUI.h"
 #include "demoInstancing.h"
 #include "demoNeuralNets.h"
 #include "demoOctTree.h"
@@ -15,20 +16,17 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(0);
-		pLS->setFadeOut(0.0f);
+		x->pLoadingScreen->onInit(0);
+		x->pLoadingScreen->setFadeOut(0.0f);
 
 		// Set window title bar text and set icon
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X: Demos. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
-		pWindow->setIcon(IDI_ICON1);
+		x->pWindow->setText("X: Demos. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		x->pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
-		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+		x->pInput->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
 		// Create GUI to switch between states
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("DemoStates");
+		CGUIContainer* pCont = x->pGUI->addContainer("DemoStates");
 		pCont->setDimensions(640, 480);
 		pCont->setPositionCentreWindow();
 		std::string strTxt;
@@ -41,11 +39,12 @@ namespace X
 		CVector2f vTxtPos(0.0f, 210.0f);
 		pBut = pCont->addButton("2D", vTxtPos.x, vTxtPos.y, 200, 30, "2D"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("2D rendering of stuff.");
 		pBut = pCont->addButton("Empty", vTxtPos.x, vTxtPos.y, 200, 30, "Empty"); vTxtPos.y += 40;							pBut->mpTooltip->setAsText("An empty demo which does nothing. I use this as a template when adding new demos.");
-		pBut = pCont->addButton("Instancing", vTxtPos.x, vTxtPos.y, 200, 30, "Instancing"); vTxtPos.y += 40;				pBut->mpTooltip->setAsText("Massive speed ups with instancing.");
+		pBut = pCont->addButton("GUI", vTxtPos.x, vTxtPos.y, 200, 30, "GUI"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("Usage of the Graphical User Interface (GUI).");
+		pBut = pCont->addButton("Instancing", vTxtPos.x, vTxtPos.y, 200, 30, "Instancing"); vTxtPos.y += 40;				pBut->mpTooltip->setAsText("Speed ups with instancing.");
 		pBut = pCont->addButton("Neural Networks", vTxtPos.x, vTxtPos.y, 200, 30, "Neural Networks"); vTxtPos.y += 40;		pBut->mpTooltip->setAsText("AI Neural networks and their training.");
 		pBut = pCont->addButton("Oct Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Oct Tree"); vTxtPos.y += 40;					pBut->mpTooltip->setAsText("Oct tree for culling.");
-		pBut = pCont->addButton("Physics", vTxtPos.x, vTxtPos.y, 200, 30, "Physics"); vTxtPos.y += 40;						pBut->mpTooltip->setAsText("Testing the physics engine here.");
-		pBut = pCont->addButton("Quad Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Quad Tree"); vTxtPos.set(220, 210);			pBut->mpTooltip->setAsText("Quad tree for culling.");
+		pBut = pCont->addButton("Physics", vTxtPos.x, vTxtPos.y, 200, 30, "Physics"); vTxtPos.set(220, 210);				pBut->mpTooltip->setAsText("Testing the physics engine here.");
+		pBut = pCont->addButton("Quad Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Quad Tree"); vTxtPos.y += 40;		 			pBut->mpTooltip->setAsText("Quad tree for culling.");
 		pBut = pCont->addButton("Scene Manager", vTxtPos.x, vTxtPos.y, 200, 30, "Scene Manager"); 	vTxtPos.y += 40;		pBut->mpTooltip->setAsText("3D Scene manager testing.");
 
 		// Create the demo states
@@ -54,6 +53,9 @@ namespace X
 
 		CStateDemoEmpty* pStateDemoEmpty = new CStateDemoEmpty;
 		_mFSM.addState("demoEmpty", pStateDemoEmpty);
+
+		CStateDemoGUI* pStateDemoGUI = new CStateDemoGUI;
+		_mFSM.addState("demoGUI", pStateDemoGUI);
 
 		CStateDemoInstancing* pStateDemoInstancing = new CStateDemoInstancing;
 		_mFSM.addState("demoInstancing", pStateDemoInstancing);
@@ -73,22 +75,20 @@ namespace X
 		CStateDemoSceneManager* pStateSceneManager = new CStateDemoSceneManager;
 		_mFSM.addState("demoSceneManager", pStateSceneManager);
 
-		
-
 		// Add button in lower right to show demo states container
-		pCont = pGUI->addContainer("DemoStatesButton");
+		pCont = x->pGUI->addContainer("DemoStatesButton");
 		pCont->setBehaviour(false);
 		pCont->setDimensions(150, 40);
-		pCont->setPosition(float(pWindow->getWidth() - 150), float(pWindow->getHeight() - 40));
+		pCont->setPosition(float(x->pWindow->getWidth() - 150), float(x->pWindow->getHeight() - 40));
 		pCont->addButton("DemoStatesShow", 0, 0, 150, 40, "Demo States");
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 
 		// TEMP
-		// Switch to state 2D straight away, not showing the Demo states container
-		_mFSM.switchToState("demo2D");
-		pGUI->getContainer("DemoStates")->setVisible(false);
+		// Switch to state GUI straight away, and hide the Demo states container
+		_mFSM.switchToState("demoGUI");
+		x->pGUI->getContainer("DemoStates")->setVisible(false);
 	}
 
 	void CApplication::onStart(void)
@@ -101,12 +101,8 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-		// Get pointers to needed managers
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-
 		// Check DemoState window
-		CGUIContainer* pCont = pGUI->getContainer("DemoStates");
+		CGUIContainer* pCont = x->pGUI->getContainer("DemoStates");
 		if (pCont->getVisible())
 		{
 			CGUIButton* pBut;
@@ -120,6 +116,12 @@ namespace X
 			if (pBut->getClicked())
 			{
 				_mFSM.switchToState("demoEmpty");
+				pCont->setVisible(false);
+			}
+			pBut = pCont->getButton("GUI");
+			if (pBut->getClicked())
+			{
+				_mFSM.switchToState("demoGUI");
 				pCont->setVisible(false);
 			}
 			pBut = pCont->getButton("Instancing");
@@ -161,29 +163,29 @@ namespace X
 		}
 
 		// Check DemoStatesShow
-		if (pGUI->getContainer("DemoStatesButton")->getButton("DemoStatesShow")->getClicked())
+		if (x->pGUI->getContainer("DemoStatesButton")->getButton("DemoStatesShow")->getClicked())
 		{
-			pGUI->getContainer("DemoStates")->setVisible(true);
+			x->pGUI->getContainer("DemoStates")->setVisible(true);
 		}
 
 		_mFSM.update();
 
 		// Escape key to exit
-		if (pInput->key.pressed(KC_ESCAPE))
+		if (x->pInput->key.pressed(KC_ESCAPE))
 			return false;
 
 		// Toggle fullscreen
-		if (pInput->key.once(KC_F1))
+		if (x->pInput->key.once(KC_F1))
 			SCWindow::getPointer()->toggleFullscreen();
 
 		// Toggle vertical sync
-		if (pInput->key.once(KC_F2))
-			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
+		if (x->pInput->key.once(KC_F2))
+			SCWindow::getPointer()->setVsync(!x->pWindow->getVSyncEnabled());
 
 		// Toggle statistics window
-		if (pInput->key.once(KC_F3))
+		if (x->pInput->key.once(KC_F3))
 		{
-			CGUIContainer* pStatsCont = SCGUIManager::getPointer()->getContainer("X:Default:Statistics");
+			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;

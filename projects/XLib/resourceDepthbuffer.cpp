@@ -1,9 +1,7 @@
 #include "PCH.h"
 #include "resourceDepthbuffer.h"
 #include "openGLExtensions.h"
-#include "log.h"
-#include "resourceManager.h"
-#include "window.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -75,8 +73,7 @@ namespace X
 	void CResourceDepthbuffer::unbindAsRenderTarget(void) const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		SCWindow* pWnd = SCWindow::getPointer();
-		glViewport(0, 0, pWnd->getWidth(), pWnd->getHeight());
+		glViewport(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 	}
 
 	void CResourceDepthbuffer::bindAsTexture(unsigned int uiTextureUnit) const
@@ -171,10 +168,8 @@ namespace X
 
 	void CResourceDepthbuffer::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, const CColour& colour)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:depthbuffer_debug");
-		SCWindow* pWindow = SCWindow::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:depthbuffer_debug");
 		
 		// Setup triangle geometry
 		pVB->removeGeom();
@@ -184,7 +179,7 @@ namespace X
 		pVB->update();
 		
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->bind();
 		pShader->setMat4("transform", matProjection);
 		bindAsTexture(0);

@@ -93,15 +93,13 @@ namespace X
 	// Usage:
 	// Audio sample data is stored inside groups
 	// By default, a group named "default" is created for storage of audio samples upon construction.
-	// Get a pointer to the audio manager...
-	// SCAudioManager *pAudioManager = SCAudioManager::getPointer();
 	// Add a new sample to the "default" group
-	// pAudioManager->addSample("audio/fart.wav", "default");
+	// x->pAudio->addSample("audio/fart.wav", "default");
 	// // Add more samples if needed and then call..
-	// pAudioManager->loadSampleGroup("default");	// Load all audio data, so it's ready for use
+	// x->pAudio->loadSampleGroup("default");	// Load all audio data, so it's ready for use
 	// Create an emitter which will be used to playback a sample.
 	// Emitters are "linked" to a single sample, they can only play that one sample
-	// CAudioEmitter *pAudioEmitter = pAudioManager->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
+	// CAudioEmitter *pAudioEmitter = x->pAudio->addEmitter("MyBottomEmitter", "audio/fart.wav", 8, "default");
 	// Now we can playback the sample with...
 	// pAudioEmitter->play(1.0f, 1.0f, false);	// Where parameters are volume, playback speed and whether to loop the sample or not
 	class SCAudioManager : public CSingleton<SCAudioManager>

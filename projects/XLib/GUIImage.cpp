@@ -1,10 +1,8 @@
 #include "PCH.h"
 #include "GUIImage.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -24,17 +22,15 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		pShader->bind();
 
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
@@ -50,13 +46,13 @@ namespace X
 		CResourceTexture2DFromImage* pTexImageColour = 0;
 		if (_mbImageIsFromFile)
 		{
-			pTexFileColour = pRM->getTexture2DFromFile(_mstrTextureResourceName);
+			pTexFileColour = x->pResource->getTexture2DFromFile(_mstrTextureResourceName);
 			// Bind textures
 			pTexFileColour->bind(0);
 		}
 		else
 		{
-			pTexImageColour = pRM->getTexture2DFromImage(_mstrTextureResourceName);
+			pTexImageColour = x->pResource->getTexture2DFromImage(_mstrTextureResourceName);
 			// Bind textures
 			pTexImageColour->bind(0);
 		}
@@ -89,8 +85,7 @@ namespace X
 	void CGUIImage::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

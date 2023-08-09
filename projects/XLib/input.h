@@ -7,7 +7,7 @@
 
 namespace X
 {
-	// This is responsible for obtaining with input from various input devices such
+	// This is responsible for obtaining input from various input devices such
 	// as keyboards, mice, joysticks and steering wheels.
 	class SCInputManager : public CSingleton<SCInputManager>
 	{

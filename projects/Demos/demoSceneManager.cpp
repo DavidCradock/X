@@ -6,8 +6,7 @@ namespace X
 	void CStateDemoSceneManager::onEnter(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(4);
+		x->pLoadingScreen->onInit(4);
 
 		timer.setAveragedFPSRate(1);	// Once every X seconds
 
@@ -15,21 +14,19 @@ namespace X
 		_initSceneManager();
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CStateDemoSceneManager::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeVertexBufferCPTBNT("cube");
-		pRM->removeVertexBufferCPTBNT("icosphere_radius_0.01");
-		pRM->removeVertexBufferCPTBNT("groundplane");
-		pRM->removeVertexBufferLine("line");
-		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png");
-		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png");
-		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png");
-		pRM->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png");
+		x->pResource->removeVertexBufferCPTBNT("cube");
+		x->pResource->removeVertexBufferCPTBNT("icosphere_radius_0.01");
+		x->pResource->removeVertexBufferCPTBNT("groundplane");
+		x->pResource->removeVertexBufferLine("line");
+		x->pResource->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png");
+		x->pResource->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png");
+		x->pResource->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png");
+		x->pResource->removeTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png");
 		
 
 //		mSceneManagerSimple.removeAllCameras();
@@ -40,10 +37,6 @@ namespace X
 
 	void CStateDemoSceneManager::onActive(CFiniteStateMachine* pFSM)
 	{
-		// Get pointers to needed managers
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-
 		// Timer delta
 		timer.update();
 
@@ -51,26 +44,23 @@ namespace X
 		mSceneManagerSimple.render();
 
 		// Render the debug shadow map onto the screen
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceDepthbuffer* pDepthbuffer = pRM->getDepthbuffer("X:shadows");
-		pDepthbuffer->renderTo2DQuad(pWindow->getWidth() - 512, 0, 512, 512);
+		CResourceDepthbuffer* pDepthbuffer = x->pResource->getDepthbuffer("X:shadows");
+		pDepthbuffer->renderTo2DQuad(x->pWindow->getWidth() - 512, 0, 512, 512);
 
 		float fInc = timer.getSecondsPast();
-
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
 
 		// Update line entity
 		CSMEntityLine* pEntityLine = mSceneManagerSimple.getEntityLine("line");
 
 		// Translation
-		if (pInput->key.pressed(KC_W))	pEntityLine->translateWorld(CVector3f(0.0f, 0.0f, 1.0f * fInc));
-		if (pInput->key.pressed(KC_S))	pEntityLine->translateWorld(CVector3f(0.0f, 0.0f, -1.0f * fInc));
-		if (pInput->key.pressed(KC_A))	pEntityLine->translateWorld(CVector3f(-1.0f * fInc, 0.0f, 0.0f));
-		if (pInput->key.pressed(KC_D))	pEntityLine->translateWorld(CVector3f(1.0f * fInc, 0.0f, 0.0f));
-		if (pInput->key.pressed(KC_R))	pEntityLine->translateWorld(CVector3f(0.0f, 1.0f * fInc, 0.0f));
-		if (pInput->key.pressed(KC_F))	pEntityLine->translateWorld(CVector3f(0.0f, -1.0f * fInc, 0.0f));
+		if (x->pInput->key.pressed(KC_W))	pEntityLine->translateWorld(CVector3f(0.0f, 0.0f, 1.0f * fInc));
+		if (x->pInput->key.pressed(KC_S))	pEntityLine->translateWorld(CVector3f(0.0f, 0.0f, -1.0f * fInc));
+		if (x->pInput->key.pressed(KC_A))	pEntityLine->translateWorld(CVector3f(-1.0f * fInc, 0.0f, 0.0f));
+		if (x->pInput->key.pressed(KC_D))	pEntityLine->translateWorld(CVector3f(1.0f * fInc, 0.0f, 0.0f));
+		if (x->pInput->key.pressed(KC_R))	pEntityLine->translateWorld(CVector3f(0.0f, 1.0f * fInc, 0.0f));
+		if (x->pInput->key.pressed(KC_F))	pEntityLine->translateWorld(CVector3f(0.0f, -1.0f * fInc, 0.0f));
 		// Scale
-		if (pInput->key.pressed(KC_T))
+		if (x->pInput->key.pressed(KC_T))
 		{
 			CVector3f v3EntityScale = pEntityLine->getScale();
 			v3EntityScale.x += fInc;
@@ -78,7 +68,7 @@ namespace X
 			v3EntityScale.z += fInc;
 			pEntityLine->setScale(v3EntityScale);
 		}
-		if (pInput->key.pressed(KC_G))
+		if (x->pInput->key.pressed(KC_G))
 		{
 			CVector3f v3EntityScale = pEntityLine->getScale();
 			v3EntityScale.x -= fInc;
@@ -87,27 +77,27 @@ namespace X
 			pEntityLine->setScale(v3EntityScale);
 		}
 		// Rotation
-		if (pInput->key.pressed(KC_Y))
+		if (x->pInput->key.pressed(KC_Y))
 		{
 
 		}
-		if (pInput->key.pressed(KC_H))
+		if (x->pInput->key.pressed(KC_H))
 		{
 
 		}
-		if (pInput->key.pressed(KC_U))
+		if (x->pInput->key.pressed(KC_U))
 		{
 
 		}
-		if (pInput->key.pressed(KC_J))
+		if (x->pInput->key.pressed(KC_J))
 		{
 
 		}
-		if (pInput->key.pressed(KC_I))
+		if (x->pInput->key.pressed(KC_I))
 		{
 
 		}
-		if (pInput->key.pressed(KC_K))
+		if (x->pInput->key.pressed(KC_K))
 		{
 
 		}
@@ -145,24 +135,23 @@ namespace X
 			true);							// Limit Y angle to > 0.0f
 
 		// Create needed triangles
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		// Cube
-		CResourceVertexBufferCPTBNT* pVB = pRM->addVertexBufferCPTBNT("cube");
+		CResourceVertexBufferCPTBNT* pVB = x->pResource->addVertexBufferCPTBNT("cube");
 		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/cube.geom", true);
 		// Point lights to show where they are
-		pVB = pRM->addVertexBufferCPTBNT("icosphere_radius_0.01");
+		pVB = x->pResource->addVertexBufferCPTBNT("icosphere_radius_0.01");
 		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/icosphere_radius_0.01.geom", true);
 		// Ground plane
-		pVB = pRM->addVertexBufferCPTBNT("groundplane");
+		pVB = x->pResource->addVertexBufferCPTBNT("groundplane");
 		pVB->addFromFile("data/Demos/DemoSceneManager/geometry/ground_plane_200x200x1.geom", true);
 
 		// Load in a textures
 		// Cubes
-		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png", "data/Demos/DemoSceneManager/textures/cube_BaseColor.png", true);
-		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png", "data/Demos/DemoSceneManager/textures/cube_Roughness.png", true);
-		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png", "data/Demos/DemoSceneManager/textures/cube_Normal.png", true);
+		x->pResource->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_BaseColor.png", "data/Demos/DemoSceneManager/textures/cube_BaseColor.png", true);
+		x->pResource->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Roughness.png", "data/Demos/DemoSceneManager/textures/cube_Roughness.png", true);
+		x->pResource->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/cube_Normal.png", "data/Demos/DemoSceneManager/textures/cube_Normal.png", true);
 		// Point light entities
-		pRM->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png", "data/Demos/DemoSceneManager/textures/groundplane.png", true);
+		x->pResource->addTexture2DFromFile("data/Demos/DemoSceneManager/textures/groundplane.png", "data/Demos/DemoSceneManager/textures/groundplane.png", true);
 
 		// Create materials
 		mSceneManagerSimple.addMaterial("mat_cubes", 0.05f, "data/Demos/DemoSceneManager/textures/cube_BaseColor.png", "data/Demos/DemoSceneManager/textures/cube_Roughness.png", 0.75f, "data/Demos/DemoSceneManager/textures/cube_Normal.png", "X:default_emission");
@@ -221,7 +210,7 @@ namespace X
 
 		// Now we're done with adding Vertex buffer entities.
 		// Let's add some line entities
-		CResourceVertexBufferLine* pLine = pRM->addVertexBufferLine("line");
+		CResourceVertexBufferLine* pLine = x->pResource->addVertexBufferLine("line");
 		pLine->setDrawModeAsLineList();
 		CResourceVertexBufferLine::Vertex lineVertex;
 		// + Y

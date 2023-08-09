@@ -373,6 +373,12 @@
     <ClInclude Include="2DWorld.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="settings.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="singletons.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -669,6 +675,12 @@
     </ClCompile>
     <ClCompile Include="2DWorld.cpp">
       <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="settings.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="singletons.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

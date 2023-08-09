@@ -1,9 +1,7 @@
 #include "PCH.h"
 #include "GUIBaseObject.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -116,9 +114,8 @@ namespace X
 
 	void CGUIBaseObject::setPositionCentreWindow(void)
 	{
-		SCWindow* pWindow = SCWindow::getPointer();
-		mfPositionX = (pWindow->getWidth() / 2) - (mfWidth / 2);
-		mfPositionY = (pWindow->getHeight() / 2) - (mfHeight / 2);
+		mfPositionX = (x->pWindow->getWidth() / 2) - (mfWidth / 2);
+		mfPositionY = (x->pWindow->getHeight() / 2) - (mfHeight / 2);
 	}
 
 	void CGUIBaseObject::setDimensions(float fWidth, float fHeight)
@@ -142,19 +139,15 @@ namespace X
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 
 		// Get required resources needed to render
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:gui");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:gui");
 		CGUITheme* pTheme = pContainer->getTheme();
-		SCInputManager* pInput = SCInputManager::getPointer();
 
 		pShader->bind();
 
 		// Setup the projection matrix as orthographic
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
@@ -167,18 +160,18 @@ namespace X
 		pShader->setFloat("fMouseCursorDistance", pTheme->mfMouseCursorDistance);
 
 		// Set mouse position, inverting Y position
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		vMousePos.y = float(pWindow->getHeight()) - vMousePos.y;
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
 		pShader->setVec2("v2MousePos", vMousePos);
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Get textures
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(strObjectColourTextureName);
-		CResourceTexture2DFromFile* pTexNormal = pRM->getTexture2DFromFile(strObjectNormalTextureName);
-		CResourceTexture2DFromFile* pTexReflection = pRM->getTexture2DFromFile(pTheme->mImages.reflection);
-		CResourceFramebuffer* pFBSample = pRM->getFramebuffer(strFramebufferToSampleFrom);
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(strObjectColourTextureName);
+		CResourceTexture2DFromFile* pTexNormal = x->pResource->getTexture2DFromFile(strObjectNormalTextureName);
+		CResourceTexture2DFromFile* pTexReflection = x->pResource->getTexture2DFromFile(pTheme->mImages.reflection);
+		CResourceFramebuffer* pFBSample = x->pResource->getFramebuffer(strFramebufferToSampleFrom);
 
 		// Bind textures
 		pTexColour->bind(0);

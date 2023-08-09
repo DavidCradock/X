@@ -50,7 +50,6 @@ namespace X
 		if (fDistanceToFood < 0.5f)
 		{
 			dFitness += 0.1f;
-			SCWindow* pWindow = SCWindow::getPointer();
 			CVector2f vNewFoodPos;
 			vNewFoodPos.x = randf(-10.0f, 10.0f);
 			vNewFoodPos.y = randf(-10.0f, 10.0f);
@@ -189,11 +188,9 @@ namespace X
 		CColour colAverage(1.0f, 0.5f, 0.0f, 1.0f);
 		CColour colWorst(1.0f, 0.0f, 0.0f, 1.0f);
 
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("state2");
+		CGUIContainer* pCont = x->pGUI->addContainer("state2");
 		pCont->setDimensions(650, 300);
-		SCWindow* pWindow = SCWindow::getPointer();
-		pCont->setPosition(999999, float(pWindow->getHeight()) - 380);
+		pCont->setPosition(999999, float(x->pWindow->getHeight()) - 380);
 		// Add text scroll describing this state.
 		std::string strTxt = "State2\n \n";
 		strTxt += "This state shows training of a neural network whereby some networks try to eat as much food as possible.\n \n";
@@ -227,11 +224,7 @@ namespace X
 	void CDemoNeuralNetsState2::onExit(void)
 	{
 		// Remove GUI objects
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("state2");
-
-		// Remove created resources
-		SCResourceManager* pRM = SCResourceManager::getPointer();
+		x->pGUI->removeContainer("state2");
 
 		// Remove all materials
 		_mSM.removeAllMaterials();
@@ -251,8 +244,7 @@ namespace X
 		// Render everything
 		_render();
 
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("state2");
+		CGUIContainer* pCont = x->pGUI->getContainer("state2");
 		std::string strTxt;
 
 		// Compute current worst, average and best fitness of population
@@ -300,7 +292,6 @@ namespace X
 				0.1/*crossover rate*/);
 
 			// Now we have the new generation of weights for the new population, place them into each of the existing networks
-			SCWindow* pWindow = SCWindow::getPointer();
 			CVector2f vNewEntityPos;
 			for (int i = 0; i < mvecCritters.size(); i++)
 			{
@@ -351,14 +342,12 @@ namespace X
 			strTxt += " PAUSED.";
 		pCont->getText("next_gen_time")->setText(strTxt);
 
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Pause/resume next generation
-		if (pInput->key.once(KC_SPACE))
+		if (x->pInput->key.once(KC_SPACE))
 			_mbPerformNextGenCountdown = !_mbPerformNextGenCountdown;
 
 		// Turbo mode toggle
-		if (pInput->key.once(KC_RETURN))
+		if (x->pInput->key.once(KC_RETURN))
 		{
 			_mbTurboMode = !_mbTurboMode;
 			CGUIText* pTurboTxt = pCont->getText("turbo");
@@ -379,8 +368,7 @@ namespace X
 		// Compute maximum amount of time that's allowed to pass before we need to update the screen
 		if (_mbTurboMode)
 		{
-			SCWindow* pWindow = SCWindow::getPointer();
-			float fTimeUntilUpdateScreen = 1.0f / (float)pWindow->getRefreshRate();
+			float fTimeUntilUpdateScreen = 1.0f / (float)x->pWindow->getRefreshRate();
 			float fTimePassed = 0.0f;
 			float fTimePerUpdate = 1.0f / 30.0f;
 			CTimer timerTurbo;

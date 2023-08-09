@@ -1,8 +1,7 @@
 #include "PCH.h"
 #include "resourceTexture2DFromFile.h"
 #include "image.h"
-#include "log.h"
-#include "resourceManager.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -125,10 +124,8 @@ namespace X
 
 	void CResourceTexture2DFromFile::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		SCWindow* pWindow = SCWindow::getPointer();
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
 		// Setup triangle geometry
 		pVB->removeGeom();
@@ -140,7 +137,7 @@ namespace X
 		// Setup the matrices
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, float(pWindow->getWidth()), 0.0f, float(pWindow->getHeight()), -1.0f, 1.0f);
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
 		pShader->bind();
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);

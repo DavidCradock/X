@@ -6,12 +6,10 @@ namespace X
 	void CStateDemoQuadTree::onEnter(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(0);
+		x->pLoadingScreen->onInit(0);
 
 		// Create quad tree
-		SCWindow* pWindow = SCWindow::getPointer();
-		CVector2f vQuadTreeMax((float)pWindow->getWidth() - 50.0f, (float)pWindow->getHeight() - 50.0f);
+		CVector2f vQuadTreeMax((float)x->pWindow->getWidth() - 50.0f, (float)x->pWindow->getHeight() - 50.0f);
 		CVector2f vQuadTreeMin(50, 50);
 		_mpQuadTree = new CQuadTree(10, 2);
 		ThrowIfFalse(_mpQuadTree, "CApplication::initOnce() failed. Unable to allocate memory for CQuadTree.");
@@ -22,7 +20,7 @@ namespace X
 		{
 			std::string strName = "Ent: " + std::to_string(i);
 			int iPosX = randInt(0, 50);
-			int iPosY = randInt(50, (int)pWindow->getHeight() - 50);
+			int iPosY = randInt(50, (int)x->pWindow->getHeight() - 50);
 			CVector2f vPos;
 			vPos.x = (float)iPosX;
 			vPos.y = (float)iPosY;
@@ -41,15 +39,14 @@ namespace X
 		_mvRangePos.set(0, 0);
 
 		// Setup GUI
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
 		CGUIContainer* pCont;
 		// Show statistics window and obtain it's dimensions
-		pCont = pGUIMan->getContainer("X:Default:Statistics");
+		pCont = x->pGUI->getContainer("X:Default:Statistics");
 //		pCont->setVisible(true);
 		CVector2f vStatsWindowDims = pCont->getDimensions();
 
 		// Window for application to show various information
-		pCont = pGUIMan->addContainer("GUI");
+		pCont = x->pGUI->addContainer("GUI");
 		pCont->setDimensions(450, 670);
 		pCont->setPosition(999999.0f, vStatsWindowDims.y + 100.0f);
 		std::string strTxt = "Welcome to Demo Quad Tree.\n \n";
@@ -95,13 +92,12 @@ namespace X
 		_mvCameraPosition.set(0.0f, 0.0f, 4000.0f);
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CStateDemoQuadTree::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("GUI");
+		x->pGUI->removeContainer("GUI");
 
 		delete _mpQuadTree;
 		_mpQuadTree = 0;
@@ -110,13 +106,10 @@ namespace X
 
 	void CStateDemoQuadTree::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Timer delta
 		timer.update();
 
 		// Update some entities by moving them based on their direction
-		SCWindow* pWindow = SCWindow::getPointer();
 		for (int i = 0; i < (int)_muiNumEntities; i++)
 		{
 			_mvecEntityPos[i].x += timer.getSecondsPast() * 150.0f * _mvecEntityDir[i].x;
@@ -135,7 +128,7 @@ namespace X
 		}
 
 		// Add entities via enter key
-		if (pInput->key.pressed(KC_RETURN))
+		if (x->pInput->key.pressed(KC_RETURN))
 		{
 			// Compute name
 			std::string strName = "Ent: " + std::to_string(_muiNumEntities);
@@ -156,7 +149,7 @@ namespace X
 		}
 
 		// Remove entities via the backspace key
-		if (pInput->key.pressed(KC_BACK))
+		if (x->pInput->key.pressed(KC_BACK))
 		{
 			if (_muiNumEntities)
 			{
@@ -170,18 +163,18 @@ namespace X
 		}
 
 		// Move range finder position
-		if (pInput->key.pressed(KC_Y))
+		if (x->pInput->key.pressed(KC_Y))
 			_mvRangePos.y += timer.getSecondsPast() * 750.0f;
-		if (pInput->key.pressed(KC_H))
+		if (x->pInput->key.pressed(KC_H))
 			_mvRangePos.y -= timer.getSecondsPast() * 750.0f;
-		if (pInput->key.pressed(KC_G))
+		if (x->pInput->key.pressed(KC_G))
 			_mvRangePos.x -= timer.getSecondsPast() * 750.0f;
-		if (pInput->key.pressed(KC_J))
+		if (x->pInput->key.pressed(KC_J))
 			_mvRangePos.x += timer.getSecondsPast() * 750.0f;
 		// Update range finder range
-		if (pInput->key.pressed(KC_I))
+		if (x->pInput->key.pressed(KC_I))
 			_mfRange += timer.getSecondsPast() * 100.0f;
-		if (pInput->key.pressed(KC_K))
+		if (x->pInput->key.pressed(KC_K))
 		{
 			_mfRange -= timer.getSecondsPast() * 100.0f;
 			if (_mfRange < 1.0f)
@@ -205,8 +198,7 @@ namespace X
 		_renderRangeFinder();
 
 		// Update GUI
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUIMan->getContainer("GUI");
+		CGUIContainer* pCont = x->pGUI->getContainer("GUI");
 		std::string strGUITxt = "CameraPos: ";
 		StringUtils::appendCVector3f(strGUITxt, _mvCameraPosition, 2, ", ");
 		pCont->getText("CameraPos")->setText(strGUITxt);
@@ -224,27 +216,26 @@ namespace X
 		pCont->getText("RangeRange")->setText(strGUITxt);
 
 		// Move camera
-		if (pInput->key.pressed(KC_W))
+		if (x->pInput->key.pressed(KC_W))
 			_mvCameraPosition.y += timer.getSecondsPast() * 1000.0f;
-		if (pInput->key.pressed(KC_S))
+		if (x->pInput->key.pressed(KC_S))
 			_mvCameraPosition.y -= timer.getSecondsPast() * 1000.0f;
-		if (pInput->key.pressed(KC_A))
+		if (x->pInput->key.pressed(KC_A))
 			_mvCameraPosition.x -= timer.getSecondsPast() * 1000.0f;
-		if (pInput->key.pressed(KC_D))
+		if (x->pInput->key.pressed(KC_D))
 			_mvCameraPosition.x += timer.getSecondsPast() * 1000.0f;
-		if (pInput->key.pressed(KC_R))
+		if (x->pInput->key.pressed(KC_R))
 			_mvCameraPosition.z -= timer.getSecondsPast() * 1000.0f;
-		if (pInput->key.pressed(KC_F))
+		if (x->pInput->key.pressed(KC_F))
 			_mvCameraPosition.z += timer.getSecondsPast() * 1000.0f;
 	}
 
 	void CStateDemoQuadTree::_renderRangeFinder(void)
 	{
 		// Obtain required resources needed to render the node's as lines.
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceVertexBufferLine* pLine = pRM->getVertexBufferLine("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
-		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("X:default_white");
+		CResourceVertexBufferLine* pLine = x->pResource->getVertexBufferLine("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
+		CResourceTexture2DFromFile* pTexture = x->pResource->getTexture2DFromFile("X:default_white");
 
 		// Setup orthographic projection matrix
 		CMatrix matrixWorld;

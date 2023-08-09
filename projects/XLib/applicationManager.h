@@ -1,6 +1,6 @@
 #pragma once
 #include "PCH.h"
-#include "singleton.h"
+#include "singletons.h"
 #include "applicationBase.h"
 #include "timer.h"
 
@@ -8,7 +8,7 @@ namespace X
 {
 	// Application manager class to handle all apps which are derived from CApplicationBase found in "applicationBase.h"
 	// By default, the current application to be run each loop is the AppDevelopment application
-	// This can be changed by calling SCApplicationManager::getPointer()->switchToApp("YourApplicationName");
+	// This can be changed by calling x->pAppMan->switchToApp("YourApplicationName");
 	// The purpose of this manager is so that we can write tools, editors and be able to switch between them.
 	// It also helps me to test the resource loading/unloading which each app uses to make sure everything is
 	// being intialised/shutdown properly.
@@ -16,6 +16,8 @@ namespace X
 	class SCApplicationManager : public CSingleton<SCApplicationManager>
 	{
 	public:
+		SCApplicationManager();
+
 		// This is the main loop of the entire program, call this from WinMain.
 		// This creates each of the applications, adds them to this manager and performs initialisation, updating and shutdown
 		void mainLoop(void);

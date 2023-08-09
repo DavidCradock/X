@@ -1,15 +1,16 @@
 #include "PCH.h"
 #include "resourceLoadingScreen.h"
-#include "resourceManager.h"
 #include "GUIManager.h"
-#include "input.h"
-#include "window.h"
 #include "stringUtils.h"
+#include "singletons.h"
 
 namespace X
 {
 	SCResourceLoadingScreen::SCResourceLoadingScreen()
 	{
+		SCLog* pLog = SCLog::getPointer();
+		pLog->add("SCResourceLoadingScreen::SCResourceLoadingScreen() called.");
+
 		SCWindow* pWindow = SCWindow::getPointer();
 
 		_mbEnabled = false;
@@ -51,19 +52,18 @@ namespace X
 			fProgress /= _miTotalNumResourcesToLoad;	// 1 to 0
 			fProgress = 1.0f - fProgress;				// 0 to 1
 		}
-		SCGUIManager::getPointer()->getContainer("LoadingScreen")->getProgressBar("progress")->setProgress(fProgress);
+		x->pGUI->getContainer("LoadingScreen")->getProgressBar("progress")->setProgress(fProgress);
 
 		// Render the loading screen.
 		_renderLoadingScreen(strResourceTypeName, strResourceName, 1);
 
 		// During the onInit() method of our application, the mouse cursor may be set.
 		// Check this, store it's name to restore to onInitEnd() and re-set the busy cursor
-		SCWindow* pWindow = SCWindow::getPointer();
-		if (pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
+		if (x->pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = pWindow->getSetMouseCursorFilename();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();	// Store the new cursor name
 			// Set cursor back to busy
-			pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
+			x->pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
 		}
 	}
 
@@ -72,17 +72,15 @@ namespace X
 		_mbEnabled = true;
 
 		// Save current vsync state (for setting it back in onInitEnd() and disable it now.
-		SCWindow* pWindow = SCWindow::getPointer();
-		_mbVsyncStatePriorToLoading = pWindow->getVSyncEnabled();
+		_mbVsyncStatePriorToLoading = x->pWindow->getVSyncEnabled();
 		if (_mbVsyncStatePriorToLoading)
-			pWindow->setVsync(false);
+			x->pWindow->setVsync(false);
 
 		// Store number of resources to load
 		_miTotalNumResourcesToLoad = iTotalNumberOfResourcesToLoad;
 
 		// Setup loading screen GUI container for progress bar
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("LoadingScreen");
+		CGUIContainer* pCont = x->pGUI->addContainer("LoadingScreen");
 		pCont->setBehaviour(false);
 		pCont->setVisible(true);
 		CGUIProgressBar* pPB = pCont->addProgressBar("progress", _mvProgressBarPosition.x, _mvProgressBarPosition.y, _mvProgressBarDims.x, _mvProgressBarDims.y);
@@ -90,9 +88,9 @@ namespace X
 		
 		// Deal with mouse cursor switch to busy
 		// Get previously set name of mouse cursor from SCWindow for restoration afterwards
-		_mstrInitialMouseCursorFilename = pWindow->getSetMouseCursorFilename();
+		_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();
 		// Set cursor to busy
-		pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
+		x->pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
 
 		// Fade in
 		// Fade out..
@@ -112,17 +110,16 @@ namespace X
 		_mbEnabled = false;
 
 		// Turn vync to it's state it was before onInit() was called, which disables it.
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setVsync(_mbVsyncStatePriorToLoading);
+		x->pWindow->setVsync(_mbVsyncStatePriorToLoading);
 
 		// Set cursor to what it was set to before all this began
 		// During the onInit() method of our application, the mouse cursor may be set.
-		if (pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
+		if (x->pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = pWindow->getSetMouseCursorFilename();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();	// Store the new cursor name
 		}
 
-		pWindow->setMouseCursorImage(_mstrInitialMouseCursorFilename);
+		x->pWindow->setMouseCursorImage(_mstrInitialMouseCursorFilename);
 
 		// Fade out..
 		_mfFadeOutCountdown = _mfFadeOutTimeSeconds;
@@ -141,7 +138,7 @@ namespace X
 		_mvecContainerVisibilityStates.clear();
 
 		// Also remove container containing progress bar
-		SCGUIManager::getPointer()->removeContainer("LoadingScreen");
+		x->pGUI->removeContainer("LoadingScreen");
 
 		// Reset number of resources loaded
 		_miNumResourcesLoaded = 0;
@@ -151,12 +148,11 @@ namespace X
 	{
 		// Get visibility for all GUI containers, storing each containers' state so we can restore it in onInitEnd().
 		// Also disable their visibility here.
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		for (int i = 0; i < pGUI->getNumberOfContainers(); i++)
+		for (int i = 0; i < x->pGUI->getNumberOfContainers(); i++)
 		{
-			std::string strContainerName = pGUI->getContainerName(i);
+			std::string strContainerName = x->pGUI->getContainerName(i);
 			SContainerState state;
-			state.pContainer = pGUI->getContainer(strContainerName);
+			state.pContainer = x->pGUI->getContainer(strContainerName);
 			state.bVisibility = state.pContainer->getVisible();
 
 			// If the container already exists in the vector, do nothing, as it's previously been added and set to invisible
@@ -176,55 +172,52 @@ namespace X
 		}
 
 		// Obtain loading screen resources
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		std::string strTxtResName;
-		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
 		
 		// Add required font resource if it doesn't exist
 		CResourceFont* pFontSmall;
 		strTxtResName = "LOADING_SCREEN: " + _mstrFontSmall;
-		if (!pRM->getFontExists(strTxtResName))					// If the resource doesn't yet exist
+		if (!x->pResource->getFontExists(strTxtResName))					// If the resource doesn't yet exist
 		{
 			_mbEnabled = false;
-			pRM->addFont(strTxtResName, _mstrFontSmall);		// Add it
+			x->pResource->addFont(strTxtResName, _mstrFontSmall);		// Add it
 			_mbEnabled = true;
 		}
-		pFontSmall = pRM->getFont(strTxtResName);
+		pFontSmall = x->pResource->getFont(strTxtResName);
 
 		// Add required font resource if it doesn't exist
 		CResourceFont* pFontLarge;
 		strTxtResName = "LOADING_SCREEN: " + _mstrFontLarge;
-		if (!pRM->getFontExists(strTxtResName))					// If the resource doesn't yet exist
+		if (!x->pResource->getFontExists(strTxtResName))					// If the resource doesn't yet exist
 		{
 			_mbEnabled = false;
-			pRM->addFont(strTxtResName, _mstrFontLarge);		// Add it
+			x->pResource->addFont(strTxtResName, _mstrFontLarge);		// Add it
 			_mbEnabled = true;
 		}
-		pFontLarge = pRM->getFont(strTxtResName);
+		pFontLarge = x->pResource->getFont(strTxtResName);
 
 		// Add required texture resource if it doesn't exist
 		CResourceTexture2DFromFile* pTextureBG;
 		strTxtResName = "LOADING_SCREEN: " + _mstrBackgroundImage;
-		if (!pRM->getTexture2DFromFileExists(strTxtResName))						// If the resource doesn't yet exist
+		if (!x->pResource->getTexture2DFromFileExists(strTxtResName))						// If the resource doesn't yet exist
 		{
 			_mbEnabled = false;
-			pRM->addTexture2DFromFile(strTxtResName, _mstrBackgroundImage);	// Add it
+			x->pResource->addTexture2DFromFile(strTxtResName, _mstrBackgroundImage);	// Add it
 			_mbEnabled = true;
 		}
-		pTextureBG = pRM->getTexture2DFromFile(strTxtResName);
+		pTextureBG = x->pResource->getTexture2DFromFile(strTxtResName);
 
 		// Render the loading screen to the back buffer
-		SCWindow* pWindow = SCWindow::getPointer();
 
-		// Clear the backbuffer
-		pWindow->clearBackbuffer();
+		x->pWindow->clearBackbuffer();
 
 		// Bind the X:backbuffer_FB to render target
 		pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
 
 		// Compute centre of window
-		int iWindowCentrePosX = pWindow->getWidth() / 2;
-		int iWindowCentrePosY = pWindow->getHeight() / 2;
+		int iWindowCentrePosX = x->pWindow->getWidth() / 2;
+		int iWindowCentrePosY = x->pWindow->getHeight() / 2;
 		std::string txt;
 
 		// Determine background image's position and dimensions
@@ -248,15 +241,15 @@ namespace X
 			pTextureBG->renderTo2DQuad(iBGposX, iBGposY, iBGWidth, iBGHeight, CColour(1.0f, 1.0f, 1.0f, fAlpha));
 
 			// Print "Loading" in centre of screen
-			pFontLarge->printCentered("Loading", iTxtPosLargeX, iTxtPosLargeY, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, fAlpha));
+			pFontLarge->printCentered("Loading", iTxtPosLargeX, iTxtPosLargeY, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, fAlpha));
 
 			// Progress bar alpha
-			CGUIProgressBar* pPB = pGUI->getContainer("LoadingScreen")->getProgressBar("progress");
+			CGUIProgressBar* pPB = x->pGUI->getContainer("LoadingScreen")->getProgressBar("progress");
 			pPB->setAlpha(fAlpha);
 			pPB->setProgress(0.0f);
 
 			// Render GUI for the progress bar
-			pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer_FB");
 		}
 		else if (1 == iState)	// Being called from loadingResource()
 		{
@@ -264,18 +257,18 @@ namespace X
 			pTextureBG->renderTo2DQuad(iBGposX, iBGposY, iBGWidth, iBGHeight, CColour(1.0f, 1.0f, 1.0f, 1.0f));
 
 			// Print "Loading" in centre of screen
-			pFontLarge->printCentered("Loading", iTxtPosLargeX, iTxtPosLargeY, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, 1.0f));
+			pFontLarge->printCentered("Loading", iTxtPosLargeX, iTxtPosLargeY, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, 1.0f));
 
 			// Print "Loading resource...etc"
 			txt = "Loading resource type\"" + strResourceTypeName + "\" named \"" + strResourceName + "\"";
-			pFontSmall->printCentered(txt, (int)_mvInfoTextLine1Pos.x, (int)_mvInfoTextLine1Pos.y, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, 1.0f));
+			pFontSmall->printCentered(txt, (int)_mvInfoTextLine1Pos.x, (int)_mvInfoTextLine1Pos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, 1.0f));
 
 			// Print "Resources Loaded: X / _miTotalNumResourcesToLoad"
 			txt = "Resources Loaded: " + std::to_string(_miNumResourcesLoaded) + " / " + std::to_string(_miTotalNumResourcesToLoad);
-			pFontSmall->printCentered(txt, (int)_mvInfoTextLine2Pos.x, (int)_mvInfoTextLine2Pos.y, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, 1.0f));
+			pFontSmall->printCentered(txt, (int)_mvInfoTextLine2Pos.x, (int)_mvInfoTextLine2Pos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, 1.0f));
 
 			// Render GUI for the progress bar
-			pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer_FB");
 		}
 		else  // Being called from onInitEnd() during fade out
 		{
@@ -289,17 +282,17 @@ namespace X
 			pTextureBG->renderTo2DQuad(iBGposX, iBGposY, iBGWidth, iBGHeight, CColour(1.0f, 1.0f, 1.0f, fAlpha));
 
 			// Print "Loading Complete" in centre of screen
-			pFontLarge->printCentered("Loading Complete", (int)_mvLoadingCompleteTextPos.x, (int)_mvLoadingCompleteTextPos.y, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, fAlpha));
+			pFontLarge->printCentered("Loading Complete", (int)_mvLoadingCompleteTextPos.x, (int)_mvLoadingCompleteTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextLarge.red, _mColTextLarge.green, _mColTextLarge.blue, fAlpha));
 
 			// Print "Resources Loaded: X / _miTotalNumResourcesToLoad"
 			if (_mbShowResLoadedTextOnFadeOut)
 			{
 				txt = "Resources Loaded: " + std::to_string(_miNumResourcesLoaded) + " / " + std::to_string(_miTotalNumResourcesToLoad);
-				pFontSmall->printCentered(txt, (int)_mvInfoTextLine2Pos.x, (int)_mvInfoTextLine2Pos.y, pWindow->getWidth(), pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, fAlpha));
+				pFontSmall->printCentered(txt, (int)_mvInfoTextLine2Pos.x, (int)_mvInfoTextLine2Pos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, fAlpha));
 			}
 
 			// Progress bar alpha
-			CGUIProgressBar* pPB = pGUI->getContainer("LoadingScreen")->getProgressBar("progress");
+			CGUIProgressBar* pPB = x->pGUI->getContainer("LoadingScreen")->getProgressBar("progress");
 			pPB->setProgress(1.0f);
 			if (_mbShowProgressBarOnFadeOut)
 				pPB->setAlpha(fAlpha);
@@ -307,7 +300,7 @@ namespace X
 				pPB->setAlpha(0.0f);
 			
 			// Render GUI for the progress bar
-			pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer_FB");
 		}
 
 		// Unbind the X:backbuffer_FB and render to the back buffer
@@ -316,14 +309,14 @@ namespace X
 		// Now render the "X:backbuffer_FB" to the backbuffer
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
-		pBGFB->renderTo2DQuad(0, 0, pWindow->getWidth(), pWindow->getHeight());
+		pBGFB->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 		glDisable(GL_BLEND);
 
 		// Swap buffers
-		pWindow->swapBuffers();
+		x->pWindow->swapBuffers();
 
 		// Check messages, to update the message loop and make sure the cursor is set
-		pWindow->checkMessages();
+		x->pWindow->checkMessages();
 	}
 
 	void SCResourceLoadingScreen::setFontSmall(const std::string& strFilename)
@@ -333,14 +326,13 @@ namespace X
 		_mbEnabled = false;
 
 		// Remove old resource
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		std::string strTxtResName = "LOADING_SCREEN: " + _mstrFontSmall;
-		pRM->removeFont(strTxtResName);
+		x->pResource->removeFont(strTxtResName);
 		
 		// Add the new resource
 		_mstrFontSmall = strFilename;
 		strTxtResName = "LOADING_SCREEN: " + _mstrFontSmall;
-		pRM->addFont(strTxtResName, strFilename);
+		x->pResource->addFont(strTxtResName, strFilename);
 
 		// Now re-enable the loading screen so it may proceed as normal
 		_mbEnabled = true;
@@ -353,14 +345,13 @@ namespace X
 		_mbEnabled = false;
 
 		// Remove old resource
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		std::string strTxtResName = "LOADING_SCREEN: " + _mstrFontLarge;
-		pRM->removeFont(strTxtResName);
+		x->pResource->removeFont(strTxtResName);
 
 		// Add the new resource
 		_mstrFontLarge = strFilename;
 		strTxtResName = "LOADING_SCREEN: " + _mstrFontLarge;
-		pRM->addFont(strTxtResName, strFilename);
+		x->pResource->addFont(strTxtResName, strFilename);
 
 		// Now re-enable the loading screen so it may proceed as normal
 		_mbEnabled = true;
@@ -373,14 +364,13 @@ namespace X
 		_mbEnabled = false;
 
 		// Remove old resource
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		std::string strTxtResName = "LOADING_SCREEN: " + _mstrBackgroundImage;
-		pRM->removeTexture2DFromFile(strTxtResName);
+		x->pResource->removeTexture2DFromFile(strTxtResName);
 
 		// Add the new resource
 		_mstrBackgroundImage = strFilename;
 		strTxtResName = "LOADING_SCREEN: " + _mstrBackgroundImage;
-		pRM->addTexture2DFromFile(strTxtResName, strFilename);
+		x->pResource->addTexture2DFromFile(strTxtResName, strFilename);
 
 		// Now re-enable the loading screen so it may proceed as normal
 		_mbEnabled = true;

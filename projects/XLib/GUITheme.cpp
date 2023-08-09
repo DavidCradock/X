@@ -1,9 +1,7 @@
 #include "PCH.h"
 #include "GUITheme.h"
 #include "stringUtils.h"
-#include "log.h"
-#include "resourceManager.h"
-#include "audioManager.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -341,29 +339,28 @@ namespace X
 
 	void CGUITheme::unloadTextures(void)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DFromFile(mImages.containerBGColour);
-		pRM->removeTexture2DFromFile(mImages.containerBGNormal);
-		pRM->removeTexture2DFromFile(mImages.buttonBGColour);
-		pRM->removeTexture2DFromFile(mImages.buttonBGNormal);
-		pRM->removeTexture2DFromFile(mImages.reflection);
-		pRM->removeTexture2DFromFile(mImages.textEditBGColour);
-		pRM->removeTexture2DFromFile(mImages.textEditBGNormal);
-		pRM->removeTexture2DFromFile(mImages.sliderBGColour);
-		pRM->removeTexture2DFromFile(mImages.sliderBGNormal);
-		pRM->removeTexture2DFromFile(mImages.sliderTabColour);
-		pRM->removeTexture2DFromFile(mImages.sliderTabNormal);
-		pRM->removeTexture2DFromFile(mImages.lineGraphBGColour);
-		pRM->removeTexture2DFromFile(mImages.lineGraphBGNormal);
-		pRM->removeTexture2DFromFile(mImages.tooltipBGColour);
-		pRM->removeTexture2DFromFile(mImages.progressBarBGColour);
-		pRM->removeTexture2DFromFile(mImages.progressBarBGNormal);
-		pRM->removeTexture2DFromFile(mImages.progressBarFillerColour);
-		pRM->removeTexture2DFromFile(mImages.progressBarFillerNormal);
-		pRM->removeTexture2DFromFile(mImages.textScrollBGColour);
-		pRM->removeTexture2DFromFile(mImages.textScrollBGNormal);
-		pRM->removeTexture2DFromFile(mImages.buttonImageBGColour);
-		pRM->removeTexture2DFromFile(mImages.buttonImageBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.containerBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.containerBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.buttonBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.buttonBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.reflection);
+		x->pResource->removeTexture2DFromFile(mImages.textEditBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.textEditBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.sliderBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.sliderBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.sliderTabColour);
+		x->pResource->removeTexture2DFromFile(mImages.sliderTabNormal);
+		x->pResource->removeTexture2DFromFile(mImages.lineGraphBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.lineGraphBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.tooltipBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.progressBarBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.progressBarBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.progressBarFillerColour);
+		x->pResource->removeTexture2DFromFile(mImages.progressBarFillerNormal);
+		x->pResource->removeTexture2DFromFile(mImages.textScrollBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.textScrollBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.buttonImageBGColour);
+		x->pResource->removeTexture2DFromFile(mImages.buttonImageBGNormal);
 	}
 
 	void CGUITheme::addFontsToManager(void)
@@ -378,12 +375,11 @@ namespace X
 
 	void CGUITheme::removeFontsFromManager(void)
 	{
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeFont(mFonts.containerTitle);
-		pRM->removeFont(mFonts.button);
-		pRM->removeFont(mFonts.text);
-		pRM->removeFont(mFonts.textEdit);
-		pRM->removeFont(mFonts.textScroll);
+		x->pResource->removeFont(mFonts.containerTitle);
+		x->pResource->removeFont(mFonts.button);
+		x->pResource->removeFont(mFonts.text);
+		x->pResource->removeFont(mFonts.textEdit);
+		x->pResource->removeFont(mFonts.textScroll);
 	}
 
 	void CGUITheme::addAudioToManager(void)
@@ -402,15 +398,14 @@ namespace X
 
 	void CGUITheme::removeAudioFromManager(void)
 	{
-		SCAudioManager* pAM = SCAudioManager::getPointer();
-		pAM->unloadSampleGroup("gui");
-		pAM->removeSample(mAudio.buttonClicked.strSampleName, "gui");			pAM->removeEmitter(mAudio.buttonClicked.strSampleName);
-		pAM->removeSample(mAudio.textEditTextAdd.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditTextAdd.strSampleName);
-		pAM->removeSample(mAudio.textEditBackspace.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditBackspace.strSampleName);
-		pAM->removeSample(mAudio.textEditReturn.strSampleName, "gui");			pAM->removeEmitter(mAudio.textEditReturn.strSampleName);
-		pAM->removeSample(mAudio.textEditActivate.strSampleName, "gui");		pAM->removeEmitter(mAudio.textEditActivate.strSampleName);
-		pAM->removeSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	pAM->removeEmitter(mAudio.textEditNoMoreCharSpace.strSampleName);
-		pAM->removeSample(mAudio.buttonImageClicked.strSampleName, "gui");		pAM->removeEmitter(mAudio.buttonImageClicked.strSampleName);
+		x->pAudio->unloadSampleGroup("gui");
+		x->pAudio->removeSample(mAudio.buttonClicked.strSampleName, "gui");				x->pAudio->removeEmitter(mAudio.buttonClicked.strSampleName);
+		x->pAudio->removeSample(mAudio.textEditTextAdd.strSampleName, "gui");			x->pAudio->removeEmitter(mAudio.textEditTextAdd.strSampleName);
+		x->pAudio->removeSample(mAudio.textEditBackspace.strSampleName, "gui");			x->pAudio->removeEmitter(mAudio.textEditBackspace.strSampleName);
+		x->pAudio->removeSample(mAudio.textEditReturn.strSampleName, "gui");			x->pAudio->removeEmitter(mAudio.textEditReturn.strSampleName);
+		x->pAudio->removeSample(mAudio.textEditActivate.strSampleName, "gui");			x->pAudio->removeEmitter(mAudio.textEditActivate.strSampleName);
+		x->pAudio->removeSample(mAudio.textEditNoMoreCharSpace.strSampleName, "gui");	x->pAudio->removeEmitter(mAudio.textEditNoMoreCharSpace.strSampleName);
+		x->pAudio->removeSample(mAudio.buttonImageClicked.strSampleName, "gui");		x->pAudio->removeEmitter(mAudio.buttonImageClicked.strSampleName);
 	}
 
 	void CGUITheme::_writeImageInfo(std::ofstream& stream, const std::string& strDescription, const std::string& strImagename)

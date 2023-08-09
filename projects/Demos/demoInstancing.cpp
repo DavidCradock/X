@@ -6,8 +6,7 @@ namespace X
 	void CStateDemoInstancing::onEnter(void)
 	{
 		// Add container which enables toggling between instanced and non-instanced rendering
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("toggleInstanced");
+		CGUIContainer* pCont = x->pGUI->addContainer("toggleInstanced");
 		pCont->setDimensions(320, 250);
 		std::string strTxt;
 		strTxt += "Toggle between instanced and non-instanced rendering with the button below.\n";
@@ -18,8 +17,7 @@ namespace X
 		_mbInstancedEnabled = true;
 		
 		// Create positions of each of the objects
-		SCWindow* pWindow = SCWindow::getPointer();
-		CVector2f vWndDims = pWindow->getDimensions() * 0.5f;
+		CVector2f vWndDims = x->pWindow->getDimensions() * 0.5f;
 		CVector2f vPos2f;
 		CVector3f vPos3f;
 		for (int i = 0; i < 50000; i++)	// Determine number of objects here!
@@ -37,23 +35,19 @@ namespace X
 		}
 
 		// Add a texture for use when rendering the quads
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->addTexture2DFromFile("particle", "data/X/textures/particles/particle0.png");
+		x->pResource->addTexture2DFromFile("particle", "data/X/textures/particles/particle0.png");
 	}
 
 	void CStateDemoInstancing::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("toggleInstanced");
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DFromFile("particle");
+		x->pGUI->removeContainer("toggleInstanced");
+		x->pResource->removeTexture2DFromFile("particle");
 	}
 
 	void CStateDemoInstancing::onActive(CFiniteStateMachine* pFSM)
 	{
 		// Toggle instancing
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("toggleInstanced");
+		CGUIContainer* pCont = x->pGUI->getContainer("toggleInstanced");
 		CGUIButton* pButton = pCont->getButton("toggleInstanced");
 		if (pButton->getClicked())
 		{
@@ -67,8 +61,7 @@ namespace X
 
 		// Regardless of rendering mode, update position of all objects
 		_mTimer.update();
-		SCWindow* pWindow = SCWindow::getPointer();
-		CVector2f vWndDims = pWindow->getDimensions() * 0.5f;
+		CVector2f vWndDims = x->pWindow->getDimensions() * 0.5f;
 		for (int i = 0; i < (int)_mvecPosition.size(); i++)
 		{
 //			break;
@@ -90,27 +83,25 @@ namespace X
 		}
 
 		// Render based upon whether instancing is enabled or not
-		// Get pointers to things we need
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		// Enable blending and disable depth testing
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 
 		// Obtain and bind texture
-		CResourceTexture2DFromFile* pTexture = pRM->getTexture2DFromFile("particle");
+		CResourceTexture2DFromFile* pTexture = x->pResource->getTexture2DFromFile("particle");
 		pTexture->bind(0);
 		
 		// Create matrices
 		CMatrix matView, matWorld, matProj;
-		matView.setTranslation(pWindow->getWidth() * 0.5f, pWindow->getHeight() * 0.5f, 0.0f);// Move view to centre of screen
+		matView.setTranslation(x->pWindow->getWidth() * 0.5f, x->pWindow->getHeight() * 0.5f, 0.0f);// Move view to centre of screen
 		matProj.setProjectionOrthographic();
 
 		CResourceShader* pShader;
 		if (_mbInstancedEnabled)
 		{
 			// Setup instanced geometry 
-			CResourceVertexBufferCPTInst* pVBI = pRM->getVertexBufferCPTInst("X:default");
+			CResourceVertexBufferCPTInst* pVBI = x->pResource->getVertexBufferCPTInst("X:default");
 			pVBI->removeAll();
 			pVBI->addQuad2D(CVector2f(0, 0), CVector2f(10, 10));
 
@@ -125,7 +116,7 @@ namespace X
 			pVBI->update();
 
 			// Bind and setup shader
-			pShader = pRM->getShader("X:VBCPTInst");
+			pShader = x->pResource->getShader("X:VBCPTInst");
 			pShader->bind();
 			pShader->setInt("texture0", 0);
 			pShader->setMat4("matrixView", matView);
@@ -136,7 +127,7 @@ namespace X
 		else
 		{
 			// Setup non-instanced geometry 
-			CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
+			CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
 			pVB->removeGeom();
 			// Add each quad for each object
 			for (int i = 0; i < (int)_mvecPosition.size(); i++)
@@ -146,7 +137,7 @@ namespace X
 			pVB->update();
 
 			// Bind and setup shader
-			pShader = pRM->getShader("X:VBCPT");
+			pShader = x->pResource->getShader("X:VBCPT");
 			pShader->bind();
 			pShader->setInt("texture0", 0);
 			pShader->setMat4("matrixWorld", matWorld);

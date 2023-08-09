@@ -174,8 +174,8 @@ namespace X
 		// CImage image;
 		// image.createBlank(512, 512, 4);
 		// // Do more stuff to image here
-		// SCResourceManager::getPointer()->addTexture2DFromImage("MyImageResource", image);
-		// CGUIContainer* pContainer = SCGUIManager::getPointer()->getContainer("container name");
+		// x->pResource->addTexture2DFromImage("MyImageResource", image);
+		// CGUIContainer* pContainer = x->pGUI->getContainer("container name");
 		// pContainer->addImageFromImage("MyGUIImage", 0, 0, "MyImageResource");
 		CGUIImage* addImageFromImage(const std::string& strName, float fPosX, float fPosY, const std::string& strCResourceTexture2DFromImage, float fWidth = -1.0f, float fHeight = -1.0f);
 

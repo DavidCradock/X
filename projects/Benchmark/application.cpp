@@ -56,18 +56,16 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(1);
+		x->pLoadingScreen->onInit(1);
 
 		// Set window title bar text and set icon
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setText("X: Benchmark. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
-		pWindow->setIcon(IDI_ICON1);
+		x->pWindow->setText("X: Benchmark. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
+		x->pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
-		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+		x->pInput->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
 		// Turn off VSync, we're benchmarking!
-		pWindow->setVsync(false);
+		x->pWindow->setVsync(false);
 
 		// Initialise finite state machine and the states for each benchmark
 		CState01_Welcome* pState01 = new CState01_Welcome;
@@ -86,7 +84,7 @@ namespace X
 		std::vector<std::string> vstrLines2 = StringUtils::splitString(strMultipleLines, "\n");
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 	}
 
 	void CApplication::onStart(void)
@@ -103,22 +101,21 @@ namespace X
 		_mFSM.update();
 
 		// Escape key to exit
-		SCInputManager* pInput = SCInputManager::getPointer();
-		if (pInput->key.pressed(KC_ESCAPE))
+		if (x->pInput->key.pressed(KC_ESCAPE))
 			return false;
 
 		// Toggle fullscreen
-		if (pInput->key.once(KC_F1))
+		if (x->pInput->key.once(KC_F1))
 			SCWindow::getPointer()->toggleFullscreen();
 
 		// Toggle vertical sync
-		if (pInput->key.once(KC_F2))
+		if (x->pInput->key.once(KC_F2))
 			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
 
 		// Toggle statistics window
-		if (pInput->key.once(KC_F3))
+		if (x->pInput->key.once(KC_F3))
 		{
-			CGUIContainer* pStatsCont = SCGUIManager::getPointer()->getContainer("X:Default:Statistics");
+			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;
@@ -126,10 +123,8 @@ namespace X
 
 	void CState01_Welcome::onEnter(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-
 		// Add container
-		CGUIContainer* pCont = pGUI->addContainer("WelcomeScreen");
+		CGUIContainer* pCont = x->pGUI->addContainer("WelcomeScreen");
 		pCont->setDimensions(320, 240);
 		pCont->setPositionCentreWindow();
 
@@ -154,24 +149,21 @@ namespace X
 
 	void CState01_Welcome::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Autostart
 		timer.update();
 		fTimeDelayUntilAutostart -= timer.getSecondsPast();
-		if (pInput->mouse.getMouseDeltaGUI().x != 0.0f || pInput->mouse.getMouseDeltaGUI().y != 0.0f)
+		if (x->pInput->mouse.getMouseDeltaGUI().x != 0.0f || x->pInput->mouse.getMouseDeltaGUI().y != 0.0f)
 			fTimeDelayUntilAutostart = 5.0f;
 
 		// Get pointer to the begin benchmark button and wait for it to be clicked.
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("WelcomeScreen");
+		CGUIContainer* pCont = x->pGUI->getContainer("WelcomeScreen");
 		CGUIButton* pButton = pCont->getButton("Begin");
 		std::string strTxt = "Begin (Autostart in: ";
 		strTxt += std::format("{:.1f}", fTimeDelayUntilAutostart);
 		strTxt += ")";
 		pButton->mstrText = strTxt;
 
-		if (pButton->getClicked() || pInput->key.pressed(KC_RETURN) || pInput->key.pressed(KC_SPACE) || fTimeDelayUntilAutostart <= 0.0f)
+		if (pButton->getClicked() || x->pInput->key.pressed(KC_RETURN) || x->pInput->key.pressed(KC_SPACE) || fTimeDelayUntilAutostart <= 0.0f)
 		{
 			pFSM->switchToState("state02_2DSprites");
 		}
@@ -179,16 +171,13 @@ namespace X
 
 	void CState01_Welcome::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("WelcomeScreen");
+		x->pGUI->removeContainer("WelcomeScreen");
 	}
 
 	void CState02_2DSprites::onEnter(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-
 		// Create non-window container
-		CGUIContainer* pCont = pGUI->addContainer("BenchmarkInfo");
+		CGUIContainer* pCont = x->pGUI->addContainer("BenchmarkInfo");
 		pCont->setBehaviour(false);
 		pCont->setVisible(true);
 
@@ -200,23 +189,20 @@ namespace X
 		pText->setColour(false, CColour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		// Setup 2D renderer
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
 		// Add the world
-		C2DWorld* pWorld = p2D->addWorld("World1");
+		C2DWorld* pWorld = x->p2dRenderer->addWorld("World1");
 		pWorld->setVisible(true);
 		// Add the camera
 		C2DCamera* pCamera = pWorld->addCamera("Cam1");
 		// Add layer 1 for the centered rotation 2D entity
 		C2DLayer* pLayer = pWorld->addLayer("Layer1");
 		// Create texture atlas holding each of the 360 images
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		vstrImages = StringUtils::getFilesInDir("data/Benchmark/images/disc/");
-		CResourceTexture2DAtlas* pAtlas = pRM->addTexture2DAtlas("Atlas1", vstrImages);
+		CResourceTexture2DAtlas* pAtlas = x->pResource->addTexture2DAtlas("Atlas1", vstrImages);
 
 		// Create scaled up centered entity
 		C2DEntity* pEntity = pLayer->addEntity("Entity:0", "Atlas1");
-		SCWindow* pWindow = SCWindow::getPointer();
-		pEntity->setPosition(CVector2f(pWindow->getWidth() / 2.0f, pWindow->getHeight() / 2.0f));
+		pEntity->setPosition(CVector2f(x->pWindow->getWidth() / 2.0f, x->pWindow->getHeight() / 2.0f));
 		pEntity->setScale(1.0f, 1.0f);
 		pEntity->setImagesMultiple(vstrImages);
 
@@ -234,8 +220,7 @@ namespace X
 	void CState02_2DSprites::onActive(CFiniteStateMachine* pFSM)
 	{
 		timer.update();
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		C2DWorld* pWorld = p2D->getWorld("World1");
+		C2DWorld* pWorld = x->p2dRenderer->getWorld("World1");
 		C2DLayer* pLayer = pWorld->getLayer("Layer1");
 
 		// Rotate the images of the centered entity
@@ -249,9 +234,8 @@ namespace X
 		fSecondsNoEntitiesAdded += timer.getSecondsPast();
 
 		// Add entity if framerate is above the refresh rate
-		SCWindow* pWindow = SCWindow::getPointer();
 		pLayer = pWorld->getLayer("Layer2");
-		if (timer.getFPS() >= pWindow->getRefreshRate())
+		if (timer.getFPS() >= x->pWindow->getRefreshRate())
 		{
 			for (unsigned int i = 0; i < 30; i++)
 			{
@@ -259,7 +243,7 @@ namespace X
 				std::string strName = "Entity:" + std::to_string(pLayer->getNumEntities());
 				pEntity = pLayer->addEntity(strName, "Atlas1");
 				pEntity->setImagesMultiple(vstrImages);
-				pEntity->setPosition(CVector2f(randf(0.0f, (float)pWindow->getWidth()), randf(0.0f, (float)pWindow->getHeight())));
+				pEntity->setPosition(CVector2f(randf(0.0f, (float)x->pWindow->getWidth()), randf(0.0f, (float)x->pWindow->getHeight())));
 				float fScale = randf(0.1f, 0.3f);
 				pEntity->setScale(fScale, fScale);
 				pEntity->setFrameBasedOnAngle(randf(0, 360));
@@ -268,8 +252,7 @@ namespace X
 				fSecondsNoEntitiesAdded = 0.0f;
 			}
 			// Update GUI text
-			SCGUIManager* pGUI = SCGUIManager::getPointer();
-			CGUIContainer* pCont = pGUI->getContainer("BenchmarkInfo");
+			CGUIContainer* pCont = x->pGUI->getContainer("BenchmarkInfo");
 			CGUIText* pText = pCont->getText("b1_num_entities");
 			std::string strText = "Number of entities: " + std::to_string(pLayer->getNumEntities());
 			pText->setText(strText);
@@ -287,13 +270,10 @@ namespace X
 	void CState02_2DSprites::onExit(void)
 	{
 		// Cleanup
-		SC2DRenderer* p2D = SC2DRenderer::getPointer();
-		p2D->removeAllWorlds();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DAtlas("Atlas1");
+		x->p2dRenderer->removeAllWorlds();
+		x->pResource->removeTexture2DAtlas("Atlas1");
 
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->getContainer("BenchmarkInfo");
+		CGUIContainer* pCont = x->pGUI->getContainer("BenchmarkInfo");
 		pCont->removeText("b1_num_entities");
 
 		// Hide container
@@ -310,13 +290,10 @@ namespace X
 		gResults.save();
 
 		// Re-enable Vsync
-		SCWindow* pWindow = SCWindow::getPointer();
-		pWindow->setVsync(true);
-
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
+		x->pWindow->setVsync(true);
 
 		// Add container
-		CGUIContainer* pCont = pGUI->addContainer("Results");
+		CGUIContainer* pCont = x->pGUI->addContainer("Results");
 		pCont->setDimensions(800, 600);
 		pCont->setPositionCentreWindow();
 
@@ -332,8 +309,7 @@ namespace X
 
 	void CState99_Results::onActive(CFiniteStateMachine* pFSM)
 	{
-		// Get pointer to the begin benchmark button and wait for it to be clicked.
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
+
 	}
 
 	void CState99_Results::onExit(void)

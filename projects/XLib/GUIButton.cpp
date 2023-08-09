@@ -1,11 +1,8 @@
 #include "PCH.h"
 #include "GUIButton.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
-#include "input.h"
-#include "audioManager.h"
 #include "GUITooltip.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -27,20 +24,15 @@ namespace X
 	void CGUIButton::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 		CColour col(_mfCurrentBGCol[0], _mfCurrentBGCol[1], _mfCurrentBGCol[2], _mfCurrentBGCol[3]);
 		renderBackground(pParentContainer, strFramebufferToSampleFrom, pTheme->mImages.buttonBGColour, pTheme->mImages.buttonBGNormal, col);
 
-		// Get required resources needed to render
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
-
 		// Now render the font stuff
 		int iRTDims[2];
-		iRTDims[0] = int(pWindow->getWidth());
-		iRTDims[1] = int(pWindow->getHeight());
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.button);
+		iRTDims[0] = int(x->pWindow->getWidth());
+		iRTDims[1] = int(x->pWindow->getHeight());
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.button);
 
 		pFont->printCentered(mstrText,										// The text
 			int(pContainer->mfPositionX + mfPositionX + (mfWidth / 2)),		// X position
@@ -52,10 +44,8 @@ namespace X
 
 	void CGUIButton::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
-		SCGUIManager* pGUIMan = SCGUIManager::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		_mTimer.update();
 		float fSecondsPast = _mTimer.getSecondsPast();
 		if (fSecondsPast > 0.1f)
@@ -75,7 +65,7 @@ namespace X
 			if (bMouseOver)
 			{
 				_mState = state::over;
-				if (pInput->mouse.leftButDown())
+				if (x->pInput->mouse.leftButDown())
 				{
 					_mState = state::down;
 				}
@@ -222,10 +212,10 @@ namespace X
 		_mbClicked = false;
 		if (state::down == _mStatePrevious)
 		{
-			if (!pInput->mouse.leftButDown())
+			if (!x->pInput->mouse.leftButDown())
 			{
 				_mbClicked = true;
-				SCAudioManager::getPointer()->getEmitter(pTheme->mAudio.buttonClicked.strSampleName)->play(pGUIMan->getAudioVol() * pTheme->mAudio.buttonClicked.fVolume, pTheme->mAudio.buttonClicked.fPitch);
+				x->pAudio->getEmitter(pTheme->mAudio.buttonClicked.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.buttonClicked.fVolume, pTheme->mAudio.buttonClicked.fPitch);
 			}
 		}
 		// Store current state to detect mouse clicks

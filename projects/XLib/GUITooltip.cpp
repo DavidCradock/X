@@ -1,11 +1,7 @@
 #include "PCH.h"
 #include "GUITooltip.h"
-#include "log.h"
-#include "resourceManager.h"
 #include "GUIManager.h"
-#include "input.h"
-
-#include "window.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -28,17 +24,13 @@ namespace X
 			return;
 
 		// Get pointers to stuff we need
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;	// Needed to get theme
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
-		CResourceFramebuffer* pBGFB = pRM->getFramebuffer("X:backbuffer_FB");
-		CResourceFramebuffer* pFB = pRM->getFramebuffer("X:guitooltipFB");
-		CResourceTexture2DFromFile* pTexColour = pRM->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
+		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer("X:guitooltipFB");
+		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
 		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
 		CVector2f vTexDimsPoint6 = pTexColour->getDimensions() * 0.6666666f;
-		SCWindow* pWindow = SCWindow::getPointer();
-		SCInputManager* pInput = SCInputManager::getPointer();
 
 		// Tooltip framebuffer: set size if needed, clear it and set as render target
 		// We need to make the framebuffer bigger than just the mfWidth and mfHeight, as we need to accommodate borders
@@ -46,8 +38,8 @@ namespace X
 		pFB->bindAsRenderTarget(true, false);
 
 		// Render the background of the tooltip
-		CResourceVertexBufferCPT* pVB = pRM->getVertexBufferCPT("X:default");
-		CResourceShader* pShader = pRM->getShader("X:VBCPT");
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 		pShader->bind();
 
 		// Setup the matrices
@@ -261,15 +253,15 @@ namespace X
 		CVector3f vTooltipPosition;
 		vTooltipPosition.x = mfPositionX + vTexDimsPoint3.x;
 		vTooltipPosition.y = mfPositionY;
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		// Move tooltip position left if it doesn't fit on screen
-		if (vTooltipPosition.x + pFB->getWidth() >= pWindow->getWidth())
+		if (vTooltipPosition.x + pFB->getWidth() >= x->pWindow->getWidth())
 		{
 			// Position so the tooltip's right most edge is to the left of the mouse cursor
 			vTooltipPosition.x = vMousePos.x - (float)pFB->getWidth();
 		}
 		// Move tooltip position up if it doesn't fit on screen
-		if (vTooltipPosition.y + pFB->getHeight() >= pWindow->getHeight())
+		if (vTooltipPosition.y + pFB->getHeight() >= x->pWindow->getHeight())
 		{
 			// Position so the tooltip's bottom most edge is above the mouse cursor
 			vTooltipPosition.y = vMousePos.y - (float)pFB->getHeight();
@@ -281,13 +273,10 @@ namespace X
 	void CGUITooltip::update(void* pParentContainer, CGUIBaseObject* pGUIOwner, bool bMouseOverOwner)
 	{
 		// Set position of tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		SCGUIManager* pGUIManager = SCGUIManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
-		CVector2f vTooltipOffset = pGUIManager->getTooltipOffset();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		CVector2f vTooltipOffset = x->pGUI->getTooltipOffset();
 		mfPositionX = vMousePos.x + vTooltipOffset.x;
 		mfPositionY = vMousePos.y + vTooltipOffset.y;
-		SCWindow* pWindow = SCWindow::getPointer();
 
 		// Deal with fading in and out
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
@@ -309,9 +298,9 @@ namespace X
 			{
 				// Delay tooltip from fading in
 				_mfTooltipDelay += fSecondsPast;
-				if (_mfTooltipDelay >= pGUIManager->getTooltipDelay())
+				if (_mfTooltipDelay >= x->pGUI->getTooltipDelay())
 				{
-					_mfTooltipDelay = pGUIManager->getTooltipDelay();
+					_mfTooltipDelay = x->pGUI->getTooltipDelay();
 					_mColour.alpha += fSecondsPast * pTheme->mfTooltipFadeSpeed;
 					clamp(_mColour.alpha, 0.0f, 1.0f);
 				}
@@ -324,8 +313,7 @@ namespace X
 		// Text
 		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		float fMaxPos[2];
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 		while (itText != _mmapTexts.end())
 		{
 			// We need to set the dimensions of the text object using the current theme
@@ -335,7 +323,7 @@ namespace X
 			// Do not render, but obtain each line of text and the total width and height of all text which is rendered.
 			std::vector<std::string> vstrLines;
 			int iTextTotalHeight;
-			pFont->printInRectNewline(false, itText->second->getText(), 0, 0, (int)pWindow->getWidth(), (int)pWindow->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f);
+			pFont->printInRectNewline(false, itText->second->getText(), 0, 0, (int)x->pWindow->getWidth(), (int)x->pWindow->getHeight(), vstrLines, iTextTotalHeight, "\n", 1.0f);
 			int iTextMaxWidth = 0;
 			std::vector<std::string>::iterator it = vstrLines.begin();
 			while (it != vstrLines.end())
@@ -586,8 +574,7 @@ namespace X
 		_mmapImages[strName] = pNewRes;
 
 		// Add strImageFilename to the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DFromFile* pTex = pResMan->addTexture2DFromFile(strImageFilename, strImageFilename);
+		CResourceTexture2DFromFile* pTex = x->pResource->addTexture2DFromFile(strImageFilename, strImageFilename);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -614,8 +601,7 @@ namespace X
 		// Remove _mstrTextureResourceName from the resource manager
 		if (it->second->_mbImageIsFromFile)
 		{
-			SCResourceManager* pResMan = SCResourceManager::getPointer();
-			pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+			x->pResource->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
 		}
 		
 		delete it->second;
@@ -625,13 +611,12 @@ namespace X
 	void CGUITooltip::removeAllImages(void)
 	{
 		std::map<std::string, CGUIImage*>::iterator it = _mmapImages.begin();
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
 		while (it != _mmapImages.end())
 		{
 			// Remove _mstrTextureResourceName from the resource manager
 			if (it->second->_mbImageIsFromFile)
 			{
-				pResMan->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
+				x->pResource->removeTexture2DFromFile(it->second->_mstrTextureResourceName);
 			}
 			delete it->second;
 			_mmapImages.erase(it);
@@ -654,8 +639,7 @@ namespace X
 		_mmapImageAnimateds[strName] = pNewRes;
 
 		// Add CResourceTexture2DAtlas to the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceTexture2DAtlas* pTex = pResMan->addTexture2DAtlas(strName, vecStrImageFilenames, false, 1);
+		CResourceTexture2DAtlas* pTex = x->pResource->addTexture2DAtlas(strName, vecStrImageFilenames, false, 1);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -680,8 +664,7 @@ namespace X
 			return;
 
 		// Remove CResourceTexture2DAtlas from the resource manager
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		pResMan->removeTexture2DAtlas(it->second->_mstrResourceTexture2DAtlasName);
+		x->pResource->removeTexture2DAtlas(it->second->_mstrResourceTexture2DAtlasName);
 
 		delete it->second;
 		_mmapImageAnimateds.erase(it);
@@ -713,8 +696,7 @@ namespace X
 		_mmapImageFramebuffers[strName] = pNewRes;
 
 		// Get CResourceFramebuffer from the resource manager to set size of this object
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceFramebuffer* pFB = pResMan->getFramebuffer(strFBname);
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer(strFBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)
@@ -768,8 +750,7 @@ namespace X
 		_mmapImageDepthbuffers[strName] = pNewRes;
 
 		// Get CResourceFramebuffer from the resource manager to set size of this object
-		SCResourceManager* pResMan = SCResourceManager::getPointer();
-		CResourceDepthbuffer* pDB = pResMan->getDepthbuffer(strDBname);
+		CResourceDepthbuffer* pDB = x->pResource->getDepthbuffer(strDBname);
 
 		// If a value less than 0 is passed to width/height, set widget to dims of the image
 		if (fWidth < 0)

@@ -1,10 +1,8 @@
 #include "PCH.h"
 #include "GUIText.h"
 #include "GUIManager.h"
-#include "resourceManager.h"
-#include "window.h"
 #include "GUITooltip.h"
-#include "input.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -22,15 +20,12 @@ namespace X
 	void CGUIText::render(void* pParentContainer)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		SCWindow* pWindow = SCWindow::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 
 		int iRTDims[2];
-		iRTDims[0] = int(pWindow->getWidth());
-		iRTDims[1] = int(pWindow->getHeight());
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		iRTDims[0] = int(x->pWindow->getWidth());
+		iRTDims[1] = int(x->pWindow->getHeight());
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 
 		CColour col;
 		if (_mbUseThemeColour)
@@ -52,14 +47,12 @@ namespace X
 	void CGUIText::renderForTooltip(void* pParentContainer, unsigned int uiTooltipFramebufferWidth, unsigned int uiTooltipFramebufferHeight)
 	{
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		SCResourceManager* pRM = SCResourceManager::getPointer();
 		CGUITheme* pTheme = pContainer->getTheme();
 
 		int iRTDims[2];
 		iRTDims[0] = int(uiTooltipFramebufferWidth);
 		iRTDims[1] = int(uiTooltipFramebufferHeight);
-		CResourceFont* pFont = pRM->getFont(pTheme->mFonts.text);
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 
 		CColour col;
 		if (_mbUseThemeColour)
@@ -78,8 +71,7 @@ namespace X
 	void CGUIText::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
 	{
 		// Update this object's tooltip
-		SCInputManager* pInput = SCInputManager::getPointer();
-		CVector2f vMousePos = pInput->mouse.getCursorPos();
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
 		bool bMouseOver = false;
 		if (bParentContainerAcceptingMouseClicks)

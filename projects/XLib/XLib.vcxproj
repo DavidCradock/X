@@ -75,6 +75,8 @@
     <ClInclude Include="resourceVertexBufferCPT2.h" />
     <ClInclude Include="resourceVertexBufferCPTBNT.h" />
     <ClInclude Include="resourceVertexBufferCPTInst.h" />
+    <ClInclude Include="settings.h" />
+    <ClInclude Include="singletons.h" />
     <ClInclude Include="SMCamera.h" />
     <ClInclude Include="frustum.h" />
     <ClInclude Include="image.h" />
@@ -186,6 +188,8 @@
     <ClCompile Include="resourceVertexBufferCPT2.cpp" />
     <ClCompile Include="resourceVertexBufferCPTBNT.cpp" />
     <ClCompile Include="resourceVertexBufferCPTInst.cpp" />
+    <ClCompile Include="settings.cpp" />
+    <ClCompile Include="singletons.cpp" />
     <ClCompile Include="SMCamera.cpp" />
     <ClCompile Include="frustum.cpp" />
     <ClCompile Include="image.cpp" />

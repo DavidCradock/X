@@ -6,30 +6,28 @@ namespace X
 	void CStateDemoOctTree::onEnter(void)
 	{
 		// Use the resource loading screen
-		SCResourceLoadingScreen* pLS = SCResourceLoadingScreen::getPointer();
-		pLS->onInit(1);
+		x->pLoadingScreen->onInit(1);
 
 		// Set oct tree settings
 		_mOctTree.init(1);
 
 		// Create resources used by scene manager
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->addTexture2DFromFile("ground", "data/Demos/DemoOctTree/textures/ground.png");
+		x->pResource->addTexture2DFromFile("ground", "data/Demos/DemoOctTree/textures/ground.png");
 
 		// Cube triangle
-		CResourceVertexBufferCPTBNT* pVB = pRM->addVertexBufferCPTBNT("cube1x1x1");
+		CResourceVertexBufferCPTBNT* pVB = x->pResource->addVertexBufferCPTBNT("cube1x1x1");
 		pVB->addCube(CVector3f(0.0f, 0.0f, 0.0f), CVector3f(1.0f, 1.0f, 1.0f));
 		pVB->update();
 
 		// Cube line
-		CResourceVertexBufferLine* pLine = pRM->addVertexBufferLine("axis");
+		CResourceVertexBufferLine* pLine = x->pResource->addVertexBufferLine("axis");
 		pLine->setDrawModeAsLineList();
 		CResourceVertexBufferLine::Vertex v;
 		pLine->addAxis(CVector3f(0.0f, 0.0f, 0.0f), 2.0f);
 		pLine->update();
 
 		// Ground triangle
-		pVB = pRM->addVertexBufferCPTBNT("ground");
+		pVB = x->pResource->addVertexBufferCPTBNT("ground");
 		pVB->addCube(CVector3f(0.0f, -0.5f, 0.0f), CVector3f(64.0f, 1.0f, 64.0f), CVector2f(32.0f, 32.0f));
 		pVB->update();
 
@@ -92,11 +90,10 @@ namespace X
 		}
 
 		// Create invisible GUI container showing controls
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		CGUIContainer* pCont = pGUI->addContainer("controls");
+		CGUIContainer* pCont = x->pGUI->addContainer("controls");
 		CGUITheme* pTheme = pCont->getTheme();
 		pCont->setBehaviour(false);
-		float fTextHeight = pRM->getFont(pTheme->mFonts.text)->getTextHeight(1.0f);
+		float fTextHeight = x->pResource->getFont(pTheme->mFonts.text)->getTextHeight(1.0f);
 		float fYpos = 0;
 		pCont->addText("txt0", 5, fYpos, "Controls...")->setColour(false);	fYpos += fTextHeight;
 		pCont->addText("txt1", 5, fYpos, "W and S = move along forward vector of entity.")->setColour(false);	fYpos += fTextHeight;
@@ -111,7 +108,7 @@ namespace X
 		pCont->addText("txt10", 5, fYpos, "Camera Position: ")->setColour(false); fYpos += fTextHeight;
 
 		// End of loading screen
-		pLS->onInitEnd();
+		x->pLoadingScreen->onInitEnd();
 
 		// Debug CFrustum
 		CSMCamera camTemp;
@@ -123,14 +120,12 @@ namespace X
 
 	void CStateDemoOctTree::onExit(void)
 	{
-		SCGUIManager* pGUI = SCGUIManager::getPointer();
-		pGUI->removeContainer("controls");
+		x->pGUI->removeContainer("controls");
 
-		SCResourceManager* pRM = SCResourceManager::getPointer();
-		pRM->removeTexture2DFromFile("ground");
-		pRM->removeVertexBufferCPT("cube1x1x1");
-		pRM->removeVertexBufferLine("axis");
-		pRM->removeVertexBufferCPT("ground");
+		x->pResource->removeTexture2DFromFile("ground");
+		x->pResource->removeVertexBufferCPT("cube1x1x1");
+		x->pResource->removeVertexBufferLine("axis");
+		x->pResource->removeVertexBufferCPT("ground");
 
 		_mSM.removeAllMaterials();
 //		_mSM.removeAllCameras();
@@ -142,8 +137,6 @@ namespace X
 
 	void CStateDemoOctTree::onActive(CFiniteStateMachine* pFSM)
 	{
-		SCInputManager* pInput = SCInputManager::getPointer();
-
 		// Timer delta
 		timer.update();
 
@@ -157,20 +150,20 @@ namespace X
 		float fRotPitch = 0.0f;
 		float fRotYaw = 0.0f;
 		float fRotRoll = 0.0f;
-		if (pInput->key.pressed(KC_LSHIFT) || pInput->key.pressed(KC_RSHIFT)) { fMultiplier = 10.0f; }
-		if (pInput->key.pressed(KC_W)) { fTransForward = fMultiplier * timer.getSecondsPast();	bTranslate = true; }
-		if (pInput->key.pressed(KC_S)) { fTransForward = -fMultiplier * timer.getSecondsPast();	bTranslate = true; }
-		if (pInput->key.pressed(KC_A)) { fTransRight = -fMultiplier * timer.getSecondsPast();	bTranslate = true; }
-		if (pInput->key.pressed(KC_D)) { fTransRight = fMultiplier * timer.getSecondsPast();	bTranslate = true; }
-		if (pInput->key.pressed(KC_R)) { fTransUp = fMultiplier * timer.getSecondsPast();		bTranslate = true; }
-		if (pInput->key.pressed(KC_F)) { fTransUp = -fMultiplier * timer.getSecondsPast();		bTranslate = true; }
+		if (x->pInput->key.pressed(KC_LSHIFT) || x->pInput->key.pressed(KC_RSHIFT)) { fMultiplier = 10.0f; }
+		if (x->pInput->key.pressed(KC_W)) { fTransForward = fMultiplier * timer.getSecondsPast();	bTranslate = true; }
+		if (x->pInput->key.pressed(KC_S)) { fTransForward = -fMultiplier * timer.getSecondsPast();	bTranslate = true; }
+		if (x->pInput->key.pressed(KC_A)) { fTransRight = -fMultiplier * timer.getSecondsPast();	bTranslate = true; }
+		if (x->pInput->key.pressed(KC_D)) { fTransRight = fMultiplier * timer.getSecondsPast();	bTranslate = true; }
+		if (x->pInput->key.pressed(KC_R)) { fTransUp = fMultiplier * timer.getSecondsPast();		bTranslate = true; }
+		if (x->pInput->key.pressed(KC_F)) { fTransUp = -fMultiplier * timer.getSecondsPast();		bTranslate = true; }
 
-		if (pInput->key.pressed(KC_Y)) { fRotPitch = fMultiplier * timer.getSecondsPast();	bRotate = true; }
-		if (pInput->key.pressed(KC_H)) { fRotPitch = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
-		if (pInput->key.pressed(KC_G)) { fRotYaw = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
-		if (pInput->key.pressed(KC_J)) { fRotYaw = fMultiplier * timer.getSecondsPast();	bRotate = true; }
-		if (pInput->key.pressed(KC_I)) { fRotRoll = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
-		if (pInput->key.pressed(KC_K)) { fRotRoll = fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_Y)) { fRotPitch = fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_H)) { fRotPitch = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_G)) { fRotYaw = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_J)) { fRotYaw = fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_I)) { fRotRoll = -fMultiplier * timer.getSecondsPast();	bRotate = true; }
+		if (x->pInput->key.pressed(KC_K)) { fRotRoll = fMultiplier * timer.getSecondsPast();	bRotate = true; }
 
 		// Apply translation to cube and axis entities
 		if (bTranslate)
