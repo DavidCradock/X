@@ -69,12 +69,15 @@ namespace X
 		}
 	}
 
-	void CResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToWindowDimensions, const CColour& backgroundClearColour)
+	void CResourceFramebuffer::bindAsRenderTarget(bool bClearbuffer,bool bResizeToScaledWindowDimensions, const CColour& backgroundClearColour)
 	{
-		if (bResizeToWindowDimensions)
+		if (bResizeToScaledWindowDimensions)
 		{
-			unsigned int iWindowWidth = (unsigned int)x->pWindow->getWidth();
-			unsigned int iWindowHeight = (unsigned int)x->pWindow->getHeight();
+			CVector2f vScaledDims;
+			vScaledDims.x = x->pSettings->getBackbufferScale() * float(x->pWindow->getWidth());
+			vScaledDims.y = x->pSettings->getBackbufferScale() * float(x->pWindow->getHeight());
+			unsigned int iWindowWidth = (unsigned int)vScaledDims.x;
+			unsigned int iWindowHeight = (unsigned int)vScaledDims.y;
 			if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
 			{
 				resize(iWindowWidth, iWindowHeight);
