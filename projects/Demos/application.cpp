@@ -15,6 +15,13 @@ namespace X
 {
 	void CApplication::initOnce(void)
 	{
+		// TEMP create CHeckbox wdiget normal image
+//		CImage imageHeight;
+//		imageHeight.load("data/X/gui/default/checkbox_BGheight.png");
+//		CImage imageNormal;
+//		imageHeight.normalmap(imageNormal);
+//		imageNormal.saveAsPNG("data/X/gui/default/checkbox_BGnormal.png");
+		
 		// Use the resource loading screen
 		x->pLoadingScreen->onInit(0);
 		x->pLoadingScreen->setFadeOut(0.0f);

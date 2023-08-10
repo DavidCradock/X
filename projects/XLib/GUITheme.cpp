@@ -32,6 +32,9 @@ namespace X
 		mImages.textScrollBGNormal = "data/X/GUI/default/textscrollBGnormal.png";
 		mImages.buttonImageBGColour = "data/X/GUI/default/buttonImageBGcolour.png";
 		mImages.buttonImageBGNormal = "data/X/GUI/default/buttonImageBGnormal.png";
+		mImages.checkboxBGColourOFF = "data/X/GUI/default/checkboxBGcolourOFF.png";
+		mImages.checkboxBGColourON = "data/X/GUI/default/checkboxBGcolourON.png";
+		mImages.checkboxBGNormal = "data/X/GUI/default/checkboxBGnormal.png";
 
 		// Fonts
 		mFonts.containerTitle = "data/X/fonts/satoshi_22";
@@ -72,6 +75,7 @@ namespace X
 		mfTextScrollSliderWidth = 20.0f;
 		mfButtonImageTextFadeSpeed = 5.0f;
 		mfTooltipFadeSpeed = 2.0f;
+		mfCheckboxFadeSpeed = 1.0f;
 
 		// Offsets
 		mOffsets.containerTitlebarText.iOffsetX = 1;
@@ -135,6 +139,9 @@ namespace X
 		_readImageInfo(file, mImages.textScrollBGNormal);
 		_readImageInfo(file, mImages.buttonImageBGColour);
 		_readImageInfo(file, mImages.buttonImageBGNormal);
+		_readImageInfo(file, mImages.checkboxBGColourOFF);
+		_readImageInfo(file, mImages.checkboxBGColourON);
+		_readImageInfo(file, mImages.checkboxBGNormal);
 
 		// Fonts
 		getline(file, strLine);	// Empty line
@@ -182,6 +189,7 @@ namespace X
 		_readFloatInfo(file, mfTextScrollSliderWidth);
 		_readFloatInfo(file, mfButtonImageTextFadeSpeed);
 		_readFloatInfo(file, mfTooltipFadeSpeed);
+		_readFloatInfo(file, mfCheckboxFadeSpeed);
 
 		// Offsets
 		getline(file, strLine);	// End of line
@@ -246,6 +254,9 @@ namespace X
 		_writeImageInfo(file, "TextScrollBGNormal", mImages.textScrollBGNormal);
 		_writeImageInfo(file, "ButtonImageBGColour", mImages.buttonImageBGColour);
 		_writeImageInfo(file, "ButtonImageBGNormal", mImages.buttonImageBGNormal);
+		_writeImageInfo(file, "CheckboxBGColourOFF", mImages.checkboxBGColourOFF);
+		_writeImageInfo(file, "CheckboxBGColourON", mImages.checkboxBGColourON);
+		_writeImageInfo(file, "CheckboxBGNormal", mImages.checkboxBGNormal);
 
 		// Fonts
 		file << "\nFonts\n";
@@ -289,7 +300,8 @@ namespace X
 		_writeFloatInfo(file, "textScrollSliderWidth", mfTextScrollSliderWidth);
 		_writeFloatInfo(file, "buttonImageFadeSpeed", mfButtonImageTextFadeSpeed);
 		_writeFloatInfo(file, "tooltipFadeSpeed", mfTooltipFadeSpeed);
-		
+		_writeFloatInfo(file, "checkboxFadeSpeed", mfCheckboxFadeSpeed);
+
 		// Offsets
 		file << "\nOffsets\n";
 		_writeOffsetInfo(file, "ContainerTitlebarText", mOffsets.containerTitlebarText);
@@ -335,6 +347,9 @@ namespace X
 		pRM->addTexture2DFromFile(mImages.textScrollBGNormal, mImages.textScrollBGNormal);
 		pRM->addTexture2DFromFile(mImages.buttonImageBGColour, mImages.buttonImageBGColour);
 		pRM->addTexture2DFromFile(mImages.buttonImageBGNormal, mImages.buttonImageBGNormal);
+		pRM->addTexture2DFromFile(mImages.checkboxBGColourOFF, mImages.checkboxBGColourOFF);
+		pRM->addTexture2DFromFile(mImages.checkboxBGColourON, mImages.checkboxBGColourON);
+		pRM->addTexture2DFromFile(mImages.checkboxBGNormal, mImages.checkboxBGNormal);
 	}
 
 	void CGUITheme::unloadTextures(void)
@@ -361,6 +376,9 @@ namespace X
 		x->pResource->removeTexture2DFromFile(mImages.textScrollBGNormal);
 		x->pResource->removeTexture2DFromFile(mImages.buttonImageBGColour);
 		x->pResource->removeTexture2DFromFile(mImages.buttonImageBGNormal);
+		x->pResource->removeTexture2DFromFile(mImages.checkboxBGColourOFF);
+		x->pResource->removeTexture2DFromFile(mImages.checkboxBGColourON);
+		x->pResource->removeTexture2DFromFile(mImages.checkboxBGNormal);
 	}
 
 	void CGUITheme::addFontsToManager(void)

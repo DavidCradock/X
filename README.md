@@ -32,7 +32,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add physics engine.
 - GUI...
 - GUI: Change default theme font to a bit bigger as commas don’t render right.
-- GUI: Implement Checkbox
 - GUI: Implement Listbox
 - GUI: Implement Colour selector
 - GUI: Implement DraggableDock.

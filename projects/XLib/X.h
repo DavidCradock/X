@@ -42,6 +42,7 @@
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
 #include "GUIButtonImage.h"
+#include "GUICheckbox.h"
 #include "GUIContainer.h"
 #include "GUIDraggableDock.h"
 #include "GUIDraggableItem.h"

@@ -379,6 +379,9 @@
     <ClInclude Include="singletons.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="GUICheckbox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -681,6 +684,9 @@
     </ClCompile>
     <ClCompile Include="singletons.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GUICheckbox.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

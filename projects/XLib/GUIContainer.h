@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
+#include "GUICheckbox.h"
 #include "GUIText.h"
 #include "GUITextEdit.h"
 #include "GUISlider.h"
@@ -56,6 +57,13 @@ namespace X
 		// Returns the name of this container which is set upon construction from the SCGUIManager::addContainer() method
 		const std::string& getName(void) const;
 
+		// Removes all objects from this container
+		void removeAll(void);
+
+		/**************************************************************************************************************************************************
+		Buttons
+		**************************************************************************************************************************************************/
+
 		// Add a button to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the button is the offset from the top left corner of the container's centre area not including the buttons edge images
@@ -71,6 +79,10 @@ namespace X
 
 		// Removes all buttons from this container
 		void removeAllButtons(void);
+
+		/**************************************************************************************************************************************************
+		Text
+		**************************************************************************************************************************************************/
 
 		// Add text to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -88,6 +100,10 @@ namespace X
 		// Removes all text from this container
 		void removeAllText(void);
 
+		/**************************************************************************************************************************************************
+		Text edit
+		**************************************************************************************************************************************************/
+
 		// Add text edit to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -103,6 +119,10 @@ namespace X
 
 		// Removes all text edits from this container
 		void removeAllTextEdits(void);
+
+		/**************************************************************************************************************************************************
+		Slider
+		**************************************************************************************************************************************************/
 
 		// Add slider to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -122,6 +142,10 @@ namespace X
 		// Removes all sliders from this container
 		void removeAllSliders(void);
 
+		/**************************************************************************************************************************************************
+		Line graph
+		**************************************************************************************************************************************************/
+
 		// Add line graph to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -138,6 +162,10 @@ namespace X
 		// Removes all line graphs from this container
 		void removeAllLineGraphs(void);
 
+		/**************************************************************************************************************************************************
+		Progress bar
+		**************************************************************************************************************************************************/
+
 		// Add progress bar to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -153,6 +181,10 @@ namespace X
 
 		// Removes all progress bars from this container
 		void removeAllProgressBars(void);
+
+		/**************************************************************************************************************************************************
+		Image
+		**************************************************************************************************************************************************/
 
 		// Add static image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -194,6 +226,10 @@ namespace X
 		// If the image object was added with addImageFromImage(), please remember, to remove to resource yourself from the resource manager.
 		void removeAllImages(void);
 
+		/**************************************************************************************************************************************************
+		Image animated
+		**************************************************************************************************************************************************/
+
 		// Add animated image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -215,6 +251,10 @@ namespace X
 		// Removes all animated images from this container
 		void removeAllImageAnimateds(void);
 
+		/**************************************************************************************************************************************************
+		Frame buffers
+		**************************************************************************************************************************************************/
+
 		// Add framebuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -233,6 +273,10 @@ namespace X
 		// Removes all image framebuffers from this container
 		void removeAllImageFramebuffers(void);
 
+		/**************************************************************************************************************************************************
+		Text scroll
+		**************************************************************************************************************************************************/
+
 		// Add text scroll object to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -250,6 +294,10 @@ namespace X
 
 		// Removes all text scrolls from this container
 		void removeAllTextScrolls(void);
+
+		/**************************************************************************************************************************************************
+		Button image
+		**************************************************************************************************************************************************/
 
 		// Add button image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
@@ -270,6 +318,10 @@ namespace X
 		// Removes all button images from this container
 		void removeAllButtonImages(void);
 
+		/**************************************************************************************************************************************************
+		Depth buffers
+		**************************************************************************************************************************************************/
+
 		// Add depthbuffer image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
@@ -288,8 +340,25 @@ namespace X
 		// Removes all image depthbuffers from this container
 		void removeAllImageDepthbuffers(void);
 
-		// Removes all objects from this container
-		void removeAll(void);
+		/**************************************************************************************************************************************************
+		Check boxes
+		**************************************************************************************************************************************************/
+
+		// Add a checkbox to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// The position of the checkbox is the offset from the top left corner of the container's centre area
+		CGUICheckbox* addCheckbox(const std::string& strName, float fPosX, float fPosY);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CGUICheckbox* getCheckbox(const std::string& strName) const;
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeCheckbox(const std::string& strName);
+
+		// Removes all check boxes from this container
+		void removeAllCheckboxes(void);
 
 		std::string mstrTitleText;	// Title text
 	private:
@@ -310,7 +379,9 @@ namespace X
 		mutable std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
 		mutable std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
 		mutable std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
-		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer 
+		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer
+		mutable std::map<std::string, CGUICheckbox*> _mmapCheckboxes;					// Hashmap for each added check box
+
 		CColour _mTextColour;		// Current colour of the titlebar text
 		bool _mbVisible;			// Whether this container is shown or not
 

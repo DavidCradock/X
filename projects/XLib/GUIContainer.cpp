@@ -116,6 +116,14 @@ namespace X
 			itImageDB++;
 		}
 
+		// Render each checkbox
+		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
+		while (itCheckbox != _mmapCheckboxes.end())
+		{
+			itCheckbox->second->render(this, strFramebufferToSampleFrom);
+			itCheckbox++;
+		}
+
 		// Render each text
 		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
@@ -221,6 +229,14 @@ namespace X
 		{
 			itImageDB->second->mpTooltip->render(this, strFramebufferToSampleFrom);
 			itImageDB++;
+		}
+
+		// Render each checkbox's tooltips
+		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
+		while (itCheckbox != _mmapCheckboxes.end())
+		{
+			itCheckbox->second->mpTooltip->render(this, strFramebufferToSampleFrom);
+			itCheckbox++;
 		}
 	}
 
@@ -433,6 +449,14 @@ namespace X
 			itImageDB++;
 		}
 
+		// Checkboxes
+		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
+		while (itCheckbox != _mmapCheckboxes.end())
+		{
+			itCheckbox->second->update(this, bContainerAcceptingMouseClicks);
+			itCheckbox++;
+		}
+
 		return bMouseOver;
 	}
 
@@ -561,6 +585,14 @@ namespace X
 			itImageDB->second->mpTooltip->resetFade();
 			itImageDB++;
 		}
+
+		// Checkboxes
+		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
+		while (itCheckbox != _mmapCheckboxes.end())
+		{
+			itCheckbox->second->mpTooltip->resetFade();
+			itCheckbox++;
+		}
 	}
 
 	bool CGUIContainer::getVisible(void) const
@@ -571,6 +603,23 @@ namespace X
 	const std::string& CGUIContainer::getName(void) const
 	{
 		return _mstrName;
+	}
+
+	void CGUIContainer::removeAll(void)
+	{
+		removeAllButtons();
+		removeAllText();
+		removeAllTextEdits();
+		removeAllSliders();
+		removeAllLineGraphs();
+		removeAllProgressBars();
+		removeAllImages();
+		removeAllImageAnimateds();
+		removeAllImageFramebuffers();
+		removeAllTextScrolls();
+		removeAllButtonImages();
+		removeAllImageDepthbuffers();
+		removeAllCheckboxes();
 	}
 
 	void CGUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
@@ -734,6 +783,10 @@ namespace X
 			_mTextColour);
 	}
 
+	/**************************************************************************************************************************************************
+	Button
+	**************************************************************************************************************************************************/
+
 	CGUIButton* CGUIContainer::addButton(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
 		// If resource already exists
@@ -777,6 +830,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Text
+	**************************************************************************************************************************************************/
+
 	CGUIText* CGUIContainer::addText(const std::string& strName, float fPosX, float fPosY, const std::string& strText)
 	{
 		// If resource already exists
@@ -817,6 +874,10 @@ namespace X
 			it = _mmapTexts.begin();
 		}
 	}
+
+	/**************************************************************************************************************************************************
+	Text edit
+	**************************************************************************************************************************************************/
 
 	CGUITextEdit* CGUIContainer::addTextEdit(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
@@ -861,6 +922,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Slider
+	**************************************************************************************************************************************************/
+
 	CGUISlider* CGUIContainer::addSlider(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
 	{
 		// If resource already exists
@@ -904,6 +969,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Line graphs
+	**************************************************************************************************************************************************/
+
 	CGUILineGraph* CGUIContainer::addLineGraph(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -946,6 +1015,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Progress bars
+	**************************************************************************************************************************************************/
+
 	CGUIProgressBar* CGUIContainer::addProgressBar(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -987,6 +1060,10 @@ namespace X
 			it = _mmapProgressBars.begin();
 		}
 	}
+
+	/**************************************************************************************************************************************************
+	Images
+	**************************************************************************************************************************************************/
 
 	CGUIImage* CGUIContainer::addImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilename, float fWidth, float fHeight)
 	{
@@ -1081,6 +1158,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Images animated
+	**************************************************************************************************************************************************/
+
 	CGUIImageAnimated* CGUIContainer::addImageAnimated(const std::string& strName, float fPosX, float fPosY, const std::vector<std::string>& vecStrImageFilenames, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -1138,6 +1219,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Frame buffers
+	**************************************************************************************************************************************************/
+
 	CGUIImageFramebuffer* CGUIContainer::addImageFramebuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strFBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -1191,6 +1276,10 @@ namespace X
 			it = _mmapImageFramebuffers.begin();
 		}
 	}
+
+	/**************************************************************************************************************************************************
+	Text scroll
+	**************************************************************************************************************************************************/
 
 	CGUITextScroll* CGUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
@@ -1247,6 +1336,10 @@ namespace X
 			it = _mmapTextScrolls.begin();
 		}
 	}
+
+	/**************************************************************************************************************************************************
+	Button image
+	**************************************************************************************************************************************************/
 
 	CGUIButtonImage* CGUIContainer::addButtonImage(const std::string& strName, float fPosX, float fPosY, const std::string& strImageFilenameUp, const std::string& strImageFilenameOver, const std::string& strImageFilenameDown, float fWidth, float fHeight)
 	{
@@ -1311,6 +1404,10 @@ namespace X
 		}
 	}
 
+	/**************************************************************************************************************************************************
+	Depth buffers
+	**************************************************************************************************************************************************/
+
 	CGUIImageDepthbuffer* CGUIContainer::addImageDepthbuffer(const std::string& strName, float fPosX, float fPosY, const std::string& strDBname, float fWidth, float fHeight)
 	{
 		// If resource already exists
@@ -1365,19 +1462,48 @@ namespace X
 		}
 	}
 
-	void CGUIContainer::removeAll(void)
+	/**************************************************************************************************************************************************
+	Check boxes
+	**************************************************************************************************************************************************/
+
+	CGUICheckbox* CGUIContainer::addCheckbox(const std::string& strName, float fPosX, float fPosY)
 	{
-		removeAllButtons();
-		removeAllText();
-		removeAllTextEdits();
-		removeAllSliders();
-		removeAllLineGraphs();
-		removeAllProgressBars();
-		removeAllImages();
-		removeAllImageAnimateds();
-		removeAllImageFramebuffers();
-		removeAllTextScrolls();
-		removeAllButtonImages();
-		removeAllImageDepthbuffers();
+		// If resource already exists
+		std::map<std::string, CGUICheckbox*>::iterator it = _mmapCheckboxes.find(strName);
+		ThrowIfTrue(it != _mmapCheckboxes.end(), "CGUIContainer::addCheckbox(" + strName + ") failed. The named object already exists.");
+		CGUICheckbox* pNewRes = new CGUICheckbox;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addCheckbox(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+
+		_mmapCheckboxes[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	CGUICheckbox* CGUIContainer::getCheckbox(const std::string& strName) const
+	{
+		std::map<std::string, CGUICheckbox*>::iterator it = _mmapCheckboxes.find(strName);
+		ThrowIfTrue(it == _mmapCheckboxes.end(), "CGUIContainer::getCheckbox(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void CGUIContainer::removeCheckbox(const std::string& strName)
+	{
+		std::map<std::string, CGUICheckbox*>::iterator it = _mmapCheckboxes.find(strName);
+		if (it == _mmapCheckboxes.end())
+			return;
+		delete it->second;
+		_mmapCheckboxes.erase(it);
+	}
+
+	void CGUIContainer::removeAllCheckboxes(void)
+	{
+		std::map<std::string, CGUICheckbox*>::iterator it = _mmapCheckboxes.begin();
+		while (it != _mmapCheckboxes.end())
+		{
+			delete it->second;
+			_mmapCheckboxes.erase(it);
+			it = _mmapCheckboxes.begin();
+		}
 	}
 }

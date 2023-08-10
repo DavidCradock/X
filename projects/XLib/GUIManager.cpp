@@ -733,17 +733,19 @@ namespace X
 		CGUITheme* pTheme = pCont->getTheme();
 		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
 		float fTextHeight = pFont->getTextHeight(1.0f);
-		CGUIButton* pBut;
+		CGUICheckbox* pCB;
+		pCB = pCont->addCheckbox("vsync", 0, 5);
+		pCB->setState(x->pWindow->getVSyncEnabled());
 		if (x->pWindow->getVSyncEnabled())
 		{
-			pBut = pCont->addButton("vsync", 0, 0, 200, 40, "Turn VSync Off.");
-			pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
+			pCB->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
 		}
 		else
 		{
-			pBut = pCont->addButton("vsync", 0, 0, 200, 40, "Turn VSync On.");
-			pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
+			pCB->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
 		}
+		CGUIText* pText = pCont->addText("vsync_checkbox_text", 40, 10, "VSync Toggle.");
+
 		CGUISlider* pSlider = pCont->addSlider("backbufferscale", 0, 50, 200, 40);
 		pSlider->setTabRatio(0.5f);
 		std::string strTxt;
@@ -758,26 +760,24 @@ namespace X
 		CVector2f vPos;
 		vPos.x = pSlider->getPosition().x + (pSlider->getDimensions().x * 0.5f) - (pFont->getTextWidth(strTxt) * 0.5f);
 		vPos.y = pSlider->getPosition().y + (pSlider->getDimensions().y * 0.5f) - (pFont->getTextHeight() * 0.5f);
-		CGUIText* pText = pCont->addText("backbuffer_slider_text", vPos.x, vPos.y, strTxt);
+		pText = pCont->addText("backbuffer_slider_text", vPos.x, vPos.y, strTxt);
 		pSlider->setTabPos(x->pSettings->getBackbufferScale() * 0.5f);	// Slider goes from 0 to 2
 	}
 
 	void SCGUIManager::_updateDefaultContainerSettings(void)
 	{
 		CGUIContainer* pCont = x->pGUI->getContainer("X:Default:Settings");
-		CGUIButton* pBut = pCont->getButton("vsync");
-		if (pBut->getClicked())
+		CGUICheckbox* pCB = pCont->getCheckbox("vsync");
+		if (pCB->getClicked())
 		{
 			x->pWindow->setVsync(!x->pWindow->getVSyncEnabled());
 			if (x->pWindow->getVSyncEnabled())
 			{
-				pBut->mstrText = "Turn VSync Off.";
-				pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
+				pCB->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
 			}
 			else
 			{
-				pBut->mstrText = "Turn VSync On.";
-				pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
+				pCB->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
 			}
 		}
 
@@ -796,7 +796,7 @@ namespace X
 		// Get scale value
 		float fScaleFromTab = pSlider->getTabPos() * 200.0f;	// 0 to 200
 		int iScale = (int)fScaleFromTab;
-		fScaleFromTab = iScale;	// Reduce precision
+		fScaleFromTab = (float)iScale;	// Reduce precision
 		fScaleFromTab *= 0.01f; // 0 to 2
 		if (fScaleFromTab < 0.001f)
 			fScaleFromTab = 0.001f;

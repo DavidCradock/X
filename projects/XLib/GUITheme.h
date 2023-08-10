@@ -85,6 +85,9 @@ namespace X
 			std::string buttonImageBGColour;
 			std::string buttonImageBGNormal;
 
+			std::string checkboxBGColourON;
+			std::string checkboxBGColourOFF;
+			std::string checkboxBGNormal;
 		};
 		// Holds the names of each image file used by the theme.
 		Images mImages;
@@ -172,6 +175,7 @@ namespace X
 		float mfTextScrollSliderWidth;		// Width of a CGUITextScroll object's vertical slider.
 		float mfButtonImageTextFadeSpeed;	// Rate at which button image colours interpolate between
 		float mfTooltipFadeSpeed;			// Rate at which tooltips face in/out
+		float mfCheckboxFadeSpeed;			// Rate at which the checkbox fades between ON and OFF states
 
 	private:
 		// Writes out image info
