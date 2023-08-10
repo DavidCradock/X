@@ -46,6 +46,7 @@ namespace X
 	// X:default				// A vertex buffer line resource used by the GUI when rendering lines
 	// 
 	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
+	// X:gui					// A framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
 	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
 	// They are loaded by this class's addDefaultResources() method which is called from SCSingletons constructor
 	class SCResourceManager : public CSingleton<SCResourceManager>

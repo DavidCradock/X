@@ -174,7 +174,7 @@ namespace X
 		CResourceTexture2DFromFile* pTex = x->pResource->getTexture2DFromFile(pTheme->mImages.textScrollBGColour);
 
 		// Unbind the render target which the GUI is currently rendering to.
-		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:gui");
 		pFBGUITarget->unbindAsRenderTarget();
 
 		// Resize framebuffer if needed to make room for the slider

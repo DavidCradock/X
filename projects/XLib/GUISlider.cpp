@@ -381,6 +381,12 @@ namespace X
 				{
 					_mbTabBeingMoved = true;
 				}
+
+				// Move the slider position with keys
+				if (x->pInput->key.repeat(KC_LEFT))
+					_mfSliderPosition -= 0.001f;
+				else if (x->pInput->key.repeat(KC_RIGHT))
+					_mfSliderPosition += 0.001f;
 			}
 			
 			if (_mbTabBeingMoved)

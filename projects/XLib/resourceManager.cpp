@@ -524,6 +524,8 @@ namespace X
 		pRM->addFramebuffer("X:backbuffer_FB", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 		// A framebuffer the GUI tooltips are rendered to
 		pRM->addFramebuffer("X:guitooltipFB", 512, 512, true);	// Dims are set when rendering each tooltip's contents
+		// A framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
+		pRM->addFramebuffer("X:gui", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 
 		/******************************************************************************************************************************
 		// Vertex buffers CPT

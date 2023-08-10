@@ -93,7 +93,7 @@ namespace X
 	// There are also some default containers which can be shown (hidden by default) and they are named as follows...
 	// X:Default:Statistics		// This shows FPS counter, also has a graph
 	// X:Default:FontGenerator	// A container with functionality to generate font files from fonts stored in the operating system
-	// 
+	// X:Default:Settings		// Settings which are stored in SCSettings can be fiddled with in this container.
 	// They are created in SCGUIManager::_createDefaultContainers()
 	// 
 	// Implementation details:
@@ -248,9 +248,15 @@ namespace X
 			std::string strFontName;
 		};
 		SDefaultContainerFontGenerator _mDefContFontGen;
-
 		void _createDefaultContainerFontGenerator(void);
 		void _updateDefaultContainerFontGenerator(void);
 		void _defaultContainerFontGeneratorBuildFont(void);
+
+		struct SDefaultContainerSettings
+		{
+		};
+		SDefaultContainerSettings _mDefContSettings;
+		void _createDefaultContainerSettings(void);
+		void _updateDefaultContainerSettings(void);
 	};
 }

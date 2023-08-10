@@ -78,7 +78,7 @@ namespace X
 				// Update and render the 2DRenderer to the "X:backbuffer_FB" and any various other framebuffers each of it's cameras are set to render to
 				x->p2dRenderer->render();
 
-				// Update and render the GUI to the "X:backbuffer_FB" framebuffer, using the "X:backbuffer_FB" as the sample source
+				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer_FB" as the sample source
 				x->pGUI->render("X:backbuffer_FB");
 
 				// Unbind the X:backbuffer_FB and render to the back buffer
@@ -87,9 +87,12 @@ namespace X
 				// Now render the "X:backbuffer_FB" to the backbuffer
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
-				pBGFB->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				glDisable(GL_BLEND);
+				x->pResource->getFramebuffer("X:backbuffer_FB")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				
+				// Now render the "X:gui" to the backbuffer
+				x->pResource->getFramebuffer("X:gui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 
+				glDisable(GL_BLEND);
 				// Swap buffers
 				x->pWindow->swapBuffers();
 			}

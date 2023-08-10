@@ -61,6 +61,17 @@ namespace X
 		}
 
 		// Render each container
+		// Set the "X:gui" framebuffer as the render target
+		x->pResource->getFramebuffer("X:backbuffer_FB")->unbindAsRenderTarget();
+		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:gui");
+		// Resize to window dims if not the same
+		if (pFBGUITarget->getDimensions().x != x->pWindow->getDimensions().x ||
+			pFBGUITarget->getDimensions().y != x->pWindow->getDimensions().y)
+		{
+			pFBGUITarget->resize(x->pWindow->getWidth(), x->pWindow->getHeight());
+		}
+		// Clear and bind the render target
+		pFBGUITarget->bindAsRenderTarget(true, false);
 
 		// Go through each container, starting with the one at the back first
 		it = _mlistContainerZOrder.begin();
@@ -88,6 +99,10 @@ namespace X
 		// Update the default containers if they are shown
 		// The default containers are statistics etc
 		_updateDefaultContainers();
+
+		// Rebind correct framebuffer
+		pFBGUITarget->unbindAsRenderTarget();
+		x->pResource->getFramebuffer("X:backbuffer_FB")->bindAsRenderTarget(false, false);
 	}
 
 	void SCGUIManager::setScale(float fScalingValue)
@@ -199,7 +214,7 @@ namespace X
 		pNew->mstrTitleText = strName;
 
 		// Store name of container inside the container, as it's used to create unique names for things such as the framebuffers used by the CGUITextScroll object.
-		pNew->_mstrName;	
+		pNew->_mstrName = strName;
 
 		// Place in the hashmap
 		_mmapContainers[strName] = pNew;
@@ -325,6 +340,7 @@ namespace X
 	{
 		_createDefaultContainerStatistics();
 		_createDefaultContainerFontGenerator();
+		_createDefaultContainerSettings();
 	}
 
 	void SCGUIManager::_updateDefaultContainers(void)
@@ -338,6 +354,10 @@ namespace X
 		pCont = getContainer("X:Default:FontGenerator");
 		if (pCont->getVisible())
 			_updateDefaultContainerFontGenerator();
+
+		pCont = getContainer("X:Default:Settings");
+		if (pCont->getVisible())
+			_updateDefaultContainerSettings();
 	}
 
 	void SCGUIManager::_createDefaultContainerStatistics(void)
@@ -683,7 +703,6 @@ namespace X
 			"\n",
 			1.0f,
 			CColour());
-
 	}
 
 	void SCGUIManager::_defaultContainerFontGeneratorBuildFont(void)
@@ -702,6 +721,92 @@ namespace X
 		std::string strFontFilename = "font_output";
 //		StringUtils::appendInt(strFontFilename, _mDefContFontGen.iHeight);
 		_mDefContFontGen.pFont = new CResourceFont(strFontFilename);
+	}
+
+	void SCGUIManager::_createDefaultContainerSettings(void)
+	{
+		CGUIContainer* pCont = addContainer("X:Default:Settings", true);
+		pCont->setDimensions(1920 * 0.5f, 1080 * 0.5f);
+		pCont->setPositionCentreWindow();
+		pCont->setVisible(false);
+		pCont->mstrTitleText = "Settings.";
+		CGUITheme* pTheme = pCont->getTheme();
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
+		float fTextHeight = pFont->getTextHeight(1.0f);
+		CGUIButton* pBut;
+		if (x->pWindow->getVSyncEnabled())
+		{
+			pBut = pCont->addButton("vsync", 0, 0, 200, 40, "Turn VSync Off.");
+			pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
+		}
+		else
+		{
+			pBut = pCont->addButton("vsync", 0, 0, 200, 40, "Turn VSync On.");
+			pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
+		}
+		CGUISlider* pSlider = pCont->addSlider("backbufferscale", 0, 50, 200, 40);
+		pSlider->setTabRatio(0.5f);
+		std::string strTxt;
+		strTxt = "Adjust the back buffer's dimension scaling.\n";
+		strTxt += "A value of 100% would make the back buffer be the same dimensions as the window.\n";
+		strTxt += "A value < 100% makes the back buffer smaller than the window, reducing the amount of work the graphics chipset has to do at the expense of reducing the clarity of the final image.\n";
+		strTxt += "A value > 100% makes the back buffer larger than the window, increasing the amount of work the graphics chipset has to do, but increasing the quality of the final image.\n";
+		pSlider->mpTooltip->setAsText(strTxt);
+		strTxt = "Scale: ";
+		StringUtils::appendFloat(strTxt, x->pSettings->getBackbufferScale() * 100.0f, 2);
+		strTxt += "%";
+		CVector2f vPos;
+		vPos.x = pSlider->getPosition().x + (pSlider->getDimensions().x * 0.5f) - (pFont->getTextWidth(strTxt) * 0.5f);
+		vPos.y = pSlider->getPosition().y + (pSlider->getDimensions().y * 0.5f) - (pFont->getTextHeight() * 0.5f);
+		CGUIText* pText = pCont->addText("backbuffer_slider_text", vPos.x, vPos.y, strTxt);
+		pSlider->setTabPos(x->pSettings->getBackbufferScale() * 0.5f);	// Slider goes from 0 to 2
+	}
+
+	void SCGUIManager::_updateDefaultContainerSettings(void)
+	{
+		CGUIContainer* pCont = x->pGUI->getContainer("X:Default:Settings");
+		CGUIButton* pBut = pCont->getButton("vsync");
+		if (pBut->getClicked())
+		{
+			x->pWindow->setVsync(!x->pWindow->getVSyncEnabled());
+			if (x->pWindow->getVSyncEnabled())
+			{
+				pBut->mstrText = "Turn VSync Off.";
+				pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently ON.");
+			}
+			else
+			{
+				pBut->mstrText = "Turn VSync On.";
+				pBut->mpTooltip->setAsText("Toggle between synchronization of the window's backbuffer flipping with that of the display device's refresh rate.\nCurrently OFF.");
+			}
+		}
+
+		CGUITheme* pTheme = pCont->getTheme();
+		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.text);
+		float fTextHeight = pFont->getTextHeight(1.0f);
+		CGUISlider* pSlider = pCont->getSlider("backbufferscale");
+		std::string strTxt = "Scale: ";
+		StringUtils::appendFloat(strTxt, x->pSettings->getBackbufferScale() * 100.0f, 2);
+		strTxt += "%";
+		CVector2f vPos;
+		vPos.x = pSlider->getPosition().x + (pSlider->getDimensions().x * 0.5f) - (pFont->getTextWidth(strTxt) * 0.5f);
+		vPos.y = pSlider->getPosition().y + (pSlider->getDimensions().y * 0.5f) - (pFont->getTextHeight() * 0.5f);
+		CGUIText* pText = pCont->getText("backbuffer_slider_text");
+
+		// Get scale value
+		float fScaleFromTab = pSlider->getTabPos() * 200.0f;	// 0 to 200
+		int iScale = (int)fScaleFromTab;
+		fScaleFromTab = iScale;	// Reduce precision
+		fScaleFromTab *= 0.01f; // 0 to 2
+		if (fScaleFromTab < 0.001f)
+			fScaleFromTab = 0.001f;
+		if (fScaleFromTab != (int)x->pSettings->getBackbufferScale())
+		{
+			x->pSettings->setBackbufferScale(fScaleFromTab);
+			x->pResource->getFramebuffer("X:backbuffer_FB")->resizeToWindowDimsScaled();
+
+			pText->setText(strTxt);
+		}
 	}
 
 	void SCGUIManager::setTooltipDelay(float fSeconds)

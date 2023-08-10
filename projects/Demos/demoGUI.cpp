@@ -50,12 +50,13 @@ namespace X
 				pCont2->setVisible(true);
 		}
 		pBut = pCont->getButton("Settings");
+		if (pBut->getClicked())
 		{
-//			CGUIContainer* pCont2 = x->pGUI->getContainer("X:Default:SettingsNOTIMP");
-//			if (pCont2->getVisible())
-//				pCont2->setVisible(false);
-//			else
-//				pCont2->setVisible(true);
+			CGUIContainer* pCont2 = x->pGUI->getContainer("X:Default:Settings");
+			if (pCont2->getVisible())
+				pCont2->setVisible(false);
+			else
+				pCont2->setVisible(true);
 		}
 
 	}

@@ -49,6 +49,10 @@ namespace X
 		// If the new dimensions are the same as the current ones, this simply returns
 		void resize(unsigned int uiNewWidth, unsigned int uiNewHeight);
 
+		// Resizes the frame buffer to the dimensions of the application's window's dimensions, scaled by SCSettings::getBackbufferScale()
+		// If the framebuffer is already the correct size, nothing happens.
+		void resizeToWindowDimsScaled(void);
+
 		// Renders the contents of this buffer to a 2D quad with specified position and dimensions
 		void renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour = CColour());
 

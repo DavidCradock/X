@@ -460,6 +460,10 @@ namespace X
 	{
 		_mbVisible = bVisible;
 
+		// If visible, bring to front
+		if (_mbVisible)
+			x->pGUI->moveContainerToFront(_mstrName);
+
 		// If set to invisible, we need to reset all tooltips for this container
 
 		// Buttons

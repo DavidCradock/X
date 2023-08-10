@@ -109,7 +109,7 @@ namespace X
 
 	void SCSettings::setBackbufferScale(float fBackbufferScale)
 	{
-		clamp(fBackbufferScale, 0.1f, 4.0f);
+		clamp(fBackbufferScale, 0.01f, 4.0f);
 		_mfBackbufferScale = fBackbufferScale;
 		save();
 	}

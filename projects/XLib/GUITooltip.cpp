@@ -26,7 +26,7 @@ namespace X
 		// Get pointers to stuff we need
 		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;	// Needed to get theme
 		CGUITheme* pTheme = pContainer->getTheme();
-		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:gui");
 		CResourceFramebuffer* pFB = x->pResource->getFramebuffer("X:guitooltipFB");
 		CResourceTexture2DFromFile* pTexColour = x->pResource->getTexture2DFromFile(pTheme->mImages.tooltipBGColour);
 		CVector2f vTexDimsPoint3 = pTexColour->getDimensions() * 0.3333333f;
@@ -242,31 +242,49 @@ namespace X
 		pFB->unbindAsRenderTarget();
 
 		// Rebind the GUI framebuffer as render target
-		pBGFB->bindAsRenderTarget(false, false);
+		pFBGUITarget->bindAsRenderTarget(false, false);
 
 //		glEnable(GL_BLEND);
 //		glDisable(GL_DEPTH_TEST);
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
 		// Now render the framebuffer which now contains the tooltip.
 		// But before we do so, we need to make sure it fits on screen, otherwise reposition as required.
 
-		CVector3f vTooltipPosition;
-		vTooltipPosition.x = mfPositionX + vTexDimsPoint3.x;
-		vTooltipPosition.y = mfPositionY;
+		CVector3f vTooltipPos;
+		vTooltipPos.x = mfPositionX + vTexDimsPoint3.x;
+		vTooltipPos.y = mfPositionY;
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
-		// Move tooltip position left if it doesn't fit on screen
-		if (vTooltipPosition.x + pFB->getWidth() >= x->pWindow->getWidth())
+		CVector2f vTargetFBDims = pFBGUITarget->getDimensions();
+
+		// If goes off right edge of render target
+		if (vTooltipPos.x + pFB->getWidth() > vTargetFBDims.x)
 		{
 			// Position so the tooltip's right most edge is to the left of the mouse cursor
-			vTooltipPosition.x = vMousePos.x - (float)pFB->getWidth();
+			vTooltipPos.x = vTargetFBDims.x - (float)pFB->getWidth();
 		}
-		// Move tooltip position up if it doesn't fit on screen
-		if (vTooltipPosition.y + pFB->getHeight() >= x->pWindow->getHeight())
+		// If goes off left edge of render target
+		else if (vTooltipPos.x < 0)
+		{
+			vTooltipPos.x = 0;
+			// If the tooltip is large, it may be rendered underneath the cursor which we don't want, 
+			// move it down so it's not rendered underneath the cursor
+//			vTooltipPosition.y += vTexDimsPoint3.y * 2.0f;
+//			vTooltipPos.y += x->pWindow->getMouseCursorDimensions().y;
+		}
+		// If goes off bottom edge of render target
+		if (vTooltipPos.y + pFB->getHeight() > vTargetFBDims.y)
 		{
 			// Position so the tooltip's bottom most edge is above the mouse cursor
-			vTooltipPosition.y = vMousePos.y - (float)pFB->getHeight();
+			vTooltipPos.y = vTargetFBDims.y - (float)pFB->getHeight();
 		}
-		pFB->renderTo2DQuad(unsigned int(vTooltipPosition.x), unsigned int(vTooltipPosition.y), unsigned int(pFB->getWidth()), unsigned int(pFB->getHeight()), _mColour);
+		// If goes off top edge of render target
+		else if (vTooltipPos.y < 0)
+		{
+			vTooltipPos.y = 0;
+		}
+		pFB->renderTo2DQuad(unsigned int(vTooltipPos.x), unsigned int(vTooltipPos.y), unsigned int(pFB->getWidth()), unsigned int(pFB->getHeight()), _mColour);
 		glDisable(GL_BLEND);
 	}
 

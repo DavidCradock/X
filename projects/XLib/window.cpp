@@ -478,4 +478,13 @@ namespace X
 	{
 		return _mstrCursorName;
 	}
+
+	CVector2f SCWindow::getMouseCursorDimensions(void) const
+	{
+		// Bit of a hack here.
+		// But I was unable to find a function in MSDN which returns the dimensions of a cursor image.
+		// So, as all cursor images we use are 64x64, we'll hackily return that for now.
+		CVector2f vDims(64, 64);
+		return vDims;
+	}
 }

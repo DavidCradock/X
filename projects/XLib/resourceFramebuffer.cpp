@@ -198,6 +198,19 @@ namespace X
 		onGLContextCreated();
 	}
 
+	void CResourceFramebuffer::resizeToWindowDimsScaled(void)
+	{
+		CVector2f vScaledDims;
+		vScaledDims.x = x->pSettings->getBackbufferScale() * float(x->pWindow->getWidth());
+		vScaledDims.y = x->pSettings->getBackbufferScale() * float(x->pWindow->getHeight());
+		unsigned int iWindowWidth = (unsigned int)vScaledDims.x;
+		unsigned int iWindowHeight = (unsigned int)vScaledDims.y;
+		if (_muiWidth != iWindowWidth || _muiHeight != iWindowHeight)
+		{
+			resize(iWindowWidth, iWindowHeight);
+		}
+	}
+
 	void CResourceFramebuffer::renderTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, CColour colour)
 	{
 		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
