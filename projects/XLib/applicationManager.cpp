@@ -1,14 +1,6 @@
 #include "PCH.h"
 #include "applicationManager.h"
-//#include "log.h"
-//#include "window.h"
-//#include "input.h"
-//#include "resourceManager.h"
-//#include "GUIManager.h"
-//#include "2DRenderer.h"
 #include "stringUtils.h"
-//#include "resourceLoadingScreen.h"
-//#include "settings.h"
 #include "singletons.h"
 
 // Include each application
@@ -40,7 +32,7 @@ namespace X
 			// Add each application to this manager
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
-			CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+			CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer");
 
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();
@@ -67,7 +59,7 @@ namespace X
 				// Clear the backbuffer
 				x->pWindow->clearBackbuffer();
 
-				// Bind the X:backbuffer_FB to render target
+				// Bind the X:backbuffer to render target
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
 
 				if (!callCurrentApp_onUpdate())
@@ -75,19 +67,19 @@ namespace X
 					break;	// Application wants to close
 				}
 
-				// Update and render the 2DRenderer to the "X:backbuffer_FB" and any various other framebuffers each of it's cameras are set to render to
+				// Update and render the 2DRenderer to the "X:backbuffer" and any various other framebuffers each of it's cameras are set to render to
 				x->p2dRenderer->render();
 
-				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer_FB" as the sample source
-				x->pGUI->render("X:backbuffer_FB");
+				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer" as the sample source
+				x->pGUI->render("X:backbuffer");
 
-				// Unbind the X:backbuffer_FB and render to the back buffer
+				// Unbind the X:backbuffer and render to the back buffer
 				pBGFB->unbindAsRenderTarget();
 				
-				// Now render the "X:backbuffer_FB" to the backbuffer
+				// Now render the "X:backbuffer" to the backbuffer
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
-				x->pResource->getFramebuffer("X:backbuffer_FB")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				x->pResource->getFramebuffer("X:backbuffer")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 				
 				// Now render the "X:gui" to the backbuffer
 				x->pResource->getFramebuffer("X:gui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());

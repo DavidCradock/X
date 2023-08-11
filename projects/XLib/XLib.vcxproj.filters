@@ -382,6 +382,12 @@
     <ClInclude Include="GUICheckbox.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="2DMapTile.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DMapImageType.h">
+      <Filter>2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -687,6 +693,12 @@
     </ClCompile>
     <ClCompile Include="GUICheckbox.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMapTile.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMapImageType.cpp">
+      <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

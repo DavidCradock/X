@@ -17,6 +17,8 @@
     <ClInclude Include="2DEntityRot.h" />
     <ClInclude Include="2DLayer.h" />
     <ClInclude Include="2DMap.h" />
+    <ClInclude Include="2DMapTile.h" />
+    <ClInclude Include="2DMapImageType.h" />
     <ClInclude Include="2DParticle.h" />
     <ClInclude Include="2DParticleAffector.h" />
     <ClInclude Include="2DParticleEmitter.h" />
@@ -132,6 +134,8 @@
     <ClCompile Include="2DEntityRot.cpp" />
     <ClCompile Include="2DLayer.cpp" />
     <ClCompile Include="2DMap.cpp" />
+    <ClCompile Include="2DMapTile.cpp" />
+    <ClCompile Include="2DMapImageType.cpp" />
     <ClCompile Include="2DParticle.cpp" />
     <ClCompile Include="2DParticleAffector.cpp" />
     <ClCompile Include="2DParticleEmitter.cpp" />

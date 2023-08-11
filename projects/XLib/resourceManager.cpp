@@ -463,7 +463,7 @@ namespace X
 	void SCResourceManager::addDefaultResources(void)
 	{
 		// NOTE:
-		// When adding resources here, remember to add the resource to the comments at the top of SCResourceManager class in resourceManager.h
+		// When adding resources here, remember to add the resource name to the public SDefaultResourceNames structure defaultRes.
 		//
 		// NOTE 2:
 		// This is called from the SCSingletons constructor and therefore cannot use the global x object
@@ -471,91 +471,113 @@ namespace X
 		SCResourceManager* pRM = SCResourceManager::getPointer();
 
 		/******************************************************************************************************************************
-		// Shaders
-		******************************************************************************************************************************/
-		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
-		pRM->addShader("X:DRNE", "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag", true);
-		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
-		pRM->addShader("X:DRNE_noshadows", "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag", true);
-		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
-		pRM->addShader("X:depthbuffer_debug", "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag", true);
-		// A shader used by the scene manager to render the depth map used for rendering shadows
-		pRM->addShader("X:shadowdepthmap", "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag", true);
-		// A shader used by the GUI to render everything.
-		pRM->addShader("X:gui", "data/X/shaders/gui.vert", "data/X/shaders/gui.frag", true);
-		// A shader used with CResourceVertexBufferCPT
-		pRM->addShader("X:VBCPT", "data/X/shaders/vertexBufferCPT.vert", "data/X/shaders/vertexBufferCPT.frag", true);
-		// A shader used with CResourceVertexBufferCPT2
-		pRM->addShader("X:VBCPT2", "data/X/shaders/vertexBufferCPT2.vert", "data/X/shaders/vertexBufferCPT2.frag", true);
-		// A shader used with CResourceVertexBufferCPT
-		pRM->addShader("X:VBCPTInst", "data/X/shaders/vertexBufferCPTInst.vert", "data/X/shaders/vertexBufferCPTInst.frag", true);
-	
-		/******************************************************************************************************************************
-		// Textures
-		******************************************************************************************************************************/
-		// A texture which is tiny and white.
-		pRM->addTexture2DFromFile("X:default_white", "data/X/textures/default_white.png", false, true);
-		// A texture which is grey for diffuse, used if not set
-		pRM->addTexture2DFromFile("X:default_diffuse", "data/X/textures/default_diffuse.png", false, true);
-		// A texture which is black for emission, used if not set
-		pRM->addTexture2DFromFile("X:default_emission", "data/X/textures/default_emission.png", false, true);
-		// A texture which is a flat normal map, used if not set
-		pRM->addTexture2DFromFile("X:default_normal", "data/X/textures/default_normal.png", false, true);
-		// A texture which is black for roughness used if not set
-		pRM->addTexture2DFromFile("X:default_roughness", "data/X/textures/default_roughness.png", false, true);
-
-		/******************************************************************************************************************************
-		// Texture atlases
-		******************************************************************************************************************************/
-		// An atlas for use with rendering generic particles
-		std::vector<std::string> vStrParticleImages = StringUtils::getFilesInDir("data/x/textures/particles/");
-		pRM->addTexture2DAtlas("X:default_particle", vStrParticleImages, true, 1, true);
-		
-		/******************************************************************************************************************************
 		// Depth buffers
 		******************************************************************************************************************************/
 		// A depth buffer which is used by scene managers to render shadows
-		pRM->addDepthbuffer("X:shadows", 2048, 2048, true);
+		defaultRes.depthbuffer_shadows = "X:shadows";
+		pRM->addDepthbuffer(defaultRes.depthbuffer_shadows, 2048, 2048, true);
 
 		/******************************************************************************************************************************
 		// Framebuffers
 		******************************************************************************************************************************/
 		// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-		pRM->addFramebuffer("X:backbuffer_FB", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
-		// A framebuffer the GUI tooltips are rendered to
-		pRM->addFramebuffer("X:guitooltipFB", 512, 512, true);	// Dims are set when rendering each tooltip's contents
+		defaultRes.framebuffer_backbuffer_FB = "X:backbuffer";
+		pRM->addFramebuffer(defaultRes.framebuffer_backbuffer_FB, 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 		// A framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
+		defaultRes.framebuffer_gui = "X:gui";
 		pRM->addFramebuffer("X:gui", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
+		// A framebuffer the GUI tooltips are rendered to
+		defaultRes.framebuffer_guitooltipFB = "X:guitooltipFB";
+		pRM->addFramebuffer(defaultRes.framebuffer_guitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents
 
 		/******************************************************************************************************************************
-		// Vertex buffers CPT
+		// Shaders
 		******************************************************************************************************************************/
-		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferCPT("X:default", true);
+		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
+		defaultRes.shader_depthbuffer_debug = "X:depthbuffer_debug";
+		pRM->addShader(defaultRes.shader_depthbuffer_debug, "data/X/shaders/depthbuffer_debug.vert", "data/X/shaders/depthbuffer_debug.frag", true);
+		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
+		defaultRes.shader_DRNE = "X:DRNE";
+		pRM->addShader(defaultRes.shader_DRNE, "data/X/shaders/DRNE.vert", "data/X/shaders/DRNE.frag", true);
+		// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
+		defaultRes.shader_DRNE_noshadows = "X:DRNE_noshadows";
+		pRM->addShader(defaultRes.shader_DRNE_noshadows, "data/X/shaders/DRNE_noshadows.vert", "data/X/shaders/DRNE_noshadows.frag", true);
+		// A shader used by the GUI to render everything.
+		defaultRes.shader_gui = "X:gui";
+		pRM->addShader(defaultRes.shader_gui, "data/X/shaders/gui.vert", "data/X/shaders/gui.frag", true);
+		// A shader used by the scene manager to render the depth map used for rendering shadows
+		defaultRes.shader_shadowdepthmap = "X:shadowdepthmap";
+		pRM->addShader(defaultRes.shader_shadowdepthmap, "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag", true);
+		// A shader used with CResourceVertexBufferCPT
+		defaultRes.shader_VBCPT = "X:VBCPT";
+		pRM->addShader(defaultRes.shader_VBCPT, "data/X/shaders/vertexBufferCPT.vert", "data/X/shaders/vertexBufferCPT.frag", true);
+		// A shader used with CResourceVertexBufferCPT2
+		defaultRes.shader_VBCPT2 = "X:VBCPT2";
+		pRM->addShader(defaultRes.shader_VBCPT2, "data/X/shaders/vertexBufferCPT2.vert", "data/X/shaders/vertexBufferCPT2.frag", true);
+		// A shader used with CResourceVertexBufferCPT
+		defaultRes.shader_VBCPTInst = "X:VBCPTInst";
+		pRM->addShader(defaultRes.shader_VBCPTInst, "data/X/shaders/vertexBufferCPTInst.vert", "data/X/shaders/vertexBufferCPTInst.frag", true);
+	
+		/******************************************************************************************************************************
+		// Texture atlases
+		******************************************************************************************************************************/
+		// An atlas for use with rendering generic particles
+		defaultRes.texture2DAtlas_default_particle = "X:default_particle";
+		pRM->addTexture2DAtlas(defaultRes.texture2DAtlas_default_particle, "data/x/textures/particles/", true, 1, true);
+
+		/******************************************************************************************************************************
+		// Textures
+		******************************************************************************************************************************/
+		// A texture which is grey for diffuse, used if not set
+		defaultRes.texture2DFromFile_default_diffuse = "X:default_diffuse";
+		pRM->addTexture2DFromFile(defaultRes.texture2DFromFile_default_diffuse, "data/X/textures/default_diffuse.png", false, true);
+		// A texture which is black for emission, used if not set
+		defaultRes.texture2DFromFile_default_emission = "X:default_emission";
+		pRM->addTexture2DFromFile(defaultRes.texture2DFromFile_default_emission, "data/X/textures/default_emission.png", false, true);
+		// A texture which is a flat normal map, used if not set
+		defaultRes.texture2DFromFile_default_normal = "X:default_normal";
+		pRM->addTexture2DFromFile(defaultRes.texture2DFromFile_default_normal, "data/X/textures/default_normal.png", false, true);
+		// A texture which is black for roughness used if not set
+		defaultRes.texture2DFromFile_default_roughness = "X:default_roughness";
+		pRM->addTexture2DFromFile(defaultRes.texture2DFromFile_default_roughness, "data/X/textures/default_roughness.png", false, true);
+		// A texture which is tiny and white.
+		defaultRes.texture2DFromFile_default_white = "X:default_white";
+		pRM->addTexture2DFromFile(defaultRes.texture2DFromFile_default_white, "data/X/textures/default_white.png", false, true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers CPT2
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferCPT2("X:default", true);
-
-		/******************************************************************************************************************************
-		// Vertex buffers instanced
-		******************************************************************************************************************************/
-		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferCPTInst("X:default", true);
+		defaultRes.vertexbufferCPT2_default = "X:default";
+		pRM->addVertexBufferCPT2(defaultRes.vertexbufferCPT2_default, true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers CPTBNT
 		******************************************************************************************************************************/
 		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
-		pRM->addVertexBufferCPTBNT("X:default", true);
+		defaultRes.vertexbufferCPTBNT_default = "X:default";
+		pRM->addVertexBufferCPTBNT(defaultRes.vertexbufferCPTBNT_default, true);
+
+		/******************************************************************************************************************************
+		// Vertex buffers instanced
+		******************************************************************************************************************************/
+		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+		defaultRes.vertexbufferCPTInst_default = "X:default";
+		pRM->addVertexBufferCPTInst(defaultRes.vertexbufferCPTInst_default, true);
+
+		/******************************************************************************************************************************
+		// Vertex buffers CPT
+		******************************************************************************************************************************/
+		// A vertex buffer resource used for rendering 2D quads to the screen for debugging purposes, by the GUI and SC2DRenderer.
+		defaultRes.vertexbufferCPT_default = "X:default";
+		pRM->addVertexBufferCPT(defaultRes.vertexbufferCPT_default, true);
 
 		/******************************************************************************************************************************
 		// Vertex buffers line
 		******************************************************************************************************************************/
 		// A line vertex buffer resource used by the GUI when rendering lines
-		pRM->addVertexBufferLine("X:default", true);
+		defaultRes.vertexbufferLine_default = "X:default";
+		pRM->addVertexBufferLine(defaultRes.vertexbufferLine_default, true);
 	}
 
 	void SCResourceManager::removeAllResources(void)
@@ -936,6 +958,17 @@ namespace X
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DAtlas(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTextures2DAtlases[strResourceName] = newRes;
 		return newRes.pResource;
+	}
+
+	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(
+		const std::string& strResourceName,
+		const std::string& strDirectoryContainingImages,
+		bool bAllowRotationOfImages,
+		unsigned int uiImageSpacing,
+		bool bLocked)
+	{
+		std::vector<std::string> vecStrFiles = StringUtils::getFilesInDir(strDirectoryContainingImages, false);
+		return addTexture2DAtlas(strResourceName, vecStrFiles, bAllowRotationOfImages, uiImageSpacing, bLocked);
 	}
 
 	CResourceTexture2DAtlas* SCResourceManager::getTexture2DAtlas(const std::string& strResourceName)

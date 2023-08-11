@@ -35,6 +35,9 @@
     <Filter Include="Demos\GUI">
       <UniqueIdentifier>{38b343f8-f012-45a3-b180-c97aa4cb9851}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Demos\AStar">
+      <UniqueIdentifier>{7f5e49a8-1e8c-41aa-b9d7-0926de8b724d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
@@ -93,6 +96,12 @@
     </ClCompile>
     <ClCompile Include="demoGUI.cpp">
       <Filter>Demos\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="demoAStar.cpp">
+      <Filter>Demos\AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="demo2Dstate4.cpp">
+      <Filter>Demos\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="demoGUI.h">
       <Filter>Demos\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="demoAStar.h">
+      <Filter>Demos\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="demo2Dstate4.h">
+      <Filter>Demos\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

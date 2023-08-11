@@ -62,7 +62,7 @@ namespace X
 
 		// Render each container
 		// Set the "X:gui" framebuffer as the render target
-		x->pResource->getFramebuffer("X:backbuffer_FB")->unbindAsRenderTarget();
+		x->pResource->getFramebuffer("X:backbuffer")->unbindAsRenderTarget();
 		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:gui");
 		// Resize to window dims if not the same
 		if (pFBGUITarget->getDimensions().x != x->pWindow->getDimensions().x ||
@@ -102,7 +102,7 @@ namespace X
 
 		// Rebind correct framebuffer
 		pFBGUITarget->unbindAsRenderTarget();
-		x->pResource->getFramebuffer("X:backbuffer_FB")->bindAsRenderTarget(false, false);
+		x->pResource->getFramebuffer("X:backbuffer")->bindAsRenderTarget(false, false);
 	}
 
 	void SCGUIManager::setScale(float fScalingValue)
@@ -796,6 +796,8 @@ namespace X
 		// Get scale value
 		float fScaleFromTab = pSlider->getTabPos() * 200.0f;	// 0 to 200
 		int iScale = (int)fScaleFromTab;
+		if (iScale > 98 && iScale < 102)
+			iScale = 100;
 		fScaleFromTab = (float)iScale;	// Reduce precision
 		fScaleFromTab *= 0.01f; // 0 to 2
 		if (fScaleFromTab < 0.001f)
@@ -803,8 +805,7 @@ namespace X
 		if (fScaleFromTab != (int)x->pSettings->getBackbufferScale())
 		{
 			x->pSettings->setBackbufferScale(fScaleFromTab);
-			x->pResource->getFramebuffer("X:backbuffer_FB")->resizeToWindowDimsScaled();
-
+			x->pResource->getFramebuffer("X:backbuffer")->resizeToWindowDimsScaled();
 			pText->setText(strTxt);
 		}
 	}

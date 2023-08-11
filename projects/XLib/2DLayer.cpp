@@ -15,6 +15,7 @@ namespace X
 		removeAllEntityRots();
 		removeAllParticleSystems();
 		removeAllEntityLines();
+		removeAllMaps();
 	}
 
 	void C2DLayer::setVisible(bool bVisible)
@@ -27,6 +28,10 @@ namespace X
 		return _mbVisible;
 	}
 
+	/**************************************************************************************************************************************************
+	Entities
+	**************************************************************************************************************************************************/
+
 	C2DEntity* C2DLayer::addEntity(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
 	{
 		// Attempt to find if the object name already exists
@@ -38,7 +43,7 @@ namespace X
 		ThrowIfFalse(pNew, "C2DLayer::addEntity(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
 
 		// Make sure the named atlas resource exists, otherwise throw an exception
-		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntity(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntity(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. Named atlas resource doesn't exist.");
 		
 		// Add object to hash map
 		_mmapEntities[strUniqueName] = pNew;
@@ -76,7 +81,7 @@ namespace X
 
 	void C2DLayer::removeEntity(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
+		// Attempt to find if the name exists
 		std::map<std::string, C2DEntity*>::iterator it = _mmapEntities.find(strUniqueName);
 		ThrowIfTrue(it == _mmapEntities.end(), "C2DLayer::removeEntity(\"" + strUniqueName + "\") failed. The object doesn't exist.");
 
@@ -123,6 +128,10 @@ namespace X
 		return int(_mmapEntities.size());
 	}
 
+	/**************************************************************************************************************************************************
+	Entities Rot
+	**************************************************************************************************************************************************/
+
 	C2DEntityRot* C2DLayer::addEntityRot(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName)
 	{
 		// Attempt to find if the object name already exists
@@ -134,7 +143,7 @@ namespace X
 		ThrowIfFalse(pNew, "C2DLayer::addEntityRot(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
 
 		// Make sure the named atlas resource exists, otherwise throw an exception
-		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityRot(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. named atlas resource doesn't exist.");
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addEntityRot(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. Named atlas resource doesn't exist.");
 
 		// Add object to hash map
 		_mmapEntityRots[strUniqueName] = pNew;
@@ -172,7 +181,7 @@ namespace X
 
 	void C2DLayer::removeEntityRot(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
+		// Attempt to find if the name exists
 		std::map<std::string, C2DEntityRot*>::iterator it = _mmapEntityRots.find(strUniqueName);
 		ThrowIfTrue(it == _mmapEntityRots.end(), "C2DLayer::removeEntityRot(\"" + strUniqueName + "\") failed. The object doesn't exist.");
 
@@ -218,6 +227,10 @@ namespace X
 	{
 		return int(_mmapEntityRots.size());
 	}
+
+	/**************************************************************************************************************************************************
+	Particle systems
+	**************************************************************************************************************************************************/
 
 	C2DParticleSystem* C2DLayer::addParticleSystem(const std::string& strUniqueName)
 	{
@@ -265,7 +278,7 @@ namespace X
 
 	void C2DLayer::removeParticleSystem(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
+		// Attempt to find if the name exists
 		std::map<std::string, C2DParticleSystem*>::iterator it = _mmapParticleSystems.find(strUniqueName);
 		ThrowIfTrue(it == _mmapParticleSystems.end(), "C2DLayer::removeParticleSystem(\"" + strUniqueName + "\") failed. The object doesn't exist.");
 
@@ -311,6 +324,10 @@ namespace X
 	{
 		return int(_mmapParticleSystems.size());
 	}
+
+	/**************************************************************************************************************************************************
+	Entities line
+	**************************************************************************************************************************************************/
 
 	C2DEntityLine* C2DLayer::addEntityLine(const std::string& strUniqueName)
 	{
@@ -358,7 +375,7 @@ namespace X
 
 	void C2DLayer::removeEntityLine(const std::string& strUniqueName)
 	{
-		// Attempt to find if the layer name already exists
+		// Attempt to find if the  name exists
 		std::map<std::string, C2DEntityLine*>::iterator it = _mmapEntityLines.find(strUniqueName);
 		ThrowIfTrue(it == _mmapEntityLines.end(), "C2DLayer::removeEntityLine(\"" + strUniqueName + "\") failed. The object doesn't exist.");
 
@@ -403,5 +420,105 @@ namespace X
 	unsigned int C2DLayer::getNumEntityLines(void) const
 	{
 		return int(_mmapEntityLines.size());
+	}
+
+	/**************************************************************************************************************************************************
+	Maps
+	**************************************************************************************************************************************************/
+
+	C2DMap* C2DLayer::addMap(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY)
+	{
+		// Attempt to find if the object name already exists
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.find(strUniqueName);
+		ThrowIfTrue(it != _mmapMaps.end(), "C2DLayer::addMap(\"" + strUniqueName + "\") failed. The object already exists.");
+
+		// Allocate memory for new object
+		C2DMap* pNew = new C2DMap(strResourceTexture2DAtlasName, iNumTilesX, iNumTilesY);
+		ThrowIfFalse(pNew, "C2DLayer::addMap(\"" + strUniqueName + "\") failed. Unable to allocate memory.");
+
+		// Make sure the named atlas resource exists, otherwise throw an exception
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strResourceTexture2DAtlasName), "C2DLayer::addMap(\"" + strUniqueName + ", " + strResourceTexture2DAtlasName + "\") failed. Named atlas resource doesn't exist.");
+
+		// Add object to hash map
+		_mmapMaps[strUniqueName] = pNew;
+		return pNew;
+	}
+
+	bool C2DLayer::getMapExists(const std::string& strUniqueName) const
+	{
+		if (_mmapMaps.find(strUniqueName) == _mmapMaps.end())
+			return false;
+		return true;
+	}
+
+	C2DMap* C2DLayer::getMap(const std::string& strUniqueName) const
+	{
+		// Attempt to find if the name already exists
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.find(strUniqueName);
+		ThrowIfTrue(it == _mmapMaps.end(), "C2DLayer::getMap(\"" + strUniqueName + "\") failed. Object name doesn't exist.");
+		return it->second;
+	}
+
+	C2DMap* C2DLayer::getMap(unsigned int uiIndex) const
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapMaps.size(), "C2DLayer::getMap(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		return it->second;
+	}
+
+	void C2DLayer::removeMap(const std::string& strUniqueName)
+	{
+		// Attempt to find if the name exists
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.find(strUniqueName);
+		ThrowIfTrue(it == _mmapMaps.end(), "C2DLayer::removeMap(\"" + strUniqueName + "\") failed. The object doesn't exist.");
+
+		// De-allocate memory
+		delete it->second;
+
+		// Remove from hash map
+		_mmapMaps.erase(it);
+	}
+
+	void C2DLayer::removeMap(unsigned int uiIndex)
+	{
+		// Make sure given index is valid
+		ThrowIfTrue(uiIndex >= _mmapMaps.size(), "C2DLayer::removeMap(" + std::to_string(uiIndex) + ") failed. Invalid index given.");
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.begin();
+		unsigned int ui = 0;
+		while (ui < uiIndex)
+		{
+			ui++;
+			it++;
+		}
+		// De-allocate memory for the object
+		delete it->second;
+
+		// Remove object from hash map
+		_mmapMaps.erase(it);
+	}
+
+	void C2DLayer::removeAllMaps(void)
+	{
+		// Remove all objects
+		std::map<std::string, C2DMap*>::iterator it = _mmapMaps.begin();
+		while (it != _mmapMaps.end())
+		{
+			delete it->second;
+			_mmapMaps.erase(it);
+			it = _mmapMaps.begin();
+		}
+		_mmapMaps.clear();
+	}
+
+	unsigned int C2DLayer::getNumMaps(void) const
+	{
+		return int(_mmapMaps.size());
 	}
 }

@@ -173,7 +173,7 @@ namespace X
 
 		// Obtain loading screen resources
 		std::string strTxtResName;
-		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer");
 		
 		// Add required font resource if it doesn't exist
 		CResourceFont* pFontSmall;
@@ -212,7 +212,7 @@ namespace X
 
 		x->pWindow->clearBackbuffer();
 
-		// Bind the X:backbuffer_FB to render target
+		// Bind the X:backbuffer to render target
 		pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
 
 		// Compute centre of window
@@ -249,7 +249,7 @@ namespace X
 			pPB->setProgress(0.0f);
 
 			// Render GUI for the progress bar
-			x->pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer");
 		}
 		else if (1 == iState)	// Being called from loadingResource()
 		{
@@ -268,7 +268,7 @@ namespace X
 			pFontSmall->printCentered(txt, (int)_mvInfoTextLine2Pos.x, (int)_mvInfoTextLine2Pos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour(_mColTextSmall.red, _mColTextSmall.green, _mColTextSmall.blue, 1.0f));
 
 			// Render GUI for the progress bar
-			x->pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer");
 		}
 		else  // Being called from onInitEnd() during fade out
 		{
@@ -300,13 +300,13 @@ namespace X
 				pPB->setAlpha(0.0f);
 			
 			// Render GUI for the progress bar
-			x->pGUI->render("X:backbuffer_FB");
+			x->pGUI->render("X:backbuffer");
 		}
 
-		// Unbind the X:backbuffer_FB and render to the back buffer
+		// Unbind the X:backbuffer and render to the back buffer
 		pBGFB->unbindAsRenderTarget();
 
-		// Now render the "X:backbuffer_FB" to the backbuffer
+		// Now render the "X:backbuffer" to the backbuffer
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		pBGFB->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());

@@ -8,7 +8,7 @@ namespace X
 	CSMCamera::CSMCamera()
 	{
 		_mMode = Mode::None;
-		setSMFramebufferTarget();	// Default is "X:backbuffer_FB"
+		setSMFramebufferTarget();	// Default is "X:backbuffer"
 		_mbActive = true;
 		setFOV(60.0f);
 		setZNearFar(1.0f, 10000.0f);

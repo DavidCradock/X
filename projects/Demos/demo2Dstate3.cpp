@@ -23,14 +23,19 @@ namespace X
 		CVector2f vWndDims = x->pWindow->getDimensions();
 		CVector2f vWndDimsHalf = vWndDims * 0.5f;
 		// Set each entity's position and velocity
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 200; i++)
 		{
 			CVector2f vRandomPos(randf(-vWndDimsHalf.x, vWndDimsHalf.x), randf(-vWndDimsHalf.y, vWndDimsHalf.y));
 			_mvEntityPosition.push_back(vRandomPos);
 			CVector2f vRandomVel(randf(-100, 100), randf(-100, 100));
 			_mvEntityVelocity.push_back(vRandomVel);
 
-			_mvEntityRotationAmount.push_back(randf(-k2Pi, k2Pi));
+			float fRandomRotation = 0;
+			while (fRandomRotation > -0.5f && fRandomRotation < 0.5f)
+			{
+				fRandomRotation = randf(-kPi, kPi);
+			}
+			_mvEntityRotationAmount.push_back(fRandomRotation);
 		}
 
 		// Setup 2D renderer
@@ -44,9 +49,9 @@ namespace X
 			std::string strName = "Ent: " + std::to_string(i);
 			C2DEntityLine* pEntity = pLayer->addEntityLine(strName);
 			if (i % 2 == 0)
-				pEntity->setAsCircle(randf(10, 20), randInt(5, 10));
+				pEntity->setAsCircle(randf(10, 50), randInt(3, 10));
 			else
-				pEntity->setAsQuad(randf(10, 20), randf(10, 20));
+				pEntity->setAsQuad(randf(10, 100), randf(10, 100));
 		}
 		
 	}

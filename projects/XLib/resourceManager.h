@@ -16,42 +16,55 @@
 
 namespace X
 {
-	// This resource manager holds various resources which require an OpenGL context
+	// This resource manager holds various resources which require an OpenGL context.
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the CResourceBase class and have the pure virtual methods defined in their own files.
-	// There are several resources added upon initialisation which are used by various classes these are...
-	// X:DRNE					// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
-	// X:DRNE_noshadows			// A shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
-	// X:depthbuffer_debug		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
-	// X:shadowdepthmap			// A shader used by the scene manager to render the depth map used for rendering shadows
-	// X:gui					// A shader used by the GUI to render everything.
-	// X:VBCPT					// A shader used with CResourceVertexBufferCPT
-	// X:VBCPT2					// A shader used with CResourceVertexBufferCPT
-	// X:VBCPTInst				// A shader used with CResourceVertexBufferCPTInst
+	//
+	// Default Resources.
+	// There are quite a few default resources added upon initialisation which are used all over the place and
+	// their type and names can be found by accessing the public SDefaultResourceNames struct defaultRes.
 	// 
-	// X:default_particle		// A texture atlas for use with rendering generic particles
-	// 
-	// X:default_white			// A texture which is tiny and white.
-	// X:default_diffuse		// A texture which is grey for diffuse, used if not set
-	// X:default_emission		// A texture which is black for emission, used if not set
-	// X:default_normal			// A texture which is a flat normal map, used if not set
-	// X:default_roughness		// A texture which is black for roughness used if not set
-	// 
-	// X:shadows				// A depth buffer which is used by scene managers to render shadows
-	// 
-	// X:default				// A vertex buffer CPT resource used for rendering 2D quads to the screen.
-	// X:default				// A vertex buffer CPT2 resource used for rendering 2D quads to the screen.
-	// X:default				// A vertex buffer CPT instanced resource used for rendering various things such as the C2DParticleSystem's particles
-	// X:default				// A vertex buffer CPTBNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
-	// X:default				// A vertex buffer line resource used by the GUI when rendering lines
-	// 
-	// X:backbuffer_FB			// A framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-	// X:gui					// A framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
-	// X:guitooltipFB			// A framebuffer the GUI tooltips are rendered to
-	// They are loaded by this class's addDefaultResources() method which is called from SCSingletons constructor
+	// They are added/loaded/created by this class's addDefaultResources() method which is called from SCSingletons constructor
+	// You can either remember the name and use that directly, or get the string holding the name of each default resource
+	// by accessing the public SDefaultResourceNames struct defaultRes.
+	// So instead of having to remember the name and go...
+	// x->pResource->getFramebuffer("X:backbuffer");
+	// We can go...
+	// x->pResource->getFramebuffer(defaultRes.framebuffer_backbuffer_FB);
 	class SCResourceManager : public CSingleton<SCResourceManager>
 	{
 	public:
+		// Holds strings which store the default resource names which we can use when calling any of the resource manager's
+		// methods which accept a unique resource name.
+		// The variables are named... ResoureType_Name so for example, defaultRes.framebuffer_backbuffer_FB holds the name of a framebuffer which is used as the backbuffer.
+		struct SDefaultResourceNames
+		{
+			std::string shader_DRNE;							// Holds the name "X:DRNE" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
+			std::string shader_DRNE_noshadows;					// Holds the name "X:DRNE_noshadows" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
+			std::string shader_depthbuffer_debug;				// Holds the name "X:depthbuffer_debug" of the default shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
+			std::string shader_shadowdepthmap;					// Holds the name "X:shadowdepthmap" of the default shader used by the scene manager to render the depth map used for rendering shadows
+			std::string shader_gui;								// Holds the name "X:gui" of the default shader used by the GUI to render everything.
+			std::string shader_VBCPT;							// Holds the name "X:VBCPT" of the default shader used with CResourceVertexBufferCPT
+			std::string shader_VBCPT2;							// Holds the name "X:VBCPT2" of the default shader used with CResourceVertexBufferCPT
+			std::string shader_VBCPTInst;						// Holds the name "X:VBCPTInst" of the default shader used with CResourceVertexBufferCPTInst
+			std::string texture2DAtlas_default_particle;		// Holds the name "X:default_particle" of the default texture atlas for use with rendering generic particles
+			std::string texture2DFromFile_default_white;		// Holds the name "X:default_white" of the default texture which is tiny and white.
+			std::string texture2DFromFile_default_diffuse;		// Holds the name "X:default_diffuse" of the default texture which is grey for diffuse, used if not set
+			std::string texture2DFromFile_default_emission;		// Holds the name "X:default_emission" of the default texture which is black for emission, used if not set
+			std::string texture2DFromFile_default_normal;		// Holds the name "X:default_normal" of the default texture which is a flat normal map, used if not set
+			std::string texture2DFromFile_default_roughness;	// Holds the name "X:default_roughness" of the default texture which is black for roughness used if not set
+			std::string depthbuffer_shadows;					// Holds the name "X:shadows" of the default depth buffer which is used by scene managers to render shadows
+			std::string vertexbufferCPT_default;				// Holds the name "X:default" of the default vertex buffer CPT resource
+			std::string vertexbufferCPT2_default;				// Holds the name "X:default" of the default vertex buffer CPT2 resource
+			std::string vertexbufferCPTInst_default;			// Holds the name "X:default" of the default vertex buffer CPT instanced resource used for rendering various things such as the C2DParticleSystem's particles
+			std::string vertexbufferCPTBNT_default;				// Holds the name "X:default" of the default vertex buffer CPTBNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
+			std::string vertexbufferLine_default;				// Holds the name "X:default" of the default vertex buffer line resource used by the GUI when rendering lines
+			std::string framebuffer_backbuffer_FB;				// Holds the name "X:backbuffer" of the default framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
+			std::string framebuffer_gui;						// Holds the name "X:gui" of the default framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
+			std::string framebuffer_guitooltipFB;				// Holds the name "X:guitooltipFB" of the default framebuffer the GUI tooltips are rendered to
+		};
+		SDefaultResourceNames defaultRes;	// A struct holding the names of all default resources added to the resource manager
+
 		SCResourceManager();
 
 		// Call just before the OpenGL window context is about to be destroyed, to free all resources which depend upon it.
@@ -186,6 +199,14 @@ namespace X
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the atlas images stored in memory.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
 		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false);
+
+		// Adds a new texture2D atlas object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// const std::string>& strDirectoryContainingImages holds the name of the directory holding the files which hold the image data for each of the images in the atlas/es.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the atlas images stored in memory.
+		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
+		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::string& strDirectoryContainingImages, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown

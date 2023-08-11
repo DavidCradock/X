@@ -13,19 +13,13 @@ namespace X
 		x->pLoadingScreen->onInit(6);
 
 		// Create resources used by the states
-
-		// Used in state0 and state1
-		std::vector<std::string> vecstrImageNamesEntity = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down/");
-		std::vector<std::string> vecstrImageNamesFood = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/food/");
-		std::vector<std::string> vecstrImageNamesTiles = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/floor_tiles/");
-		// Used in state1
-		std::vector<std::string> vecstrImageNamesEntityEvil = StringUtils::getFilesInDir("data/Demos/DemoNeuralNets/images/creature_top_down_evil/");
-
 		// Create texture atlases and entities
-		x->pResource->addTexture2DAtlas("creature_top_down", vecstrImageNamesEntity);
-		x->pResource->addTexture2DAtlas("food", vecstrImageNamesFood);
-		x->pResource->addTexture2DAtlas("tiles", vecstrImageNamesTiles);
-		x->pResource->addTexture2DAtlas("creature_top_down_evil", vecstrImageNamesEntityEvil);
+		// Used in state0 and state1
+		x->pResource->addTexture2DAtlas("creature_top_down", "data/Demos/DemoNeuralNets/images/creature_top_down/");
+		x->pResource->addTexture2DAtlas("food", "data/Demos/DemoNeuralNets/images/food/");
+		x->pResource->addTexture2DAtlas("tiles", "data/Demos/DemoNeuralNets/images/floor_tiles/");
+		// Used in state1
+		x->pResource->addTexture2DAtlas("creature_top_down_evil", "data/Demos/DemoNeuralNets/images/creature_top_down_evil/");
 
 		// Create textures
 		x->pResource->addTexture2DFromFile("critter_diffuse", "data/Demos/DemoNeuralNets/textures/critter_diffuse.png", true);

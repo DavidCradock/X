@@ -30,18 +30,18 @@ namespace X
 		void setEnabled(bool bEnabled);
 
 		// Returns a std::string holding the name of the framebuffer located in SCResourceManager which the camera uses to render to.
-		// By default, this is set to "X:backbuffer_FB"
+		// By default, this is set to "X:backbuffer"
 		std::string getFramebufferTargetName(void) const;
 
 		// Sets the name of the framebuffer located in SCResourceManager which the camera uses to render to.
-		// By default, this is set to "X:backbuffer_FB"
+		// By default, this is set to "X:backbuffer"
 		void setFramebufferTargetName(const std::string& strFramebufferTargetName);
 
 	private:
 		bool _mbEnabled;					// Whether this camera is enabled and rendering to it's framebuffer or not
 
 		// The name of the CFramebuffer resource located in the SCResourceManager which this camera uses to render to.
-		// By default, this is set to "X:backbuffer_FB"
+		// By default, this is set to "X:backbuffer"
 		std::string _mstrFramebufferTarget;
 		
 		CVector2f _mv2fPosition;	// Position of the camera in the world

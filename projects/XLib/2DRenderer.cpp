@@ -160,7 +160,7 @@ namespace X
 				
 				// Set framebuffer as render target
 				// Only clear the framebuffer if it isn't "X:backbuffer_fb"
-				if (itCamera->second->getFramebufferTargetName() != "X:backbuffer_FB")
+				if (itCamera->second->getFramebufferTargetName() != "X:backbuffer")
 					pFB->bindAsRenderTarget(true, false);
 				else
 					pFB->bindAsRenderTarget(false, false);
@@ -190,6 +190,15 @@ namespace X
 					// Only render the layer if it is set to be
 					if (!pLayer->_mbVisible)
 						continue;
+
+					// For each C2DMap
+					std::map<std::string, C2DMap*>::iterator itMap = pLayer->_mmapMaps.begin();
+					while (itMap != pLayer->_mmapMaps.end())
+					{
+						if (itMap->second->getVisible())
+							itMap->second->render(*itCamera->second);
+						itMap++;
+					}
 
 					// Set previously bound stuff to nothing
 					unsigned int uiPreviouslyBoundAtlasImageNumber = 999999;		// Used to reduce rebinding of same atlas texture
@@ -272,6 +281,8 @@ namespace X
 					pVB->removeGeom();
 					pShaderLine->unbind();
 					pTextureLine->unbind();
+
+					
 				}	// Each layer
 
 				itCamera++;
@@ -280,8 +291,8 @@ namespace X
 		}	// Each world
 
 
-		// Reset framebuffer to render to the "X:backbuffer_FB"
-		CResourceFramebuffer* pFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+		// Reset framebuffer to render to the "X:backbuffer"
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer("X:backbuffer");
 		pFB->bindAsRenderTarget(false, false);
 
 		glDisable(GL_BLEND);

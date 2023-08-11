@@ -17,11 +17,11 @@ namespace X
 		
 		// Sets the framebuffer the scene manager renders this camera to.
 		// The framebuffer must exist in the SCResourceManager otherwise an exception occurs during rendering
-		// By default, all cameras render to the framebuffer named "X:backbuffer_FB".
-		void setSMFramebufferTarget(const std::string& strFramebufferResourceName = "X:backbuffer_FB");
+		// By default, all cameras render to the framebuffer named "X:backbuffer".
+		void setSMFramebufferTarget(const std::string& strFramebufferResourceName = "X:backbuffer");
 		
 		// Returns the name of the framebuffer the scene manager renders this camera to.
-		// By default, all cameras render to the framebuffer named "X:backbuffer_FB".
+		// By default, all cameras render to the framebuffer named "X:backbuffer".
 		std::string getSMFramebufferTarget(void) const;
 
 		// Sets whether this camera is active or not.

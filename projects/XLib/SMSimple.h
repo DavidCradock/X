@@ -33,9 +33,9 @@ namespace X
 		// There is a camera added by default, named "camera"
 		// strFramebufferTargetResourceName is the name of the framebuffer resource located in SCResourceManager
 		// which the scene manager renders the camera to.
-		// By default, this is set to "X:backbuffer_FB"
+		// By default, this is set to "X:backbuffer"
 		// This can be changed with a call to CSMCamera::setSMFramebufferTarget()
-		CSMCamera* addCamera(const std::string& strName, const std::string& strFramebufferTargetResourceName = "X:backbuffer_FB");
+		CSMCamera* addCamera(const std::string& strName, const std::string& strFramebufferTargetResourceName = "X:backbuffer");
 
 		// Returns a pointer to the named camera
 		// If the camera doesn't exist, an exception occurs

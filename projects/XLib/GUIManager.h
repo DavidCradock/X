@@ -111,7 +111,7 @@ namespace X
 		SCGUIManager();
 
 		// Updates and renders the GUI
-		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer_FB");
+		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer");
 
 		// Scaling of the GUI is set with a single float value. Values should be 1.0f, 0.5f, 0.25f, 0.125f for optimal appearance, but can be set to any value.
 		void setScale(float fScalingValue);

@@ -2,6 +2,7 @@
 #include "application.h"
 #include "resource.h"
 #include "demo2D.h"
+#include "demoAStar.h"
 #include "demoEmpty.h"
 #include "demoGUI.h"
 #include "demoInstancing.h"
@@ -45,18 +46,22 @@ namespace X
 		CGUIButton* pBut;
 		CVector2f vTxtPos(0.0f, 210.0f);
 		pBut = pCont->addButton("2D", vTxtPos.x, vTxtPos.y, 200, 30, "2D"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("2D rendering of stuff.");
+		pBut = pCont->addButton("AStar", vTxtPos.x, vTxtPos.y, 200, 30, "AStar"); vTxtPos.y += 40;							pBut->mpTooltip->setAsText("AStar pathfinding algorithm.");
 		pBut = pCont->addButton("Empty", vTxtPos.x, vTxtPos.y, 200, 30, "Empty"); vTxtPos.y += 40;							pBut->mpTooltip->setAsText("An empty demo which does nothing. I use this as a template when adding new demos.");
 		pBut = pCont->addButton("GUI", vTxtPos.x, vTxtPos.y, 200, 30, "GUI"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("Usage of the Graphical User Interface (GUI).");
 		pBut = pCont->addButton("Instancing", vTxtPos.x, vTxtPos.y, 200, 30, "Instancing"); vTxtPos.y += 40;				pBut->mpTooltip->setAsText("Speed ups with instancing.");
 		pBut = pCont->addButton("Neural Networks", vTxtPos.x, vTxtPos.y, 200, 30, "Neural Networks"); vTxtPos.y += 40;		pBut->mpTooltip->setAsText("AI Neural networks and their training.");
-		pBut = pCont->addButton("Oct Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Oct Tree"); vTxtPos.y += 40;					pBut->mpTooltip->setAsText("Oct tree for culling.");
-		pBut = pCont->addButton("Physics", vTxtPos.x, vTxtPos.y, 200, 30, "Physics"); vTxtPos.set(220, 210);				pBut->mpTooltip->setAsText("Testing the physics engine here.");
+		pBut = pCont->addButton("Oct Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Oct Tree"); vTxtPos.set(220, 210);				pBut->mpTooltip->setAsText("Oct tree for culling.");
+		pBut = pCont->addButton("Physics", vTxtPos.x, vTxtPos.y, 200, 30, "Physics"); vTxtPos.y += 40;						pBut->mpTooltip->setAsText("Testing the physics engine here.");
 		pBut = pCont->addButton("Quad Tree", vTxtPos.x, vTxtPos.y, 200, 30, "Quad Tree"); vTxtPos.y += 40;		 			pBut->mpTooltip->setAsText("Quad tree for culling.");
 		pBut = pCont->addButton("Scene Manager", vTxtPos.x, vTxtPos.y, 200, 30, "Scene Manager"); 	vTxtPos.y += 40;		pBut->mpTooltip->setAsText("3D Scene manager testing.");
 
 		// Create the demo states
 		CStateDemo2D* pStateDemo2D = new CStateDemo2D;
 		_mFSM.addState("demo2D", pStateDemo2D);
+
+		CStateDemoAStar* pStateDemoAStar = new CStateDemoAStar;
+		_mFSM.addState("demoAStar", pStateDemoAStar);
 
 		CStateDemoEmpty* pStateDemoEmpty = new CStateDemoEmpty;
 		_mFSM.addState("demoEmpty", pStateDemoEmpty);
@@ -93,8 +98,8 @@ namespace X
 		x->pLoadingScreen->onInitEnd();
 
 		// TEMP
-		// Switch to state GUI straight away, and hide the Demo states container
-		_mFSM.switchToState("demoGUI");
+		// Switch to state straight away, and hide the Demo states container
+		_mFSM.switchToState("demo2D");
 		x->pGUI->getContainer("DemoStates")->setVisible(false);
 	}
 
@@ -117,6 +122,12 @@ namespace X
 			if (pBut->getClicked())
 			{
 				_mFSM.switchToState("demo2D");
+				pCont->setVisible(false);
+			}
+			pBut = pCont->getButton("AStar");
+			if (pBut->getClicked())
+			{
+				_mFSM.switchToState("demoAStar");
 				pCont->setVisible(false);
 			}
 			pBut = pCont->getButton("Empty");

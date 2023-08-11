@@ -102,6 +102,8 @@
     <ClCompile Include="demo2Dstate1.cpp" />
     <ClCompile Include="demo2Dstate2.cpp" />
     <ClCompile Include="demo2Dstate3.cpp" />
+    <ClCompile Include="demo2Dstate4.cpp" />
+    <ClCompile Include="demoAStar.cpp" />
     <ClCompile Include="demoEmpty.cpp" />
     <ClCompile Include="demoGUI.cpp" />
     <ClCompile Include="demoInstancing.cpp" />
@@ -130,6 +132,8 @@
     <ClInclude Include="demo2Dstate1.h" />
     <ClInclude Include="demo2Dstate2.h" />
     <ClInclude Include="demo2Dstate3.h" />
+    <ClInclude Include="demo2Dstate4.h" />
+    <ClInclude Include="demoAStar.h" />
     <ClInclude Include="demoEmpty.h" />
     <ClInclude Include="demoGUI.h" />
     <ClInclude Include="demoInstancing.h" />

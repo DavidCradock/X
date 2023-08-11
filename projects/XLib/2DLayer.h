@@ -3,11 +3,12 @@
 #include "2DEntity.h"
 #include "2DEntityLine.h"
 #include "2DEntityRot.h"
+#include "2DMap.h"
 #include "2DParticleSystem.h"
 
 namespace X
 {
-	// A layer stores entities of various types and each layer is ordered by rendering order (in the C2DWorld objects) so that we can
+	// A layer stores entities of various types as well as maps and each layer is ordered by rendering order (in the C2DWorld objects) so that we can
 	// have some control over which entities get rendered on top of others.
 	// When adding entities to layers, try to keep different entity types in their own layers and if entities use different texture
 	// resources, keep them in seperate layers too. They don't have to, but it helps to reduce texture re-bindings which slows things down.
@@ -164,11 +165,47 @@ namespace X
 		// Returns the total number of added objects
 		unsigned int getNumEntityLines(void) const;
 
+		/**************************************************************************************************************************************************
+		C2DMap
+		**************************************************************************************************************************************************/
+
+		// Add a new named object
+		// If the object name already exists, an exception occurs
+		// strResourceTexture2DAtlasName is the name of the CResourceTexture2DAtlas added to SCResourceManager which contains this map's image data.
+		// If the name of the CResourceTexture2DAtlas doesn't exist, an exception occurs.
+		// Returns a pointer to the newly added object
+		// See C2DMap in 2DMap.h for more information.
+		C2DMap* addMap(const std::string& strUniqueName, const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY);
+
+		// Returns true if an object exists, else false
+		bool getMapExists(const std::string& strUniqueName) const;
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DMap* getMap(const std::string& strUniqueName) const;
+
+		// Returns a pointer to a previously added named object if it exists, else an exception occurs
+		C2DMap* getMap(unsigned int uiIndex) const;
+
+		// Removes an object
+		// If the object's name given doesn't exist, an exception occurs
+		void removeMap(const std::string& strUniqueName);
+
+		// Removes an object
+		// If an invalid index is given, an exception occurs
+		void removeMap(unsigned int uiIndex);
+
+		// Removes all objects
+		void removeAllMaps(void);
+
+		// Returns the total number of added objects
+		unsigned int getNumMaps(void) const;
+
 	private:
 		mutable std::map<std::string, C2DEntity*> _mmapEntities;					// Each named C2DEntity
 		mutable std::map<std::string, C2DEntityRot*> _mmapEntityRots;				// Each named C2DEntityRot
 		mutable std::map<std::string, C2DParticleSystem*> _mmapParticleSystems;		// Each named C2DParticleSystem
 		mutable std::map<std::string, C2DEntityLine*> _mmapEntityLines;				// Each named C2DEntityLine
+		mutable std::map<std::string, C2DMap*> _mmapMaps;							// Each named C2DMap
 
 		bool _mbVisible;														// Whether this layer is visible and rendered or not
 

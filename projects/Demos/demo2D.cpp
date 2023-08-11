@@ -4,6 +4,7 @@
 #include "demo2Dstate1.h"
 #include "demo2Dstate2.h"
 #include "demo2Dstate3.h"
+#include "demo2Dstate4.h"
 
 namespace X
 {
@@ -14,38 +15,44 @@ namespace X
 
 		// Create GUI shared between states
 		CGUIContainer* pCont = x->pGUI->addContainer("State Selection.");
-		pCont->setDimensions(150, 150);
-		pCont->setPosition(999999, float(x->pWindow->getHeight())-220);
+		pCont->setDimensions(150, 190);
+		pCont->setPosition(999999, float(x->pWindow->getHeight())-260);
 		float fYpos = 5;
 		pCont->addButton("state0", 0, fYpos, 150, 30, "State 0")->mpTooltip->setAsText("Click me to switch to state zero."); fYpos += 40;
 		pCont->addButton("state1", 0, fYpos, 150, 30, "State 1")->mpTooltip->setAsText("Click me to switch to state one."); fYpos += 40;
 		pCont->addButton("state2", 0, fYpos, 150, 30, "State 2")->mpTooltip->setAsText("Click me to switch to state two."); fYpos += 40;
 		pCont->addButton("state3", 0, fYpos, 150, 30, "State 3")->mpTooltip->setAsText("Click me to switch to state three."); fYpos += 40;
+		pCont->addButton("state4", 0, fYpos, 150, 30, "State 4")->mpTooltip->setAsText("Click me to switch to state four."); fYpos += 40;
 
 		// Create all resources for each of the states
 
 		// State0
 		// Top down creature rotation images
-		std::vector<std::string> vstrImageFilenames = StringUtils::getFilesInDir("data/Demos/Demo2D/images/creature_top_down/");	// Get filenames 
-		x->pResource->addTexture2DAtlas("Scene0Creatures", vstrImageFilenames, true, 1);												// Create texture atlas
+		x->pResource->addTexture2DAtlas("Scene0Creatures", "data/Demos/Demo2D/images/creature_top_down/", true, 1);
 
 		// State1
 		// Tank body and turret image
-		vstrImageFilenames.clear();
+		std::vector<std::string> vstrImageFilenames;
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_body.png");
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_turret.png");
 		x->pResource->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
 
 		// State2
 
+		// State3
+	
+		// State4
+		x->pResource->addTexture2DAtlas("map_atlas", "data/x/textures/map_tiles/");
+
 		// Create the application states
 		CDemo2DState0* pState0 = new CDemo2DState0;	_mFSM.addState("state0", pState0);
 		CDemo2DState1* pState1 = new CDemo2DState1;	_mFSM.addState("state1", pState1);
 		CDemo2DState2* pState2 = new CDemo2DState2;	_mFSM.addState("state2", pState2);
 		CDemo2DState3* pState3 = new CDemo2DState3;	_mFSM.addState("state3", pState3);
+		CDemo2DState4* pState4 = new CDemo2DState4;	_mFSM.addState("state4", pState4);
 
 		// Switch to state
-		_mFSM.switchToState("state3");
+		_mFSM.switchToState("state4");
 
 		// End of loading screen
 		x->pLoadingScreen->onInitEnd();
@@ -56,6 +63,7 @@ namespace X
 		x->pGUI->removeContainer("State Selection.");
 		x->pResource->removeTexture2DAtlas("Scene0Creatures");
 		x->pResource->removeTexture2DAtlas("Scene1Tank");
+		x->pResource->removeTexture2DAtlas("map_atlas");
 		_mFSM.removeAllStates();
 	}
 
@@ -86,6 +94,12 @@ namespace X
 		if (pBut->getClicked())
 		{
 			_mFSM.switchToState("state3");
+			x->pGUI->setContainerAsActive("State Selection.");
+		}
+		pBut = pCont->getButton("state4");
+		if (pBut->getClicked())
+		{
+			_mFSM.switchToState("state4");
 			x->pGUI->setContainerAsActive("State Selection.");
 		}
 

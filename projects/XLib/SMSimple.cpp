@@ -93,8 +93,8 @@ namespace X
 
 	void CSceneManagerSimple::render(void)
 	{
-		// The application manager has X:backbuffer_FB set to render target, so unbind this first
-		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer_FB");
+		// The application manager has X:backbuffer set to render target, so unbind this first
+		CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer");
 		pBGFB->unbindAsRenderTarget();
 
 		// For each camera
@@ -123,7 +123,7 @@ namespace X
 			
 			// If the buffer is the back buffer, resize it to the window dimensions
 			bool bResizeFramebufferToWindowDims = false;
-			if (itCamera->second->getSMFramebufferTarget() == "X:backbuffer_FB")
+			if (itCamera->second->getSMFramebufferTarget() == "X:backbuffer")
 				bResizeFramebufferToWindowDims = true;
 
 			// Bind the framebuffer we're rendering to
@@ -148,7 +148,7 @@ namespace X
 			itCamera++;
 		}
 
-		// Now re-set the X:backbuffer_FB framebuffer to be the render target again
+		// Now re-set the X:backbuffer framebuffer to be the render target again
 		pBGFB->bindAsRenderTarget(false, false);
 	}
 
