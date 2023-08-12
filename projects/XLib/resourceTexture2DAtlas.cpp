@@ -6,7 +6,7 @@
 namespace X
 {
 
-	CResourceTexture2DAtlas::CResourceTexture2DAtlas(const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing)
+	CResourceTexture2DAtlas::CResourceTexture2DAtlas(const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing, bool bFilteringNearest)
 	{
 		// Upon construction, we need to load each image in and store inside atlas images.
 		SCWindow* pWindow = SCWindow::getPointer();
@@ -21,6 +21,7 @@ namespace X
 			_mvAtlasTextureIDs.push_back(0);
 		}
 
+		_mbFilteringNearest = bFilteringNearest;
 		onGLContextCreated();
 	}
 
@@ -39,8 +40,17 @@ namespace X
 			glBindTexture(GL_TEXTURE_2D, _mvAtlasTextureIDs[ui]);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			if (_mbFilteringNearest)
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			}
+			else
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			}
 
 			CImage* pImage = _mAtlases.getAtlasImage(ui);
 			if (3 == pImage->getNumChannels())

@@ -953,7 +953,7 @@ namespace X
 		_mmapResShaders.erase(it);
 	}
 
-	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing, bool bLocked)
+	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing, bool bLocked, bool bFilteringNearest)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Texture2DAtlas", strResourceName);
@@ -968,7 +968,7 @@ namespace X
 		SResourceTexture2DAtlas newRes;
 		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
-		newRes.pResource = new CResourceTexture2DAtlas(vecStrImageFilenames, bAllowRotationOfImages, uiImageSpacing);
+		newRes.pResource = new CResourceTexture2DAtlas(vecStrImageFilenames, bAllowRotationOfImages, uiImageSpacing, bFilteringNearest);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addTexture2DAtlas(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResTextures2DAtlases[strResourceName] = newRes;
 		return newRes.pResource;
@@ -979,10 +979,11 @@ namespace X
 		const std::string& strDirectoryContainingImages,
 		bool bAllowRotationOfImages,
 		unsigned int uiImageSpacing,
-		bool bLocked)
+		bool bLocked,
+		bool bFilteringNearest)
 	{
 		std::vector<std::string> vecStrFiles = StringUtils::getFilesInDir(strDirectoryContainingImages, false);
-		return addTexture2DAtlas(strResourceName, vecStrFiles, bAllowRotationOfImages, uiImageSpacing, bLocked);
+		return addTexture2DAtlas(strResourceName, vecStrFiles, bAllowRotationOfImages, uiImageSpacing, bLocked, bFilteringNearest);
 	}
 
 	CResourceTexture2DAtlas* SCResourceManager::getTexture2DAtlas(const std::string& strResourceName)

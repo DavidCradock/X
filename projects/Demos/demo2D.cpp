@@ -35,14 +35,14 @@ namespace X
 		std::vector<std::string> vstrImageFilenames;
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_body.png");
 		vstrImageFilenames.push_back("data/Demos/Demo2D/images/tank_turret.png");
-		x->pResource->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 1);
+		x->pResource->addTexture2DAtlas("Scene1Tank", vstrImageFilenames, true, 0, false, false);
 
 		// State2
 
 		// State3
 	
 		// State4
-		x->pResource->addTexture2DAtlas("map_atlas", "data/x/textures/map_tiles/", true, 10);
+		x->pResource->addTexture2DAtlas("map_atlas", "data/x/textures/map_tiles/", true, 10, false, true);
 
 		// TEMP SAVE atlas
 		CImageAtlasPacker* pAtlasImagePacker = x->pResource->getTexture2DAtlas("map_atlas")->getImageAtlasPacker();

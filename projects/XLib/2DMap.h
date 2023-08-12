@@ -26,7 +26,8 @@ namespace X
 		// Example usage:
 		// First create the texture atlas which holds all the map's tile's images inside a directory
 		// std::vector<std::string> strMapTileImageFilenames = StringUtils::getFilesInDir("data/maps/MyFirstMapsTiles/");
-		// x->pResource->addTexture2DAtlas("MyMapsTextureAtlas", strMapTileImageFilenames);
+		// NOTE: When creating the texture atlas for a map to use, create it with nearest filtering, otherwise teeny imprecision messes with the edges.
+		// x->pResource->addTexture2DAtlas("MyMapsTextureAtlas", strMapTileImageFilenames, true, 1, false, true);
 		//
 		// Alternatively, instead of getting the filenames within the directory ourselves, we can instead use the easier method which does this for us...
 		// x->pResource->addTexture2DAtlas("MyMapsTextureAtlas", "data/maps/MyFirstMapsTiles/");

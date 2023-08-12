@@ -214,7 +214,7 @@ namespace X
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the atlas images stored in memory.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
-		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false);
+		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false, bool bFilteringNearest = false);
 
 		// Adds a new texture2D atlas object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
@@ -222,7 +222,7 @@ namespace X
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the Cimages containing the atlas images stored in memory.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
-		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::string& strDirectoryContainingImages, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false);
+		CResourceTexture2DAtlas* addTexture2DAtlas(const std::string& strResourceName, const std::string& strDirectoryContainingImages, bool bAllowRotationOfImages = true, unsigned int uiImageSpacing = 1, bool bLocked = false, bool bFilteringNearest = false);
 
 		// Returns a pointer to an existing resource
 		// If the resource couldn't be found, an exception is thrown

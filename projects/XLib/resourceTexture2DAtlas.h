@@ -15,7 +15,7 @@ namespace X
 	class CResourceTexture2DAtlas : public CResourceBase
 	{
 	public:
-		CResourceTexture2DAtlas(const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing = 1);
+		CResourceTexture2DAtlas(const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing = 1, bool bFilteringNearest = false);
 		~CResourceTexture2DAtlas();
 
 		// Create all OpenGL context dependent objects when an OpenGL context exists.
@@ -121,5 +121,6 @@ namespace X
 	private:
 		mutable CImageAtlasPacker _mAtlases;			// Holds one or more atlas images containing all images
 		std::vector<unsigned int> _mvAtlasTextureIDs;	// OpenGL texture ID for each generated atlas texture holding the smaller images.
+		bool _mbFilteringNearest;						// Whether when generating the textures, we use nearest filtering or mipmipping
 	};
 }
