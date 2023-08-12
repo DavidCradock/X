@@ -42,7 +42,13 @@ namespace X
 		// State3
 	
 		// State4
-		x->pResource->addTexture2DAtlas("map_atlas", "data/x/textures/map_tiles/");
+		x->pResource->addTexture2DAtlas("map_atlas", "data/x/textures/map_tiles/", true, 10);
+
+		// TEMP SAVE atlas
+		CImageAtlasPacker* pAtlasImagePacker = x->pResource->getTexture2DAtlas("map_atlas")->getImageAtlasPacker();
+		pAtlasImagePacker->getAtlasImage(0)->saveAsPNG("ATLAS.png");
+
+
 
 		// Create the application states
 		CDemo2DState0* pState0 = new CDemo2DState0;	_mFSM.addState("state0", pState0);

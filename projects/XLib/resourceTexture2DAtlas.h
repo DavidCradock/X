@@ -116,6 +116,8 @@ namespace X
 		// uiAtlasImageNumber should be a valid number (Use getNumAtlases()) otherwise an exception occurs
 		void renderAtlasTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, unsigned int uiAtlasImageNumber, CColour colour = CColour());
 
+		// Returns a pointer to the CImageAtlasPacker object so we can access the images
+		CImageAtlasPacker* getImageAtlasPacker(void);
 	private:
 		mutable CImageAtlasPacker _mAtlases;			// Holds one or more atlas images containing all images
 		std::vector<unsigned int> _mvAtlasTextureIDs;	// OpenGL texture ID for each generated atlas texture holding the smaller images.

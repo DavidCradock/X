@@ -359,4 +359,9 @@ namespace X
 		pShader->unbind();
 		unbind(0);
 	}
+
+	CImageAtlasPacker* CResourceTexture2DAtlas::getImageAtlasPacker(void)
+	{
+		return &_mAtlases;
+	}
 }
