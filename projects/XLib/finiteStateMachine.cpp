@@ -92,4 +92,29 @@ namespace X
 		}
 		_mmapStates.clear();
 	}
+
+	int CFiniteStateMachine::getNumberStates(void)
+	{
+		return (int)_mmapStates.size();
+	}
+
+	CFiniteStateBase* CFiniteStateMachine::getState(unsigned int uiIndex)
+	{
+		ThrowIfTrue(uiIndex >= (unsigned int)_mmapStates.size(), "CFiniteStateMachine::getState() failed. Given invalid index.");
+		std::map<std::string, CFiniteStateBase*>::iterator it = _mmapStates.begin();
+		unsigned int uiCount = 0;
+		while (uiCount < uiIndex)
+		{
+			uiCount++;
+			it++;
+		}
+		return it->second;
+	}
+
+	CFiniteStateBase* CFiniteStateMachine::getState(const std::string strName)
+	{
+		std::map<std::string, CFiniteStateBase*>::iterator it = _mmapStates.find(strName);
+		ThrowIfTrue(it == _mmapStates.end(), "CFiniteStateMachine::getState() failed. " + strName + " couldn't be found.");
+		return it->second;
+	}
 }

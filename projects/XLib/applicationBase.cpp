@@ -20,4 +20,9 @@ namespace X
 	void CApplicationBase::onStop(void)
 	{
 	}
+
+	void CApplicationBase::onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight)
+	{
+
+	}
 }

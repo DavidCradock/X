@@ -159,7 +159,7 @@ namespace X
 				CResourceFramebuffer* pFB = x->pResource->getFramebuffer(itCamera->second->getFramebufferTargetName());
 				
 				// Set framebuffer as render target
-				// Only clear the framebuffer if it isn't "X:backbuffer_fb"
+				// Only clear the framebuffer if it isn't "X:backbuffer"
 				if (itCamera->second->getFramebufferTargetName() != "X:backbuffer")
 					pFB->bindAsRenderTarget(true, false);
 				else
@@ -196,7 +196,7 @@ namespace X
 					while (itMap != pLayer->_mmapMaps.end())
 					{
 						if (itMap->second->getVisible())
-							itMap->second->render(*itCamera->second);
+							itMap->second->render(*itCamera->second, matrixView, matrixProjection);
 						itMap++;
 					}
 

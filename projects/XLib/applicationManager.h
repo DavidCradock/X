@@ -49,6 +49,11 @@ namespace X
 		// Returns the amount of seconds the named application has been active/running for
 		// If an invalid application name is given, an exception occurs
 		float getApplicationRuntime(const std::string& applicationName) const;
+
+		// Called by SCWindow::toggleFullscreen after the window and resources have been restored.
+		// This then calls each application's onWindowToggleFullscreen() method if it is defined.
+		// It's params are the new state of the window.
+		void onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight);
 	private:
 		// Calls all added applications' initOnce() methods
 		void callAllApps_initOnce(void);

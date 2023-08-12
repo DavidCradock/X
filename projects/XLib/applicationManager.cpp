@@ -32,7 +32,9 @@ namespace X
 			// Add each application to this manager
 //			addApp("GUIThemeEditor", pAppGUIThemeEditor);
 
+			// Set backbuffer to size of window
 			CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer");
+			pBGFB->resizeToWindowDimsScaled();
 
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();
@@ -231,5 +233,15 @@ namespace X
 		std::map<std::string, CApplicationBase*>::iterator it = _mApplications.find(applicationName);
 		ThrowIfTrue(it == _mApplications.end(), "SCApplicationManager::getApplicationRuntime(" + applicationName + " failed. Unable to find the named application");
 		return it->second->mfApplicationSecondsRunning;
+	}
+
+	void SCApplicationManager::onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight)
+	{
+		std::map<std::string, CApplicationBase*>::iterator it = _mApplications.begin();
+		while (it != _mApplications.end())
+		{
+			it->second->onWindowToggleFullscreen(bFullscreen, iWindowWidth, iWindowHeight);
+			it++;
+		}
 	}
 }

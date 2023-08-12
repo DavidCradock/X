@@ -8,7 +8,7 @@ namespace X
 		// Create state window
 		CGUIContainer* pCont = x->pGUI->addContainer("state3");
 		pCont->setDimensions(640, 240);
-		pCont->setPosition(0, 0);
+		pCont->setPosition((x->pResource->getBackbufferDims().x * 0.5f) - 320.0f, 0);
 		pCont->mstrTitleText = "State three.";
 		// Add text scroll
 		std::string strTxt;
@@ -54,6 +54,7 @@ namespace X
 				pEntity->setAsQuad(randf(10, 100), randf(10, 100));
 		}
 		
+		_mTimer.update();
 	}
 
 	void CDemo2DState3::onExit(void)
@@ -108,6 +109,13 @@ namespace X
 			vCamPos.x += _mTimer.getSecondsPast() * 250.0f;
 		pCamera->setPosition(vCamPos);
 
-		x->p2dRenderer->render();
+		//x->p2dRenderer->render();
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

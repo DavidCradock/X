@@ -25,6 +25,11 @@ namespace X
 		// It is called once per program loop for the currently set application
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
+
+		// Override this if you need it, by default it does nothing (Virtual method).
+		// Is is called when ever SCWindow::toggleFullscreen() gets called, after it has restored everything.
+		// It's params are the new state of the window.
+		void onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight);
 	private:
 		// Finite state machine to hold each demo application as a state.
 		CFiniteStateMachine _mFSM;

@@ -13,5 +13,11 @@ namespace X
 
 	void CStateDemoAStar::onActive(CFiniteStateMachine* pFSM)
 	{
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

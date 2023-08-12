@@ -118,6 +118,12 @@ namespace X
 			pEntity->setRotation(qRot);
 		}
 
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 
 	void CStateDemoSceneManager::_initSceneManager(void)

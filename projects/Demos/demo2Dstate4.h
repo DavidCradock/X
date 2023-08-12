@@ -17,6 +17,9 @@ namespace X
 		// This is usefull to allow the state to change to another named state by calling pFSM->switchToState()
 		void onActive(CFiniteStateMachine* pFSM);
 
+		// Set to true if there has been a fullscreen toggle.
+		// Check this in onActive to reposition various things such as GUI containers
+		bool bFullscreenToggle;
 	private:
 		CTimer _mTimer;
 	};

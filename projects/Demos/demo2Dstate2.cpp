@@ -8,7 +8,7 @@ namespace X
 		// Create state window
 		CGUIContainer* pCont = x->pGUI->addContainer("state2");
 		pCont->setDimensions(640, 340);
-		pCont->setPosition(0, 0);
+		pCont->setPosition((x->pResource->getBackbufferDims().x * 0.5f) - 320.0f, 0);
 		pCont->mstrTitleText = "State two.";
 		// Add text scroll
 		std::string strTxt;
@@ -43,6 +43,7 @@ namespace X
 		C2DParticleType* pType = pPS->getParticleType("default");
 		pType->stageDeath.strTextureAtlasImageName = "data/x/textures/particles/smoke0129.png";
 
+		timer.update();
 	}
 
 	void CDemo2DState2::onExit(void)
@@ -89,6 +90,11 @@ namespace X
 			vCamPos.x += timer.getSecondsPast() * 250.0f;
 		pCamera->setPosition(vCamPos);
 
-	
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

@@ -59,5 +59,11 @@ namespace X
 				pCont2->setVisible(true);
 		}
 
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

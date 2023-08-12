@@ -31,6 +31,11 @@ namespace X
 		// return false here if the application wants to close.
 		virtual bool onUpdate(void) = 0;
 	
+		// Override this if you need it, by default it does nothing (Virtual method).
+		// Is is called when ever SCWindow::toggleFullscreen() gets called, after it has restored everything.
+		// It's params are the new state of the window.
+		virtual void onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight);
+
 		float mfApplicationSecondsRunning;	// Number of seconds the application has been running. Updated by SCApplicationManager
 	protected:
 	};

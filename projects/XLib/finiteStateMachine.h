@@ -97,6 +97,16 @@ namespace X
 		// The states given during calls to addState() are deleted for us here, no need to delete them ourselves.
 		void removeAllStates(void);
 
+		// Returns the number of states
+		int getNumberStates(void);
+
+		// Returns pointer to the state at the given index.
+		// If an invalid index is given, an exception occurs
+		CFiniteStateBase* getState(unsigned int uiIndex);
+
+		// Returns pointer to the named state.
+		// If the named state couldn't be found, an exception occurs.
+		CFiniteStateBase* getState(const std::string strName);
 	private:
 		std::string _mstrCurrentState;							// The name of the currently set state. This is initially empty, IE, there's no state.
 		std::map<std::string, CFiniteStateBase*> _mmapStates;	// Holds each uniquely named state and a pointer to the object.

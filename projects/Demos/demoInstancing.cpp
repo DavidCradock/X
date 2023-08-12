@@ -36,6 +36,8 @@ namespace X
 
 		// Add a texture for use when rendering the quads
 		x->pResource->addTexture2DFromFile("particle", "data/X/textures/particles/particle0.png");
+
+		_mTimer.update();
 	}
 
 	void CStateDemoInstancing::onExit(void)
@@ -150,5 +152,12 @@ namespace X
 		// Unbind stuff
 		pShader->unbind();
 		pTexture->unbind(0);
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

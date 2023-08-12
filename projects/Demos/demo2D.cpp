@@ -16,7 +16,7 @@ namespace X
 		// Create GUI shared between states
 		CGUIContainer* pCont = x->pGUI->addContainer("State Selection.");
 		pCont->setDimensions(150, 190);
-		pCont->setPosition(999999, float(x->pWindow->getHeight())-260);
+		pCont->setPosition(999999, (x->pResource->getBackbufferDims().y * 0.5f) - (pCont->getDimensions().y * 0.5f));
 		float fYpos = 5;
 		pCont->addButton("state0", 0, fYpos, 150, 30, "State 0")->mpTooltip->setAsText("Click me to switch to state zero."); fYpos += 40;
 		pCont->addButton("state1", 0, fYpos, 150, 30, "State 1")->mpTooltip->setAsText("Click me to switch to state one."); fYpos += 40;
@@ -105,5 +105,19 @@ namespace X
 
 		// Update current state
 		_mFSM.update();
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+			CGUIContainer* pCont = x->pGUI->getContainer("State Selection.");
+			pCont->setPosition(999999, (x->pResource->getBackbufferDims().y * 0.5f) - (pCont->getDimensions().y * 0.5f));
+
+			CDemo2DState0* pState0 = (CDemo2DState0*)_mFSM.getState("state0");	pState0->bFullscreenToggle = true;
+			CDemo2DState1* pState1 = (CDemo2DState1*)_mFSM.getState("state1");	pState1->bFullscreenToggle = true;
+			CDemo2DState2* pState2 = (CDemo2DState2*)_mFSM.getState("state2");	pState2->bFullscreenToggle = true;
+			CDemo2DState3* pState3 = (CDemo2DState3*)_mFSM.getState("state3");	pState3->bFullscreenToggle = true;
+			CDemo2DState4* pState4 = (CDemo2DState4*)_mFSM.getState("state4");	pState4->bFullscreenToggle = true;
+		}
 	}
 }

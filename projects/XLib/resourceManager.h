@@ -73,6 +73,22 @@ namespace X
 		// Call this after the OpenGL window context has been recreated, to return all the resource back to their original state.
 		void onGLContextRecreated(void);
 
+		// As the back buffer frame buffer is needed alot, here's a method to return a pointer to it.
+		// This saves us from having to type...
+		// CResourceFramebuffer* pBackbuffer = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB);
+		// or
+		// CResourceFramebuffer* pBackbuffer = x->pResource->getFramebuffer("X:backbuffer");
+		CResourceFramebuffer* getBackbuffer(void);
+
+		// As the back buffer frame buffer's dimensions are needed alot, here's a method to return them.
+		// This saves us from having to type...
+		// CResourceFramebuffer* pBackbuffer = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB);
+		// CVector2f vBackbufferDimensions = pBackbuffer->getDimensions();
+		// or
+		// CResourceFramebuffer* pBackbuffer = x->pResource->getFramebuffer("X:backbuffer");
+		// CVector2f vBackbufferDimensions = pBackbuffer->getDimensions();
+		CVector2f getBackbufferDims(void);
+
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
 		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.

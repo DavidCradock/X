@@ -57,7 +57,7 @@ namespace X
 		// Create state window
 		CGUIContainer* pCont = x->pGUI->addContainer("state1");
 		pCont->setDimensions(640, 640);
-		pCont->setPosition(0, 0);
+		pCont->setPosition((x->pResource->getBackbufferDims().x * 0.5f) - 320.0f, 0);
 		pCont->mstrTitleText = "State one.";
 
 		// Add text scroll
@@ -74,6 +74,8 @@ namespace X
 		strTxt += "But that is OK! The added ability of rotation is worth it\n";
 		strTxt += "Try switching between state 0 and 1 and notice the framerate differences.\n";
 		pCont->addTextScroll("TextScroll1", 0, 0, 640, 640, strTxt);
+
+		timer.update();
 	}
 
 	void CDemo2DState1::onExit(void)
@@ -126,5 +128,12 @@ namespace X
 		if (x->pInput->key.pressed(KC_RIGHT))
 			vCamPos.x += timer.getSecondsPast() * 150.0f;
 		pCamera->setPosition(vCamPos);
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

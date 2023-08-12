@@ -44,7 +44,7 @@ namespace X
 		// Create state window
 		CGUIContainer* pCont = x->pGUI->addContainer("state0");
 		pCont->setDimensions(640, 640);
-		pCont->setPosition(0, 0);
+		pCont->setPosition((x->pResource->getBackbufferDims().x * 0.5f) - 320.0f, 0);
 		pCont->mstrTitleText = "State zero.";
 
 		// Add text scroll
@@ -67,6 +67,8 @@ namespace X
 		strTxt += "CEntityLine entities use a CResourceLine object to render lines. These lines can be cubes, circles or simple lines and unlike the previously mentioned entities, can actually be rotated. They are generally used for debug rendering.\n \n";
 		strTxt += "CEntityRot entities, unlike CEntities, do not (Although can do) use multiple images stored in an atlas to represent their rotations, but instead, have their vertices rotated on the GPU via a world matrix prior to being sent to the graphics device. This allows for more flexibility (Being able to be rotated), at the expense of less efficiency (No batching).\n";
 		pCont->addTextScroll("TextScroll", 0, 0, 640, 640, strTxt);
+
+		timer.update();
 	}
 
 	void CDemo2DState0::onExit(void)
@@ -107,5 +109,12 @@ namespace X
 		if (x->pInput->key.pressed(KC_RIGHT))
 			vCamPos.x += timer.getSecondsPast() * 150.0f;
 		pCamera->setPosition(vCamPos);
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

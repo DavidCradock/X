@@ -16,13 +16,13 @@ namespace X
 {
 	void CApplication::initOnce(void)
 	{
-		// TEMP create CHeckbox wdiget normal image
+		// TEMP create checkbox widget normal image
 //		CImage imageHeight;
 //		imageHeight.load("data/X/gui/default/checkbox_BGheight.png");
 //		CImage imageNormal;
 //		imageHeight.normalmap(imageNormal);
 //		imageNormal.saveAsPNG("data/X/gui/default/checkbox_BGnormal.png");
-		
+
 		// Use the resource loading screen
 		x->pLoadingScreen->onInit(0);
 		x->pLoadingScreen->setFadeOut(0.0f);
@@ -207,5 +207,31 @@ namespace X
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;
+	}
+
+	void CApplication::onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight)
+	{
+		// This gets called regardless of whether this application is current or not.
+		if (x->pAppMan->getCurrentAppName() != "App")	// Name set in WinMain
+			return;
+
+		// Reposition any GUI windows which are initially set to corners of the window.
+		CGUIContainer* pCont = x->pGUI->getContainer("DemoStates");
+		pCont->setPositionCentreWindow();
+
+		pCont = x->pGUI->getContainer("DemoStatesButton");
+		pCont->setPosition(float(x->pWindow->getWidth() - 150), float(x->pWindow->getHeight() - 40));
+
+		// Set each state's bFullscreenToggle to true
+		CStateDemo2D* pStateDemo2D = (CStateDemo2D*)_mFSM.getState("demo2D");										pStateDemo2D->bFullscreenToggle = true;
+		CStateDemoAStar* pStateDemoAStar = (CStateDemoAStar*)_mFSM.getState("demoAStar");							pStateDemoAStar->bFullscreenToggle = true;
+		CStateDemoEmpty* pStateDemoEmpty = (CStateDemoEmpty*)_mFSM.getState("demoEmpty");							pStateDemoEmpty->bFullscreenToggle = true;
+		CStateDemoGUI* pStateDemoGUI = (CStateDemoGUI*)_mFSM.getState("demoGUI");									pStateDemoGUI->bFullscreenToggle = true;
+		CStateDemoInstancing* pStateDemoInstancing = (CStateDemoInstancing*)_mFSM.getState("demoInstancing");		pStateDemoInstancing->bFullscreenToggle = true;
+		CStateDemoNeuralNets* pStateNeuralNets = (CStateDemoNeuralNets*)_mFSM.getState("demoNeuralNets");			pStateNeuralNets->bFullscreenToggle = true;
+		CStateDemoOctTree* pStateOctTree = (CStateDemoOctTree*)_mFSM.getState("demoOctTree");						pStateOctTree->bFullscreenToggle = true;
+		CStateDemoPhysics* pStateDemoPhysics = (CStateDemoPhysics*)_mFSM.getState("demoPhysics");					pStateDemoPhysics->bFullscreenToggle = true;
+		CStateDemoQuadTree* pStateQuadTree = (CStateDemoQuadTree*)_mFSM.getState("demoQuadTree");					pStateQuadTree->bFullscreenToggle = true;
+		CStateDemoSceneManager* pStateSceneManager = (CStateDemoSceneManager*)_mFSM.getState("demoSceneManager");	pStateSceneManager->bFullscreenToggle = true;
 	}
 }

@@ -32,6 +32,10 @@ namespace X
 
 		// State's main loop
 		void onActive(CFiniteStateMachine* pFSM);
+
+		// Set to true if there has been a fullscreen toggle.
+		// Check this in onActive to reposition various things such as GUI containers
+		bool bFullscreenToggle;
 	private:
 		// Render everything
 		void _render(void);

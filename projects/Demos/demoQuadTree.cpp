@@ -228,6 +228,13 @@ namespace X
 			_mvCameraPosition.z -= timer.getSecondsPast() * 1000.0f;
 		if (x->pInput->key.pressed(KC_F))
 			_mvCameraPosition.z += timer.getSecondsPast() * 1000.0f;
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 
 	void CStateDemoQuadTree::_renderRangeFinder(void)
@@ -294,5 +301,6 @@ namespace X
 		glEnable(GL_DEPTH_TEST);
 		pTexture->unbind();
 		pShader->unbind();
+
 	}
 }

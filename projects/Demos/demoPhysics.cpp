@@ -15,6 +15,11 @@ namespace X
 
 	void CStateDemoPhysics::onActive(CFiniteStateMachine* pFSM)
 	{
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
 
+		}
 	}
 }

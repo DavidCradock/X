@@ -21,7 +21,7 @@ namespace X
 				_mvecTiles[ix].push_back(newTile);
 			}
 		}
-		
+		_muiNumberOfTilesRendered = 0;
 	}
 
 	void C2DMap::setVisible(bool bVisible)
@@ -34,7 +34,7 @@ namespace X
 		return _mbVisible;
 	}
 
-	void C2DMap::render(C2DCamera& camera)
+	void C2DMap::render(C2DCamera& camera, CMatrix& matrixView, CMatrix& matrixProjection)
 	{
 		// Make sure some image types exist
 		ThrowIfFalse(_mmapImageTypes.size(), "C2DMap::render() failed. No C2DMapImageType added. Use C2DMap::addImageType()");
@@ -54,28 +54,12 @@ namespace X
 
 		// Get viewport corner positions from camera position
 		CVector2f v2CameraPos = camera.getPosition();
-		CVector2f vViewportMin(v2CameraPos.x, -v2CameraPos.y);
-		CVector2f vViewportMax = pBackbuffer->getDimensions();
-		vViewportMax += vViewportMin;
-
-		// Set view matrix from camera
-		CMatrix matrixView;
-		CVector3f v3CameraPos(v2CameraPos.x, v2CameraPos.y, 0.0f);
-//		v3CameraPos.x *= -1.0f;
-//		v3CameraPos.y *= -1.0f;
-//		matrixView.setTranslation(v3CameraPos);
-
-		// Set projection matrix
-		CVector2f vFBDims = pBackbuffer->getDimensions();
-		CMatrix matrixProjection;
-		matrixProjection.setProjectionOrthographic(0.0f, vFBDims.x, 0.0f, vFBDims.y, -1.0f, 1.0f);
+		CVector2f vViewportMin(v2CameraPos.x, v2CameraPos.y);
+		CVector2f vViewportMax = vViewportMin;
+		vViewportMax += pBackbuffer->getDimensions();
 
 		// Set identity world matrix
 		CMatrix matrixWorld;
-
-		// Get texture atlas and bind it
-		CResourceTexture2DAtlas* pAtlasTexture = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
-		pAtlasTexture->bind();
 
 		// Get shader and parse matrices and uniforms
 		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_VBCPT);
@@ -85,16 +69,21 @@ namespace X
 		pShader->setMat4("matrixView", matrixView);
 		pShader->setMat4("matrixProjection", matrixProjection);
 
+		// Get texture atlas and bind it
+		CResourceTexture2DAtlas* pAtlasTexture = x->pResource->getTexture2DAtlas(_mstrResourceTexture2DAtlasName);
+		pAtlasTexture->bind();
+
 		// Get the vertex buffer used to send geometry to the GPU
 		CResourceVertexBufferCPT* pVertexBuffer = x->pResource->getVertexBufferCPT(x->pResource->defaultRes.vertexbufferCPT_default);
 		pVertexBuffer->removeGeom();
-		
+
 		// Get dimensions of a tile from one of the image types
 		CVector2f vTileDims = _mmapImageTypes.begin()->second->getCurrentFrameImageDimensions();
 
 		// Add tiles to be rendered
 		CVector2f vTileMinPos;	// Holds tile's top left corner position
 		CVector2f vTileMaxPos;	// Holds tile's bottom right corner position
+		_muiNumberOfTilesRendered = 0;
 		for (size_t ix = 0; ix < _mvecTiles.size(); ix++)
 		{
 			// Get min and max positions of this tile
@@ -102,10 +91,10 @@ namespace X
 			vTileMaxPos.x = vTileMinPos.x + vTileDims.x;
 
 			// If tile is not onscreen
-//			if (vTileMaxPos.x < vViewportMin.x)
-//				continue;	// Skip this entire column
-//			if (vTileMinPos.x > vViewportMax.x)
-//				break;		// No more tiles to render
+			if (vTileMaxPos.x < vViewportMin.x)
+				continue;	// Skip this entire column
+			if (vTileMinPos.x > vViewportMax.x)
+				break;		// No more tiles to render
 
 			for (size_t iy = 0; iy < _mvecTiles[ix].size(); iy++)
 			{
@@ -114,29 +103,30 @@ namespace X
 				vTileMaxPos.y = vTileMinPos.y + vTileDims.y;
 
 				// If tile is not onscreen
-//				if (vTileMaxPos.y < vViewportMin.y)
-//					continue;	// Skip this row
-//				if (vTileMinPos.y > vViewportMax.y)
-//					break;	// Will this break out of just the above loop? I'm confused.
+				if (vTileMaxPos.y < vViewportMin.y)
+					continue;	// Skip this row
+				if (vTileMinPos.y > vViewportMax.y)
+					break;	// Will this break out of just the above loop.
 
 				// If we get here, the tile is on screen
-				CColour col(ix * 0.01, iy * 0.01, 1, 1);
+
 				// Get the image type this tile uses
 				C2DMapImageType* pTileImageType = _mvecTiles[ix][iy].getImageType();
 				CImageAtlasDetails::STexCoords imageTexCoords = pTileImageType->getCurrentFrameImageTextureCoords();
+				_muiNumberOfTilesRendered++;
 				pVertexBuffer->addQuad2D(
 					vTileMinPos,
 					vTileDims,
-					col,//_mvecTiles[ix][iy]._mColour,
+					_mvecTiles[ix][iy]._mColour,
 					imageTexCoords.bottom_left,
 					imageTexCoords.bottom_right,
 					imageTexCoords.top_right,
-					imageTexCoords.top_left
-				);
+					imageTexCoords.top_left);
 			}
 		}
 		pVertexBuffer->update();
 		pVertexBuffer->render();
+		pVertexBuffer->removeGeom();
 
 		// Unbind stuff
 		pShader->unbind();
@@ -195,6 +185,19 @@ namespace X
 			delete it->second;
 			_mmapImageTypes.erase(it);
 			it = _mmapImageTypes.begin();
+		}
+	}
+
+	void C2DMap::getStatsTilesRendered(int& iNumberOfTilesRendered, int& iTotalNumberOfTiles)
+	{
+		iNumberOfTilesRendered = (int)_muiNumberOfTilesRendered;
+		if (_mvecTiles.size())
+		{
+			iTotalNumberOfTiles = (int)_mvecTiles.size() * (int)_mvecTiles[0].size();
+		}
+		else
+		{
+			iTotalNumberOfTiles = 0;
 		}
 	}
 }

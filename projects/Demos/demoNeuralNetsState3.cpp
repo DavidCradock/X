@@ -308,6 +308,13 @@ namespace X
 
 		// Deal with state switching from the buttons being clicked.
 		DemoNNGUIstateSelectionUpdate(pFSM);
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 
 	void CDemoNeuralNetsState3::_render(void)

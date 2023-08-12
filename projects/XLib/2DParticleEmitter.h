@@ -98,6 +98,5 @@ namespace X
 		float _mfMaxRangeFromPos;				// Maximum distance from position the new particles will be created at.
 		std::string _mstrParticleTypeName;		// The name of the particle type stored in C2DParticle system this emitter gives to it's particles
 		C2DParticleType* _mpParticleType;		// The pointer to the particle type stored in C2DParticle system this emitter gives to it's particles
-
 	};
 }

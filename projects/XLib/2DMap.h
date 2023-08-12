@@ -4,6 +4,7 @@
 #include "2DMapTile.h"
 #include "2DCamera.h"
 #include "timer.h"
+#include "matrix.h"
 
 namespace X
 {
@@ -54,7 +55,7 @@ namespace X
 
 		// Renders (and updates) this map.
 		// Called from SC2DRenderer::render()
-		void render(C2DCamera& camera);
+		void render(C2DCamera& camera, CMatrix& matrixView, CMatrix& matrixProjection);
 
 		// Sets all tiles to use the named image type.
 		void setAllTilesImageType(const std::string& strImageTypeName);
@@ -77,6 +78,9 @@ namespace X
 
 		// Removes all image types from this map
 		void removeAllImageTypes(void);
+
+		// For statistics only, sets the given variables to how many tiles are being rendered and the total number of tiles.
+		void getStatsTilesRendered(int& iNumberOfTilesRendered, int& iTotalNumberOfTiles);
 	private:
 		CTimer _mTimer;
 		std::string _mstrResourceTexture2DAtlasName;	// Name of the CResourceTexture2DAtlas added to SCResourceManager which holds this entity's image data
@@ -86,6 +90,6 @@ namespace X
 
 		std::vector< std::vector<C2DMapTile> > _mvecTiles;	// A vector of vectors of C2DMapTile objects holding all the tiles.
 
-		
+		unsigned int _muiNumberOfTilesRendered;			// What is says on the tin.
 	};
 }

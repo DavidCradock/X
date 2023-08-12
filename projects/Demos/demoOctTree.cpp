@@ -287,5 +287,12 @@ namespace X
 		strTxt = "Camera Position: ";
 		StringUtils::appendCVector3f(strTxt, pCamera->getPosition());
 		pCont->getText("txt10")->setText(strTxt);
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }

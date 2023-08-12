@@ -29,14 +29,35 @@
 0w:0d:0h:0m:00s : SCGUIManager::SCGUIManager() called.
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() calling App's onStart()
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:27s : SCApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() called.
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:27s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() unregistering window class.
-0w:0d:0h:0m:27s : SCWindow::destroyWindow() complete.
-0w:0d:0h:0m:27s : Total runtime: 27sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() calling App's onStart()
+0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() called.
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:32s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() unregistering window class.
+0w:0d:0h:0m:32s : SCWindow::destroyWindow() complete.
+0w:0d:0h:0m:32s : SCWindow::createWindow() called.
+0w:0d:0h:0m:32s : SCWindow::createWindow() creating window.
+0w:0d:0h:0m:32s : SCWindow::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:32s : SCWindow::createWindow() obtaining window's device context.
+0w:0d:0h:0m:32s : SCWindow::createWindow() choosing a compatible pixel format.
+0w:0d:0h:0m:32s : SCWindow::createWindow() setting pixel format.
+0w:0d:0h:0m:32s : SCWindow::createWindow() creating temporary OpenGL rendering context to be able to obtain wglCreateContextAttibsARB function pointer.
+0w:0d:0h:0m:32s : SCWindow::createWindow() creating OpenGL core profile rendering context.
+0w:0d:0h:0m:32s : SCWindow::createWindow() making rendering context the calling thread's current one.
+0w:0d:0h:0m:32s : SCWindow::createWindow() deleting the temporary OpenGL rendering context.
+0w:0d:0h:0m:32s : SCWindow::createWindow() resizing OpenGL viewport.
+0w:0d:0h:0m:32s : SCWindow::_resizeOpenGLViewport( 3840, 2160) called.
+0w:0d:0h:0m:32s : SCWindow::createWindow() has created the window.
+0w:0d:0h:0m:52s : SCApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() called.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() changing display mode back to normal.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() releasing window's device context.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() closing and destroying the window.
+0w:0d:0h:0m:52s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() unregistering window class.
+0w:0d:0h:0m:52s : SCWindow::destroyWindow() complete.
+0w:0d:0h:0m:52s : Total runtime: 52sec 0min 0hr 0days 0weeks.

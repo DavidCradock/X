@@ -215,6 +215,20 @@ namespace X
 		}
 	}
 
+	CResourceFramebuffer* SCResourceManager::getBackbuffer(void)
+	{
+		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbuffer() failed. X:backbuffer resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	CVector2f SCResourceManager::getBackbufferDims(void)
+	{
+		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferDims() failed. X:backbuffer resource doesn't exist.");
+		return it->second.pResource->getDimensions();
+	}
+
 	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout, bool bAppendHeightToFilename) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
@@ -485,7 +499,7 @@ namespace X
 		pRM->addFramebuffer(defaultRes.framebuffer_backbuffer_FB, 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 		// A framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
 		defaultRes.framebuffer_gui = "X:gui";
-		pRM->addFramebuffer("X:gui", 512, 512, true);	// Dims are set each program loop to match the window's dimensions
+		pRM->addFramebuffer(defaultRes.framebuffer_gui, 512, 512, true);	// Dims are set each program loop to match the window's dimensions
 		// A framebuffer the GUI tooltips are rendered to
 		defaultRes.framebuffer_guitooltipFB = "X:guitooltipFB";
 		pRM->addFramebuffer(defaultRes.framebuffer_guitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents

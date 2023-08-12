@@ -418,6 +418,11 @@ namespace X
 		// Now call the method which recreates all resources to the GPU which require an OpenGL context, putting everything back again to the original state.
 		x->pResource->onGLContextRecreated();
 
+		// Resize backbuffer
+		x->pResource->getBackbuffer()->resizeToWindowDimsScaled();
+
+		// Call application manager's onToggleFullscreen to call all app's method too.
+		x->pAppMan->onWindowToggleFullscreen(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
 	}
 
 	CVector2f SCWindow::getDimensions(void) const

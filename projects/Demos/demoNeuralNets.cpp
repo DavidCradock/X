@@ -103,5 +103,12 @@ namespace X
 
 		// Update state machine
 		_mFSM.update();
+
+		// Deal with fullscreen toggling
+		if (bFullscreenToggle)
+		{
+			bFullscreenToggle = false;
+
+		}
 	}
 }
