@@ -287,6 +287,18 @@ namespace X
 			ThrowIfTrue(vAtlasDims.x < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas width less than 1.");
 			ThrowIfTrue(vAtlasDims.y < 1.0f, "CImageAtlasPacker::createAtlasImages() failed. Atlas height less than 1.");
 			CVector2f vAtlasDimsRecip(1.0f / vAtlasDims.x, 1.0f / vAtlasDims.y);
+
+			// Compute correct image positions, not including the spacing
+			// From above, top left position is correct for x and y.
+			// All others include spacing and need to be recalculated.
+			_mvImageDetails[ui].sTexCoords.bottom_right.x = _mvImageDetails[ui].sTexCoords.top_left.x + _mvImageDetails[ui].v2fDimensions.x;
+			_mvImageDetails[ui].sTexCoords.bottom_right.y = _mvImageDetails[ui].sTexCoords.top_left.y + _mvImageDetails[ui].v2fDimensions.y;
+			_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.top_left.x + _mvImageDetails[ui].v2fDimensions.x;
+			_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
+			_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
+			_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.top_left.y + _mvImageDetails[ui].v2fDimensions.y;
+
+			// Now convert from pixel postion in image to 0.0f - 1.0f
 			_mvImageDetails[ui].sTexCoords.bottom_left.x *= vAtlasDimsRecip.x;
 			_mvImageDetails[ui].sTexCoords.bottom_left.y *= vAtlasDimsRecip.y;
 			_mvImageDetails[ui].sTexCoords.bottom_right.x *= vAtlasDimsRecip.x;
