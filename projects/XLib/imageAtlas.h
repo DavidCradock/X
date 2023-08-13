@@ -16,11 +16,20 @@ namespace X
 			CVector2f bottom_left;
 			CVector2f bottom_right;
 		};
+		// Stuff read/written to file
 		STexCoords sTexCoords;			// The texture coordinates within the atlas image of the image
 		CVector2f v2fDimensions;		// The dimensions of the image
 		std::string strImageFilename;	// The filename which the image was created from.
 		unsigned int uiAtlasImage;		// The atlas image number which the image is located in.
 		bool bRotated;					// Whether the image was rotated clockwise to fit better or not.
+
+		// Writes out this object's data to an already opened ofstream
+		// If an error occurs, so does an exception
+		void write(std::ofstream& file);
+
+		// Reads in this object's data from an already opened ifsream
+		// If an error occurs, so does an exception
+		void read(std::ifstream& file);
 	};
 
 	// Image atlas class used to pack many smaller images into as few as possible larger atlas images.

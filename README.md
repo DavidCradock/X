@@ -20,7 +20,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add A star pathfinding.
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
 - Add quad tree culling of all entities.
-- Create and add C2DMap to layers.
 - Add QuadTree to 2D world/layers
 - Set automatic positioning for shadows depthmap rendering in the scene manager
 - Test CFrustum class and culling of COctTree

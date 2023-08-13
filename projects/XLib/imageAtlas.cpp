@@ -1,9 +1,42 @@
 #include "PCH.h"
 #include "imageAtlas.h"
 #include "log.h"
+#include "stringUtils.h"
 
 namespace X
 {
+	void CImageAtlasDetails::write(std::ofstream& file)
+	{
+		ThrowIfFalse(file.is_open(), "CImageAtlasDetails::write() failed. The given ofstream is not open.");
+
+		file.write((char*)&sTexCoords.bottom_left, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.bottom_right, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.top_left, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.top_right, sizeof(CVector2f));
+		file.write((char*)&v2fDimensions, sizeof(CVector2f));
+		StringUtils::stringWrite(strImageFilename, file);
+		file.write((char*)&uiAtlasImage, sizeof(unsigned int));
+		file.write((char*)&bRotated, sizeof(bool));
+
+		ThrowIfFalse(file.good(), "CImageAtlasDetails::write() failed. The ofstream is not good.");
+	}
+
+	void CImageAtlasDetails::read(std::ifstream& file)
+	{
+		ThrowIfFalse(file.is_open(), "CImageAtlasDetails::read() failed. The given ifstream is not open.");
+
+		file.read((char*)&sTexCoords.bottom_left, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.bottom_right, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.top_left, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.top_right, sizeof(CVector2f));
+		file.read((char*)&v2fDimensions, sizeof(CVector2f));
+		StringUtils::stringRead(strImageFilename, file);
+		file.read((char*)&uiAtlasImage, sizeof(unsigned int));
+		file.read((char*)&bRotated, sizeof(bool));
+
+		ThrowIfFalse(file.good(), "CImageAtlasDetails::read() failed. The ifstream is not good.");
+	}
+
 	CImageAtlasPacker::CImageAtlasPacker()
 	{
 	}

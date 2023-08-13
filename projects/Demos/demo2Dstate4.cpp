@@ -55,6 +55,11 @@ namespace X
 		pEntityLine = pLayer->addEntityLine("0_H");	pEntityLine->setAsCircle(100, 36);	pEntityLine->setPosition(CVector2f(0, vBackbufferDims.y));
 
 		_mTimer.update();
+
+		// TEMP
+		// Write out map
+		pMap->save("data/x/maps/map_test.map");
+		pMap->load("data/x/maps/map_test.map");
 	}
 
 	void CDemo2DState4::onExit(void)
@@ -74,7 +79,18 @@ namespace X
 		C2DWorld* pWorld = x->p2dRenderer->getWorld("world");
 		C2DCamera* pCamera = pWorld->getCamera("camera");
 		C2DLayer* pLayer = pWorld->getLayer("layer");
+		C2DMap* pMap = pLayer->getMap("map");
 
+		// "Select" tile at cursor position and make it red
+		C2DMapTile* pMapTile = pMap->getTileAtScreenPosition(pCamera->getPosition(), x->pInput->mouse.getCursorPos());
+		static C2DMapTile* pMapTilePrev = pMapTile;
+		if (pMapTilePrev)
+			pMapTilePrev->setColour(CColour());
+		if (pMapTile)	// Might not've found a tile if mouse cursor isn't over any
+			pMapTile->setColour(CColour(1.0f, 0.0f, 0.0f, 1.0f));
+		pMapTilePrev = pMapTile;
+		
+		// Move camera
 		CVector2f vCamPos = pCamera->getPosition();
 		float fCameraMultiplier = 250.0f;
 		if (x->pInput->key.pressed(KC_LSHIFT) || x->pInput->key.pressed(KC_RSHIFT))

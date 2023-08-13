@@ -253,5 +253,26 @@ namespace X
 		{
 			return (std::all_of(string.begin(), string.end(), ::isdigit));
 		}
+
+		void stringWrite(const std::string& strString, std::ofstream& file)
+		{
+			ThrowIfFalse(file.is_open(), "StringUtils::stringWrite() failed. The given ofstream is not open.");
+			size_t size = strString.size();
+			file.write((char*)&size, sizeof(size));
+			file.write(strString.c_str(), size);
+			ThrowIfFalse(file.good(), "StringUtils::stringWrite() failed. The ofstream is not good.");
+		}
+
+		void stringRead(std::string& strString, std::ifstream& file)
+		{
+			ThrowIfFalse(file.is_open(), "StringUtils::stringRead() failed. The given ofstream is not open.");
+			strString.clear();
+			size_t size;
+			file.read((char*)&size, sizeof(size));
+			strString.resize(size);
+			//file.read(&strString[0], size);
+			file.read((char*)strString.c_str(), size);
+			ThrowIfFalse(file.good(), "StringUtils::stringRead() failed. The ifstream is not good.");
+		}
 	}
 }

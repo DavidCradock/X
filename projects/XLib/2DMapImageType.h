@@ -11,6 +11,7 @@ namespace X
 	// Also deals with animation of the frames by calling update()
 	class C2DMapImageType
 	{
+		friend class C2DMap;
 	public:
 		C2DMapImageType(const std::string& strResourceTexture2DAtlasName);
 
@@ -47,11 +48,12 @@ namespace X
 		// Returns the texture coordinates within the texture atlas for the current image frame
 		CImageAtlasDetails::STexCoords getCurrentFrameImageTextureCoords(void) const;
 	private:
-		std::string _mstrResourceTexture2DAtlasName;		// Holds name of the CResourceTexture2DAtlas this image type is using.
 		CResourceTexture2DAtlas* _mpAtlas;					// Holds pointer of the CResourceTexture2DAtlas this image type is using.
-
-		std::vector<CImageAtlasDetails> _mvecImageFrames;	// Details about each image inside the atlas for each frame of animation.
+		std::string _mstrResourceTexture2DAtlasName;		// Holds name of the CResourceTexture2DAtlas this image type is using.
 		float _mfCurrentFrame;								// Used to hold current frame for this image type
+
+		// Stuff loaded/saved in files
+		std::vector<CImageAtlasDetails> _mvecImageFrames;	// Details about each image inside the atlas for each frame of animation.
 		float _mfAnimRateFPS;								// Rate at which frames progress in frames per second.
 	};
 }

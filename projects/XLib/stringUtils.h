@@ -35,6 +35,7 @@ namespace X
 		// The returned filename is all lowercase.
 		// The filename extension may or may not have the "." at the beginning. If it doesn't exist, it is added.
 		// If passed strings are of zero length, an exception occurs.
+		// Also, if the strFilename already has an extension, it is removed and replaced with the new one.
 		std::string addFilenameExtension(const std::string& strFilenameExtension, const std::string& strFilename);
 
 		// Append an integer to given string
@@ -67,5 +68,16 @@ namespace X
 
 		// Returns true if the given string has nothing but digits
 		bool representsNumber(const std::string& string);
+
+		// Writes out a string to an already opened ofstream.
+		// The writes out the size of the string and then the string itself.
+		// It's paired with stringRead()
+		// If the file is not open, an exception occurs
+		void stringWrite(const std::string& strString, std::ofstream& file);
+
+		// Reads in a string from an already opened ifstream.
+		// This reads in the size of the string, resizes it to make room and then loads it in
+		// If the file is not open or there was an error during reading, an exception occurs.
+		void stringRead(std::string& strString, std::ifstream& file);
 	}
 }

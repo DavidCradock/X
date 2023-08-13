@@ -44,8 +44,16 @@ namespace X
 		//
 		// Now get some tiles and set their image type...
 		// 
-		// TODO
+		// C2DMapImageType* pImageType = pMap->addImageType("tiles");
+		// pImageType->addFrameImage("data/x/textures/map_tiles/tiles.png");
+		// pImageType->setFramerate(0.0f);
+		//
+		// Set all tiles in the map to use the above image type
+		// pMap->setAllTilesImageType("tiles");
 		C2DMap(const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY);
+
+		// Frees everything an resets to initial state
+		void reset(const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY);
 
 		// Sets whether this map is rendered or not.
 		// By default, they are visible
@@ -60,6 +68,17 @@ namespace X
 
 		// Sets all tiles to use the named image type.
 		void setAllTilesImageType(const std::string& strImageTypeName);
+
+		// Given the camera position and position on screen (For example, the mouse cursor),
+		// returns a pointer to the tile at the screen position.
+		// May be 0 if no tile was located at the given screen position.
+		C2DMapTile* getTileAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition);
+
+		// Saves the map out to a file
+		void save(const std::string& strFilename) const;
+
+		// Loads the map in from a file
+		void load(const std::string& strFilename);
 
 		/**************************************************************************************************************************************************
 		Image types
@@ -84,13 +103,12 @@ namespace X
 		void getStatsTilesRendered(int& iNumberOfTilesRendered, int& iTotalNumberOfTiles);
 	private:
 		CTimer _mTimer;
-		std::string _mstrResourceTexture2DAtlasName;	// Name of the CResourceTexture2DAtlas added to SCResourceManager which holds this entity's image data
-		bool _mbVisible;								// Whether this map is visible and rendered or not
+		unsigned int _muiNumberOfTilesRendered;								// What is says on the tin.
 
+		// Stuff loaded/saved in files
+		std::string _mstrResourceTexture2DAtlasName;						// Name of the CResourceTexture2DAtlas added to SCResourceManager which holds this entity's image data
+		bool _mbVisible;													// Whether this map is visible and rendered or not
 		mutable std::map<std::string, C2DMapImageType*> _mmapImageTypes;	// Hashmap holding each image type
-
-		std::vector< std::vector<C2DMapTile> > _mvecTiles;	// A vector of vectors of C2DMapTile objects holding all the tiles.
-
-		unsigned int _muiNumberOfTilesRendered;			// What is says on the tin.
+		std::vector< std::vector<C2DMapTile> > _mvecTiles;					// A vector of vectors of C2DMapTile objects holding all the tiles.
 	};
 }

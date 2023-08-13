@@ -33,13 +33,24 @@ namespace X
 		// By default, this is white with full alpha
 		void setColour(const CColour& colour);
 
+		// Writes out this object's data to an already opened ofstream
+		// If an error occurs, so does an exception
+		void write(std::ofstream& file) const;
+
+		// Reads in this object's data from an already opened ifsream
+		// If an error occurs, so does an exception
+		void read(std::ifstream& file);
+
+		// Stuff loaded/saved in files
 		float mfUserData;			// Nothing to do with the map itself, but can be set to store whatever data we desire
 		std::string mstrUserData;	// Nothing to do with the map itself, but can be set to store whatever data we desire
 		CVector2f mv2fUserData;		// Nothing to do with the map itself, but can be set to store whatever data we desire
 	private:
 		C2DMap* _mpMap;							// The C2DMap this object belongs to
-		std::string _mstrImageTypeName;			// Named of the C2DMapImageType stored in C2DMap this tile uses for it's image data
 		C2DMapImageType* _mpImageType;			// Pointer to the C2DMapImageType stored in C2DMap this tile uses for it's image data
+
+		// Stuff loaded/saved in files
+		std::string _mstrImageTypeName;			// Named of the C2DMapImageType stored in C2DMap this tile uses for it's image data
 		CColour _mColour;						// Colour used to render this tile
 	};
 }
