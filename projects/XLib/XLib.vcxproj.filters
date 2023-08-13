@@ -388,6 +388,9 @@
     <ClInclude Include="2DMapImageType.h">
       <Filter>2D</Filter>
     </ClInclude>
+    <ClInclude Include="GUISubContainer.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -699,6 +702,9 @@
     </ClCompile>
     <ClCompile Include="2DMapImageType.cpp">
       <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISubContainer.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

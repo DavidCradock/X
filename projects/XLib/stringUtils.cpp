@@ -274,5 +274,41 @@ namespace X
 			file.read((char*)strString.c_str(), size);
 			ThrowIfFalse(file.good(), "StringUtils::stringRead() failed. The ifstream is not good.");
 		}
+
+		std::string blenderAnimFilename(const std::string& strBasename, const std::string& strExtension, int iFrameNumber)
+		{
+			ThrowIfTrue(iFrameNumber < 0 || iFrameNumber > 9999, "StringUtils::blenderAnimFilename() given invalid iFrameNumber.");
+			std::string output;
+			output = strBasename;
+			if (iFrameNumber < 10)
+			{
+				output += "000";
+				output += std::to_string(iFrameNumber);
+			}
+			else if (iFrameNumber < 100)
+			{
+				output += "00";
+				output += std::to_string(iFrameNumber);
+			}
+			else if (iFrameNumber < 1000)
+			{
+				output += "0";
+				output += std::to_string(iFrameNumber);
+			}
+			else
+			{
+				output += std::to_string(iFrameNumber);
+			}
+
+			// Append "." to extension if needed
+			std::string strExt = strExtension;
+			if (strExt.c_str()[0] != '.')
+			{
+				std::string::iterator itBegin = strExt.begin();
+				strExt.insert(itBegin, '.');
+			}
+			output += strExt;
+			return output;
+		}
 	}
 }

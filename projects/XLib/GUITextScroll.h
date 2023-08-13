@@ -11,6 +11,7 @@ namespace X
 	class CGUITextScroll : public CGUIBaseObject
 	{
 		friend class CGUIContainer;
+		friend class CGUISubContainer;
 	public:
 		CGUITextScroll();
 		~CGUITextScroll();

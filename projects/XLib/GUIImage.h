@@ -10,6 +10,7 @@ namespace X
 	class CGUIImage : public CGUIBaseObject
 	{
 		friend class CGUIContainer;
+		friend class CGUISubContainer;
 		friend class CGUITooltip;
 	public:
 		CGUIImage();

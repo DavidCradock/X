@@ -52,6 +52,8 @@ namespace X
 		// pMap->setAllTilesImageType("tiles");
 		C2DMap(const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY);
 
+		~C2DMap();
+
 		// Frees everything an resets to initial state
 		void reset(const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY);
 
@@ -70,6 +72,11 @@ namespace X
 		void setAllTilesImageType(const std::string& strImageTypeName);
 
 		// Given the camera position and position on screen (For example, the mouse cursor),
+		// Sets the given integers to tile indices of the map.
+		// If no tile is to be found at the given screen position, these are noth set to -1
+		void getTileIndicesAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition, int& iTileIndexX, int& iTileIndexY) const;
+
+		// Given the camera position and position on screen (For example, the mouse cursor),
 		// returns a pointer to the tile at the screen position.
 		// May be 0 if no tile was located at the given screen position.
 		C2DMapTile* getTileAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition);
@@ -79,6 +86,9 @@ namespace X
 
 		// Loads the map in from a file
 		void load(const std::string& strFilename);
+
+		// Returns the name of the CResoureTexture2DAtlas resource name used by the map
+		std::string getAtlasResourceName(void) const;
 
 		/**************************************************************************************************************************************************
 		Image types

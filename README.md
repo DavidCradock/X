@@ -30,7 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add mouse wheel support for CGUITextScroll object.
 - Add physics engine.
 - GUI...
-- GUI: Change default theme font to a bit bigger as commas don’t render right.
+- GUI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
 - GUI: Implement Listbox
 - GUI: Implement Colour selector
 - GUI: Implement DraggableDock.

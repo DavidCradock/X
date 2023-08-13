@@ -10,6 +10,7 @@ namespace X
 	class CGUIImageDepthbuffer : public CGUIBaseObject
 	{
 		friend class CGUIContainer;
+		friend class CGUISubContainer;
 		friend class CGUITooltip;
 	public:
 		CGUIImageDepthbuffer();

@@ -11,6 +11,7 @@ namespace X
 	{
 	public:
 		friend class CGUIContainer;
+		friend class CGUISubContainer;
 		CGUIButtonImage();
 		~CGUIButtonImage();
 

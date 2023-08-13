@@ -604,7 +604,7 @@ namespace X
 		pTE = pCont->getTextEdit("textedit:fontname");
 		if (pTE->getEnterPressed())
 		{
-			_mDefContFontGen.strFontName = pTE->mstrText;
+			_mDefContFontGen.strFontName = pTE->getText();
 			_defaultContainerFontGeneratorBuildFont();
 		}
 
@@ -612,9 +612,9 @@ namespace X
 		pTE = pCont->getTextEdit("textedit:fontheight");
 		if (pTE->getEnterPressed())
 		{
-			if (StringUtils::representsNumber(pTE->mstrText))
+			if (StringUtils::representsNumber(pTE->getText()))
 			{
-				_mDefContFontGen.iHeight = stoi(pTE->mstrText);
+				_mDefContFontGen.iHeight = stoi(pTE->getText());
 				_defaultContainerFontGeneratorBuildFont();
 			}
 		}
@@ -623,9 +623,9 @@ namespace X
 		pTE = pCont->getTextEdit("textedit:fontweight");
 		if (pTE->getEnterPressed())
 		{
-			if (StringUtils::representsNumber(pTE->mstrText))
+			if (StringUtils::representsNumber(pTE->getText()))
 			{
-				_mDefContFontGen.iWeight = stoi(pTE->mstrText);
+				_mDefContFontGen.iWeight = stoi(pTE->getText());
 				_defaultContainerFontGeneratorBuildFont();
 			}
 		}

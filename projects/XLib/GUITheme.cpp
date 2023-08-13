@@ -53,8 +53,8 @@ namespace X
 		mColours.buttonBGOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		mColours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.text.set(0.7f, 0.7f, 0.7f, 1.0f);
-		mColours.textEditActive.set(0.0f, 0.0f, 0.0f, 1.0f);
-		mColours.textEditInactive.set(0.0f, 0.0f, 0.0f, 0.75f);
+		mColours.textEditActive.set(0.9f, 0.9f, 0.9f, 1.0f);
+		mColours.textEditInactive.set(0.9f, 0.9f, 0.9f, 0.75f);
 		mColours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		mColours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 		mColours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);

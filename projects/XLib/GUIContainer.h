@@ -2,19 +2,20 @@
 #include "PCH.h"
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
+#include "GUIButtonImage.h"
 #include "GUICheckbox.h"
-#include "GUIText.h"
-#include "GUITextEdit.h"
-#include "GUISlider.h"
-#include "GUILineGraph.h"
-#include "GUIProgressBar.h"
 #include "GUIImage.h"
 #include "GUIImageAnimated.h"
-#include "GUIImageFramebuffer.h"
-#include "GUITextScroll.h"
-#include "GUIButtonImage.h"
 #include "GUIImageDepthbuffer.h"
+#include "GUIImageFramebuffer.h"
+#include "GUILineGraph.h"
+#include "GUIProgressBar.h"
+#include "GUISubContainer.h"
+#include "GUIText.h"
+#include "GUITextEdit.h"
+#include "GUITextScroll.h"
 #include "GUITheme.h"
+#include "GUISlider.h"
 
 namespace X
 {
@@ -360,6 +361,25 @@ namespace X
 		// Removes all check boxes from this container
 		void removeAllCheckboxes(void);
 
+		/**************************************************************************************************************************************************
+		Sub containers
+		**************************************************************************************************************************************************/
+
+		// Add a sub container to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CGUISubContainer* addSubContainer(const std::string& strName, float fPosX, float fPosY, float fDimsX, float fDimsY);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CGUISubContainer* getSubContainer(const std::string& strName) const;
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void removeSubContainer(const std::string& strName);
+
+		// Removes all sub containers from this container
+		void removeAllSubContainers(void);
+
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbLocked;				// When added via SCGUIManager, this may be set to true to prevent removal of this container. It's used to prevent removal of the default containers.
@@ -367,6 +387,8 @@ namespace X
 		bool _mbWindowBeingMoved;	// Whether this window is being moved or not
 		std::string _mstrName;		// The name of the container, used to generate unique names for resources
 		bool _mbContainerIsWindow;	// If true, this container is set as a window, which enables dragging and rendering of a window's borders, titlebar text etc
+		bool _mbVisible;			// Whether this container is shown or not
+		CColour _mTextColour;		// Current colour of the titlebar text
 
 		mutable std::map<std::string, CGUIButton*> _mmapButtons;						// Hashmap for each added button
 		mutable std::map<std::string, CGUIText*> _mmapTexts;							// Hashmap for each added text
@@ -381,12 +403,9 @@ namespace X
 		mutable std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
 		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer
 		mutable std::map<std::string, CGUICheckbox*> _mmapCheckboxes;					// Hashmap for each added check box
+		mutable std::map<std::string, CGUISubContainer*> _mmapSubContainers;			// Hashmap for each added sub container.
 
-		CColour _mTextColour;		// Current colour of the titlebar text
-		bool _mbVisible;			// Whether this container is shown or not
-
-		// Called from render() to render this container
+		// Render this container
 		void _renderContainer(const std::string& strFramebufferToSampleFrom);
-
 	};
 }

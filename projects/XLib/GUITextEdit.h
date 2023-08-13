@@ -20,7 +20,11 @@ namespace X
 		// Called from CGUIContainer to update this object
 		void update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks);
 
-		std::string mstrText;	// The text to be rendered on top of this button
+		// Sets the text in this object
+		void setText(const std::string& strText);
+
+		// Returns the text stored in this object
+		std::string getText(void) const;
 
 		// Maximum number of characters the edit box is allowed
 		void setMaxChars(unsigned int iMaxChars);
@@ -52,6 +56,7 @@ namespace X
 			active,
 			inactive
 		};
+		std::string _mstrText;			// The text to be rendered on top of this object
 		state _mState;
 		CColour _mTextColour;			// Current colour of text based on state
 		float _mfAddFlashingCursor;		// value is incremented and if above 1, adds an additional character to the text edit when active

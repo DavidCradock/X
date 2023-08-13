@@ -124,6 +124,14 @@ namespace X
 			itCheckbox++;
 		}
 
+		// Render each sub container
+		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
+		while (itSubContainer != _mmapSubContainers.end())
+		{
+			itSubContainer->second->render(this, strFramebufferToSampleFrom);
+			itSubContainer++;
+		}
+
 		// Render each text
 		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
@@ -344,7 +352,6 @@ namespace X
 				mfPositionY = vTexDimsDiv3.x;
 			else if (mfPositionY + mfHeight + vTexDimsDiv3.y >= vWindowDims.y)
 				mfPositionY = vWindowDims.y - mfHeight - vTexDimsDiv3.y;
-
 		}
 
 		// Now update each of the widgets
@@ -457,6 +464,14 @@ namespace X
 			itCheckbox++;
 		}
 
+		// Sub containers
+		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
+		while (itSubContainer != _mmapSubContainers.end())
+		{
+			itSubContainer->second->update(this, bContainerAcceptingMouseClicks);
+			itSubContainer++;
+		}
+
 		return bMouseOver;
 	}
 
@@ -489,12 +504,16 @@ namespace X
 			x->pGUI->moveContainerToFront(_mstrName);
 
 		// If set to invisible, we need to reset all tooltips for this container
+		// Also need to reset some other stuff too.
 
 		// Buttons
 		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
 			itButton->second->mpTooltip->resetFade();
+			itButton->second->_mbClicked = false;
+			itButton->second->_mState = CGUIButton::state::up;
+			itButton->second->_mStatePrevious = CGUIButton::state::up;
 			itButton++;
 		}
 
@@ -620,6 +639,7 @@ namespace X
 		removeAllButtonImages();
 		removeAllImageDepthbuffers();
 		removeAllCheckboxes();
+		removeAllSubContainers();
 	}
 
 	void CGUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
@@ -890,7 +910,7 @@ namespace X
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->mfWidth = fWidth;
 		pNewRes->mfHeight = fHeight;
-		pNewRes->mstrText = strText;
+		pNewRes->setText(strText);
 		_mmapTextEdits[strName] = pNewRes;
 		return pNewRes;
 	}
@@ -1504,6 +1524,54 @@ namespace X
 			delete it->second;
 			_mmapCheckboxes.erase(it);
 			it = _mmapCheckboxes.begin();
+		}
+	}
+
+	/**************************************************************************************************************************************************
+	Sub containers
+	**************************************************************************************************************************************************/
+
+	CGUISubContainer* CGUIContainer::addSubContainer(const std::string& strName, float fPosX, float fPosY, float fDimsX, float fDimsY)
+	{
+		// If resource already exists
+		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
+		ThrowIfTrue(it != _mmapSubContainers.end(), "CGUIContainer::addSubContainer(" + strName + ") failed. The named object already exists.");
+		CGUISubContainer* pNewRes = new CGUISubContainer;
+		ThrowIfFalse(pNewRes, "CGUIContainer::addSubContainer(" + strName + ") failed. Could not allocate memory for the new object.");
+		pNewRes->mfPositionX = fPosX;
+		pNewRes->mfPositionY = fPosY;
+		pNewRes->setDimensions(fDimsX, fDimsY);
+		pNewRes->_mstrName = strName;
+		pNewRes->_mbVisible = true;
+
+		_mmapSubContainers[strName] = pNewRes;
+		return pNewRes;
+	}
+
+	CGUISubContainer* CGUIContainer::getSubContainer(const std::string& strName) const
+	{
+		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
+		ThrowIfTrue(it == _mmapSubContainers.end(), "CGUIContainer::getSubContainer(" + strName + ") failed. The named object doesn't exist.");
+		return it->second;
+	}
+
+	void CGUIContainer::removeSubContainer(const std::string& strName)
+	{
+		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
+		if (it == _mmapSubContainers.end())
+			return;
+		delete it->second;
+		_mmapSubContainers.erase(it);
+	}
+
+	void CGUIContainer::removeAllSubContainers(void)
+	{
+		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.begin();
+		while (it != _mmapSubContainers.end())
+		{
+			delete it->second;
+			_mmapSubContainers.erase(it);
+			it = _mmapSubContainers.begin();
 		}
 	}
 }

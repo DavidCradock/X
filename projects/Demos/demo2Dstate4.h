@@ -22,5 +22,6 @@ namespace X
 		bool bFullscreenToggle;
 	private:
 		CTimer _mTimer;
+		C2DMapTile* _mpMapTilePrev;
 	};
 }

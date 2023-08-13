@@ -11,6 +11,7 @@ namespace X
 	class CGUIImageAnimated : public CGUIBaseObject
 	{
 		friend class CGUIContainer;
+		friend class CGUISubContainer;
 		friend class CGUITooltip;
 	public:
 		CGUIImageAnimated();

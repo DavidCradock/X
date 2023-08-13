@@ -79,5 +79,15 @@ namespace X
 		// This reads in the size of the string, resizes it to make room and then loads it in
 		// If the file is not open or there was an error during reading, an exception occurs.
 		void stringRead(std::string& strString, std::ifstream& file);
+
+		// Blender animation frame filename helper.
+		// Say we create an animation in Blender with 100 frames and we save them out as "image"
+		// The first 10 images will be named "image0000.png" through to "image0009.png"
+		// The next 90 will be named "image0010.png" through to "image0099.png"
+		// What this function does is given, a basename, an integer and extension, it returns
+		// a string which holds the correct final name.
+		// So for example, passing "image" as the basename, "png" (or ".png") as the extension and
+		// "50" for the int will return the string "image0050.png"
+		std::string blenderAnimFilename(const std::string& strBasename = "image", const std::string& strExtension = ".png", int iFrameNumber = 0);
 	}
 }

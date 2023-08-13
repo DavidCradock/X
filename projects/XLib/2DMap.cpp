@@ -11,6 +11,21 @@ namespace X
 		reset(strResourceTexture2DAtlasName, iNumTilesX, iNumTilesY);
 	}
 
+	C2DMap::~C2DMap()
+	{
+		if (_mmapImageTypes.size())
+		{
+			std::map<std::string, C2DMapImageType*>::iterator itIT = _mmapImageTypes.begin();
+			while (itIT != _mmapImageTypes.end())
+			{
+				delete itIT->second;
+				itIT++;
+			}
+			_mmapImageTypes.clear();
+		}
+		_mvecTiles.clear();
+	}
+
 	void C2DMap::reset(const std::string& strResourceTexture2DAtlasName, int iNumTilesX, int iNumTilesY)
 	{
 		_muiNumberOfTilesRendered = 0;
@@ -164,23 +179,32 @@ namespace X
 		}
 	}
 
-	C2DMapTile* C2DMap::getTileAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition)
+	void C2DMap::getTileIndicesAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition, int& iTileIndexX, int& iTileIndexY) const
 	{
 		// Make sure some image types exist
-		ThrowIfFalse(_mmapImageTypes.size(), "C2DMap::getTileAtScreenPosition() failed. No C2DMapImageType added. Use C2DMap::addImageType()");
+		ThrowIfFalse(_mmapImageTypes.size(), "C2DMap::getTileIndicesAtScreenPosition() failed. No C2DMapImageType added. Use C2DMap::addImageType()");
 
 		// Get dimensions of a tile from one of the image types
 		CVector2f vTileDims = _mmapImageTypes.begin()->second->getCurrentFrameImageDimensions();
 
-		int iTileIndexX = int((vScreenPosition.x + vCameraPosition.x) / vTileDims.x);
-		int iTileIndexY = int((vScreenPosition.y + vCameraPosition.y) / vTileDims.y);
+		iTileIndexX = int((vScreenPosition.x + vCameraPosition.x) / vTileDims.x);
+		iTileIndexY = int((vScreenPosition.y + vCameraPosition.y) / vTileDims.y);
 
 		// Make sure indicies are in range of the vectors
 		if (iTileIndexX < 0 || iTileIndexX >= (int)_mvecTiles.size())
-			return 0;
+			iTileIndexX = iTileIndexY = -1;
 		if (iTileIndexY < 0 || iTileIndexY >= (int)_mvecTiles[0].size())
-			return 0;
+			iTileIndexX = iTileIndexY = -1;
+	}
 
+	C2DMapTile* C2DMap::getTileAtScreenPosition(const CVector2f& vCameraPosition, const CVector2f& vScreenPosition)
+	{
+		int iTileIndexX, iTileIndexY;
+		getTileIndicesAtScreenPosition(vCameraPosition, vScreenPosition, iTileIndexX, iTileIndexY);
+
+		// Make sure indicies are valid
+		if (iTileIndexX == -1 || iTileIndexY == -1)
+			return 0;
 		return &_mvecTiles[iTileIndexX][iTileIndexY];
 	}
 
@@ -363,5 +387,10 @@ namespace X
 
 		ThrowIfFalse(file.good(), "C2DMap::load(" + strFilename + ") failed. Error occurred whilst writing.");
 		file.close();
+	}
+
+	std::string C2DMap::getAtlasResourceName(void) const
+	{
+		return _mstrResourceTexture2DAtlasName;
 	}
 }

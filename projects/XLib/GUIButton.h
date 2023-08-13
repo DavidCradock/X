@@ -9,6 +9,7 @@ namespace X
 
 	class CGUIButton : public CGUIBaseObject
 	{
+		friend class CGUIContainer;
 	public:
 		CGUIButton();
 		~CGUIButton();

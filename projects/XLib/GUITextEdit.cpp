@@ -41,7 +41,7 @@ namespace X
 		CResourceFont* pFont = x->pResource->getFont(pTheme->mFonts.textEdit);
 
 		// Simply update to determine whether we add the flashing character when the state is active
-		std::string strFinalText = mstrText;
+		std::string strFinalText = _mstrText;
 		if (state::active == _mState)
 		{
 			if (_mfAddFlashingCursor >= 1.0f)
@@ -57,7 +57,7 @@ namespace X
 
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;
-		std::string strTextTemp = mstrText + "_";	// We use this to compute width to prevent moving forward and backwards of text when cursor flashes.
+		std::string strTextTemp = _mstrText + "_";	// We use this to compute width to prevent moving forward and backwards of text when cursor flashes.
 		int iTextWidth = (int)pFont->getTextWidth(strTextTemp, 1.0f);
 		if (iTextWidth > (int)mfWidth - vTexDimsPoint6.x)
 		{
@@ -169,15 +169,15 @@ namespace X
 
 				// Call C function pointer if set
 				if (_mfuncOnEnterPressed != NULL)
-					_mfuncOnEnterPressed(mstrText);
+					_mfuncOnEnterPressed(_mstrText);
 			}
 			else if (x->pInput->key.anyPressed())
 			{
 				if (x->pInput->key.repeat(KC_BACK))
 				{
-					if (mstrText.length() > 0)
+					if (_mstrText.length() > 0)
 					{
-						mstrText.pop_back();
+						_mstrText.pop_back();
 						x->pAudio->getEmitter(pTheme->mAudio.textEditBackspace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditBackspace.fVolume, pTheme->mAudio.textEditBackspace.fPitch);
 					}
 				}
@@ -186,9 +186,9 @@ namespace X
 					std::string strNewChar = x->pInput->key.once2Char();
 					if (strNewChar.length() > 0)
 					{
-						if (mstrText.length() < _muiMaxChars)
+						if (_mstrText.length() < _muiMaxChars)
 						{
-							mstrText += strNewChar;
+							_mstrText += strNewChar;
 							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
 						}
 						else
@@ -198,9 +198,9 @@ namespace X
 					}
 					if (x->pInput->key.repeat(KC_SPACE))
 					{
-						if (mstrText.length() < _muiMaxChars)
+						if (_mstrText.length() < _muiMaxChars)
 						{
-							mstrText += " ";
+							_mstrText += " ";
 							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
 						}
 						else
@@ -216,6 +216,16 @@ namespace X
 		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 	
+	void CGUITextEdit::setText(const std::string& strText)
+	{
+		_mstrText = strText;
+	}
+
+	std::string CGUITextEdit::getText(void) const
+	{
+		return _mstrText;
+	}
+
 	void CGUITextEdit::setMaxChars(unsigned int iMaxChars)
 	{
 		_muiMaxChars = iMaxChars;
@@ -228,13 +238,13 @@ namespace X
 
 	void CGUITextEdit::_checkIsNumber(bool bResetToZero)
 	{
-		if (0 == mstrText.length())
+		if (0 == _mstrText.length())
 			return;
-		if (std::all_of(mstrText.begin(), mstrText.end(), ::isdigit))
+		if (std::all_of(_mstrText.begin(), _mstrText.end(), ::isdigit))
 			return;
 		if (bResetToZero)
 		{
-			mstrText = "0";
+			_mstrText = "0";
 		}
 	}
 

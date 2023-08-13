@@ -14,6 +14,7 @@ namespace X
 		friend class C2DMap;
 	public:
 		C2DMapImageType(const std::string& strResourceTexture2DAtlasName);
+		~C2DMapImageType();
 
 		// Updates the current frame image number and loops it
 		void update(float fTimeDeltaSeconds);

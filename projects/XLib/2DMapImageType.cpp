@@ -11,6 +11,11 @@ namespace X
 		_mfAnimRateFPS = 30;
 	}
 
+	C2DMapImageType::~C2DMapImageType()
+	{
+		_mvecImageFrames.clear();
+	}
+
 	void C2DMapImageType::update(float fTimeDeltaSeconds)
 	{
 		if (_mfAnimRateFPS > 0.0f)
