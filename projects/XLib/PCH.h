@@ -16,6 +16,7 @@
 #include <math.h>
 #include <memory>
 #include <optional>
+#include <queue>
 #include <set>
 #include <sstream>
 #include <string>

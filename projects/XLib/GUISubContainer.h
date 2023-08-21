@@ -373,5 +373,11 @@ namespace X
 		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer
 		mutable std::map<std::string, CGUICheckbox*> _mmapCheckboxes;					// Hashmap for each added check box
 		mutable std::map<std::string, CGUISubContainer*> _mmapSubContainers;			// Hashmap for each added sub container.
+
+		CGUISlider _mSliderV, _mSliderH;		// Vertical and horizontal sliders
+		CVector2f _mPreviousDims;				// Used to detect whether the dimensions have changed and resizes the sliders and framebuffer
+		bool _mbFBNeedsUpdating;				// Flag to re-render the frame buffer if needed.
+		std::string _mstrFBName;				// Name of framebuffer in SCResourceManager used for rendering the objects to.
+		void _renderFramebuffer(void* pParentContainer, const std::string& strFramebufferToSampleFrom);
 	};
 }

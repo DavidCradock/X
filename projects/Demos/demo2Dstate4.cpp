@@ -80,7 +80,7 @@ namespace X
 
 		// Load in textures for the GUI to use as images
 		// and create image buttons for them and add them to the sub container, which we create next...
-		pCont->addSubContainer("tiles", 0, 260, 320, 380);
+		CGUISubContainer* pSubCont = pCont->addSubContainer("tiles", 0, 260, 320, 380);
 
 		std::vector<std::string> vecstrTiles = StringUtils::getFilesInDir("data/x/textures/map_tiles/");
 		CVector2f vButtonPos(0, 260);
@@ -89,7 +89,8 @@ namespace X
 			x->pResource->addTexture2DFromFile(vecstrTiles[i], vecstrTiles[i]);
 			std::string strButName = "but_";
 			strButName += vecstrTiles[i];
-			CGUIButtonImage* pButImage = pCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
+			//CGUIButtonImage* pButImage = pCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
+			CGUIButtonImage* pButImage = pSubCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
 			vButtonPos.y += 40;
 			if (vButtonPos.y > pCont->getDimensions().y)
 			{

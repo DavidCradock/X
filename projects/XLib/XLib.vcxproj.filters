@@ -10,23 +10,8 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{9f37bd66-2429-485d-a2d2-ea8b86a54c53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input">
-      <UniqueIdentifier>{6a3d61fa-510f-4117-a486-b79c23572887}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{9f69bee0-2b3a-4a56-ae3a-44a32520e4b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SceneManager">
       <UniqueIdentifier>{725ff4ea-dae3-4fe6-a608-5dea63553f91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{fb10734b-bd47-4dda-a5df-55d06f057a18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{7b60c26f-e31f-4d2c-aaa2-4e840cc74c53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL">
-      <UniqueIdentifier>{a946d6b2-3490-4f8f-a6d8-730875098b38}</UniqueIdentifier>
     </Filter>
     <Filter Include="2D">
       <UniqueIdentifier>{30930f28-af09-48c8-986b-b056a207f254}</UniqueIdentifier>
@@ -49,6 +34,27 @@
     <Filter Include="2D\Particles">
       <UniqueIdentifier>{0c5febab-ffaf-4c07-ac14-c6ee80eb96ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{d96f03d5-3ec8-429a-ba03-2ff7296f5722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patterns">
+      <UniqueIdentifier>{97d1d571-316d-4eff-92c6-0397b8677793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{7b60c26f-e31f-4d2c-aaa2-4e840cc74c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{6a3d61fa-510f-4117-a486-b79c23572887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{a946d6b2-3490-4f8f-a6d8-730875098b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9f69bee0-2b3a-4a56-ae3a-44a32520e4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{fb10734b-bd47-4dda-a5df-55d06f057a18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -65,9 +71,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="openGLExtensions.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="singleton.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="timer.h">
@@ -390,6 +393,9 @@
     </ClInclude>
     <ClInclude Include="GUISubContainer.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Patterns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

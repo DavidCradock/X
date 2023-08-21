@@ -19,7 +19,7 @@ namespace X
 	{
 		delete mpTooltip;
 
-		// Also remove the framebuffer used from the resource manager
+		// Remove the framebuffer used from the resource manager
 		x->pResource->removeFramebuffer(_mstrFBName);
 	}
 

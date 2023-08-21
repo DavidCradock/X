@@ -7,7 +7,7 @@ namespace X
 	{
 		// Use the resource loading screen
 		x->pLoadingScreen->onInit(0);
-		x->pLoadingScreen->setFadeOut(1.0f);
+		x->pLoadingScreen->setFadeOut(0.0f);
 
 		// Set window title bar text and set icon
 		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");

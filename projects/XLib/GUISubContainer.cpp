@@ -6,12 +6,14 @@ namespace X
 {
 	CGUISubContainer::CGUISubContainer()
 	{
-
+		_mPreviousDims.set(-1, -1);
+		_mbFBNeedsUpdating = true;
 	}
 	
 	CGUISubContainer::~CGUISubContainer()
 	{
-
+		// Remove the framebuffer used from the resource manager
+		x->pResource->removeFramebuffer(_mstrFBName);
 	}
 
 	void CGUISubContainer::render(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
@@ -48,122 +50,59 @@ namespace X
 		pTexture->unbind();
 		pShaderLine->unbind();
 
+		CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer(_mstrFBName);
 
-
-
-
-
-		// Render each button
-		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
+		// Does the frame buffer need updating (Like when the OpenGL context has been lost)
+		if (pFramebuffer->mbNeedsUpdating)
 		{
-			itButton->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itButton++;
+			pFramebuffer->mbNeedsUpdating = false;
+			_mbFBNeedsUpdating = true;
 		}
+		// Update the framebuffer if needed
+		if (_mbFBNeedsUpdating)
+			_renderFramebuffer(pParentContainer, strFramebufferToSampleFrom);
 
-		// Render each text edit
-		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
-		{
-			itTextEdit->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itTextEdit++;
-		}
+		// Get required resources needed to render
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
 
-		// Render each sliders
-		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
-		while (itSlider != _mmapSliders.end())
-		{
-			itSlider->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itSlider++;
-		}
+		// Render the frame buffer over the top of the background
+		pShader->bind();
 
-		// Render each line graph
-		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
-		while (itLineGraph != _mmapLineGraphs.end())
-		{
-			itLineGraph->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itLineGraph++;
-		}
+		// Setup the matrices
+//		CMatrix matWorld, matView;
+//		CMatrix matProjection;
+//		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
+		pShader->setMat4("matrixWorld", matWorld);
+		pShader->setMat4("matrixView", matView);
+		pShader->setMat4("matrixProjection", matProjection);
 
-		// Render each progress bar
-		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
-		while (itProgressBar != _mmapProgressBars.end())
-		{
-			itProgressBar->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itProgressBar++;
-		}
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
 
-		// Render each image
-		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
-		while (itImage != _mmapImages.end())
-		{
-			itImage->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itImage++;
-		}
+		glDisable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Render each animated image
-		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
-		while (itImageAnimated != _mmapImageAnimateds.end())
-		{
-			itImageAnimated->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itImageAnimated++;
-		}
+		// Bind textures
+		pFramebuffer->bindAsTexture(0);
 
-		// Images framebuffer
-		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
-		while (itImageFB != _mmapImageFramebuffers.end())
-		{
-			itImageFB->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itImageFB++;
-		}
+		// Render the image
+		pVB->removeGeom();
+		pVB->addQuad2D(
+			CVector2f(pContainer->mfPositionX + mfPositionX, pContainer->mfPositionY + mfPositionY),	// Position
+			CVector2f(mfWidth, mfHeight),			// Dimensions
+			CColour(1.0f, 1.0f, 1.0f, 1.0f),		// Vertex colour
+			CVector2f(0.0f, 0.0f),
+			CVector2f(1.0f, 0.0f),
+			CVector2f(1.0f, 1.0f),
+			CVector2f(0.0f, 1.0f));
 
-		// Render each text scroll object
-		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
-		while (itTextScroll != _mmapTextScrolls.end())
-		{
-			itTextScroll->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itTextScroll++;
-		}
+		pVB->update();
+		pVB->render();
 
-		// Render each of the button images
-		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
-		while (itButtonImage != _mmapButtonImages.end())
-		{
-			itButtonImage->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itButtonImage++;
-		}
-
-		// Images depth buffer
-		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
-		while (itImageDB != _mmapImageDepthbuffers.end())
-		{
-			itImageDB->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itImageDB++;
-		}
-
-		// Render each checkbox
-		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
-		while (itCheckbox != _mmapCheckboxes.end())
-		{
-			itCheckbox->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itCheckbox++;
-		}
-
-		// Render each sub container
-		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
-		while (itSubContainer != _mmapSubContainers.end())
-		{
-			itSubContainer->second->render(pParentContainer, strFramebufferToSampleFrom);
-			itSubContainer++;
-		}
-
-		// Render each text
-		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
-		while (itText != _mmapTexts.end())
-		{
-			itText->second->render(pParentContainer);
-			itText++;
-		}
+		pFramebuffer->unbindTexture();	// Unbind textures
+		pShader->unbind();				// Unbind the GUI shader
 	}
 
 	void CGUISubContainer::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
@@ -1038,6 +977,15 @@ namespace X
 		pNewRes->mfPositionY = fPosY;
 		pNewRes->setDimensions(fDimsX, fDimsY);
 
+		// Create name of framebuffer
+		pNewRes->_mstrFBName = "GUISubContainerFB_" + _mstrName + "_" + strName;
+
+		// Check to see if the framebuffer resource name already exists
+		ThrowIfTrue(x->pResource->getFramebufferExists(pNewRes->_mstrFBName), "CGUISubContainer::addSubContainer(" + strName + ") failed. The name must be unique for all SubContainer objects.");
+
+		// Create framebuffer in SCResourceManager
+		x->pResource->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fDimsX), unsigned int(fDimsY));
+
 		_mmapSubContainers[strName] = pNewRes;
 		return pNewRes;
 	}
@@ -1067,5 +1015,162 @@ namespace X
 			_mmapSubContainers.erase(it);
 			it = _mmapSubContainers.begin();
 		}
+	}
+
+	void CGUISubContainer::_renderFramebuffer(void* pParentContainer, const std::string& strFramebufferToSampleFrom)
+	{
+		CGUIContainer* pContainer = (CGUIContainer*)pParentContainer;
+
+		// Create fake container object, as we need to set dimensions to that of this subcontainer
+		CGUIContainer fakeContainer;
+		fakeContainer.setDimensions(mfWidth, mfHeight);
+		pContainer = &fakeContainer;
+
+		CResourceFramebuffer* pFB = x->pResource->getFramebuffer(_mstrFBName);
+
+		// Unbind the render target which the GUI is currently rendering to.
+		CResourceFramebuffer* pFBGUITarget = x->pResource->getFramebuffer("X:gui");
+		pFBGUITarget->unbindAsRenderTarget();
+
+		// Resize the scrollbars and framebuffer render target if the dimensions have changed
+		if (_mPreviousDims.x != mfWidth || _mPreviousDims.y != mfHeight)
+		{
+			_mPreviousDims.set(mfWidth, mfHeight);
+			_mSliderV.setDimensions(20, mfHeight - 20);
+			_mSliderV.setPosition(mfWidth - 20, 0);
+			_mSliderH.setDimensions(mfWidth - 20, 20);
+			_mSliderH.setPosition(0, mfHeight - 20);
+
+			pFB->resize((unsigned int)mfWidth, (unsigned int)mfHeight);
+		}
+
+		// Set framebuffer as render target and clear it
+		pFB->bindAsRenderTarget(true, false, CColour(1.0f, 0.2f, 0.0f, 0.2f));
+
+		// Render stuff to the frame buffer
+		// Render each button
+		std::map<std::string, CGUIButton*>::iterator itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itButton++;
+		}
+
+		// Render each text edit
+		std::map<std::string, CGUITextEdit*>::iterator itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itTextEdit++;
+		}
+
+		// Render each sliders
+		std::map<std::string, CGUISlider*>::iterator itSlider = _mmapSliders.begin();
+		while (itSlider != _mmapSliders.end())
+		{
+			itSlider->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itSlider++;
+		}
+
+		// Render each line graph
+		std::map<std::string, CGUILineGraph*>::iterator itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itLineGraph++;
+		}
+
+		// Render each progress bar
+		std::map<std::string, CGUIProgressBar*>::iterator itProgressBar = _mmapProgressBars.begin();
+		while (itProgressBar != _mmapProgressBars.end())
+		{
+			itProgressBar->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itProgressBar++;
+		}
+
+		// Render each image
+		std::map<std::string, CGUIImage*>::iterator itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			itImage->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itImage++;
+		}
+
+		// Render each animated image
+		std::map<std::string, CGUIImageAnimated*>::iterator itImageAnimated = _mmapImageAnimateds.begin();
+		while (itImageAnimated != _mmapImageAnimateds.end())
+		{
+			itImageAnimated->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itImageAnimated++;
+		}
+
+		// Images framebuffer
+		std::map<std::string, CGUIImageFramebuffer*>::iterator itImageFB = _mmapImageFramebuffers.begin();
+		while (itImageFB != _mmapImageFramebuffers.end())
+		{
+			itImageFB->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itImageFB++;
+		}
+
+		// Render each text scroll object
+		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
+		while (itTextScroll != _mmapTextScrolls.end())
+		{
+			itTextScroll->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itTextScroll++;
+		}
+
+		// Render each of the button images
+		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itButtonImage++;
+		}
+
+		// Images depth buffer
+		std::map<std::string, CGUIImageDepthbuffer*>::iterator itImageDB = _mmapImageDepthbuffers.begin();
+		while (itImageDB != _mmapImageDepthbuffers.end())
+		{
+			itImageDB->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itImageDB++;
+		}
+
+		// Render each checkbox
+		std::map<std::string, CGUICheckbox*>::iterator itCheckbox = _mmapCheckboxes.begin();
+		while (itCheckbox != _mmapCheckboxes.end())
+		{
+			itCheckbox->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itCheckbox++;
+		}
+
+		// Render each sub container
+		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
+		while (itSubContainer != _mmapSubContainers.end())
+		{
+			itSubContainer->second->render(pParentContainer, strFramebufferToSampleFrom);
+			itSubContainer++;
+		}
+
+		// Render each text
+		std::map<std::string, CGUIText*>::iterator itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			itText->second->render(pParentContainer);
+			itText++;
+		}
+
+		// Render the sliders
+		_mSliderV.render(pParentContainer, strFramebufferToSampleFrom);
+		_mSliderH.render(pParentContainer, strFramebufferToSampleFrom);
+
+
+
+
+		pFB->unbindAsRenderTarget();
+		_mbFBNeedsUpdating = false;
+
+		// Remember to re-bind the GUI framebuffer back again
+		pFBGUITarget->bindAsRenderTarget(false, false);
 	}
 }

@@ -1544,6 +1544,15 @@ namespace X
 		pNewRes->_mstrName = strName;
 		pNewRes->_mbVisible = true;
 
+		// Create name of framebuffer
+		pNewRes->_mstrFBName = "GUISubContainerFB_" + _mstrName + "_" + strName;
+
+		// Check to see if the framebuffer resource name already exists
+		ThrowIfTrue(x->pResource->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addSubContainer(" + strName + ") failed. The name must be unique for all SubContainer objects.");
+
+		// Create framebuffer in SCResourceManager
+		x->pResource->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fDimsX), unsigned int(fDimsY));
+
 		_mmapSubContainers[strName] = pNewRes;
 		return pNewRes;
 	}

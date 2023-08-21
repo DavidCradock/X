@@ -36,6 +36,11 @@ namespace X
 		CMatrix matWorld, matView;
 		CMatrix matProjection;
 		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
+//		matProjection.setProjectionOrthographic(
+//			pContainer->mfPositionX,
+//			pContainer->mfPositionX + pContainer->mfWidth,
+//			pContainer->mfPositionY,
+//			pContainer->mfPositionY + pContainer->mfHeight, -1.0f, 1.0f);
 		pShader->setMat4("matrixWorld", matWorld);
 		pShader->setMat4("matrixView", matView);
 		pShader->setMat4("matrixProjection", matProjection);
