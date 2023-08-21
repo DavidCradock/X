@@ -17,13 +17,11 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-- rename log to logging
-- added fileArchive and fileMemory
-
+- Forward slashes for all file names/paths
+- All logging has fully qualified namespaces before class names.
+- Private implementation of private members and methods.
+- added fileArchive and fileMemory, complete archive
 - implement message system and remove SCWindow onToggleFullscreen.
-- Add renderer class to deal with resources indirectly, a wrapper if you will.
--   We don't want to be binding textures, shaders, setting viewports and such we just want to draw things.
--
 - Add A star pathfinding.
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
 - Add quad tree culling of all entities.
@@ -36,28 +34,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add padding to vector classes and test speed increase.
 - Add mouse wheel support for CGUITextScroll object.
 - Add physics engine.
-- GUI...
-- GUI: Make each container have their own render target. Why? It'll make things faster.
-- GUI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
-- GUI: Implement Listbox
-- GUI: Implement Colour selector
-- GUI: Implement DraggableDock.
-- GUI: Implement DraggableItem.
-- GUI: Implement Menu.
-- GUI: Implement Tab and TabContainer.
-- GUI: Implement Taskbar.
-- GUI: Add ability for the GUITooltip::setAsText() method to allow "\n" multiple lines.
-
-** Random notes **
-The measurement of force uses the unit known as the Newton after that guy who has a nasty experience with an apple.
-One Newton is the force required to make a one kilogram mass move from rest to a speed of one meter per second.
-
-Forward slashes for all file names/paths
-All logging has fully qualified namespaces before class names.
-Private implementation of private members and methods.
-
 - GUI rewrite
-- Rewrite the entire GUI
 - Things to improve...
 - Use texture atlas
 - Add more frame buffer usage to speed up everything
@@ -66,18 +43,34 @@ Private implementation of private members and methods.
 - Call containers, windows. Then set decorations on/off.
 - Add screen resize handling code (For fullscreen and window resize)
 - The current method of checking button presses is aweful, too many if statements
--	 Read up on "messaging" data structure then a widget will send a message to a message handler, which we check instead so we can go..
--    if (pGUI->messageExists())
--	{
--		std::vector<GUIMessage>& vecMessages = pGUI->getMessages();
--		for each message...
--			if message.type == buttonType
--				if message.name == "exit"
--					exit();
+- Read up on "messaging" data structure then a widget will send a message to a message handler.
 - Add alignment (left, right, centreX, top, centreY, bottom)
+- UI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
+- UI: Implement Button
+- UI: Implement ButtonImage
+- UI: Implement Checkbox
+- UI: Implement Colour selector
+- UI: Implement Container
+- UI: Implement DraggableDock.
+- UI: Implement DraggableItem.
+- UI: Implement Image
+- UI: Implement ImageAnimated
+- UI: Implement ImageDepthbuffer
+- UI: Implement ImageFramebuffer
+- UI: Implement Linegraph
+- UI: Implement Listbox
+- UI: Implement Manager
+- UI: Implement Menu.
+- UI: Implement Progress bar
+- UI: Implement Slider
+- UI: Implement Tab and TabContainer.
+- UI: Implement Taskbar.
+- UI: Implement Text
+- UI: Implement TextScroll
+- UI: Implement Theme
+- UI: Implement Tooltip
+- REMOVE GUI.
 
-
-
-
-
-
+** Random notes **
+The measurement of force uses the unit known as the Newton after that guy who has a nasty experience with an apple.
+One Newton is the force required to make a one kilogram mass move from rest to a speed of one meter per second.

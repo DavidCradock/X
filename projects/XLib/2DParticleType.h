@@ -40,6 +40,5 @@ namespace X
 		float fLifeSpanMaxSeconds;		// Maximum random value of a particle's life in seconds
 
 		C2DParticleType* mpTypeToSpawnOnDeath;	// Type of the particle emitted upon particle's death, may be NULL
-
 	};
 }
