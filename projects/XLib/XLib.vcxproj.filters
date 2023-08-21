@@ -406,6 +406,9 @@
     <ClInclude Include="fileMemory.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="messaging.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -725,6 +728,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="fileMemory.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="messaging.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
