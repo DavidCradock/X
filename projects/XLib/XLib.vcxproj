@@ -116,6 +116,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="stringUtils.h" />
+    <ClInclude Include="templateManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="vector2d.h" />

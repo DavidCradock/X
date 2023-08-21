@@ -6,11 +6,21 @@ namespace X
 {
 	bool getFileExists(const std::string& strFilename)
 	{
+		/*
 		FILE* f;
 		if (fopen_s(&f, strFilename.c_str(), "rb"))
 			return false;
 		fclose(f);
 		return true;
+		*/
+		bool bExists = false;
+		std::ifstream file(strFilename);
+		if (file.is_open())
+		{
+			bExists = true;
+			file.close();
+		}
+		return bExists;
 	}
 
 	bool convertFileToHeader(const std::string &strFilename, const std::string &strArrayName, unsigned int uiNumElementsPerRow)

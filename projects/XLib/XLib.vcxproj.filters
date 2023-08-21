@@ -397,6 +397,9 @@
     <ClInclude Include="singleton.h">
       <Filter>Patterns</Filter>
     </ClInclude>
+    <ClInclude Include="templateManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />

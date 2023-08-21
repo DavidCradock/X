@@ -16,27 +16,48 @@ namespace X
 			mstrException = "File: " + strFilename + "\n";
 			mstrException += "Line: " + std::to_string(iLineNumber) + "\n";
 			mstrException += "Desc: " + strExceptionText + "\n";
-			mstrException += "Please click the OK button to close.";
+//			mstrException += "Please click the OK button to close.";
 		}
 		std::string mstrException;
 	};
-	// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
+	#ifndef _DEBUG
+		// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
 	#ifndef ThrowIfFalse
-	#define ThrowIfFalse(x, y)							\
-	{                                                   \
-		if(!x){											\
-			__debugbreak();								\
-			throw CException(y, __FILE__, __LINE__);}	\
-	}
+	#define ThrowIfFalse(x, y)					\
+		{											\
+		if(!x){										\
+		throw CException(y, __FILE__, __LINE__);}	\
+		}
 	#endif
+
 	// Macro to check a bool and is true, throw an exception which adds filename, line number and the given text.
 	#ifndef ThrowIfTrue
-	#define ThrowIfTrue(x, y)                           \
-	{                                                   \
-		if(x){											\
-			__debugbreak();								\
-			throw CException(y, __FILE__, __LINE__);}	\
-	}
+	#define ThrowIfTrue(x, y)					\
+		{											\
+		if(x){										\
+		throw CException(y, __FILE__, __LINE__);}	\
+		}
+	#endif
+	#else
+		// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
+	#ifndef ThrowIfFalse
+	#define ThrowIfFalse(x, y)					\
+		{											\
+		if(!x){										\
+ 		__debugbreak();								\
+		throw CException(y, __FILE__, __LINE__);}	\
+		}
+	#endif
+
+	// Macro to check a bool and is true, throw an exception which adds filename, line number and the given text.
+	#ifndef ThrowIfTrue
+	#define ThrowIfTrue(x, y)					\
+		{											\
+		if(x){										\
+ 		__debugbreak();								\
+		throw CException(y, __FILE__, __LINE__);}	\
+		}
+	#endif
 	#endif
 
 	// Logging of information to "log.txt" file and storage of each added log entry into memory
