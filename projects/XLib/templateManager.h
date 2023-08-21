@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH.h"
 
-namespace X::Core
+namespace X
 {
 	// Template class to manage pointers to objects of a class of the given type.
 	// An object has a reference count, so if it is added multiple times, it will not be removed with calls to remove() until the reference count has reached 0.
