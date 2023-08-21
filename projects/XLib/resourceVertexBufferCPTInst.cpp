@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "resourceVertexBufferCPTInst.h"
-#include "log.h"
+#include "logging.h"
 #include "vector4f.h"
 
 namespace X

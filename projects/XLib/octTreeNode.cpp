@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "octTreeNode.h"
-#include "log.h"
+#include "logging.h"
 #include "octTree.h"
 
 namespace X

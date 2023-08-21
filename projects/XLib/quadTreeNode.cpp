@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "quadTreeNode.h"
-#include "log.h"
+#include "logging.h"
 #include "quadTree.h"
 
 namespace X

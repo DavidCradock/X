@@ -6,7 +6,7 @@
 #include "audioManager.h"
 #include "GUIManager.h"
 #include "input.h"
-#include "log.h"
+#include "logging.h"
 #include "physicsManager.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"

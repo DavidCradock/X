@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "vector2r.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

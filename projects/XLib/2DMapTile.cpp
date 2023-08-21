@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "2DMapTile.h"
 #include "2DMap.h"
-#include "log.h"
+#include "logging.h"
 #include "stringUtils.h"
 
 namespace X

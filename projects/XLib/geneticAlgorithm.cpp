@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "geneticAlgorithm.h"
 #include "utilities.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

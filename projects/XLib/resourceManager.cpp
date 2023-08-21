@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "resourceManager.h"
-#include "log.h"
+#include "logging.h"
 #include "image.h"	// For building the CResourceFont files with buildFontFiles()
 #include "stringUtils.h"
 #include "resourceLoadingScreen.h"

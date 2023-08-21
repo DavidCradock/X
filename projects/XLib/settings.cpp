@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "settings.h"
 #include "utilities.h"
-#include "log.h"
+#include "logging.h"
 #include "stringUtils.h"
 #include "singletons.h"
 

@@ -2,7 +2,7 @@
 #include "2DParticleEmitter.h"
 #include "2DParticleSystem.h"
 #include "utilities.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

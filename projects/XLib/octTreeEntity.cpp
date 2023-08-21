@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "octTreeEntity.h"
 #include "octTreeNode.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

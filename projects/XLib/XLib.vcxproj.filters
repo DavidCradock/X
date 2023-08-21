@@ -67,7 +67,7 @@
     <ClInclude Include="image.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="log.h">
+    <ClInclude Include="logging.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="openGLExtensions.h">
@@ -400,6 +400,12 @@
     <ClInclude Include="templateManager.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="fileArchive.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="fileMemory.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -412,7 +418,7 @@
     <ClCompile Include="image.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="log.cpp">
+    <ClCompile Include="logging.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="openGLExtensions.cpp">
@@ -714,6 +720,12 @@
     </ClCompile>
     <ClCompile Include="GUISubContainer.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="fileArchive.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="fileMemory.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "quadTreeEntity.h"
 #include "quadTreeNode.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

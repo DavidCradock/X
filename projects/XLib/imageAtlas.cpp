@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "imageAtlas.h"
-#include "log.h"
+#include "logging.h"
 #include "stringUtils.h"
 
 namespace X

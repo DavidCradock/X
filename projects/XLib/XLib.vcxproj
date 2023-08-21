@@ -26,6 +26,8 @@
     <ClInclude Include="2DParticleType.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="aStarPathfinding.h" />
+    <ClInclude Include="fileArchive.h" />
+    <ClInclude Include="fileMemory.h" />
     <ClInclude Include="geneticAlgorithm.h" />
     <ClInclude Include="GUICheckbox.h" />
     <ClInclude Include="GUISubContainer.h" />
@@ -88,7 +90,7 @@
     <ClInclude Include="inputJoystick.h" />
     <ClInclude Include="inputKeyboard.h" />
     <ClInclude Include="inputMouse.h" />
-    <ClInclude Include="log.h" />
+    <ClInclude Include="logging.h" />
     <ClInclude Include="openGLExtensions.h" />
     <ClInclude Include="OpenGL\glcorearb.h" />
     <ClInclude Include="OpenGL\glext.h" />
@@ -145,6 +147,8 @@
     <ClCompile Include="2DParticleType.cpp" />
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="aStarPathfinding.cpp" />
+    <ClCompile Include="fileArchive.cpp" />
+    <ClCompile Include="fileMemory.cpp" />
     <ClCompile Include="geneticAlgorithm.cpp" />
     <ClCompile Include="GUICheckbox.cpp" />
     <ClCompile Include="GUISubContainer.cpp" />
@@ -206,7 +210,7 @@
     <ClCompile Include="inputJoystick.cpp" />
     <ClCompile Include="inputKeyboard.cpp" />
     <ClCompile Include="inputMouse.cpp" />
-    <ClCompile Include="log.cpp" />
+    <ClCompile Include="logging.cpp" />
     <ClCompile Include="openGLExtensions.cpp" />
     <ClCompile Include="PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

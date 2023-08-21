@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "2DWorld.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

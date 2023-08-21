@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "image.h"
-#include "log.h"
+#include "logging.h"
 #include "vector3f.h"
 
 namespace X

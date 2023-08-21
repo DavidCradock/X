@@ -29,9 +29,11 @@
 #include "audioManager.h"
 // Core
 #include "colour.h"
+#include "fileArchive.h"
+#include "fileMemory.h"
 #include "image.h"
 #include "imageAtlas.h"
-#include "log.h"
+#include "logging.h"
 #include "openGLExtensions.h"
 #include "precision.h"
 #include "settings.h"

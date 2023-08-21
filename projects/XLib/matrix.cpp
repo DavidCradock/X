@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "matrix.h"
 #include "utilities.h"
-#include "log.h"
+#include "logging.h"
 #include "vector4f.h"
 
 namespace X

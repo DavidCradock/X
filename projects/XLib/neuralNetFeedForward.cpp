@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "neuralNetFeedForward.h"
 #include "utilities.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {

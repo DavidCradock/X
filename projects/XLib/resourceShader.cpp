@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "resourceShader.h"
 #include "openGLExtensions.h"
-#include "log.h"
+#include "logging.h"
 
 namespace X
 {
