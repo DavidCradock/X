@@ -14,6 +14,8 @@ namespace X
 		pLog->clear();
 		pLog->add("SCSingletons::SCSingletons() called. Initialising all singletons...");
 
+		pMessageSystem = SCMessageSystem::getPointer();
+
 		pSettings = SCSettings::getPointer();
 
 		// Input depends upon there being a window

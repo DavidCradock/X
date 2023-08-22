@@ -17,6 +17,15 @@ namespace X
 
 		// End of loading screen
 		x->pLoadingScreen->onInitEnd();
+
+		// Setup messaging system
+		// Create a message service which handles sending and receiving of messages to/from message users
+		CMessageService* pMsgService = x->pMessageSystem->serviceAdd("RoyalMail");
+		CMessageUser* pUser = x->pMessageSystem->userAdd("David");
+		x->pMessageSystem->subscribeUserToService("David", "RoyalMail");
+		x->pMessageSystem->serviceRemove("RoyalMail");
+
+
 	}
 
 	void CApplication::onStart(void)

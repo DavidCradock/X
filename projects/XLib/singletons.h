@@ -7,6 +7,7 @@
 #include "GUIManager.h"
 #include "input.h"
 #include "logging.h"
+#include "messaging.h"
 #include "physicsManager.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
@@ -54,6 +55,9 @@ namespace X
 
 		// A pointer to the SCLoadingScreen singleton class.
 		SCResourceLoadingScreen* pLoadingScreen;
+
+		// A pointer to the SCMessageSystem singleton class.
+		SCMessageSystem* pMessageSystem;
 
 		// A pointer to the SCPhysicsManager singleton class.
 		// NOT IMPLEMENTED

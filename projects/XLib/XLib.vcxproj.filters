@@ -55,6 +55,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{fb10734b-bd47-4dda-a5df-55d06f057a18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Messaging">
+      <UniqueIdentifier>{2edc2e00-fb1c-4ee4-9e20-8092732da05b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -407,7 +410,16 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="messaging.h">
-      <Filter>Core</Filter>
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="messagingMessage.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="messagingUser.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="messagingService.h">
+      <Filter>Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -731,7 +743,16 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="messaging.cpp">
-      <Filter>Core</Filter>
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="messagingMessage.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="messagingUser.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="messagingService.cpp">
+      <Filter>Messaging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include "PCH.h"
+#include "logging.h"
 
 namespace X
 {

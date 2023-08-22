@@ -1,60 +1,63 @@
 #pragma once
 #include "PCH.h"
+#include "singleton.h"
+#include "templateManager.h"
+#include "messagingService.h"
 
 namespace X
 {
-	// Message types
-	// Used when constructing a message to set it's type.
-	// Used to differenciate between different types of messages.
-	enum EMessageType
-	{
-
-	};
-
-	// A message object used by a messaging system and message user
-	class CMessage
+	// The message system responsible for handling everything message related.
+	// There are three other classes in the messaging system and they are...
+	// CMessage which represents a single message that is passed around the messaging system.
+	// CMessageUser which represents a single message user which can send and receive messages to and from a...
+	// CMessageService which is responsible for receiving and sending messages to/from CMessageUsers.
+	class SCMessageSystem : public CSingleton<SCMessageSystem>
 	{
 	public:
-		// Constructor, preparing the message
-		CMessage(const std::string& strMessage, EMessageType eMessageType);
+		// Adds a new message service to the system and returns a pointer to it if needed
+		// If the named service already exists, an exception occurs.
+		CMessageService* serviceAdd(const std::string& strServiceName);
 
-		// Returns a string holding the message
-		std::string& getMessageContents(void) const;
+		// Removes a message service from the system
+		// If the named service does not exist, an exception occurs.
+		void serviceRemove(const std::string& strServiceName);
 
-		// Returns the type of this message
-		EMessageType getMessageType(void) const;
+		// Returns whether the named service currently exists or not
+		bool serviceExists(const std::string& strServiceName);
+
+		// Returns a pointer to the named message service.
+		// If the named message system does not exist, an exception occurs
+		CMessageService* serviceGet(const std::string& strServiceName);
+
+		// Adds a new message user to the system and returns a pointer to it if needed
+		// If the named user already exists, an exception occurs.
+		CMessageUser* userAdd(const std::string& strUserName);
+
+		// Removes a message user from the system
+		// If the named user does not exist, an exception occurs.
+		void userRemove(const std::string& strUserName);
+
+		// Returns whether the named user currently exists or not
+		bool userExists(const std::string& strUserName);
+
+		// Returns a pointer to the named message user.
+		// If the named message user does not exist, an exception occurs
+		CMessageUser* userGet(const std::string& strUserName);
+
+		// Subscribes the named message user to the named service
+		// If the user does not exist, an exception occurs.
+		// If the service does not exist, an exception occurs.
+		// If the user is already subscribed, nothing happens.
+		void subscribeUserToService(const std::string& strUserName, const std::string& strServiceName);
+
+		// Unsubscribes the named message user from the named service
+		// If the user does not exist, an exception occurs.
+		// If the service does not exist, an exception occurs.
+		// If the user is already unsubscribed, nothing happens.
+		void unsubscribeUserFromService(const std::string& strUserName, const std::string& strServiceName);
+
 	private:
-		std::string _mstrMessage;	// String holding the message, given to constructor
-		EMessageType _mType;		// The type of message this is
-	};
-
-	// A message user
-	// Can send and recieve messages from a message system
-	class CMessageUser
-	{
-	public:
-		// Constructor, subscribes the user to listen to messages from the given message system
-		CMessageUser(const std::string& strUserName, const CMessageSystem* pMessageSystem);
-
-		// Sends the given message to the message system to be sent to all subscribed users of that message system
-		void sendMessage(const CMessage& message);
-
-		// Recieves a vector holding all messages sent from the subscribed message system
-		std::vector<CMessage> recieveMessages(void);
-	private:
-		std::string _mstrUserName;			// Name of this message user.
-		CMessageSystem* _mpMessageSystem;	// The message system this user is subscribed to.
-	};
-
-	// A message system
-	class CMessageSystem
-	{
-	public:
-		// Recieve a message from a subsribed user
-		void recieveMessage(CMessage& message);
-
-		// Dispatches all recieved messages to all subscribed users
-		void dispatchMessages(void);
-	private:
+		CManager<CMessageService> services;
+		CManager<CMessageUser> users;
 	};
 }

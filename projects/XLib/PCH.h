@@ -11,6 +11,7 @@
 #include <format>		// For stuff like std::string strFPS = "FPS: "; strFPS += std::format("{:.2f}", timer.getFPSAveraged());
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <locale>
 #include <map>
 #include <math.h>
