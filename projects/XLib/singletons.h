@@ -4,6 +4,7 @@
 #include "2DRenderer.h"
 #include "applicationManager.h"
 #include "audioManager.h"
+#include "fileManager.h"
 #include "GUIManager.h"
 #include "input.h"
 #include "logging.h"
@@ -38,6 +39,9 @@ namespace X
 		// A pointer to the SCAudioManager singleton class.
 		// Playback of audio samples which are loaded from .wav files.
 		SCAudioManager* pAudio;
+
+		// A pointer to the SCFileManager singleton class.
+		SCFileManager* pFile;
 
 		// A pointer to the SCGUIManager singleton class.
 		// DEPRECATED

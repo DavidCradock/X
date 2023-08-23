@@ -26,7 +26,7 @@
     <ClInclude Include="2DParticleType.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="aStarPathfinding.h" />
-    <ClInclude Include="fileArchive.h" />
+    <ClInclude Include="fileManager.h" />
     <ClInclude Include="fileMemory.h" />
     <ClInclude Include="geneticAlgorithm.h" />
     <ClInclude Include="GUICheckbox.h" />
@@ -151,7 +151,7 @@
     <ClCompile Include="2DParticleType.cpp" />
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="aStarPathfinding.cpp" />
-    <ClCompile Include="fileArchive.cpp" />
+    <ClCompile Include="fileManager.cpp" />
     <ClCompile Include="fileMemory.cpp" />
     <ClCompile Include="geneticAlgorithm.cpp" />
     <ClCompile Include="GUICheckbox.cpp" />

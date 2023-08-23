@@ -14,6 +14,8 @@ namespace X
 		pLog->clear();
 		pLog->add("SCSingletons::SCSingletons() called. Initialising all singletons...");
 
+		pFile = SCFileManager::getPointer();
+
 		pMessageSystem = SCMessageSystem::getPointer();
 
 		pSettings = SCSettings::getPointer();

@@ -18,10 +18,9 @@ Screenshot of "X:Default:FontGenerator" container window...
 
 ** TODO **
 - Forward slashes for all file names/paths
-- All logging has fully qualified namespaces before class names.
 - Private implementation of private members and methods.
-- added fileArchive and fileMemory, complete archive
-- implement message system and remove SCWindow onToggleFullscreen.
+- added fileManager and fileMemory, complete manager
+- implement message system and remove SCWindow onToggleFullscreen. Why?
 - Add A star pathfinding.
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
 - Add quad tree culling of all entities.

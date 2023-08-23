@@ -116,6 +116,14 @@ namespace X
 		_mstSeekPos = 0;
 	}
 
+	void CFileMemory::seekEnd(void)
+	{
+		_mpchSeekData = _mpchDataStart;
+		_mpchSeekData += _mstDataSizeBytes - 1;
+		_mstSeekPos = _mstDataSizeBytes - 1;
+
+	}
+
 	bool CFileMemory::seekToPos(size_t stOffsetBytesFromStart)
 	{
 		if (stOffsetBytesFromStart >= _mstDataSizeBytes)

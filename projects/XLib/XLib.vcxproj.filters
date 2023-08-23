@@ -58,6 +58,9 @@
     <Filter Include="Messaging">
       <UniqueIdentifier>{2edc2e00-fb1c-4ee4-9e20-8092732da05b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FileArchive">
+      <UniqueIdentifier>{3d463802-671f-46c4-8844-fe2c090601aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -403,12 +406,6 @@
     <ClInclude Include="templateManager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="fileArchive.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="fileMemory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="messaging.h">
       <Filter>Messaging</Filter>
     </ClInclude>
@@ -420,6 +417,12 @@
     </ClInclude>
     <ClInclude Include="messagingService.h">
       <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="fileManager.h">
+      <Filter>FileArchive</Filter>
+    </ClInclude>
+    <ClInclude Include="fileMemory.h">
+      <Filter>FileArchive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -736,12 +739,6 @@
     <ClCompile Include="GUISubContainer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="fileArchive.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="fileMemory.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="messaging.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
@@ -753,6 +750,12 @@
     </ClCompile>
     <ClCompile Include="messagingService.cpp">
       <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="fileManager.cpp">
+      <Filter>FileArchive</Filter>
+    </ClCompile>
+    <ClCompile Include="fileMemory.cpp">
+      <Filter>FileArchive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
