@@ -38,7 +38,7 @@ namespace X
 	{
 		ThrowIfTrue(users.exists(strUserName), "SCMessageSystem::userAdd(\"" + strUserName + "\") failed. The named user already exists.");
 		CMessageUser* pUser = users.add(strUserName);
-		pUser->setName(strUserName);
+		pUser->_mstrName = strUserName;
 		return pUser;
 	}
 

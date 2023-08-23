@@ -3,10 +3,10 @@
 
 namespace X
 {
-	CMessage::CMessage(const std::string& strMessageContents, const std::string& strMessageSenderName, EMessageType eMessageType)
+	CMessage::CMessage(const std::string& strMessageContents, EMessageType eMessageType)
 	{
 		_mstrContents = strMessageContents;
-		_mstrSenderName = strMessageSenderName;
+		_mstrSenderName = "UNKNOWN";
 		_meType = eMessageType;
 	}
 

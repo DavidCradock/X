@@ -9,16 +9,18 @@ namespace X
 	// Add more here if you need them
 	enum EMessageType
 	{
-		WINDOW,		// Window related message
-		UNKNOWN		// Unknown type
+		UNKNOWN,	// Unknown type
+		WINDOW		// Window related message
 	};
 
 	// A message object used by a messaging system and message user
 	class CMessage
 	{
 	public:
+		friend class CMessageUser;
+
 		// Constructor, preparing the message
-		CMessage(const std::string& strMessageContents, const std::string& strMessageSenderName, EMessageType eMessageType);
+		CMessage(const std::string& strMessageContents, EMessageType eMessageType = EMessageType::UNKNOWN);
 
 		// Returns a string holding the message
 		const std::string& getMessageContents(void) const;

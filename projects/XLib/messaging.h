@@ -6,11 +6,41 @@
 
 namespace X
 {
-	// The message system responsible for handling everything message related.
+	// The message system is responsible for handling everything message related.
 	// There are three other classes in the messaging system and they are...
 	// CMessage which represents a single message that is passed around the messaging system.
 	// CMessageUser which represents a single message user which can send and receive messages to and from a...
 	// CMessageService which is responsible for receiving and sending messages to/from CMessageUsers.
+	// Important note: Once a user is cacpable of receiving messages, by being subscribed to service, that user
+	// needs to check it's inbox and empty it on a regular basis, otherwise the inbox will eventually fill up with loads of messages.
+	// To empty the inbox, either call the user's getMessageFromInbox() until it's doesInboxContainMessages() returns false, or
+	// call the user's getMessagesFromInbox() method. Alternatively, a call to that user's emptyInbox() will suffice.
+	/* Example usage :
+		// Setup messaging system
+		// Create a message service which handles sending and receiving of messages to/from message users
+		CMessageService* pMsgService = x->pMessageSystem->serviceAdd("service");	// Create a messaging service
+		CMessageUser* pUserDavid = x->pMessageSystem->userAdd("David");				// Add a user
+		CMessageUser* pUserMojo = x->pMessageSystem->userAdd("Mojo");				// Add another user
+		x->pMessageSystem->subscribeUserToService("David", "service");				// Subscribe "David" user to "service" service.
+		CMessage msg("ThisIsMessageContents", EMessageType::UNKNOWN);				// Create a message for some user to send to the service
+		pUserMojo->postNewMessage(msg, "service");									// Let user "Mojo" send the message to the "service" service
+		pMsgService->dispatch();													// Get the service to dispatch all received messages to all subscribed users
+		while (pUserMojo->doesInboxContainMessages())								// Get Mojo user to check to see if their inbox contains any messages
+			CMessage message = pUserMojo->getMessageFromInbox();					// If there's a message, remove it from the user's inbox and then we can read the message
+		// There won't be any messages as user Mojo is not subscribed to any service.
+		if (pUserDavid->doesInboxContainMessages())									// Get David user to check to see if their inbox contains any messages
+		{
+			std::vector<CMessage> messages = pUserDavid->getMessagesFromInbox();	// Get all messages from the user's inbox, emptying the inbox in the process.
+			for (size_t iMessage = 0; iMessage < messages.size(); iMessage++)		// Do stuff with the messages
+			{
+				CMessage mes = messages[iMessage];
+				if (mes.getMessageSender() == "Mojo")
+				{
+					std::string strContents = mes.getMessageContents();
+				}
+			}
+		}
+	*/
 	class SCMessageSystem : public CSingleton<SCMessageSystem>
 	{
 	public:
