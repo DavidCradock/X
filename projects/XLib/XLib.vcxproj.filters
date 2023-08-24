@@ -61,6 +61,9 @@
     <Filter Include="FileArchive">
       <UniqueIdentifier>{3d463802-671f-46c4-8844-fe2c090601aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Image">
+      <UniqueIdentifier>{708e56d8-6157-4376-8539-ff3ff2690cbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -69,9 +72,6 @@
     </ClInclude>
     <ClInclude Include="applicationBase.h">
       <Filter>Applications</Filter>
-    </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="logging.h">
       <Filter>Core</Filter>
@@ -125,8 +125,6 @@
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="X.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="OpenGL\glcorearb.h">
       <Filter>OpenGL</Filter>
     </ClInclude>
@@ -237,9 +235,6 @@
     </ClInclude>
     <ClInclude Include="vector2r.h">
       <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="imageAtlas.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="vector2f.h">
       <Filter>Math</Filter>
@@ -424,6 +419,18 @@
     <ClInclude Include="fileMemory.h">
       <Filter>FileArchive</Filter>
     </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="imageAtlas.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_write.h">
+      <Filter>Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -432,9 +439,6 @@
     </ClCompile>
     <ClCompile Include="applicationManager.cpp">
       <Filter>Applications</Filter>
-    </ClCompile>
-    <ClCompile Include="image.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="logging.cpp">
       <Filter>Core</Filter>
@@ -579,9 +583,6 @@
     </ClCompile>
     <ClCompile Include="vector2r.cpp">
       <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="imageAtlas.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="vector2f.cpp">
       <Filter>Math</Filter>
@@ -756,6 +757,12 @@
     </ClCompile>
     <ClCompile Include="fileMemory.cpp">
       <Filter>FileArchive</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="imageAtlas.cpp">
+      <Filter>Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

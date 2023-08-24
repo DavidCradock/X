@@ -19,10 +19,12 @@ Screenshot of "X:Default:FontGenerator" container window...
 ** TODO **
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
+-
 - added fileManager and fileMemory, complete manager
 - implement message system and remove SCWindow onToggleFullscreen. Why?
-- Add A star pathfinding.
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
+-
+- Add A star pathfinding.
 - Add quad tree culling of all entities.
 - Add QuadTree to 2D world/layers
 - Set automatic positioning for shadows depthmap rendering in the scene manager
@@ -31,8 +33,8 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add 2D and 3D particle systems.
 - Rewrite joy part of input.
 - Add padding to vector classes and test speed increase.
-- Add mouse wheel support for CGUITextScroll object.
 - Add physics engine.
+- 
 - GUI rewrite
 - Things to improve...
 - Use texture atlas

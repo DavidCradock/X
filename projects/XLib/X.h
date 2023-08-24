@@ -29,7 +29,7 @@
 #include "audioManager.h"
 // Core
 #include "colour.h"
-#include "fileArchive.h"
+#include "fileManager.h"
 #include "fileMemory.h"
 #include "image.h"
 #include "imageAtlas.h"
