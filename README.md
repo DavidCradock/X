@@ -1,7 +1,7 @@
 ![X project logo. A character X, extruded slightly and placed against a quad within the 3D application Blender.](https://github.com/DavidCradock/X/blob/38b6f3ba1d8ecd946eac329807001c5faad6462c/github_images/github_social_image.png)
 # My current personal project.
 ## Written in C++ for Windows 11, using OpenGL for rendering.
-### It's early days, but I'm enjoying programming again after about a nine year gap due to a health issue and this project will develop into a nice little game development framework.
+### This project is intended to become a bunch of code which I can use to develop a game with.
 ** Build help **
 - Download the source as a zip and extract somewhere.
 - Download and install Visual studio
