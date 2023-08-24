@@ -8,7 +8,17 @@
 - Load the X.sln file into Visual studio, hit compile, done.
 
 ** Features **
-2D rendering, 3D rendering, AI, Audio playback, Image loading/saving/editing, 2D pixel based user interface, input using DirectX 8, math helper functions/classes, messaging, physics and spatial partitioning.
+- 2D rendering
+- 3D rendering
+- AI (Neural networks, finite state machines and path finding)
+- Audio playback
+- Image loading/saving/editing
+- 2D pixel based user interface
+- Input using DirectX 8
+- Math helper functions/classes
+- Messaging
+- Physics
+- Spatial partitioning.
 
 Screenshot of the development application showing GUI and simple 3D scene manager with shadow rendering...
 ![Screenshot of the development application showing GUI and simple 3D scene manager with shadow rendering.](https://github.com/DavidCradock/X/blob/e0d565a4164a812c36f54f97c38803a583d7033d/github_images/github_screenshot_2023_07_03.png)
@@ -20,6 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
 -
