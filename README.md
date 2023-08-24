@@ -7,6 +7,9 @@
 - Download and install Visual studio
 - Load the X.sln file into Visual studio, hit compile, done.
 
+** Features **
+2D rendering, 3D rendering, AI, Audio playback, Image loading/saving/editing, 2D pixel based user interface, input using DirectX 8, math helper functions/classes, messaging, physics and spatial partitioning.
+
 Screenshot of the development application showing GUI and simple 3D scene manager with shadow rendering...
 ![Screenshot of the development application showing GUI and simple 3D scene manager with shadow rendering.](https://github.com/DavidCradock/X/blob/e0d565a4164a812c36f54f97c38803a583d7033d/github_images/github_screenshot_2023_07_03.png)
 
