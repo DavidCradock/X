@@ -43,6 +43,9 @@ namespace X
 		// Returns window's height
 		unsigned int getHeight(void) const;
 
+		// Returns window dimensions as a CVector2f
+		CVector2f getDimensions(void) const;
+
 		// Returns whether the window is fullscreen or not
 		bool getFullscreen(void) const;
 
@@ -70,9 +73,6 @@ namespace X
 		// This is done from within this method by calling each of the various managers' _onOpenGLContextLost() methods to store which objects are currently loaded
 		// and then the window and OpenGL context is re-created and then a call to each of the various managers' _onOpenGLContextRestored() methods which re-load/create the resources again.
 		void toggleFullscreen(void);
-
-		// Returns window dimensions as a CVector2f
-		CVector2f getDimensions(void) const;
 
 		// Returns the maximum texture size supported by the OpenGL drivers
 		unsigned int getMaxTextureSize(void) const;

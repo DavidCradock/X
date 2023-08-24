@@ -229,6 +229,20 @@ namespace X
 		return it->second.pResource->getDimensions();
 	}
 
+	float SCResourceManager::getBackbufferWidth(void)
+	{
+		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferWidth() failed. X:backbuffer resource doesn't exist.");
+		return (float)it->second.pResource->getWidth();
+	}
+
+	float SCResourceManager::getBackbufferHeight(void)
+	{
+		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferHeight() failed. X:backbuffer resource doesn't exist.");
+		return (float)it->second.pResource->getHeight();
+	}
+
 	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout, bool bAppendHeightToFilename) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.

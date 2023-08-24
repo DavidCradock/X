@@ -3,6 +3,12 @@
 
 namespace X
 {
+	SCLog::SCLog()
+	{
+		clear();
+		add("SCLog::SCLog() called.", true, true);
+	}
+
 	void SCLog::clear(void)
 	{
 		std::fstream fs;

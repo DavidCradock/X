@@ -4,6 +4,11 @@
 
 namespace X
 {
+	SCMessageSystem::SCMessageSystem()
+	{
+		SCLog::getPointer()->add("SCMessageSystem::SCMessageSystem() called.");
+	}
+
 	CMessageService* SCMessageSystem::serviceAdd(const std::string& strServiceName)
 	{
 		ThrowIfTrue(services.exists(strServiceName), "SCMessageSystem::serviceAdd(\"" + strServiceName + "\") failed. The named service already exists.");

@@ -10,19 +10,17 @@ namespace X
 {
 	SCApplicationManager::SCApplicationManager()
 	{
-		SCLog* pLog = SCLog::getPointer();
-		pLog->add("SCApplicationManager::SCApplicationManager() called.");
+		SCLog::getPointer()->add("SCApplicationManager::SCApplicationManager() called.");
 	}
 
 	void SCApplicationManager::mainLoop(void)
 	{
 		try
 		{
-			// Here's the program's main loop called from WinMain.
-
 			// Get a pointer to the global x SCSingletons class object to initialise all the singleton classes in the correct order
 			x = SCSingletons::getPointer();
 
+			// Here's the program's main loop called from WinMain.
 			x->pLog->add("SCApplicationManager::mainLoop() called.");
 
 			// Create objects to each of the application classes which inherit from CApplicationBase
@@ -94,7 +92,7 @@ namespace X
 			// Last current app's onStop method
 			x->pLog->add("SCApplicationManager::mainLoop() is shutting down...");
 			it = _mApplications.find(_mstrCurrentApp);
-			ThrowIfTrue(it == _mApplications.end(), "unable to find the current application called " + _mstrCurrentApp);
+			ThrowIfTrue(it == _mApplications.end(), "Unable to find the current application called " + _mstrCurrentApp);
 			it->second->onStop();
 
 			// Now close the window

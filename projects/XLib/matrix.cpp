@@ -3,6 +3,7 @@
 #include "utilities.h"
 #include "logging.h"
 #include "vector4f.h"
+#include "singletons.h"
 
 namespace X
 {
@@ -309,6 +310,13 @@ namespace X
 		float fNearMinusFar = fNearClippingPlaneDistance - fFarClippingPlaneDistance;
 		ThrowIfTrue(fNearMinusFar == 0.0f, "CMatrix::setProjectionPerspective() failed. Given near and far clipping plane distances invalid.");
 
+		// Compute fAspectRatio if given a value <= 0.0f from the back buffer's framebuffer's resource dimensions
+		if (fAspectRatio <= 0.0f)
+		{
+			CVector2f vBackbufferDims = x->pResource->getBackbufferDims();
+			fAspectRatio = vBackbufferDims.x / vBackbufferDims.y;
+		}
+
 		// First column
 		m[0] = 1.0f / (fAspectRatio * fTanHalfFOV);
 		m[1] = 0.0f;
@@ -342,6 +350,14 @@ namespace X
 		float fNear,
 		float fFar)
 	{
+		// Compute fRight and fBottom if given a value <= 0.0f from the back buffer's framebuffer's resource dimensions
+		if (fRight <= 0.0f || fBottom <= 0.0f)
+		{
+			CVector2f vBackbufferDims = x->pResource->getBackbufferDims();
+			fRight = vBackbufferDims.x;
+			fBottom = vBackbufferDims.y;
+		}
+
 		// First column
 		m[0] = 2.0f / (fRight - fLeft);
 		m[1] = 0.0f;

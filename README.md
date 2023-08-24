@@ -21,9 +21,8 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Private implementation of private members and methods.
 -
 - added fileManager and fileMemory, complete manager
-- implement message system and remove SCWindow onToggleFullscreen. Why?
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
--
+- 
 - Add A star pathfinding.
 - Add quad tree culling of all entities.
 - Add QuadTree to 2D world/layers
@@ -44,7 +43,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Call containers, windows. Then set decorations on/off.
 - Add screen resize handling code (For fullscreen and window resize)
 - The current method of checking button presses is aweful, too many if statements
-- Read up on "messaging" data structure then a widget will send a message to a message handler.
+- Use messaging for various widgets to send messages for events such as "clicked". 
 - Add alignment (left, right, centreX, top, centreY, bottom)
 - UI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
 - UI: Implement Button

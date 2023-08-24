@@ -169,18 +169,20 @@ namespace X
 		CMatrix multiply(const float fScalar);
 
 		// Sets the matrix to represent a perspective projection matrix
+		// Passing in a value of 0.0f or less for fAspectRatio will compute this value for us from the (width / height) from x->pResource->getBackbufferDims()
 		void setProjectionPerspective(
 			float fFieldOfViewInDegrees = 55.0f,
 			float fNearClippingPlaneDistance = 1.0f,
 			float fFarClippingPlaneDistance = 1000.0f,
-			float fAspectRatio = (float)SCWindow::getPointer()->getWidth() / (float)SCWindow::getPointer()->getHeight());
+			float fAspectRatio = -1.0f);
 
 		// Sets the matrix to represent an orthographic prjection matrix
+		// Passing in a value of 0.0f or less for fRight or fBottom will set those values from x->pResource->getBackbufferDims()
 		void setProjectionOrthographic(
 			float fLeft = 0.0f,
-			float fRight = (float)SCWindow::getPointer()->getWidth(),
+			float fRight = -1.0f,
 			float fTop = 0.0f,
-			float fBottom = (float)SCWindow::getPointer()->getHeight(),
+			float fBottom = -1.0f,
 			float fNear = -1.0f,
 			float fFar = 1.0f);
 

@@ -89,6 +89,12 @@ namespace X
 		// CVector2f vBackbufferDimensions = pBackbuffer->getDimensions();
 		CVector2f getBackbufferDims(void);
 
+		// As the back buffer frame buffer's dimensions are needed alot, here's a methoed to return the it's width
+		float getBackbufferWidth(void);
+
+		// As the back buffer frame buffer's dimensions are needed alot, here's a methoed to return the it's height
+		float getBackbufferHeight(void);
+
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.
 		// The output file names (the font.fnt and font.png files) are named based upon the strOutputBaseName.

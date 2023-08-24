@@ -11,7 +11,6 @@ namespace X
 	SCSingletons::SCSingletons()
 	{
 		pLog = SCLog::getPointer();
-		pLog->clear();
 		pLog->add("SCSingletons::SCSingletons() called. Initialising all singletons...");
 
 		pFile = SCFileManager::getPointer();
@@ -41,5 +40,7 @@ namespace X
 		pGUI = SCGUIManager::getPointer();
 
 		pLoadingScreen = SCResourceLoadingScreen::getPointer();
+
+		pLog->add("SCSingletons::SCSingletons() complete. All singletons initialised.");
 	}
 }

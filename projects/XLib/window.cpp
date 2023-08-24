@@ -362,6 +362,14 @@ namespace X
 		return _muiWindowHeight;
 	}
 
+	CVector2f SCWindow::getDimensions(void) const
+	{
+		CVector2f vDims;
+		vDims.x = float(_muiWindowWidth);
+		vDims.y = float(_muiWindowHeight);
+		return vDims;
+	}
+
 	bool SCWindow::getFullscreen(void) const
 	{
 		return _mbWindowFullscreen;
@@ -423,14 +431,6 @@ namespace X
 
 		// Call application manager's onToggleFullscreen to call all app's method too.
 		x->pAppMan->onWindowToggleFullscreen(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
-	}
-
-	CVector2f SCWindow::getDimensions(void) const
-	{
-		CVector2f vDims;
-		vDims.x = float(_muiWindowWidth);
-		vDims.y = float(_muiWindowHeight);
-		return vDims;
 	}
 
 	unsigned int SCWindow::getMaxTextureSize(void) const

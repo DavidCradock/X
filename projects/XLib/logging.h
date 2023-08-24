@@ -65,6 +65,7 @@ namespace X
 	class SCLog : public CSingleton<SCLog>
 	{
 	public:
+		SCLog();
 
 		// Clear the log file and all log entries in memory
 		void clear(void);

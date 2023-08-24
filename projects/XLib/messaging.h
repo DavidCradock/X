@@ -44,6 +44,8 @@ namespace X
 	class SCMessageSystem : public CSingleton<SCMessageSystem>
 	{
 	public:
+		SCMessageSystem();
+
 		// Adds a new message service to the system and returns a pointer to it if needed
 		// If the named service already exists, an exception occurs.
 		CMessageService* serviceAdd(const std::string& strServiceName);
