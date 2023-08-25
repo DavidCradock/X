@@ -111,11 +111,11 @@ namespace X
 		// Structure to hold the names of all the fonts used by this theme
 		struct SFonts
 		{
-			std::string button;
-			std::string text;
-			std::string textEdit;
-			std::string textScroll;
-			std::string window;
+			std::string button;						// Font used when rendering a button's text
+			std::string text;						// Font used when rendering a UIText widget.
+			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
+			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
+			std::string window;						// Font used when rendering a window's titlebar text.
 		};
 
 		// Structure to hold colours used for this theme
@@ -146,19 +146,19 @@ namespace X
 		// Audio samples
 		struct AudioSampleInfo
 		{
-			float pitch;
-			float volume;
-			std::string sampleName;
+			float pitch;								// Pitch of 1.0 is normal pitch of the sample
+			float volume;								// Volume of 1.0 is normal volume of the sample
+			std::string sampleName;						// The filename of the sample.
 		};
 		struct SAudio
 		{
-			AudioSampleInfo buttonClicked;
-			AudioSampleInfo buttonImageClicked;
-			AudioSampleInfo textEditActivate;
-			AudioSampleInfo textEditBackspace;
-			AudioSampleInfo textEditNoMoreCharSpace;
-			AudioSampleInfo textEditReturn;
-			AudioSampleInfo textEditTextAdd;
+			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
+			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
+			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
+			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
+			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
+			AudioSampleInfo textEditReturn;				// Audio sample to play when a text edit box is activated and the return key is pressed.
+			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
 		};
 		
 		// Structure to hold all floating point settings

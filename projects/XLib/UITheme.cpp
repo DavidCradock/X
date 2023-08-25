@@ -74,9 +74,6 @@ namespace X
 			addAllResources();
 	}
 
-	// Saves the theme with all it's settings to a file on disk for loading with load()
-	// The filename is saved with the ".theme" extension. If it isn't at the end of the given filename, it is added.
-	// If the file couldn't be opened, an exception occurs.
 	void CUITheme::save(const std::string& strFilename)
 	{
 		// Make sure filename given has the required extension and set to lowercase
