@@ -104,8 +104,5 @@ namespace X
 
 		// This is so we can lookup an image by name using getImageDetails()
 		mutable std::map<std::string, CImageAtlasDetails> _mmapImageDetails;
-
-		
-
 	};
 }

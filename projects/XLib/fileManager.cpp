@@ -9,7 +9,7 @@ namespace X
 		SCLog::getPointer()->add("SCFileManager::SCFileManager() called.");
 	}
 
-	void SCFileManager::write(std::ofstream& file, std::string& strString) const
+	void SCFileManager::writeString(std::ofstream& file, std::string& strString) const
 	{
 		ThrowIfFalse(file.is_open(), "SCFileManager::write() failed. The given ofstream is not open.");
 		ThrowIfTrue(file.bad(), "SCFileManager::write() failed. The given ofstream is bad.");
@@ -24,7 +24,7 @@ namespace X
 		ThrowIfTrue(file.bad(), "SCFileManager::write() failed. The given ofstream is bad.");
 	}
 
-	void SCFileManager::read(std::ifstream& file, std::string& strString) const
+	void SCFileManager::readString(std::ifstream& file, std::string& strString) const
 	{
 		ThrowIfFalse(file.is_open(), "SCFileManager::read() failed. The given ifstream is not open.");
 		ThrowIfTrue(file.bad(), "SCFileManager::read() failed. The given ifstream is bad.");

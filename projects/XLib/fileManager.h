@@ -14,12 +14,12 @@ namespace X
 
 		// Helper method to write the given string to an already opened ofstream in binary mode.
 		// If the given ofstream is not opened or an error occurred, an exception occurs
-		void write(std::ofstream& file, std::string& strString) const;
+		void writeString(std::ofstream& file, std::string& strString) const;
 
 		// Helper method to read a string from an already opened ifstream in binary mode.
 		// If the given ifstream is not opened or an error occurred, an exception occurs
 		// The given string is cleared before being set.
-		void read(std::ifstream& file, std::string& strString) const;
+		void readString(std::ifstream& file, std::string& strString) const;
 
 		// Helper method. Returns true if the given filename exists on storage device
 		bool getFileExists(const std::string& strFilename) const;
