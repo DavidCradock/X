@@ -437,6 +437,12 @@
     <ClInclude Include="UITheme.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIContainer.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -774,6 +780,12 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UITheme.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIContainer.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWindow.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>

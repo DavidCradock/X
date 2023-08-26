@@ -124,8 +124,10 @@
     <ClInclude Include="stringUtils.h" />
     <ClInclude Include="templateManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UITheme.h" />
+    <ClInclude Include="UIWindow.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="vector2d.h" />
     <ClInclude Include="vector2f.h" />
@@ -243,8 +245,10 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="stringUtils.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UITheme.cpp" />
+    <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="utilities.cpp" />
     <ClCompile Include="vector2d.cpp" />
     <ClCompile Include="vector2f.cpp" />

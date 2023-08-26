@@ -12,6 +12,9 @@ namespace X
 		_mbResourcesAdded = false;
 	}
 
+	/************************************************************************************************************************************************************/
+	/* All methods below this section need to be modified if we're adding a new widget type */
+	/************************************************************************************************************************************************************/
 	void CUITheme::load(const std::string& strFilename, bool bCallAddAllResources)
 	{
 		removeAllResources();
@@ -25,13 +28,13 @@ namespace X
 		ThrowIfFalse(file.is_open(), "CUITheme::load(" + filename + ") failed to open file for reading.");
 
 		// Audio
-		_helperReadAudio(file, _mSettings.audio.buttonClicked);
-		_helperReadAudio(file, _mSettings.audio.buttonImageClicked);
-		_helperReadAudio(file, _mSettings.audio.textEditActivate);
-		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
-		_helperReadAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
-		_helperReadAudio(file, _mSettings.audio.textEditReturn);
-		_helperReadAudio(file, _mSettings.audio.textEditTextAdd);
+//		_helperReadAudio(file, _mSettings.audio.buttonClicked);
+//		_helperReadAudio(file, _mSettings.audio.buttonImageClicked);
+//		_helperReadAudio(file, _mSettings.audio.textEditActivate);
+//		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
+//		_helperReadAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
+//		_helperReadAudio(file, _mSettings.audio.textEditReturn);
+//		_helperReadAudio(file, _mSettings.audio.textEditTextAdd);
 
 		// Colours
 		x->pFile->read(file, _mSettings.colours);
@@ -40,26 +43,27 @@ namespace X
 		x->pFile->read(file, _mSettings.floats);
 
 		// Fonts
-		x->pFile->readString(file, _mSettings.fonts.button);
-		x->pFile->readString(file, _mSettings.fonts.text);
-		x->pFile->readString(file, _mSettings.fonts.textEdit);
-		x->pFile->readString(file, _mSettings.fonts.textScroll);
-		x->pFile->readString(file, _mSettings.fonts.window);
+//		x->pFile->readString(file, _mSettings.fonts.button);
+//		x->pFile->readString(file, _mSettings.fonts.text);
+//		x->pFile->readString(file, _mSettings.fonts.textEdit);
+//		x->pFile->readString(file, _mSettings.fonts.textScroll);
+		x->pFile->readString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
-		_helperReadImageType(file, _mSettings.images.buttonBG);
-		_helperReadImageType(file, _mSettings.images.buttonImageBG);
-		_helperReadImageType(file, _mSettings.images.checkboxBGNormal);
-		_helperReadImageType(file, _mSettings.images.checkboxBGOFF);
-		_helperReadImageType(file, _mSettings.images.checkboxBGON);
-		_helperReadImageType(file, _mSettings.images.lineGraphBG);
-		_helperReadImageType(file, _mSettings.images.progressBarBG);
-		_helperReadImageType(file, _mSettings.images.progressBarFiller);
+//		_helperReadImageType(file, _mSettings.images.buttonBG);
+//		_helperReadImageType(file, _mSettings.images.buttonImageBG);
+//		_helperReadImageType(file, _mSettings.images.checkboxBGNormal);
+//		_helperReadImageType(file, _mSettings.images.checkboxBGOFF);
+//		_helperReadImageType(file, _mSettings.images.checkboxBGON);
+//		_helperReadImageType(file, _mSettings.images.lineGraphBG);
+//		_helperReadImageType(file, _mSettings.images.progressBarBG);
+//		_helperReadImageType(file, _mSettings.images.progressBarFiller);
 		_helperReadImageType(file, _mSettings.images.sliderBG);
 		_helperReadImageType(file, _mSettings.images.sliderTab);
-		_helperReadImageType(file, _mSettings.images.textEditBG);
-		_helperReadImageType(file, _mSettings.images.textScrollBG);
-		_helperReadImageType(file, _mSettings.images.tooltipBG);
+//		_helperReadImageType(file, _mSettings.images.textEditBG);
+//		_helperReadImageType(file, _mSettings.images.textScrollBG);
+//		_helperReadImageType(file, _mSettings.images.tooltipBG);
+		_helperReadImageType(file, _mSettings.images.windowBG);
 
 		// Theme name
 		x->pFile->readString(file, _mSettings.themeName);
@@ -85,13 +89,13 @@ namespace X
 		ThrowIfFalse(file.is_open(), "CUITheme::save(" + filename + ") failed to open file for writing.");
 
 		// Audio
-		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
-		_helperWriteAudio(file, _mSettings.audio.buttonImageClicked);
-		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
-		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
-		_helperWriteAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
-		_helperWriteAudio(file, _mSettings.audio.textEditReturn);
-		_helperWriteAudio(file, _mSettings.audio.textEditTextAdd);
+//		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
+//		_helperWriteAudio(file, _mSettings.audio.buttonImageClicked);
+//		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
+//		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
+//		_helperWriteAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
+//		_helperWriteAudio(file, _mSettings.audio.textEditReturn);
+//		_helperWriteAudio(file, _mSettings.audio.textEditTextAdd);
 
 		// Colours
 		x->pFile->write(file, _mSettings.colours);
@@ -100,26 +104,27 @@ namespace X
 		x->pFile->write(file, _mSettings.floats);
 
 		// Fonts
-		x->pFile->writeString(file, _mSettings.fonts.button);
-		x->pFile->writeString(file, _mSettings.fonts.text);
-		x->pFile->writeString(file, _mSettings.fonts.textEdit);
-		x->pFile->writeString(file, _mSettings.fonts.textScroll);
-		x->pFile->writeString(file, _mSettings.fonts.window);
+//		x->pFile->writeString(file, _mSettings.fonts.button);
+//		x->pFile->writeString(file, _mSettings.fonts.text);
+//		x->pFile->writeString(file, _mSettings.fonts.textEdit);
+//		x->pFile->writeString(file, _mSettings.fonts.textScroll);
+		x->pFile->writeString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
-		_helperWriteImageType(file, _mSettings.images.buttonBG);
-		_helperWriteImageType(file, _mSettings.images.buttonImageBG);
-		_helperWriteImageType(file, _mSettings.images.checkboxBGNormal);
-		_helperWriteImageType(file, _mSettings.images.checkboxBGOFF);
-		_helperWriteImageType(file, _mSettings.images.checkboxBGON);
-		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
-		_helperWriteImageType(file, _mSettings.images.progressBarBG);
-		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
+//		_helperWriteImageType(file, _mSettings.images.buttonBG);
+//		_helperWriteImageType(file, _mSettings.images.buttonImageBG);
+//		_helperWriteImageType(file, _mSettings.images.checkboxBGNormal);
+//		_helperWriteImageType(file, _mSettings.images.checkboxBGOFF);
+//		_helperWriteImageType(file, _mSettings.images.checkboxBGON);
+//		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
+//		_helperWriteImageType(file, _mSettings.images.progressBarBG);
+//		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
 		_helperWriteImageType(file, _mSettings.images.sliderBG);
 		_helperWriteImageType(file, _mSettings.images.sliderTab);
-		_helperWriteImageType(file, _mSettings.images.textEditBG);
-		_helperWriteImageType(file, _mSettings.images.textScrollBG);
-		_helperWriteImageType(file, _mSettings.images.tooltipBG);
+//		_helperWriteImageType(file, _mSettings.images.textEditBG);
+//		_helperWriteImageType(file, _mSettings.images.textScrollBG);
+//		_helperWriteImageType(file, _mSettings.images.tooltipBG);
+		_helperWriteImageType(file, _mSettings.images.windowBG);
 
 		// Theme name
 		x->pFile->writeString(file, _mSettings.themeName);
@@ -131,7 +136,7 @@ namespace X
 		file.close();
 	}
 
-	void CUITheme::addAllResources(void)
+	void CUITheme::addAllResources(bool bOverwriteNormalImages)
 	{
 		removeAllResources();
 
@@ -140,25 +145,31 @@ namespace X
 		// Audio
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->addNewSampleGroup("UI");
-		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+//		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		pAM->loadSampleGroup("UI");
 
 		// Fonts
-		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
-		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
-		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
-		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
-		x->pResource->addFont(_mSettings.fonts.window, _mSettings.fonts.window, false);
+//		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
+//		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
+//		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
+//		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
+		x->pResource->addFont(_mSettings.fonts.windowTitlebar, _mSettings.fonts.windowTitlebar, false);
+
+		// Build/rebuild normal images
+		_helperBuildNormalImages(bOverwriteNormalImages);
 
 		// Texture atlas
 		strTmp = "UI_THEME_" + _mSettings.themeName;
 		x->pResource->addTexture2DAtlas(strTmp, _mSettings.imageDir, true, 0, false, true);
+
+		// Possibly throw an exception, make sure all image dimensions are OK
+		_helperCheckImageDimsAreOK();
 
 		_mbResourcesAdded = true;
 	}
@@ -173,20 +184,20 @@ namespace X
 		// Audio
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->unloadSampleGroup("UI");
-		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+//		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 
 		// Fonts
-		x->pResource->removeFont(_mSettings.fonts.button);
-		x->pResource->removeFont(_mSettings.fonts.text);
-		x->pResource->removeFont(_mSettings.fonts.textEdit);
-		x->pResource->removeFont(_mSettings.fonts.textScroll);
-		x->pResource->removeFont(_mSettings.fonts.window);
+//		x->pResource->removeFont(_mSettings.fonts.button);
+//		x->pResource->removeFont(_mSettings.fonts.text);
+//		x->pResource->removeFont(_mSettings.fonts.textEdit);
+//		x->pResource->removeFont(_mSettings.fonts.textScroll);
+		x->pResource->removeFont(_mSettings.fonts.windowTitlebar);
 
 		// Texture atlas
 		strTmp = "UI_THEME_" + _mSettings.themeName;
@@ -195,77 +206,75 @@ namespace X
 		_mbResourcesAdded = false;
 	}
 
-	CUITheme::SSettings* CUITheme::getSettings(void)
-	{
-		removeAllResources();
-		return &_mSettings;
-	}
-
 	void CUITheme::_setSettingsToDefault(void)
 	{
 		// Audio
-		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
-		_helperSetAudio(_mSettings.audio.buttonImageClicked, "data/X/UI/default/buttonImageClicked.wav", 1.0f, 0.8f);
-		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
-		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
-		_helperSetAudio(_mSettings.audio.textEditNoMoreCharSpace, "data/X/UI/default/textEditNoMoreCharSpace.wav", 1.0f, 0.2f);
-		_helperSetAudio(_mSettings.audio.textEditReturn, "data/X/UI/default/textEditReturn.wav", 1.0f, 0.8f);
-		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
+//		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
+//		_helperSetAudio(_mSettings.audio.buttonImageClicked, "data/X/UI/default/buttonImageClicked.wav", 1.0f, 0.8f);
+//		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
+//		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
+//		_helperSetAudio(_mSettings.audio.textEditNoMoreCharSpace, "data/X/UI/default/textEditNoMoreCharSpace.wav", 1.0f, 0.2f);
+//		_helperSetAudio(_mSettings.audio.textEditReturn, "data/X/UI/default/textEditReturn.wav", 1.0f, 0.8f);
+//		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
 
 		// Colours
-		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonBGOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonBGOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textEditInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.textEditInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
 
 		// Floats
-		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
-		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
-		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
-		_mSettings.floats.mouseCursorDistance = 50.0f;
-		_mSettings.floats.normalAmount = 0.1f;
-		_mSettings.floats.sliderTabFadeSpeedSeconds = 5.0f;
-		_mSettings.floats.textEditFlashSpeed = 4.0f;
-		_mSettings.floats.textScrollSliderWidth = 20.0f;
-		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
+//		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
+//		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
+//		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
+//		_mSettings.floats.mouseCursorDistance = 50.0f;
+//		_mSettings.floats.normalAmount = 0.1f;
+//		_mSettings.floats.sliderTabFadeSpeedSeconds = 5.0f;
+//		_mSettings.floats.textEditFlashSpeed = 4.0f;
+//		_mSettings.floats.textScrollSliderWidth = 20.0f;
+//		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
 
 		// Fonts
-		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
-		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
-		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
-		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
-		_mSettings.fonts.window = "data/X/UI/default/satoshi_22";
+//		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
+//		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
+//		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
+//		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";
 
 		// Image file names
-		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/buttonBG");
-		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
-		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
-		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");
-		_helperSetNames(_mSettings.images.checkboxBGON, "data/X/UI/default/images/checkboxBGON");
-		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/lineGraphBG");
-		_helperSetNames(_mSettings.images.progressBarBG, "data/X/UI/default/images/progressBarBG");
-		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/progressBarFiller");
+//		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/buttonBG");
+//		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
+//		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
+//		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");
+//		_helperSetNames(_mSettings.images.checkboxBGON, "data/X/UI/default/images/checkboxBGON");
+//		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/lineGraphBG");
+//		_helperSetNames(_mSettings.images.progressBarBG, "data/X/UI/default/images/progressBarBG");
+//		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/progressBarFiller");
 		_helperSetNames(_mSettings.images.sliderBG, "data/X/UI/default/images/sliderBG");
 		_helperSetNames(_mSettings.images.sliderTab, "data/X/UI/default/images/sliderTab");
-		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/textEditBG");
-		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
-		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
+//		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/textEditBG");
+//		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
+//		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
+		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
 
 		// Theme name
 		_mSettings.themeName = "Default theme";
@@ -274,12 +283,47 @@ namespace X
 		_mSettings.imageDir = "data/X/UI/default/images/";
 	}
 
-	void CUITheme::_helperSetAudio(AudioSampleInfo& audio, const std::string& strSampleName, float fPitch, float fVolume)
+	void CUITheme::_helperCheckImageDimsAreOK(void)
 	{
-		audio.pitch = fPitch;
-		audio.sampleName = strSampleName;
-		audio.volume = fVolume;
+		ThrowIfFalse(_mbResourcesAdded, "CUITheme::_helperCheckImageDimsAreOK() failed. Resources have not been added to resource managers yet.");
+		// Note: The second parameter for the below method calls can be anything, it's used during creating of the exception text.
+//		_helperCheckImageDimsAreOK(_mSettings.images.buttonBG, "buttonBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.buttonImageBG, "buttonImageBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGNormal, "checkboxBGNormal");
+//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOFF, "checkboxBGOFF");
+//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGON, "checkboxBGON");
+//		_helperCheckImageDimsAreOK(_mSettings.images.lineGraphBG, "lineGraphBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.progressBarBG, "progressBarBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.progressBarFiller, "progressBarFiller");
+		_helperCheckImageDimsAreOK(_mSettings.images.sliderBG, "sliderBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.sliderTab, "sliderTab");
+//		_helperCheckImageDimsAreOK(_mSettings.images.textEditBG, "textEditBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.textScrollBG, "textScrollBG");
+//		_helperCheckImageDimsAreOK(_mSettings.images.tooltipBG, "tooltipBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.windowBG, "windowBG");
 	}
+
+	void CUITheme::_helperBuildNormalImages(bool bOverwriteNormalImages)
+	{
+//		_helperBuildNormalImages(_mSettings.images.buttonBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.buttonImageBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.checkboxBGNormal, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.checkboxBGOFF, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.checkboxBGON, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.lineGraphBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.progressBarBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.progressBarFiller, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.sliderBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.sliderTab, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.textEditBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.textScrollBG, bOverwriteNormalImages);
+//		_helperBuildNormalImages(_mSettings.images.tooltipBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.windowBG, bOverwriteNormalImages);
+	}
+
+	/************************************************************************************************************************************************************/
+	/* All methods below this section DO NOT need to be modified if we're adding a new widget type */
+	/************************************************************************************************************************************************************/
 
 	void CUITheme::_helperSetNames(SImageType& imageType, const std::string& strBaseName)
 	{
@@ -314,13 +358,39 @@ namespace X
 		imageType.normal.edgeT = strBaseName + "_normal_edgeT.png";
 	}
 
+	CUITheme::SSettings* CUITheme::getSettings(void)
+	{
+		removeAllResources();
+		return &_mSettings;
+	}
+
+	CResourceTexture2DAtlas* CUITheme::getTextureAtlas(void)
+	{
+		ThrowIfFalse(_mbResourcesAdded, "CUITheme::getTextureAtlas() failed. Resources have not been added to the various managers yet.");
+		std::string strTextureAtlasName = "UI_THEME_" + _mSettings.themeName;
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(strTextureAtlasName), "CUITheme::getTextureAtlas() failed. The texture atlas named \"" + strTextureAtlasName + "\" does not exist.");
+		return x->pResource->getTexture2DAtlas(strTextureAtlasName);
+	}
+
+	bool CUITheme::getResourcesAdded(void)
+	{
+		return _mbResourcesAdded;
+	}
+
+	void CUITheme::_helperSetAudio(AudioSampleInfo& audio, const std::string& strSampleName, float fPitch, float fVolume)
+	{
+		audio.pitch = fPitch;
+		audio.sampleName = strSampleName;
+		audio.volume = fVolume;
+	}
+
 	void CUITheme::_helperReadAudio(std::ifstream& file, AudioSampleInfo& audio)
 	{
 		x->pFile->read(file, audio.pitch);
 		x->pFile->readString(file, audio.sampleName);
 		x->pFile->read(file, audio.volume);
 	}
-	
+
 	void CUITheme::_helperWriteAudio(std::ofstream& file, AudioSampleInfo& audio)
 	{
 		x->pFile->write(file, audio.pitch);
@@ -392,5 +462,208 @@ namespace X
 		x->pFile->writeString(file, imageType.normal.edgeL);
 		x->pFile->writeString(file, imageType.normal.edgeR);
 		x->pFile->writeString(file, imageType.normal.edgeT);
+	}
+
+	void CUITheme::_helperCheckImageDimsAreOK(SImageType& imageType, const std::string& strWidgetName)
+	{
+		CResourceTexture2DAtlas* pAtlas = getTextureAtlas();
+		std::string strErr;
+		CImageAtlasDetails imageDetails[3];
+
+		// Top row height, colour image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerTL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeT);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "colour image data do not have the same height.\nOffending images: ";
+			strErr += imageType.colour.cornerTL + ", " + imageType.colour.edgeT + ", " + imageType.colour.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+		// Bottom row height, colour image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeB);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerBR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "colour image data do not have the same height.\nOffending images: ";
+			strErr += imageType.colour.cornerBL + ", " + imageType.colour.edgeB + ", " + imageType.colour.cornerBR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Left edge width, colour image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeL);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTL);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "colour image data do not have the same width.\nOffending images: ";
+			strErr += imageType.colour.cornerBL + ", " + imageType.colour.edgeL + ", " + imageType.colour.cornerTL + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Right edge width, colour image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBR);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeR);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTR);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "colour image data do not have the same width.\nOffending images: ";
+			strErr += imageType.colour.cornerBR + ", " + imageType.colour.edgeR + ", " + imageType.colour.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Top row height, height image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerTL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeT);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "height image data do not have the same height.\nOffending images: ";
+			strErr += imageType.height.cornerTL + ", " + imageType.height.edgeT + ", " + imageType.height.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+		// Bottom row height, height image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeB);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerBR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "height image data do not have the same height.\nOffending images: ";
+			strErr += imageType.height.cornerBL + ", " + imageType.height.edgeB + ", " + imageType.height.cornerBR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Left edge width, height image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeL);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTL);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "height image data do not have the same width.\nOffending images: ";
+			strErr += imageType.height.cornerBL + ", " + imageType.height.edgeL + ", " + imageType.height.cornerTL + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Right edge width, height image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBR);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeR);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTR);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "height image data do not have the same width.\nOffending images: ";
+			strErr += imageType.height.cornerBR + ", " + imageType.height.edgeR + ", " + imageType.height.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Top row height, normal image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerTL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeT);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "normal image data do not have the same height.\nOffending images: ";
+			strErr += imageType.normal.cornerTL + ", " + imageType.normal.edgeT + ", " + imageType.normal.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+		// Bottom row height, normal image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeB);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerBR);
+		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
+			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "normal image data do not have the same height.\nOffending images: ";
+			strErr += imageType.normal.cornerBL + ", " + imageType.normal.edgeB + ", " + imageType.normal.cornerBR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Left edge width, normal image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBL);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeL);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTL);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "normal image data do not have the same width.\nOffending images: ";
+			strErr += imageType.normal.cornerBL + ", " + imageType.normal.edgeL + ", " + imageType.normal.cornerTL + ".";
+			ThrowIfTrue(1, strErr);
+		}
+
+		// Right edge width, normal image data
+		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBR);
+		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeR);
+		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTR);
+		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
+			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		{
+			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
+			strErr += "normal image data do not have the same width.\nOffending images: ";
+			strErr += imageType.normal.cornerBR + ", " + imageType.normal.edgeR + ", " + imageType.normal.cornerTR + ".";
+			ThrowIfTrue(1, strErr);
+		}
+	}
+
+	void CUITheme::_helperBuildNormalImages(SImageType& imageType, bool bOverwriteNormalImages)
+	{
+		CImage imageHeight;
+		CImage imageNormal;
+		// For each of the 9 images in the grid, if the normal file doesn't exist, or we're overwriting, load the height image, create normal image and save.
+		if (!x->pFile->getFileExists(imageType.normal.centre) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.centre);		imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.centre);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.cornerBL) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.cornerBL);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.cornerBL);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.cornerBR) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.cornerBR);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.cornerBR);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.cornerTL) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.cornerTL);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.cornerTL);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.cornerTR) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.cornerTR);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.cornerTR);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.edgeB) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.edgeB);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.edgeB);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.edgeL) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.edgeL);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.edgeL);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.edgeR) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.edgeR);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.edgeR);
+		}
+		if (!x->pFile->getFileExists(imageType.normal.edgeT) || bOverwriteNormalImages)
+		{
+			imageHeight.load(imageType.height.edgeT);	imageHeight.normalmap(imageNormal);	imageNormal.saveAsPNG(imageType.normal.edgeT);
+		}
 	}
 }

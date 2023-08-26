@@ -40,6 +40,11 @@ namespace X
 		// Returns the number of objects.
 		size_t getNumber(void);
 
+		// Attempts to find and return the name of the object at the specified index.
+		// If the given index is invalid, an exception occurs.
+		// Use getNumber() to determine valid index range.
+		std::string getName(size_t index);
+
 		// Returns a pointer to the object at the specified index.
 		// If the given index is invalid, an exception occurs.
 		// Use getNumber() to determine valid index range.
@@ -49,6 +54,8 @@ namespace X
 		// If the named object could not be found, an exception occurs.
 		// Use exists() to determine whether the object exists to prevent exception from occurring.
 		T* get(const std::string& strObjectName);
+
+		
 	private:
 		struct SObject
 		{
@@ -147,6 +154,18 @@ namespace X
 	size_t CManager<T>::getNumber(void)
 	{
 		return _mmapObjects.size();
+	}
+
+	template <class T>
+	std::string CManager<T>::getName(size_t index)
+	{
+		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManager::getName(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
+		auto it = _mmapObjects.begin();
+		for (size_t i = 0; i < index; index++)
+		{
+			it++;
+		}
+		return it->first;
 	}
 
 	template <class T>

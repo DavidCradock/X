@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "colour.h"
 #include "audioManager.h"
+#include "resourceManager.h"
 
 namespace X
 {
@@ -58,7 +59,10 @@ namespace X
 
 		// Adds all resources stored in _mSettings to the various managers.
 		// This removes any previously added resources.
-		void addAllResources(void);
+		// This also creates the normal images from the height images if they do not exist.
+		// Passing true to bOverwriteNormalImages will rebuild the normal images regardless of whether they exist or not
+		// May throw an exception if the images' dimensions are invalid (See _helperCheckImageDimsAreOK())
+		void addAllResources(bool bOverwriteNormalImages = false);
 
 		// Removes all resources stored in _mSettings from the various managers.
 		// If the resources haven't been added, this does nothing.
@@ -67,6 +71,14 @@ namespace X
 		// Returns a pointer to the _mSettings object so we can modify any of the settings for the theme.
 		// This calls removeAllResources()
 		SSettings* getSettings(void);
+
+		// Returns a pointer to this theme's texture atlas
+		// If the resources haven't been loaded yet, an exception occurs
+		// To check if the resources have been loaded, call getResourcesAdded()
+		CResourceTexture2DAtlas* getTextureAtlas(void);
+
+		// Returns whether the resources for this theme have been added to the various managers or not
+		bool getResourcesAdded(void);
 
 		// Each of the 9 cells in the 3x3 grid
 		struct SImagesGrid
@@ -93,54 +105,58 @@ namespace X
 		// Struct holding each widget's and window's image filenames
 		struct SImageNamesWidget
 		{
-			SImageType buttonBG;			// Image names for CUIButton's background
-			SImageType buttonImageBG;		// Image names for CUIButtonImage's background
-			SImageType checkboxBGNormal;	// Image names for CUICheckbox's normal state
-			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
-			SImageType checkboxBGOFF;		// Image names for CUICheckbox's OFF state
-			SImageType lineGraphBG;			// Image names for CUILineGraph's background
-			SImageType progressBarBG;		// Image names for CUIProgressBar's background
-			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
+//			SImageType buttonBG;			// Image names for CUIButton's background
+//			SImageType buttonImageBG;		// Image names for CUIButtonImage's background
+//			SImageType checkboxBGNormal;	// Image names for CUICheckbox's normal state
+//			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
+//			SImageType checkboxBGOFF;		// Image names for CUICheckbox's OFF state
+//			SImageType lineGraphBG;			// Image names for CUILineGraph's background
+//			SImageType progressBarBG;		// Image names for CUIProgressBar's background
+//			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
 			SImageType sliderBG;			// Image names for CUISlider's background
 			SImageType sliderTab;			// Image names for CUISlider's tab
-			SImageType textEditBG;			// Image names for CUITextEdit's background.
-			SImageType textScrollBG;		// Image names for CUITextScroll's background.
-			SImageType tooltipBG;			// Image names for CUITooltip's background.
+//			SImageType textEditBG;			// Image names for CUITextEdit's background.
+//			SImageType textScrollBG;		// Image names for CUITextScroll's background.
+//			SImageType tooltipBG;			// Image names for CUITooltip's background.
+			SImageType windowBG;			// Image names for CUIWindow's background.
 		};
 
 		// Structure to hold the names of all the fonts used by this theme
 		struct SFonts
 		{
-			std::string button;						// Font used when rendering a button's text
-			std::string text;						// Font used when rendering a UIText widget.
-			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
-			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
-			std::string window;						// Font used when rendering a window's titlebar text.
+//			std::string button;						// Font used when rendering a button's text
+//			std::string text;						// Font used when rendering a UIText widget.
+//			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
+//			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
+			std::string windowTitlebar;				// Font used when rendering a window's titlebar text.
 		};
 
 		// Structure to hold colours used for this theme
 		struct SColours
 		{
-			CColour buttonBGDown;						// Colour of a button's BG when mouse is over and clicked
-			CColour buttonBGOver;						// Colour of a button's BG when mouse is over
-			CColour buttonBGUp;							// Colour of a button's BG when mouse is not over
-			CColour buttonImageDown;					// CUIButtonImage's colour when mouse is over and clicked
-			CColour buttonImageOver;					// CUIButtonImage's colour when mouse is over
-			CColour buttonImageUp;						// CUIButtonImage's colour when mouse is not over
-			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
-			CColour buttonTextOver;						// Colour of a button's text when mouse is over
-			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
-			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
-			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
-			CColour progressBarFiller;					// CUIProgressBar's colour
-			CColour sliderTabNotOver;					// CUISlider's tab colour when mouse is not over
-			CColour sliderTabOver;						// CUISlider's tab colour when mouse is over
-			CColour text;								// CUIText font colour
-			CColour textEditActive;						// CUITextEdit's text colour when active
-			CColour textEditInactive;					// CUITextEdit's text colour when inactive
-			CColour textScrollBG;						// CUITextScroll's colour
-			CColour textScrollText;						// CUITextScroll's text colour
-			CColour tooltipText;						// Tool tip text colour
+//			CColour buttonBGDown;						// Colour of a button's BG when mouse is over and clicked
+//			CColour buttonBGOver;						// Colour of a button's BG when mouse is over
+//			CColour buttonBGUp;							// Colour of a button's BG when mouse is not over
+//			CColour buttonImageDown;					// CUIButtonImage's colour when mouse is over and clicked
+//			CColour buttonImageOver;					// CUIButtonImage's colour when mouse is over
+//			CColour buttonImageUp;						// CUIButtonImage's colour when mouse is not over
+//			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
+//			CColour buttonTextOver;						// Colour of a button's text when mouse is over
+//			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
+//			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
+//			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
+			CColour progressBarBG;						// CUIProgressBar's background vertex colour
+			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
+//			CColour sliderTabNotOver;					// CUISlider's tab colour when mouse is not over
+//			CColour sliderTabOver;						// CUISlider's tab colour when mouse is over
+//			CColour text;								// CUIText font colour
+//			CColour textEditActive;						// CUITextEdit's text colour when active
+//			CColour textEditInactive;					// CUITextEdit's text colour when inactive
+//			CColour textScrollBG;						// CUITextScroll's colour
+//			CColour textScrollText;						// CUITextScroll's text colour
+//			CColour tooltipText;						// Tool tip text colour
+			CColour windowBGFocused;					// CUIWindow background vertex colour when focused
+			CColour windowBGNotFocused;					// CUIWindow background vertex colour when not focused
 		};
 
 		// Audio samples
@@ -152,27 +168,27 @@ namespace X
 		};
 		struct SAudio
 		{
-			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
-			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
-			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
-			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
-			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
-			AudioSampleInfo textEditReturn;				// Audio sample to play when a text edit box is activated and the return key is pressed.
-			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
+//			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
+//			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
+//			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
+//			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
+//			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
+//			AudioSampleInfo textEditReturn;				// Audio sample to play when a text edit box is activated and the return key is pressed.
+//			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
 		};
 		
 		// Structure to hold all floating point settings
 		struct SFloats
 		{
-			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
-			float buttonImageTextFadeSpeedSeconds;	// Rate at which button image colours interpolate between
-			float checkboxFadeSpeedSeconds;			// Rate at which the checkbox fades between ON and OFF states
-			float mouseCursorDistance;				// Distance the mouse cursor is from the fragments when computing the bump mapping.
-			float normalAmount;						// Strength of normal mapping effect. 1.0f = max normal, 0.0f = none
-			float sliderTabFadeSpeedSeconds;		// Rate at which slider's tab colours interpolate between
-			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
-			float textScrollSliderWidth;			// Width of a CUITextScroll object's vertical slider.
-			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
+//			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
+//			float buttonImageTextFadeSpeedSeconds;	// Rate at which button image colours interpolate between
+//			float checkboxFadeSpeedSeconds;			// Rate at which the checkbox fades between ON and OFF states
+//			float mouseCursorDistance;				// Distance the mouse cursor is from the fragments when computing the bump mapping.
+//			float normalAmount;						// Strength of normal mapping effect. 1.0f = max normal, 0.0f = none
+//			float sliderTabFadeSpeedSeconds;		// Rate at which slider's tab colours interpolate between
+//			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
+//			float textScrollSliderWidth;			// Width of a CUITextScroll object's vertical slider.
+//			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
 		};
 
 		// Struct to hold all settings for the theme
@@ -185,11 +201,10 @@ namespace X
 			SImageNamesWidget images;	// Holds all the names of the images stored in a texture atlas used by this theme.
 			std::string imageDir;		// Holds the directory name containing each of the theme's images, for example "data/X/UI/default/images/"
 			std::string themeName;		// Holds the name of the theme.
-			
 		};
 	private:
 		SSettings _mSettings;
-		bool _mbResourcesAdded;			// Whether resources have been added or not
+		bool _mbResourcesAdded;			// Whether resources have been added to the managers or not
 
 		// Helper method to set all settings in _mSettings to default theme
 		void _setSettingsToDefault(void);
@@ -213,5 +228,27 @@ namespace X
 
 		// Helper method to write out image filenames for each widget type from already opened ofstream
 		void _helperWriteImageType(std::ofstream& file, SImageType& imageType);
+
+		// Helper method to determine whether each of the images have the correct dimensions.
+		// In the 3x3 grid...
+		// The 3 images in the top row must have the same height.
+		// The 3 images in the bottom row must have the same height.
+		// The 3 images on the left edge must have the same width.
+		// The 3 images on the right edge must have the same width.
+		// The centre image can be whatever dimensions it likes.
+		// Throws an exception is image dimensions are invalid
+		// Note: the image atlas must exist before calling this.
+		void _helperCheckImageDimsAreOK(void);
+
+		// Helper method to determine whether the given image type images have the correct dimensions.
+		// Called from _helpCheckImageDimsAreOK(void)
+		// Throws an exception is image dimensions are invalid
+		void _helperCheckImageDimsAreOK(SImageType& imageType, const std::string& strWidgetName);
+
+		// Builds or rebuilds normal map images from height images
+		void _helperBuildNormalImages(bool bOverwriteNormalImages);
+
+		// Builds or rebuilds normal map images from height images for the given SImageType
+		void _helperBuildNormalImages(SImageType& imageType, bool bOverwriteNormalImages);
 	};
 }

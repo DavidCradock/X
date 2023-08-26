@@ -1,7 +1,10 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
+#include "UIContainer.h"
 #include "UITheme.h"
+#include "UIWindow.h"
+#include "templateManager.h"
 
 namespace X
 {
@@ -114,7 +117,7 @@ namespace X
 		void themeRemoveAll(void);
 
 		// Returns the number of themes
-		int themeGetNumber(void) const;
+		size_t themeGetNumber(void) const;
 
 		// Returns the name of a theme at the specified index.
 		// If an invalid index is given, an exception occurs.
@@ -124,6 +127,7 @@ namespace X
 		// If the passed theme name doesn't exist, an exception occurs
 		void setThemeForAll(const std::string& strName);
 	private:
-
+		mutable CManager<CUITheme> _mmanThemes;
+//		mutable std::map<std::string, CUITheme*> _mmapThemes;			// A hashmap holding each named theme.
 	};
 }
