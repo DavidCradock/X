@@ -3,5 +3,8 @@
 
 namespace X
 {
+	CUIContainer::CUIContainer()
+	{
 
+	}
 }

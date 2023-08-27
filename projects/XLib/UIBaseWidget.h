@@ -1,11 +1,13 @@
 #pragma once
 #include "PCH.h"
 #include "vector2f.h"
-#include "UITheme.h"
-#include "UIContainer.h"
 
 namespace X
 {
+	// A base class which all user interface containers, widgets and windows are based upon.
+	// It simply contains a few things which are common amoung all objects such
+	// as position, dimensions and visibility.
+	// By default, it's position is 0, 0, dimensions are 128, 128 and visibility set to true.
 	class CUIBaseWidget
 	{
 	public:
@@ -28,10 +30,6 @@ namespace X
 
 		// Returns whether this container is visible or not
 		bool getVisible(void) const;
-
-		// Renders this widget's 9 grid cells representing the background
-		void renderBackground(CUIContainer* pOwningContainer, CUITheme::SImageNamesWidget& widgetTextureNames);
-
 	private:
 		CVector2f _mvDimensions;	// Dimensions of the widget
 		CVector2f _mvPosition;		// Position of the widget in relation to it's container.

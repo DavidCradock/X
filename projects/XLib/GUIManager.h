@@ -206,7 +206,7 @@ namespace X
 		// Gets tooltip offset from mouse cursor position
 		CVector2f getTooltipOffset(void) const;
 
-		// Sets the named container as active, settings it's titlebar text to the correct colour stored in theme and all other containers to inactive
+		// Sets the named container as active, setting it's titlebar text to the correct colour stored in theme and all other containers to inactive
 		// If the named container doesn't exist, an exception occurs
 		void setContainerAsActive(const std::string& strContainerName);
 	private:

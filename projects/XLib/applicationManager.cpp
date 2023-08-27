@@ -35,7 +35,7 @@ namespace X
 			pBGFB->resizeToWindowDimsScaled();
 
 			// Create default UI theme
-			CUITheme* pTheme = x->pUI->themeAdd("default");
+			CUITheme* pTheme = x->pUI->themeAdd("default", true);
 			pTheme->addAllResources();
 
 			// Create default GUI containers

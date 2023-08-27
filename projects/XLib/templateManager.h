@@ -161,7 +161,7 @@ namespace X
 	{
 		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManager::getName(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 		auto it = _mmapObjects.begin();
-		for (size_t i = 0; i < index; index++)
+		for (size_t i = 0; i < index; i++)
 		{
 			it++;
 		}
@@ -174,7 +174,7 @@ namespace X
 		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManager::get(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 
 		auto it = _mmapObjects.begin();
-		for (size_t i = 0; i < index; index++)
+		for (size_t i = 0; i < index; i++)
 		{
 			it++;
 		}

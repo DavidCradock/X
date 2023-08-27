@@ -37,7 +37,7 @@ namespace X
 		// Will only return true if the mouse isn't over a previously updated container.
 		bool update(bool bMouseIsOverContainerWhichIsAboveThisOne);
 
-		// Sets this container's behavious. Whether it will be, or not, a draggable window, or just an invisible container
+		// Sets this container's behaviours. Whether it will be, or not, a draggable window, or just an invisible container
 		void setBehaviour(bool bContainerIsWindow);
 
 		// Get currently set theme name used by this container

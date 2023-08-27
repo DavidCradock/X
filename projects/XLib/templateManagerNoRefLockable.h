@@ -27,7 +27,12 @@ namespace X
 		// If bLocked is set to true, this affects the various remove method's behaviour.
 		// If calling a remove method on a named object which is set as locked, it will not
 		// be removed unless that remove method is passed true to it's bForceRemoveLocked parameter.
+		// Objects can later be unlocked with a call to setLocked().
 		T* add(const std::string& strObjectName, bool bLocked = false);
+
+		// Sets the locked status of the named object.
+		// If the named object doesn't exist, an exception occurs.
+		void setLocked(const std::string& strObjectName, bool bLocked);
 
 		// Attempts to remove the named object.
 		// If the named object does not exist, an exception occurs.
@@ -87,6 +92,15 @@ namespace X
 		ThrowIfFalse(pNewObject->pObject, "CManagerNoRefLockable::add(\"" + strObjectName + "\") failed. Unable to allocate memory for new object.");
 		_mmapObjects[strObjectName] = pNewObject;
 		return pNewObject->pObject;
+	}
+
+	template <class T>
+	void CManagerNoRefLockable<T>::setLocked(const std::string& strObjectName, bool bLocked)
+	{
+		// Find object and set locked status.
+		auto it = _mmapObjects.find(strObjectName);
+		ThrowIfTrue(_mmapObjects.end() == it, "CManagerNoRefLockable::setLocked(\"" + strObjectName + "\") failed. Named object does not exist.");
+		it->second->bLocked = bLocked;
 	}
 
 	template <class T>
@@ -160,7 +174,7 @@ namespace X
 	{
 		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManagerNoRefLockable::getName(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 		auto it = _mmapObjects.begin();
-		for (size_t i = 0; i < index; index++)
+		for (size_t i = 0; i < index; i++)
 		{
 			it++;
 		}
@@ -173,7 +187,7 @@ namespace X
 		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManagerNoRefLockable::get(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 
 		auto it = _mmapObjects.begin();
-		for (size_t i = 0; i < index; index++)
+		for (size_t i = 0; i < index; i++)
 		{
 			it++;
 		}

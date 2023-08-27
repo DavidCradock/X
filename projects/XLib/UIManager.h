@@ -4,7 +4,7 @@
 #include "UIContainer.h"
 #include "UITheme.h"
 #include "UIWindow.h"
-#include "templateManager.h"
+#include "templateManagerNoRefLockable.h"
 
 namespace X
 {
@@ -104,7 +104,8 @@ namespace X
 		// Adds a new container for use by the UI and returns a pointer to it
 		// The new container is initialised to use the default theme.
 		// If the named container already exists, a pointer to that container is returned.
-		CUIContainer* containerAdd(const std::string& strName);
+		// If bLocked is true, this object is not removed upon calling the various remove methods, unless they are passed true to their bForceRemoveLocked parameter.
+		CUIContainer* containerAdd(const std::string& strName, bool bLocked = false);
 
 		// Returns true if the named container exists
 		bool containerExists(const std::string& strName) const;
@@ -126,11 +127,12 @@ namespace X
 
 		// Removes the named container.
 		// If the named object doesn't exist, this silently fails.
-		// If the named object has been added multiple times, it's reference count is decreased and it remains.
-		void containerRemove(const std::string& strName);
+		// If the named object is locked, it will not be removed unless bForceRemoveLocked is true.
+		void containerRemove(const std::string& strName, bool bForceRemoveLocked = false);
 
 		// Removes all containers.
-		void containerRemoveAll(void);
+		// If objects are locked, they will not be removed unless bForceRemoveLocked is true.
+		void containerRemoveAll(bool bForceRemoveLocked = false);
 
 		/************************************************************************************************************************************************************/
 		/* Theme related */
@@ -139,7 +141,8 @@ namespace X
 		// Adds a new theme for use by the UI and returns a pointer to it
 		// The new theme is initialised to use the default settings and image files.
 		// If the named theme already exists, a pointer to that theme is returned.
-		CUITheme* themeAdd(const std::string& strName);
+		// If bLocked is true, this object is not removed upon calling the various remove methods, unless they are passed true to their bForceRemoveLocked parameter.
+		CUITheme* themeAdd(const std::string& strName, bool bLocked = false);
 
 		// Returns true if the named theme exists
 		bool themeExists(const std::string& strName) const;
@@ -161,20 +164,60 @@ namespace X
 
 		// Removes the named theme.
 		// If the named object doesn't exist, this silently fails.
-		// If the named object has been added multiple times, it's reference count is decreased and it remains.
-		void themeRemove(const std::string& strName);
+		// If the named object is locked, it will not be removed unless bForceRemoveLocked is true.
+		void themeRemove(const std::string& strName, bool bForceRemoveLocked = false);
 
 		// Removes all themes.
-		// Regardless of the number of times the object has been added, ??????????????
-		void themeRemoveAll(void);
+		// If objects are locked, they will not be removed unless bForceRemoveLocked is true.
+		void themeRemoveAll(bool bForceRemoveLocked = false);
 
 		// Sets all UI objects to use the named theme.
 		// If the passed theme name doesn't exist, an exception occurs
 		void themeSetForAll(const std::string& strName);
-	private:
-		mutable CManager<CUITheme> _mmanThemes;
-		mutable CManager<CUIContainer> _mmanContainers;
 
-//		mutable std::map<std::string, CUITheme*> _mmapThemes;			// A hashmap holding each named theme.
+		/************************************************************************************************************************************************************/
+		/* Window related */
+		/************************************************************************************************************************************************************/
+
+		// Adds a new window for use by the UI and returns a pointer to it
+		// The new window is initialised to use the default theme.
+		// If the named window already exists, a pointer to that window is returned.
+		// If bLocked is true, this object is not removed upon calling the various remove methods, unless they are passed true to their bForceRemoveLocked parameter.
+		CUIWindow* windowAdd(const std::string& strName, bool bLocked = false);
+
+		// Returns true if the named window exists
+		bool windowExists(const std::string& strName) const;
+
+		// Returns a pointer to a window.
+		// If the named object doesn't exist, an exception occurs.
+		CUIWindow* windowGet(const std::string& strName) const;
+
+		// Returns a pointer to the window at the given index
+		// If the index is invalid, an exception occurs.
+		CUIWindow* windowGet(size_t index) const;
+
+		// Returns the name of a window at the specified index.
+		// If an invalid index is given, an exception occurs.
+		std::string windowGetName(size_t index) const;
+
+		// Returns the number of windows
+		size_t windowGetNumber(void) const;
+
+		// Removes the named window.
+		// If the named object doesn't exist, this silently fails.
+		// If the named object is locked, it will not be removed unless bForceRemoveLocked is true.
+		void windowRemove(const std::string& strName, bool bForceRemoveLocked = false);
+
+		// Removes all windows.
+		// If objects are locked, they will not be removed unless bForceRemoveLocked is true.
+		void windowRemoveAll(bool bForceRemoveLocked = false);
+	private:
+		mutable CManagerNoRefLockable<CUIContainer> _mmanContainers;
+		mutable CManagerNoRefLockable<CUITheme> _mmanThemes;
+		mutable CManagerNoRefLockable<CUIWindow> _mmanWindows;
+
+		// Holds each window name, in their Z order where the front most window
+		// is the last one in the list and therefore the last to be rendered.
+		std::list<std::string> _mlistWindowZOrder;
 	};
 }

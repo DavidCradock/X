@@ -3,5 +3,8 @@
 
 namespace X
 {
+	CUIWindow::CUIWindow()
+	{
 
+	}
 }
