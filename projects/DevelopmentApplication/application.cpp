@@ -46,10 +46,7 @@ namespace X
 
 		// Setup UserInterface theme
 		x->pUI->windowAdd("window1unlocked", false);
-		x->pUI->windowAdd("window2locked", true);
-		x->pUI->windowAdd("window3unlocked", false);
-		x->pUI->windowRemoveAll(false);
-		x->pUI->windowRemoveAll(true);
+		x->pUI->containerAdd("container00", false);
 
 	}
 

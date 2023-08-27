@@ -9,9 +9,13 @@ namespace X
 	// and can be dragged around the screen.
 	class CUIWindow : public CUIContainer
 	{
+		friend class SCUIManager;
 	public:
 		CUIWindow();
 
+		~CUIWindow();
+
 	private:
+
 	};
 }

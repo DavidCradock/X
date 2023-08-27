@@ -276,6 +276,10 @@
     <None Include="..\..\data\X\shaders\gui.vert" />
     <None Include="..\..\data\X\shaders\shadow_depthmap.frag" />
     <None Include="..\..\data\X\shaders\shadow_depthmap.vert" />
+    <None Include="..\..\data\X\shaders\ui.frag" />
+    <None Include="..\..\data\X\shaders\ui.vert" />
+    <None Include="..\..\data\X\shaders\ui_window.frag" />
+    <None Include="..\..\data\X\shaders\ui_window.vert" />
     <None Include="..\..\data\X\shaders\vertexBufferCPT.frag" />
     <None Include="..\..\data\X\shaders\vertexBufferCPT.vert" />
     <None Include="..\..\data\X\shaders\vertexBufferCPT2.frag" />

@@ -44,6 +44,8 @@ namespace X
 			std::string shader_depthbuffer_debug;				// Holds the name "X:depthbuffer_debug" of the default shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
 			std::string shader_shadowdepthmap;					// Holds the name "X:shadowdepthmap" of the default shader used by the scene manager to render the depth map used for rendering shadows
 			std::string shader_gui;								// Holds the name "X:gui" of the default shader used by the GUI to render everything.
+			std::string shader_ui;								// Holds the name "X:ui" of the default shader used by the UI to render most things.
+			std::string shader_ui_window;						// Holds the name "X:ui_window" of the shader used by the UI to render the windows.
 			std::string shader_VBCPT;							// Holds the name "X:VBCPT" of the default shader used with CResourceVertexBufferCPT
 			std::string shader_VBCPT2;							// Holds the name "X:VBCPT2" of the default shader used with CResourceVertexBufferCPT
 			std::string shader_VBCPTInst;						// Holds the name "X:VBCPTInst" of the default shader used with CResourceVertexBufferCPTInst
@@ -62,6 +64,8 @@ namespace X
 			std::string framebuffer_backbuffer_FB;				// Holds the name "X:backbuffer" of the default framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
 			std::string framebuffer_gui;						// Holds the name "X:gui" of the default framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
 			std::string framebuffer_guitooltipFB;				// Holds the name "X:guitooltipFB" of the default framebuffer the GUI tooltips are rendered to
+			std::string framebuffer_ui;							// Holds the name "X:ui" of the default framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
+//			std::string framebuffer_uitooltipFB;				// Holds the name "X:uitooltipFB" of the default framebuffer the UI tooltips are rendered to
 		};
 		SDefaultResourceNames defaultRes;	// A struct holding the names of all default resources added to the resource manager
 

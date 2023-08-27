@@ -77,6 +77,9 @@ namespace X
 				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer" as the sample source
 				x->pGUI->render("X:backbuffer");
 
+				// Update and render the UI to the "X:ui" framebuffer
+				x->pUI->render();
+
 				// Unbind the X:backbuffer and render to the back buffer
 				pBGFB->unbindAsRenderTarget();
 				
@@ -87,6 +90,9 @@ namespace X
 				
 				// Now render the "X:gui" to the backbuffer
 				x->pResource->getFramebuffer("X:gui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+
+				// Now render the "X::ui" framebuffer to the backbuffer
+				x->pResource->getFramebuffer("X:ui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 
 				glDisable(GL_BLEND);
 				// Swap buffers

@@ -7,4 +7,9 @@ namespace X
 	{
 
 	}
+
+	CUIWindow::~CUIWindow()
+	{
+
+	}
 }

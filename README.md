@@ -76,7 +76,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 - UI: Implement Manager
 - UI: Implement Menu.
 - UI: Implement Progress bar
-- UI: Implement Slider
+- UI: Implement Scrollbar
 - UI: Implement Tab and TabContainer.
 - UI: Implement Taskbar.
 - UI: Implement Text

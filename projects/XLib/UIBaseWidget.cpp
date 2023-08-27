@@ -39,4 +39,9 @@ namespace X
 	{
 		return _mbVisible;
 	}
+
+	void CUIBaseWidget::_addGridGeometry(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	{
+
+	}
 }

@@ -68,9 +68,13 @@ namespace X
 		// If the resources haven't been added, this does nothing.
 		void removeAllResources(void);
 		
-		// Returns a pointer to the _mSettings object so we can modify any of the settings for the theme.
-		// This calls removeAllResources()
-		SSettings* getSettings(void);
+		// Returns a pointer to the _mSettings object so we can access any of the settings for the theme.
+		const SSettings* getSettings(void);
+
+		// Returns a pointer to the _mSettings object so we can modify them.
+		// This removes all the resources from the various managers by calling removeAllResources() before returning.
+		// Call this method, then update any settings, then do NOT forget to call addAllResources() again afterwards
+		SSettings* getSettingsForModification(void);
 
 		// Returns a pointer to this theme's texture atlas
 		// If the resources haven't been loaded yet, an exception occurs
@@ -113,8 +117,8 @@ namespace X
 //			SImageType lineGraphBG;			// Image names for CUILineGraph's background
 //			SImageType progressBarBG;		// Image names for CUIProgressBar's background
 //			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
-			SImageType sliderBG;			// Image names for CUISlider's background
-			SImageType sliderTab;			// Image names for CUISlider's tab
+			SImageType scrollbarBG;			// Image names for CUIScrollbar's background
+			SImageType scrollbarTab;		// Image names for CUIScrollbar's tab
 //			SImageType textEditBG;			// Image names for CUITextEdit's background.
 //			SImageType textScrollBG;		// Image names for CUITextScroll's background.
 //			SImageType tooltipBG;			// Image names for CUITooltip's background.
@@ -145,10 +149,11 @@ namespace X
 //			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
 //			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
 //			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
-			CColour progressBarBG;						// CUIProgressBar's background vertex colour
-			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
-//			CColour sliderTabNotOver;					// CUISlider's tab colour when mouse is not over
-//			CColour sliderTabOver;						// CUISlider's tab colour when mouse is over
+//			CColour progressBarBG;						// CUIProgressBar's background vertex colour
+//			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
+			CColour scrollbarBG;						// CUIScrollbar'd BG colour.
+			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
+			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over
 //			CColour text;								// CUIText font colour
 //			CColour textEditActive;						// CUITextEdit's text colour when active
 //			CColour textEditInactive;					// CUITextEdit's text colour when inactive
@@ -183,11 +188,11 @@ namespace X
 //			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
 //			float buttonImageTextFadeSpeedSeconds;	// Rate at which button image colours interpolate between
 //			float checkboxFadeSpeedSeconds;			// Rate at which the checkbox fades between ON and OFF states
-//			float mouseCursorDistance;				// Distance the mouse cursor is from the fragments when computing the bump mapping.
-//			float normalAmount;						// Strength of normal mapping effect. 1.0f = max normal, 0.0f = none
-//			float sliderTabFadeSpeedSeconds;		// Rate at which slider's tab colours interpolate between
+			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
+			float normalAmount;						// Strength of normal mapping effect. 1.0f = max normal, 0.0f = none
+			float scrollbarTabFadeSpeedSeconds;		// Rate at which scrollbar's tab colours interpolate between
 //			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
-//			float textScrollSliderWidth;			// Width of a CUITextScroll object's vertical slider.
+//			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 //			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
 		};
 

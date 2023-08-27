@@ -1,7 +1,273 @@
 #include "PCH.h"
 #include "UIScrollBar.h"
+#include "utilities.h"
+#include "UIContainer.h"
+#include "singletons.h"
+#include "UITheme.h"
 
 namespace X
 {
+	CUIScrollbar::CUIScrollbar()
+	{
+		_mfScrollbarPosition = 0.5f;
+		_mbTabBeingMoved = false;
+		_mfTabRatio = 0.5f;
+		setDimensions(CVector2f(200, 48));
+		_mbOrientationIsHorizontal = true;
+	}
 
+	CUIScrollbar::~CUIScrollbar()
+	{
+
+	}
+
+	void CUIScrollbar::render(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	{
+		// Add geometry for the 9 grid cells
+		_addGridGeometry(pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
+
+		// The set position of a container requires no offset for the widget's position
+		// The set position of a window however is the top left position of the window along with it's borders and therefore the widget's position must be offset by this.
+		CVector2f vPos = _mvPosition;
+		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
+		if (bContainerIsWindow)
+			vPos += pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL).v2fDimensions;
+		// Regardless of whether the container is a window or not, we still need to offset by it's position...
+		vPos += pContainer->getPosition();
+
+		// Render corner, TL
+		CImageAtlasDetails idColCornerTL = pAtlas->getImageDetails(pThemeSettings->images.scrollbarBG.colour.cornerTL);
+		CImageAtlasDetails idNormCornerTL = pAtlas->getImageDetails(pThemeSettings->images.scrollbarBG.normal.cornerTL);
+		CVector2f vDims = idColCornerTL.v2fDimensions;
+		pVB->addQuad2D(vPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColCornerTL.sTexCoords.bottom_left,
+			idColCornerTL.sTexCoords.bottom_right,
+			idColCornerTL.sTexCoords.top_right,
+			idColCornerTL.sTexCoords.top_left,
+			idNormCornerTL.sTexCoords.bottom_left,
+			idNormCornerTL.sTexCoords.bottom_right,
+			idNormCornerTL.sTexCoords.top_right,
+			idNormCornerTL.sTexCoords.bottom_left);
+
+	}
+
+	void CUIScrollbar::update(float fTimeDeltaSec, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	{
+		// Return name of the window, or container which the mouse cursor is over
+		std::string strMouseOverWindow = x->pUI->getMouseIsOverWhichWindow();
+		bool bAcceptingMouseInput = false;
+		// And if that window or container is this object's container, we're accepting mouse input
+		if (strMouseOverWindow == pContainer->getName())
+			bAcceptingMouseInput = true;
+
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+
+		// Compute orientation
+		_mbOrientationIsHorizontal = false;
+		if (_mvDimensions.x > _mvDimensions.y)
+		{
+			_mbOrientationIsHorizontal = true;
+		}
+
+		// Compute tab dims
+		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
+		CImageAtlasDetails imageDetailsCornerTR = pAtlas->getImageDetails(pThemeSettings->images.scrollbarTab.colour.cornerTR);
+		CImageAtlasDetails imageDetailsCornerBL = pAtlas->getImageDetails(pThemeSettings->images.scrollbarTab.colour.cornerBL);
+
+		if (_mbOrientationIsHorizontal)
+		{
+			_mfTabDims[0] = _mfTabRatio * (_mvDimensions.x - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x);
+			_mfTabDims[1] = _mvDimensions.y - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y;
+		}
+		else
+		{
+			_mfTabDims[0] = _mvDimensions.x - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x;
+			_mfTabDims[1] = _mfTabRatio * (_mvDimensions.y - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y);
+		}
+
+		// Compute tab position
+		if (_mbOrientationIsHorizontal)
+		{
+			float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0] - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x;
+			float fCentrePosOfScrollbar = pContainer->getPosition().x + _mvPosition.x + (_mvDimensions.x * 0.5f) - (_mfTabDims[0] * 0.5f);
+
+			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
+			float fTabOffset = _mfScrollbarPosition - 0.5f;
+
+			// Position offset
+			fTabOffset *= fTabTotalMovementAmount;
+
+			_mfTabPos[0] = fCentrePosOfScrollbar + fTabOffset;
+			_mfTabPos[1] = pContainer->getPosition().y + _mvPosition.y + imageDetailsCornerBL.v2fDimensions.y;
+		}
+		else // Vertical
+		{
+			float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1] - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y;
+			float fCentrePosOfScrollbar = pContainer->getPosition().y + _mvPosition.y + (_mvDimensions.y * 0.5f) - (_mfTabDims[1] * 0.5f);
+
+			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
+			float fTabOffset = _mfScrollbarPosition - 0.5f;
+
+			// Position offset
+			fTabOffset *= fTabTotalMovementAmount;
+
+			_mfTabPos[0] = pContainer->getPosition().x + _mvPosition.x + imageDetailsCornerTR.v2fDimensions.x;
+			_mfTabPos[1] = fCentrePosOfScrollbar + fTabOffset;
+		}
+
+		bool bMouseOver = false;
+		if (bAcceptingMouseInput)
+		{
+			// Determine if mouse cursor is over
+			if (vMousePos.x > _mfTabPos[0] - imageDetailsCornerTR.v2fDimensions.x)
+				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + imageDetailsCornerBL.v2fDimensions.x)
+					if (vMousePos.y > _mfTabPos[1])
+						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + imageDetailsCornerTR.v2fDimensions.y)
+							bMouseOver = true;
+			if (bMouseOver)
+			{
+				if (x->pInput->mouse.leftButtonOnce())
+				{
+					_mbTabBeingMoved = true;
+				}
+
+				// Move the scrollbar position with keys
+				if (x->pInput->key.repeat(KC_LEFT))
+					_mfScrollbarPosition -= 0.001f;
+				else if (x->pInput->key.repeat(KC_RIGHT))
+					_mfScrollbarPosition += 0.001f;
+			}
+
+			if (_mbTabBeingMoved)
+			{
+				if (!x->pInput->mouse.leftButDown())
+					_mbTabBeingMoved = false;
+				else
+				{
+					// Move tab position
+					// As tab position is in range of 0-1, we need to compute movement based upon mouse delta and scrollbar dims
+					CVector2f vMouseDelta = x->pInput->mouse.getMouseDeltaGUI();
+					float fTabPosOffset = 0;
+					if (_mbOrientationIsHorizontal)
+					{
+						float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0];
+						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
+							fTabTotalMovementAmount = 0.0001f;
+						fTabPosOffset += vMouseDelta.x * (1.0f / fTabTotalMovementAmount);
+					}
+					else
+					{
+						float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1];
+						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
+							fTabTotalMovementAmount = 0.0001f;
+						fTabPosOffset += vMouseDelta.y * (1.0f / fTabTotalMovementAmount);
+					}
+					_mfScrollbarPosition += fTabPosOffset;
+					clamp(_mfScrollbarPosition, 0.0f, 1.0f);
+				}
+			}
+		}
+		else  // Not accepting mouse clicks
+		{
+
+		}
+
+		// Compute tab colour based on whether the mouse is over or not
+		float fCol[4];
+		fCol[0] = _mTabColour.red;
+		fCol[1] = _mTabColour.green;
+		fCol[2] = _mTabColour.blue;
+		fCol[3] = _mTabColour.alpha;
+		float fColTheme[4];
+		if (bMouseOver)
+		{
+			fColTheme[0] = pThemeSettings->colours.scrollbarTabOver.red;
+			fColTheme[1] = pThemeSettings->colours.scrollbarTabOver.green;
+			fColTheme[2] = pThemeSettings->colours.scrollbarTabOver.blue;
+			fColTheme[3] = pThemeSettings->colours.scrollbarTabOver.alpha;
+
+			for (int iCol = 0; iCol < 4; iCol++)
+			{
+				if (fCol[iCol] < fColTheme[iCol])
+				{
+					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					if (fCol[iCol] > fColTheme[iCol])
+						fCol[iCol] = fColTheme[iCol];
+				}
+				else if (_mTabColour.red > fColTheme[iCol])
+				{
+					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					if (fCol[iCol] < fColTheme[iCol])
+						fCol[iCol] = fColTheme[iCol];
+				}
+			}
+		}
+		else // Mouse not over
+		{
+			fColTheme[0] = pThemeSettings->colours.scrollbarTabNotOver.red;
+			fColTheme[1] = pThemeSettings->colours.scrollbarTabNotOver.green;
+			fColTheme[2] = pThemeSettings->colours.scrollbarTabNotOver.blue;
+			fColTheme[3] = pThemeSettings->colours.scrollbarTabNotOver.alpha;
+
+			for (int iCol = 0; iCol < 4; iCol++)
+			{
+				if (fCol[iCol] < fColTheme[iCol])
+				{
+					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					if (fCol[iCol] > fColTheme[iCol])
+						fCol[iCol] = fColTheme[iCol];
+				}
+				else if (_mTabColour.red > fColTheme[iCol])
+				{
+					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					if (fCol[iCol] < fColTheme[iCol])
+						fCol[iCol] = fColTheme[iCol];
+				}
+			}
+		}
+		// Store colour
+		_mTabColour.set(fCol[0], fCol[1], fCol[2], fCol[3]);
+
+		// Update this object's tooltip
+//		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
+	}
+
+	void CUIScrollbar::setTabPos(float fPos)
+	{
+		clamp(fPos, 0.0f, 1.0f);
+		_mfScrollbarPosition = fPos;
+	}
+
+	float CUIScrollbar::getTabPos(void) const
+	{
+		if (_mbOrientationIsHorizontal)
+			return _mfScrollbarPosition;
+		else
+			return 1.0f - _mfScrollbarPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
+	}
+
+	void CUIScrollbar::setTabRatio(float fRatio)
+	{
+		// Must be less than 1, otherwise the tab can be same width/height as the scrollbar
+		// and if this occurs, we could get a divide by zero error in the update method with the following code...
+		//float fTabTotalMovementAmount = mfWidth - _mfTabDims[0];
+		//fTabPosOffset += vMouseDelta.x * (1.0f / fTabTotalMovementAmount);
+		clamp(fRatio, 0.001f, 0.9999f);
+		_mfTabRatio = fRatio;
+	}
+
+	float CUIScrollbar::getTabRatio(void) const
+	{
+		return _mfTabRatio;
+	}
+
+	bool CUIScrollbar::getOrientationHorizontal(void) const
+	{
+		return _mbOrientationIsHorizontal;
+	}
+
+	CVector2f CUIScrollbar::getTabDims(void) const
+	{
+		return CVector2f(_mfTabDims[0], _mfTabDims[1]);
+	}
 }

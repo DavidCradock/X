@@ -1,10 +1,11 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
-#include "UIContainer.h"
 #include "UITheme.h"
+#include "UIContainer.h"
 #include "UIWindow.h"
 #include "templateManagerNoRefLockable.h"
+#include "timer.h"
 
 namespace X
 {
@@ -13,7 +14,7 @@ namespace X
 	// The user interface has a few nice features...
 	// The cursor is used as a light source to create a nice bump mapped look to the user interface.
 	// The windows of the UI can be semi transparent and blur the background of the current state of the back buffer's frame buffer.
-	// The UI uses the messaging classes instead of function pointers for us to determine UI events such as button clicks, slider movement etc.
+	// The UI uses the messaging classes instead of function pointers for us to determine UI events such as button clicks, scrollbar movement etc.
 	// Audio playback for various UI events such as button clicks.
 	// 
 	// Position coordinates and dimensions.
@@ -49,7 +50,7 @@ namespace X
 	// text boxes with vertical scroll bar, progress bars, static images, animated images, frame buffer boxes which render the
 	// contents of a framebuffer, draggable images/framebuffers which can be dragged between "draggable dock" widgets, line graphs, expandable menus
 	// with support for holding various widgets such as buttons, text and images, for each item in the menu.
-	// We also have a taskbar, sliders which may be horizontal or vertical.
+	// We also have a taskbar, scrollbars which may be horizontal or vertical.
 	// I may also add more such as a colour selection widget.
 	// 
 	// Taskbars:
@@ -95,7 +96,12 @@ namespace X
 		SCUIManager();
 
 		// Updates and renders the UI
-		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer");
+		// 
+		void render(void);
+
+		// Returns which window name the mouse cursor is over based on Z order.
+		// If the cursor isn't over any windows, an empty string is returned.
+		std::string getMouseIsOverWhichWindow(void);
 
 		/************************************************************************************************************************************************************/
 		/* Container related */
@@ -211,7 +217,14 @@ namespace X
 		// Removes all windows.
 		// If objects are locked, they will not be removed unless bForceRemoveLocked is true.
 		void windowRemoveAll(bool bForceRemoveLocked = false);
+
+		// Moves the named window's ZOrder so that it at the top/in front
+		// If the named window doesn't exist, this does nothing.
+		void windowMoveToFront(const std::string& strName);
+
 	private:
+		CTimer _mTimer;
+
 		mutable CManagerNoRefLockable<CUIContainer> _mmanContainers;
 		mutable CManagerNoRefLockable<CUITheme> _mmanThemes;
 		mutable CManagerNoRefLockable<CUIWindow> _mmanWindows;
@@ -219,5 +232,12 @@ namespace X
 		// Holds each window name, in their Z order where the front most window
 		// is the last one in the list and therefore the last to be rendered.
 		std::list<std::string> _mlistWindowZOrder;
+
+		// Called from render to update everything
+		void _update(void);
+
+		// Which window the mouse cursor is currently over.
+		// May be empty is the mouse cursor isn't over any windows.
+		std::string _mstrMouseCursorIsOverThisWindow;
 	};
 }

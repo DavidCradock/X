@@ -4,6 +4,11 @@
 
 namespace X
 {
+	class CResourceTexture2DAtlas;
+	class CUIContainer;
+	class CUITheme;
+	class CResourceVertexBufferCPT2;
+
 	// A base class which all user interface containers, widgets and windows are based upon.
 	// It simply contains a few things which are common amoung all objects such
 	// as position, dimensions and visibility.
@@ -30,9 +35,12 @@ namespace X
 
 		// Returns whether this container is visible or not
 		bool getVisible(void) const;
-	private:
+	protected:
 		CVector2f _mvDimensions;	// Dimensions of the widget
 		CVector2f _mvPosition;		// Position of the widget in relation to it's container.
 		bool _mbVisible;			// Whether this widget is shown or not
+
+		// Adds geometry to the given vertex buffer for the 9 grid cells
+		void _addGridGeometry(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 	};
 }

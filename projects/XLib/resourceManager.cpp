@@ -517,6 +517,12 @@ namespace X
 		// A framebuffer the GUI tooltips are rendered to
 		defaultRes.framebuffer_guitooltipFB = "X:guitooltipFB";
 		pRM->addFramebuffer(defaultRes.framebuffer_guitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents
+		// A framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
+		defaultRes.framebuffer_ui = "X:ui";
+		pRM->addFramebuffer(defaultRes.framebuffer_ui, 512, 512, true);	// Dims are set each program loop to match the window's dimensions
+//		// A framebuffer the UI tooltips are rendered to
+//		defaultRes.framebuffer_uitooltipFB = "X:uitooltipFB";
+//		pRM->addFramebuffer(defaultRes.framebuffer_uitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents
 
 		/******************************************************************************************************************************
 		// Shaders
@@ -536,6 +542,12 @@ namespace X
 		// A shader used by the scene manager to render the depth map used for rendering shadows
 		defaultRes.shader_shadowdepthmap = "X:shadowdepthmap";
 		pRM->addShader(defaultRes.shader_shadowdepthmap, "data/X/shaders/shadow_depthmap.vert", "data/X/shaders/shadow_depthmap.frag", true);
+		// A shader used by the UI to render most things.
+		defaultRes.shader_ui = "X:ui";
+		pRM->addShader(defaultRes.shader_ui, "data/X/shaders/ui.vert", "data/X/shaders/ui.frag", true);
+		// A shader used by the UI to render the windows.
+		defaultRes.shader_ui_window = "X:ui_window";
+		pRM->addShader(defaultRes.shader_ui_window, "data/X/shaders/ui_window.vert", "data/X/shaders/ui_window.frag", true);
 		// A shader used with CResourceVertexBufferCPT
 		defaultRes.shader_VBCPT = "X:VBCPT";
 		pRM->addShader(defaultRes.shader_VBCPT, "data/X/shaders/vertexBufferCPT.vert", "data/X/shaders/vertexBufferCPT.frag", true);

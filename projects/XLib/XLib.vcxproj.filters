@@ -857,5 +857,17 @@
     <None Include="..\..\data\X\shaders\vertexBufferCPT2.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\data\X\shaders\ui.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\ui.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\ui_window.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\data\X\shaders\ui_window.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

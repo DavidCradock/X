@@ -58,8 +58,8 @@ namespace X
 //		_helperReadImageType(file, _mSettings.images.lineGraphBG);
 //		_helperReadImageType(file, _mSettings.images.progressBarBG);
 //		_helperReadImageType(file, _mSettings.images.progressBarFiller);
-		_helperReadImageType(file, _mSettings.images.sliderBG);
-		_helperReadImageType(file, _mSettings.images.sliderTab);
+		_helperReadImageType(file, _mSettings.images.scrollbarBG);
+		_helperReadImageType(file, _mSettings.images.scrollbarTab);
 //		_helperReadImageType(file, _mSettings.images.textEditBG);
 //		_helperReadImageType(file, _mSettings.images.textScrollBG);
 //		_helperReadImageType(file, _mSettings.images.tooltipBG);
@@ -119,8 +119,8 @@ namespace X
 //		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
 //		_helperWriteImageType(file, _mSettings.images.progressBarBG);
 //		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
-		_helperWriteImageType(file, _mSettings.images.sliderBG);
-		_helperWriteImageType(file, _mSettings.images.sliderTab);
+		_helperWriteImageType(file, _mSettings.images.scrollbarBG);
+		_helperWriteImageType(file, _mSettings.images.scrollbarTab);
 //		_helperWriteImageType(file, _mSettings.images.textEditBG);
 //		_helperWriteImageType(file, _mSettings.images.textScrollBG);
 //		_helperWriteImageType(file, _mSettings.images.tooltipBG);
@@ -229,10 +229,11 @@ namespace X
 //		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.sliderTabNotOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.sliderTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
+//		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.scrollbarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.scrollbarTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
+		_mSettings.colours.scrollbarTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textEditInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -246,11 +247,11 @@ namespace X
 //		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
-//		_mSettings.floats.mouseCursorDistance = 50.0f;
-//		_mSettings.floats.normalAmount = 0.1f;
-//		_mSettings.floats.sliderTabFadeSpeedSeconds = 5.0f;
+		_mSettings.floats.normalMouseCursorDistance = 50.0f;
+		_mSettings.floats.normalAmount = 0.1f;
+		_mSettings.floats.scrollbarTabFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
-//		_mSettings.floats.textScrollSliderWidth = 20.0f;
+//		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
 
 		// Fonts
@@ -269,15 +270,15 @@ namespace X
 //		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/lineGraphBG");
 //		_helperSetNames(_mSettings.images.progressBarBG, "data/X/UI/default/images/progressBarBG");
 //		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/progressBarFiller");
-		_helperSetNames(_mSettings.images.sliderBG, "data/X/UI/default/images/sliderBG");
-		_helperSetNames(_mSettings.images.sliderTab, "data/X/UI/default/images/sliderTab");
+		_helperSetNames(_mSettings.images.scrollbarBG, "data/X/UI/default/images/scrollbarBG");
+		_helperSetNames(_mSettings.images.scrollbarTab, "data/X/UI/default/images/scrollbarTab");
 //		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/textEditBG");
 //		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
 //		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
 		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
 
 		// Theme name
-		_mSettings.themeName = "Default theme";
+		_mSettings.themeName = "default";
 
 		// Image dir
 		_mSettings.imageDir = "data/X/UI/default/images/";
@@ -295,8 +296,8 @@ namespace X
 //		_helperCheckImageDimsAreOK(_mSettings.images.lineGraphBG, "lineGraphBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.progressBarBG, "progressBarBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.progressBarFiller, "progressBarFiller");
-		_helperCheckImageDimsAreOK(_mSettings.images.sliderBG, "sliderBG");
-		_helperCheckImageDimsAreOK(_mSettings.images.sliderTab, "sliderTab");
+		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarBG, "scrollbarBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarTab, "scrollbarTab");
 //		_helperCheckImageDimsAreOK(_mSettings.images.textEditBG, "textEditBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.textScrollBG, "textScrollBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.tooltipBG, "tooltipBG");
@@ -313,8 +314,8 @@ namespace X
 //		_helperBuildNormalImages(_mSettings.images.lineGraphBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.progressBarBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.progressBarFiller, bOverwriteNormalImages);
-		_helperBuildNormalImages(_mSettings.images.sliderBG, bOverwriteNormalImages);
-		_helperBuildNormalImages(_mSettings.images.sliderTab, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.scrollbarBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.scrollbarTab, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.textEditBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.textScrollBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.tooltipBG, bOverwriteNormalImages);
@@ -358,7 +359,12 @@ namespace X
 		imageType.normal.edgeT = strBaseName + "_normal_edgeT.png";
 	}
 
-	CUITheme::SSettings* CUITheme::getSettings(void)
+	const CUITheme::SSettings* CUITheme::getSettings(void)
+	{
+		return &_mSettings;
+	}
+
+	CUITheme::SSettings* CUITheme::getSettingsForModification(void)
 	{
 		removeAllResources();
 		return &_mSettings;

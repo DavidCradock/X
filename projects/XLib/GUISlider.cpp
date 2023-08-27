@@ -301,7 +301,6 @@ namespace X
 		pTexColour->unbindAll();	// Unbind textures
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
-
 	}
 
 	void CGUISlider::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
