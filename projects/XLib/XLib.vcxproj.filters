@@ -443,6 +443,18 @@
     <ClInclude Include="UIWindow.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIScrollBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBaseWidget.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="templateManagerNoRef.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="templateManagerNoRefLockable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -786,6 +798,12 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UIWindow.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScrollBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBaseWidget.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>

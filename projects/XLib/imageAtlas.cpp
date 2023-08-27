@@ -70,15 +70,15 @@ namespace X
 			ThrowIfFalse(vImages[ui]->load(vStrImageFilenames[ui], false), "CImageAtlasPacker::createAtlasImages() failed. Unable to load image from file: " + vStrImageFilenames[ui] + ".");
 
 			// We check to see if the loaded image's dimensions are not the same as the first one and throw an exception
-			bool bNotSameDims = vImages[ui]->getWidth() != vImages[0]->getWidth() || vImages[ui]->getHeight() != vImages[0]->getHeight();
-			if (bNotSameDims)
-			{
-				std::string strTxt = "CImageAtlasPacker::createAtlasImages() failed. All images added to an atlas must have the same dimensions.";
-				strTxt += "The first image dims: " + std::to_string(vImages[0]->getWidth()) + "x" + std::to_string(vImages[0]->getHeight());
-				strTxt += " The current image dims: " + std::to_string(vImages[ui]->getWidth()) + "x" + std::to_string(vImages[ui]->getHeight());
-				strTxt += ".";
-				ThrowIfTrue(1, strTxt);
-			}
+//			bool bNotSameDims = vImages[ui]->getWidth() != vImages[0]->getWidth() || vImages[ui]->getHeight() != vImages[0]->getHeight();
+//			if (bNotSameDims)
+//			{
+//				std::string strTxt = "CImageAtlasPacker::createAtlasImages() failed. All images added to an atlas must have the same dimensions.";
+//				strTxt += "The first image dims: " + std::to_string(vImages[0]->getWidth()) + "x" + std::to_string(vImages[0]->getHeight());
+//				strTxt += " The current image dims: " + std::to_string(vImages[ui]->getWidth()) + "x" + std::to_string(vImages[ui]->getHeight());
+//				strTxt += ".";
+//				ThrowIfTrue(1, strTxt);
+//			}
 		}
 
 		// Determine maximum width/height of the individual images and make sure, including image spacing, they can all fit within the specified max atlas image width/height

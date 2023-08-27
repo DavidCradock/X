@@ -39,6 +39,9 @@ namespace X
 		// GUI depends upon resource manager and therefore window
 		pGUI = SCGUIManager::getPointer();
 
+		// UI depends upon resource manager and therefore window
+		pUI = SCUIManager::getPointer();
+
 		pLoadingScreen = SCResourceLoadingScreen::getPointer();
 
 		pLog->add("SCSingletons::SCSingletons() complete. All singletons initialised.");

@@ -5,38 +5,41 @@
 namespace X
 {
 	// Template class to manage pointers to objects of a class of the given type.
-	// An object has a reference count, so if it is added multiple times, it will not be removed with calls to remove() until the reference count has reached 0.
-	// That is unless removeAll() is passed true to it's bForceRemoval parameter in which case, it is.
-	// If you do not wish to mess around with references, use the CManagerNoRef template class instead.
-	template <typename T> class CManager
+	// This class has the ability to "lock" resources when they are added.
+	// Locked objects are not removed upon the various remove methods unless they are passed true to their "bForceRemoveLocked" parameter.
+	// If you don't need this functionality, you can use the CManager or CManagerNoRef template classes instead.
+	template <typename T> class CManagerNoRefLockable
 	{
 	public:
 		// Constructor
-		CManager()
+		CManagerNoRefLockable()
 		{
 		}
 
 		// Destructor
-		~CManager()
+		~CManagerNoRefLockable()
 		{
 			removeAll(true);
 		}
 
 		// Adds a new uniquely named object.
-		// If the named object already exists, it's reference count is increased.
-		T* add(const std::string& strObjectName);
+		// If the named object already exists, this simply returns the object's pointer
+		// If bLocked is set to true, this affects the various remove method's behaviour.
+		// If calling a remove method on a named object which is set as locked, it will not
+		// be removed unless that remove method is passed true to it's bForceRemoveLocked parameter.
+		T* add(const std::string& strObjectName, bool bLocked = false);
 
 		// Attempts to remove the named object.
 		// If the named object does not exist, an exception occurs.
-		// If the named object exists and has been added multiple times, it's reference count is decreased and the object remains.
-		void remove(const std::string& strObjectName);
+		// If the named object is set as locked, it will not be removed unless bForceRemoveLocked is true.
+		void remove(const std::string& strObjectName, bool bForceRemoveLocked = false);
 
 		// Returns whether the named object exists or not
 		bool exists(const std::string& strObjectName);
 
 		// Removes all objects.
-		// bForceRemoval, if true will remove objects regardless of their reference count, else only objects with a reference count of 0 will be removed.
-		void removeAll(bool bForceRemoval = false);
+		// bForceRemoveLocked, if true will remove objects regardless of their locked status, else, only unlocked resources are removed.
+		void removeAll(bool bForceRemoveLocked = false);
 
 		// Returns the number of objects.
 		size_t getNumber(void);
@@ -59,48 +62,44 @@ namespace X
 		struct SObject
 		{
 			T* pObject;
-			unsigned int iRefCount;
+			bool bLocked;
 		};
 		std::map<std::string, SObject*> _mmapObjects;
 	};
 
 	template <class T>
-	T* CManager<T>::add(const std::string& strObjectName)
+	T* CManagerNoRefLockable<T>::add(const std::string& strObjectName, bool bLocked)
 	{
 		// Find object
 		auto it = _mmapObjects.find(strObjectName);
 
-		// If object exists, increment reference count and return object
+		// If object exists, return object
 		if (_mmapObjects.end() != it)
 		{
-			it->second->iRefCount++;
 			return it->second->pObject;
 		}
 
 		// Create new object and return it
 		SObject* pNewObject = new SObject;
-		ThrowIfFalse(pNewObject, "CManager::add(\"" + strObjectName + "\") failed. Unable to allocate memory for new object.");
-		pNewObject->iRefCount = 1;
+		ThrowIfFalse(pNewObject, "CManagerNoRefLockable::add(\"" + strObjectName + "\") failed. Unable to allocate memory for new object.");
+		pNewObject->bLocked = bLocked;
 		pNewObject->pObject = new T;
-		ThrowIfFalse(pNewObject->pObject, "CManager::add(\"" + strObjectName + "\") failed. Unable to allocate memory for new object.");
+		ThrowIfFalse(pNewObject->pObject, "CManagerNoRefLockable::add(\"" + strObjectName + "\") failed. Unable to allocate memory for new object.");
 		_mmapObjects[strObjectName] = pNewObject;
 		return pNewObject->pObject;
 	}
 
 	template <class T>
-	void CManager<T>::remove(const std::string& strObjectName)
+	void CManagerNoRefLockable<T>::remove(const std::string& strObjectName, bool bForceRemoveLocked)
 	{
 		// Find object
 		auto it = _mmapObjects.find(strObjectName);
 
 		// If object doesn't exist, throw exception
-		ThrowIfTrue(_mmapObjects.end() == it, "CManager::remove(\"" + strObjectName + "\") failed. Object does not exist.");
+		ThrowIfTrue(_mmapObjects.end() == it, "CManagerNoRefLockable::remove(\"" + strObjectName + "\") failed. Object does not exist.");
 
-		// Decrement object's reference count
-		it->second->iRefCount--;
-
-		// If reference count is still high, simply return
-		if (it->second->iRefCount > 0)
+		// If object is locked, simply return
+		if (it->second->bLocked && bForceRemoveLocked == false)
 			return;
 
 		// Remove object
@@ -110,17 +109,17 @@ namespace X
 	}
 
 	template <class T>
-	bool CManager<T>::exists(const std::string& strObjectName)
+	bool CManagerNoRefLockable<T>::exists(const std::string& strObjectName)
 	{
 		auto it = _mmapObjects.find(strObjectName);
 		return (_mmapObjects.end() != it);
 	}
 
 	template <class T>
-	void CManager<T>::removeAll(bool bForceRemoval)
+	void CManagerNoRefLockable<T>::removeAll(bool bForceRemoveLocked)
 	{
 		// Remove all objects
-		if (bForceRemoval)
+		if (bForceRemoveLocked)
 		{
 			auto it = _mmapObjects.begin();
 			while (it != _mmapObjects.end())
@@ -133,12 +132,12 @@ namespace X
 			return;
 		}
 
-		// Go through map of objects, decrease reference count of each and get names for objects which should be removed
+		// Go through map of objects, check locked status of each and get names for objects which should be removed
 		std::vector<std::string> vecstrObjectsToDelete;
 		auto it = _mmapObjects.begin();
 		while (_mmapObjects.end() != it)
 		{
-			if (it->second->iRefCount == 1)
+			if (!it->second->bLocked)
 			{
 				vecstrObjectsToDelete.push_back(it->first);
 			}
@@ -151,15 +150,15 @@ namespace X
 	}
 
 	template <class T>
-	size_t CManager<T>::getNumber(void)
+	size_t CManagerNoRefLockable<T>::getNumber(void)
 	{
 		return _mmapObjects.size();
 	}
 
 	template <class T>
-	std::string CManager<T>::getName(size_t index)
+	std::string CManagerNoRefLockable<T>::getName(size_t index)
 	{
-		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManager::getName(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
+		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManagerNoRefLockable::getName(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 		auto it = _mmapObjects.begin();
 		for (size_t i = 0; i < index; index++)
 		{
@@ -169,9 +168,9 @@ namespace X
 	}
 
 	template <class T>
-	T* CManager<T>::get(size_t index)
+	T* CManagerNoRefLockable<T>::get(size_t index)
 	{
-		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManager::get(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
+		ThrowIfTrue(index < 0 || index >= _mmapObjects.size(), "CManagerNoRefLockable::get(\"" + std::to_string(index) + "\") failed. Invalid index value given.");
 
 		auto it = _mmapObjects.begin();
 		for (size_t i = 0; i < index; index++)
@@ -182,10 +181,10 @@ namespace X
 	}
 
 	template <class T>
-	T* CManager<T>::get(const std::string& strObjectName)
+	T* CManagerNoRefLockable<T>::get(const std::string& strObjectName)
 	{
 		auto it = _mmapObjects.find(strObjectName);
-		ThrowIfTrue(_mmapObjects.end() == it, "CManager::get(\"" + strObjectName + "\") failed. Object does not exist.");
+		ThrowIfTrue(_mmapObjects.end() == it, "CManagerNoRefLockable::get(\"" + strObjectName + "\") failed. Object does not exist.");
 		return it->second->pObject;
 	}
 }

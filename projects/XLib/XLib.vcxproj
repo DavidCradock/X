@@ -123,9 +123,13 @@
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="stringUtils.h" />
     <ClInclude Include="templateManager.h" />
+    <ClInclude Include="templateManagerNoRefLockable.h" />
+    <ClInclude Include="templateManagerNoRef.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="UIBaseWidget.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIScrollBar.h" />
     <ClInclude Include="UITheme.h" />
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="utilities.h" />
@@ -245,8 +249,10 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="stringUtils.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="UIBaseWidget.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIScrollBar.cpp" />
     <ClCompile Include="UITheme.cpp" />
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="utilities.cpp" />

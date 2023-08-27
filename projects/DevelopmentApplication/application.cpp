@@ -12,6 +12,7 @@ namespace X
 		// Set window title bar text and set icon
 		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		x->pWindow->setIcon(IDI_ICON1);
+
 		// Set mouse cursor
 		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
 
@@ -42,6 +43,9 @@ namespace X
 				}
 			}
 		}
+
+		// Setup UserInterface theme
+
 
 	}
 

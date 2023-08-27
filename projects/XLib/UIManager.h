@@ -97,37 +97,84 @@ namespace X
 		// Updates and renders the UI
 		void render(const std::string& strFramebufferToSampleFrom = "X:backbuffer");
 
+		/************************************************************************************************************************************************************/
+		/* Container related */
+		/************************************************************************************************************************************************************/
+
+		// Adds a new container for use by the UI and returns a pointer to it
+		// The new container is initialised to use the default theme.
+		// If the named container already exists, a pointer to that container is returned.
+		CUIContainer* containerAdd(const std::string& strName);
+
+		// Returns true if the named container exists
+		bool containerExists(const std::string& strName) const;
+
+		// Returns a pointer to a container.
+		// If the named object doesn't exist, an exception occurs.
+		CUIContainer* containerGet(const std::string& strName) const;
+
+		// Returns a pointer to the container at the given index
+		// If the index is invalid, an exception occurs.
+		CUIContainer* containerGet(size_t index) const;
+
+		// Returns the name of a container at the specified index.
+		// If an invalid index is given, an exception occurs.
+		std::string containerGetName(size_t index) const;
+
+		// Returns the number of containers
+		size_t containerGetNumber(void) const;
+
+		// Removes the named container.
+		// If the named object doesn't exist, this silently fails.
+		// If the named object has been added multiple times, it's reference count is decreased and it remains.
+		void containerRemove(const std::string& strName);
+
+		// Removes all containers.
+		void containerRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
+		/* Theme related */
+		/************************************************************************************************************************************************************/
+
 		// Adds a new theme for use by the UI and returns a pointer to it
 		// The new theme is initialised to use the default settings and image files.
 		// If the named theme already exists, a pointer to that theme is returned.
 		CUITheme* themeAdd(const std::string& strName);
 
+		// Returns true if the named theme exists
+		bool themeExists(const std::string& strName) const;
+
 		// Returns a pointer to a named theme.
 		// If the named object doesn't exist, an exception occurs.
 		CUITheme* themeGet(const std::string& strName) const;
 
-		// Returns true if the named theme exists
-		bool themeExists(const std::string& strName) const;
+		// Returns a pointer to the theme at the given index
+		// If the index is invalid, an exception occurs.
+		CUITheme* themeGet(size_t index) const;
 
-		// Removes the named theme.
-		// If the named object doesn't exist, this silently fails.
-		void themeRemove(const std::string& strName);
-
-		// Removes all themes.
-		void themeRemoveAll(void);
+		// Returns the name of a theme at the specified index.
+		// If an invalid index is given, an exception occurs.
+		std::string themeGetName(size_t index) const;
 
 		// Returns the number of themes
 		size_t themeGetNumber(void) const;
 
-		// Returns the name of a theme at the specified index.
-		// If an invalid index is given, an exception occurs.
-		std::string themeGetName(int iIndex) const;
+		// Removes the named theme.
+		// If the named object doesn't exist, this silently fails.
+		// If the named object has been added multiple times, it's reference count is decreased and it remains.
+		void themeRemove(const std::string& strName);
+
+		// Removes all themes.
+		// Regardless of the number of times the object has been added, ??????????????
+		void themeRemoveAll(void);
 
 		// Sets all UI objects to use the named theme.
 		// If the passed theme name doesn't exist, an exception occurs
-		void setThemeForAll(const std::string& strName);
+		void themeSetForAll(const std::string& strName);
 	private:
 		mutable CManager<CUITheme> _mmanThemes;
+		mutable CManager<CUIContainer> _mmanContainers;
+
 //		mutable std::map<std::string, CUITheme*> _mmapThemes;			// A hashmap holding each named theme.
 	};
 }

@@ -34,6 +34,10 @@ namespace X
 			CResourceFramebuffer* pBGFB = x->pResource->getFramebuffer("X:backbuffer");
 			pBGFB->resizeToWindowDimsScaled();
 
+			// Create default UI theme
+			CUITheme* pTheme = x->pUI->themeAdd("default");
+			pTheme->addAllResources();
+
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();
 

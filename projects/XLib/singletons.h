@@ -12,8 +12,9 @@
 #include "physicsManager.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
-#include "window.h"
 #include "settings.h"
+#include "UIManager.h"
+#include "window.h"
 
 namespace X
 {
@@ -79,6 +80,10 @@ namespace X
 		// These settings are things which are usually accessed from a program's settings interface and include such things as..
 		// Shadow map resolution, backbuffer resolution, global audio volumn and more.
 		SCSettings* pSettings;
+
+		// A pointer to the SCUIManager singleton class.
+		// Is responsible for everything User Interface related, from creating themes to adding buttons to containers or windows.
+		SCUIManager* pUI;
 
 		// A pointer to the SCWindow singleton class.
 		// Is responsible for creating/updating/shutting down the application's window.

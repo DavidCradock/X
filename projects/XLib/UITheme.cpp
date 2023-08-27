@@ -168,10 +168,10 @@ namespace X
 		strTmp = "UI_THEME_" + _mSettings.themeName;
 		x->pResource->addTexture2DAtlas(strTmp, _mSettings.imageDir, true, 0, false, true);
 
+		_mbResourcesAdded = true;
+
 		// Possibly throw an exception, make sure all image dimensions are OK
 		_helperCheckImageDimsAreOK();
-
-		_mbResourcesAdded = true;
 	}
 
 	void CUITheme::removeAllResources(void)
