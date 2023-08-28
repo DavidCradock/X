@@ -193,9 +193,9 @@ namespace X
 			v2fPos,											// Position
 			v2fDims,										// Dimensions
 			_mColour,										// Colour
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,		// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,	// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,		// Texture coordinates
-			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vBL,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vBR,	// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vTR,		// Texture coordinates
+			_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vTL);		// Texture coordinates
 	}
 }

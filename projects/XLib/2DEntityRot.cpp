@@ -184,10 +184,10 @@ namespace X
 				CVector2f(-0.5f, -0.5f),
 				CVector2f(1, 1),
 				_mColour,
-				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_left,
-				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.bottom_right,
-				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_right,
-				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.top_left);
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vBL,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vBR,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vTR,
+				_mvImageDetails[_muiCurrentFrameNumber].sTexCoords.vTL);
 			pVBI->update();
 		}
 

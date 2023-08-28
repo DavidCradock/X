@@ -50,11 +50,10 @@ namespace X
 		pWindow->setDimensions(CVector2f(320, 240));
 		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
 
-//		CUIContainer* pCont = x->pUI->containerAdd("container00", false);
-//		pCont->scrollbarAdd("scrollbar0", 0, 0, 100, 100, 0.05f);
-
-		x->pResource->addTexture2DFromFile("test", "TEMP_ATLAS.png");
-		
+		CImageAtlasPacker ip;
+		std::vector<std::string> strFiles = StringUtils::getFilesInDir("data/X/UI/Default/images/");
+		ip.createAtlasImages(strFiles, 512, 512, false, 1);
+		ip.getAtlasImage(0)->saveAsPNG("output.png");
 	}
 
 	void CApplication::onStart(void)

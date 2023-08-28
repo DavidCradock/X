@@ -36,6 +36,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 -
 - added fileManager and fileMemory, complete manager
 - Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
+- Look into atlas packer and fix double spacing issue.
 - 
 - Add A star pathfinding.
 - Add quad tree culling of all entities.

@@ -78,28 +78,134 @@ namespace X
 		vDims = idColTL.v2fDimensions;
 		CVector2f vCellPos = vPos;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
-			idColTL.sTexCoords.bottom_left,
-			idColTL.sTexCoords.bottom_right,
-			idColTL.sTexCoords.top_right,
-			idColTL.sTexCoords.top_left,
-			idNormTL.sTexCoords.bottom_left,
-			idNormTL.sTexCoords.bottom_right,
-			idNormTL.sTexCoords.top_right,
-			idNormTL.sTexCoords.bottom_left);
+			idColTL.sTexCoords.vBL,
+			idColTL.sTexCoords.vBR,
+			idColTL.sTexCoords.vTR,
+			idColTL.sTexCoords.vTL,
+			idNormTL.sTexCoords.vBL,
+			idNormTL.sTexCoords.vBR,
+			idNormTL.sTexCoords.vTR,
+			idNormTL.sTexCoords.vTL);
+
+		// Top edge
+		vCellPos = vPos;
+		vCellPos.x += idColTL.v2fDimensions.x;
+		vDims.x = _mvDimensions.x - idColTR.v2fDimensions.x;
+		vDims.y = idColT.v2fDimensions.y;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColT.sTexCoords.vBL,
+			idColT.sTexCoords.vBR,
+			idColT.sTexCoords.vTR,
+			idColT.sTexCoords.vTL,
+			idNormT.sTexCoords.vBL,
+			idNormT.sTexCoords.vBR,
+			idNormT.sTexCoords.vTR,
+			idNormT.sTexCoords.vTL);
 
 		// Top right corner
-		vDims = idColTR.v2fDimensions;
 		vCellPos = vPos;
-		vCellPos.x += _mvDimensions.x - vDims.x;
+		vCellPos.x += _mvDimensions.x - idColTR.v2fDimensions.x;
+		vDims = idColTR.v2fDimensions;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
-			idColTR.sTexCoords.bottom_left,
-			idColTR.sTexCoords.bottom_right,
-			idColTR.sTexCoords.top_right,
-			idColTR.sTexCoords.top_left,
-			idNormTR.sTexCoords.bottom_left,
-			idNormTR.sTexCoords.bottom_right,
-			idNormTR.sTexCoords.top_right,
-			idNormTR.sTexCoords.bottom_left);
+			idColTR.sTexCoords.vBL,
+			idColTR.sTexCoords.vBR,
+			idColTR.sTexCoords.vTR,
+			idColTR.sTexCoords.vTL,
+			idNormTR.sTexCoords.vBL,
+			idNormTR.sTexCoords.vBR,
+			idNormTR.sTexCoords.vTR,
+			idNormTR.sTexCoords.vTL);
 
+		// Left edge
+		vCellPos = vPos;
+		vCellPos.y += idColTL.v2fDimensions.y;
+		vDims.x = idColL.v2fDimensions.x;
+		vDims.y = _mvDimensions.y - idColTL.v2fDimensions.y - idColBL.v2fDimensions.y;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColL.sTexCoords.vBL,
+			idColL.sTexCoords.vBR,
+			idColL.sTexCoords.vTR,
+			idColL.sTexCoords.vTL,
+			idNormL.sTexCoords.vBL,
+			idNormL.sTexCoords.vBR,
+			idNormL.sTexCoords.vTR,
+			idNormL.sTexCoords.vTL);
+
+		// Centre
+		vCellPos = vPos;
+		vCellPos.x += idColL.v2fDimensions.x;
+		vCellPos.y += idColTL.v2fDimensions.y;
+		vDims.x = _mvDimensions.x - idColL.v2fDimensions.x - idColR.v2fDimensions.x;
+		vDims.y = _mvDimensions.y - idColTL.v2fDimensions.y - idColBL.v2fDimensions.y;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColC.sTexCoords.vBL,
+			idColC.sTexCoords.vBR,
+			idColC.sTexCoords.vTR,
+			idColC.sTexCoords.vTL,
+			idNormC.sTexCoords.vBL,
+			idNormC.sTexCoords.vBR,
+			idNormC.sTexCoords.vTR,
+			idNormC.sTexCoords.vTL);
+
+		// Right edge
+		vCellPos = vPos;
+		vCellPos.x += _mvDimensions.x - idColR.v2fDimensions.x;
+		vCellPos.y += idColTL.v2fDimensions.y;
+		vDims.x = idColR.v2fDimensions.x;
+		vDims.y = _mvDimensions.y - idColL.v2fDimensions.y - idColR.v2fDimensions.y;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColR.sTexCoords.vBL,
+			idColR.sTexCoords.vBR,
+			idColR.sTexCoords.vTR,
+			idColR.sTexCoords.vTL,
+			idNormR.sTexCoords.vBL,
+			idNormR.sTexCoords.vBR,
+			idNormR.sTexCoords.vTR,
+			idNormR.sTexCoords.vTL);
+
+		// Bottom left corner
+		vCellPos = vPos;
+		vCellPos.y += _mvDimensions.y - idColBL.v2fDimensions.y;
+		vDims = idColBL.v2fDimensions;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColBL.sTexCoords.vBL,
+			idColBL.sTexCoords.vBR,
+			idColBL.sTexCoords.vTR,
+			idColBL.sTexCoords.vTL,
+			idNormBL.sTexCoords.vBL,
+			idNormBL.sTexCoords.vBR,
+			idNormBL.sTexCoords.vTR,
+			idNormBL.sTexCoords.vTL);
+
+		// Bottom edge
+		vCellPos = vPos;
+		vCellPos.x += idColBL.v2fDimensions.x;
+		vCellPos.y += _mvDimensions.y - idColB.v2fDimensions.y;
+		vDims.x = _mvDimensions.x - idColBL.v2fDimensions.x - idColBR.v2fDimensions.x;
+		vDims.y = idColB.v2fDimensions.y;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColB.sTexCoords.vBL,
+			idColB.sTexCoords.vBR,
+			idColB.sTexCoords.vTR,
+			idColB.sTexCoords.vTL,
+			idNormB.sTexCoords.vBL,
+			idNormB.sTexCoords.vBR,
+			idNormB.sTexCoords.vTR,
+			idNormB.sTexCoords.vTL);
+
+		// Bottom right corner
+		vCellPos = vPos;
+		vCellPos.x += _mvDimensions.x - idColBR.v2fDimensions.x;
+		vCellPos.y += _mvDimensions.y - idColBR.v2fDimensions.y;
+		vDims = idColBR.v2fDimensions;
+		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
+			idColBR.sTexCoords.vBL,
+			idColBR.sTexCoords.vBR,
+			idColBR.sTexCoords.vTR,
+			idColBR.sTexCoords.vTL,
+			idNormBR.sTexCoords.vBL,
+			idNormBR.sTexCoords.vBR,
+			idNormBR.sTexCoords.vTR,
+			idNormBR.sTexCoords.vTL);
 	}
 }

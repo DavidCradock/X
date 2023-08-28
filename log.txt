@@ -35,8 +35,8 @@
 0w:0d:0h:0m:00s : SCSingletons::SCSingletons() complete. All singletons initialised.
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() calling App's onStart()
-0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() calling App's onStart()
+0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is entering main loop...
 0w:0d:0h:0m:12s : SCApplicationManager::mainLoop() is shutting down...
 0w:0d:0h:0m:12s : SCWindow::destroyWindow() called.
 0w:0d:0h:0m:12s : SCWindow::destroyWindow() releasing OpenGL rendering context.

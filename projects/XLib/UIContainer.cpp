@@ -15,7 +15,7 @@ namespace X
 		widgetRemoveAll();
 	}
 
-	void CUIContainer::update(float fTimeDeltaSec)
+	void CUIContainer::update(float fTimeDeltaSec, bool bIsWindow)
 	{
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
@@ -23,11 +23,11 @@ namespace X
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanWidgetScrollbars.getNumber(); i++)
 		{
-			_mmanWidgetScrollbars.get(i)->update(fTimeDeltaSec, pAtlas, this, false, pTheme);
+			_mmanWidgetScrollbars.get(i)->update(fTimeDeltaSec, pAtlas, this, bIsWindow, pTheme);
 		}
 	}
 
-	void CUIContainer::render(void)
+	void CUIContainer::render(bool bIsWindow)
 	{
 		// Get required resources needed to render things
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
@@ -62,7 +62,7 @@ namespace X
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanWidgetScrollbars.getNumber(); i++)
 		{
-			_mmanWidgetScrollbars.get(i)->render(pAtlas, this, false, pTheme, pVB);
+			_mmanWidgetScrollbars.get(i)->render(pAtlas, this, bIsWindow, pTheme, pVB);
 		}
 
 		pVB->update();

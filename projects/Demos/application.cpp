@@ -101,6 +101,18 @@ namespace X
 		// Switch to state straight away, and hide the Demo states container
 		_mFSM.switchToState("demo2D");
 		x->pGUI->getContainer("DemoStates")->setVisible(false);
+
+		// SUPER TEMP DEBUG ATLAS
+		// Setup UserInterface theme
+		CUIWindow* pWindow = x->pUI->windowAdd("window1unlocked", false);
+		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
+		pWindow->setDimensions(CVector2f(320, 240));
+		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
+
+		CImageAtlasPacker ip;
+		std::vector<std::string> strFiles = StringUtils::getFilesInDir("data/X/UI/Default/images/");
+		ip.createAtlasImages(strFiles, 512, 512, false, 1);
+		ip.getAtlasImage(0)->saveAsPNG("output.png");
 	}
 
 	void CApplication::onStart(void)

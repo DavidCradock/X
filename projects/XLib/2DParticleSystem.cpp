@@ -128,14 +128,14 @@ namespace X
 			CImageAtlasDetails imageDetailsDeath = pAtlas->getImageDetails(_mvParticles[iParticle].pType->stageDeath.strTextureAtlasImageName);
 			
 			// Set texture coordinates within texture atlas for both sets
-			vBL.texCoord = imageDetailsBirth.sTexCoords.bottom_left;
-			vBR.texCoord = imageDetailsBirth.sTexCoords.bottom_right;
-			vTL.texCoord = imageDetailsBirth.sTexCoords.top_left;
-			vTR.texCoord = imageDetailsBirth.sTexCoords.top_right;
-			vBL.texCoord2 = imageDetailsDeath.sTexCoords.bottom_left;
-			vBR.texCoord2 = imageDetailsDeath.sTexCoords.bottom_right;
-			vTL.texCoord2 = imageDetailsDeath.sTexCoords.top_left;
-			vTR.texCoord2 = imageDetailsDeath.sTexCoords.top_right;
+			vBL.texCoord = imageDetailsBirth.sTexCoords.vBL;
+			vBR.texCoord = imageDetailsBirth.sTexCoords.vBR;
+			vTL.texCoord = imageDetailsBirth.sTexCoords.vTL;
+			vTR.texCoord = imageDetailsBirth.sTexCoords.vTR;
+			vBL.texCoord2 = imageDetailsDeath.sTexCoords.vBL;
+			vBR.texCoord2 = imageDetailsDeath.sTexCoords.vBR;
+			vTL.texCoord2 = imageDetailsDeath.sTexCoords.vTL;
+			vTR.texCoord2 = imageDetailsDeath.sTexCoords.vTR;
 
 			// Set amount of each texture to use for the shader
 			pShader->setFloat("fTextureContribution", _mvParticles[iParticle].fAge);

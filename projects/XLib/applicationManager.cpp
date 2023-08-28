@@ -36,7 +36,7 @@ namespace X
 
 			// Create default UI theme
 			CUITheme* pTheme = x->pUI->themeAdd("default", true);
-			pTheme->addAllResources();
+			pTheme->addAllResources(true);
 
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();

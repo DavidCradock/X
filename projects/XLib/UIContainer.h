@@ -19,10 +19,10 @@ namespace X
 		~CUIContainer();
 
 		// Updates this container
-		void update(float fTimeDeltaSec);
+		void update(float fTimeDeltaSec, bool bIsWindow = false);
 
 		// Render this container and each of it's objects
-		void render(void);
+		void render(bool bIsWindow = false);
 
 		// Render this container's object's tooltips
 		void renderTooltips(void);

@@ -2,10 +2,10 @@
 #version 330 core
 out vec4 FragColour;  
 in vec4 colour;
-in vec2 texCoordColour;
-in vec2 texCoordNormal;
+in vec2 texCoord0_colour;
+in vec2 texCoord1_normal;
 
-uniform sampler2D texture0_colourAndNormal;
+uniform sampler2D texture0;
 
 uniform float fNormalAmount;
 uniform float fMouseCursorDistance;
@@ -15,8 +15,8 @@ uniform vec2 v2MousePos;    // Y axis should be inverted
 void main()
 {
     // Now get colour values from the textures
-    vec4 v4Col = texture(texture0_colourAndNormal, texCoordColour);
-    vec3 v3Normal = texture(texture0_colourAndNormal, texCoordNormal).rgb;
+    vec4 v4Col = texture(texture0, texCoord0_colour);
+    vec3 v3Normal = texture(texture0, texCoord1_normal).rgb;
 
     // Convert normal from 0.0f-1.0f to -1.0f to 1.0f
     v3Normal.x *= 2.0f;
@@ -31,9 +31,6 @@ void main()
 
     // Add everything together to produce final fragment colour
     FragColour = v4Col;
-//	FragColour.r = v3Normal.r;// Colour map
-//	FragColour.a = 1;
-//	FragColour = v4col;
     FragColour.rgb += fNormalAmount * fDot;                         // Normal
     FragColour *= colour;                                           // Vertex colour
 }

@@ -9,10 +9,10 @@ namespace X
 	{
 		ThrowIfFalse(file.is_open(), "CImageAtlasDetails::write() failed. The given ofstream is not open.");
 
-		file.write((char*)&sTexCoords.bottom_left, sizeof(CVector2f));
-		file.write((char*)&sTexCoords.bottom_right, sizeof(CVector2f));
-		file.write((char*)&sTexCoords.top_left, sizeof(CVector2f));
-		file.write((char*)&sTexCoords.top_right, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.vBL, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.vBR, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.vTL, sizeof(CVector2f));
+		file.write((char*)&sTexCoords.vTR, sizeof(CVector2f));
 		file.write((char*)&v2fDimensions, sizeof(CVector2f));
 		StringUtils::stringWrite(strImageFilename, file);
 		file.write((char*)&uiAtlasImage, sizeof(unsigned int));
@@ -25,10 +25,10 @@ namespace X
 	{
 		ThrowIfFalse(file.is_open(), "CImageAtlasDetails::read() failed. The given ifstream is not open.");
 
-		file.read((char*)&sTexCoords.bottom_left, sizeof(CVector2f));
-		file.read((char*)&sTexCoords.bottom_right, sizeof(CVector2f));
-		file.read((char*)&sTexCoords.top_left, sizeof(CVector2f));
-		file.read((char*)&sTexCoords.top_right, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.vBL, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.vBR, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.vTL, sizeof(CVector2f));
+		file.read((char*)&sTexCoords.vTR, sizeof(CVector2f));
 		file.read((char*)&v2fDimensions, sizeof(CVector2f));
 		StringUtils::stringRead(strImageFilename, file);
 		file.read((char*)&uiAtlasImage, sizeof(unsigned int));
@@ -200,25 +200,25 @@ namespace X
 		{
 			// Compute position of current image in atlas
 			CVector2f vImageDims = vImages[ui]->getDimensions();
-			_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
-			_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
-			_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
-			_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
+			_mvImageDetails[ui].sTexCoords.vTL.x = fSpacing + v2fCurrentPositionInAtlas.x;
+			_mvImageDetails[ui].sTexCoords.vTL.y = fSpacing + v2fCurrentPositionInAtlas.y;
+			_mvImageDetails[ui].sTexCoords.vBR.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+			_mvImageDetails[ui].sTexCoords.vBR.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
 
 			// If the image position fits in current atlas row
-			if (_mvImageDetails[ui].sTexCoords.bottom_right.x <= (float)uiMaxAtlasImageWidth)
+			if (_mvImageDetails[ui].sTexCoords.vBR.x <= (float)uiMaxAtlasImageWidth)
 			{
 				// Image fits, fill in the rest of it's information
-				_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-				_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
-				_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
-				_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+				_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vBR.x;
+				_mvImageDetails[ui].sTexCoords.vTR.y = _mvImageDetails[ui].sTexCoords.vTL.y;
+				_mvImageDetails[ui].sTexCoords.vBL.x = _mvImageDetails[ui].sTexCoords.vTL.x;
+				_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 				// Update maximum atlas size
-				if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
-					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-				if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
-					vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+				if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.vBR.x)
+					vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.vBR.x;
+				if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.vBR.y)
+					vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 				// Move position in atlas right
 				v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
@@ -233,25 +233,25 @@ namespace X
 				v2fCurrentPositionInAtlas.y = vv2fAtlasDims[iCurAtlasImage].y - fSpacing;
 
 				// Compute position of current image in atlas
-				_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
-				_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
-				_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
-				_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
+				_mvImageDetails[ui].sTexCoords.vTL.x = fSpacing + v2fCurrentPositionInAtlas.x;
+				_mvImageDetails[ui].sTexCoords.vTL.y = fSpacing + v2fCurrentPositionInAtlas.y;
+				_mvImageDetails[ui].sTexCoords.vBR.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+				_mvImageDetails[ui].sTexCoords.vBR.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
 
 				// If the image position fits in current atlas
-				if (_mvImageDetails[ui].sTexCoords.bottom_right.y <= (float)uiMaxAtlasImageHeight)
+				if (_mvImageDetails[ui].sTexCoords.vBR.y <= (float)uiMaxAtlasImageHeight)
 				{
 					// Image fits, fill in the rest of it's information
-					_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-					_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
-					_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
-					_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+					_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vBR.x;
+					_mvImageDetails[ui].sTexCoords.vTR.y = _mvImageDetails[ui].sTexCoords.vTL.y;
+					_mvImageDetails[ui].sTexCoords.vBL.x = _mvImageDetails[ui].sTexCoords.vTL.x;
+					_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 					// Update maximum atlas size
-					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
-						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
-						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.vBR.x)
+						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.vBR.x;
+					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.vBR.y)
+						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 					// Move position in atlas right
 					v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
@@ -266,20 +266,20 @@ namespace X
 					v2fCurrentPositionInAtlas.setZero();
 
 					// Add image to new atlas image
-					_mvImageDetails[ui].sTexCoords.top_left.x = fSpacing + v2fCurrentPositionInAtlas.x;
-					_mvImageDetails[ui].sTexCoords.top_left.y = fSpacing + v2fCurrentPositionInAtlas.y;
-					_mvImageDetails[ui].sTexCoords.bottom_right.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
-					_mvImageDetails[ui].sTexCoords.bottom_right.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
-					_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-					_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
-					_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
-					_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+					_mvImageDetails[ui].sTexCoords.vTL.x = fSpacing + v2fCurrentPositionInAtlas.x;
+					_mvImageDetails[ui].sTexCoords.vTL.y = fSpacing + v2fCurrentPositionInAtlas.y;
+					_mvImageDetails[ui].sTexCoords.vBR.x = fSpacingTimesTwo + v2fCurrentPositionInAtlas.x + vImageDims.x;
+					_mvImageDetails[ui].sTexCoords.vBR.y = fSpacingTimesTwo + v2fCurrentPositionInAtlas.y + vImageDims.y;
+					_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vBR.x;
+					_mvImageDetails[ui].sTexCoords.vTR.y = _mvImageDetails[ui].sTexCoords.vTL.y;
+					_mvImageDetails[ui].sTexCoords.vBL.x = _mvImageDetails[ui].sTexCoords.vTL.x;
+					_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 					// Update maximum atlas size
-					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.bottom_right.x)
-						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.bottom_right.x;
-					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.bottom_right.y)
-						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.bottom_right.y;
+					if (vv2fAtlasDims[iCurAtlasImage].x < _mvImageDetails[ui].sTexCoords.vBR.x)
+						vv2fAtlasDims[iCurAtlasImage].x = _mvImageDetails[ui].sTexCoords.vBR.x;
+					if (vv2fAtlasDims[iCurAtlasImage].y < _mvImageDetails[ui].sTexCoords.vBR.y)
+						vv2fAtlasDims[iCurAtlasImage].y = _mvImageDetails[ui].sTexCoords.vBR.y;
 
 					// Move position in atlas right
 					v2fCurrentPositionInAtlas.x += fSpacingTimesTwo + vImageDims.x;
@@ -311,8 +311,8 @@ namespace X
 				0, 0,
 				(int)vImages[ui]->getWidth(),
 				(int)vImages[ui]->getHeight(),
-				(int)_mvImageDetails[ui].sTexCoords.top_left.x,
-				(int)_mvImageDetails[ui].sTexCoords.top_left.y);
+				(int)_mvImageDetails[ui].sTexCoords.vTL.x,
+				(int)_mvImageDetails[ui].sTexCoords.vTL.y);
 
 			// Now compute texture coordinates
 			CVector2f vAtlasDims = _mvAtlasImages[_mvImageDetails[ui].uiAtlasImage]->getDimensions();
@@ -324,22 +324,22 @@ namespace X
 			// Compute correct image positions, not including the spacing
 			// From above, top left position is correct for x and y.
 			// All others include spacing and need to be recalculated.
-			_mvImageDetails[ui].sTexCoords.bottom_right.x = _mvImageDetails[ui].sTexCoords.top_left.x + _mvImageDetails[ui].v2fDimensions.x;
-			_mvImageDetails[ui].sTexCoords.bottom_right.y = _mvImageDetails[ui].sTexCoords.top_left.y + _mvImageDetails[ui].v2fDimensions.y;
-			_mvImageDetails[ui].sTexCoords.top_right.x = _mvImageDetails[ui].sTexCoords.top_left.x + _mvImageDetails[ui].v2fDimensions.x;
-			_mvImageDetails[ui].sTexCoords.top_right.y = _mvImageDetails[ui].sTexCoords.top_left.y;
-			_mvImageDetails[ui].sTexCoords.bottom_left.x = _mvImageDetails[ui].sTexCoords.top_left.x;
-			_mvImageDetails[ui].sTexCoords.bottom_left.y = _mvImageDetails[ui].sTexCoords.top_left.y + _mvImageDetails[ui].v2fDimensions.y;
+			_mvImageDetails[ui].sTexCoords.vBR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].v2fDimensions.x;
+			_mvImageDetails[ui].sTexCoords.vBR.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].v2fDimensions.y;
+			_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].v2fDimensions.x;
+			_mvImageDetails[ui].sTexCoords.vTR.y = _mvImageDetails[ui].sTexCoords.vTL.y;
+			_mvImageDetails[ui].sTexCoords.vBL.x = _mvImageDetails[ui].sTexCoords.vTL.x;
+			_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].v2fDimensions.y;
 
 			// Now convert from pixel postion in image to 0.0f - 1.0f
-			_mvImageDetails[ui].sTexCoords.bottom_left.x *= vAtlasDimsRecip.x;
-			_mvImageDetails[ui].sTexCoords.bottom_left.y *= vAtlasDimsRecip.y;
-			_mvImageDetails[ui].sTexCoords.bottom_right.x *= vAtlasDimsRecip.x;
-			_mvImageDetails[ui].sTexCoords.bottom_right.y *= vAtlasDimsRecip.y;
-			_mvImageDetails[ui].sTexCoords.top_left.x *= vAtlasDimsRecip.x;
-			_mvImageDetails[ui].sTexCoords.top_left.y *= vAtlasDimsRecip.y;
-			_mvImageDetails[ui].sTexCoords.top_right.x *= vAtlasDimsRecip.x;
-			_mvImageDetails[ui].sTexCoords.top_right.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vBL.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vBL.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vBR.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vBR.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vTL.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vTL.y *= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vTR.x *= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vTR.y *= vAtlasDimsRecip.y;
 		}
 
 		// Now we're done, we setup the hashmap for fast lookup of image details by individual image names

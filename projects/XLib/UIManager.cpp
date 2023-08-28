@@ -26,7 +26,7 @@ namespace X
 		// For each container
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
 		{
-			_mmanContainers.get(i)->render();
+			_mmanContainers.get(i)->render(false);
 		}
 
 		// For each window, render with the ones at the back, first.
@@ -102,6 +102,7 @@ namespace X
 				}
 			}
 		}
+		// End of determining which window or container the mouse cursor is over
 
 		_mTimer.update();
 		float fTimeDeltaSeconds = _mTimer.getSecondsPast();
@@ -111,7 +112,7 @@ namespace X
 		// For each container
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
 		{
-			_mmanContainers.get(i)->update(fTimeDeltaSeconds);
+			_mmanContainers.get(i)->update(fTimeDeltaSeconds, false);
 		}
 
 		// For each window

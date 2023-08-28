@@ -27,7 +27,7 @@ namespace X
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 
 		// Update all of the widgets
-		CUIContainer::update(fTimeDeltaSec);
+		CUIContainer::update(fTimeDeltaSec, true);
 	}
 
 	void CUIWindow::render(void)
@@ -36,7 +36,7 @@ namespace X
 		_renderBorders();
 
 		// Render all of the widgets
-//		CUIContainer::render();
+		CUIContainer::render(true);
 	}
 
 	void CUIWindow::_renderBorders(void)
@@ -105,14 +105,14 @@ namespace X
 		CVector2f vPos = _mvPosition;
 		CVector2f vDims = idColTL.v2fDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColTL.sTexCoords.bottom_left,
-			idColTL.sTexCoords.bottom_right,
-			idColTL.sTexCoords.top_right,
-			idColTL.sTexCoords.top_left,
-			idNormTL.sTexCoords.bottom_left,
-			idNormTL.sTexCoords.bottom_right,
-			idNormTL.sTexCoords.top_right,
-			idNormTL.sTexCoords.top_left);
+			idColTL.sTexCoords.vBL,
+			idColTL.sTexCoords.vBR,
+			idColTL.sTexCoords.vTR,
+			idColTL.sTexCoords.vTL,
+			idNormTL.sTexCoords.vBL,
+			idNormTL.sTexCoords.vBR,
+			idNormTL.sTexCoords.vTR,
+			idNormTL.sTexCoords.vTL);
 
 		// Top edge
 		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x;
@@ -120,28 +120,28 @@ namespace X
 		vDims.x = _mvDimensions.x;
 		vDims.y = idColT.v2fDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColT.sTexCoords.bottom_left,
-			idColT.sTexCoords.bottom_right,
-			idColT.sTexCoords.top_right,
-			idColT.sTexCoords.top_left,
-			idNormT.sTexCoords.bottom_left,
-			idNormT.sTexCoords.bottom_right,
-			idNormT.sTexCoords.top_right,
-			idNormT.sTexCoords.top_left);
+			idColT.sTexCoords.vBL,
+			idColT.sTexCoords.vBR,
+			idColT.sTexCoords.vTR,
+			idColT.sTexCoords.vTL,
+			idNormT.sTexCoords.vBL,
+			idNormT.sTexCoords.vBR,
+			idNormT.sTexCoords.vTR,
+			idNormT.sTexCoords.vTL);
 
 		// Top right corner
 		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x + _mvDimensions.x;
 		vPos.y = _mvPosition.y;
 		vDims = idColTR.v2fDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColTR.sTexCoords.bottom_left,
-			idColTR.sTexCoords.bottom_right,
-			idColTR.sTexCoords.top_right,
-			idColTR.sTexCoords.top_left,
-			idNormTR.sTexCoords.bottom_left,
-			idNormTR.sTexCoords.bottom_right,
-			idNormTR.sTexCoords.top_right,
-			idNormTR.sTexCoords.top_left);
+			idColTR.sTexCoords.vBL,
+			idColTR.sTexCoords.vBR,
+			idColTR.sTexCoords.vTR,
+			idColTR.sTexCoords.vTL,
+			idNormTR.sTexCoords.vBL,
+			idNormTR.sTexCoords.vBR,
+			idNormTR.sTexCoords.vTR,
+			idNormTR.sTexCoords.vTL);
 
 		// Left edge
 		vPos.x = _mvPosition.x;
@@ -149,28 +149,28 @@ namespace X
 		vDims.x = idColL.v2fDimensions.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColL.sTexCoords.bottom_left,
-			idColL.sTexCoords.bottom_right,
-			idColL.sTexCoords.top_right,
-			idColL.sTexCoords.top_left,
-			idNormL.sTexCoords.bottom_left,
-			idNormL.sTexCoords.bottom_right,
-			idNormL.sTexCoords.top_right,
-			idNormL.sTexCoords.top_left);
+			idColL.sTexCoords.vBL,
+			idColL.sTexCoords.vBR,
+			idColL.sTexCoords.vTR,
+			idColL.sTexCoords.vTL,
+			idNormL.sTexCoords.vBL,
+			idNormL.sTexCoords.vBR,
+			idNormL.sTexCoords.vTR,
+			idNormL.sTexCoords.vTL);
 
 		// Centre
 		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x;
 		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y;
 		vDims = _mvDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColC.sTexCoords.bottom_left,
-			idColC.sTexCoords.bottom_right,
-			idColC.sTexCoords.top_right,
-			idColC.sTexCoords.top_left,
-			idNormC.sTexCoords.bottom_left,
-			idNormC.sTexCoords.bottom_right,
-			idNormC.sTexCoords.top_right,
-			idNormC.sTexCoords.top_left);
+			idColC.sTexCoords.vBL,
+			idColC.sTexCoords.vBR,
+			idColC.sTexCoords.vTR,
+			idColC.sTexCoords.vTL,
+			idNormC.sTexCoords.vBL,
+			idNormC.sTexCoords.vBR,
+			idNormC.sTexCoords.vTR,
+			idNormC.sTexCoords.vTL);
 
 		// Right edge
 		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x + _mvDimensions.x;
@@ -178,28 +178,28 @@ namespace X
 		vDims.x = idColR.v2fDimensions.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColR.sTexCoords.bottom_left,
-			idColR.sTexCoords.bottom_right,
-			idColR.sTexCoords.top_right,
-			idColR.sTexCoords.top_left,
-			idNormR.sTexCoords.bottom_left,
-			idNormR.sTexCoords.bottom_right,
-			idNormR.sTexCoords.top_right,
-			idNormR.sTexCoords.top_left);
+			idColR.sTexCoords.vBL,
+			idColR.sTexCoords.vBR,
+			idColR.sTexCoords.vTR,
+			idColR.sTexCoords.vTL,
+			idNormR.sTexCoords.vBL,
+			idNormR.sTexCoords.vBR,
+			idNormR.sTexCoords.vTR,
+			idNormR.sTexCoords.vTL);
 
 		// Bottom left corner
 		vPos.x = _mvPosition.x;
 		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y + _mvDimensions.y;
 		vDims = idColBL.v2fDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColBL.sTexCoords.bottom_left,
-			idColBL.sTexCoords.bottom_right,
-			idColBL.sTexCoords.top_right,
-			idColBL.sTexCoords.top_left,
-			idNormBL.sTexCoords.bottom_left,
-			idNormBL.sTexCoords.bottom_right,
-			idNormBL.sTexCoords.top_right,
-			idNormBL.sTexCoords.top_left);
+			idColBL.sTexCoords.vBL,
+			idColBL.sTexCoords.vBR,
+			idColBL.sTexCoords.vTR,
+			idColBL.sTexCoords.vTL,
+			idNormBL.sTexCoords.vBL,
+			idNormBL.sTexCoords.vBR,
+			idNormBL.sTexCoords.vTR,
+			idNormBL.sTexCoords.vTL);
 
 		// Bottom edge
 		vPos.x = _mvPosition.x + idColBL.v2fDimensions.x;
@@ -207,28 +207,28 @@ namespace X
 		vDims.x = _mvDimensions.x;
 		vDims.y = idColB.v2fDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColB.sTexCoords.bottom_left,
-			idColB.sTexCoords.bottom_right,
-			idColB.sTexCoords.top_right,
-			idColB.sTexCoords.top_left,
-			idNormB.sTexCoords.bottom_left,
-			idNormB.sTexCoords.bottom_right,
-			idNormB.sTexCoords.top_right,
-			idNormB.sTexCoords.top_left);
+			idColB.sTexCoords.vBL,
+			idColB.sTexCoords.vBR,
+			idColB.sTexCoords.vTR,
+			idColB.sTexCoords.vTL,
+			idNormB.sTexCoords.vBL,
+			idNormB.sTexCoords.vBR,
+			idNormB.sTexCoords.vTR,
+			idNormB.sTexCoords.vTL);
 
 		// Bottom right corner
 		vPos.x = _mvPosition.x + idColBL.v2fDimensions.x + _mvDimensions.x;
 		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y + _mvDimensions.y;
 		vDims = idColBR.v2fDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColBR.sTexCoords.bottom_left,
-			idColBR.sTexCoords.bottom_right,
-			idColBR.sTexCoords.top_right,
-			idColBR.sTexCoords.top_left,
-			idNormBR.sTexCoords.bottom_left,
-			idNormBR.sTexCoords.bottom_right,
-			idNormBR.sTexCoords.top_right,
-			idNormBR.sTexCoords.top_left);
+			idColBR.sTexCoords.vBL,
+			idColBR.sTexCoords.vBR,
+			idColBR.sTexCoords.vTR,
+			idColBR.sTexCoords.vTL,
+			idNormBR.sTexCoords.vBL,
+			idNormBR.sTexCoords.vBR,
+			idNormBR.sTexCoords.vTR,
+			idNormBR.sTexCoords.vTL);
 
 		pVB->update();
 		pVB->render();
@@ -238,5 +238,4 @@ namespace X
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 	}
-
 }

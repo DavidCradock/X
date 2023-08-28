@@ -11,10 +11,10 @@ namespace X
 	public:
 		struct STexCoords
 		{
-			CVector2f top_left;
-			CVector2f top_right;
-			CVector2f bottom_left;
-			CVector2f bottom_right;
+			CVector2f vTL;
+			CVector2f vTR;
+			CVector2f vBL;
+			CVector2f vBR;
 		};
 		// Stuff read/written to file
 		STexCoords sTexCoords;			// The texture coordinates within the atlas image of the image

@@ -152,10 +152,10 @@ namespace X
 					vTileMinPos,
 					vTileDims,
 					_mvecTiles[ix][iy]._mColour,
-					imageTexCoords.bottom_left,
-					imageTexCoords.bottom_right,
-					imageTexCoords.top_right,
-					imageTexCoords.top_left);
+					imageTexCoords.vBL,
+					imageTexCoords.vBR,
+					imageTexCoords.vTR,
+					imageTexCoords.vTL);
 			}
 		}
 		pVertexBuffer->update();

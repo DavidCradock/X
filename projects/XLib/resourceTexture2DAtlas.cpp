@@ -228,40 +228,40 @@ namespace X
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
-		vTCMin.x = (float)(*pviad)[uiImageNumber].sTexCoords.top_left.x;
-		vTCMin.y = (float)(*pviad)[uiImageNumber].sTexCoords.top_left.y;
+		vTCMin.x = (float)(*pviad)[uiImageNumber].sTexCoords.vTL.x;
+		vTCMin.y = (float)(*pviad)[uiImageNumber].sTexCoords.vTL.y;
 
-		vTCMax.x = (float)(*pviad)[uiImageNumber].sTexCoords.bottom_right.x;
-		vTCMax.y = (float)(*pviad)[uiImageNumber].sTexCoords.bottom_right.y;
+		vTCMax.x = (float)(*pviad)[uiImageNumber].sTexCoords.vBR.x;
+		vTCMax.y = (float)(*pviad)[uiImageNumber].sTexCoords.vBR.y;
 	}
 
 	void CResourceTexture2DAtlas::getTextureCoords(unsigned int uiImageNumber, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft) const
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getTextureCoords() given invalid image number.");
-		vtcTopLeft = (*pviad)[uiImageNumber].sTexCoords.top_left;
-		vtcTopRight = (*pviad)[uiImageNumber].sTexCoords.top_right;
-		vtcBottomRight = (*pviad)[uiImageNumber].sTexCoords.bottom_right;
-		vtcBottomLeft = (*pviad)[uiImageNumber].sTexCoords.bottom_left;
+		vtcTopLeft = (*pviad)[uiImageNumber].sTexCoords.vTL;
+		vtcTopRight = (*pviad)[uiImageNumber].sTexCoords.vTR;
+		vtcBottomRight = (*pviad)[uiImageNumber].sTexCoords.vBR;
+		vtcBottomLeft = (*pviad)[uiImageNumber].sTexCoords.vBL;
 	}
 
 	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2f& vTCMin, CVector2f& vTCMax) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
-		vTCMin.x = (float)iad.sTexCoords.top_left.x;
-		vTCMin.y = (float)iad.sTexCoords.top_left.y;
-		vTCMax.x = (float)iad.sTexCoords.bottom_right.x;
-		vTCMax.y = (float)iad.sTexCoords.bottom_right.y;
+		vTCMin.x = (float)iad.sTexCoords.vTL.x;
+		vTCMin.y = (float)iad.sTexCoords.vTL.y;
+		vTCMax.x = (float)iad.sTexCoords.vBR.x;
+		vTCMax.y = (float)iad.sTexCoords.vBR.y;
 	}
 
 	void CResourceTexture2DAtlas::getTextureCoords(const std::string& strImageName, CVector2f& vtcTopLeft, CVector2f& vtcTopRight, CVector2f& vtcBottomRight, CVector2f& vtcBottomLeft) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
 
-		vtcTopLeft = iad.sTexCoords.top_left;
-		vtcTopRight = iad.sTexCoords.top_right;
-		vtcBottomRight = iad.sTexCoords.bottom_right;
-		vtcBottomLeft = iad.sTexCoords.bottom_left;
+		vtcTopLeft = iad.sTexCoords.vTL;
+		vtcTopRight = iad.sTexCoords.vTR;
+		vtcBottomRight = iad.sTexCoords.vBR;
+		vtcBottomLeft = iad.sTexCoords.vBL;
 	}
 
 	unsigned int CResourceTexture2DAtlas::getNumAtlases(void) const
