@@ -23,32 +23,15 @@ namespace X
 
 	void CUIScrollbar::render(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
-		// Add geometry for the 9 grid cells
-		_addGridGeometry(pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
-
-		// The set position of a container requires no offset for the widget's position
-		// The set position of a window however is the top left position of the window along with it's borders and therefore the widget's position must be offset by this.
-		CVector2f vPos = _mvPosition;
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
-		if (bContainerIsWindow)
-			vPos += pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL).v2fDimensions;
-		// Regardless of whether the container is a window or not, we still need to offset by it's position...
-		vPos += pContainer->getPosition();
 
-		// Render corner, TL
-		CImageAtlasDetails idColCornerTL = pAtlas->getImageDetails(pThemeSettings->images.scrollbarBG.colour.cornerTL);
-		CImageAtlasDetails idNormCornerTL = pAtlas->getImageDetails(pThemeSettings->images.scrollbarBG.normal.cornerTL);
-		CVector2f vDims = idColCornerTL.v2fDimensions;
-		pVB->addQuad2D(vPos, vDims, pThemeSettings->colours.scrollbarBG,
-			idColCornerTL.sTexCoords.bottom_left,
-			idColCornerTL.sTexCoords.bottom_right,
-			idColCornerTL.sTexCoords.top_right,
-			idColCornerTL.sTexCoords.top_left,
-			idNormCornerTL.sTexCoords.bottom_left,
-			idNormCornerTL.sTexCoords.bottom_right,
-			idNormCornerTL.sTexCoords.top_right,
-			idNormCornerTL.sTexCoords.bottom_left);
+		// Add geometry for the 9 grid cells
+		_addGridGeometry(pThemeSettings->images.scrollbarBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
 
+		
+
+
+//		pVB->addQuad2D(CVector2f(0, 0), CVector2f(100, 100));
 	}
 
 	void CUIScrollbar::update(float fTimeDeltaSec, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)

@@ -247,8 +247,8 @@ namespace X
 //		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
-		_mSettings.floats.normalMouseCursorDistance = 50.0f;
-		_mSettings.floats.normalAmount = 0.1f;
+		_mSettings.floats.normalMouseCursorDistance = 5.0f;
+		_mSettings.floats.normalAmount = 0.995f;
 		_mSettings.floats.scrollbarTabFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;

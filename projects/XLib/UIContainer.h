@@ -62,7 +62,7 @@ namespace X
 
 		// Removes all scrollbars from this container
 		void scrollbarRemoveAll(void);
-	private:
+	protected:
 		std::string _mstrThemename;	// Theme name used by this container ("default" upon construction)
 		CManagerNoRef<CUIScrollbar> _mmanWidgetScrollbars;		// Manager holding each CUIScrollbar widget
 

@@ -43,7 +43,7 @@ namespace X
 		pShader->setMat4("transform", matProjection);
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0_colourAndNormal", 0);
+		pShader->setInt("texture0", 0);
 		pShader->setFloat("fNormalAmount", pTheme->getSettings()->floats.normalAmount);
 		pShader->setFloat("fMouseCursorDistance", pTheme->getSettings()->floats.normalMouseCursorDistance);
 
@@ -52,14 +52,12 @@ namespace X
 		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
 		pShader->setVec2("v2MousePos", vMousePos);
 
-		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 
 		// Get textures and bind them
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		pAtlas->bindAtlas();
-
-		pVB->removeGeom();
+		pAtlas->bindAtlas(0, 0);
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanWidgetScrollbars.getNumber(); i++)
@@ -72,7 +70,8 @@ namespace X
 
 		pAtlas->unbind();
 		pShader->unbind();	// Unbind the GUI shader
-
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	void CUIContainer::renderTooltips(void)

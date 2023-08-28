@@ -15,7 +15,16 @@ namespace X
 
 		~CUIWindow();
 
+		// Updates this container
+		void update(float fTimeDeltaSec);
+
+		// Render this container and each of it's objects
+		void render(void);
 	private:
+		void _renderBorders(void);
+
+		// Whether this window is in focus or not.
+		bool _mbInFocus;
 
 	};
 }

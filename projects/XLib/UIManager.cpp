@@ -14,7 +14,13 @@ namespace X
 		// Update everything first
 		_update();
 
+		// Make sure the UI framebuffer is of the same size as the window
 		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+		CVector2f fWindowDims = x->pWindow->getDimensions();
+		if (pUIFB->getDimensions() != fWindowDims)
+		{
+			pUIFB->resize((unsigned int)fWindowDims.x, (unsigned int)fWindowDims.y);
+		}
 		pUIFB->bindAsRenderTarget(true, false);
 
 		// For each container
@@ -101,14 +107,6 @@ namespace X
 		float fTimeDeltaSeconds = _mTimer.getSecondsPast();
 		if (fTimeDeltaSeconds > 0.1f)
 			fTimeDeltaSeconds = 0.1f;
-
-		// Make sure the UI framebuffer is of the same size as the window
-		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
-		CVector2f fWindowDims = x->pWindow->getDimensions();
-		if (pUIFB->getDimensions() != fWindowDims)
-		{
-			pUIFB->resize((unsigned int)fWindowDims.x, (unsigned int)fWindowDims.y);
-		}
 
 		// For each container
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
@@ -227,7 +225,17 @@ namespace X
 	{
 		ThrowIfFalse(_mmanThemes.exists(strName), "SCUIManager::setThemeForAll(\"" + strName + "\") failed. Invalid name given.");
 
-		ThrowIfTrue(1, "NOT IMPLEMENTED");
+		// Set theme name for all containers
+		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
+		{
+			_mmanContainers.get(i)->themeNameSet(strName);
+		}
+
+		// Set theme name for all windows
+		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		{
+			_mmanWindows.get(i)->themeNameSet(strName);
+		}
 	}
 
 	/************************************************************************************************************************************************************/

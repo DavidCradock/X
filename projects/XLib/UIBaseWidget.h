@@ -1,12 +1,12 @@
 #pragma once
 #include "PCH.h"
 #include "vector2f.h"
+#include "UITheme.h"
 
 namespace X
 {
 	class CResourceTexture2DAtlas;
 	class CUIContainer;
-	class CUITheme;
 	class CResourceVertexBufferCPT2;
 
 	// A base class which all user interface containers, widgets and windows are based upon.
@@ -41,6 +41,6 @@ namespace X
 		bool _mbVisible;			// Whether this widget is shown or not
 
 		// Adds geometry to the given vertex buffer for the 9 grid cells
-		void _addGridGeometry(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
+		void _addGridGeometry(CUITheme::SImageType imageType, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 	};
 }

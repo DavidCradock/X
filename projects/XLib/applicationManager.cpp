@@ -71,6 +71,9 @@ namespace X
 					break;	// Application wants to close
 				}
 
+				// Unbind the X:backbuffer and render to the back buffer
+				pBGFB->unbindAsRenderTarget();
+
 				// Update and render the 2DRenderer to the "X:backbuffer" and any various other framebuffers each of it's cameras are set to render to
 				x->p2dRenderer->render();
 
@@ -80,19 +83,17 @@ namespace X
 				// Update and render the UI to the "X:ui" framebuffer
 				x->pUI->render();
 
-				// Unbind the X:backbuffer and render to the back buffer
-				pBGFB->unbindAsRenderTarget();
 				
 				// Now render the "X:backbuffer" to the backbuffer
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
-				x->pResource->getFramebuffer("X:backbuffer")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 				
 				// Now render the "X:gui" to the backbuffer
-				x->pResource->getFramebuffer("X:gui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_gui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 
 				// Now render the "X::ui" framebuffer to the backbuffer
-				x->pResource->getFramebuffer("X:ui")->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 
 				glDisable(GL_BLEND);
 				// Swap buffers

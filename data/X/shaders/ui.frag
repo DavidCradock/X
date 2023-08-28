@@ -30,7 +30,10 @@ void main()
     float fDot = dot(vDir, v3Normal);
 
     // Add everything together to produce final fragment colour
-    FragColour = v4Col;                                             // Colour map
+    FragColour = v4Col;
+//	FragColour.r = v3Normal.r;// Colour map
+//	FragColour.a = 1;
+//	FragColour = v4col;
     FragColour.rgb += fNormalAmount * fDot;                         // Normal
     FragColour *= colour;                                           // Vertex colour
 }

@@ -45,9 +45,16 @@ namespace X
 		}
 
 		// Setup UserInterface theme
-		x->pUI->windowAdd("window1unlocked", false);
-		x->pUI->containerAdd("container00", false);
+		CUIWindow* pWindow = x->pUI->windowAdd("window1unlocked", false);
+		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
+		pWindow->setDimensions(CVector2f(320, 240));
+		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
 
+//		CUIContainer* pCont = x->pUI->containerAdd("container00", false);
+//		pCont->scrollbarAdd("scrollbar0", 0, 0, 100, 100, 0.05f);
+
+		x->pResource->addTexture2DFromFile("test", "TEMP_ATLAS.png");
+		
 	}
 
 	void CApplication::onStart(void)
