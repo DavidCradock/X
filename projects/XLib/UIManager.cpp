@@ -306,6 +306,7 @@ namespace X
 
 		CUIWindow* pNew = _mmanWindows.add(strName, bLocked);
 		pNew->_mstrName = strName;
+		pNew->_mstrTitlebarText = strName;
 		return pNew;
 	}
 

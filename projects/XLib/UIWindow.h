@@ -29,11 +29,23 @@ namespace X
 		// Returns a CRect which represents the area of the window's titlebar
 		CRect getTitlebarArea(void);
 
+		// Returns the string of text used when printing the titlebar text.
+		// Initially, this is set to the name of the window by the manager.
+		// Use setTitlebarText() to change this.
+		std::string getTitlebarText(void);
+
+		// Sets the string of text used when printing the titlebar text.
+		// Initially, this is set to the name of the window by the manager.
+		void setTitlebarText(const std::string& strTitlebarText);
 	private:
 		void _renderBorders(void);
 
 		// Whether this window is in focus or not.
 		bool _mbInFocus;
+
+		// The text string used when printing the titlebar text.
+		// Initially, this is set to the name of the window by the manager.
+		std::string _mstrTitlebarText;
 
 	};
 }

@@ -164,6 +164,8 @@ namespace X
 //			CColour tooltipText;						// Tool tip text colour
 			CColour windowBGFocused;					// CUIWindow background vertex colour when focused
 			CColour windowBGNotFocused;					// CUIWindow background vertex colour when not focused
+			CColour windowTitlebarTextFocused;			// CUIWindow titlebar text colour when focused
+			CColour windowTitlebarTextNotFocused;		// CUIWindow titlebar text colour when not focused
 		};
 
 		// Audio samples

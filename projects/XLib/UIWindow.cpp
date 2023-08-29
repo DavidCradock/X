@@ -32,6 +32,23 @@ namespace X
 
 		// Render all of the widgets
 		CUIContainer::render(true);
+
+		// Render the title bar text
+		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceFont* pFont = x->pResource->getFont(pSettings->fonts.windowTitlebar);
+		CImageAtlasDetails idTL = pTheme->getTextureAtlas()->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
+		float fTextHeight = pFont->getTextHeight();
+		CColour colour;
+		if (_mbInFocus)
+			colour = pSettings->colours.windowTitlebarTextFocused;
+		else
+			colour = pSettings->colours.windowTitlebarTextNotFocused;
+		CVector2f vTextPos = _mvPosition;
+		vTextPos.x += idTL.vDims.x;
+		vTextPos.y += idTL.vDims.y * 0.5f;
+		vTextPos.y -= fTextHeight * 0.5f;
+		pFont->print(_mstrTitlebarText, vTextPos.x, vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
 	}
 
 	void CUIWindow::_renderBorders(void)
@@ -263,4 +280,13 @@ namespace X
 		return area;
 	}
 
+	std::string CUIWindow::getTitlebarText(void)
+	{
+		return _mstrTitlebarText;
+	}
+
+	void CUIWindow::setTitlebarText(const std::string& strTitlebarText)
+	{
+		_mstrTitlebarText = strTitlebarText;
+	}
 }

@@ -49,10 +49,10 @@ namespace X
 		// Updates this container
 		void update(float fTimeDeltaSec, bool bIsWindow = false);
 
-		// Render this container and each of it's objects
+		// Render this container's widgets
 		void render(bool bIsWindow = false);
 
-		// Render this container's object's tooltips
+		// Render this container's widget's tooltips
 		void renderTooltips(void);
 
 		// Get currently set theme name used by this container
