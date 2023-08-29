@@ -13,7 +13,7 @@ namespace X
 	//
 	// The user interface has a few nice features...
 	// The cursor is used as a light source to create a nice bump mapped look to the user interface.
-	// The windows of the UI can be semi transparent and blur the background of the current state of the back buffer's frame buffer.
+	// The windows of the UI can be semi transparent.
 	// The UI uses the messaging classes instead of function pointers for us to determine UI events such as button clicks, scrollbar movement etc.
 	// Audio playback for various UI events such as button clicks.
 	// 
@@ -65,7 +65,7 @@ namespace X
 	// there are helper functions which create various "tooltip templates" such as "just text" or "left aligned text box with right animated image".
 	// 
 	// Rendering features:
-	// We have colour and transparency with blurred background, and normal maps for lighting effects where the mouse can be a light source.
+	// We have colour and transparency and normal maps for lighting effects where the mouse can be a light source.
 	// 
 	// Audio features:
 	// Only one feature, we can playback sounds when things get clicked, dropped, closed etc.
@@ -92,6 +92,8 @@ namespace X
 	// These are all stored on disk as seperate files and are added to a single texture atlas during startup to reduce texture rebinding all over the place.
 	class SCUIManager : public CSingleton<SCUIManager>
 	{
+		friend class CUIButton;
+		friend class CUIScrollbar;
 	public:
 		SCUIManager();
 
@@ -102,6 +104,7 @@ namespace X
 		// Returns which window name or container the mouse cursor is over.
 		// If the cursor isn't over any windows, or containers, an empty string is returned.
 		// Windows are checked first, aka, they are infront of any containers.
+		// Both containers and windows have to be visible.
 		std::string getMouseIsOver(void);
 
 		/************************************************************************************************************************************************************/
@@ -261,5 +264,8 @@ namespace X
 
 		// The name of the window which is currently being moved
 		std::string _mstrWindowBeingMoved;
+
+		// Adds geometry to the given vertex buffer for the 9 grid cells
+		void _addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 	};
 }

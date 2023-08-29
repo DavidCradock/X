@@ -109,7 +109,7 @@ namespace X
 		// Struct holding each widget's and window's image filenames
 		struct SImageNamesWidget
 		{
-//			SImageType buttonBG;			// Image names for CUIButton's background
+			SImageType buttonBG;			// Image names for CUIButton's background
 //			SImageType buttonImageBG;		// Image names for CUIButtonImage's background
 //			SImageType checkboxBGNormal;	// Image names for CUICheckbox's normal state
 //			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
@@ -128,7 +128,7 @@ namespace X
 		// Structure to hold the names of all the fonts used by this theme
 		struct SFonts
 		{
-//			std::string button;						// Font used when rendering a button's text
+			std::string button;						// Font used when rendering a button's text
 //			std::string text;						// Font used when rendering a UIText widget.
 //			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
 //			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
@@ -138,17 +138,19 @@ namespace X
 		// Structure to hold colours used for this theme
 		struct SColours
 		{
-//			CColour buttonBGDown;						// Colour of a button's BG when mouse is over and clicked
-//			CColour buttonBGOver;						// Colour of a button's BG when mouse is over
-//			CColour buttonBGUp;							// Colour of a button's BG when mouse is not over
+			CColour ambientLight;						// Colour of the ambient light used during normal mapping lighting.
+			CColour buttonBGDown;						// Colour of a button's BG when mouse is over and clicked
+			CColour buttonBGOver;						// Colour of a button's BG when mouse is over
+			CColour buttonBGUp;							// Colour of a button's BG when mouse is not over
+			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
+			CColour buttonTextOver;						// Colour of a button's text when mouse is over
+			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
 //			CColour buttonImageDown;					// CUIButtonImage's colour when mouse is over and clicked
 //			CColour buttonImageOver;					// CUIButtonImage's colour when mouse is over
 //			CColour buttonImageUp;						// CUIButtonImage's colour when mouse is not over
-//			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
-//			CColour buttonTextOver;						// Colour of a button's text when mouse is over
-//			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
 //			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
 //			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
+			CColour mouseLight;							// Colour emitted from the mouse cursor
 //			CColour progressBarBG;						// CUIProgressBar's background vertex colour
 //			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
 			CColour scrollbarBG;						// CUIScrollbar'd BG colour.
@@ -185,11 +187,10 @@ namespace X
 		// Structure to hold all floating point settings
 		struct SFloats
 		{
-//			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
+			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
 //			float buttonImageTextFadeSpeedSeconds;	// Rate at which button image colours interpolate between
 //			float checkboxFadeSpeedSeconds;			// Rate at which the checkbox fades between ON and OFF states
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
-			float normalAmount;						// Strength of normal mapping effect. 1.0f = max normal, 0.0f = none
 			float scrollbarTabFadeSpeedSeconds;		// Rate at which scrollbar's tab colours interpolate between
 //			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.

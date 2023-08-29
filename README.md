@@ -53,9 +53,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Things to improve...
 - Use texture atlas
 - Add more frame buffer usage to speed up everything
-- Remove the reflection thing, it's crap
-- Add blurring of background
-- Call containers, windows. Then set decorations on/off.
 - Add screen resize handling code (For fullscreen and window resize)
 - The current method of checking button presses is aweful, too many if statements
 - Use messaging for various widgets to send messages for events such as "clicked". 

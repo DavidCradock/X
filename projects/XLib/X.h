@@ -119,3 +119,5 @@
 #include "quadTree.h"
 #include "quadTreeEntity.h"
 #include "quadTreeNode.h"
+// User Interface
+#include "UIManager.h"

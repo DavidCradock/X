@@ -8,6 +8,7 @@ namespace X
 	CUIWindow::CUIWindow()
 	{
 		_mbInFocus = false;
+		_mbVisible = true;
 	}
 
 	CUIWindow::~CUIWindow()
@@ -23,6 +24,9 @@ namespace X
 
 	void CUIWindow::render(void)
 	{
+		if (!_mbVisible)
+			return;
+
 		// Now render the window's borders
 		_renderBorders();
 
@@ -34,9 +38,10 @@ namespace X
 	{
 		// Get required resources needed to render things
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
-		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui_window);
+		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui);
 		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 
 		pShader->bind();
 
@@ -47,8 +52,9 @@ namespace X
 
 		// Tell OpenGL, for each sampler, to which texture unit it belongs to
 		pShader->setInt("texture0", 0);
-		pShader->setFloat("fNormalAmount", pTheme->getSettings()->floats.normalAmount);
-		pShader->setFloat("fMouseCursorDistance", pTheme->getSettings()->floats.normalMouseCursorDistance);
+		pShader->setFloat("fMouseCursorDistance", pSettings->floats.normalMouseCursorDistance);
+		pShader->setVec4("v4AmbientLight", pSettings->colours.ambientLight);
+		pShader->setVec4("v4MouseLight", pSettings->colours.mouseLight);
 
 		// Set mouse position, inverting Y position
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
@@ -68,7 +74,6 @@ namespace X
 		pVB->removeGeom();
 
 		// Get image details for the 3x3 cell images
-		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CImageAtlasDetails idColC = pAtlas->getImageDetails(pSettings->images.windowBG.colour.centre);
 		CImageAtlasDetails idColBL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBL);
 		CImageAtlasDetails idColBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);

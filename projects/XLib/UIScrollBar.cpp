@@ -9,10 +9,14 @@ namespace X
 {
 	CUIScrollbar::CUIScrollbar()
 	{
+		setDimensions(CVector2f(200, 48));
+		setPosition(CVector2f(0, 0));
+		setVisible(true);
+
 		_mfScrollbarPosition = 0.5f;
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
-		setDimensions(CVector2f(200, 48));
+		
 		_mbOrientationIsHorizontal = true;
 	}
 
@@ -21,12 +25,42 @@ namespace X
 
 	}
 
+	void CUIScrollbar::setDimensions(const CVector2f& vDimensions)
+	{
+		_mvDimensions = vDimensions;
+	}
+
+	CVector2f CUIScrollbar::getDimensions(void) const
+	{
+		return _mvDimensions;
+	}
+
+	void CUIScrollbar::setPosition(const CVector2f& vPosition)
+	{
+		_mvPosition = vPosition;
+	}
+
+	CVector2f CUIScrollbar::getPosition(void) const
+	{
+		return _mvPosition;
+	}
+
+	void CUIScrollbar::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool CUIScrollbar::getVisible(void)
+	{
+		return _mbVisible;
+	}
+
 	void CUIScrollbar::render(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 
 		// Add geometry for the 9 grid cells
-		_addGridGeometry(pThemeSettings->images.scrollbarBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
+		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
 
 	}
 

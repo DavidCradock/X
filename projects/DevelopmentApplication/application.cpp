@@ -53,6 +53,7 @@ namespace X
 		pWindow = x->pUI->windowAdd("window2");
 		pWindow->setDimensions(CVector2f(640, 480));
 		pWindow->setPosition(CVector2f(800, 0));
+		CUIButton* pButton = pWindow->buttonAdd("myFirstButton", 0, 0, 128, 24);
 
 		CGUIContainer *pCont = x->pGUI->addContainer("debug");
 		pCont->addText("text0", 0, 0, "Mouse Over Window: None");

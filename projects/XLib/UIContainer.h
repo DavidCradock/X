@@ -1,6 +1,6 @@
 #pragma once
 #include "PCH.h"
-#include "UIBaseWidget.h"
+#include "UIButton.h"
 #include "UIScrollBar.h"
 #include "UITheme.h"
 #include "templateManagerNoRef.h"
@@ -28,10 +28,16 @@ namespace X
 
 		// Sets the dimensions of this container.
 		// This is the dimensions of the area available for widgets to be added to.
+		// The actual container's dimensions are dependant upon the theme it's currently using.
+		// The actual dimensions are the dimensions given here PLUS the width/height of the
+		// horizontal and vertical scrollbars which are added to the bottom and right edge of the
+		// container for scrolling of widgets into view if their positions are greater than the
+		// dimensions given here.
 		void setDimensions(const CVector2f& vDimensions);
 
 		// Returns the dimensions of this container.
-		// This is the dimensions of the area available for widgets to be added to.
+		// This is the dimensions of the area available for widgets to be added to, not including
+		// the additional dimensions added for the container's two scroll bars.
 		CVector2f getDimensions(void) const;
 
 		// Sets whether this container is visible or not
@@ -65,6 +71,25 @@ namespace X
 		std::string getName(void);
 
 		/************************************************************************************************************************************************************/
+		/* Buttons */
+		/************************************************************************************************************************************************************/
+
+		// Add button to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIButton* buttonAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUIButton* buttonbarGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void buttonRemove(const std::string& strName);
+
+		// Removes all buttons from this container
+		void buttonRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
 		/* Scrollbars */
 		/************************************************************************************************************************************************************/
 
@@ -90,9 +115,22 @@ namespace X
 		bool _mbVisible;			// Whether this container is shown or not
 
 		std::string _mstrThemename;	// Theme name used by this container ("default" upon construction)
-		CManagerNoRef<CUIScrollbar> _mmanWidgetScrollbars;		// Manager holding each CUIScrollbar widget
+		CManagerNoRef<CUIButton> _mmanButtons;			// Manager holding each CUIButton widget
+		CManagerNoRef<CUIScrollbar> _mmanScrollbars;	// Manager holding each CUIScrollbar widget
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;
+
+		// The horizontal scrollbar used for scrolling through all the widgets if their positions exceed
+		// the dimensions of the container.
+		CUIScrollbar _mScrollbarH;
+
+		// The vertical scrollbar used for scrolling through all the widgets if their positions exceed
+		// the dimensions of the container.
+		CUIScrollbar _mScrollbarV;
+
+		// Updates the two scrollbar positions and dimensions and such.
+		// Called if the theme or dimensions change.
+		void _computeScrollbars(void);
 	};
 }

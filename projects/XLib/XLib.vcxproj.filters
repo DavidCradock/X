@@ -446,14 +446,14 @@
     <ClInclude Include="UIScrollBar.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="UIBaseWidget.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="templateManagerNoRef.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="templateManagerNoRefLockable.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -803,7 +803,7 @@
     <ClCompile Include="UIScrollBar.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UIBaseWidget.cpp">
+    <ClCompile Include="UIButton.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -861,12 +861,6 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\..\data\X\shaders\ui.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\ui_window.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\data\X\shaders\ui_window.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

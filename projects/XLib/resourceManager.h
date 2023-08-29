@@ -45,7 +45,6 @@ namespace X
 			std::string shader_shadowdepthmap;					// Holds the name "X:shadowdepthmap" of the default shader used by the scene manager to render the depth map used for rendering shadows
 			std::string shader_gui;								// Holds the name "X:gui" of the default shader used by the GUI to render everything.
 			std::string shader_ui;								// Holds the name "X:ui" of the default shader used by the UI to render most things.
-			std::string shader_ui_window;						// Holds the name "X:ui_window" of the shader used by the UI to render the windows.
 			std::string shader_VBCPT;							// Holds the name "X:VBCPT" of the default shader used with CResourceVertexBufferCPT
 			std::string shader_VBCPT2;							// Holds the name "X:VBCPT2" of the default shader used with CResourceVertexBufferCPT
 			std::string shader_VBCPTInst;						// Holds the name "X:VBCPTInst" of the default shader used with CResourceVertexBufferCPTInst

@@ -545,9 +545,6 @@ namespace X
 		// A shader used by the UI to render most things.
 		defaultRes.shader_ui = "X:ui";
 		pRM->addShader(defaultRes.shader_ui, "data/X/shaders/ui.vert", "data/X/shaders/ui.frag", true);
-		// A shader used by the UI to render the windows.
-		defaultRes.shader_ui_window = "X:ui_window";
-		pRM->addShader(defaultRes.shader_ui_window, "data/X/shaders/ui_window.vert", "data/X/shaders/ui_window.frag", true);
 		// A shader used with CResourceVertexBufferCPT
 		defaultRes.shader_VBCPT = "X:VBCPT";
 		pRM->addShader(defaultRes.shader_VBCPT, "data/X/shaders/vertexBufferCPT.vert", "data/X/shaders/vertexBufferCPT.frag", true);

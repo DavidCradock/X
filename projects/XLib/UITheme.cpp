@@ -43,14 +43,14 @@ namespace X
 		x->pFile->read(file, _mSettings.floats);
 
 		// Fonts
-//		x->pFile->readString(file, _mSettings.fonts.button);
+		x->pFile->readString(file, _mSettings.fonts.button);
 //		x->pFile->readString(file, _mSettings.fonts.text);
 //		x->pFile->readString(file, _mSettings.fonts.textEdit);
 //		x->pFile->readString(file, _mSettings.fonts.textScroll);
 		x->pFile->readString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
-//		_helperReadImageType(file, _mSettings.images.buttonBG);
+		_helperReadImageType(file, _mSettings.images.buttonBG);
 //		_helperReadImageType(file, _mSettings.images.buttonImageBG);
 //		_helperReadImageType(file, _mSettings.images.checkboxBGNormal);
 //		_helperReadImageType(file, _mSettings.images.checkboxBGOFF);
@@ -104,14 +104,14 @@ namespace X
 		x->pFile->write(file, _mSettings.floats);
 
 		// Fonts
-//		x->pFile->writeString(file, _mSettings.fonts.button);
+		x->pFile->writeString(file, _mSettings.fonts.button);
 //		x->pFile->writeString(file, _mSettings.fonts.text);
 //		x->pFile->writeString(file, _mSettings.fonts.textEdit);
 //		x->pFile->writeString(file, _mSettings.fonts.textScroll);
 		x->pFile->writeString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
-//		_helperWriteImageType(file, _mSettings.images.buttonBG);
+		_helperWriteImageType(file, _mSettings.images.buttonBG);
 //		_helperWriteImageType(file, _mSettings.images.buttonImageBG);
 //		_helperWriteImageType(file, _mSettings.images.checkboxBGNormal);
 //		_helperWriteImageType(file, _mSettings.images.checkboxBGOFF);
@@ -155,7 +155,7 @@ namespace X
 		pAM->loadSampleGroup("UI");
 
 		// Fonts
-//		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
+		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
 //		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
 //		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
@@ -193,7 +193,7 @@ namespace X
 //		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 
 		// Fonts
-//		x->pResource->removeFont(_mSettings.fonts.button);
+		x->pResource->removeFont(_mSettings.fonts.button);
 //		x->pResource->removeFont(_mSettings.fonts.text);
 //		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
@@ -218,17 +218,19 @@ namespace X
 //		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
 
 		// Colours
-//		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonBGOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.ambientLight.set(0.3f, 0.3f, 0.3f, 1.0f);
+		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonBGOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.mouseLight.set(0.9f, 0.9f, 1.0f, 1.0f);
 //		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.scrollbarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -240,29 +242,28 @@ namespace X
 //		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
+		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
+		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.7f);
 
 		// Floats
-//		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
+		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
-		_mSettings.floats.normalMouseCursorDistance = 5.0f;
-		_mSettings.floats.normalAmount = 0.995f;
+		_mSettings.floats.normalMouseCursorDistance = 50.0f;
 		_mSettings.floats.scrollbarTabFadeSpeedSeconds = 5.0f;
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
 
 		// Fonts
-//		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";
 
 		// Image file names
-//		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/buttonBG");
+		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/buttonBG");
 //		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
 //		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
 //		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");
@@ -288,7 +289,7 @@ namespace X
 	{
 		ThrowIfFalse(_mbResourcesAdded, "CUITheme::_helperCheckImageDimsAreOK() failed. Resources have not been added to resource managers yet.");
 		// Note: The second parameter for the below method calls can be anything, it's used during creating of the exception text.
-//		_helperCheckImageDimsAreOK(_mSettings.images.buttonBG, "buttonBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.buttonBG, "buttonBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.buttonImageBG, "buttonImageBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGNormal, "checkboxBGNormal");
 //		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOFF, "checkboxBGOFF");
@@ -306,7 +307,7 @@ namespace X
 
 	void CUITheme::_helperBuildNormalImages(bool bOverwriteNormalImages)
 	{
-//		_helperBuildNormalImages(_mSettings.images.buttonBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.buttonBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.buttonImageBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.checkboxBGNormal, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.checkboxBGOFF, bOverwriteNormalImages);

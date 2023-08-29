@@ -7,10 +7,11 @@ in vec2 texCoord1_normal;
 
 uniform sampler2D texture0;
 
-uniform float fNormalAmount;
 uniform float fMouseCursorDistance;
 
 uniform vec2 v2MousePos;    // Y axis should be inverted
+uniform vec4 v4AmbientLight;
+uniform vec4 v4MouseLight;
 
 void main()
 {
@@ -29,8 +30,17 @@ void main()
     vDir = normalize(vDir);
     float fDot = dot(vDir, v3Normal);
 
-    // Add everything together to produce final fragment colour
-    FragColour = v4Col;
-    FragColour.rgb += fNormalAmount * fDot;                         // Normal
-    FragColour *= colour;                                           // Vertex colour
+	// Texture colour multiplied by vertex colour
+	// This is the material colour.
+	vec4 vMaterialColour  = v4Col * colour;
+
+	// Multiply the ambient lighting by the material colour
+	vec3 vAmbientCol = vMaterialColour.rgb * v4AmbientLight.rgb;
+
+	// Multiply the normal lighting by the material colour
+	vec3 vSpecularCol = vMaterialColour.rgb * v4MouseLight.rgb * fDot;
+
+	// Add both the ambient and specular colours together.
+	FragColour.a = vMaterialColour.a;
+    FragColour.rgb = vAmbientCol + vSpecularCol;
 }
