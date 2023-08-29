@@ -248,14 +248,14 @@ namespace X
 		CVector2f vDims;
 		CVector2f vPos;
 		vDims.x = _mvDimensions.x;
-		vDims.y = idScrollbarTL.v2fDimensions.y + idScrollbarL.v2fDimensions.y + idScrollbarBR.v2fDimensions.y;
+		vDims.y = idScrollbarTL.vDims.y + idScrollbarL.vDims.y + idScrollbarBR.vDims.y;
 		_mScrollbarH.setDimensions(vDims);
 		vPos.x = 0;
 		vPos.y = _mvDimensions.y;
 		_mScrollbarH.setPosition(vPos);
 
 		// Vertical scrollbar
-//		vDims.x = idScrollbarTL.v2fDimensions.x + idScrollbarT.v2fDimensions.x +
+//		vDims.x = idScrollbarTL.vDims.x + idScrollbarT.vDims.x +
 
 	}
 }

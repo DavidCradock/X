@@ -54,6 +54,9 @@ namespace X
 		// This then calls each application's onWindowToggleFullscreen() method if it is defined.
 		// It's params are the new state of the window.
 		void onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight);
+
+		// Exits the main loop and shutdown
+		void shutdown(void);
 	private:
 		// Calls all added applications' initOnce() methods
 		void callAllApps_initOnce(void);

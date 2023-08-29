@@ -56,8 +56,11 @@ namespace X
 		CUIButton* pButton = pWindow->buttonAdd("myFirstButton", 0, 0, 128, 24);
 
 		CGUIContainer *pCont = x->pGUI->addContainer("debug");
+		pCont->setDimensions(320, 240);
+
 		pCont->addText("text0", 0, 0, "Mouse Over Window: None");
 		pCont->addText("text1", 0, 20, "DEBUG text1");
+
 	}
 
 	void CApplication::onStart(void)
@@ -90,7 +93,6 @@ namespace X
 		{
 			pCont->getText("text1")->setText("Mouse is NOT over titlebar of window0");
 		}
-
 
 		// Timer delta
 		timer.update();

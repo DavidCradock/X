@@ -13,7 +13,7 @@ namespace X
 		file.write((char*)&sTexCoords.vBR, sizeof(CVector2f));
 		file.write((char*)&sTexCoords.vTL, sizeof(CVector2f));
 		file.write((char*)&sTexCoords.vTR, sizeof(CVector2f));
-		file.write((char*)&v2fDimensions, sizeof(CVector2f));
+		file.write((char*)&vDims, sizeof(CVector2f));
 		StringUtils::stringWrite(strImageFilename, file);
 		file.write((char*)&uiAtlasImage, sizeof(unsigned int));
 		file.write((char*)&bRotated, sizeof(bool));
@@ -29,7 +29,7 @@ namespace X
 		file.read((char*)&sTexCoords.vBR, sizeof(CVector2f));
 		file.read((char*)&sTexCoords.vTL, sizeof(CVector2f));
 		file.read((char*)&sTexCoords.vTR, sizeof(CVector2f));
-		file.read((char*)&v2fDimensions, sizeof(CVector2f));
+		file.read((char*)&vDims, sizeof(CVector2f));
 		StringUtils::stringRead(strImageFilename, file);
 		file.read((char*)&uiAtlasImage, sizeof(unsigned int));
 		file.read((char*)&bRotated, sizeof(bool));
@@ -107,15 +107,15 @@ namespace X
 			imageDetail.bRotated = false;
 			imageDetail.strImageFilename = vStrImageFilenames[ui];
 			imageDetail.uiAtlasImage = 0;
-			imageDetail.v2fDimensions = vImages[ui]->getDimensions();
+			imageDetail.vDims = vImages[ui]->getDimensions();
 			if (bAllowRotationOfImages)
 			{
 				// Rotate image so that it's height is greatest
-				if (imageDetail.v2fDimensions.x > imageDetail.v2fDimensions.y)
+				if (imageDetail.vDims.x > imageDetail.vDims.y)
 				{
 					imageDetail.bRotated = true;
 					vImages[ui]->rotateClockwise();
-					imageDetail.v2fDimensions = vImages[ui]->getDimensions();
+					imageDetail.vDims = vImages[ui]->getDimensions();
 				}
 			}
 			_mvImageDetails.push_back(imageDetail);
@@ -134,7 +134,7 @@ namespace X
 			for (int j = 0; j < (int)vImages.size(); ++j)
 			{
 				// Swap by largest first
-				if (_mvImageDetails[j].v2fDimensions.x < _mvImageDetails[i].v2fDimensions.x)
+				if (_mvImageDetails[j].vDims.x < _mvImageDetails[i].vDims.x)
 				{
 					// Temporarily store image, filename and image details
 					// Assign i to temp
@@ -159,7 +159,7 @@ namespace X
 			for (int j = 0; j < (int)vImages.size(); ++j)
 			{
 				// Swap by largest first
-				if (_mvImageDetails[j].v2fDimensions.y < _mvImageDetails[i].v2fDimensions.y)
+				if (_mvImageDetails[j].vDims.y < _mvImageDetails[i].vDims.y)
 				{
 					// Temporarily store image, filename and image details
 					// Assign i to temp
@@ -184,7 +184,7 @@ namespace X
 		// std::vector<CImage*> vImages;					// Holds each individual image's image data
 		// std::vector<CImageAtlasDetails> _mvImageDetails;	// Holds each individual image's details
 		// _mvImageDetails[X].sTexCoords is not computed yet, we'll temporarily use this to hold position of each individual image inside of texture atlas
-		// and then convert to actual texture coordinates below.
+		// and then convert to actual texture coordinates later further below.
 
 		// We now need to compute each image's position within the large atlas image and once done, we'll have the dimensions of the atlas image/s and the number required.
 		std::vector<CVector2f> vv2fAtlasDims;	// Will hold computed dims of each atlas image
@@ -324,14 +324,16 @@ namespace X
 			// Compute correct image positions, not including the spacing
 			// From above, top left position is correct for x and y.
 			// All others include spacing and need to be recalculated.
-			_mvImageDetails[ui].sTexCoords.vBR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].v2fDimensions.x;
-			_mvImageDetails[ui].sTexCoords.vBR.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].v2fDimensions.y;
-			_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].v2fDimensions.x;
+			_mvImageDetails[ui].sTexCoords.vBR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].vDims.x;
+			_mvImageDetails[ui].sTexCoords.vBR.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].vDims.y;
+			_mvImageDetails[ui].sTexCoords.vTR.x = _mvImageDetails[ui].sTexCoords.vTL.x + _mvImageDetails[ui].vDims.x;
 			_mvImageDetails[ui].sTexCoords.vTR.y = _mvImageDetails[ui].sTexCoords.vTL.y;
 			_mvImageDetails[ui].sTexCoords.vBL.x = _mvImageDetails[ui].sTexCoords.vTL.x;
-			_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].v2fDimensions.y;
+			_mvImageDetails[ui].sTexCoords.vBL.y = _mvImageDetails[ui].sTexCoords.vTL.y + _mvImageDetails[ui].vDims.y;
 
-			// Now convert from pixel postion in image to 0.0f - 1.0f
+			// Now all positions are correct
+
+			// Now convert from pixel position in image to 0.0f - 1.0f
 			_mvImageDetails[ui].sTexCoords.vBL.x *= vAtlasDimsRecip.x;
 			_mvImageDetails[ui].sTexCoords.vBL.y *= vAtlasDimsRecip.y;
 			_mvImageDetails[ui].sTexCoords.vBR.x *= vAtlasDimsRecip.x;
@@ -340,6 +342,19 @@ namespace X
 			_mvImageDetails[ui].sTexCoords.vTL.y *= vAtlasDimsRecip.y;
 			_mvImageDetails[ui].sTexCoords.vTR.x *= vAtlasDimsRecip.x;
 			_mvImageDetails[ui].sTexCoords.vTR.y *= vAtlasDimsRecip.y;
+
+			// For nearest filtering this is all we have to do.
+			// However, with linear filtering, we need to offset the texture coordinates
+			// by half a texel so that everything looks great when using linear filtering.
+			_mvImageDetails[ui].sTexCoords.vBL.x += vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vBL.y -= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vBR.x -= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vBR.y -= vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vTL.x += vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vTL.y += vAtlasDimsRecip.y;
+			_mvImageDetails[ui].sTexCoords.vTR.x -= vAtlasDimsRecip.x;
+			_mvImageDetails[ui].sTexCoords.vTR.y += vAtlasDimsRecip.y;
+
 		}
 
 		// Now we're done, we setup the hashmap for fast lookup of image details by individual image names

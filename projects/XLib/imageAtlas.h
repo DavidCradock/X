@@ -17,11 +17,23 @@ namespace X
 			CVector2f vBR;
 		};
 		// Stuff read/written to file
-		STexCoords sTexCoords;			// The texture coordinates within the atlas image of the image
-		CVector2f v2fDimensions;		// The dimensions of the image
-		std::string strImageFilename;	// The filename which the image was created from.
-		unsigned int uiAtlasImage;		// The atlas image number which the image is located in.
-		bool bRotated;					// Whether the image was rotated clockwise to fit better or not.
+
+		// The texture coordinates within the atlas image of the image
+		STexCoords sTexCoords;
+
+		// The atlas image number which the image is located in.
+		// If setting the maximum size of the atlas images to a small size,
+		// multiple atlas images may be created to accomodate all the images.
+		unsigned int uiAtlasImage;
+
+		// Whether the image was rotated clockwise to fit better or not.
+		bool bRotated;
+
+		// The dimensions of the image in pixels
+		CVector2f vDims;
+
+		// The filename which the image was created from.
+		std::string strImageFilename;
 
 		// Writes out this object's data to an already opened ofstream
 		// If an error occurs, so does an exception

@@ -198,8 +198,8 @@ namespace X
 		// Create scale matrix for this entity
 		CMatrix matrixScale;
 		CVector3f v3fScale(_mv2fScale.x, _mv2fScale.y, 1.0f);
-		v3fScale.x *= _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions.x;
-		v3fScale.y *= _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions.y;
+		v3fScale.x *= _mvImageDetails[_muiCurrentFrameNumber].vDims.x;
+		v3fScale.y *= _mvImageDetails[_muiCurrentFrameNumber].vDims.y;
 		matrixScale.setScale(v3fScale);
 
 		// Create translation matrix for this entity

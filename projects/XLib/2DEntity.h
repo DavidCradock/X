@@ -119,7 +119,7 @@ namespace X
 
 		/* A vector of CImageAtlasDetails, holding each image's atlas details including...
 			sTexCoords The texture coordinates within the atlas image of the image
-			v2fDimensions The dimensions of the image
+			vDims The dimensions of the image
 			strImageFilename The filename which the image was created from.
 			uiAtlasImage The atlas image number which the image is located in.
 			bRotated Whether the image was rotated clockwise to fit better or not. */

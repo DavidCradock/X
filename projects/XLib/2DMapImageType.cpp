@@ -66,7 +66,7 @@ namespace X
 
 	CVector2f C2DMapImageType::getCurrentFrameImageDimensions(void) const
 	{
-		return _mvecImageFrames[int(_mfCurrentFrame)].v2fDimensions;
+		return _mvecImageFrames[int(_mfCurrentFrame)].vDims;
 	}
 
 	CImageAtlasDetails::STexCoords C2DMapImageType::getCurrentFrameImageTextureCoords(void) const

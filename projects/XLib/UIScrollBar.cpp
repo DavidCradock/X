@@ -89,19 +89,19 @@ namespace X
 
 		if (_mbOrientationIsHorizontal)
 		{
-			_mfTabDims[0] = _mfTabRatio * (_mvDimensions.x - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x);
-			_mfTabDims[1] = _mvDimensions.y - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y;
+			_mfTabDims[0] = _mfTabRatio * (_mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x);
+			_mfTabDims[1] = _mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
 		}
 		else
 		{
-			_mfTabDims[0] = _mvDimensions.x - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x;
-			_mfTabDims[1] = _mfTabRatio * (_mvDimensions.y - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y);
+			_mfTabDims[0] = _mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
+			_mfTabDims[1] = _mfTabRatio * (_mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y);
 		}
 
 		// Compute tab position
 		if (_mbOrientationIsHorizontal)
 		{
-			float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0] - imageDetailsCornerTR.v2fDimensions.x - imageDetailsCornerBL.v2fDimensions.x;
+			float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0] - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
 			float fCentrePosOfScrollbar = pContainer->getPosition().x + _mvPosition.x + (_mvDimensions.x * 0.5f) - (_mfTabDims[0] * 0.5f);
 
 			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
@@ -111,11 +111,11 @@ namespace X
 			fTabOffset *= fTabTotalMovementAmount;
 
 			_mfTabPos[0] = fCentrePosOfScrollbar + fTabOffset;
-			_mfTabPos[1] = pContainer->getPosition().y + _mvPosition.y + imageDetailsCornerBL.v2fDimensions.y;
+			_mfTabPos[1] = pContainer->getPosition().y + _mvPosition.y + imageDetailsCornerBL.vDims.y;
 		}
 		else // Vertical
 		{
-			float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1] - imageDetailsCornerTR.v2fDimensions.y - imageDetailsCornerBL.v2fDimensions.y;
+			float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1] - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
 			float fCentrePosOfScrollbar = pContainer->getPosition().y + _mvPosition.y + (_mvDimensions.y * 0.5f) - (_mfTabDims[1] * 0.5f);
 
 			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
@@ -124,7 +124,7 @@ namespace X
 			// Position offset
 			fTabOffset *= fTabTotalMovementAmount;
 
-			_mfTabPos[0] = pContainer->getPosition().x + _mvPosition.x + imageDetailsCornerTR.v2fDimensions.x;
+			_mfTabPos[0] = pContainer->getPosition().x + _mvPosition.x + imageDetailsCornerTR.vDims.x;
 			_mfTabPos[1] = fCentrePosOfScrollbar + fTabOffset;
 		}
 
@@ -132,10 +132,10 @@ namespace X
 		if (bAcceptingMouseInput)
 		{
 			// Determine if mouse cursor is over
-			if (vMousePos.x > _mfTabPos[0] - imageDetailsCornerTR.v2fDimensions.x)
-				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + imageDetailsCornerBL.v2fDimensions.x)
+			if (vMousePos.x > _mfTabPos[0] - imageDetailsCornerTR.vDims.x)
+				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + imageDetailsCornerBL.vDims.x)
 					if (vMousePos.y > _mfTabPos[1])
-						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + imageDetailsCornerTR.v2fDimensions.y)
+						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + imageDetailsCornerTR.vDims.y)
 							bMouseOver = true;
 			if (bMouseOver)
 			{

@@ -273,13 +273,13 @@ namespace X
 	{
 		std::vector<CImageAtlasDetails>* pviad = _mAtlases.getAllImageDetailsPointer();
 		ThrowIfTrue(uiImageNumber >= pviad->size(), "CResourceTexture2DAtlas::getImageDims() given invalid image number.");
-		return (*pviad)[uiImageNumber].v2fDimensions;
+		return (*pviad)[uiImageNumber].vDims;
 	}
 
 	CVector2f CResourceTexture2DAtlas::getImageDims(const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);
-		return iad.v2fDimensions;
+		return iad.vDims;
 	}
 	
 	std::string CResourceTexture2DAtlas::getImageFilename(unsigned int uiImageNumber) const

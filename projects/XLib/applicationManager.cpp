@@ -120,6 +120,11 @@ namespace X
 		x->pLog->add("Total runtime: " + _mTimer.getClock());
 	}
 
+	void SCApplicationManager::shutdown(void)
+	{
+		PostQuitMessage(0);
+	}
+
 	void SCApplicationManager::addApp(const std::string& applicationName, CApplicationBase* pTheApplication)
 	{
 		std::string strLog = "SCApplicationManager::addApp(" + applicationName + ") called.";

@@ -166,7 +166,7 @@ namespace X
 
 		// Texture atlas
 		strTmp = "UI_THEME_" + _mSettings.themeName;
-		x->pResource->addTexture2DAtlas(strTmp, _mSettings.imageDir, true, 0, false, true);
+		x->pResource->addTexture2DAtlas(strTmp, _mSettings.imageDir, true, 0, false, false/*nearest or linear filtering*/);
 
 		_mbResourcesAdded = true;
 
@@ -481,8 +481,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerTL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeT);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "colour image data do not have the same height.\nOffending images: ";
@@ -493,8 +493,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeB);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerBR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "colour image data do not have the same height.\nOffending images: ";
@@ -506,8 +506,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeL);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTL);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "colour image data do not have the same width.\nOffending images: ";
@@ -519,8 +519,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.colour.cornerBR);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.colour.edgeR);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.colour.cornerTR);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "colour image data do not have the same width.\nOffending images: ";
@@ -532,8 +532,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerTL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeT);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "height image data do not have the same height.\nOffending images: ";
@@ -544,8 +544,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeB);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerBR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "height image data do not have the same height.\nOffending images: ";
@@ -557,8 +557,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeL);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTL);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "height image data do not have the same width.\nOffending images: ";
@@ -570,8 +570,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.height.cornerBR);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.height.edgeR);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.height.cornerTR);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "height image data do not have the same width.\nOffending images: ";
@@ -583,8 +583,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerTL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeT);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "normal image data do not have the same height.\nOffending images: ";
@@ -595,8 +595,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeB);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerBR);
-		if (imageDetails[0].v2fDimensions.y != imageDetails[1].v2fDimensions.y ||
-			imageDetails[0].v2fDimensions.y != imageDetails[2].v2fDimensions.y)
+		if (imageDetails[0].vDims.y != imageDetails[1].vDims.y ||
+			imageDetails[0].vDims.y != imageDetails[2].vDims.y)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "normal image data do not have the same height.\nOffending images: ";
@@ -608,8 +608,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBL);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeL);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTL);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "normal image data do not have the same width.\nOffending images: ";
@@ -621,8 +621,8 @@ namespace X
 		imageDetails[0] = pAtlas->getImageDetails(imageType.normal.cornerBR);
 		imageDetails[1] = pAtlas->getImageDetails(imageType.normal.edgeR);
 		imageDetails[2] = pAtlas->getImageDetails(imageType.normal.cornerTR);
-		if (imageDetails[0].v2fDimensions.x != imageDetails[1].v2fDimensions.x ||
-			imageDetails[0].v2fDimensions.x != imageDetails[2].v2fDimensions.x)
+		if (imageDetails[0].vDims.x != imageDetails[1].vDims.x ||
+			imageDetails[0].vDims.x != imageDetails[2].vDims.x)
 		{
 			strErr = "CUITheme::_helperCheckImageDimsAreOK() for widget " + strWidgetName + " failed. Images for";
 			strErr += "normal image data do not have the same width.\nOffending images: ";

@@ -504,12 +504,12 @@ namespace X
 		vPos += pContainer->getPosition();
 		// The set position of a window however is the top left position of the window along with it's borders and therefore the widget's position must be offset by this.
 		if (bContainerIsWindow)
-			vPos += pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL).v2fDimensions;
+			vPos += pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL).vDims;
 
 		CVector2f vDims;
 
 		// Top left corner
-		vDims = idColTL.v2fDimensions;
+		vDims = idColTL.vDims;
 		CVector2f vCellPos = vPos;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColTL.sTexCoords.vBL,
@@ -523,9 +523,9 @@ namespace X
 
 		// Top edge
 		vCellPos = vPos;
-		vCellPos.x += idColTL.v2fDimensions.x;
-		vDims.x = vDimensions.x - idColTR.v2fDimensions.x;
-		vDims.y = idColT.v2fDimensions.y;
+		vCellPos.x += idColTL.vDims.x;
+		vDims.x = vDimensions.x - idColTR.vDims.x;
+		vDims.y = idColT.vDims.y;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColT.sTexCoords.vBL,
 			idColT.sTexCoords.vBR,
@@ -538,8 +538,8 @@ namespace X
 
 		// Top right corner
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColTR.v2fDimensions.x;
-		vDims = idColTR.v2fDimensions;
+		vCellPos.x += vDimensions.x - idColTR.vDims.x;
+		vDims = idColTR.vDims;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColTR.sTexCoords.vBL,
 			idColTR.sTexCoords.vBR,
@@ -552,9 +552,9 @@ namespace X
 
 		// Left edge
 		vCellPos = vPos;
-		vCellPos.y += idColTL.v2fDimensions.y;
-		vDims.x = idColL.v2fDimensions.x;
-		vDims.y = vDimensions.y - idColTL.v2fDimensions.y - idColBL.v2fDimensions.y;
+		vCellPos.y += idColTL.vDims.y;
+		vDims.x = idColL.vDims.x;
+		vDims.y = vDimensions.y - idColTL.vDims.y - idColBL.vDims.y;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColL.sTexCoords.vBL,
 			idColL.sTexCoords.vBR,
@@ -567,10 +567,10 @@ namespace X
 
 		// Centre
 		vCellPos = vPos;
-		vCellPos.x += idColL.v2fDimensions.x;
-		vCellPos.y += idColTL.v2fDimensions.y;
-		vDims.x = vDimensions.x - idColL.v2fDimensions.x - idColR.v2fDimensions.x;
-		vDims.y = vDimensions.y - idColTL.v2fDimensions.y - idColBL.v2fDimensions.y;
+		vCellPos.x += idColL.vDims.x;
+		vCellPos.y += idColTL.vDims.y;
+		vDims.x = vDimensions.x - idColL.vDims.x - idColR.vDims.x;
+		vDims.y = vDimensions.y - idColTL.vDims.y - idColBL.vDims.y;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColC.sTexCoords.vBL,
 			idColC.sTexCoords.vBR,
@@ -583,10 +583,10 @@ namespace X
 
 		// Right edge
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColR.v2fDimensions.x;
-		vCellPos.y += idColTL.v2fDimensions.y;
-		vDims.x = idColR.v2fDimensions.x;
-		vDims.y = vDimensions.y - idColL.v2fDimensions.y - idColR.v2fDimensions.y;
+		vCellPos.x += vDimensions.x - idColR.vDims.x;
+		vCellPos.y += idColTL.vDims.y;
+		vDims.x = idColR.vDims.x;
+		vDims.y = vDimensions.y - idColL.vDims.y - idColR.vDims.y;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColR.sTexCoords.vBL,
 			idColR.sTexCoords.vBR,
@@ -599,8 +599,8 @@ namespace X
 
 		// Bottom left corner
 		vCellPos = vPos;
-		vCellPos.y += vDimensions.y - idColBL.v2fDimensions.y;
-		vDims = idColBL.v2fDimensions;
+		vCellPos.y += vDimensions.y - idColBL.vDims.y;
+		vDims = idColBL.vDims;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColBL.sTexCoords.vBL,
 			idColBL.sTexCoords.vBR,
@@ -613,10 +613,10 @@ namespace X
 
 		// Bottom edge
 		vCellPos = vPos;
-		vCellPos.x += idColBL.v2fDimensions.x;
-		vCellPos.y += vDimensions.y - idColB.v2fDimensions.y;
-		vDims.x = vDimensions.x - idColBL.v2fDimensions.x - idColBR.v2fDimensions.x;
-		vDims.y = idColB.v2fDimensions.y;
+		vCellPos.x += idColBL.vDims.x;
+		vCellPos.y += vDimensions.y - idColB.vDims.y;
+		vDims.x = vDimensions.x - idColBL.vDims.x - idColBR.vDims.x;
+		vDims.y = idColB.vDims.y;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColB.sTexCoords.vBL,
 			idColB.sTexCoords.vBR,
@@ -629,9 +629,9 @@ namespace X
 
 		// Bottom right corner
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColBR.v2fDimensions.x;
-		vCellPos.y += vDimensions.y - idColBR.v2fDimensions.y;
-		vDims = idColBR.v2fDimensions;
+		vCellPos.x += vDimensions.x - idColBR.vDims.x;
+		vCellPos.y += vDimensions.y - idColBR.vDims.y;
+		vDims = idColBR.vDims;
 		pVB->addQuad2D(vCellPos, vDims, pThemeSettings->colours.scrollbarBG,
 			idColBR.sTexCoords.vBL,
 			idColBR.sTexCoords.vBR,

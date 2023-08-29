@@ -99,7 +99,7 @@ namespace X
 
 		// Top left corner
 		CVector2f vPos = _mvPosition;
-		CVector2f vDims = idColTL.v2fDimensions;
+		CVector2f vDims = idColTL.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColTL.sTexCoords.vBL,
 			idColTL.sTexCoords.vBR,
@@ -111,10 +111,10 @@ namespace X
 			idNormTL.sTexCoords.vTL);
 
 		// Top edge
-		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x;
+		vPos.x = _mvPosition.x + idColTL.vDims.x;
 		vPos.y = _mvPosition.y;
 		vDims.x = _mvDimensions.x;
-		vDims.y = idColT.v2fDimensions.y;
+		vDims.y = idColT.vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColT.sTexCoords.vBL,
 			idColT.sTexCoords.vBR,
@@ -126,9 +126,9 @@ namespace X
 			idNormT.sTexCoords.vTL);
 
 		// Top right corner
-		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x + _mvDimensions.x;
+		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvDimensions.x;
 		vPos.y = _mvPosition.y;
-		vDims = idColTR.v2fDimensions;
+		vDims = idColTR.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColTR.sTexCoords.vBL,
 			idColTR.sTexCoords.vBR,
@@ -141,8 +141,8 @@ namespace X
 
 		// Left edge
 		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y;
-		vDims.x = idColL.v2fDimensions.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y;
+		vDims.x = idColL.vDims.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColL.sTexCoords.vBL,
@@ -155,8 +155,8 @@ namespace X
 			idNormL.sTexCoords.vTL);
 
 		// Centre
-		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y;
+		vPos.x = _mvPosition.x + idColTL.vDims.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y;
 		vDims = _mvDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColC.sTexCoords.vBL,
@@ -169,9 +169,9 @@ namespace X
 			idNormC.sTexCoords.vTL);
 
 		// Right edge
-		vPos.x = _mvPosition.x + idColTL.v2fDimensions.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y;
-		vDims.x = idColR.v2fDimensions.x;
+		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvDimensions.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y;
+		vDims.x = idColR.vDims.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColR.sTexCoords.vBL,
@@ -185,8 +185,8 @@ namespace X
 
 		// Bottom left corner
 		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y + _mvDimensions.y;
-		vDims = idColBL.v2fDimensions;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
+		vDims = idColBL.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBL.sTexCoords.vBL,
 			idColBL.sTexCoords.vBR,
@@ -198,10 +198,10 @@ namespace X
 			idNormBL.sTexCoords.vTL);
 
 		// Bottom edge
-		vPos.x = _mvPosition.x + idColBL.v2fDimensions.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y + _mvDimensions.y;
+		vPos.x = _mvPosition.x + idColBL.vDims.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
 		vDims.x = _mvDimensions.x;
-		vDims.y = idColB.v2fDimensions.y;
+		vDims.y = idColB.vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColB.sTexCoords.vBL,
 			idColB.sTexCoords.vBR,
@@ -213,9 +213,9 @@ namespace X
 			idNormB.sTexCoords.vTL);
 
 		// Bottom right corner
-		vPos.x = _mvPosition.x + idColBL.v2fDimensions.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y + idColTL.v2fDimensions.y + _mvDimensions.y;
-		vDims = idColBR.v2fDimensions;
+		vPos.x = _mvPosition.x + idColBL.vDims.x + _mvDimensions.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
+		vDims = idColBR.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBR.sTexCoords.vBL,
 			idColBR.sTexCoords.vBR,
@@ -243,8 +243,8 @@ namespace X
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
 		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
 		CVector2f vDims = _mvDimensions;
-		vDims.x += idTL.v2fDimensions.x + idBR.v2fDimensions.x;
-		vDims.y += idTL.v2fDimensions.y + idBR.v2fDimensions.y;
+		vDims.x += idTL.vDims.x + idBR.vDims.x;
+		vDims.y += idTL.vDims.y + idBR.vDims.y;
 		return vDims;
 	}
 
@@ -258,8 +258,8 @@ namespace X
 		CRect area(
 			int(_mvPosition.x),
 			int(_mvPosition.y),
-			int(_mvPosition.x + _mvDimensions.x + idTL.v2fDimensions.x + idTR.v2fDimensions.x),
-			int(_mvPosition.y + idTL.v2fDimensions.y));
+			int(_mvPosition.x + _mvDimensions.x + idTL.vDims.x + idTR.vDims.x),
+			int(_mvPosition.y + idTL.vDims.y));
 		return area;
 	}
 

@@ -176,7 +176,7 @@ namespace X
 			uiNumTextureBindingsPerLoop++;
 		}
 
-		CVector2f v2fDims = _mvImageDetails[_muiCurrentFrameNumber].v2fDimensions;
+		CVector2f v2fDims = _mvImageDetails[_muiCurrentFrameNumber].vDims;
 		CVector2f v2fPos = _mv2fPosition;
 
 		// Scale sprite if needed
