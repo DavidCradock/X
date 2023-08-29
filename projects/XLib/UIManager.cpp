@@ -162,11 +162,26 @@ namespace X
 				}
 			}
 		}
+		
+		// Deal with setting focus for all windows
+		if (x->pInput->mouse.leftButtonOnce())
+		{
+			if (_bMouseIsOverAWindow)
+			{
+				if (_mstrMouseIsOver.size())
+				{
+					windowSetFocused(_mstrMouseIsOver);
+				}
+			}
+		}
 
 		// For each window, update all of it's widgets
+		// Also set focus state of all windows
 		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
 		{
-			_mmanWindows.get(i)->update(fTimeDeltaSeconds);
+			// Update the window's widgets
+			CUIWindow* pWindow = _mmanWindows.get(i);
+			pWindow->update(fTimeDeltaSeconds);
 		}
 
 	}
@@ -437,4 +452,18 @@ namespace X
 		}
 	}
 
+	void SCUIManager::windowSetFocused(const std::string strWindowName)
+	{
+		ThrowIfFalse(windowExists(strWindowName), "SCUIManager::windowSetFocused(\"" + strWindowName + "\") failed. Given window name does not exist.");
+		windowSetUnfocusedAll();
+		_mmanWindows.get(strWindowName)->_mbInFocus = true;
+	}
+
+	void SCUIManager::windowSetUnfocusedAll(void)
+	{
+		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		{
+			_mmanWindows.get(i)->_mbInFocus = false;
+		}
+	}
 }

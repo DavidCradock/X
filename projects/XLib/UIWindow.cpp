@@ -17,20 +17,6 @@ namespace X
 
 	void CUIWindow::update(float fTimeDeltaSec)
 	{
-		// Return name of the window, or container which the mouse cursor is over
-		std::string strMouseIsOver = x->pUI->getMouseIsOver();
-		bool bAcceptingMouseInput = false;
-		// And if that window or container is this object's container, we're accepting mouse input
-		if (strMouseIsOver == _mstrName)
-			bAcceptingMouseInput = true;
-
-		if (bAcceptingMouseInput)
-		{
-			CVector2f vMousePos = x->pInput->mouse.getCursorPos();
-		}
-
-
-
 		// Update all of the widgets
 		CUIContainer::update(fTimeDeltaSec, true);
 	}
@@ -271,4 +257,5 @@ namespace X
 			int(_mvPosition.y + idTL.v2fDimensions.y));
 		return area;
 	}
+
 }

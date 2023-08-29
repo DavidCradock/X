@@ -229,6 +229,13 @@ namespace X
 
 		// Sets the name of the window currently being moved.
 		void windowBeingMoved(const std::string& strWindowBeingMoved);
+
+		// Sets the named window to be in focus and all others to not be.
+		// If the named window doesn't exist, an exception occurs.
+		void windowSetFocused(const std::string strWindowName);
+
+		// Sets all windows as unfocused
+		void windowSetUnfocusedAll(void);
 	private:
 		CTimer _mTimer;
 
