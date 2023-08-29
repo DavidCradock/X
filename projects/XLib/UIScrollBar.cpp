@@ -55,17 +55,19 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIScrollbar::render(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void CUIScrollbar::render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
-
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		// Add geometry for the 9 grid cells
-		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
+		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pContainer, bContainerIsWindow, pTheme, pVB);
 
 	}
 
-	void CUIScrollbar::update(float fTimeDeltaSec, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	void CUIScrollbar::update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
 	{
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+
 		// Return name of the window, or container which the mouse cursor is over
 		std::string strMouseIsOver = x->pUI->getMouseIsOver();
 		bool bAcceptingMouseInput = false;

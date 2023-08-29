@@ -265,7 +265,7 @@ namespace X
 		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";
 
 		// Image file names
-		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/buttonBG");
+		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/genericBG");
 //		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
 //		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
 //		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");

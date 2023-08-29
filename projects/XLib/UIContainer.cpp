@@ -54,18 +54,18 @@ namespace X
 	void CUIContainer::update(float fTimeDeltaSec, bool bIsWindow)
 	{
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
-		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+//		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->update(fTimeDeltaSec, pAtlas, this, bIsWindow, pTheme);
+			_mmanButtons.get(i)->update(fTimeDeltaSec, this, bIsWindow, pTheme);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->update(fTimeDeltaSec, pAtlas, this, bIsWindow, pTheme);
+			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this, bIsWindow, pTheme);
 		}
 	}
 
@@ -80,6 +80,7 @@ namespace X
 		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		//CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		pShader->bind();
 
@@ -109,13 +110,13 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->render(pAtlas, this, bIsWindow, pTheme, pVB);
+			_mmanButtons.get(i)->render(this, bIsWindow, pTheme, pVB);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->render(pAtlas, this, bIsWindow, pTheme, pVB);
+			_mmanScrollbars.get(i)->render(this, bIsWindow, pTheme, pVB);
 		}
 
 		pVB->update();

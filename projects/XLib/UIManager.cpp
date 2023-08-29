@@ -476,8 +476,10 @@ namespace X
 		}
 	}
 
-	void SCUIManager::_addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void SCUIManager::_addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+
 		CImageAtlasDetails idColC = pAtlas->getImageDetails(imageType.colour.centre);
 		CImageAtlasDetails idNormC = pAtlas->getImageDetails(imageType.normal.centre);
 		CImageAtlasDetails idColBL = pAtlas->getImageDetails(imageType.colour.cornerBL);

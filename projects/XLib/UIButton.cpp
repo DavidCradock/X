@@ -50,16 +50,17 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIButton::render(CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void CUIButton::render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Add geometry for the 9 grid cells
-		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.buttonBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
+		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.buttonBG, pContainer, bContainerIsWindow, pTheme, pVB);
 
 	}
 
-	void CUIButton::update(float fTimeDeltaSec, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	void CUIButton::update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
 	{
 		// Return name of the window, or container which the mouse cursor is over
 		std::string strMouseIsOver = x->pUI->getMouseIsOver();
@@ -69,6 +70,8 @@ namespace X
 			bAcceptingMouseInput = true;
 
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+
+	//	CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Update this object's tooltip
 //		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
