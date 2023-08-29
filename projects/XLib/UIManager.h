@@ -99,9 +99,10 @@ namespace X
 		// 
 		void render(void);
 
-		// Returns which window name the mouse cursor is over based on Z order.
-		// If the cursor isn't over any windows, an empty string is returned.
-		std::string getMouseIsOverWhichWindow(void);
+		// Returns which window name or container the mouse cursor is over.
+		// If the cursor isn't over any windows, or containers, an empty string is returned.
+		// Windows are checked first, aka, they are infront of any containers.
+		std::string getMouseIsOver(void);
 
 		/************************************************************************************************************************************************************/
 		/* Container related */
@@ -222,6 +223,12 @@ namespace X
 		// If the named window doesn't exist, this does nothing.
 		void windowMoveToFront(const std::string& strName);
 
+		// Returns the name of a window which is currently being moved.
+		// Will be empty if no windows are being moved
+		std::string windowBeingMoved(void);
+
+		// Sets the name of the window currently being moved.
+		void windowBeingMoved(const std::string& strWindowBeingMoved);
 	private:
 		CTimer _mTimer;
 
@@ -236,8 +243,16 @@ namespace X
 		// Called from render to update everything
 		void _update(void);
 
-		// Which window the mouse cursor is currently over.
-		// May be empty is the mouse cursor isn't over any windows.
-		std::string _mstrMouseCursorIsOverThisWindow;
+		// Called from _update() to compute if the mouse cursor is over any windows or containers.
+		// Stores the name of the window or container the cursor is over in _mstrMouseIsOver
+		void _updateMouseIsOver(void);
+
+		// Which window or container the mouse cursor is currently over.
+		// May be empty is the mouse cursor isn't over any windows, or containers.
+		std::string _mstrMouseIsOver;
+		bool _bMouseIsOverAWindow;	// Holds whether if _mstrMouseIsOver.size() > 0, whether the name is a window or container
+
+		// The name of the window which is currently being moved
+		std::string _mstrWindowBeingMoved;
 	};
 }

@@ -71,6 +71,11 @@ namespace X
 		return true;
 	}
 
+	bool CRect::doesPositionFitWithin(const CVector2f& vPos)
+	{
+		return doesPositionFitWithin(int(vPos.x), int(vPos.y));
+	}
+
 	void CRect::getCentre(int& iCentreX, int& iCentreY)
 	{
 		// Compute dims

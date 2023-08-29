@@ -104,15 +104,14 @@ namespace X
 
 		// SUPER TEMP DEBUG ATLAS
 		// Setup UserInterface theme
-		CUIWindow* pWindow = x->pUI->windowAdd("window1unlocked", false);
+		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
 		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
 		pWindow->setDimensions(CVector2f(320, 240));
 		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
 
-		CImageAtlasPacker ip;
-		std::vector<std::string> strFiles = StringUtils::getFilesInDir("data/X/UI/Default/images/");
-		ip.createAtlasImages(strFiles, 512, 512, false, 1);
-		ip.getAtlasImage(0)->saveAsPNG("output.png");
+		pWindow = x->pUI->windowAdd("window2");
+		pWindow->setDimensions(CVector2f(640, 480));
+		pWindow->setPosition(CVector2f(0, 0));
 	}
 
 	void CApplication::onStart(void)

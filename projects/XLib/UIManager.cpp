@@ -41,93 +41,134 @@ namespace X
 
 	}
 
-	std::string SCUIManager::getMouseIsOverWhichWindow(void)
+	std::string SCUIManager::getMouseIsOver(void)
 	{
-		return _mstrMouseCursorIsOverThisWindow;
+		return _mstrMouseIsOver;
 	}
 
 	void SCUIManager::_update(void)
 	{
-		// Compute which window name the mouse cursor is currently over, if any
-		_mstrMouseCursorIsOverThisWindow.clear();
-		CVector2f vMouseCursorPos = x->pInput->mouse.getCursorPos();
-		// Go through each window by Z order to see which window the cursor is over, if any
-		auto itWindowR = _mlistWindowZOrder.rbegin();
-		CUIWindow* pWindow;
-		while (itWindowR != _mlistWindowZOrder.rend())
-		{
-			// Get window dims and position
-			pWindow = windowGet((*itWindowR));
-			CVector2f vPos = pWindow->getPosition();
-			CVector2f vDims = pWindow->getDimensions();
-			if (vMouseCursorPos.x >= vPos.x)
-			{
-				if (vMouseCursorPos.x <= vPos.x + vDims.x)
-				{
-					if (vMouseCursorPos.y >= vPos.y)
-					{
-						if (vMouseCursorPos.y <= vPos.y + vDims.y)
-						{
-							// Mouse is over this window
-							_mstrMouseCursorIsOverThisWindow = *itWindowR;
-							break;
-						}
-					}
-				}
-			}
-			itWindowR++;
-		}
-		// If we haven't found a window that the mouse cursor if over, see if it is over any containers
-		if (!_mstrMouseCursorIsOverThisWindow.size())
-		{
-			for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
-			{
-				CUIContainer* pCont = _mmanContainers.get(i);
-				CVector2f vPos = pCont->getPosition();
-				CVector2f vDims = pCont->getDimensions();
-				if (vMouseCursorPos.x >= vPos.x)
-				{
-					if (vMouseCursorPos.x <= vPos.x + vDims.x)
-					{
-						if (vMouseCursorPos.y >= vPos.y)
-						{
-							if (vMouseCursorPos.y <= vPos.y + vDims.y)
-							{
-								// Mouse is over this window
-								_mstrMouseCursorIsOverThisWindow = _mmanContainers.getName(i);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		// End of determining which window or container the mouse cursor is over
+		// Set _mstrMouseIsOver to hold name of container or window the mouse is currently over
+		// Set _bMouseIsOverAWindow to differentiate between a container or window.
+		// _mstrMouseIsOver may have zero size if mouse isn't over anything.
+		_updateMouseIsOver();
 
+		// Update timing and limit delta to a small value
 		_mTimer.update();
 		float fTimeDeltaSeconds = _mTimer.getSecondsPast();
 		if (fTimeDeltaSeconds > 0.1f)
 			fTimeDeltaSeconds = 0.1f;
 
-		// For each container
+		// For each container, update all of it's widgets
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
 		{
 			_mmanContainers.get(i)->update(fTimeDeltaSeconds, false);
 		}
 
 		// For each window
-		// We get each name and then update each window by name incase z-order gets messed up during update
-		std::vector<std::string> strvecWindowNames;
-		auto itWindow = _mlistWindowZOrder.begin();
-		while (itWindow != _mlistWindowZOrder.end())
+
+		// Deal with moving windows
+		// Stop moving any windows if the mouse button if up
+		if (!x->pInput->mouse.leftButDown())
+			_mstrWindowBeingMoved.clear();
+		// If the mouse button has been pressed once, see if we can start moving a window
+		// and set _mstrMouseIsOver to the window's name
+		if (x->pInput->mouse.leftButtonOnce())
 		{
-			strvecWindowNames.push_back(*itWindow);
-			itWindow++;
+			// Is the mouse over a window or container?
+			if (_mstrMouseIsOver.size())
+			{
+				// Is the mouse over a window?
+				if (_bMouseIsOverAWindow)
+				{
+					// Get the window the mouse is over
+					CUIWindow* pWindow = _mmanWindows.get(_mstrMouseIsOver);
+					// Check to see if the mouse cursor is over the window's titlebar
+					CRect rctTitlebar = pWindow->getTitlebarArea();
+					if (rctTitlebar.doesPositionFitWithin(x->pInput->mouse.getCursorPos()))
+					{
+						// Start moving the thing...
+						_mstrWindowBeingMoved = _mstrMouseIsOver;
+					}
+				}
+			}
 		}
-		for (int i = 0; i < strvecWindowNames.size(); i++)
+		// Deal with updating the position of a window that is set as being moved
+		if (_mstrWindowBeingMoved.size())
 		{
-			_mmanWindows.get(strvecWindowNames[i])->update(fTimeDeltaSeconds);
+			// Compute new position of the window
+			CUIWindow* pWindow = _mmanWindows.get(_mstrWindowBeingMoved);
+			CVector2f vNewPos = pWindow->getPosition();
+			vNewPos.x += x->pInput->mouse.getMouseDeltaGUI().x;
+			vNewPos.y += x->pInput->mouse.getMouseDeltaGUI().y;
+			
+			// Limit the window to the screen.
+			CVector2f vWindowActualDims = pWindow->getDimsIncludingTheme();
+			bool bLimitMouseMovementX = false;
+			bool bLimitMouseMovementY = false;
+			// Off left edge of screen
+			if (vNewPos.x < 0)
+			{
+				vNewPos.x = 0;
+				bLimitMouseMovementX = true;
+			}
+			// Off right edge of screen
+			else if (vNewPos.x + vWindowActualDims.x > x->pWindow->getDimensions().x)
+			{
+				vNewPos.x = x->pWindow->getDimensions().x - vWindowActualDims.x;
+				bLimitMouseMovementX = true;
+			}
+			// Off top edge of screen
+			if (vNewPos.y < 0)
+			{
+				vNewPos.y = 0;
+				bLimitMouseMovementY = true;
+			}
+			// Off bottom edge of screen
+			else if (vNewPos.y + vWindowActualDims.y > x->pWindow->getDimensions().y)
+			{
+				vNewPos.y = x->pWindow->getDimensions().y - vWindowActualDims.y;
+				bLimitMouseMovementY = true;
+			}
+			// Limit movement of mouse cursor
+			if (bLimitMouseMovementX || bLimitMouseMovementY)
+			{
+				CVector2f vMouseOldPos = x->pInput->mouse.getCursorPos();
+				if (bLimitMouseMovementX)
+					vMouseOldPos.x -= x->pInput->mouse.getMouseDeltaGUI().x;
+				if (bLimitMouseMovementY)
+					vMouseOldPos.y -= x->pInput->mouse.getMouseDeltaGUI().y;
+				x->pInput->mouse.setMousePos(vMouseOldPos);
+			}
+
+			// Set position of the window
+			pWindow->setPosition(vNewPos);
 		}
+
+		// Deal with Z order of windows
+		// If a window is being moved, it MUST be the window in front
+		if (_mstrWindowBeingMoved.size())
+		{
+			windowMoveToFront(_mstrWindowBeingMoved);
+		}
+		// If the cursor is over a window and the mouse button is down, bring that window to the front
+		else if (x->pInput->mouse.leftButtonOnce())
+		{
+			if (_bMouseIsOverAWindow)
+			{
+				if (_mstrMouseIsOver.size())
+				{
+					windowMoveToFront(_mstrMouseIsOver);
+				}
+			}
+		}
+
+		// For each window, update all of it's widgets
+		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		{
+			_mmanWindows.get(i)->update(fTimeDeltaSeconds);
+		}
+
 	}
 
 	/************************************************************************************************************************************************************/
@@ -325,4 +366,75 @@ namespace X
 			_mlistWindowZOrder.push_back(strName);
 		}
 	}
+
+	std::string SCUIManager::windowBeingMoved(void)
+	{
+		return _mstrWindowBeingMoved;
+	}
+
+	void SCUIManager::windowBeingMoved(const std::string& strWindowBeingMoved)
+	{
+		_mstrWindowBeingMoved = strWindowBeingMoved;
+	}
+
+	void SCUIManager::_updateMouseIsOver(void)
+	{
+		// Compute which window name the mouse cursor is currently over, if any
+		_mstrMouseIsOver.clear();
+		CVector2f vMouseCursorPos = x->pInput->mouse.getCursorPos();
+		// Go through each window by Z order to see which window the cursor is over, if any
+		auto itWindowR = _mlistWindowZOrder.rbegin();
+		CUIWindow* pWindow;
+		while (itWindowR != _mlistWindowZOrder.rend())
+		{
+			// Get window dims and position
+			pWindow = windowGet((*itWindowR));
+			CVector2f vPos = pWindow->getPosition();
+			CVector2f vDims = pWindow->getDimsIncludingTheme();
+			if (vMouseCursorPos.x >= vPos.x)
+			{
+				if (vMouseCursorPos.x <= vPos.x + vDims.x)
+				{
+					if (vMouseCursorPos.y >= vPos.y)
+					{
+						if (vMouseCursorPos.y <= vPos.y + vDims.y)
+						{
+							// Mouse is over this window
+							_mstrMouseIsOver = *itWindowR;
+							_bMouseIsOverAWindow = true;
+							break;
+						}
+					}
+				}
+			}
+			itWindowR++;
+		}
+		// If we haven't found a window that the mouse cursor if over, see if it is over any containers
+		if (!_mstrMouseIsOver.size())
+		{
+			for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
+			{
+				CUIContainer* pCont = _mmanContainers.get(i);
+				CVector2f vPos = pCont->getPosition();
+				CVector2f vDims = pCont->getDimensions();
+				if (vMouseCursorPos.x >= vPos.x)
+				{
+					if (vMouseCursorPos.x <= vPos.x + vDims.x)
+					{
+						if (vMouseCursorPos.y >= vPos.y)
+						{
+							if (vMouseCursorPos.y <= vPos.y + vDims.y)
+							{
+								// Mouse is over this window
+								_mstrMouseIsOver = _mmanContainers.getName(i);
+								_bMouseIsOverAWindow = false;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 }

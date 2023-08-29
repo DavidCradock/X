@@ -18,13 +18,18 @@ namespace X
 	void CUIWindow::update(float fTimeDeltaSec)
 	{
 		// Return name of the window, or container which the mouse cursor is over
-		std::string strMouseOverWindow = x->pUI->getMouseIsOverWhichWindow();
+		std::string strMouseIsOver = x->pUI->getMouseIsOver();
 		bool bAcceptingMouseInput = false;
 		// And if that window or container is this object's container, we're accepting mouse input
-		if (strMouseOverWindow == _mstrName)
+		if (strMouseIsOver == _mstrName)
 			bAcceptingMouseInput = true;
 
-		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		if (bAcceptingMouseInput)
+		{
+			CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		}
+
+
 
 		// Update all of the widgets
 		CUIContainer::update(fTimeDeltaSec, true);
@@ -237,5 +242,33 @@ namespace X
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
+	}
+
+	CVector2f CUIWindow::getDimsIncludingTheme(void)
+	{
+		CUITheme* pTheme = themeGet();
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
+		CVector2f vDims = _mvDimensions;
+		vDims.x += idTL.v2fDimensions.x + idBR.v2fDimensions.x;
+		vDims.y += idTL.v2fDimensions.y + idBR.v2fDimensions.y;
+		return vDims;
+	}
+
+	CRect CUIWindow::getTitlebarArea(void)
+	{
+		CUITheme* pTheme = themeGet();
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails idTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
+		CRect area(
+			int(_mvPosition.x),
+			int(_mvPosition.y),
+			int(_mvPosition.x + _mvDimensions.x + idTL.v2fDimensions.x + idTR.v2fDimensions.x),
+			int(_mvPosition.y + idTL.v2fDimensions.y));
+		return area;
 	}
 }

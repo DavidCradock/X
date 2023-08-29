@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "UIContainer.h"
+#include "rect.h"
 
 namespace X
 {
@@ -20,6 +21,14 @@ namespace X
 
 		// Render this container and each of it's objects
 		void render(void);
+
+		// Returns the dims of this window (not just the widget area),
+		// including the borders of this window's currently set theme.
+		CVector2f getDimsIncludingTheme(void);
+
+		// Returns a CRect which represents the area of the window's titlebar
+		CRect getTitlebarArea(void);
+
 	private:
 		void _renderBorders(void);
 

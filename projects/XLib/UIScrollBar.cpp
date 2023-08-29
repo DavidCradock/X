@@ -28,19 +28,15 @@ namespace X
 		// Add geometry for the 9 grid cells
 		_addGridGeometry(pThemeSettings->images.scrollbarBG, pAtlas, pContainer, bContainerIsWindow, pTheme, pVB);
 
-		
-
-
-//		pVB->addQuad2D(CVector2f(0, 0), CVector2f(100, 100));
 	}
 
 	void CUIScrollbar::update(float fTimeDeltaSec, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
 	{
 		// Return name of the window, or container which the mouse cursor is over
-		std::string strMouseOverWindow = x->pUI->getMouseIsOverWhichWindow();
+		std::string strMouseIsOver = x->pUI->getMouseIsOver();
 		bool bAcceptingMouseInput = false;
 		// And if that window or container is this object's container, we're accepting mouse input
-		if (strMouseOverWindow == pContainer->getName())
+		if (strMouseIsOver == pContainer->getName())
 			bAcceptingMouseInput = true;
 
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();

@@ -30,6 +30,9 @@ namespace X
 		// Given a position, returns whether it fits within this rect or not
 		bool doesPositionFitWithin(int iPosX, int iPosY);
 
+		// Given a position, returns whether it fits within this rect or not
+		bool doesPositionFitWithin(const CVector2f& vPos);
+
 		// Returns the centre position of the rect
 		void getCentre(int& iCentreX, int& iCentreY);
 

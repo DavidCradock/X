@@ -10,13 +10,35 @@ namespace X
 	// A container object for the user interface.
 	// A container object allows us to add all the various UI widgets to it.
 	// A container is a CUIBaseWidget which stores position, dimensions and visibility.
-	class CUIContainer : public CUIBaseWidget
+	class CUIContainer
 	{
 		friend class SCUIManager;
 	public:
 		CUIContainer();
 
 		~CUIContainer();
+
+		// Sets the position of this container.
+		// This is the top left position of the widget area, where widgets can be placed.
+		void setPosition(const CVector2f& vPosition);
+
+		// Returns the position of this container.
+		// This is the top left position of the widget area, where widgets can be placed.
+		CVector2f getPosition(void) const;
+
+		// Sets the dimensions of this container.
+		// This is the dimensions of the area available for widgets to be added to.
+		void setDimensions(const CVector2f& vDimensions);
+
+		// Returns the dimensions of this container.
+		// This is the dimensions of the area available for widgets to be added to.
+		CVector2f getDimensions(void) const;
+
+		// Sets whether this container is visible or not
+		void setVisible(bool bVisible);
+
+		// Returns whether this container is visible or not
+		bool getVisible(void) const;
 
 		// Updates this container
 		void update(float fTimeDeltaSec, bool bIsWindow = false);
@@ -63,6 +85,10 @@ namespace X
 		// Removes all scrollbars from this container
 		void scrollbarRemoveAll(void);
 	protected:
+		CVector2f _mvDimensions;	// Dimensions of the container
+		CVector2f _mvPosition;		// Position of the container.
+		bool _mbVisible;			// Whether this container is shown or not
+
 		std::string _mstrThemename;	// Theme name used by this container ("default" upon construction)
 		CManagerNoRef<CUIScrollbar> _mmanWidgetScrollbars;		// Manager holding each CUIScrollbar widget
 

@@ -8,11 +8,43 @@ namespace X
 	CUIContainer::CUIContainer()
 	{
 		_mstrThemename = "default";
+		_mvPosition.set(0, 0);
+		_mvDimensions.set(128, 128);
 	}
 
 	CUIContainer::~CUIContainer()
 	{
 		widgetRemoveAll();
+	}
+
+	void CUIContainer::setPosition(const CVector2f& vPosition)
+	{
+		_mvPosition = vPosition;
+	}
+
+	CVector2f CUIContainer::getPosition(void) const
+	{
+		return _mvPosition;
+	}
+
+	void CUIContainer::setDimensions(const CVector2f& vDimensions)
+	{
+		_mvDimensions = vDimensions;
+	}
+
+	CVector2f CUIContainer::getDimensions(void) const
+	{
+		return _mvDimensions;
+	}
+
+	void CUIContainer::setVisible(bool bVisible)
+	{
+		_mbVisible = bVisible;
+	}
+
+	bool CUIContainer::getVisible(void) const
+	{
+		return _mbVisible;
 	}
 
 	void CUIContainer::update(float fTimeDeltaSec, bool bIsWindow)

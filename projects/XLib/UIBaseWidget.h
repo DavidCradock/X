@@ -9,10 +9,9 @@ namespace X
 	class CUIContainer;
 	class CResourceVertexBufferCPT2;
 
-	// A base class which all user interface containers, widgets and windows are based upon.
-	// It simply contains a few things which are common amoung all objects such
-	// as position, dimensions and visibility.
-	// By default, it's position is 0, 0, dimensions are 128, 128 and visibility set to true.
+	// A base class which all user interface widgets are based upon.
+	// It simply contains a few things which are common amoung all widgets
+	// By default, it's position is 0, 0 and dimensions are 128, 128.
 	class CUIBaseWidget
 	{
 	public:
@@ -30,15 +29,9 @@ namespace X
 		// Returns the dimensions of the widget.
 		CVector2f getDimensions(void) const;
 
-		// Sets whether this container is visible or not
-		void setVisible(bool bVisible);
-
-		// Returns whether this container is visible or not
-		bool getVisible(void) const;
 	protected:
 		CVector2f _mvDimensions;	// Dimensions of the widget
 		CVector2f _mvPosition;		// Position of the widget in relation to it's container.
-		bool _mbVisible;			// Whether this widget is shown or not
 
 		// Adds geometry to the given vertex buffer for the 9 grid cells
 		void _addGridGeometry(CUITheme::SImageType imageType, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);

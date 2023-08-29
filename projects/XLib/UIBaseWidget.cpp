@@ -8,7 +8,6 @@ namespace X
 	{
 		setPosition(CVector2f(0, 0));
 		setDimensions(CVector2f(128, 128));
-		setVisible(true);
 	}
 
 	void CUIBaseWidget::setPosition(const CVector2f& vPosition)
@@ -29,16 +28,6 @@ namespace X
 	CVector2f CUIBaseWidget::getDimensions(void) const
 	{
 		return _mvDimensions;
-	}
-
-	void CUIBaseWidget::setVisible(bool bVisible)
-	{
-		_mbVisible = bVisible;
-	}
-
-	bool CUIBaseWidget::getVisible(void) const
-	{
-		return _mbVisible;
 	}
 
 	void CUIBaseWidget::_addGridGeometry(CUITheme::SImageType imageType, CResourceTexture2DAtlas* pAtlas, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)

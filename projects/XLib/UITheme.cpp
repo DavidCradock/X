@@ -241,7 +241,7 @@ namespace X
 //		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
+		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
 
 		// Floats
 //		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;

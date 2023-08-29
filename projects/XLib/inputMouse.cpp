@@ -212,6 +212,11 @@ namespace X
 		SetCursorPos(mPos.x, mPos.y);
 	}
 
+	void CInputMouse::setMousePos(const CVector2f& vNewPosition)
+	{
+		setMousePos((int)vNewPosition.x, (int)vNewPosition.y);
+	}
+
 	void CInputMouse::setMouseCursorImage(const std::string& strAniFilename)
 	{
 		x->pWindow->setMouseCursorImage(strAniFilename);

@@ -45,15 +45,18 @@ namespace X
 		}
 
 		// Setup UserInterface theme
-		CUIWindow* pWindow = x->pUI->windowAdd("window1unlocked", false);
+		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
 		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
 		pWindow->setDimensions(CVector2f(320, 240));
 		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
 
-		CImageAtlasPacker ip;
-		std::vector<std::string> strFiles = StringUtils::getFilesInDir("data/X/UI/Default/images/");
-		ip.createAtlasImages(strFiles, 512, 512, false, 1);
-		ip.getAtlasImage(0)->saveAsPNG("output.png");
+		pWindow = x->pUI->windowAdd("window2");
+		pWindow->setDimensions(CVector2f(640, 480));
+		pWindow->setPosition(CVector2f(800, 0));
+
+		CGUIContainer *pCont = x->pGUI->addContainer("debug");
+		pCont->addText("text0", 0, 0, "Mouse Over Window: None");
+		pCont->addText("text1", 0, 20, "DEBUG text1");
 	}
 
 	void CApplication::onStart(void)
@@ -66,6 +69,28 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
+		// Debug text
+		CGUIContainer* pCont = x->pGUI->getContainer("debug");
+		// Mouse is over which window/container?
+		std::string str = x->pUI->getMouseIsOver();
+		std::string str2 = "Mouse Over Window : ";
+		if (str.size())
+			str2 += str;
+		else
+			str2 += "None";
+		pCont->getText("text0")->setText(str2);
+		// Mouse is over a titlebar
+		CRect rectTitlebarArea = x->pUI->windowGet(0)->getTitlebarArea();
+		if (rectTitlebarArea.doesPositionFitWithin(x->pInput->mouse.getCursorPos()))
+		{
+			pCont->getText("text1")->setText("Mouse IS over titlebar of window0");
+		}
+		else
+		{
+			pCont->getText("text1")->setText("Mouse is NOT over titlebar of window0");
+		}
+
+
 		// Timer delta
 		timer.update();
 
