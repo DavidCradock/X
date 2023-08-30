@@ -46,20 +46,15 @@ namespace X
 
 		// Setup UserInterface theme
 		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
+		pWindow->setDimensions(CVector2f(240, 240));
 		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
-		pWindow->setDimensions(CVector2f(320, 240));
 		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
 
-		pWindow = x->pUI->windowAdd("window2");
-		pWindow->setDimensions(CVector2f(640, 480));
-		pWindow->setPosition(CVector2f(800, 0));
-		CUIButton* pButton = pWindow->buttonAdd("myFirstButton", 0, 0, 128, 24);
-
-		CGUIContainer *pCont = x->pGUI->addContainer("debug");
-		pCont->setDimensions(320, 240);
-
-		pCont->addText("text0", 0, 0, "Mouse Over Window: None");
-		pCont->addText("text1", 0, 20, "DEBUG text1");
+		pWindow = x->pUI->windowAdd("window2 300x300");
+		pWindow->setDimensions(CVector2f(300, 300));
+		pWindow->setPosition(CVector2f(0, 0));
+		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
+//		CUIScrollbar* pScrollbar = pWindow->scrollbarAdd("100x24", 0, 0, 100, 24);
 
 	}
 
@@ -73,30 +68,25 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-		// Debug text
-		CGUIContainer* pCont = x->pGUI->getContainer("debug");
-		// Mouse is over which window/container?
-		std::string str = x->pUI->getMouseIsOver();
-		std::string str2 = "Mouse Over Window : ";
-		if (str.size())
-			str2 += str;
-		else
-			str2 += "None";
-		pCont->getText("text0")->setText(str2);
-		// Mouse is over a titlebar
-		CRect rectTitlebarArea = x->pUI->windowGet(0)->getTitlebarArea();
-		if (rectTitlebarArea.doesPositionFitWithin(x->pInput->mouse.getCursorPos()))
-		{
-			pCont->getText("text1")->setText("Mouse IS over titlebar of window0");
-		}
-		else
-		{
-			pCont->getText("text1")->setText("Mouse is NOT over titlebar of window0");
-		}
-
 		// Timer delta
 		timer.update();
 
+		// G key to toggle debug grid
+		if (x->pInput->key.once(KC_G))
+		{
+			CVector2f vDebugGridSpacing = x->pAppMan->debugGridSpacing();
+			x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), (int)vDebugGridSpacing.x, (int)vDebugGridSpacing.y);
+		}
+		if (x->pInput->key.repeat(KC_EQUALS))
+		{
+			CVector2f vDebugGridSpacing = x->pAppMan->debugGridSpacing();
+			x->pAppMan->debugShowGrid(x->pAppMan->debugGridShown(), (int)vDebugGridSpacing.x + 1, (int)vDebugGridSpacing.y + 1);
+		}
+		if (x->pInput->key.repeat(KC_MINUS))
+		{
+			CVector2f vDebugGridSpacing = x->pAppMan->debugGridSpacing();
+			x->pAppMan->debugShowGrid(x->pAppMan->debugGridShown(), (int)vDebugGridSpacing.x - 1, (int)vDebugGridSpacing.y - 1);
+		}
 		// Escape key to exit
 		if (x->pInput->key.pressed(KC_ESCAPE))
 			return false;

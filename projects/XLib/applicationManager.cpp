@@ -11,6 +11,11 @@ namespace X
 	SCApplicationManager::SCApplicationManager()
 	{
 		SCLog::getPointer()->add("SCApplicationManager::SCApplicationManager() called.");
+
+		// Debug grid
+		_mbDebugGridShow = false;
+		_mfDebugGridSpacing[0] = _mfDebugGridSpacing[1] = 24;
+		_mfDebugGridTextAlpha = 0;
 	}
 
 	void SCApplicationManager::mainLoop(void)
@@ -83,7 +88,6 @@ namespace X
 				// Update and render the UI to the "X:ui" framebuffer
 				x->pUI->render();
 
-				
 				// Now render the "X:backbuffer" to the backbuffer
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
@@ -96,6 +100,11 @@ namespace X
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
 
 				glDisable(GL_BLEND);
+
+				// Render debug grid
+				if (_mbDebugGridShow)
+					_debugGridRender();
+
 				// Swap buffers
 				x->pWindow->swapBuffers();
 			}
@@ -256,6 +265,122 @@ namespace X
 		{
 			it->second->onWindowToggleFullscreen(bFullscreen, iWindowWidth, iWindowHeight);
 			it++;
+		}
+	}
+
+	void SCApplicationManager::debugShowGrid(bool bShowGrid, int iSpacingX, int iSpacingY)
+	{
+		_mbDebugGridShow = bShowGrid;
+		if (iSpacingX < 2)
+			iSpacingX = 2;
+		if (iSpacingY < 2)
+			iSpacingY = 2;
+		_mfDebugGridSpacing[0] = float(iSpacingX);
+		_mfDebugGridSpacing[1] = float(iSpacingY);
+		_mfDebugGridTextAlpha = 1.0f;
+	}
+
+	bool SCApplicationManager::debugGridShown(void) const
+	{
+		return _mbDebugGridShow;
+	}
+
+	CVector2f SCApplicationManager::debugGridSpacing(void) const
+	{
+		CVector2f vSpacing;
+		vSpacing.x = float(_mfDebugGridSpacing[0]);
+		vSpacing.y = float(_mfDebugGridSpacing[1]);
+		return vSpacing;
+	}
+
+	void SCApplicationManager::_debugGridRender(void)
+	{
+		if (!_mbDebugGridShow)
+			return;
+
+		// Obtain required resources needed to render the node's as lines.
+		CResourceVertexBufferLine* pLine = x->pResource->getVertexBufferLine(x->pResource->defaultRes.vertexbufferLine_default);
+		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_VBCPT);
+		CResourceTexture2DFromFile* pTexture = x->pResource->getTexture2DFromFile(x->pResource->defaultRes.texture2DFromFile_default_white);
+
+		// Setup orthographic projection matrix
+		CMatrix matrixWorld;
+		CMatrix matrixView;
+		CMatrix matrixProjection;
+		matrixProjection.setProjectionOrthographic(0.0f, x->pWindow->getDimensions().x, 0.0f, x->pWindow->getDimensions().y);
+
+		// Bind shader and set uniforms
+		pShader->bind();
+		pShader->setMat4("matrixWorld", matrixWorld);
+		pShader->setMat4("matrixView", matrixView);
+		pShader->setMat4("matrixProjection", matrixProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
+
+		// And bind the texture...
+		pTexture->bind();
+
+		// Set the line vertex buffer rendering mode
+		pLine->setDrawModeAsLineList();
+		pLine->removeGeom();
+
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Setup vertex we'll be using to render with
+		CResourceVertexBufferLine::Vertex vertex;
+		vertex.colour.set(1.0f, 1.0f, 1.0f, 0.2f);
+		for (float fX = 0; fX < x->pWindow->getDimensions().x; fX += _mfDebugGridSpacing[0])
+		{
+			// Vertical line going from top to bottom
+			vertex.position.x = fX;
+			vertex.position.y = 0.0f;
+			pLine->addLinePoint(vertex);
+
+			vertex.position.y = x->pWindow->getDimensions().y;
+			pLine->addLinePoint(vertex);
+		}
+		for (float fY = 0; fY < x->pWindow->getDimensions().y; fY += _mfDebugGridSpacing[1])
+		{
+			// Horizontal line going from left to right
+			vertex.position.x = 0.0f;
+			vertex.position.y = fY;
+			pLine->addLinePoint(vertex);
+
+			vertex.position.x = x->pWindow->getDimensions().x;
+			pLine->addLinePoint(vertex);
+		}
+
+		// Send geometry to be rendered
+		pLine->update();
+		pLine->render();
+
+		// Cleanup
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+		pTexture->unbind();
+		pShader->unbind();
+
+		// Render text to show debug grid settings
+		_mfDebugGridTextAlpha -= _mTimer.getSecondsPast() * 1000.0f;
+		static float temp = 0;
+
+		if (_mfDebugGridTextAlpha < 0.0f)
+			_mfDebugGridTextAlpha = 0.0f;
+		if (_mfDebugGridTextAlpha > 0.0f)
+		{
+			CResourceFont* pFont = x->pResource->getFont(x->pResource->defaultRes.font_default);
+			std::string strText = "Grid settings.";
+			CVector2f vScreenDims = x->pWindow->getDimensions();
+			CVector2f vScreenTextPos = x->pWindow->getDimensions() * 0.5f;
+			pFont->printCentered(strText, (int)vScreenTextPos.x, (int)vScreenTextPos.y, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(1.0f, 1.0f, 1.0f, _mfDebugGridTextAlpha));
+			vScreenTextPos.y += pFont->getTextHeight();
+			strText = "Spacing X and Y: " + std::to_string(int(_mfDebugGridSpacing[0]));
+			pFont->printCentered(strText, (int)vScreenTextPos.x, (int)vScreenTextPos.y, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(1.0f, 1.0f, 1.0f, _mfDebugGridTextAlpha));
+
+			
 		}
 	}
 }

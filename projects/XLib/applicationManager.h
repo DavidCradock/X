@@ -57,6 +57,16 @@ namespace X
 
 		// Exits the main loop and shutdown
 		void shutdown(void);
+
+		// Toggles rendering of a debug grid of lines.
+		void debugShowGrid(bool bShowGrid, int iSpacingX = 10, int iSpacingY = 10);
+
+		// Returns whether debug grid is enabled or not
+		bool debugGridShown(void) const;
+
+		// Returns currently set debug grid spacing values
+		CVector2f debugGridSpacing(void) const;
+
 	private:
 		// Calls all added applications' initOnce() methods
 		void callAllApps_initOnce(void);
@@ -68,5 +78,11 @@ namespace X
 		mutable std::map<std::string, CApplicationBase*> _mApplications;	// Hash map which holds each named application
 		std::string _mstrCurrentApp;										// Application name of the current application.
 		CTimer _mTimer;														// Used to update application running time.
+
+		// debugShowGrid
+		void _debugGridRender(void);	// Renders the debug grid
+		bool _mbDebugGridShow;			// Whether the render the debug grid or not
+		float _mfDebugGridSpacing[2];		// Spacing values for the debug grid
+		float _mfDebugGridTextAlpha;	// Set to 1 on call to debugShowGrid
 	};
 }

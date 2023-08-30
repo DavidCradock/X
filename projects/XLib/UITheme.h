@@ -197,6 +197,8 @@ namespace X
 //			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 //			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
+			float windowScrollbarHorizontalHeight;	// Height of a window's horizontal scrollbar
+			float windowScrollbarVerticalWidth;		// Width of a window's vertical scrollbar
 		};
 
 		// Struct to hold all settings for the theme

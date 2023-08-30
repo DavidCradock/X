@@ -39,6 +39,13 @@ namespace X
 		// The variables are named... ResoureType_Name so for example, defaultRes.framebuffer_backbuffer_FB holds the name of a framebuffer which is used as the backbuffer.
 		struct SDefaultResourceNames
 		{
+			std::string depthbuffer_shadows;					// Holds the name "X:shadows" of the default depth buffer which is used by scene managers to render shadows
+			std::string framebuffer_backbuffer_FB;				// Holds the name "X:backbuffer" of the default framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
+			std::string framebuffer_gui;						// Holds the name "X:gui" of the default framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
+			std::string framebuffer_guitooltipFB;				// Holds the name "X:guitooltipFB" of the default framebuffer the GUI tooltips are rendered to
+			std::string framebuffer_ui;							// Holds the name "X:ui" of the default framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
+//			std::string framebuffer_uitooltipFB;				// Holds the name "X:uitooltipFB" of the default framebuffer the UI tooltips are rendered to
+			std::string font_default;							// Holds the name "X:default" of the font object used for quick font rendering, usually used by debug code.
 			std::string shader_DRNE;							// Holds the name "X:DRNE" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
 			std::string shader_DRNE_noshadows;					// Holds the name "X:DRNE_noshadows" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
 			std::string shader_depthbuffer_debug;				// Holds the name "X:depthbuffer_debug" of the default shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
@@ -54,17 +61,12 @@ namespace X
 			std::string texture2DFromFile_default_emission;		// Holds the name "X:default_emission" of the default texture which is black for emission, used if not set
 			std::string texture2DFromFile_default_normal;		// Holds the name "X:default_normal" of the default texture which is a flat normal map, used if not set
 			std::string texture2DFromFile_default_roughness;	// Holds the name "X:default_roughness" of the default texture which is black for roughness used if not set
-			std::string depthbuffer_shadows;					// Holds the name "X:shadows" of the default depth buffer which is used by scene managers to render shadows
 			std::string vertexbufferCPT_default;				// Holds the name "X:default" of the default vertex buffer CPT resource
 			std::string vertexbufferCPT2_default;				// Holds the name "X:default" of the default vertex buffer CPT2 resource
 			std::string vertexbufferCPTInst_default;			// Holds the name "X:default" of the default vertex buffer CPT instanced resource used for rendering various things such as the C2DParticleSystem's particles
 			std::string vertexbufferCPTBNT_default;				// Holds the name "X:default" of the default vertex buffer CPTBNT resource used for rendering vertices with computed Binormal, Normal and Tangents used for normal mapping.
 			std::string vertexbufferLine_default;				// Holds the name "X:default" of the default vertex buffer line resource used by the GUI when rendering lines
-			std::string framebuffer_backbuffer_FB;				// Holds the name "X:backbuffer" of the default framebuffer stuff is rendered to and then at the end of the program loop, rendered to the backbuffer
-			std::string framebuffer_gui;						// Holds the name "X:gui" of the default framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
-			std::string framebuffer_guitooltipFB;				// Holds the name "X:guitooltipFB" of the default framebuffer the GUI tooltips are rendered to
-			std::string framebuffer_ui;							// Holds the name "X:ui" of the default framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
-//			std::string framebuffer_uitooltipFB;				// Holds the name "X:uitooltipFB" of the default framebuffer the UI tooltips are rendered to
+			
 		};
 		SDefaultResourceNames defaultRes;	// A struct holding the names of all default resources added to the resource manager
 

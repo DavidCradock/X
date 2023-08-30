@@ -9,11 +9,9 @@ namespace X
 	{
 		_mstrThemename = "default";
 		_mvPosition.set(0, 0);
-		_mvDimensions.set(128, 128);
+		_mvContainersWidgetAreaDimensions.set(100, 100);
 		_mbVisible = true;
 
-		// Scrollbars
-		
 	}
 
 	CUIContainer::~CUIContainer()
@@ -33,12 +31,13 @@ namespace X
 
 	void CUIContainer::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
+		_mvContainersWidgetAreaDimensions = vDimensions;
+		_computeScrollbars();
 	}
 
 	CVector2f CUIContainer::getDimensions(void) const
 	{
-		return _mvDimensions;
+		return _mvContainersWidgetAreaDimensions;
 	}
 
 	void CUIContainer::setVisible(bool bVisible)
@@ -118,6 +117,9 @@ namespace X
 		{
 			_mmanScrollbars.get(i)->render(this, bIsWindow, pTheme, pVB);
 		}
+		// Render the two scrollbars used for scrolling through contents of the container
+		_mScrollbarH.render(this, false, pTheme, pVB);
+		_mScrollbarV.render(this, false, pTheme, pVB);
 
 		pVB->update();
 		pVB->render();
@@ -153,7 +155,11 @@ namespace X
 
 	void CUIContainer::themeNameSet(const std::string& strThemeToUse)
 	{
-		_mstrThemename = strThemeToUse;
+		if (_mstrThemename != strThemeToUse)
+		{
+			_mstrThemename = strThemeToUse;
+			_computeScrollbars();
+		}
 	}
 
 	void CUIContainer::widgetRemoveAll(void)
@@ -248,23 +254,37 @@ namespace X
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		CImageAtlasDetails idWindowL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeL);
+		CImageAtlasDetails idWindowT = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeT);
+
 		CImageAtlasDetails idScrollbarTL = pAtlas->getImageDetails(pSettings->images.scrollbarBG.colour.cornerTL);
 		CImageAtlasDetails idScrollbarL = pAtlas->getImageDetails(pSettings->images.scrollbarBG.colour.edgeL);
 		CImageAtlasDetails idScrollbarT = pAtlas->getImageDetails(pSettings->images.scrollbarBG.colour.edgeT);
 		CImageAtlasDetails idScrollbarBR = pAtlas->getImageDetails(pSettings->images.scrollbarBG.colour.cornerBR);
 		
 		// Horizontal scrollbar
-		CVector2f vDims;
 		CVector2f vPos;
-		vDims.x = _mvDimensions.x;
-		vDims.y = idScrollbarTL.vDims.y + idScrollbarL.vDims.y + idScrollbarBR.vDims.y;
-		_mScrollbarH.setDimensions(vDims);
-		vPos.x = 0;
-		vPos.y = _mvDimensions.y;
+		vPos.x = idWindowL.vDims.x;
+		// If at 0, and is a window, this renders the scroll bar right at the top, over the title bar.
+		// What we want is to render the scrollbar so that it's top edge is beneath the widget area's bottom edge.
+		// To do this, we need to offset y by window titlebar height and the dimensions of the widget area
+		vPos.y = idWindowT.vDims.y + _mvContainersWidgetAreaDimensions.y;
 		_mScrollbarH.setPosition(vPos);
 
+		CVector2f vDims;
+		vDims.x = _mvContainersWidgetAreaDimensions.x;
+		vDims.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		_mScrollbarH.setDimensions(vDims);
+		
 		// Vertical scrollbar
-//		vDims.x = idScrollbarTL.vDims.x + idScrollbarT.vDims.x +
+		// Offset by left edge of window border + dims of widget area
+		vPos.x = idWindowL.vDims.x + _mvContainersWidgetAreaDimensions.x;
+		vPos.y = idWindowT.vDims.y;	// Offset down from titlebar
+		_mScrollbarV.setPosition(vPos);
+
+		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;
+		vDims.y = _mvContainersWidgetAreaDimensions.y;
+		_mScrollbarV.setDimensions(vDims);
 
 	}
 }

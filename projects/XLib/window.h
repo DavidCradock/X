@@ -93,6 +93,7 @@ namespace X
 
 		// Returns dimensions of the mouse cursor.
 		CVector2f getMouseCursorDimensions(void) const;
+
 	private:
 		WNDCLASS _mWindowClass;			// Window class used to create the window
 		HINSTANCE _mhInstance;			// Application instance handle

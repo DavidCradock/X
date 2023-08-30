@@ -525,6 +525,13 @@ namespace X
 //		pRM->addFramebuffer(defaultRes.framebuffer_uitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents
 
 		/******************************************************************************************************************************
+		// Fonts
+		******************************************************************************************************************************/
+		// A font used for debug rendering of text
+		defaultRes.font_default = "X:default";
+		pRM->addFont(defaultRes.font_default, "data/X/fonts/satoshi_22", true);
+
+		/******************************************************************************************************************************
 		// Shaders
 		******************************************************************************************************************************/
 		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer

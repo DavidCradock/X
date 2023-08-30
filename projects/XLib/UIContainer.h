@@ -9,7 +9,6 @@ namespace X
 {
 	// A container object for the user interface.
 	// A container object allows us to add all the various UI widgets to it.
-	// A container is a CUIBaseWidget which stores position, dimensions and visibility.
 	class CUIContainer
 	{
 		friend class SCUIManager;
@@ -19,25 +18,21 @@ namespace X
 		~CUIContainer();
 
 		// Sets the position of this container.
-		// This is the top left position of the widget area, where widgets can be placed.
+		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
+		// If the container is a window, then this is the position of the window's top left corner of it's borders.
 		void setPosition(const CVector2f& vPosition);
 
 		// Returns the position of this container.
-		// This is the top left position of the widget area, where widgets can be placed.
 		CVector2f getPosition(void) const;
 
-		// Sets the dimensions of this container.
-		// This is the dimensions of the area available for widgets to be added to.
-		// The actual container's dimensions are dependant upon the theme it's currently using.
-		// The actual dimensions are the dimensions given here PLUS the width/height of the
-		// horizontal and vertical scrollbars which are added to the bottom and right edge of the
-		// container for scrolling of widgets into view if their positions are greater than the
-		// dimensions given here.
+		// This sets _mvContainersWidgetAreaDimensions which is the dimensions of the container's widget area.
+		// The actual container's dimensions onscreen will be larger than this if it is a window,
+		// as a window has borders and the two scrollbars.
 		void setDimensions(const CVector2f& vDimensions);
 
 		// Returns the dimensions of this container.
-		// This is the dimensions of the area available for widgets to be added to, not including
-		// the additional dimensions added for the container's two scroll bars.
+		// This is the dimensions of the area available for widgets to be added to.
+		// If widgets are placed so that they are outside of this area, the two scrollbars are shown which allows scrolling of the contents.
 		CVector2f getDimensions(void) const;
 
 		// Sets whether this container is visible or not
@@ -110,11 +105,17 @@ namespace X
 		// Removes all scrollbars from this container
 		void scrollbarRemoveAll(void);
 	protected:
-		CVector2f _mvDimensions;	// Dimensions of the container
-		CVector2f _mvPosition;		// Position of the container.
-		bool _mbVisible;			// Whether this container is shown or not
+		// Dimensions of the container's widget area, set by setDimensions();
+		CVector2f _mvContainersWidgetAreaDimensions;
+		
+		// Position of the container.
+		CVector2f _mvPosition;
 
-		std::string _mstrThemename;	// Theme name used by this container ("default" upon construction)
+		// Whether this container is shown or not
+		bool _mbVisible;
+
+		// Theme name used by this container ("default" upon construction)
+		std::string _mstrThemename;
 		CManagerNoRef<CUIButton> _mmanButtons;			// Manager holding each CUIButton widget
 		CManagerNoRef<CUIScrollbar> _mmanScrollbars;	// Manager holding each CUIScrollbar widget
 
@@ -129,7 +130,7 @@ namespace X
 		// the dimensions of the container.
 		CUIScrollbar _mScrollbarV;
 
-		// Updates the two scrollbar positions and dimensions and such.
+		// Updates the two scrollbar positions and dimensions
 		// Called if the theme or dimensions change.
 		void _computeScrollbars(void);
 	};

@@ -256,6 +256,8 @@ namespace X
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
+		_mSettings.floats.windowScrollbarHorizontalHeight = 24.0f;
+		_mSettings.floats.windowScrollbarVerticalWidth = 24.0f;
 
 		// Fonts
 		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";

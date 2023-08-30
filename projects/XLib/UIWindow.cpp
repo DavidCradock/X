@@ -27,7 +27,6 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-		// Now render the window's borders
 		_renderBorders();
 
 		// Render all of the widgets
@@ -48,7 +47,7 @@ namespace X
 		vTextPos.x += idTL.vDims.x;
 		vTextPos.y += idTL.vDims.y * 0.5f;
 		vTextPos.y -= fTextHeight * 0.5f;
-		pFont->print(_mstrTitlebarText, vTextPos.x, vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
+		pFont->print(_mstrTitlebarText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
 	}
 
 	void CUIWindow::_renderBorders(void)
@@ -110,6 +109,17 @@ namespace X
 		CImageAtlasDetails idNormR = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeR);
 		CImageAtlasDetails idNormT = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeT);
 
+		// When rendering these borders, we need to add the additional space for the scrollbars.
+		// The widgets' area remains the same.
+		// The scrollbars are rendered to the right and below the widget area, so we need to increase
+		// the dimensions of the centre cell of the window and move the right and bottom borders along
+		// to make room for those scrollbars.
+		// Let's store the width and height of those scroll bars and use them as an offset and use it below
+		// to position everything correctly...
+		CVector2f vScrollbarOffset;
+		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+
 		CColour col = pSettings->colours.windowBGNotFocused;
 		if (_mbInFocus)
 			col = pSettings->colours.windowBGFocused;
@@ -130,7 +140,7 @@ namespace X
 		// Top edge
 		vPos.x = _mvPosition.x + idColTL.vDims.x;
 		vPos.y = _mvPosition.y;
-		vDims.x = _mvDimensions.x;
+		vDims.x = _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
 		vDims.y = idColT.vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColT.sTexCoords.vBL,
@@ -143,7 +153,7 @@ namespace X
 			idNormT.sTexCoords.vTL);
 
 		// Top right corner
-		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvDimensions.x;
+		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
 		vPos.y = _mvPosition.y;
 		vDims = idColTR.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
@@ -160,7 +170,7 @@ namespace X
 		vPos.x = _mvPosition.x;
 		vPos.y = _mvPosition.y + idColTL.vDims.y;
 		vDims.x = idColL.vDims.x;
-		vDims.y = _mvDimensions.y;
+		vDims.y = _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColL.sTexCoords.vBL,
 			idColL.sTexCoords.vBR,
@@ -174,7 +184,8 @@ namespace X
 		// Centre
 		vPos.x = _mvPosition.x + idColTL.vDims.x;
 		vPos.y = _mvPosition.y + idColTL.vDims.y;
-		vDims = _mvDimensions;
+		vDims = _mvContainersWidgetAreaDimensions;
+		vDims += vScrollbarOffset;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColC.sTexCoords.vBL,
 			idColC.sTexCoords.vBR,
@@ -186,10 +197,10 @@ namespace X
 			idNormC.sTexCoords.vTL);
 
 		// Right edge
-		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvDimensions.x;
+		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
 		vPos.y = _mvPosition.y + idColTL.vDims.y;
 		vDims.x = idColR.vDims.x;
-		vDims.y = _mvDimensions.y;
+		vDims.y = _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColR.sTexCoords.vBL,
 			idColR.sTexCoords.vBR,
@@ -202,7 +213,7 @@ namespace X
 
 		// Bottom left corner
 		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		vDims = idColBL.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBL.sTexCoords.vBL,
@@ -216,8 +227,8 @@ namespace X
 
 		// Bottom edge
 		vPos.x = _mvPosition.x + idColBL.vDims.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
-		vDims.x = _mvDimensions.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
+		vDims.x = _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
 		vDims.y = idColB.vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColB.sTexCoords.vBL,
@@ -230,8 +241,8 @@ namespace X
 			idNormB.sTexCoords.vTL);
 
 		// Bottom right corner
-		vPos.x = _mvPosition.x + idColBL.vDims.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvDimensions.y;
+		vPos.x = _mvPosition.x + idColBL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
+		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		vDims = idColBR.vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBR.sTexCoords.vBL,
@@ -259,7 +270,7 @@ namespace X
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
 		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
-		CVector2f vDims = _mvDimensions;
+		CVector2f vDims = _mvContainersWidgetAreaDimensions;
 		vDims.x += idTL.vDims.x + idBR.vDims.x;
 		vDims.y += idTL.vDims.y + idBR.vDims.y;
 		return vDims;
@@ -275,7 +286,7 @@ namespace X
 		CRect area(
 			int(_mvPosition.x),
 			int(_mvPosition.y),
-			int(_mvPosition.x + _mvDimensions.x + idTL.vDims.x + idTR.vDims.x),
+			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL.vDims.x + idTR.vDims.x),
 			int(_mvPosition.y + idTL.vDims.y));
 		return area;
 	}
