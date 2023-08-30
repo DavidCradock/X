@@ -19,14 +19,11 @@ namespace X
 		widgetRemoveAll();
 	}
 
-	void CUIContainer::setPosition(const CVector2f& vPosition)
+	void CUIContainer::setDimensions(float fX, float fY)
 	{
-		_mvPosition = vPosition;
-	}
-
-	CVector2f CUIContainer::getPosition(void) const
-	{
-		return _mvPosition;
+		_mvContainersWidgetAreaDimensions.x = fX;
+		_mvContainersWidgetAreaDimensions.y = fY;
+		_computeScrollbars();
 	}
 
 	void CUIContainer::setDimensions(const CVector2f& vDimensions)
@@ -38,6 +35,22 @@ namespace X
 	CVector2f CUIContainer::getDimensions(void) const
 	{
 		return _mvContainersWidgetAreaDimensions;
+	}
+
+	void CUIContainer::setPosition(float fX, float fY)
+	{
+		_mvPosition.x = fX;
+		_mvPosition.y = fY;
+	}
+
+	void CUIContainer::setPosition(const CVector2f& vPosition)
+	{
+		_mvPosition = vPosition;
+	}
+
+	CVector2f CUIContainer::getPosition(void) const
+	{
+		return _mvPosition;
 	}
 
 	void CUIContainer::setVisible(bool bVisible)

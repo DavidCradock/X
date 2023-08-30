@@ -25,6 +25,12 @@ namespace X
 
 	}
 
+	void CUIScrollbar::setDimensions(float fX, float fY)
+	{
+		_mvDimensions.x = fX;
+		_mvDimensions.y = fY;
+	}
+
 	void CUIScrollbar::setDimensions(const CVector2f& vDimensions)
 	{
 		_mvDimensions = vDimensions;
@@ -33,6 +39,12 @@ namespace X
 	CVector2f CUIScrollbar::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	void CUIScrollbar::setPosition(float fX, float fY)
+	{
+		_mvPosition.x = fX;
+		_mvPosition.y = fY;
 	}
 
 	void CUIScrollbar::setPosition(const CVector2f& vPosition)

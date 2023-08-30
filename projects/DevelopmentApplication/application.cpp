@@ -56,6 +56,12 @@ namespace X
 		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
 //		CUIScrollbar* pScrollbar = pWindow->scrollbarAdd("100x24", 0, 0, 100, 24);
 
+		// Add container for debugging
+		CUIContainer* pContainer = x->pUI->containerAdd("container0 100x100x100x100");
+		pContainer->setDimensions(CVector2f(100, 100));
+		pContainer->setPosition(100, 100);
+		pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
+
 	}
 
 	void CApplication::onStart(void)

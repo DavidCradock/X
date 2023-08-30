@@ -15,10 +15,16 @@ namespace X
 		~CUIScrollbar();
 
 		// Sets the dimensions of the widget.
+		void setDimensions(float fX, float fY);
+
+		// Sets the dimensions of the widget.
 		void setDimensions(const CVector2f& vDimensions);
 
 		// Returns the dimensions of the widget.
 		CVector2f getDimensions(void) const;
+
+		// Sets the position of this widget in relation to it's container.
+		void setPosition(float fX, float fY);
 
 		// Sets the position of this widget in relation to it's container.
 		void setPosition(const CVector2f& vPosition);

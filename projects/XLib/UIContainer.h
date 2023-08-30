@@ -17,13 +17,10 @@ namespace X
 
 		~CUIContainer();
 
-		// Sets the position of this container.
-		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
-		// If the container is a window, then this is the position of the window's top left corner of it's borders.
-		void setPosition(const CVector2f& vPosition);
-
-		// Returns the position of this container.
-		CVector2f getPosition(void) const;
+		// This sets _mvContainersWidgetAreaDimensions which is the dimensions of the container's widget area.
+		// The actual container's dimensions onscreen will be larger than this if it is a window,
+		// as a window has borders and the two scrollbars.
+		void setDimensions(float fX, float fY);
 
 		// This sets _mvContainersWidgetAreaDimensions which is the dimensions of the container's widget area.
 		// The actual container's dimensions onscreen will be larger than this if it is a window,
@@ -34,6 +31,19 @@ namespace X
 		// This is the dimensions of the area available for widgets to be added to.
 		// If widgets are placed so that they are outside of this area, the two scrollbars are shown which allows scrolling of the contents.
 		CVector2f getDimensions(void) const;
+
+		// Sets the position of this container.
+		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
+		// If the container is a window, then this is the position of the window's top left corner of it's borders.
+		void setPosition(float fX, float fY);
+
+		// Sets the position of this container.
+		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
+		// If the container is a window, then this is the position of the window's top left corner of it's borders.
+		void setPosition(const CVector2f& vPosition);
+
+		// Returns the position of this container.
+		CVector2f getPosition(void) const;
 
 		// Sets whether this container is visible or not
 		void setVisible(bool bVisible);

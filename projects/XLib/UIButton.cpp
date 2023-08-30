@@ -12,12 +12,17 @@ namespace X
 		setDimensions(CVector2f(200, 48));
 		setPosition(CVector2f(0, 0));
 		setVisible(true);
-
 	}
 
 	CUIButton::~CUIButton()
 	{
 
+	}
+
+	void CUIButton::setDimensions(float fX, float fY)
+	{
+		_mvDimensions.x = fX;
+		_mvDimensions.y = fY;
 	}
 
 	void CUIButton::setDimensions(const CVector2f& vDimensions)
@@ -28,6 +33,12 @@ namespace X
 	CVector2f CUIButton::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	void CUIButton::setPosition(float fX, float fY)
+	{
+		_mvPosition.x = fX;
+		_mvPosition.y = fY;
 	}
 
 	void CUIButton::setPosition(const CVector2f& vPosition)
