@@ -34,7 +34,7 @@ namespace X
 		CUIContainer::render(true);
 
 		// Render the title bar text
-		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
+		CUITheme* pTheme = x->pUI->themeGet(_mstrThemename);
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceFont* pFont = x->pResource->getFont(pSettings->fonts.windowTitlebar);
 		CImageAtlasDetails idTL = pTheme->getTextureAtlas()->getImageDetails(pSettings->images.windowBG.colour.cornerTL);

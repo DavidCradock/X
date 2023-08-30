@@ -126,6 +126,14 @@ namespace X
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
+
+
+		// Render font stuff
+		// For each button object, render non-font stuff
+		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
+		{
+			_mmanButtons.get(i)->renderFonts(this, bIsWindow, pTheme);
+		}
 	}
 
 	void CUIContainer::renderTooltips(void)
@@ -175,7 +183,7 @@ namespace X
 		// Set settings for new object
 		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
 		pNewObject->setPosition(CVector2f(fPosX, fPosY));
-
+		pNewObject->setText(strName);
 		return pNewObject;
 	}
 

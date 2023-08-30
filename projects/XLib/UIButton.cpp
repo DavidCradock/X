@@ -53,11 +53,31 @@ namespace X
 	void CUIButton::render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
-		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+//		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Add geometry for the 9 grid cells
 		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.buttonBG, pContainer, bContainerIsWindow, pTheme, pVB);
 
+	}
+
+	void CUIButton::renderFonts(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	{
+		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
+		CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.button);
+		
+		CColour colour;
+		colour = pThemeSettings->colours.buttonBGUp;
+		CVector2f vTextPos = pContainer->getPosition();
+		vTextPos += _mvPosition;
+		vTextPos.x += _mvDimensions.x * 0.5f;
+		vTextPos.y += _mvDimensions.y * 0.5f;
+		if (bContainerIsWindow)
+		{
+			CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+			CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL);
+			vTextPos += idTL.vDims;
+		}
+		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
 	}
 
 	void CUIButton::update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
@@ -77,5 +97,13 @@ namespace X
 //		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
+	void CUIButton::setText(const std::string& strText)
+	{
+		_mstrText = strText;
+	}
 
+	std::string CUIButton::getText(void) const
+	{
+		return _mstrText;
+	}
 }

@@ -36,15 +36,20 @@ namespace X
 		void render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 
 		// Render this object's font stuff
-		//void renderFonts()
+		void renderFonts(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme);
 	
 		// Update this object
 		void update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme);
 
+		// Sets the text string to be rendered over the top of the button
+		void setText(const std::string& strText);
+
+		// Returns the text string that's used to render the text over this button.
+		std::string getText(void) const;
 	private:
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
 		bool _mbVisible;					// Whether this widget is visible or not.
-
+		std::string _mstrText;				// Text string to be rendered
 	};
 }
