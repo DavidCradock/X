@@ -26,7 +26,7 @@ namespace X
 		// For each container
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
 		{
-			_mmanContainers.get(i)->render(false);
+			_mmanContainers.get(i)->render();
 		}
 
 		// For each window, render with the ones at the back, first.
@@ -62,7 +62,7 @@ namespace X
 		// For each container, update all of it's widgets
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
 		{
-			_mmanContainers.get(i)->update(fTimeDeltaSeconds, false);
+			_mmanContainers.get(i)->update(fTimeDeltaSeconds);
 		}
 
 		// For each window
@@ -476,7 +476,7 @@ namespace X
 		}
 	}
 
-	void SCUIManager::_addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void SCUIManager::_addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
@@ -506,7 +506,7 @@ namespace X
 		// Regardless of whether the container is a window or not, we still need to offset by the container's position...
 		vPos += pContainer->getPosition();
 		// The set position of a window however is the top left position of the window along with it's borders and therefore the widget's position must be offset by this.
-		if (bContainerIsWindow)
+		if (pContainer->_mbContainerIsWindow)
 			vPos += pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL).vDims;
 
 		CVector2f vDims;

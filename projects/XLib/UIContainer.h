@@ -12,6 +12,8 @@ namespace X
 	class CUIContainer
 	{
 		friend class SCUIManager;
+		friend class CUIButton;
+		friend class CUIScrollbar;
 	public:
 		CUIContainer();
 
@@ -52,10 +54,10 @@ namespace X
 		bool getVisible(void) const;
 
 		// Updates this container
-		void update(float fTimeDeltaSec, bool bIsWindow = false);
+		void update(float fTimeDeltaSec);
 
 		// Render this container's widgets
-		void render(bool bIsWindow = false);
+		void render(void);
 
 		// Render this container's widget's tooltips
 		void renderTooltips(void);
@@ -123,6 +125,11 @@ namespace X
 
 		// Whether this container is shown or not
 		bool _mbVisible;
+
+		// Set via CUIContainer or CUIWindow constructors.
+		// Used by _computeScrollbars and other areas to
+		// determine whether the container is a window or not.
+		bool _mbContainerIsWindow;
 
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;

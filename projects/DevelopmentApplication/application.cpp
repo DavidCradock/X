@@ -46,13 +46,13 @@ namespace X
 
 		// Setup UserInterface theme
 		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
-		pWindow->setDimensions(CVector2f(240, 240));
-		pWindow->scrollbarAdd("scrollbar", 10, 10, 100, 100, 0.05f);
-		pWindow->setPosition(CVector2f((x->pWindow->getDimensions().x / 2) - 160, (x->pWindow->getDimensions().y / 2) - 120));
+		pWindow->setDimensions(CVector2f(200, 200));
+		pWindow->scrollbarAdd("scrollbar", 0, 0, 100, 100, 0.05f);
+		pWindow->setPosition(1400-16, 800-30);
 
 		pWindow = x->pUI->windowAdd("window2 300x300");
 		pWindow->setDimensions(CVector2f(300, 300));
-		pWindow->setPosition(CVector2f(0, 0));
+		pWindow->setPosition(CVector2f(400-16, 400-30));
 		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
 //		CUIScrollbar* pScrollbar = pWindow->scrollbarAdd("100x24", 0, 0, 100, 24);
 
@@ -62,6 +62,7 @@ namespace X
 		pContainer->setPosition(100, 100);
 		pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
 
+		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 	}
 
 	void CApplication::onStart(void)

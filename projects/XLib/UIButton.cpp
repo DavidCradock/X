@@ -61,17 +61,17 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIButton::render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void CUIButton::render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 //		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Add geometry for the 9 grid cells
-		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.buttonBG, pContainer, bContainerIsWindow, pTheme, pVB);
+		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.buttonBG, pContainer, pTheme, pVB);
 
 	}
 
-	void CUIButton::renderFonts(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	void CUIButton::renderFonts(CUIContainer* pContainer, CUITheme* pTheme)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 		CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.button);
@@ -82,7 +82,7 @@ namespace X
 		vTextPos += _mvPosition;
 		vTextPos.x += _mvDimensions.x * 0.5f;
 		vTextPos.y += _mvDimensions.y * 0.5f;
-		if (bContainerIsWindow)
+		if (pContainer->_mbContainerIsWindow)
 		{
 			CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 			CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.windowBG.colour.cornerTL);
@@ -91,7 +91,7 @@ namespace X
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
 	}
 
-	void CUIButton::update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	void CUIButton::update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme)
 	{
 		// Return name of the window, or container which the mouse cursor is over
 		std::string strMouseIsOver = x->pUI->getMouseIsOver();

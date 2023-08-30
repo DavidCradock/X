@@ -39,10 +39,10 @@ namespace X
 		bool getVisible(void);
 
 		// Render this object's non-font stuff
-		void render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
+		void render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 
 		// Update this object
-		void update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme);
+		void update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme);
 
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);

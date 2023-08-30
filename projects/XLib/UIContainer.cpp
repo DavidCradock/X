@@ -11,7 +11,7 @@ namespace X
 		_mvPosition.set(0, 0);
 		_mvContainersWidgetAreaDimensions.set(100, 100);
 		_mbVisible = true;
-
+		_mbContainerIsWindow = false;
 	}
 
 	CUIContainer::~CUIContainer()
@@ -63,7 +63,7 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIContainer::update(float fTimeDeltaSec, bool bIsWindow)
+	void CUIContainer::update(float fTimeDeltaSec)
 	{
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
 //		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
@@ -71,17 +71,17 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->update(fTimeDeltaSec, this, bIsWindow, pTheme);
+			_mmanButtons.get(i)->update(fTimeDeltaSec, this, pTheme);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this, bIsWindow, pTheme);
+			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this, pTheme);
 		}
 	}
 
-	void CUIContainer::render(bool bIsWindow)
+	void CUIContainer::render(void)
 	{
 		if (!_mbVisible)
 			return;
@@ -122,17 +122,17 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->render(this, bIsWindow, pTheme, pVB);
+			_mmanButtons.get(i)->render(this, pTheme, pVB);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->render(this, bIsWindow, pTheme, pVB);
+			_mmanScrollbars.get(i)->render(this, pTheme, pVB);
 		}
 		// Render the two scrollbars used for scrolling through contents of the container
-		_mScrollbarH.render(this, false, pTheme, pVB);
-		_mScrollbarV.render(this, false, pTheme, pVB);
+		_mScrollbarH.render(this, pTheme, pVB);
+		_mScrollbarV.render(this, pTheme, pVB);
 
 		pVB->update();
 		pVB->render();
@@ -147,7 +147,7 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->renderFonts(this, bIsWindow, pTheme);
+			_mmanButtons.get(i)->renderFonts(this, pTheme);
 		}
 	}
 
@@ -277,11 +277,8 @@ namespace X
 		
 		// Horizontal scrollbar
 		CVector2f vPos;
-		vPos.x = idWindowL.vDims.x;
-		// If at 0, and is a window, this renders the scroll bar right at the top, over the title bar.
-		// What we want is to render the scrollbar so that it's top edge is beneath the widget area's bottom edge.
-		// To do this, we need to offset y by window titlebar height and the dimensions of the widget area
-		vPos.y = idWindowT.vDims.y + _mvContainersWidgetAreaDimensions.y;
+		vPos.x = 0;
+		vPos.y = _mvContainersWidgetAreaDimensions.y;
 		_mScrollbarH.setPosition(vPos);
 
 		CVector2f vDims;
@@ -291,8 +288,8 @@ namespace X
 		
 		// Vertical scrollbar
 		// Offset by left edge of window border + dims of widget area
-		vPos.x = idWindowL.vDims.x + _mvContainersWidgetAreaDimensions.x;
-		vPos.y = idWindowT.vDims.y;	// Offset down from titlebar
+		vPos.x = _mvContainersWidgetAreaDimensions.x;
+		vPos.y = 0;
 		_mScrollbarV.setPosition(vPos);
 
 		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;

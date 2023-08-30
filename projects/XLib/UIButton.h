@@ -39,13 +39,13 @@ namespace X
 		bool getVisible(void);
 
 		// Render this object's non-font stuff
-		void render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
+		void render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
 
 		// Render this object's font stuff
-		void renderFonts(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme);
+		void renderFonts(CUIContainer* pContainer, CUITheme* pTheme);
 	
 		// Update this object
-		void update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme);
+		void update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme);
 
 		// Sets the text string to be rendered over the top of the button
 		void setText(const std::string& strText);

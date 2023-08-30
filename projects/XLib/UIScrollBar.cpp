@@ -67,16 +67,16 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIScrollbar::render(CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void CUIScrollbar::render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
 	{
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		// Add geometry for the 9 grid cells
-		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pContainer, bContainerIsWindow, pTheme, pVB);
+		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pContainer, pTheme, pVB);
 
 	}
 
-	void CUIScrollbar::update(float fTimeDeltaSec, CUIContainer* pContainer, bool bContainerIsWindow, CUITheme* pTheme)
+	void CUIScrollbar::update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme)
 	{
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 

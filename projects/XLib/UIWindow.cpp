@@ -9,6 +9,7 @@ namespace X
 	{
 		_mbInFocus = false;
 		_mbVisible = true;
+		_mbContainerIsWindow = true;
 	}
 
 	CUIWindow::~CUIWindow()
@@ -19,7 +20,7 @@ namespace X
 	void CUIWindow::update(float fTimeDeltaSec)
 	{
 		// Update all of the widgets
-		CUIContainer::update(fTimeDeltaSec, true);
+		CUIContainer::update(fTimeDeltaSec);
 	}
 
 	void CUIWindow::render(void)
@@ -30,7 +31,7 @@ namespace X
 		_renderBorders();
 
 		// Render all of the widgets
-		CUIContainer::render(true);
+		CUIContainer::render();
 
 		// Render the title bar text
 		CUITheme* pTheme = x->pUI->themeGet(_mstrThemename);
