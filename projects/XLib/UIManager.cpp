@@ -38,7 +38,6 @@ namespace X
 		}
 
 		pUIFB->unbindAsRenderTarget();
-
 	}
 
 	std::string SCUIManager::getMouseIsOver(void)
@@ -48,8 +47,8 @@ namespace X
 
 	void SCUIManager::_update(void)
 	{
-		// Set _mstrMouseIsOver to hold name of container or window the mouse is currently over
-		// Set _bMouseIsOverAWindow to differentiate between a container or window.
+		// Sets _mstrMouseIsOver to hold name of container or window the mouse is currently over
+		// Sets _bMouseIsOverAWindow to differentiate between a container or window.
 		// _mstrMouseIsOver may have zero size if mouse isn't over anything.
 		_updateMouseIsOver();
 
@@ -176,14 +175,12 @@ namespace X
 		}
 
 		// For each window, update all of it's widgets
-		// Also set focus state of all windows
 		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
 		{
 			// Update the window's widgets
 			CUIWindow* pWindow = _mmanWindows.get(i);
 			pWindow->update(fTimeDeltaSeconds);
 		}
-
 	}
 
 	/************************************************************************************************************************************************************/

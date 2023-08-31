@@ -271,9 +271,15 @@ namespace X
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
 		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
+
+		// Add the additional space for the scrollbars.
+		CVector2f vScrollbarOffset;
+		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+
 		CVector2f vDims = _mvContainersWidgetAreaDimensions;
-		vDims.x += idTL.vDims.x + idBR.vDims.x;
-		vDims.y += idTL.vDims.y + idBR.vDims.y;
+		vDims.x += idTL.vDims.x + idBR.vDims.x + vScrollbarOffset.x;
+		vDims.y += idTL.vDims.y + idBR.vDims.y + vScrollbarOffset.y;
 		return vDims;
 	}
 
@@ -284,10 +290,15 @@ namespace X
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
 		CImageAtlasDetails idTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
+
+		// Add the additional space for the scrollbars.
+		CVector2f vScrollbarOffset;
+		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+
 		CRect area(
 			int(_mvPosition.x),
 			int(_mvPosition.y),
-			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL.vDims.x + idTR.vDims.x),
+			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL.vDims.x + idTR.vDims.x + vScrollbarOffset.x),
 			int(_mvPosition.y + idTL.vDims.y));
 		return area;
 	}

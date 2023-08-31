@@ -206,7 +206,7 @@ namespace X
 		return pNewObject;
 	}
 
-	CUIButton* CUIContainer::buttonbarGet(const std::string& strName)
+	CUIButton* CUIContainer::buttonGet(const std::string& strName)
 	{
 		return _mmanButtons.get(strName);
 	}

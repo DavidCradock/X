@@ -87,7 +87,7 @@ namespace X
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
-		CUIButton* buttonbarGet(const std::string& strName);
+		CUIButton* buttonGet(const std::string& strName);
 
 		// Removes the named object from the container
 		// If the named object doesn't exist, this silently fails

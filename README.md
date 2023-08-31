@@ -30,9 +30,8 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-- Remove bool bIsWindow from render and update in UIContainer and replace with _mbIsWindow into CUIContainer and set that during UIManager addWindow/container methods.
-- Why? This will be needed for CUIContainer _computeScrollbars() and will eliminate mess of passing bIsWindow to the aforementined render/update methods.
-- 
+i CUIWinndow check getTitlebarArea and getDimsIncludingTheme
+- constness checking in UI code.
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
 -
