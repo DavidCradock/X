@@ -218,19 +218,19 @@ namespace X
 //		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
 
 		// Colours
-		_mSettings.colours.ambientLight.set(0.3f, 0.3f, 0.3f, 1.0f);
+		_mSettings.colours.ambientLight.set(0.7f, 0.7f, 0.7f, 1.0f);
 		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonBGOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonBGUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonBGOver.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.buttonBGUp.set(0.8f, 0.8f, 0.8f, 1.0f);
 		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonTextOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonTextUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.buttonTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
 //		_mSettings.colours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.mouseLight.set(0.9f, 0.9f, 1.0f, 1.0f);
+		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
 //		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.scrollbarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -248,11 +248,11 @@ namespace X
 		_mSettings.colours.windowTitlebarTextNotFocused.set(1.0f, 1.0f, 1.0f, 0.9f);
 
 		// Floats
-		_mSettings.floats.buttonFadeSpeedSeconds = 5.0f;
-//		_mSettings.floats.buttonImageTextFadeSpeedSeconds = 5.0f;
-//		_mSettings.floats.checkboxFadeSpeedSeconds = 1.0f;
+		_mSettings.floats.buttonFadeSpeed = 5.0f;
+//		_mSettings.floats.buttonImageTextFadeSpeed = 5.0f;
+//		_mSettings.floats.checkboxFadeSpeed = 1.0f;
 		_mSettings.floats.normalMouseCursorDistance = 50.0f;
-		_mSettings.floats.scrollbarTabFadeSpeedSeconds = 5.0f;
+		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;

@@ -36,13 +36,13 @@ namespace X
 		void setVisible(bool bVisible);
 
 		// Returns whether this widget is visible or not.
-		bool getVisible(void);
+		bool getVisible(void) const;
 
 		// Render this object's non-font stuff
-		void render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
+		void render(CUIContainer* pContainer, CResourceVertexBufferCPT2* pVB);
 
 		// Update this object
-		void update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme);
+		void update(float fTimeDeltaSec, CUIContainer* pContainer);
 
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);

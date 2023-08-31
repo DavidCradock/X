@@ -71,13 +71,13 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->update(fTimeDeltaSec, this, pTheme);
+			_mmanButtons.get(i)->update(fTimeDeltaSec, this);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this, pTheme);
+			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this);
 		}
 	}
 
@@ -122,17 +122,17 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->render(this, pTheme, pVB);
+			_mmanButtons.get(i)->render(this, pVB);
 		}
 
 		// For each scrollbar object, render non-font stuff
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
 		{
-			_mmanScrollbars.get(i)->render(this, pTheme, pVB);
+			_mmanScrollbars.get(i)->render(this, pVB);
 		}
 		// Render the two scrollbars used for scrolling through contents of the container
-		_mScrollbarH.render(this, pTheme, pVB);
-		_mScrollbarV.render(this, pTheme, pVB);
+		_mScrollbarH.render(this, pVB);
+		_mScrollbarV.render(this, pVB);
 
 		pVB->update();
 		pVB->render();
@@ -147,7 +147,7 @@ namespace X
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
 		{
-			_mmanButtons.get(i)->renderFonts(this, pTheme);
+			_mmanButtons.get(i)->renderFonts(this);
 		}
 	}
 
@@ -163,7 +163,12 @@ namespace X
 
 	CUITheme* CUIContainer::themeGet(void) const
 	{
-		return SCUIManager::getPointer()->themeGet(_mstrThemename);
+		return x->pUI->themeGet(_mstrThemename);
+	}
+
+	const CUITheme::SSettings* CUIContainer::themeGetSettings(void) const
+	{
+		return x->pUI->themeGet(_mstrThemename)->getSettings();
 	}
 
 	void CUIContainer::themeNameSet(const std::string& strThemeToUse)
@@ -183,6 +188,17 @@ namespace X
 	std::string CUIContainer::getName(void)
 	{
 		return _mstrName;
+	}
+
+	CVector2f CUIContainer::getWidgetAreaTLCornerPosition(void) const
+	{
+		CVector2f vPosition = _mvPosition;
+		if (_mbContainerIsWindow)
+		{
+			CUITheme* pTheme = x->pUI->themeGet(_mstrThemename);
+			vPosition += pTheme->getTextureAtlas()->getImageDetails(pTheme->getSettings()->images.windowBG.colour.cornerTL).vDims;
+		}
+		return vPosition;
 	}
 
 	/************************************************************************************************************************************************************/

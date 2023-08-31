@@ -264,7 +264,14 @@ namespace X
 		// The name of the window which is currently being moved
 		std::string _mstrWindowBeingMoved;
 
-		// Adds geometry to the given vertex buffer for the 9 grid cells
-		void _addGridGeometry(const CVector2f& vPosition, const CVector2f& vDimensions, CUITheme::SImageType imageType, CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB);
+		// Add 9 quads to the passed vertex buffer, which represent the 9 grid cell images stored in the passed CUITheme::SImageType.
+		void _addWidgetGridGeometry(
+			const CVector2f& vPosition,			// vPosition is the position of the widget's top left corner offset from the container's top left corner of the widget area.
+			const CVector2f& vDimensions,		// vDimensions is the total dimensions of the widget
+			CUITheme::SImageType imageType,		// imageType holds the names of the 9 images stored in the theme's atlas texture and is used to obtain the dimensions of each image and it's texture coordinates.
+			const CColour& colour,				// colour is the colour used for the vertex colours.
+			CUIContainer* pContainer,			// pContainer is the container which the widget belongs to.
+			CResourceVertexBufferCPT2* pVB		// pVB is a CResourceVertexBufferCPT2 pointer which the computed vertex positions/texture coordinates will be added to.
+		);
 	};
 }

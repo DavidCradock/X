@@ -153,7 +153,7 @@ namespace X
 			CColour mouseLight;							// Colour emitted from the mouse cursor
 //			CColour progressBarBG;						// CUIProgressBar's background vertex colour
 //			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
-			CColour scrollbarBG;						// CUIScrollbar'd BG colour.
+			CColour scrollbarBG;						// CUIScrollbar's  BG colour.
 			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
 			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over
 //			CColour text;								// CUIText font colour
@@ -189,11 +189,11 @@ namespace X
 		// Structure to hold all floating point settings
 		struct SFloats
 		{
-			float buttonFadeSpeedSeconds;			// Rate at which button text and BG colours interpolate between
-//			float buttonImageTextFadeSpeedSeconds;	// Rate at which button image colours interpolate between
-//			float checkboxFadeSpeedSeconds;			// Rate at which the checkbox fades between ON and OFF states
+			float buttonFadeSpeed;					// Rate at which button text and BG colours interpolate between
+//			float buttonImageTextFadeSpeed;			// Rate at which button image colours interpolate between
+//			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
-			float scrollbarTabFadeSpeedSeconds;		// Rate at which scrollbar's tab colours interpolate between
+			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between
 //			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 //			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out

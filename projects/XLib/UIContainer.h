@@ -68,6 +68,9 @@ namespace X
 		// Returns a pointer to the theme this container uses
 		CUITheme* themeGet(void) const;
 
+		// Returns a pointer to the theme's settings this container uses.
+		const CUITheme::SSettings* themeGetSettings(void) const;
+
 		// Set theme this container uses for it's widgets and scrollbars
 		void themeNameSet(const std::string& strThemeToUse);
 
@@ -77,6 +80,13 @@ namespace X
 		// Returns the name of this container given to it when it was added via SCUIManager::containerAdd() or SCUIManager::windowAdd()
 		std::string getName(void);
 
+		// Returns the top left position of the widget area for this container.
+		// Used when rendering or updating a widget to determine the actual top left position of the container's widget area.
+		// If this container is just a container, then this will be equal to the container's top left position, otherwise,
+		// it'll be that + the dimensions of the top left cornder border of the window using this container's currently set theme.
+		CVector2f getWidgetAreaTLCornerPosition(void) const;
+
+		
 		/************************************************************************************************************************************************************/
 		/* Buttons */
 		/************************************************************************************************************************************************************/

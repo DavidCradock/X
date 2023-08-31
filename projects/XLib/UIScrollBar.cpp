@@ -62,22 +62,28 @@ namespace X
 		_mbVisible = bVisible;
 	}
 
-	bool CUIScrollbar::getVisible(void)
+	bool CUIScrollbar::getVisible(void) const
 	{
 		return _mbVisible;
 	}
 
-	void CUIScrollbar::render(CUIContainer* pContainer, CUITheme* pTheme, CResourceVertexBufferCPT2* pVB)
+	void CUIScrollbar::render(CUIContainer* pContainer, CResourceVertexBufferCPT2* pVB)
 	{
-		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
-		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		// Add geometry for the 9 grid cells
-		x->pUI->_addGridGeometry(_mvPosition, _mvDimensions, pThemeSettings->images.scrollbarBG, pContainer, pTheme, pVB);
+		const CUITheme::SSettings* pThemeSettings = pContainer->themeGetSettings();
 
+		// Add geometry for the 9 grid cells
+		x->pUI->_addWidgetGridGeometry(
+			_mvPosition,
+			_mvDimensions,
+			pThemeSettings->images.scrollbarBG,
+			pThemeSettings->colours.scrollbarBG,
+			pContainer,
+			pVB);
 	}
 
-	void CUIScrollbar::update(float fTimeDeltaSec, CUIContainer* pContainer, CUITheme* pTheme)
+	void CUIScrollbar::update(float fTimeDeltaSec, CUIContainer* pContainer)
 	{
+		CUITheme* pTheme = pContainer->themeGet();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Return name of the window, or container which the mouse cursor is over
@@ -217,13 +223,13 @@ namespace X
 			{
 				if (fCol[iCol] < fColTheme[iCol])
 				{
-					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeed;
 					if (fCol[iCol] > fColTheme[iCol])
 						fCol[iCol] = fColTheme[iCol];
 				}
 				else if (_mTabColour.red > fColTheme[iCol])
 				{
-					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeed;
 					if (fCol[iCol] < fColTheme[iCol])
 						fCol[iCol] = fColTheme[iCol];
 				}
@@ -240,13 +246,13 @@ namespace X
 			{
 				if (fCol[iCol] < fColTheme[iCol])
 				{
-					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					fCol[iCol] += fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeed;
 					if (fCol[iCol] > fColTheme[iCol])
 						fCol[iCol] = fColTheme[iCol];
 				}
 				else if (_mTabColour.red > fColTheme[iCol])
 				{
-					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeedSeconds;
+					fCol[iCol] -= fTimeDeltaSec * pThemeSettings->floats.scrollbarTabFadeSpeed;
 					if (fCol[iCol] < fColTheme[iCol])
 						fCol[iCol] = fColTheme[iCol];
 				}

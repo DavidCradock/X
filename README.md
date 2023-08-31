@@ -32,6 +32,8 @@ Screenshot of "X:Default:FontGenerator" container window...
 ** TODO **
 i CUIWinndow check getTitlebarArea and getDimsIncludingTheme
 - constness checking in UI code.
+- Use pointers to object's methods for UIbutton etc
+- Optimise timer class, maybe make two a simple and a complex one
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
 -
