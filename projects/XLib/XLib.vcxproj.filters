@@ -455,6 +455,9 @@
     <ClInclude Include="UIButton.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIObserver.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />

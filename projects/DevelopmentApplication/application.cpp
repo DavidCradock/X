@@ -54,15 +54,17 @@ namespace X
 		pWindow->setDimensions(CVector2f(300, 300));
 		pWindow->setPosition(CVector2f(400-16, 400-30));
 		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
+		//pButton
 //		CUIScrollbar* pScrollbar = pWindow->scrollbarAdd("100x24", 0, 0, 100, 24);
 
 		// Add container for debugging
 		CUIContainer* pContainer = x->pUI->containerAdd("container0 100x100x100x100");
 		pContainer->setDimensions(CVector2f(100, 100));
 		pContainer->setPosition(100, 100);
-		pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
+		pButton = pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
+
 	}
 
 	void CApplication::onStart(void)
@@ -117,5 +119,10 @@ namespace X
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;
+	}
+
+	void CApplication::onButtonClick(void)
+	{
+		int i = 3;
 	}
 }

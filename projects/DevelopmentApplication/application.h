@@ -25,6 +25,7 @@ namespace X
 		// It is called once per program loop for the currently set application
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
+
 	private:
 		CTimer timer;
 	};

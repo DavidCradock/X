@@ -129,6 +129,7 @@
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIObserver.h" />
     <ClInclude Include="UIScrollBar.h" />
     <ClInclude Include="UITheme.h" />
     <ClInclude Include="UIWindow.h" />

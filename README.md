@@ -30,9 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-i CUIWinndow check getTitlebarArea and getDimsIncludingTheme
-- constness checking in UI code.
-- Use pointers to object's methods for UIbutton etc
+- Research observer pattern for UI.
 - Optimise timer class, maybe make two a simple and a complex one
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
@@ -57,8 +55,7 @@ i CUIWinndow check getTitlebarArea and getDimsIncludingTheme
 - Use texture atlas
 - Add more frame buffer usage to speed up everything
 - Add screen resize handling code (For fullscreen and window resize)
-- The current method of checking button presses is aweful, too many if statements
-- Use messaging for various widgets to send messages for events such as "clicked". 
+- The current method of checking button presses is aweful, too many if statements. Research observer pattern, or signal and slots or delegates.
 - Add alignment (left, right, centreX, top, centreY, bottom)
 - UI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
 - UI: Implement Button

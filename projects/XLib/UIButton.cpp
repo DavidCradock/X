@@ -140,8 +140,8 @@ namespace X
 	
 		// Depending upon state, compute text and BG colours
 		const CUITheme::SSettings* pSettings = pContainer->themeGetSettings();
-		CColour colTargetBG;	// Will hold the colour of the button's current state for it's background
-		CColour colTargetText;	// Same again, but for the text colour.
+		CColour colTargetBG;
+		CColour colTargetText;
 		if (_mState == state::up)
 		{
 			colTargetBG = pSettings->colours.buttonBGUp;
@@ -169,6 +169,11 @@ namespace X
 	std::string CUIButton::getText(void) const
 	{
 		return _mstrText;
+	}
+
+	bool CUIButton::getClicked(void) const
+	{
+		return _mbClicked;
 	}
 
 	void CUIButton::_helperColourAdjust(CColour& colourAdjust, const CColour& colourTarget, float fTimeDeltaSecs, const CUITheme::SSettings* pSettings)
