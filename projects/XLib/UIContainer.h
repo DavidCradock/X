@@ -62,6 +62,9 @@ namespace X
 		// Render this container's widget's tooltips
 		void renderTooltips(void);
 
+		// Resets all colours and time based values for widgets
+		void reset(void);
+
 		// Get currently set theme name used by this container
 		std::string themeNameGet(void) const;
 

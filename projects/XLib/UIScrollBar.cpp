@@ -265,6 +265,11 @@ namespace X
 //		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
 	}
 
+	void CUIScrollbar::reset(CUIContainer* pContainer)
+	{
+
+	}
+
 	void CUIScrollbar::setTabPos(float fPos)
 	{
 		clamp(fPos, 0.0f, 1.0f);

@@ -77,10 +77,7 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-//		if (x->pUI->getMouseIsOver().size())
-//		{
-		x->pUI->containerGet("container0 100x100x100x100")->buttonGet("0x0x100x100")->setText(x->pUI->getMouseIsOver());
-//		}
+
 		// Timer delta
 		timer.update();
 
@@ -121,8 +118,4 @@ namespace X
 		return true;
 	}
 
-	void CApplication::onButtonClick(void)
-	{
-		int i = 3;
-	}
 }

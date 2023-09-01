@@ -161,6 +161,13 @@ namespace X
 		_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings);
 	}
 
+	void CUIButton::reset(CUIContainer* pContainer)
+	{
+		const CUITheme::SSettings* pSettings = pContainer->themeGetSettings();
+		_mColourBG = pSettings->colours.buttonBGUp;
+		_mColourText = pSettings->colours.buttonTextUp;
+	}
+
 	void CUIButton::setText(const std::string& strText)
 	{
 		_mstrText = strText;

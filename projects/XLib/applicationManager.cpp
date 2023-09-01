@@ -2,6 +2,7 @@
 #include "applicationManager.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "profiler.h"
 
 // Include each application
 
@@ -56,37 +57,58 @@ namespace X
 			ThrowIfTrue(it == _mApplications.end(), "SCApplicationManager::mainLoop() unable to find the current application called " + _mstrCurrentApp);
 			it->second->onStart();
 
+			// Reset user interface
+			x->pUI->reset();
+
 			// Enter main loop...
 			x->pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
 			_mTimer.update();
 			
+			CProfiler profiler;
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (x->pWindow->checkMessages())
 			{
+				profiler.begin("main");
+
 				_mTimer.update();
+
+				profiler.begin("clear_backbuffer");
 
 				// Clear the backbuffer
 				x->pWindow->clearBackbuffer();
 
+				profiler.end("clear_backbuffer");
+
 				// Bind the X:backbuffer to render target
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
+
+				profiler.begin("callCurrentApp_onUpdate()");
 
 				if (!callCurrentApp_onUpdate())
 				{
 					break;	// Application wants to close
 				}
 
+				profiler.end("callCurrentApp_onUpdate()");
+
 				// Unbind the X:backbuffer and render to the back buffer
 				pBGFB->unbindAsRenderTarget();
 
 				// Update and render the 2DRenderer to the "X:backbuffer" and any various other framebuffers each of it's cameras are set to render to
+
+				profiler.begin("x->p2dRenderer");
 				x->p2dRenderer->render();
+				profiler.end("x->p2dRenderer");
 
 				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer" as the sample source
+				profiler.begin("x->pGUI->render()");
 				x->pGUI->render("X:backbuffer");
+				profiler.end("x->pGUI->render()");
 
 				// Update and render the UI to the "X:ui" framebuffer
+				profiler.begin("x->pUI->render()");
 				x->pUI->render();
+				profiler.end("x->pUI->render()");
 
 				// Now render the "X:backbuffer" to the backbuffer
 				glEnable(GL_BLEND);
@@ -104,6 +126,9 @@ namespace X
 				// Render debug grid
 				if (_mbDebugGridShow)
 					_debugGridRender();
+
+				profiler.end("main");
+				profiler.printResults();
 
 				// Swap buffers
 				x->pWindow->swapBuffers();

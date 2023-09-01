@@ -8,6 +8,7 @@ namespace X
 
 
 	There are two ways to store a pointer to an instance method in C++:
+
 	Using the .* operator: The .* operator is a member access operator that can be used to access a member function of an object.
 	The syntax for using the .* operator to store a pointer to an instance method is:
 
@@ -16,6 +17,7 @@ namespace X
 
 
 	where object_type is the type of the object, method_name is the name of the method, and method_pointer is the pointer to the method.
+
 	Using the ->* operator: The ->* operator is a member access operator that can also be used to access a member function of an object.
 	The syntax for using the ->* operator to store a pointer to an instance method is:
 

@@ -106,6 +106,10 @@ namespace X
 		// Both containers and windows have to be visible.
 		std::string getMouseIsOver(void);
 
+		// Resets all colours and time based values for widgets and windows
+		// This is called from the application manager during initialisation.
+		void reset(void);
+
 		/************************************************************************************************************************************************************/
 		/* Container related */
 		/************************************************************************************************************************************************************/

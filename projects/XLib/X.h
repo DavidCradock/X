@@ -36,11 +36,13 @@
 #include "logging.h"
 #include "openGLExtensions.h"
 #include "precision.h"
+#include "profiler.h"
 #include "settings.h"
 #include "singleton.h"
 #include "singletons.h"
 #include "stringUtils.h"
 #include "timer.h"
+#include "timerMinimal.h"
 #include "utilities.h"
 #include "window.h"
 // GUI

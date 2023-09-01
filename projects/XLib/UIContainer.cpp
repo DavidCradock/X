@@ -156,6 +156,21 @@ namespace X
 
 	}
 
+	void CUIContainer::reset(void)
+	{
+		// For each button object
+		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
+		{
+			_mmanButtons.get(i)->reset(this);
+		}
+
+		// For each scrollbar object
+		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
+		{
+			_mmanButtons.get(i)->reset(this);
+		}
+	}
+
 	std::string CUIContainer::themeNameGet(void) const
 	{
 		return _mstrThemename;

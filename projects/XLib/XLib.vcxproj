@@ -73,6 +73,7 @@
     <ClInclude Include="octTreeNode.h" />
     <ClInclude Include="physicsManager.h" />
     <ClInclude Include="precision.h" />
+    <ClInclude Include="profiler.h" />
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="quadTreeEntity.h" />
     <ClInclude Include="quadTreeNode.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="templateManagerNoRefLockable.h" />
     <ClInclude Include="templateManagerNoRef.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="timerMinimal.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIManager.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="octTreeEntity.cpp" />
     <ClCompile Include="octTreeNode.cpp" />
     <ClCompile Include="physicsManager.cpp" />
+    <ClCompile Include="profiler.cpp" />
     <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="quadTreeEntity.cpp" />
     <ClCompile Include="quadTreeNode.cpp" />
@@ -250,6 +253,7 @@
     <ClCompile Include="SMSimple.cpp" />
     <ClCompile Include="stringUtils.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="timerMinimal.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIManager.cpp" />

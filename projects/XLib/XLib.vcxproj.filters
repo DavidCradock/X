@@ -458,6 +458,12 @@
     <ClInclude Include="UIObserver.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="profiler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="timerMinimal.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -808,6 +814,12 @@
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="profiler.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="timerMinimal.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,9 @@ namespace X
 		// Update this object
 		void update(float fTimeDeltaSec, CUIContainer* pContainer);
 
+		// Resets all colours and time based values for the widget
+		void reset(CUIContainer* pContainer);
+
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);
 

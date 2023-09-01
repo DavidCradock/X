@@ -47,6 +47,9 @@ namespace X
 		// Update this object
 		void update(float fTimeDeltaSec, CUIContainer* pContainer);
 
+		// Resets all colours and time based values for the widget
+		void reset(CUIContainer* pContainer);
+
 		// Sets the text string to be rendered over the top of the button
 		void setText(const std::string& strText);
 
@@ -56,28 +59,12 @@ namespace X
 		// Returns whether this button has been clicked upon or not.
 		// This is OK for a quick and dirty approach to checking button clicks, but if we have
 		// many buttons, they'll be a lot of if then statements in the calling code and things start
-		// to get inefficient. Instead of using this, use observers please.
+		// to get inefficient.
+		// Don't forget to check if the widget's container is visible, otherwise there's no point checking
+		// to see if the widget has changed state as it will not have.
+		// Instead of using this, use observers or function pointers for optimal performance.
 		bool getClicked(void) const;
 
-		// Sets a method of a class object to call when the button is clicked.
-		// Example usage:
-		// 
-		// Have a class which has a method which will be called when the button is clicked upon...
-		//		class SomeClass
-		//		{
-		//			public:
-		//				void buttonHasBeenClicked(void);
-		//		}
-		// Create an object of that class...
-		//		SomeClass someClass;
-		// 
-		// Create a user interface container to contain the button and create the button...
-		//		SCUIManager* pUI = SCUIManager::getPointer();
-		//		CUIContainer* pContainer = pUI->containerAdd("A_Container");
-		//		CUIButton* pButton = pContainer->buttonAdd("TheButton");
-		// 
-		// Now finally set the class object's method to be called when the button is clicked upon...
-		//		pButton->setCallOnClicked(someClass.*buttonHasBeenClicked);
 	private:
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
