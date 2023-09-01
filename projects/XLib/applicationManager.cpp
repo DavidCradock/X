@@ -64,77 +64,81 @@ namespace X
 			x->pLog->add("SCApplicationManager::mainLoop() is entering main loop...");
 			_mTimer.update();
 			
-			CProfiler profiler;
 			// Check window messages and if WM_QUIT occurs, end execution and shutdown
 			while (x->pWindow->checkMessages())
 			{
-				profiler.begin("main");
+				x->pProfiler->begin("main");
+
+				// Update the input manager
+				x->pProfiler->begin("x->pInput->update()");
+				x->pInput->update(x->pWindow->getFullscreen(), x->pWindow->getWidth(), x->pWindow->getHeight());
+				x->pProfiler->end("x->pInput->update()");
 
 				_mTimer.update();
 
 				// Clear the backbuffer
-				profiler.begin("clear_backbuffer");
+				x->pProfiler->begin("clear_backbuffer");
 				x->pWindow->clearBackbuffer();
-				profiler.end("clear_backbuffer");
+				x->pProfiler->end("clear_backbuffer");
 
 				// Bind the X:backbuffer to render target
-				profiler.begin("binder backbuffer framebuffer as target");
+				x->pProfiler->begin("bind backbuffer framebuffer as target");
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
-				profiler.end("binder backbuffer framebuffer as target");
+				x->pProfiler->end("bind backbuffer framebuffer as target");
 
-				profiler.begin("callCurrentApp_onUpdate()");
+				x->pProfiler->begin("callCurrentApp_onUpdate()");
 				if (!callCurrentApp_onUpdate())
 				{
 					break;	// Application wants to close
 				}
-				profiler.end("callCurrentApp_onUpdate()");
+				x->pProfiler->end("callCurrentApp_onUpdate()");
 
 				// Unbind the X:backbuffer and render to the back buffer
 				pBGFB->unbindAsRenderTarget();
 
 				// Update and render the 2DRenderer to the "X:backbuffer" and any various other framebuffers each of it's cameras are set to render to
 
-				profiler.begin("x->p2dRenderer");
+				x->pProfiler->begin("x->p2dRenderer");
 				x->p2dRenderer->render();
-				profiler.end("x->p2dRenderer");
+				x->pProfiler->end("x->p2dRenderer");
 
 				// Update and render the GUI to the "X:gui" framebuffer, using the "X:backbuffer" as the sample source
-				profiler.begin("x->pGUI->render()");
+				x->pProfiler->begin("x->pGUI->render()");
 				x->pGUI->render("X:backbuffer");
-				profiler.end("x->pGUI->render()");
+				x->pProfiler->end("x->pGUI->render()");
 
 				// Update and render the UI to the "X:ui" framebuffer
-				profiler.begin("x->pUI->render()");
+				x->pProfiler->begin("x->pUI->render()");
 				x->pUI->render();
-				profiler.end("x->pUI->render()");
+				x->pProfiler->end("x->pUI->render()");
 
 				// Now render the "X:backbuffer" to the backbuffer
-				profiler.begin("render X:backbuffer to backbuffer");
+				x->pProfiler->begin("render X:backbuffer to backbuffer");
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				profiler.end("render X:backbuffer to backbuffer");
+				x->pProfiler->end("render X:backbuffer to backbuffer");
 
 				// Now render the "X:gui" to the backbuffer
-				profiler.begin("render X:gui framebuffer");
+				x->pProfiler->begin("render X:gui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_gui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				profiler.end("render X:gui framebuffer");
+				x->pProfiler->end("render X:gui framebuffer");
 
 				// Now render the "X::ui" framebuffer to the backbuffer
-				profiler.begin("render X:ui framebuffer");
+				x->pProfiler->begin("render X:ui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				profiler.end("render X:ui framebuffer");
+				x->pProfiler->end("render X:ui framebuffer");
 
 				glDisable(GL_BLEND);
 
 				// Render debug grid
-				profiler.begin("SCApplicationManager::_debugGridRender()");
+				x->pProfiler->begin("SCApplicationManager::_debugGridRender()");
 				if (_mbDebugGridShow)
 					_debugGridRender();
-				profiler.end("SCApplicationManager::_debugGridRender()");
+				x->pProfiler->end("SCApplicationManager::_debugGridRender()");
 
-				profiler.end("main");
-				profiler.printResults();
+				x->pProfiler->end("main");
+				x->pProfiler->printResults();
 
 				// Swap buffers
 				x->pWindow->swapBuffers();

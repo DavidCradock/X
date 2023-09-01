@@ -72,7 +72,7 @@ namespace X
 		const CUITheme::SSettings* pThemeSettings = pContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
-		x->pUI->_addWidgetGridGeometry(
+		x->pUI->_helperAddWidgetGridGeometry(
 			_mvPosition,
 			_mvDimensions,
 			pThemeSettings->images.scrollbarBG,

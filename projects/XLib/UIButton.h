@@ -82,8 +82,5 @@ namespace X
 		};
 		state _mState;				// The current state of the button
 		bool _mbClicked;			// Holds whether the button has been clicked upon.
-
-		// Helper method to move a colour towards a target colour
-		void _helperColourAdjust(CColour& colourAdjust, const CColour& colourTarget, float fTimeDeltaSecs, const CUITheme::SSettings* pSettings);
 	};
 }

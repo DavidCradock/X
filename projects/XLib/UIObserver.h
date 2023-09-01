@@ -91,7 +91,4 @@ namespace X
 	{
 	public:
 	};
-	/*
-	In a widget which uses this mechanism
-	*/
 }

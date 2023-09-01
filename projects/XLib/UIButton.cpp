@@ -68,7 +68,7 @@ namespace X
 		const CUITheme::SSettings* pThemeSettings = pContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
-		x->pUI->_addWidgetGridGeometry(
+		x->pUI->_helperAddWidgetGridGeometry(
 			_mvPosition,
 			_mvDimensions,
 			pThemeSettings->images.buttonBG,
@@ -157,8 +157,8 @@ namespace X
 			colTargetBG = pSettings->colours.buttonBGDown;
 			colTargetText = pSettings->colours.buttonTextDown;
 		}
-		_helperColourAdjust(_mColourBG, colTargetBG, fTimeDeltaSec, pSettings);
-		_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings);
+		x->pUI->_helperColourAdjust(_mColourBG, colTargetBG, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
+		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
 	}
 
 	void CUIButton::reset(CUIContainer* pContainer)
@@ -181,60 +181,5 @@ namespace X
 	bool CUIButton::getClicked(void) const
 	{
 		return _mbClicked;
-	}
-
-	void CUIButton::_helperColourAdjust(CColour& colourAdjust, const CColour& colourTarget, float fTimeDeltaSecs, const CUITheme::SSettings* pSettings)
-	{
-		if (colourAdjust.red < colourTarget.red)
-		{
-			colourAdjust.red += fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.red > colourTarget.red)
-				colourAdjust.red = colourTarget.red;
-		}
-		else
-		{
-			colourAdjust.red -= fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.red < colourTarget.red)
-				colourAdjust.red = colourTarget.red;
-		}
-
-		if (colourAdjust.green < colourTarget.green)
-		{
-			colourAdjust.green += fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.green > colourTarget.green)
-				colourAdjust.green = colourTarget.green;
-		}
-		else
-		{
-			colourAdjust.green -= fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.green < colourTarget.green)
-				colourAdjust.green = colourTarget.green;
-		}
-
-		if (colourAdjust.blue < colourTarget.blue)
-		{
-			colourAdjust.blue += fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.blue > colourTarget.blue)
-				colourAdjust.blue = colourTarget.blue;
-		}
-		else
-		{
-			colourAdjust.blue -= fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.blue < colourTarget.blue)
-				colourAdjust.blue = colourTarget.blue;
-		}
-
-		if (colourAdjust.alpha < colourTarget.alpha)
-		{
-			colourAdjust.alpha += fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.alpha > colourTarget.alpha)
-				colourAdjust.alpha = colourTarget.alpha;
-		}
-		else
-		{
-			colourAdjust.alpha -= fTimeDeltaSecs * pSettings->floats.buttonFadeSpeed;
-			if (colourAdjust.alpha < colourTarget.alpha)
-				colourAdjust.alpha = colourTarget.alpha;
-		}
 	}
 }

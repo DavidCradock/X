@@ -10,6 +10,7 @@
 #include "logging.h"
 #include "messaging.h"
 #include "physicsManager.h"
+#include "profiler.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
 #include "settings.h"
@@ -23,7 +24,7 @@ namespace X
 	// can use to gain access to all singleton objects.
 	// We have this class as it stores all global pointers in one place and also creates things in the
 	// correct order as certain objects depend upon others being initialised.
-	// 
+	// This is a dumping ground for other global objects too such as a pointer to a CProfiler object.
 	class SCSingletons : public CSingleton<SCSingletons>
 	{
 	public:
@@ -67,6 +68,10 @@ namespace X
 		// A pointer to the SCPhysicsManager singleton class.
 		// NOT IMPLEMENTED
 		SCPhysicsManager* pPhysics;
+
+		// A pointer to a CProfiler object
+		// Not technically a singleton, but that's OK :)
+		CProfiler* pProfiler;
 
 		// A pointer to the SCResourceManager singleton class.
 		// This resource manager holds various resources which require an OpenGL context and is 

@@ -129,7 +129,7 @@ namespace X
 		_mfUpdateResultsText -= (float)_mTimerMinimal.getSecondsPast();
 		if (_mfUpdateResultsText <= 0.0f)
 		{
-			_mfUpdateResultsText = 0.5f;
+			_mfUpdateResultsText = 1.0f;
 			_mvecstrResultsText.clear();
 
 			// Get sorted vector of results

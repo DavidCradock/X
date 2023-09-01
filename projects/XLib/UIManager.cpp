@@ -489,7 +489,7 @@ namespace X
 	}
 
 	
-	void SCUIManager::_addWidgetGridGeometry(
+	void SCUIManager::_helperAddWidgetGridGeometry(
 		const CVector2f& vPosition,
 		const CVector2f& vDimensions,
 		CUITheme::SImageType imageType,
@@ -687,5 +687,60 @@ namespace X
 			idNormBR.sTexCoords.vBR,
 			idNormBR.sTexCoords.vTR,
 			idNormBR.sTexCoords.vTL);
+	}
+
+	void SCUIManager::_helperColourAdjust(CColour& colourToAdjust, const CColour& colourTarget, float fTimeDeltaSecs, float fFadeSpeed)
+	{
+		if (colourToAdjust.red < colourTarget.red)
+		{
+			colourToAdjust.red += fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.red > colourTarget.red)
+				colourToAdjust.red = colourTarget.red;
+		}
+		else
+		{
+			colourToAdjust.red -= fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.red < colourTarget.red)
+				colourToAdjust.red = colourTarget.red;
+		}
+
+		if (colourToAdjust.green < colourTarget.green)
+		{
+			colourToAdjust.green += fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.green > colourTarget.green)
+				colourToAdjust.green = colourTarget.green;
+		}
+		else
+		{
+			colourToAdjust.green -= fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.green < colourTarget.green)
+				colourToAdjust.green = colourTarget.green;
+		}
+
+		if (colourToAdjust.blue < colourTarget.blue)
+		{
+			colourToAdjust.blue += fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.blue > colourTarget.blue)
+				colourToAdjust.blue = colourTarget.blue;
+		}
+		else
+		{
+			colourToAdjust.blue -= fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.blue < colourTarget.blue)
+				colourToAdjust.blue = colourTarget.blue;
+		}
+
+		if (colourToAdjust.alpha < colourTarget.alpha)
+		{
+			colourToAdjust.alpha += fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.alpha > colourTarget.alpha)
+				colourToAdjust.alpha = colourTarget.alpha;
+		}
+		else
+		{
+			colourToAdjust.alpha -= fTimeDeltaSecs * fFadeSpeed;
+			if (colourToAdjust.alpha < colourTarget.alpha)
+				colourToAdjust.alpha = colourTarget.alpha;
+		}
 	}
 }

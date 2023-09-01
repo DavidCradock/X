@@ -36,6 +36,9 @@ namespace X
 		p2dRenderer = SC2DRenderer::getPointer();
 		pPhysics = SCPhysicsManager::getPointer();
 
+		pProfiler = new CProfiler;
+		ThrowIfFalse(pProfiler, "SCSingletons::SCSingletons() failed to allocated memory for CProfiler object.");
+
 		// GUI depends upon resource manager and therefore window
 		pGUI = SCGUIManager::getPointer();
 

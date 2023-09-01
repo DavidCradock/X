@@ -320,9 +320,6 @@ namespace X
 				DispatchMessage(&msg);	// Dispatches a message to a window procedure
 			}
 		}
-
-		// Update the input manager
-		x->pInput->update(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
 		return true;
 	}
 
