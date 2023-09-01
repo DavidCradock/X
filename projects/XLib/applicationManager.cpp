@@ -72,23 +72,21 @@ namespace X
 
 				_mTimer.update();
 
-				profiler.begin("clear_backbuffer");
-
 				// Clear the backbuffer
+				profiler.begin("clear_backbuffer");
 				x->pWindow->clearBackbuffer();
-
 				profiler.end("clear_backbuffer");
 
 				// Bind the X:backbuffer to render target
+				profiler.begin("binder backbuffer framebuffer as target");
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
+				profiler.end("binder backbuffer framebuffer as target");
 
 				profiler.begin("callCurrentApp_onUpdate()");
-
 				if (!callCurrentApp_onUpdate())
 				{
 					break;	// Application wants to close
 				}
-
 				profiler.end("callCurrentApp_onUpdate()");
 
 				// Unbind the X:backbuffer and render to the back buffer
@@ -111,21 +109,29 @@ namespace X
 				profiler.end("x->pUI->render()");
 
 				// Now render the "X:backbuffer" to the backbuffer
+				profiler.begin("render X:backbuffer to backbuffer");
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				
+				profiler.end("render X:backbuffer to backbuffer");
+
 				// Now render the "X:gui" to the backbuffer
+				profiler.begin("render X:gui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_gui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				profiler.end("render X:gui framebuffer");
 
 				// Now render the "X::ui" framebuffer to the backbuffer
+				profiler.begin("render X:ui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
+				profiler.end("render X:ui framebuffer");
 
 				glDisable(GL_BLEND);
 
 				// Render debug grid
+				profiler.begin("SCApplicationManager::_debugGridRender()");
 				if (_mbDebugGridShow)
 					_debugGridRender();
+				profiler.end("SCApplicationManager::_debugGridRender()");
 
 				profiler.end("main");
 				profiler.printResults();

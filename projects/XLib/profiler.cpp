@@ -57,6 +57,8 @@ namespace X
 	{
 		// Remove all sections
 		_mmapSections.clear();
+
+		_mfUpdateResultsText = 0.0f;
 	}
 
 	double CProfiler::getSectionTime(const std::string& strSectionName)
@@ -122,21 +124,35 @@ namespace X
 		CResourceFont* pFont = x->pResource->getFont(x->pResource->defaultRes.font_default);
 		float fTextHeight = pFont->getTextHeight() + 2;
 
-		std::vector<SProfilerResults> vResults = getResults();
-		CVector2f vTextPos(5, 5);
-		pFont->print("CProfiler::printResults()", int(vTextPos.x), int(vTextPos.y), x->pWindow->getWidth(), x->pWindow->getHeight());
-		vTextPos.y += fTextHeight;
-		for (size_t i = 0; i < vResults.size(); i++)
+		// Update text string vector with results every so often
+		_mTimerMinimal.update();
+		_mfUpdateResultsText -= (float)_mTimerMinimal.getSecondsPast();
+		if (_mfUpdateResultsText <= 0.0f)
 		{
-			std::string strTxt = "Section: " + vResults[i].strSectionName;
-			strTxt += " Accumulated Seconds: ";
-			StringUtils::appendDouble(strTxt, vResults[i].dAccumulatedTimeSeconds, 3);
-			strTxt += " Percentage of \"main\": ";
-			StringUtils::appendFloat(strTxt, vResults[i].fPercentageOfMain, 1);
-			strTxt += "%";
-			pFont->print(strTxt, int(vTextPos.x), int(vTextPos.y), x->pWindow->getWidth(), x->pWindow->getHeight());
-			vTextPos.y += fTextHeight;
+			_mfUpdateResultsText = 0.5f;
+			_mvecstrResultsText.clear();
+
+			// Get sorted vector of results
+			std::vector<SProfilerResults> vResults = getResults();
+			_mvecstrResultsText.push_back("CProfiler::printResults()");
+			for (size_t i = 0; i < vResults.size(); i++)
+			{
+				std::string strTxt;
+				StringUtils::appendFloat(strTxt, vResults[i].fPercentageOfMain, 1);
+				strTxt += "% of main. (";
+				StringUtils::appendDouble(strTxt, vResults[i].dAccumulatedTimeSeconds, 4);
+				strTxt += ") sec. \"";
+				strTxt += vResults[i].strSectionName;
+				strTxt += "\"";
+				_mvecstrResultsText.push_back(strTxt);
+			}
 		}
 
+		CVector2f vTextPos(5, 5);
+		for (size_t i = 0; i < _mvecstrResultsText.size(); i++)
+		{
+			pFont->print(_mvecstrResultsText[i], int(vTextPos.x), int(vTextPos.y), x->pWindow->getWidth(), x->pWindow->getHeight());
+			vTextPos.y += fTextHeight;
+		}
 	}
 }

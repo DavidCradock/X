@@ -83,5 +83,13 @@ namespace X
 	private:
 		// Holds each named section including "main"
 		std::map<std::string, SSection> _mmapSections;
+		
+		// Count until update _mstrResultsText.
+		float _mfUpdateResultsText;
+
+		// Holds results text to be printed to the screen.
+		std::vector<std::string> _mvecstrResultsText;
+
+		CTimerMinimal _mTimerMinimal;
 	};
 }
