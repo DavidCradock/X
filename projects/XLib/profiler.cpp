@@ -140,8 +140,8 @@ namespace X
 				std::string strTxt;
 				StringUtils::appendFloat(strTxt, vResults[i].fPercentageOfMain, 1);
 				strTxt += "% of main. (";
-				StringUtils::appendDouble(strTxt, vResults[i].dAccumulatedTimeSeconds, 4);
-				strTxt += ") sec. \"";
+				StringUtils::appendDouble(strTxt, 1000 * vResults[i].dAccumulatedTimeSeconds, 4);
+				strTxt += ") ms. \"";
 				strTxt += vResults[i].strSectionName;
 				strTxt += "\"";
 				_mvecstrResultsText.push_back(strTxt);

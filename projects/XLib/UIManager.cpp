@@ -40,7 +40,7 @@ namespace X
 		pUIFB->unbindAsRenderTarget();
 	}
 
-	std::string SCUIManager::getMouseIsOver(void)
+	std::string SCUIManager::getMouseIsOverWhichContainer(void)
 	{
 		return _mstrMouseIsOver;
 	}

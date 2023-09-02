@@ -66,19 +66,19 @@ namespace X
 
 		// Return computed tab dimensions
 		CVector2f getTabDims(void) const;
-
-		
 	private:
+		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
 		bool _mbVisible;					// Whether this widget is visible or not.
 
-		float _mfScrollbarPosition;			// 0-1 position of scrollbar
+		// Widget specific
+		float _mfTabPosition;				// 0-1 position of tab
 		float _mfTabRatio;					// Multiplied by scrollbar dims(depending upon orientation) to obtain tab dimensions
 		bool _mbTabBeingMoved;				// Whether the tab is being moved or not
 		bool _mbOrientationIsHorizontal;	// Computed in update() and used in render(). Scrollbar orientation based on dimensions
-		float _mfTabPos[2];					// Computed in update() and used in render(). Tab position
-		float _mfTabDims[2];				// Computed in update() and used in render(). Tab dimensions
+		CVector2f _mvTabPos;				// Computed in update() and used in render(). Tab position
+		CVector2f _mvTabDims;				// Computed in update() and used in render(). Tab dimensions
 		CColour _mTabColour;				// For fading between over/not over colours of tab
 	};
 }

@@ -13,7 +13,7 @@ namespace X
 		setPosition(CVector2f(0, 0));
 		setVisible(true);
 
-		_mfScrollbarPosition = 0.5f;
+		_mfTabPosition = 0.5f;
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
 		
@@ -87,7 +87,7 @@ namespace X
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
 		// Return name of the window, or container which the mouse cursor is over
-		std::string strMouseIsOver = x->pUI->getMouseIsOver();
+		std::string strMouseIsOver = x->pUI->getMouseIsOverWhichContainer();
 		bool bAcceptingMouseInput = false;
 		// And if that window or container is this object's container, we're accepting mouse input
 		if (strMouseIsOver == pContainer->getName())
@@ -109,53 +109,53 @@ namespace X
 
 		if (_mbOrientationIsHorizontal)
 		{
-			_mfTabDims[0] = _mfTabRatio * (_mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x);
-			_mfTabDims[1] = _mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
+			_mvTabDims.x = _mfTabRatio * (_mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x);
+			_mvTabDims.y = _mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
 		}
 		else
 		{
-			_mfTabDims[0] = _mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
-			_mfTabDims[1] = _mfTabRatio * (_mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y);
+			_mvTabDims.x = _mvDimensions.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
+			_mvTabDims.y = _mfTabRatio * (_mvDimensions.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y);
 		}
 
 		// Compute tab position
 		if (_mbOrientationIsHorizontal)
 		{
-			float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0] - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
-			float fCentrePosOfScrollbar = pContainer->getPosition().x + _mvPosition.x + (_mvDimensions.x * 0.5f) - (_mfTabDims[0] * 0.5f);
+			float fTabTotalMovementAmount = _mvDimensions.x - _mvTabDims.x - imageDetailsCornerTR.vDims.x - imageDetailsCornerBL.vDims.x;
+			float fCentrePosOfScrollbar = pContainer->getPosition().x + _mvPosition.x + (_mvDimensions.x * 0.5f) - (_mvTabDims.x * 0.5f);
 
 			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
-			float fTabOffset = _mfScrollbarPosition - 0.5f;
+			float fTabOffset = _mfTabPosition - 0.5f;
 
 			// Position offset
 			fTabOffset *= fTabTotalMovementAmount;
 
-			_mfTabPos[0] = fCentrePosOfScrollbar + fTabOffset;
-			_mfTabPos[1] = pContainer->getPosition().y + _mvPosition.y + imageDetailsCornerBL.vDims.y;
+			_mvTabPos.x = fCentrePosOfScrollbar + fTabOffset;
+			_mvTabPos.y = pContainer->getPosition().y + _mvPosition.y + imageDetailsCornerBL.vDims.y;
 		}
 		else // Vertical
 		{
-			float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1] - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
-			float fCentrePosOfScrollbar = pContainer->getPosition().y + _mvPosition.y + (_mvDimensions.y * 0.5f) - (_mfTabDims[1] * 0.5f);
+			float fTabTotalMovementAmount = _mvDimensions.y - _mvTabDims.y - imageDetailsCornerTR.vDims.y - imageDetailsCornerBL.vDims.y;
+			float fCentrePosOfScrollbar = pContainer->getPosition().y + _mvPosition.y + (_mvDimensions.y * 0.5f) - (_mvTabDims.y * 0.5f);
 
-			// Convert _mfScrollbarPosition from 0 to 1 to -0.5 to 0.5f
-			float fTabOffset = _mfScrollbarPosition - 0.5f;
+			// Convert _mfTabPosition from 0 to 1 to -0.5 to 0.5f
+			float fTabOffset = _mfTabPosition - 0.5f;
 
 			// Position offset
 			fTabOffset *= fTabTotalMovementAmount;
 
-			_mfTabPos[0] = pContainer->getPosition().x + _mvPosition.x + imageDetailsCornerTR.vDims.x;
-			_mfTabPos[1] = fCentrePosOfScrollbar + fTabOffset;
+			_mvTabPos.x = pContainer->getPosition().x + _mvPosition.x + imageDetailsCornerTR.vDims.x;
+			_mvTabPos.y = fCentrePosOfScrollbar + fTabOffset;
 		}
 
 		bool bMouseOver = false;
 		if (bAcceptingMouseInput)
 		{
 			// Determine if mouse cursor is over
-			if (vMousePos.x > _mfTabPos[0] - imageDetailsCornerTR.vDims.x)
-				if (vMousePos.x < _mfTabPos[0] + _mfTabDims[0] + imageDetailsCornerBL.vDims.x)
-					if (vMousePos.y > _mfTabPos[1])
-						if (vMousePos.y < _mfTabPos[1] + _mfTabDims[1] + imageDetailsCornerTR.vDims.y)
+			if (vMousePos.x > _mvTabPos.x - imageDetailsCornerTR.vDims.x)
+				if (vMousePos.x < _mvTabPos .x + _mvTabDims.x + imageDetailsCornerBL.vDims.x)
+					if (vMousePos.y > _mvTabPos.y)
+						if (vMousePos.y < _mvTabPos.y + _mvTabDims.y + imageDetailsCornerTR.vDims.y)
 							bMouseOver = true;
 			if (bMouseOver)
 			{
@@ -166,9 +166,9 @@ namespace X
 
 				// Move the scrollbar position with keys
 				if (x->pInput->key.repeat(KC_LEFT))
-					_mfScrollbarPosition -= 0.001f;
+					_mfTabPosition -= 0.001f;
 				else if (x->pInput->key.repeat(KC_RIGHT))
-					_mfScrollbarPosition += 0.001f;
+					_mfTabPosition += 0.001f;
 			}
 
 			if (_mbTabBeingMoved)
@@ -183,20 +183,20 @@ namespace X
 					float fTabPosOffset = 0;
 					if (_mbOrientationIsHorizontal)
 					{
-						float fTabTotalMovementAmount = _mvDimensions.x - _mfTabDims[0];
+						float fTabTotalMovementAmount = _mvDimensions.x - _mvTabDims.x;
 						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
 							fTabTotalMovementAmount = 0.0001f;
 						fTabPosOffset += vMouseDelta.x * (1.0f / fTabTotalMovementAmount);
 					}
 					else
 					{
-						float fTabTotalMovementAmount = _mvDimensions.y - _mfTabDims[1];
+						float fTabTotalMovementAmount = _mvDimensions.y - _mvTabDims.x;
 						if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
 							fTabTotalMovementAmount = 0.0001f;
 						fTabPosOffset += vMouseDelta.y * (1.0f / fTabTotalMovementAmount);
 					}
-					_mfScrollbarPosition += fTabPosOffset;
-					clamp(_mfScrollbarPosition, 0.0f, 1.0f);
+					_mfTabPosition += fTabPosOffset;
+					clamp(_mfTabPosition, 0.0f, 1.0f);
 				}
 			}
 		}
@@ -273,15 +273,15 @@ namespace X
 	void CUIScrollbar::setTabPos(float fPos)
 	{
 		clamp(fPos, 0.0f, 1.0f);
-		_mfScrollbarPosition = fPos;
+		_mfTabPosition = fPos;
 	}
 
 	float CUIScrollbar::getTabPos(void) const
 	{
 		if (_mbOrientationIsHorizontal)
-			return _mfScrollbarPosition;
+			return _mfTabPosition;
 		else
-			return 1.0f - _mfScrollbarPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
+			return 1.0f - _mfTabPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
 	}
 
 	void CUIScrollbar::setTabRatio(float fRatio)
@@ -306,6 +306,6 @@ namespace X
 
 	CVector2f CUIScrollbar::getTabDims(void) const
 	{
-		return CVector2f(_mfTabDims[0], _mfTabDims[1]);
+		return _mvTabDims;
 	}
 }

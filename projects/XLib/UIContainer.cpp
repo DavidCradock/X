@@ -68,17 +68,13 @@ namespace X
 		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
 //		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 
-		// For each button object, render non-font stuff
+		// For each button object
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
-		{
 			_mmanButtons.get(i)->update(fTimeDeltaSec, this);
-		}
 
-		// For each scrollbar object, render non-font stuff
+		// For each scrollbar object
 		for (size_t i = 0; i < _mmanScrollbars.getNumber(); i++)
-		{
 			_mmanScrollbars.get(i)->update(fTimeDeltaSec, this);
-		}
 	}
 
 	void CUIContainer::render(void)
@@ -142,13 +138,10 @@ namespace X
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
-
 		// Render font stuff
 		// For each button object, render non-font stuff
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
-		{
 			_mmanButtons.get(i)->renderFonts(this);
-		}
 	}
 
 	void CUIContainer::renderTooltips(void)
@@ -160,15 +153,11 @@ namespace X
 	{
 		// For each button object
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
-		{
 			_mmanButtons.get(i)->reset(this);
-		}
 
 		// For each scrollbar object
 		for (size_t i = 0; i < _mmanButtons.getNumber(); i++)
-		{
 			_mmanButtons.get(i)->reset(this);
-		}
 	}
 
 	std::string CUIContainer::themeNameGet(void) const
@@ -326,6 +315,5 @@ namespace X
 		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;
 		vDims.y = _mvContainersWidgetAreaDimensions.y;
 		_mScrollbarV.setDimensions(vDims);
-
 	}
 }

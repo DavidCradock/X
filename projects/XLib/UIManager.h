@@ -104,7 +104,7 @@ namespace X
 		// If the cursor isn't over any windows, or containers, an empty string is returned.
 		// Windows are checked first, aka, they are infront of any containers.
 		// Both containers and windows have to be visible.
-		std::string getMouseIsOver(void);
+		std::string getMouseIsOverWhichContainer(void);
 
 		// Resets all colours and time based values for widgets and windows
 		// This is called from the application manager during initialisation.
@@ -263,7 +263,7 @@ namespace X
 		// Which window or container the mouse cursor is currently over.
 		// May be empty is the mouse cursor isn't over any windows, or containers.
 		std::string _mstrMouseIsOver;
-		bool _bMouseIsOverAWindow;	// Holds whether if _mstrMouseIsOver.size() > 0, whether the name is a window or container
+		bool _bMouseIsOverAWindow;	// Holds whether when _mstrMouseIsOver.size() > 0, whether the name is a window or container
 
 		// The name of the window which is currently being moved
 		std::string _mstrWindowBeingMoved;

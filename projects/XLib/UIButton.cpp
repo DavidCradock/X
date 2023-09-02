@@ -94,7 +94,7 @@ namespace X
 		// Determine whether the mouse cursor is over this widget's container or not.
 		// This is all to prevent doing expensive checks if we don't need to.
 		bool bContainerHasMouseOver = false;
-		std::string strMouseIsOver = x->pUI->getMouseIsOver();	// Get the name of the container/window that the mouse cursor is over, if any.
+		std::string strMouseIsOver = x->pUI->getMouseIsOverWhichContainer();	// Get the name of the container/window that the mouse cursor is over, if any.
 		if (strMouseIsOver == pContainer->getName())
 			bContainerHasMouseOver = true;
 

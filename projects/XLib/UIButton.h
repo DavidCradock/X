@@ -66,15 +66,16 @@ namespace X
 		bool getClicked(void) const;
 
 	private:
+		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
 		bool _mbVisible;					// Whether this widget is visible or not.
+
+		// Widget specific
 		std::string _mstrText;				// Text string to be rendered
 		CColour _mColourBG;					// Current BG colour (fading between up/over/down states)
 		CColour _mColourText;				// Current text colour (fading between up/over/down states)
-		
-		// The three states of a button
-		enum state
+		enum state	// The three states of a button
 		{
 			up,		// Mouse is not over the button
 			over,	// Mouse is over the button

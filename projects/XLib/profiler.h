@@ -19,7 +19,7 @@ namespace X
 
 	// A class to deal with time profiling.
 	// It works on the concept of code sections.
-	// We create an object of this class and then call
+	// We create an object of this class (Or use the global one stored in x->pProfiler) and then call
 	// begin("nameOfSection") before any code we wish to time.
 	// Then after all the section code, we call
 	// end("nameOfSection")
@@ -66,6 +66,8 @@ namespace X
 		std::vector<SProfilerResults> getResults(void);
 
 		// Renders the results of the profiler to the screen using x->pResource->defaultRes.font_default
+		// It's crude and dirty but will suffice until the user interface is implemented and then we can
+		// create a CUIWindow which displays the results in a much better way. TODO
 		void printResults(void);
 
 		struct SSection

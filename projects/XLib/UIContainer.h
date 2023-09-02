@@ -89,7 +89,6 @@ namespace X
 		// it'll be that + the dimensions of the top left cornder border of the window using this container's currently set theme.
 		CVector2f getWidgetAreaTLCornerPosition(void) const;
 
-		
 		/************************************************************************************************************************************************************/
 		/* Buttons */
 		/************************************************************************************************************************************************************/
