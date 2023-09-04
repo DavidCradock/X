@@ -30,6 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+- Add centering of text rendering for CUIText
 - Implement observer pattern and function pointers for UI
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
