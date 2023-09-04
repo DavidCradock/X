@@ -10,8 +10,9 @@ namespace X
 
 	class CUIButton
 	{
+		friend class CUIContainer;
 	public:
-		CUIButton();
+		CUIButton(CUIContainer* pContainer);
 		~CUIButton();
 
 		// Sets the dimensions of the widget.
@@ -39,16 +40,16 @@ namespace X
 		bool getVisible(void) const;
 
 		// Render this object's non-font stuff
-		void render(CUIContainer* pContainer, CResourceVertexBufferCPT2* pVB);
+		void render(CResourceVertexBufferCPT2* pVB);
 
 		// Render this object's font stuff
-		void renderFonts(CUIContainer* pContainer);
+		void renderFonts(void);
 	
 		// Update this object
-		void update(float fTimeDeltaSec, CUIContainer* pContainer);
+		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget
-		void reset(CUIContainer* pContainer);
+		void reset(void);
 
 		// Sets the text string to be rendered over the top of the button
 		void setText(const std::string& strText);
@@ -70,6 +71,7 @@ namespace X
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
 		bool _mbVisible;					// Whether this widget is visible or not.
+		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
 		std::string _mstrText;				// Text string to be rendered

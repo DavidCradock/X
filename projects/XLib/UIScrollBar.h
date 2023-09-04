@@ -8,10 +8,21 @@ namespace X
 {
 	class CUIContainer;
 
+	// A scrollbar with a draggable tab.
+	// The scrollbar can be either horizontal or vertical.
+	// The orientation of the scrollbar is automatically calculated based upon the scrollbar's dimensions.
+	// So if the width is greater than the height, it's a horizontal scrollbar, else vertical.
+	// The scrollbar has a tab which is draggable via the mouse cursor and has a position value which ranges from 0.0f to 1.0f and can be obtained with a call to getTabPos()
+	// If the scrollbar is horizontal and if the tab is to the far left, this will be 0.0f, if far right, 1.0f
+	// If the scrollbar is vertical and if the tab is at the bottom, this will be 0.0f, if top, 1.0f
+	// The tab also has a "ratio" value which can be set with a call to setTabRatio() and should be between 0.0f and 1.0f
+	// This value is multiplied by the width/height of the scrollbar and determines the width/height of the tab.
+	// So if the ratio is set to 0.5f and the width of a horizontal scrollbar is 100 pixels, the tab's width will be 100*0.5 = 50 pixels.
 	class CUIScrollbar
 	{
+		friend class CUIContainer;
 	public:
-		CUIScrollbar();
+		CUIScrollbar(CUIContainer *pContainer);
 		~CUIScrollbar();
 
 		// Sets the dimensions of the widget.
@@ -39,13 +50,13 @@ namespace X
 		bool getVisible(void) const;
 
 		// Render this object's non-font stuff
-		void render(CUIContainer* pContainer, CResourceVertexBufferCPT2* pVB);
+		void render(CResourceVertexBufferCPT2* pVB);
 
 		// Update this object
-		void update(float fTimeDeltaSec, CUIContainer* pContainer);
+		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget
-		void reset(CUIContainer* pContainer);
+		void reset(void);
 
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);
@@ -71,6 +82,7 @@ namespace X
 		CVector2f _mvDimensions;			// Dimensions of the widget
 		CVector2f _mvPosition;				// Position of the widget in relation to it's container.
 		bool _mbVisible;					// Whether this widget is visible or not.
+		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
 		float _mfTabPosition;				// 0-1 position of tab

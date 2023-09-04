@@ -47,7 +47,7 @@ namespace X
 		// Setup UserInterface theme
 		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
 		pWindow->setDimensions(CVector2f(200, 200));
-		pWindow->scrollbarAdd("scrollbar", 0, 0, 100, 100, 0.05f);
+		pWindow->scrollbarAdd("scrollbar", 220, 0, 100, 24, 0.05f);
 		pWindow->setPosition(1400-16, 800-30);
 
 		pWindow = x->pUI->windowAdd("window2 300x300");

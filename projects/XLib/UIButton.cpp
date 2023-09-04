@@ -7,8 +7,9 @@
 
 namespace X
 {
-	CUIButton::CUIButton()
+	CUIButton::CUIButton(CUIContainer* pContainer)
 	{
+		_mpContainer = pContainer;
 		setDimensions(CVector2f(200, 48));
 		setPosition(CVector2f(0, 0));
 		setVisible(true);
@@ -25,11 +26,13 @@ namespace X
 	{
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
+		_mpContainer->_computeScrollbars();
 	}
 
 	void CUIButton::setDimensions(const CVector2f& vDimensions)
 	{
 		_mvDimensions = vDimensions;
+		_mpContainer->_computeScrollbars();
 	}
 
 	CVector2f CUIButton::getDimensions(void) const
@@ -41,11 +44,13 @@ namespace X
 	{
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
+		_mpContainer->_computeScrollbars();
 	}
 
 	void CUIButton::setPosition(const CVector2f& vPosition)
 	{
 		_mvPosition = vPosition;
+		_mpContainer->_computeScrollbars();
 	}
 
 	CVector2f CUIButton::getPosition(void) const
@@ -63,9 +68,9 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIButton::render(CUIContainer* pContainer, CResourceVertexBufferCPT2* pVB)
+	void CUIButton::render(CResourceVertexBufferCPT2* pVB)
 	{
-		const CUITheme::SSettings* pThemeSettings = pContainer->themeGetSettings();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
 		x->pUI->_helperAddWidgetGridGeometry(
@@ -73,29 +78,29 @@ namespace X
 			_mvDimensions,
 			pThemeSettings->images.buttonBG,
 			_mColourBG,
-			pContainer,
+			_mpContainer,
 			pVB);
 	}
 
-	void CUIButton::renderFonts(CUIContainer* pContainer)
+	void CUIButton::renderFonts(void)
 	{
-		CUITheme* pTheme = pContainer->themeGet();
+		CUITheme* pTheme = _mpContainer->themeGet();
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 		CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.button);
 		
-		CVector2f vTextPos = pContainer->getWidgetAreaTLCornerPosition();
+		CVector2f vTextPos = _mpContainer->getWidgetAreaTLCornerPosition();
 		vTextPos.x += _mvDimensions.x * 0.5f;
 		vTextPos.y += _mvDimensions.y * 0.5f;
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, _mColourText);
 	}
 
-	void CUIButton::update(float fTimeDeltaSec, CUIContainer* pContainer)
+	void CUIButton::update(float fTimeDeltaSec)
 	{
 		// Determine whether the mouse cursor is over this widget's container or not.
 		// This is all to prevent doing expensive checks if we don't need to.
 		bool bContainerHasMouseOver = false;
 		std::string strMouseIsOver = x->pUI->getMouseIsOverWhichContainer();	// Get the name of the container/window that the mouse cursor is over, if any.
-		if (strMouseIsOver == pContainer->getName())
+		if (strMouseIsOver == _mpContainer->getName())
 			bContainerHasMouseOver = true;
 
 		// Set state of button prior to checks below
@@ -111,7 +116,7 @@ namespace X
 
 			// Compute a CRect which represents this widget's actual screen area
 			CRect rctWidget;	// This will hold actual screen position for the widget's four corners.
-			CVector2f vWidgetAreaTLPos = pContainer->getWidgetAreaTLCornerPosition();
+			CVector2f vWidgetAreaTLPos = _mpContainer->getWidgetAreaTLCornerPosition();
 			rctWidget.miMinX = int(vWidgetAreaTLPos.x + _mvPosition.x);
 			rctWidget.miMinY = int(vWidgetAreaTLPos.y + _mvPosition.y);
 			rctWidget.miMaxX = rctWidget.miMinX + int(_mvDimensions.x);
@@ -139,7 +144,7 @@ namespace X
 		}	// if (bContainerHasMouseOver)
 	
 		// Depending upon state, compute text and BG colours
-		const CUITheme::SSettings* pSettings = pContainer->themeGetSettings();
+		const CUITheme::SSettings* pSettings = _mpContainer->themeGetSettings();
 		CColour colTargetBG;
 		CColour colTargetText;
 		if (_mState == state::up)
@@ -161,9 +166,9 @@ namespace X
 		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
 	}
 
-	void CUIButton::reset(CUIContainer* pContainer)
+	void CUIButton::reset(void)
 	{
-		const CUITheme::SSettings* pSettings = pContainer->themeGetSettings();
+		const CUITheme::SSettings* pSettings = _mpContainer->themeGetSettings();
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
 	}

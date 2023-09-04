@@ -77,14 +77,10 @@ namespace X
 				_mTimer.update();
 
 				// Clear the backbuffer
-				x->pProfiler->begin("clear_backbuffer");
 				x->pWindow->clearBackbuffer();
-				x->pProfiler->end("clear_backbuffer");
 
 				// Bind the X:backbuffer to render target
-				x->pProfiler->begin("bind backbuffer framebuffer as target");
 				pBGFB->bindAsRenderTarget(true, true);	// Both clear and resize to window dims
-				x->pProfiler->end("bind backbuffer framebuffer as target");
 
 				x->pProfiler->begin("callCurrentApp_onUpdate()");
 				if (!callCurrentApp_onUpdate())
@@ -138,7 +134,7 @@ namespace X
 				x->pProfiler->end("SCApplicationManager::_debugGridRender()");
 
 				x->pProfiler->end("main");
-				x->pProfiler->printResults();
+//				x->pProfiler->printResults();
 
 				// Swap buffers
 				x->pWindow->swapBuffers();

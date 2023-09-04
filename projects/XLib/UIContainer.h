@@ -3,7 +3,6 @@
 #include "UIButton.h"
 #include "UIScrollBar.h"
 #include "UITheme.h"
-#include "templateManagerNoRef.h"
 
 namespace X
 {
@@ -89,6 +88,9 @@ namespace X
 		// it'll be that + the dimensions of the top left cornder border of the window using this container's currently set theme.
 		CVector2f getWidgetAreaTLCornerPosition(void) const;
 
+		// Returns a vector holding the amount to offset this container's widgets due to this container's scrollbars being enabled
+		CVector2f getWidgetOffset(void) const;
+
 		/************************************************************************************************************************************************************/
 		/* Buttons */
 		/************************************************************************************************************************************************************/
@@ -145,22 +147,44 @@ namespace X
 
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;
-		CManagerNoRef<CUIButton> _mmanButtons;			// Manager holding each CUIButton widget
-		CManagerNoRef<CUIScrollbar> _mmanScrollbars;	// Manager holding each CUIScrollbar widget
+		std::map<std::string, CUIButton*> _mmapButtons;			// Manager holding each CUIButton widget
+		std::map<std::string, CUIScrollbar*> _mmapScrollbars;	// Manager holding each CUIScrollbar widget
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;
 
+		// Updates the two scrollbar positions, dimensions and ratios
+		// Called if the theme changes, the dimensions change, a new widget is added to the container or if a widgets dims or pos are changed
+		// Computes _mvMinWidgetCorner and _mvMaxWidgetCorner
+		void _computeScrollbars(void);
+
 		// The horizontal scrollbar used for scrolling through all the widgets if their positions exceed
 		// the dimensions of the container.
-		CUIScrollbar _mScrollbarH;
+		CUIScrollbar* _mpScrollbarH;
 
 		// The vertical scrollbar used for scrolling through all the widgets if their positions exceed
 		// the dimensions of the container.
-		CUIScrollbar _mScrollbarV;
+		CUIScrollbar* _mpScrollbarV;
 
-		// Updates the two scrollbar positions and dimensions
-		// Called if the theme or dimensions change.
-		void _computeScrollbars(void);
+		// Computes the amount to offset widget positions by due to this container's scrollbars.
+		// Sets _mvWidgetOffset.
+		// Called from update();
+		void _computeWidgetOffset(void);
+
+		// This is the amount to offset widget positions by due to the container's scrollbars.
+		// Set in _computeWidgetOffset()
+		CVector2f _mvWidgetOffset;
+
+		// Goes through all of the container's widgets and returns the topleft and bottomright most positions of all
+		// of this container's widgets based upon their position and dimensions.
+		// Used by _computeScrollbars()
+		// Will set the given vectors to zero if no widgets exist
+		void _helperGetMinMaxWidgetPos(void);
+
+		// Of all widgets, holds top left most corner's position. Computed by _helperGetMinMaxWidgetPos()
+		CVector2f _mvMinWidgetCorner;
+
+		// Of all widgets, holds bottom right most corner's position. Computed by _helperGetMinMaxWidgetPos()
+		CVector2f _mvMaxWidgetCorner;
 	};
 }
