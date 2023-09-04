@@ -68,15 +68,20 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIScrollbar::render(CResourceVertexBufferCPT2* pVB)
+	void CUIScrollbar::render(CResourceVertexBufferCPT2* pVB, bool bUseWidgetScrollbarOffset)
 	{
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
-		// Add geometry for the 9 grid cells of the scrollbar's background
+		
 		if (_mbVisible)
 		{
+			// Add geometry for the 9 grid cells of the scrollbar's background
+			CVector2f vPos = _mvPosition;
+			if (bUseWidgetScrollbarOffset)
+				vPos += _mpContainer->getWidgetOffset();
+
 			x->pUI->_helperAddWidgetGridGeometry(
-				_mvPosition + _mpContainer->getWidgetOffset(),
+				vPos,
 				_mvDimensions,
 				pThemeSettings->images.scrollbarBG,
 				pThemeSettings->colours.scrollbarBG,
@@ -84,8 +89,11 @@ namespace X
 				pVB);
 
 			// Add geometry for the 9 grid cells of the scrollbar's tab
+			vPos = _mvTabPos;
+			if (bUseWidgetScrollbarOffset)
+				vPos += _mpContainer->getWidgetOffset();
 			x->pUI->_helperAddWidgetGridGeometry(
-				_mvTabPos + _mpContainer->getWidgetOffset(),
+				vPos,
 				_mvTabDims,
 				pThemeSettings->images.scrollbarTab,
 				_mTabColour,
@@ -94,7 +102,7 @@ namespace X
 		}
 	}
 
-	void CUIScrollbar::update(float fTimeDeltaSec)
+	void CUIScrollbar::update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset)
 	{
 		// Determine whether this widget's container is accepting mouse input
 		bool bAcceptingMouseInput = false;
@@ -146,7 +154,8 @@ namespace X
 		}
 
 		// _mvTabPos now holds screen position (not including _mpContainer->getWidgetOffset())
-		_mvTabPos += _mpContainer->getWidgetOffset();
+		if (bUseWidgetScrollbarOffset)
+			_mvTabPos += _mpContainer->getWidgetOffset();
 
 		// We'll convert this back to position relative to container once all calculations
 		// have been performed, so that rendering of the thing is correct, near the bottom of this method.
@@ -229,7 +238,8 @@ namespace X
 			}
 		}	// Tab is being moved
 
-		_mvTabPos -= _mpContainer->getWidgetOffset();
+		if (bUseWidgetScrollbarOffset)
+			_mvTabPos -= _mpContainer->getWidgetOffset();
 
 		// Convert screen position back to local so that rendering is correct
 		_mvTabPos -= _mpContainer->getWidgetAreaTLCornerPosition();

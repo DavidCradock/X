@@ -91,9 +91,9 @@ namespace X
 		// Returns a vector holding the amount to offset this container's widgets due to this container's scrollbars being enabled
 		CVector2f getWidgetOffset(void) const;
 
-		// Updates the two scrollbar positions, dimensions and ratios
-		// Called if the theme changes, the dimensions change, a new widget is added to the container or if a widgets dims or pos are changed
-		// Also calls _helperGetMinMaxWidgetPos which computes _mvMinWidgetCorner and _mvMaxWidgetCorner
+		// Updates the this container's two scrollbar positions, dimensions and ratios
+		// Called if the theme changes, the dimensions change, a new widget is added (or removed) to the container or if a widgets dims or pos are changed
+		// Also calls _helperComputeMaxWidgetCornerPos which computes _mvMaxWidgetCornerPos
 		void computeScrollbars(void);
 
 		/************************************************************************************************************************************************************/
@@ -172,13 +172,10 @@ namespace X
 		// of this container's widgets based upon their position and dimensions.
 		// Used by _computeScrollbars()
 		// Will set the given vectors to zero if no widgets exist
-		void _helperGetMinMaxWidgetPos(void);
+		void _helperComputeMaxWidgetCornerPos(void);
 
-		// Of all widgets, holds top left most corner's position. Computed by _helperGetMinMaxWidgetPos()
-		CVector2f _mvMinWidgetCorner;
-
-		// Of all widgets, holds bottom right most corner's position. Computed by _helperGetMinMaxWidgetPos()
-		CVector2f _mvMaxWidgetCorner;
+		// Of all widgets, holds bottom right most corner's position. Computed by _helperComputeMaxWidgetCornerPos()
+		CVector2f _mvMaxWidgetCornerPos;
 		
 		// Computes the amount to offset widget positions by due to this container's scrollbars.
 		// Sets _mvWidgetOffset.

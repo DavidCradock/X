@@ -15,8 +15,11 @@ namespace X
 
 		_mpScrollbarH = new CUIScrollbar(this);
 		ThrowIfFalse(_mpScrollbarH, "CUIContainer() failed to allocate memory.");
+		_mpScrollbarH->setTabPos(0);
 		_mpScrollbarV = new CUIScrollbar(this);
 		ThrowIfFalse(_mpScrollbarV, "CUIContainer() failed to allocate memory.");
+		_mpScrollbarV->setTabPos(0);
+		computeScrollbars();
 	}
 
 	CUIContainer::~CUIContainer()
@@ -92,8 +95,8 @@ namespace X
 		}
 
 		// The container's two scrollbars
-		_mpScrollbarH->update(fTimeDeltaSec);
-		_mpScrollbarV->update(fTimeDeltaSec);
+		_mpScrollbarH->update(fTimeDeltaSec, false);
+		_mpScrollbarV->update(fTimeDeltaSec, false);
 
 		_computeWidgetOffset();
 	}
@@ -154,23 +157,22 @@ namespace X
 			itScrollbar++;
 		}
 
-//		glEnable(GL_SCISSOR_TEST);
-		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
-		
 		// Render all the widget backgrounds and borders
+		glEnable(GL_SCISSOR_TEST);
+		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
 		pVB->update();
 		pVB->render();
 		pVB->removeGeom();
-
 		glDisable(GL_SCISSOR_TEST);
 
-
-
 		// Render the two scrollbars used for scrolling through contents of the container
-		_mpScrollbarH->render(pVB);
-		_mpScrollbarV->render(pVB);
+		pVB->removeGeom();
+		_mpScrollbarH->render(pVB, false);
+		_mpScrollbarV->render(pVB, false);
+
 		pVB->update();
 		pVB->render();
+		pVB->removeGeom();
 
 		pAtlas->unbind();
 		pShader->unbind();	// Unbind the GUI shader
@@ -243,6 +245,7 @@ namespace X
 	void CUIContainer::widgetRemoveAll(void)
 	{
 		scrollbarRemoveAll();
+		computeScrollbars();
 	}
 
 	std::string CUIContainer::getName(void)
@@ -308,6 +311,7 @@ namespace X
 			return;
 		delete it->second;
 		_mmapButtons.erase(it);
+		computeScrollbars();
 	}
 
 	void CUIContainer::buttonRemoveAll(void)
@@ -319,6 +323,7 @@ namespace X
 			it++;
 		}
 		_mmapButtons.clear();
+		computeScrollbars();
 	}
 
 	/************************************************************************************************************************************************************/
@@ -363,6 +368,7 @@ namespace X
 			return;
 		delete it->second;
 		_mmapScrollbars.erase(it);
+		computeScrollbars();
 	}
 
 	void CUIContainer::scrollbarRemoveAll(void)
@@ -374,6 +380,7 @@ namespace X
 			it++;
 		}
 		_mmapScrollbars.clear();
+		computeScrollbars();
 	}
 
 	void CUIContainer::computeScrollbars(void)
@@ -382,39 +389,35 @@ namespace X
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		
-		// Computes the positions of this container's topleft most and bottomright most widget's corner positions.
-		// Stores in _mvMinWidgetCorner and _mvMaxWidgetCorner
-		_helperGetMinMaxWidgetPos();
+		// Computes the position of this container's bottom right most widget's corner position.
+		// Stores in _mvMaxWidgetCornerPos
+		_helperComputeMaxWidgetCornerPos();
 
-		// Compute offset of widgets outside of widget area
-		CVector2f vOffsetOutsideWidgetAreaTL;
-		CVector2f vOffsetOutsideWidgetAreaBR;
-		if (_mvMinWidgetCorner.x < 0)
-			vOffsetOutsideWidgetAreaTL.x = -_mvMinWidgetCorner.x;
-		if (_mvMinWidgetCorner.y < 0)
-			vOffsetOutsideWidgetAreaTL.y = -_mvMinWidgetCorner.y;
-		if (_mvMaxWidgetCorner.x > _mvContainersWidgetAreaDimensions.x)
-			vOffsetOutsideWidgetAreaBR.x = _mvMaxWidgetCorner.x - _mvContainersWidgetAreaDimensions.x;
-		if (_mvMaxWidgetCorner.y > _mvContainersWidgetAreaDimensions.y)
-			vOffsetOutsideWidgetAreaBR.y = _mvMaxWidgetCorner.y - _mvContainersWidgetAreaDimensions.y;
-
-		// Compute total offset of widgets
-		CVector2f vTotalOffset;
-		vTotalOffset.x = vOffsetOutsideWidgetAreaTL.x + vOffsetOutsideWidgetAreaBR.x;
-		vTotalOffset.y = vOffsetOutsideWidgetAreaTL.y + vOffsetOutsideWidgetAreaBR.y;
+		// Compute offset of widgets outside of widget area.
+		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
+		CVector2f vOffsetOutsideWidgetArea;
+		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
+			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
+		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
+			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
 
 		// Here we compute and set tab ratios
+		// We need to compute how many of _mvContainerWidgetAreaDimensions fit into _mvContainersWidgetAreaDimensions
+		// and if say, it's 0.5, then ratio should be ???
+		// and if say, it's 1, then ratio should be 0.5
+		// and if say, it's 2, then ratio should be 0.25
+		// and if say. it's 4, then ratio should be 0.125
 		CVector2f vTabRatios(1, 1);
 		// If all widgets fit
-		if (vTotalOffset.x > 0)
+		if (_mvMaxWidgetCornerPos.x > 0)
 		{
-			vTabRatios.x = 1.0f - (vTotalOffset.x / _mvContainersWidgetAreaDimensions.x);
+			vTabRatios.x = 1.0f - (_mvMaxWidgetCornerPos.x / _mvContainersWidgetAreaDimensions.x);
 			if (vTabRatios.x < 0.1f)
 				vTabRatios.x = 0.1f;
 		}
-		if (vTotalOffset.y > 0)
+		if (_mvMaxWidgetCornerPos.y > 0)
 		{
-			vTabRatios.y = 1.0f - (vTotalOffset.y / _mvContainersWidgetAreaDimensions.y);
+			vTabRatios.y = 1.0f - (_mvMaxWidgetCornerPos.y / _mvContainersWidgetAreaDimensions.y);
 			if (vTabRatios.y < 0.1f)
 				vTabRatios.y = 0.1f;
 		}
@@ -454,40 +457,43 @@ namespace X
 	{
 		// Set the amount returned by getWidgetOffset()
 		// The amount to offset each widget position due to this container's scrollbars
+
+		// We already have _mvMaxWidgetCornerPos which holds the position of this container's bottom right most widget's corner position.
+		// The above was computed by the _helperComputeMaxWidgetCornerPos() method which gets called from computeScrollbars() which gets called whenever 
+		// A widget is added, removed, modified position or dims or if the container changes or if the theme changes.
+
+		// Compute offset of widgets outside of widget area.
+		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
+		CVector2f vOffsetOutsideWidgetArea;
+		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
+			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
+		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
+			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
+
 		if (_mpScrollbarH->getVisible())
 		{
-			_mvWidgetOffset.x = 0;
-			_mvWidgetOffset.x += 0;
+			_mvWidgetOffset.x = _mpScrollbarH->getTabPos() * -vOffsetOutsideWidgetArea.x;
 		}
 		if (_mpScrollbarV->getVisible())
 		{
-
+			_mvWidgetOffset.y = (1.0f - _mpScrollbarV->getTabPos()) * -vOffsetOutsideWidgetArea.y;
 		}
 
 	}
 
-	void CUIContainer::_helperGetMinMaxWidgetPos(void)
+	void CUIContainer::_helperComputeMaxWidgetCornerPos(void)
 	{
-		_mvMinWidgetCorner.set(9999999.0f, 9999999.0f);
-		_mvMaxWidgetCorner.set(-9999999.0f, -9999999.0f);
-
-		bool bWidgetExists = false;
+		_mvMaxWidgetCornerPos.setZero();
 
 		// For each button object
 		auto itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
-			CVector2f vTLPos = itButton->second->getPosition();
-			CVector2f vBRPos = vTLPos + itButton->second->getDimensions();
-			if (_mvMinWidgetCorner.x > vTLPos.x)
-				_mvMinWidgetCorner.x = vTLPos.x;
-			if (_mvMinWidgetCorner.y > vTLPos.y)
-				_mvMinWidgetCorner.y = vTLPos.y;
-			if (_mvMaxWidgetCorner.x < vBRPos.x)
-				_mvMaxWidgetCorner.x = vBRPos.x;
-			if (_mvMaxWidgetCorner.y < vBRPos.y)
-				_mvMaxWidgetCorner.y = vBRPos.y;
-			bWidgetExists = true;
+			CVector2f vBRPos = itButton->second->getPosition() + itButton->second->getDimensions();
+			if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+				_mvMaxWidgetCornerPos.x = vBRPos.x;
+			if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+				_mvMaxWidgetCornerPos.y = vBRPos.y;
 			itButton++;
 		}
 
@@ -495,25 +501,12 @@ namespace X
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
 		{
-			CVector2f vTLPos = itScrollbar->second->getPosition();
-			CVector2f vBRPos = vTLPos + itScrollbar->second->getDimensions();
-			if (_mvMinWidgetCorner.x > vTLPos.x)
-				_mvMinWidgetCorner.x = vTLPos.x;
-			if (_mvMinWidgetCorner.y > vTLPos.y)
-				_mvMinWidgetCorner.y = vTLPos.y;
-			if (_mvMaxWidgetCorner.x < vBRPos.x)
-				_mvMaxWidgetCorner.x = vBRPos.x;
-			if (_mvMaxWidgetCorner.y < vBRPos.y)
-				_mvMaxWidgetCorner.y = vBRPos.y;
-			bWidgetExists = true;
+			CVector2f vBRPos = itScrollbar->second->getPosition() + itScrollbar->second->getDimensions();
+			if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+				_mvMaxWidgetCornerPos.x = vBRPos.x;
+			if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+				_mvMaxWidgetCornerPos.y = vBRPos.y;
 			itScrollbar++;
-		}
-
-		// If no widgets exist, set the given min and max to zero
-		if (!bWidgetExists)
-		{
-			_mvMinWidgetCorner.setZero();
-			_mvMaxWidgetCorner.setZero();
 		}
 	}
 }

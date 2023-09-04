@@ -25,9 +25,11 @@ namespace X
 		CVector2f getDimensions(void) const;
 
 		// Sets the position of this widget in relation to it's container.
+		// Both axis should be at least zero
 		void setPosition(float fX, float fY);
 
 		// Sets the position of this widget in relation to it's container.
+		// Both axis should be at least zero
 		void setPosition(const CVector2f& vPosition);
 
 		// Returns the position of the widget in relation to it's container.

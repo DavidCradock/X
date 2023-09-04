@@ -35,9 +35,11 @@ namespace X
 		CVector2f getDimensions(void) const;
 
 		// Sets the position of this widget in relation to it's container.
+		// Both axis should be at least zero
 		void setPosition(float fX, float fY);
 
 		// Sets the position of this widget in relation to it's container.
+		// Both axis should be at least zero
 		void setPosition(const CVector2f& vPosition);
 
 		// Returns the position of the widget in relation to it's container.
@@ -50,10 +52,10 @@ namespace X
 		bool getVisible(void) const;
 
 		// Render this object's non-font stuff
-		void render(CResourceVertexBufferCPT2* pVB);
+		void render(CResourceVertexBufferCPT2* pVB, bool bUseWidgetScrollbarOffset = true);
 
 		// Update this object
-		void update(float fTimeDeltaSec);
+		void update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset = true);
 
 		// Resets all colours and time based values for the widget
 		void reset(void);

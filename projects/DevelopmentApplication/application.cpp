@@ -50,11 +50,13 @@ namespace X
 //		pWindow->scrollbarAdd("scrollbar", 220, 0, 100, 24, 0.05f);
 		pWindow->setPosition(1400-16, 800-30);
 		pWindow->buttonAdd("buttonC",   50,  100, 100, 24);
-		pWindow->buttonAdd("buttonT",   50, -100, 100, 24);
+		pWindow->buttonAdd("buttonT",   50, 100, 100, 24);
 		pWindow->buttonAdd("buttonB",   50,  300, 100, 24);
-		pWindow->buttonAdd("buttonL",  -50,  100, 100, 24);
+		pWindow->buttonAdd("buttonL",  50,  100, 100, 24);
 		pWindow->buttonAdd("buttonR",  300,  100, 100, 24);
-
+		pWindow->buttonAdd("button0x0", 0, 0, 100, 24);
+		pWindow->buttonAdd("button300x0", 300, 0, 100, 24);
+		pWindow->buttonAdd("button0x300", 0, 300, 100, 24);
 		x->pUI->windowAdd("Window2");
 
 //		pWindow = x->pUI->windowAdd("window2 300x300");
