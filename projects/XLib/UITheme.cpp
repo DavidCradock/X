@@ -44,7 +44,7 @@ namespace X
 
 		// Fonts
 		x->pFile->readString(file, _mSettings.fonts.button);
-//		x->pFile->readString(file, _mSettings.fonts.text);
+		x->pFile->readString(file, _mSettings.fonts.text);
 //		x->pFile->readString(file, _mSettings.fonts.textEdit);
 //		x->pFile->readString(file, _mSettings.fonts.textScroll);
 		x->pFile->readString(file, _mSettings.fonts.windowTitlebar);
@@ -105,7 +105,7 @@ namespace X
 
 		// Fonts
 		x->pFile->writeString(file, _mSettings.fonts.button);
-//		x->pFile->writeString(file, _mSettings.fonts.text);
+		x->pFile->writeString(file, _mSettings.fonts.text);
 //		x->pFile->writeString(file, _mSettings.fonts.textEdit);
 //		x->pFile->writeString(file, _mSettings.fonts.textScroll);
 		x->pFile->writeString(file, _mSettings.fonts.windowTitlebar);
@@ -156,7 +156,7 @@ namespace X
 
 		// Fonts
 		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
-//		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
+		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
 //		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
 		x->pResource->addFont(_mSettings.fonts.windowTitlebar, _mSettings.fonts.windowTitlebar, false);
@@ -194,7 +194,7 @@ namespace X
 
 		// Fonts
 		x->pResource->removeFont(_mSettings.fonts.button);
-//		x->pResource->removeFont(_mSettings.fonts.text);
+		x->pResource->removeFont(_mSettings.fonts.text);
 //		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
 		x->pResource->removeFont(_mSettings.fonts.windowTitlebar);
@@ -236,7 +236,7 @@ namespace X
 		_mSettings.colours.scrollbarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.scrollbarTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		_mSettings.colours.scrollbarTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textEditInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -261,7 +261,7 @@ namespace X
 
 		// Fonts
 		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
-//		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";

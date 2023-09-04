@@ -61,6 +61,7 @@ namespace X
 	void CUIScrollbar::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		_mpContainer->computeScrollbars();
 	}
 
 	bool CUIScrollbar::getVisible(void) const
@@ -262,6 +263,8 @@ namespace X
 
 		_mbTabBeingMoved = false;
 	}
+
+	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIScrollbar::setTabPos(float fPos)
 	{

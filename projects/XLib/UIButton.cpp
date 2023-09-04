@@ -60,6 +60,7 @@ namespace X
 	void CUIButton::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		_mpContainer->computeScrollbars();
 	}
 
 	bool CUIButton::getVisible(void) const
@@ -173,6 +174,8 @@ namespace X
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
 	}
+
+	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIButton::setText(const std::string& strText)
 	{

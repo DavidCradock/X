@@ -14,7 +14,6 @@ namespace X
 	// The user interface has a few nice features...
 	// The cursor is used as a light source to create a nice bump mapped look to the user interface.
 	// The windows of the UI can be semi transparent.
-	// The UI uses the messaging classes instead of function pointers for us to determine UI events such as button clicks, scrollbar movement etc.
 	// Audio playback for various UI events such as button clicks.
 	// 
 	// Position coordinates and dimensions.
@@ -22,7 +21,8 @@ namespace X
 	// Everything is offset from the top left corner of the screen, where coordinates of 0, 0 represent the top left corner of the screen.
 	// The X coordinate is from the left edge of the screen, starting at 0, increasing as we go across the screen.
 	// The Y coordinate is from the top edge of the screen, starting at 0, increasing as we go down the screen.
-	//
+	// All widget positions should be zero or greater
+	// 
 	// The user interface consists of the following components...
 	// 
 	// Widgets:
@@ -47,7 +47,7 @@ namespace X
 	// 
 	// Widgets (More information):
 	// Widgets include buttons, image buttons which use a custom set image, static text, editable text boxes,
-	// text boxes with vertical scroll bar, progress bars, static images, animated images, frame buffer boxes which render the
+	// progress bars, static images, animated images, frame buffer boxes which render the
 	// contents of a framebuffer, draggable images/framebuffers which can be dragged between "draggable dock" widgets, line graphs, expandable menus
 	// with support for holding various widgets such as buttons, text and images, for each item in the menu.
 	// We also have a taskbar, scrollbars which may be horizontal or vertical.

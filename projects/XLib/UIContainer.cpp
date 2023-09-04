@@ -16,9 +16,11 @@ namespace X
 		_mpScrollbarH = new CUIScrollbar(this);
 		ThrowIfFalse(_mpScrollbarH, "CUIContainer() failed to allocate memory.");
 		_mpScrollbarH->setTabPos(0);
+
 		_mpScrollbarV = new CUIScrollbar(this);
 		ThrowIfFalse(_mpScrollbarV, "CUIContainer() failed to allocate memory.");
 		_mpScrollbarV->setTabPos(0);
+
 		computeScrollbars();
 	}
 
@@ -73,148 +75,6 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIContainer::update(float fTimeDeltaSec)
-	{
-		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
-//		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-
-		// For each button object
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
-		{
-			itButton->second->update(fTimeDeltaSec);
-			itButton++;
-		}
-
-		// For each scrollbar object
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
-		{
-			itScrollbar->second->update(fTimeDeltaSec);
-			itScrollbar++;
-		}
-
-		// The container's two scrollbars
-		_mpScrollbarH->update(fTimeDeltaSec, false);
-		_mpScrollbarV->update(fTimeDeltaSec, false);
-
-		_computeWidgetOffset();
-	}
-
-	void CUIContainer::render(void)
-	{
-		if (!_mbVisible)
-			return;
-
-		// Get required resources needed to render things
-		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
-		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui);
-		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
-		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
-		const CUITheme::SSettings* pSettings = pTheme->getSettings();
-		//CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-
-		pShader->bind();
-
-		// Setup the projection matrix as orthographic
-		CMatrix matProjection;
-		matProjection.setProjectionOrthographic(0.0f, (float)pUIFB->getWidth(), 0.0f, (float)pUIFB->getHeight(), -1.0f, 1.0f);
-		pShader->setMat4("transform", matProjection);
-
-		// Tell OpenGL, for each sampler, to which texture unit it belongs to
-		pShader->setInt("texture0", 0);
-		pShader->setFloat("fMouseCursorDistance", pSettings->floats.normalMouseCursorDistance);
-		pShader->setVec4("v4AmbientLight", pSettings->colours.ambientLight);
-		pShader->setVec4("v4MouseLight", pSettings->colours.mouseLight);
-
-		// Set mouse position, inverting Y position
-		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
-		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
-		pShader->setVec2("v2MousePos", vMousePos);
-
-		glEnable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
-
-		// Get textures and bind them
-		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		pAtlas->bindAtlas(0, 0);
-
-		pVB->removeGeom();
-
-		// For each button object
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
-		{
-			itButton->second->render(pVB);
-			itButton++;
-		}
-
-		// For each scrollbar object
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
-		{
-			itScrollbar->second->render(pVB);
-			itScrollbar++;
-		}
-
-		// Render all the widget backgrounds and borders
-		glEnable(GL_SCISSOR_TEST);
-		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
-		pVB->update();
-		pVB->render();
-		pVB->removeGeom();
-		glDisable(GL_SCISSOR_TEST);
-
-		// Render the two scrollbars used for scrolling through contents of the container
-		pVB->removeGeom();
-		_mpScrollbarH->render(pVB, false);
-		_mpScrollbarV->render(pVB, false);
-
-		pVB->update();
-		pVB->render();
-		pVB->removeGeom();
-
-		pAtlas->unbind();
-		pShader->unbind();	// Unbind the GUI shader
-		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
-
-		// Render font stuff
-		// For each button object, render non-font stuff
-		glEnable(GL_SCISSOR_TEST);
-		itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
-		{
-			itButton->second->renderFonts();
-			itButton++;
-		}
-		glDisable(GL_SCISSOR_TEST);
-	}
-
-	void CUIContainer::renderTooltips(void)
-	{
-
-	}
-
-	void CUIContainer::reset(void)
-	{
-		// For each button object
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
-		{
-			itButton->second->reset();
-			itButton++;
-		}
-
-		// For each scrollbar object
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
-		{
-			itScrollbar->second->reset();
-			itScrollbar++;
-		}
-	}
-
 	std::string CUIContainer::themeNameGet(void) const
 	{
 		return _mstrThemename;
@@ -239,12 +99,6 @@ namespace X
 		}
 	}
 
-	void CUIContainer::widgetRemoveAll(void)
-	{
-		scrollbarRemoveAll();
-		computeScrollbars();
-	}
-
 	std::string CUIContainer::getName(void)
 	{
 		return _mstrName;
@@ -266,12 +120,112 @@ namespace X
 		return _mvWidgetOffset;
 	}
 
+	void CUIContainer::computeScrollbars(void)
+	{
+		// Get required theme settings
+		CUITheme* pTheme = themeGet();
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+
+		// Computes the position of this container's bottom right most widget's corner position.
+		// Stores in _mvMaxWidgetCornerPos
+		_helperComputeMaxWidgetCornerPos();
+
+		// Compute offset of widgets outside of widget area.
+		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
+		CVector2f vOffsetOutsideWidgetArea;
+		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
+			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
+		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
+			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
+
+		// Here we compute and set tab ratios
+		CVector2f vTabRatios(1, 1);
+		// If all widgets fit
+		if (_mvMaxWidgetCornerPos.x > 0)
+		{
+			vTabRatios.x = (vOffsetOutsideWidgetArea.x + _mvContainersWidgetAreaDimensions.x) / _mvContainersWidgetAreaDimensions.x;
+			vTabRatios.x = 1.0f / vTabRatios.x;
+			if (vTabRatios.x < 0.1f)
+				vTabRatios.x = 0.1f;
+		}
+		if (_mvMaxWidgetCornerPos.y > 0)
+		{
+			vTabRatios.y = (vOffsetOutsideWidgetArea.y + _mvContainersWidgetAreaDimensions.y) / _mvContainersWidgetAreaDimensions.y;
+			vTabRatios.y = 1.0f / vTabRatios.y;
+			if (vTabRatios.y < 0.1f)
+				vTabRatios.y = 0.1f;
+		}
+
+		// Set tab ratios for both scrollbars
+		_mpScrollbarH->setTabRatio(vTabRatios.x);
+		_mpScrollbarV->setTabRatio(vTabRatios.y);
+
+		// Also, hide them if everything fits
+		_mpScrollbarH->_mbVisible = !(vTabRatios.x == 1.0f);
+		_mpScrollbarV->_mbVisible = !(vTabRatios.y == 1.0f);
+
+		// Horizontal scrollbar
+		// Position
+		CVector2f vPos;
+		vPos.x = 0;
+		vPos.y = _mvContainersWidgetAreaDimensions.y;
+		_mpScrollbarH->_mvPosition = vPos;
+		// Dimensions
+		CVector2f vDims;
+		vDims.x = _mvContainersWidgetAreaDimensions.x;
+		vDims.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		_mpScrollbarH->_mvDimensions = vDims;
+
+		// Vertical scrollbar
+		// Position
+		vPos.x = _mvContainersWidgetAreaDimensions.x;	// Offset by left edge of window border + dims of widget area
+		vPos.y = 0;
+		_mpScrollbarV->_mvPosition = vPos;
+		// Dimensions
+		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;
+		vDims.y = _mvContainersWidgetAreaDimensions.y;
+		_mpScrollbarV->_mvDimensions = vDims;
+	}
+
+	void CUIContainer::_computeWidgetOffset(void)
+	{
+		// Set the amount returned by getWidgetOffset()
+		// The amount to offset each widget position due to this container's scrollbars
+
+		// We already have _mvMaxWidgetCornerPos which holds the position of this container's bottom right most widget's corner position.
+		// The above was computed by the _helperComputeMaxWidgetCornerPos() method which gets called from computeScrollbars() which gets called whenever 
+		// A widget is added, removed, modified position or dims or if the container changes or if the theme changes.
+
+		// Compute offset of widgets outside of widget area.
+		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
+		CVector2f vOffsetOutsideWidgetArea;
+		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
+			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
+		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
+			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
+
+		if (_mpScrollbarH->getVisible())
+		{
+			_mvWidgetOffset.x = _mpScrollbarH->getTabPos() * -vOffsetOutsideWidgetArea.x;
+		}
+		if (_mpScrollbarV->getVisible())
+		{
+			_mvWidgetOffset.y = (1.0f - _mpScrollbarV->getTabPos()) * -vOffsetOutsideWidgetArea.y;
+		}
+	}
+
 	/************************************************************************************************************************************************************/
-	/* Buttons */
+	/* All widget code below
+	*  When adding a new widget type, we add the usual widgetnameAdd(), widgetnameGet(), widgetnameRemove() and widgetnameRemoveall() methods,
+	*  then all CUIContainer methods below those need to be modified to include the new widget.
+	*  All the code above does not need to be modified to accomodate a new widget.
+	*/
 	/************************************************************************************************************************************************************/
 
-	// Add button to this container and return a pointer to it
-	// If the name already exists, an exception occurs
+	/************************************************************************************************************************************************************/
+	/* CUIButton */
+	/************************************************************************************************************************************************************/
+
 	CUIButton* CUIContainer::buttonAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
 	{
 		// Throw exception if named object already exists
@@ -290,7 +244,6 @@ namespace X
 
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
 		computeScrollbars();
-
 		return pNewObject;
 	}
 
@@ -324,13 +277,9 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
-	/* Scrollbars */
+	/* CUIScrollbar */
 	/************************************************************************************************************************************************************/
 
-	// Add scrollbar to this container and return a pointer to it
-	// If the name already exists, an exception occurs
-	// If the width is greater than height, it is set as a horizontal scrollbar, else vertical.
-	// fTabRatio is a value which is multiplied by the width/height(Depending on orientation) of the scrollbar's dims, to obtain tab dimensions
 	CUIScrollbar* CUIContainer::scrollbarAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio)
 	{
 		// Throw exception if named object already exists
@@ -380,127 +329,282 @@ namespace X
 		computeScrollbars();
 	}
 
-	void CUIContainer::computeScrollbars(void)
+	/************************************************************************************************************************************************************/
+	/* CUIText */
+	/************************************************************************************************************************************************************/
+
+	CUIText* CUIContainer::textAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
 	{
-		// Get required theme settings
-		CUITheme* pTheme = themeGet();
-		const CUITheme::SSettings* pSettings = pTheme->getSettings();
-		
-		// Computes the position of this container's bottom right most widget's corner position.
-		// Stores in _mvMaxWidgetCornerPos
-		_helperComputeMaxWidgetCornerPos();
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapTexts.find(strName) != _mmapTexts.end(), "CUIContainer::textAdd(\"" + strName + "\") failed. Named object already exists.");
 
-		// Compute offset of widgets outside of widget area.
-		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
-		CVector2f vOffsetOutsideWidgetArea;
-		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
-			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
-		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
-			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
+		// Create new object
+		CUIText* pNewObject = new CUIText(this, strName);
+		ThrowIfFalse(pNewObject, "CUIContainer::textAdd() failed to allocate memory for new object.");
 
-		// Here we compute and set tab ratios
-		CVector2f vTabRatios(1, 1);
-		// If all widgets fit
-		if (_mvMaxWidgetCornerPos.x > 0)
-		{
-			vTabRatios.x = (vOffsetOutsideWidgetArea.x + _mvContainersWidgetAreaDimensions.x) / _mvContainersWidgetAreaDimensions.x;
-			vTabRatios.x = 1.0f / vTabRatios.x;
-			if (vTabRatios.x < 0.1f)
-				vTabRatios.x = 0.1f;
-		}
-		if (_mvMaxWidgetCornerPos.y > 0)
-		{
-			vTabRatios.y = (vOffsetOutsideWidgetArea.y + _mvContainersWidgetAreaDimensions.y) / _mvContainersWidgetAreaDimensions.y;
-			vTabRatios.y = 1.0f / vTabRatios.y;
-			if (vTabRatios.y < 0.1f)
-				vTabRatios.y = 0.1f;
-		}
+		_mmapTexts[strName] = pNewObject;
 
-		// Set tab ratios for both scrollbars
-		_mpScrollbarH->setTabRatio(vTabRatios.x);
-		_mpScrollbarV->setTabRatio(vTabRatios.y);
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+		pNewObject->setText(strText);
 
-		// Also, hide them if everything fits
-		_mpScrollbarH->setVisible(!(vTabRatios.x == 1.0f));
-		_mpScrollbarV->setVisible(!(vTabRatios.y == 1.0f));
-
-		// Horizontal scrollbar
-		// Position
-		CVector2f vPos;
-		vPos.x = 0;
-		vPos.y = _mvContainersWidgetAreaDimensions.y;
-		_mpScrollbarH->_mvPosition = vPos;
-		// Dimensions
-		CVector2f vDims;
-		vDims.x = _mvContainersWidgetAreaDimensions.x;
-		vDims.y = pSettings->floats.windowScrollbarHorizontalHeight;
-		_mpScrollbarH->_mvDimensions = vDims;
-		
-		// Vertical scrollbar
-		// Position
-		vPos.x = _mvContainersWidgetAreaDimensions.x;	// Offset by left edge of window border + dims of widget area
-		vPos.y = 0;
-		_mpScrollbarV->_mvPosition = vPos;
-		// Dimensions
-		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;
-		vDims.y = _mvContainersWidgetAreaDimensions.y;
-		_mpScrollbarV->_mvDimensions = vDims;
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
 	}
 
-	void CUIContainer::_computeWidgetOffset(void)
+	CUIText* CUIContainer::textGet(const std::string& strName)
 	{
-		// Set the amount returned by getWidgetOffset()
-		// The amount to offset each widget position due to this container's scrollbars
+		auto it = _mmapTexts.find(strName);
+		ThrowIfTrue(_mmapTexts.end() == it, "CUIContainer::textGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
 
-		// We already have _mvMaxWidgetCornerPos which holds the position of this container's bottom right most widget's corner position.
-		// The above was computed by the _helperComputeMaxWidgetCornerPos() method which gets called from computeScrollbars() which gets called whenever 
-		// A widget is added, removed, modified position or dims or if the container changes or if the theme changes.
+	void CUIContainer::textRemove(const std::string& strName)
+	{
+		auto it = _mmapTexts.find(strName);
+		if (_mmapTexts.end() == it)
+			return;
+		delete it->second;
+		_mmapTexts.erase(it);
+		computeScrollbars();
+	}
 
-		// Compute offset of widgets outside of widget area.
-		// This is the number of pixels outside the widget area to the bottom right most widget's BR corner
-		CVector2f vOffsetOutsideWidgetArea;
-		if (_mvMaxWidgetCornerPos.x > _mvContainersWidgetAreaDimensions.x)
-			vOffsetOutsideWidgetArea.x = _mvMaxWidgetCornerPos.x - _mvContainersWidgetAreaDimensions.x;
-		if (_mvMaxWidgetCornerPos.y > _mvContainersWidgetAreaDimensions.y)
-			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
-
-		if (_mpScrollbarH->getVisible())
+	void CUIContainer::textRemoveAll(void)
+	{
+		auto it = _mmapTexts.begin();
+		while (it != _mmapTexts.end())
 		{
-			_mvWidgetOffset.x = _mpScrollbarH->getTabPos() * -vOffsetOutsideWidgetArea.x;
+			delete it->second;
+			it++;
 		}
-		if (_mpScrollbarV->getVisible())
+		_mmapTexts.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
+	/* All code below here needs to be modified to accomodate a new widget */
+	/************************************************************************************************************************************************************/
+
+	void CUIContainer::widgetRemoveAll(void)
+	{
+		buttonRemoveAll();
+		scrollbarRemoveAll();
+		textRemoveAll();
+
+		// Recompute this container's scrollbars
+		computeScrollbars();
+	}
+
+	void CUIContainer::reset(void)
+	{
+		// For each CUIButton widget
+		auto itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
 		{
-			_mvWidgetOffset.y = (1.0f - _mpScrollbarV->getTabPos()) * -vOffsetOutsideWidgetArea.y;
+			itButton->second->reset();
+			itButton++;
 		}
 
+		// For each CUIScrollbar widget
+		auto itScrollbar = _mmapScrollbars.begin();
+		while (itScrollbar != _mmapScrollbars.end())
+		{
+			itScrollbar->second->reset();
+			itScrollbar++;
+		}
+
+		// For each CUIText object (No need)
 	}
 
 	void CUIContainer::_helperComputeMaxWidgetCornerPos(void)
 	{
 		_mvMaxWidgetCornerPos.setZero();
 
-		// For each button object
+		// For each CUIButton widget
 		auto itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
-			CVector2f vBRPos = itButton->second->getPosition() + itButton->second->getDimensions();
-			if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-				_mvMaxWidgetCornerPos.x = vBRPos.x;
-			if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-				_mvMaxWidgetCornerPos.y = vBRPos.y;
+			if (itButton->second->_mbVisible)
+			{
+				CVector2f vBRPos = itButton->second->getPosition() + itButton->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
 			itButton++;
 		}
 
-		// For each scrollbar object
+		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
 		{
-			CVector2f vBRPos = itScrollbar->second->getPosition() + itScrollbar->second->getDimensions();
-			if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-				_mvMaxWidgetCornerPos.x = vBRPos.x;
-			if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-				_mvMaxWidgetCornerPos.y = vBRPos.y;
+			if (itScrollbar->second->_mbVisible)
+			{
+				CVector2f vBRPos = itScrollbar->second->getPosition() + itScrollbar->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
 			itScrollbar++;
 		}
+
+		// For each CUIText object
+		auto itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			if (itText->second->_mbVisible)
+			{
+				CVector2f vBRPos = itText->second->getPosition() + itText->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itText++;
+		}
+
+
 	}
+
+	void CUIContainer::update(float fTimeDeltaSec)
+	{
+		// For each CUIButton widget
+		auto itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->update(fTimeDeltaSec);
+			itButton++;
+		}
+
+		// For each CUIScrollbar widget
+		auto itScrollbar = _mmapScrollbars.begin();
+		while (itScrollbar != _mmapScrollbars.end())
+		{
+			itScrollbar->second->update(fTimeDeltaSec);
+			itScrollbar++;
+		}
+
+		// For each CUIText widget (No need)
+
+
+		// The container's two scrollbars
+		_mpScrollbarH->update(fTimeDeltaSec, false);
+		_mpScrollbarV->update(fTimeDeltaSec, false);
+
+		_computeWidgetOffset();
+	}
+
+	void CUIContainer::render(void)
+	{
+		if (!_mbVisible)
+			return;
+
+		// Get required resources needed to render things
+		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
+		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui);
+		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+		CUITheme* pTheme = SCUIManager::getPointer()->themeGet(_mstrThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		//CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+
+		pShader->bind();
+
+		// Setup the projection matrix as orthographic
+		CMatrix matProjection;
+		matProjection.setProjectionOrthographic(0.0f, (float)pUIFB->getWidth(), 0.0f, (float)pUIFB->getHeight(), -1.0f, 1.0f);
+		pShader->setMat4("transform", matProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
+		pShader->setFloat("fMouseCursorDistance", pSettings->floats.normalMouseCursorDistance);
+		pShader->setVec4("v4AmbientLight", pSettings->colours.ambientLight);
+		pShader->setVec4("v4MouseLight", pSettings->colours.mouseLight);
+
+		// Set mouse position, inverting Y position
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+		vMousePos.y = float(x->pWindow->getHeight()) - vMousePos.y;
+		pShader->setVec2("v2MousePos", vMousePos);
+
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+
+		// Get textures and bind them
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		pAtlas->bindAtlas(0, 0);
+
+		pVB->removeGeom();
+
+		// For each CUIButton widget
+		auto itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->render(pVB);
+			itButton++;
+		}
+
+		// For each CUIScrollbar widget
+		auto itScrollbar = _mmapScrollbars.begin();
+		while (itScrollbar != _mmapScrollbars.end())
+		{
+			itScrollbar->second->render(pVB);
+			itScrollbar++;
+		}
+
+		// Render all the widget backgrounds added above
+		glEnable(GL_SCISSOR_TEST);
+		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
+		pVB->update();
+		pVB->render();
+		pVB->removeGeom();
+		glDisable(GL_SCISSOR_TEST);
+
+		// Render the two scrollbars used for scrolling through contents of the container
+		pVB->removeGeom();
+		_mpScrollbarH->render(pVB, false);
+		_mpScrollbarV->render(pVB, false);
+		pVB->update();
+		pVB->render();
+		pVB->removeGeom();
+		pAtlas->unbind();
+		pShader->unbind();	// Unbind the GUI shader
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		// Render font stuff
+		// For each CUIButton widget, render non-font stuff
+		glEnable(GL_SCISSOR_TEST);
+		itButton = _mmapButtons.begin();
+		while (itButton != _mmapButtons.end())
+		{
+			itButton->second->renderFonts();
+			itButton++;
+		}
+
+		// For each CUIScrollbar widget (Not needed, doesn't have any font stuff)
+
+		// For each CUIText widget
+		auto itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			itText->second->render();
+			itText++;
+		}
+
+
+
+		glDisable(GL_SCISSOR_TEST);
+	}
+
+	void CUIContainer::renderTooltips(void)
+	{
+
+	}
+
+	/************************************************************************************************************************************************************/
+	/* The end!!!!!!! :) */
+	/************************************************************************************************************************************************************/
 }

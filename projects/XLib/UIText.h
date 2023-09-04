@@ -8,12 +8,12 @@ namespace X
 {
 	class CUIContainer;
 
-	class CUIButton
+	class CUIText
 	{
 		friend class CUIContainer;
 	public:
-		CUIButton(CUIContainer* pContainer);
-		~CUIButton();
+		CUIText(CUIContainer* pContainer, const std::string& strWidgetName);
+		~CUIText();
 
 		// Sets the dimensions of the widget.
 		void setDimensions(float fX, float fY);
@@ -42,33 +42,19 @@ namespace X
 		bool getVisible(void) const;
 
 		// Render this object's non-font stuff
-		void render(CResourceVertexBufferCPT2* pVB);
-
-		// Render this object's font stuff
-		void renderFonts(void);
-	
-		// Update this object
-		void update(float fTimeDeltaSec);
-
-		// Resets all colours and time based values for the widget
-		void reset(void);
+		void render(void);
 
 		/******************************************************************* Widget specific *******************************************************************/
 
-		// Sets the text string to be rendered over the top of the button
+		// Sets the text string to be rendered
 		void setText(const std::string& strText);
 
-		// Returns the text string that's used to render the text over this button.
+		// Returns the text string that's used to render
 		std::string getText(void) const;
 
-		// Returns whether this button has been clicked upon or not.
-		// This is OK for a quick and dirty approach to checking button clicks, but if we have
-		// many buttons, they'll be a lot of if then statements in the calling code and things start
-		// to get inefficient.
-		// Don't forget to check if the widget's container is visible, otherwise there's no point checking
-		// to see if the widget has changed state as it will not have.
-		// Instead of using this, use observers or function pointers for optimal performance.
-		bool getClicked(void) const;
+		// Sets whether to use the theme's text colour or the colour given here
+		// If bUseThemesColour is true, the colour is still stored
+		void setColour(bool bUseThemesColour, const CColour& colour = CColour(1, 1, 1, 1));
 
 	private:
 		// Common amoung widgets
@@ -79,15 +65,9 @@ namespace X
 
 		// Widget specific
 		std::string _mstrText;				// Text string to be rendered
-		CColour _mColourBG;					// Current BG colour (fading between up/over/down states)
-		CColour _mColourText;				// Current text colour (fading between up/over/down states)
-		enum state	// The three states of a button
-		{
-			up,		// Mouse is not over the button
-			over,	// Mouse is over the button
-			down	// Mouse is over the button and left mouse button is pressed
-		};
-		state _mState;				// The current state of the button
-		bool _mbClicked;			// Holds whether the button has been clicked upon.
+		CColour _mColour;					// Current text colour (if not using the text colour from the theme)
+		bool _mbUseThemeColour;				// Whether to use the theme's text colour or the one given to setColour()
+		bool _mbFramebufferNeedsUpdating;	// If any settings changed, we need to re-render this widget's framebuffer
+		std::string _mstrFramebufferName;	// The unique name of this widget's framebuffer. Computed in constructor
 	};
 }

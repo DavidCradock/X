@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "UIButton.h"
 #include "UIScrollBar.h"
+#include "UIText.h"
 #include "UITheme.h"
 
 namespace X
@@ -135,6 +136,25 @@ namespace X
 
 		// Removes all scrollbars from this container
 		void scrollbarRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
+		/* Text */
+		/************************************************************************************************************************************************************/
+
+		// Add text to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIText* textAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUIText* textGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void textRemove(const std::string& strName);
+
+		// Removes all text from this container
+		void textRemoveAll(void);
 	protected:
 		// Dimensions of the container's widget area, set by setDimensions();
 		CVector2f _mvContainersWidgetAreaDimensions;
@@ -154,8 +174,9 @@ namespace X
 
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;
-		std::map<std::string, CUIButton*> _mmapButtons;			// Manager holding each CUIButton widget
-		std::map<std::string, CUIScrollbar*> _mmapScrollbars;	// Manager holding each CUIScrollbar widget
+		std::map<std::string, CUIButton*> _mmapButtons;			// Map holding each CUIButton widget
+		std::map<std::string, CUIScrollbar*> _mmapScrollbars;	// Map holding each CUIScrollbar widget
+		std::map<std::string, CUIText*> _mmapTexts;				// Map holding each CUIText widget
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;
@@ -169,7 +190,7 @@ namespace X
 		CUIScrollbar* _mpScrollbarV;
 
 		// Goes through all of the container's widgets and returns the topleft and bottomright most positions of all
-		// of this container's widgets based upon their position and dimensions.
+		// of this container's widgets based upon their position and dimensions and whether they're visible or not.
 		// Used by _computeScrollbars()
 		// Will set the given vectors to zero if no widgets exist
 		void _helperComputeMaxWidgetCornerPos(void);
@@ -185,7 +206,5 @@ namespace X
 		// This is the amount to offset widget positions by due to the container's scrollbars.
 		// Set in _computeWidgetOffset()
 		CVector2f _mvWidgetOffset;
-
-		
 	};
 }

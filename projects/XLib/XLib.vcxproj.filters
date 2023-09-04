@@ -464,6 +464,9 @@
     <ClInclude Include="timerMinimal.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -820,6 +823,9 @@
     </ClCompile>
     <ClCompile Include="timerMinimal.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

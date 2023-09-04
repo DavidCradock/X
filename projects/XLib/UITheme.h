@@ -129,7 +129,7 @@ namespace X
 		struct SFonts
 		{
 			std::string button;						// Font used when rendering a button's text
-//			std::string text;						// Font used when rendering a UIText widget.
+			std::string text;						// Font used when rendering a UIText widget.
 //			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
 //			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
 			std::string windowTitlebar;				// Font used when rendering a window's titlebar text.
@@ -156,7 +156,7 @@ namespace X
 			CColour scrollbarBG;						// CUIScrollbar's  BG colour.
 			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
 			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over
-//			CColour text;								// CUIText font colour
+			CColour text;								// CUIText font colour
 //			CColour textEditActive;						// CUITextEdit's text colour when active
 //			CColour textEditInactive;					// CUITextEdit's text colour when inactive
 //			CColour textScrollBG;						// CUITextScroll's colour

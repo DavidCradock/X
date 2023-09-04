@@ -35,11 +35,11 @@ namespace X
 		CVector2f getDimensions(void) const;
 
 		// Sets the position of this widget in relation to it's container.
-		// Both axis should be at least zero
+		// Both axis should be at least zero. I wish there was an unsigned float, but oh well :)
 		void setPosition(float fX, float fY);
 
 		// Sets the position of this widget in relation to it's container.
-		// Both axis should be at least zero
+		// Both axis should be at least zero. I wish there was an unsigned float, but oh well :)
 		void setPosition(const CVector2f& vPosition);
 
 		// Returns the position of the widget in relation to it's container.
@@ -59,6 +59,8 @@ namespace X
 
 		// Resets all colours and time based values for the widget
 		void reset(void);
+
+		/******************************************************************* Widget specific *******************************************************************/
 
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);
