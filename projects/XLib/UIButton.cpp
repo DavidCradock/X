@@ -25,13 +25,13 @@ namespace X
 	{
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	void CUIButton::setDimensions(const CVector2f& vDimensions)
 	{
 		_mvDimensions = vDimensions;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	CVector2f CUIButton::getDimensions(void) const
@@ -43,13 +43,13 @@ namespace X
 	{
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	void CUIButton::setPosition(const CVector2f& vPosition)
 	{
 		_mvPosition = vPosition;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	CVector2f CUIButton::getPosition(void) const
@@ -73,7 +73,7 @@ namespace X
 
 		// Add geometry for the 9 grid cells
 		x->pUI->_helperAddWidgetGridGeometry(
-			_mvPosition,
+			_mvPosition + _mpContainer->getWidgetOffset(),
 			_mvDimensions,
 			pThemeSettings->images.buttonBG,
 			_mColourBG,
@@ -88,6 +88,8 @@ namespace X
 		CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.button);
 		
 		CVector2f vTextPos = _mpContainer->getWidgetAreaTLCornerPosition();
+		vTextPos += _mvPosition;
+		vTextPos += _mpContainer->getWidgetOffset();
 		vTextPos.x += _mvDimensions.x * 0.5f;
 		vTextPos.y += _mvDimensions.y * 0.5f;
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, _mColourText);
@@ -115,7 +117,7 @@ namespace X
 
 			// Compute a CRect which represents this widget's actual screen area
 			CRect rctWidget;	// This will hold actual screen position for the widget's four corners.
-			CVector2f vWidgetAreaTLPos = _mpContainer->getWidgetAreaTLCornerPosition();
+			CVector2f vWidgetAreaTLPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
 			rctWidget.miMinX = int(vWidgetAreaTLPos.x + _mvPosition.x);
 			rctWidget.miMinY = int(vWidgetAreaTLPos.y + _mvPosition.y);
 			rctWidget.miMaxX = rctWidget.miMinX + int(_mvDimensions.x);

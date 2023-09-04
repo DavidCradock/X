@@ -47,23 +47,30 @@ namespace X
 		// Setup UserInterface theme
 		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
 		pWindow->setDimensions(CVector2f(200, 200));
-		pWindow->scrollbarAdd("scrollbar", 220, 0, 100, 24, 0.05f);
+//		pWindow->scrollbarAdd("scrollbar", 220, 0, 100, 24, 0.05f);
 		pWindow->setPosition(1400-16, 800-30);
+		pWindow->buttonAdd("buttonC",   50,  100, 100, 24);
+		pWindow->buttonAdd("buttonT",   50, -100, 100, 24);
+		pWindow->buttonAdd("buttonB",   50,  300, 100, 24);
+		pWindow->buttonAdd("buttonL",  -50,  100, 100, 24);
+		pWindow->buttonAdd("buttonR",  300,  100, 100, 24);
 
-		pWindow = x->pUI->windowAdd("window2 300x300");
-		pWindow->setDimensions(CVector2f(300, 300));
-		pWindow->setPosition(CVector2f(400-16, 400-30));
-		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
+		x->pUI->windowAdd("Window2");
+
+//		pWindow = x->pUI->windowAdd("window2 300x300");
+//		pWindow->setDimensions(CVector2f(300, 300));
+//		pWindow->setPosition(CVector2f(400-16, 400-30));
+//		CUIButton* pButton = pWindow->buttonAdd("100x24", 0, 0, 100, 24);
 		//pButton
 //		CUIScrollbar* pScrollbar = pWindow->scrollbarAdd("100x24", 0, 0, 100, 24);
 
 		// Add container for debugging
-		CUIContainer* pContainer = x->pUI->containerAdd("container0 100x100x100x100");
-		pContainer->setDimensions(CVector2f(100, 100));
-		pContainer->setPosition(100, 100);
-		pButton = pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
+//		CUIContainer* pContainer = x->pUI->containerAdd("container0 100x100x100x100");
+//		pContainer->setDimensions(CVector2f(100, 100));
+//		pContainer->setPosition(100, 100);
+//		pButton = pContainer->buttonAdd("0x0x100x100", 0, 0, 100, 100);
 
-		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
+//		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 
 	}
 

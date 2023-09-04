@@ -30,13 +30,13 @@ namespace X
 	{
 		_mvContainersWidgetAreaDimensions.x = fX;
 		_mvContainersWidgetAreaDimensions.y = fY;
-		_computeScrollbars();
+		computeScrollbars();
 	}
 
 	void CUIContainer::setDimensions(const CVector2f& vDimensions)
 	{
 		_mvContainersWidgetAreaDimensions = vDimensions;
-		_computeScrollbars();
+		computeScrollbars();
 	}
 
 	CVector2f CUIContainer::getDimensions(void) const
@@ -136,6 +136,8 @@ namespace X
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		pAtlas->bindAtlas(0, 0);
 
+		pVB->removeGeom();
+
 		// For each button object
 		auto itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
@@ -152,10 +154,21 @@ namespace X
 			itScrollbar++;
 		}
 
+//		glEnable(GL_SCISSOR_TEST);
+		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
+		
+		// Render all the widget backgrounds and borders
+		pVB->update();
+		pVB->render();
+		pVB->removeGeom();
+
+		glDisable(GL_SCISSOR_TEST);
+
+
+
 		// Render the two scrollbars used for scrolling through contents of the container
 		_mpScrollbarH->render(pVB);
 		_mpScrollbarV->render(pVB);
-
 		pVB->update();
 		pVB->render();
 
@@ -164,14 +177,19 @@ namespace X
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
+		
+
+
 		// Render font stuff
 		// For each button object, render non-font stuff
+		glEnable(GL_SCISSOR_TEST);
 		itButton = _mmapButtons.begin();
 		while (itButton != _mmapButtons.end())
 		{
 			itButton->second->renderFonts();
 			itButton++;
 		}
+		glDisable(GL_SCISSOR_TEST);
 	}
 
 	void CUIContainer::renderTooltips(void)
@@ -218,7 +236,7 @@ namespace X
 		if (_mstrThemename != strThemeToUse)
 		{
 			_mstrThemename = strThemeToUse;
-			_computeScrollbars();
+			computeScrollbars();
 		}
 	}
 
@@ -271,7 +289,7 @@ namespace X
 		pNewObject->setText(strName);
 
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
-		_computeScrollbars();
+		computeScrollbars();
 
 		return pNewObject;
 	}
@@ -327,7 +345,7 @@ namespace X
 		pNewObject->setPosition(CVector2f(fPosX, fPosY));
 
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
-		_computeScrollbars();
+		computeScrollbars();
 		return pNewObject;
 	}
 
@@ -358,7 +376,7 @@ namespace X
 		_mmapScrollbars.clear();
 	}
 
-	void CUIContainer::_computeScrollbars(void)
+	void CUIContainer::computeScrollbars(void)
 	{
 		// Get required theme settings
 		CUITheme* pTheme = themeGet();
@@ -369,21 +387,21 @@ namespace X
 		_helperGetMinMaxWidgetPos();
 
 		// Compute offset of widgets outside of widget area
-		CVector2f vOffsetOutsideWidgetAreaL;
-		CVector2f vOffsetOutsideWidgetAreaR;
+		CVector2f vOffsetOutsideWidgetAreaTL;
+		CVector2f vOffsetOutsideWidgetAreaBR;
 		if (_mvMinWidgetCorner.x < 0)
-			vOffsetOutsideWidgetAreaL.x = -_mvMinWidgetCorner.x;
+			vOffsetOutsideWidgetAreaTL.x = -_mvMinWidgetCorner.x;
 		if (_mvMinWidgetCorner.y < 0)
-			vOffsetOutsideWidgetAreaL.y = -_mvMinWidgetCorner.y;
+			vOffsetOutsideWidgetAreaTL.y = -_mvMinWidgetCorner.y;
 		if (_mvMaxWidgetCorner.x > _mvContainersWidgetAreaDimensions.x)
-			vOffsetOutsideWidgetAreaR.x = _mvMaxWidgetCorner.x - _mvContainersWidgetAreaDimensions.x;
-		if (_mvMaxWidgetCorner.y > _mvMaxWidgetCorner.y - _mvContainersWidgetAreaDimensions.y)
-			vOffsetOutsideWidgetAreaR.y = _mvMaxWidgetCorner.y - _mvContainersWidgetAreaDimensions.y;
+			vOffsetOutsideWidgetAreaBR.x = _mvMaxWidgetCorner.x - _mvContainersWidgetAreaDimensions.x;
+		if (_mvMaxWidgetCorner.y > _mvContainersWidgetAreaDimensions.y)
+			vOffsetOutsideWidgetAreaBR.y = _mvMaxWidgetCorner.y - _mvContainersWidgetAreaDimensions.y;
 
 		// Compute total offset of widgets
 		CVector2f vTotalOffset;
-		vTotalOffset.x = vOffsetOutsideWidgetAreaL.x + vOffsetOutsideWidgetAreaR.x;
-		vTotalOffset.y = vOffsetOutsideWidgetAreaL.y + vOffsetOutsideWidgetAreaR.y;
+		vTotalOffset.x = vOffsetOutsideWidgetAreaTL.x + vOffsetOutsideWidgetAreaBR.x;
+		vTotalOffset.y = vOffsetOutsideWidgetAreaTL.y + vOffsetOutsideWidgetAreaBR.y;
 
 		// Here we compute and set tab ratios
 		CVector2f vTabRatios(1, 1);
@@ -445,6 +463,7 @@ namespace X
 		{
 
 		}
+
 	}
 
 	void CUIContainer::_helperGetMinMaxWidgetPos(void)

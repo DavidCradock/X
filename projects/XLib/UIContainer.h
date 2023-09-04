@@ -11,8 +11,8 @@ namespace X
 	class CUIContainer
 	{
 		friend class SCUIManager;
-		friend class CUIButton;
-		friend class CUIScrollbar;
+//		friend class CUIButton;
+//		friend class CUIScrollbar;
 	public:
 		CUIContainer();
 
@@ -85,11 +85,16 @@ namespace X
 		// Returns the top left position of the widget area for this container.
 		// Used when rendering or updating a widget to determine the actual top left position of the container's widget area.
 		// If this container is just a container, then this will be equal to the container's top left position, otherwise,
-		// it'll be that + the dimensions of the top left cornder border of the window using this container's currently set theme.
+		// it'll be that + the dimensions of the top left corner border of the window using this container's currently set theme.
 		CVector2f getWidgetAreaTLCornerPosition(void) const;
 
 		// Returns a vector holding the amount to offset this container's widgets due to this container's scrollbars being enabled
 		CVector2f getWidgetOffset(void) const;
+
+		// Updates the two scrollbar positions, dimensions and ratios
+		// Called if the theme changes, the dimensions change, a new widget is added to the container or if a widgets dims or pos are changed
+		// Also calls _helperGetMinMaxWidgetPos which computes _mvMinWidgetCorner and _mvMaxWidgetCorner
+		void computeScrollbars(void);
 
 		/************************************************************************************************************************************************************/
 		/* Buttons */
@@ -135,6 +140,8 @@ namespace X
 		CVector2f _mvContainersWidgetAreaDimensions;
 		
 		// Position of the container.
+		// If the container isn't inherited (IE, not a window) then this is the top left position of the widget area
+		// else (it's a window and _mbContainerIsWindow == true) then this is the top left position of the window's TL border.
 		CVector2f _mvPosition;
 
 		// Whether this container is shown or not
@@ -153,11 +160,6 @@ namespace X
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;
 
-		// Updates the two scrollbar positions, dimensions and ratios
-		// Called if the theme changes, the dimensions change, a new widget is added to the container or if a widgets dims or pos are changed
-		// Computes _mvMinWidgetCorner and _mvMaxWidgetCorner
-		void _computeScrollbars(void);
-
 		// The horizontal scrollbar used for scrolling through all the widgets if their positions exceed
 		// the dimensions of the container.
 		CUIScrollbar* _mpScrollbarH;
@@ -165,15 +167,6 @@ namespace X
 		// The vertical scrollbar used for scrolling through all the widgets if their positions exceed
 		// the dimensions of the container.
 		CUIScrollbar* _mpScrollbarV;
-
-		// Computes the amount to offset widget positions by due to this container's scrollbars.
-		// Sets _mvWidgetOffset.
-		// Called from update();
-		void _computeWidgetOffset(void);
-
-		// This is the amount to offset widget positions by due to the container's scrollbars.
-		// Set in _computeWidgetOffset()
-		CVector2f _mvWidgetOffset;
 
 		// Goes through all of the container's widgets and returns the topleft and bottomright most positions of all
 		// of this container's widgets based upon their position and dimensions.
@@ -186,5 +179,16 @@ namespace X
 
 		// Of all widgets, holds bottom right most corner's position. Computed by _helperGetMinMaxWidgetPos()
 		CVector2f _mvMaxWidgetCorner;
+		
+		// Computes the amount to offset widget positions by due to this container's scrollbars.
+		// Sets _mvWidgetOffset.
+		// Called from update();
+		void _computeWidgetOffset(void);
+
+		// This is the amount to offset widget positions by due to the container's scrollbars.
+		// Set in _computeWidgetOffset()
+		CVector2f _mvWidgetOffset;
+
+		
 	};
 }

@@ -26,7 +26,7 @@ namespace X
 	{
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 
 	}
 
@@ -44,13 +44,13 @@ namespace X
 	{
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	void CUIScrollbar::setPosition(const CVector2f& vPosition)
 	{
 		_mvPosition = vPosition;
-		_mpContainer->_computeScrollbars();
+		_mpContainer->computeScrollbars();
 	}
 
 	CVector2f CUIScrollbar::getPosition(void) const
