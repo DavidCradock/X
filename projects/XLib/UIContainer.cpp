@@ -12,6 +12,7 @@ namespace X
 		_mvContainersWidgetAreaDimensions.set(100, 100);
 		_mbVisible = true;
 		_mbContainerIsWindow = false;
+
 		_mpScrollbarH = new CUIScrollbar(this);
 		ThrowIfFalse(_mpScrollbarH, "CUIContainer() failed to allocate memory.");
 		_mpScrollbarV = new CUIScrollbar(this);
@@ -21,6 +22,8 @@ namespace X
 	CUIContainer::~CUIContainer()
 	{
 		widgetRemoveAll();
+		delete _mpScrollbarH;
+		delete _mpScrollbarV;
 	}
 
 	void CUIContainer::setDimensions(float fX, float fY)
@@ -411,22 +414,22 @@ namespace X
 		CVector2f vPos;
 		vPos.x = 0;
 		vPos.y = _mvContainersWidgetAreaDimensions.y;
-		_mpScrollbarH->setPosition(vPos);
+		_mpScrollbarH->_mvPosition = vPos;
 		// Dimensions
 		CVector2f vDims;
 		vDims.x = _mvContainersWidgetAreaDimensions.x;
 		vDims.y = pSettings->floats.windowScrollbarHorizontalHeight;
-		_mpScrollbarH->setDimensions(vDims);
+		_mpScrollbarH->_mvDimensions = vDims;
 		
 		// Vertical scrollbar
 		// Position
 		vPos.x = _mvContainersWidgetAreaDimensions.x;	// Offset by left edge of window border + dims of widget area
 		vPos.y = 0;
-		_mpScrollbarV->setPosition(vPos);
+		_mpScrollbarV->_mvPosition = vPos;
 		// Dimensions
 		vDims.x = pSettings->floats.windowScrollbarVerticalWidth;
 		vDims.y = _mvContainersWidgetAreaDimensions.y;
-		_mpScrollbarV->setDimensions(vDims);
+		_mpScrollbarV->_mvDimensions = vDims;
 	}
 
 	void CUIContainer::_computeWidgetOffset(void)

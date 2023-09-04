@@ -10,10 +10,8 @@ namespace X
 	CUIScrollbar::CUIScrollbar(CUIContainer* pContainer)
 	{
 		_mpContainer = pContainer;
-		setDimensions(CVector2f(200, 48));
-		setPosition(CVector2f(0, 0));
-		setVisible(true);
-
+		_mvDimensions.set(200, 48);
+		_mbVisible = true;
 		_mfTabPosition = 0.5f;
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
