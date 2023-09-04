@@ -179,9 +179,6 @@ namespace X
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
-		
-
-
 		// Render font stuff
 		// For each button object, render non-font stuff
 		glEnable(GL_SCISSOR_TEST);
@@ -402,22 +399,19 @@ namespace X
 			vOffsetOutsideWidgetArea.y = _mvMaxWidgetCornerPos.y - _mvContainersWidgetAreaDimensions.y;
 
 		// Here we compute and set tab ratios
-		// We need to compute how many of _mvContainerWidgetAreaDimensions fit into _mvContainersWidgetAreaDimensions
-		// and if say, it's 0.5, then ratio should be ???
-		// and if say, it's 1, then ratio should be 0.5
-		// and if say, it's 2, then ratio should be 0.25
-		// and if say. it's 4, then ratio should be 0.125
 		CVector2f vTabRatios(1, 1);
 		// If all widgets fit
 		if (_mvMaxWidgetCornerPos.x > 0)
 		{
-			vTabRatios.x = 1.0f - (_mvMaxWidgetCornerPos.x / _mvContainersWidgetAreaDimensions.x);
+			vTabRatios.x = (vOffsetOutsideWidgetArea.x + _mvContainersWidgetAreaDimensions.x) / _mvContainersWidgetAreaDimensions.x;
+			vTabRatios.x = 1.0f / vTabRatios.x;
 			if (vTabRatios.x < 0.1f)
 				vTabRatios.x = 0.1f;
 		}
 		if (_mvMaxWidgetCornerPos.y > 0)
 		{
-			vTabRatios.y = 1.0f - (_mvMaxWidgetCornerPos.y / _mvContainersWidgetAreaDimensions.y);
+			vTabRatios.y = (vOffsetOutsideWidgetArea.y + _mvContainersWidgetAreaDimensions.y) / _mvContainersWidgetAreaDimensions.y;
+			vTabRatios.y = 1.0f / vTabRatios.y;
 			if (vTabRatios.y < 0.1f)
 				vTabRatios.y = 0.1f;
 		}

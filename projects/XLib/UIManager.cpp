@@ -452,6 +452,11 @@ namespace X
 				{
 					CVector2f vPos = pCont->getPosition();
 					CVector2f vDims = pCont->getDimensions();
+
+					// Increase dims to accomodate the scrollbar as it is placed at pCont->getPosition() + pCont->getDimensions().
+					vDims.y += pCont->themeGetSettings()->floats.windowScrollbarHorizontalHeight;
+					vDims.x += pCont->themeGetSettings()->floats.windowScrollbarVerticalWidth;
+
 					if (vMouseCursorPos.x >= vPos.x)
 					{
 						if (vMouseCursorPos.x <= vPos.x + vDims.x)
