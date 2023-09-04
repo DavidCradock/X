@@ -46,5 +46,8 @@ namespace X
 		// The text string used when printing the titlebar text.
 		// Initially, this is set to the name of the window by the manager.
 		std::string _mstrTitlebarText;
+
+		// Called from SCUIManager::onToggleFullscreen()
+		void _onToggleFullscreen(void);
 	};
 }

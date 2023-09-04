@@ -60,6 +60,22 @@ namespace X
 		}
 	}
 
+	void SCUIManager::onToggleFullscreen(void)
+	{
+		// For each container
+		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
+		{
+			_mmanContainers.get(i)->_onToggleFullscreen();
+		}
+
+		// For each window
+		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		{
+			_mmanWindows.get(i)->_onToggleFullscreen();
+		}
+
+	}
+
 	void SCUIManager::_update(void)
 	{
 		// Sets _mstrMouseIsOver to hold name of container or window the mouse is currently over

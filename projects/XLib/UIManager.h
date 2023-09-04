@@ -110,6 +110,9 @@ namespace X
 		// This is called from the application manager during initialisation.
 		void reset(void);
 
+		// Called from SCApplicationManager::onWindowToggleFullscreen()
+		void onToggleFullscreen(void);
+
 		/************************************************************************************************************************************************************/
 		/* Container related */
 		/************************************************************************************************************************************************************/

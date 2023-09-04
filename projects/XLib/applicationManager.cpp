@@ -297,6 +297,9 @@ namespace X
 			it->second->onWindowToggleFullscreen(bFullscreen, iWindowWidth, iWindowHeight);
 			it++;
 		}
+
+		// Call SCUIManager::onToggleFullscreen()
+		x->pUI->onToggleFullscreen();
 	}
 
 	void SCApplicationManager::debugShowGrid(bool bShowGrid, int iSpacingX, int iSpacingY)

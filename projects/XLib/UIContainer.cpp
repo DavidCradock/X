@@ -604,6 +604,17 @@ namespace X
 
 	}
 
+	void CUIContainer::_onToggleFullscreen(void)
+	{
+		// For each CUIText widget
+		auto itText = _mmapTexts.begin();
+		while (itText != _mmapTexts.end())
+		{
+			itText->second->_mbFramebufferNeedsUpdating = true;
+			itText++;
+		}
+	}
+
 	/************************************************************************************************************************************************************/
 	/* The end!!!!!!! :) */
 	/************************************************************************************************************************************************************/

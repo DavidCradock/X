@@ -8,6 +8,9 @@ namespace X
 {
 	class CUIContainer;
 
+	// Text using a framebuffer to increase rendering performance.
+	// Can accept text with multiple lines. Use "\n" inside the string to create a new line.
+	// By default, uses the colour set by the owning container's theme but can be set with setColour()
 	class CUIText
 	{
 		friend class CUIContainer;

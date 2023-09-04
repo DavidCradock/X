@@ -312,4 +312,9 @@ namespace X
 	{
 		_mstrTitlebarText = strTitlebarText;
 	}
+
+	void CUIWindow::_onToggleFullscreen(void)
+	{
+		CUIContainer::_onToggleFullscreen();
+	}
 }

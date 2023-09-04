@@ -92,11 +92,12 @@ namespace X
 			// Render text to framebuffer
 			const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 			CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.text);
+			glDisable(GL_SCISSOR_TEST);
 			pFramebuffer->bindAsRenderTarget(true);
 			std::vector<std::string> vstrTemp;
 			int iTotalRenderedHeight;
-			glDisable(GL_SCISSOR_TEST);
-			pFont->printInRectNewline(true, _mstrText, 0, 0, _mvDimensions.x, _mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColour);
+			
+			pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColour);
 			glEnable(GL_SCISSOR_TEST);
 			pFramebuffer->unbindAsRenderTarget();
 		}
@@ -107,7 +108,7 @@ namespace X
 		vTextPos += _mpContainer->getWidgetOffset();
 
 		glEnable(GL_BLEND);
-		pFramebuffer->renderTo2DQuad(vTextPos.x, vTextPos.y, _mvDimensions.x, _mvDimensions.y);
+		pFramebuffer->renderTo2DQuad((int)vTextPos.x, (int)vTextPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y);
 		glDisable(GL_BLEND);
 	}
 

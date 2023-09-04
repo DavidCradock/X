@@ -206,5 +206,8 @@ namespace X
 		// This is the amount to offset widget positions by due to the container's scrollbars.
 		// Set in _computeWidgetOffset()
 		CVector2f _mvWidgetOffset;
+
+		// Called from SCUIManager::onToggleFullscreen()
+		void _onToggleFullscreen(void);
 	};
 }

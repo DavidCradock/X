@@ -58,7 +58,7 @@ namespace X
 		pWindow->buttonAdd("button300x0", 300, 0, 100, 24);
 //		pWindow->buttonAdd("button0x300", 0, 300, 100, 24);
 		pWindow->textAdd("text0", 0, 30, 100, 20, "Hello World");
-
+		pWindow->textAdd("text1", 0, 60, 200, 200, "This is lots of text.\nRendered on multiple lines.\nThis may cause stuff to happen.");
 
 		x->pUI->windowAdd("Window2");
 

@@ -8,6 +8,7 @@ namespace X
 {
 	class CUIContainer;
 
+	// A clickable button with text rendered on top of it.
 	class CUIButton
 	{
 		friend class CUIContainer;
