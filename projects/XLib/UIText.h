@@ -10,7 +10,10 @@ namespace X
 
 	// Text using a framebuffer to increase rendering performance.
 	// Can accept text with multiple lines. Use "\n" inside the string to create a new line.
-	// By default, uses the colour set by the owning container's theme but can be set with setColour()
+	// Even if no new line code is used, the text is wrapped so that no words go outside of the
+	// widget's set position + dimensions.
+	// The text will not go outside of the widget's position + dimensions due to both scissor testing and being rendered to a framebuffer.
+	// By default, when rendering, the widget uses the colour set by the owning container's theme but can be set with setColour()
 	class CUIText
 	{
 		friend class CUIContainer;
@@ -69,6 +72,17 @@ namespace X
 		// If the named font resource doesn't exist, an exception occurs.
 		void setFont(bool bUseThemeFont, const std::string& strFontResourceToUse = "");
 
+		// Sets this widget's position and dimensions, using the currently set font, with the currently set text, so that
+		// when rendered, the text of this widget is centered around the given position in relation to this widget's container.
+		// Note: If changing the font or text, this needs to be called again if the text is to remain centered.
+		// 
+		// TODO Implement all of this centering stuff and don't forget to modify CUIContainer::_helperComputeMaxWidgetCornerPos()
+		// which uses the widget's position and dimensions to compute required stuff so that scrollbars work correctly.
+		// Maybe write stuff in such a way, so that when settings centered to true, it modifies these two members directly
+		// In fact, write a single method in this widget setPosDimsCentered(CVector2f& vCentrePosition) which calculates the position and dims and sets them.
+		// If the widget is set to be centered when rendering with a call to centreText(const CVector2f& vCentrePos), the text's
+		// actual rendered dimensions are calculated and then the widget's position is offset so that the the text is positioned at the widget's set position.
+		// TODO IMPLEMENT THIS
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

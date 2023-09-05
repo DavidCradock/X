@@ -6,7 +6,7 @@ namespace X
 {
 	// Due to floating point errors, we use this to determine whether
 	// two floating points are roughly equal
-	const float kfEpsilon = 0.0000001f;	// TODO How many points? 7?
+	const float kfEpsilon = 0.0000001f;
 	inline bool areFloatsEqual(const float& A, const float& B)
 	{
 		return (fabsf(A - B) < kfEpsilon);
@@ -14,7 +14,7 @@ namespace X
 
 	// Due to floating point errors with doubles, we use this to determine whether
 	// two doubles points are roughly equal
-	const double kdEpsilon = 0.000000000000001f;	// TODO How many points? 15?
+	const double kdEpsilon = 0.000000000000001f;
 	inline bool areDoublesEqual(const double& A, const double& B)
 	{
 		return (abs(A - B) < kdEpsilon);
