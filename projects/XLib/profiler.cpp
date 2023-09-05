@@ -11,6 +11,14 @@ namespace X
 		reset();
 	}
 
+	void CProfiler::reset(void)
+	{
+		// Remove all sections
+		_mmapSections.clear();
+
+		_mfUpdateResultsText = 0.0f;
+	}
+
 	void CProfiler::begin(const std::string& strSectionName)
 	{
 		// Add named section if it doesn't exist.
@@ -51,14 +59,13 @@ namespace X
 		// Update this section's accumulated time
 		it->second.timer.update();
 		it->second.dAccumulatedTimeInSeconds += it->second.timer.getSecondsPast();
-	}
 
-	void CProfiler::reset(void)
-	{
-		// Remove all sections
-		_mmapSections.clear();
-
-		_mfUpdateResultsText = 0.0f;
+		// If this section is "main", update the cached results.
+		if ("main" == strSectionName)
+		{
+			_mvResultsCached.clear();
+			_mvResultsCached = getResults(false);
+		}
 	}
 
 	double CProfiler::getSectionTime(const std::string& strSectionName)
@@ -79,8 +86,13 @@ namespace X
 		return (a.second.dAccumulatedTimeInSeconds < b.second.dAccumulatedTimeInSeconds);
 	}
 
-	std::vector<SProfilerResults> CProfiler::getResults(void)
+	std::vector<SProfilerResults> CProfiler::getResults(bool bReturnCachedResults)
 	{
+		if (bReturnCachedResults)
+		{
+			return _mvResultsCached;
+		}
+
 		// Will hold the final results
 		std::vector<SProfilerResults> vResults;
 

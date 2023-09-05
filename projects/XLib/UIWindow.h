@@ -37,6 +37,13 @@ namespace X
 		// Sets the string of text used when printing the titlebar text.
 		// Initially, this is set to the name of the window by the manager.
 		void setTitlebarText(const std::string& strTitlebarText);
+
+		// Centres the window on the screen
+		void setPositionCentre(void);
+
+		// Sets this window to the foreground, aka top most and in focus
+		void setToFrontAndInFocus(void);
+
 	private:
 		void _renderBorders(void);
 

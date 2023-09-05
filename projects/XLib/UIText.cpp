@@ -108,6 +108,10 @@ namespace X
 			pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColourText);
 			glEnable(GL_SCISSOR_TEST);
 			pFramebuffer->unbindAsRenderTarget();
+
+			// Rebind the UI framebuffer
+			CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+			pUIFB->bindAsRenderTarget(false);
 		}
 
 		// Compute position

@@ -63,13 +63,18 @@ namespace X
 		size_t getSectionNumber(void);
 
 		// Returns a vector of SProfilerResults, sorted by accumulated time in seconds.
-		std::vector<SProfilerResults> getResults(void);
+		// Unfortunately, this only returns valid results after a call to end() with the "main" section specified has been called,
+		// otherwise we don't have all the needed information we need to compute the percentages of main.
+		// However, passing true to bReturnCachedResults will return the results from results which have been obtained during the
+		// last call to end() with "main" being given as the section. These results are one frame old, but are complete.
+		std::vector<SProfilerResults> getResults(bool bReturnCachedResults = true);
 
 		// Renders the results of the profiler to the screen using x->pResource->defaultRes.font_default
 		// It's crude and dirty but will suffice until the user interface is implemented and then we can
 		// create a CUIWindow which displays the results in a much better way. TODO
 		void printResults(void);
 
+		// Members needed by each code section.
 		struct SSection
 		{
 			// Minimal timer object used to time this section
@@ -93,5 +98,8 @@ namespace X
 		std::vector<std::string> _mvecstrResultsText;
 
 		CTimerMinimal _mTimerMinimal;
+
+		// This holds the cached results which are created upon a call to end() with "main" being the named section
+		std::vector<SProfilerResults> _mvResultsCached;
 	};
 }

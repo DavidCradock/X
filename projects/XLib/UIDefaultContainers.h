@@ -53,6 +53,13 @@ namespace X
 
 		void _initProfiling(void);							// Init method called from initialise() for "X:Default:Profiling" default container.
 		void _updateProfiling(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Profiling" default container.
+		// Struct used by profiling default container
+		struct SProfiling
+		{
+			float fUpdateDelaySeconds;		// Number of seconds between updating of text
+			float fUpdateDelay;				// When reached zero, we update the text
+		};
+		SProfiling _mProfiling;
 
 		void _initSettings(void);							// Init method called from initialise() for "X:Default:Settings" default container.
 		void _updateSettings(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Settings" default container.

@@ -317,4 +317,18 @@ namespace X
 	{
 		CUIContainer::_onToggleFullscreen();
 	}
+
+	void CUIWindow::setPositionCentre(void)
+	{
+		CVector2f vAppWndDimsHalf = x->pWindow->getDimensions() * 0.5f;
+		CVector2f vWndDimsHalf = getDimsIncludingTheme() * 0.5f;
+		setPosition(vAppWndDimsHalf.x - vWndDimsHalf.x, vAppWndDimsHalf.y - vWndDimsHalf.y);
+	}
+
+	void CUIWindow::setToFrontAndInFocus(void)
+	{
+		x->pUI->windowMoveToFront(_mstrName);
+		x->pUI->windowSetUnfocusedAll();
+		x->pUI->windowSetFocused(_mstrName);
+	}
 }

@@ -2,6 +2,7 @@
 #include "UIDefaultContainers.h"
 #include "UIWindow.h"
 #include "singletons.h"
+#include "stringUtils.h"
 
 namespace X
 {
@@ -67,7 +68,13 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.profiling, true);
 //		pWindow->setVisible(false);
-		pWindow->setDimensions(600, 200);
+		pWindow->setDimensions(800, 400);
+		pWindow->setPositionCentre();
+		pWindow->setToFrontAndInFocus();
+
+		_mProfiling.fUpdateDelay = 0.0f;
+		_mProfiling.fUpdateDelaySeconds = 1.0f;
+
 	}
 
 	void CUIDefaultContainers::_updateProfiling(float fTimeDeltaSec)
@@ -77,6 +84,54 @@ namespace X
 		if (!pWindow->getVisible())
 			return;
 
+		// Deal with update delay
+		_mProfiling.fUpdateDelay -= fTimeDeltaSec;
+		bool bUpdateText = false;
+		if (_mProfiling.fUpdateDelay <= 0.0f)
+		{
+			_mProfiling.fUpdateDelay = _mProfiling.fUpdateDelaySeconds;
+			bUpdateText = true;
+		}
+
+		if (bUpdateText)
+		{
+			pWindow->textRemoveAll();
+			CVector2f vTextPos(0, 0);
+			const CUITheme::SSettings* pThemeSettings = pWindow->themeGetSettings();
+			CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.text);
+			float fTextHeight = pFont->getTextHeight();
+			CVector2f vWndDims = pWindow->getDimensions();
+			std::vector<SProfilerResults> vResults = x->pProfiler->getResults();
+			// Add title text
+			pWindow->textAdd("TitlePercentMain", 0, vTextPos.y, 150, fTextHeight, "% of \"main\"");
+			pWindow->textAdd("TitleMS", 140, vTextPos.y, 150, fTextHeight, "Milliseconds");
+			pWindow->textAdd("TitleSectionName", 300, vTextPos.y, 150, fTextHeight, "Section");
+			vTextPos.y += fTextHeight;
+			for (size_t i = 0; i < vResults.size(); i++)
+			{
+				// Percent of main
+				std::string strTextName = "PercentMain:" + std::to_string(i);
+				std::string strLine;
+				StringUtils::appendFloat(strLine, vResults[i].fPercentageOfMain, 1);
+				strLine += "%";
+				pWindow->textAdd(strTextName, 0, vTextPos.y, vWndDims.x, fTextHeight, strLine);
+
+				// Milliseconds
+				strTextName = "Milliseconds:" + std::to_string(i);
+				strLine.clear();
+				StringUtils::appendDouble(strLine, vResults[i].dAccumulatedTimeSeconds * 1000, 3);
+				strLine += "ms";
+				pWindow->textAdd(strTextName, 140, vTextPos.y, 160, fTextHeight, strLine);
+
+				// Section name
+				// We need to compute how wide the text so we can add the text widget with that size.
+				float fTextWidth = pFont->getTextWidth(vResults[i].strSectionName);
+				strTextName = "SectionName:" + std::to_string(i);
+				pWindow->textAdd(strTextName, 300, vTextPos.y, fTextWidth + 10, fTextHeight, vResults[i].strSectionName);
+
+				vTextPos.y += fTextHeight;
+			}
+		}
 	}
 
 	/************************************************************************************************************************************************************/
