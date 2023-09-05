@@ -103,9 +103,14 @@ namespace X
 			CVector2f vWndDims = pWindow->getDimensions();
 			std::vector<SProfilerResults> vResults = x->pProfiler->getResults();
 			// Add title text
-			pWindow->textAdd("TitlePercentMain", 0, vTextPos.y, 150, fTextHeight, "% of \"main\"");
-			pWindow->textAdd("TitleMS", 140, vTextPos.y, 150, fTextHeight, "Milliseconds");
-			pWindow->textAdd("TitleSectionName", 300, vTextPos.y, 150, fTextHeight, "Section");
+			float fColumnWidth[3];
+			fColumnWidth[0] = pFont->getTextWidth("% of \"main\" ");
+			fColumnWidth[1] = pFont->getTextWidth("Milliseconds ");
+			fColumnWidth[2] = pFont->getTextWidth("Code Section Name ");
+
+			pWindow->textAdd("TitlePercentMain", 0, vTextPos.y, fColumnWidth[0], fTextHeight, "% of \"main\"");
+			pWindow->textAdd("TitleMS", 140, vTextPos.y, fColumnWidth[1], fTextHeight, "Milliseconds");
+			pWindow->textAdd("TitleSectionName", 300, vTextPos.y, fColumnWidth[2], fTextHeight, "Code Section Name");
 			vTextPos.y += fTextHeight;
 			for (size_t i = 0; i < vResults.size(); i++)
 			{
@@ -114,20 +119,20 @@ namespace X
 				std::string strLine;
 				StringUtils::appendFloat(strLine, vResults[i].fPercentageOfMain, 1);
 				strLine += "%";
-				pWindow->textAdd(strTextName, 0, vTextPos.y, vWndDims.x, fTextHeight, strLine);
+				pWindow->textAdd(strTextName, fColumnWidth[0] * 0.5f, vTextPos.y, vWndDims.x, fTextHeight, strLine);
 
 				// Milliseconds
 				strTextName = "Milliseconds:" + std::to_string(i);
 				strLine.clear();
 				StringUtils::appendDouble(strLine, vResults[i].dAccumulatedTimeSeconds * 1000, 3);
 				strLine += "ms";
-				pWindow->textAdd(strTextName, 140, vTextPos.y, 160, fTextHeight, strLine);
+				pWindow->textAdd(strTextName, 140 + (fColumnWidth[1] * 0.5f), vTextPos.y, 160, fTextHeight, strLine);
 
 				// Section name
 				// We need to compute how wide the text so we can add the text widget with that size.
 				float fTextWidth = pFont->getTextWidth(vResults[i].strSectionName);
 				strTextName = "SectionName:" + std::to_string(i);
-				pWindow->textAdd(strTextName, 300, vTextPos.y, fTextWidth + 10, fTextHeight, vResults[i].strSectionName);
+				pWindow->textAdd(strTextName, 300 + (fColumnWidth[2] * 0.5f), vTextPos.y, fTextWidth + 10, fTextHeight, vResults[i].strSectionName);
 
 				vTextPos.y += fTextHeight;
 			}

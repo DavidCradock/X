@@ -51,6 +51,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 - Add physics engine.
 - 
 - GUI rewrite
+- Add centered text rendering for CUIText
 - Implement UIDefaultContainers stuff
 - Things to improve...
 - Use texture atlas
