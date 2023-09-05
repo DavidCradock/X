@@ -467,6 +467,9 @@
     <ClInclude Include="UIText.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIDefaultContainers.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -825,6 +828,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="UIText.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefaultContainers.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>

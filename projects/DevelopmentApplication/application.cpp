@@ -45,9 +45,21 @@ namespace X
 		}
 
 		// Setup UserInterface theme
-		CUIWindow* pWindow = x->pUI->windowAdd("window1", false);
+		// Top most container
+		CUIContainer* pContainer = x->pUI->containerAdd("Container0");
+		pContainer->setDimensions(CVector2f(200, 200));
+		pContainer->setPosition(1400, 100);
+		CUIButton* pButton = pContainer->buttonAdd("0x0x100x24", 0, 0, 100, 24);
+		pContainer->buttonAdd("200x0x100x24", 200, 0, 100, 24);
+		pContainer->buttonAdd("0x200x100x24", 0, 200, 100, 24);
+
+		pContainer = x->pUI->containerAdd("Container 1 200x200");
+		pContainer->setPosition(1400, 400);
+		pContainer->textAdd("text", 0, 0, 200, 200, "Here's some text in a 200x200 CUIText object inside a 200x200 container object.\nLet's have a newline here shall we?");
+		pContainer->setDimensions(200, 200);
+
+		CUIWindow* pWindow = x->pUI->windowAdd("window1 200x200", false);
 		pWindow->setDimensions(CVector2f(200, 200));
-//		pWindow->scrollbarAdd("scrollbar", 220, 0, 100, 24, 0.05f);
 		pWindow->setPosition(1400-16, 800-30);
 		pWindow->buttonAdd("buttonC",   50,  100, 100, 24);
 		pWindow->buttonAdd("buttonT",   50, 100, 100, 24);
@@ -60,15 +72,11 @@ namespace X
 		pWindow->textAdd("text0", 0, 30, 100, 20, "Hello World");
 		pWindow->textAdd("text1", 0, 60, 200, 200, "This is lots of text.\nRendered on multiple lines.\nThis may cause stuff to happen.");
 
-		x->pUI->windowAdd("Window2");
+		pWindow = x->pUI->windowAdd("Window2 200x200");
+		pWindow->setDimensions(200, 200);
+		pWindow->setPosition(1400-16, 1200-30);
 
-		// Add container for debugging
-		CUIContainer* pContainer = x->pUI->containerAdd("container0 100x100x200x200");
-		pContainer->setDimensions(CVector2f(200, 200));
-		pContainer->setPosition(100, 100);
-		CUIButton* pButton = pContainer->buttonAdd("0x0x100x24", 0, 0, 100, 24);
-		pContainer->buttonAdd("200x0x100x24", 200, 0, 100, 24);
-		pContainer->buttonAdd("0x200x100x24", 0, 200, 100, 24);
+		
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 

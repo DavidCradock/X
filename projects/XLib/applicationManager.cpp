@@ -47,6 +47,9 @@ namespace X
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();
 
+			// Create default UI containers
+			x->pUI->_initialiseDefaultContainers();
+
 			// Now call each application's initOnce method
 			callAllApps_initOnce();
 

@@ -130,6 +130,7 @@
     <ClInclude Include="timerMinimal.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIContainer.h" />
+    <ClInclude Include="UIDefaultContainers.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIObserver.h" />
     <ClInclude Include="UIScrollBar.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="timerMinimal.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIContainer.cpp" />
+    <ClCompile Include="UIDefaultContainers.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIScrollBar.cpp" />
     <ClCompile Include="UIText.cpp" />

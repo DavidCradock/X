@@ -16,7 +16,9 @@ namespace X
 		_mbFramebufferNeedsUpdating = true;
 		_mstrFramebufferName = "CUITextCont_" + pContainer->getName() + "Widget_" + strWidgetName;
 		x->pResource->addFramebuffer(_mstrFramebufferName, 100, 100, false);
-		setColour(true);
+		setTextColour(true);
+		setBackgroundColour();
+		setFont(true);
 	}
 
 	CUIText::~CUIText()
@@ -91,13 +93,19 @@ namespace X
 
 			// Render text to framebuffer
 			const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
-			CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.text);
+			// Get font resource
+			CResourceFont* pFont;
+			if (_mbUseThemeFont)
+				pFont = x->pResource->getFont(pThemeSettings->fonts.text);
+			else
+				pFont = x->pResource->getFont(_mstrFontResourceName);
+
 			glDisable(GL_SCISSOR_TEST);
-			pFramebuffer->bindAsRenderTarget(true);
+			pFramebuffer->bindAsRenderTarget(true, false, _mColourFramebufferClear);
 			std::vector<std::string> vstrTemp;
 			int iTotalRenderedHeight;
 			
-			pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColour);
+			pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColourText);
 			glEnable(GL_SCISSOR_TEST);
 			pFramebuffer->unbindAsRenderTarget();
 		}
@@ -125,10 +133,27 @@ namespace X
 		return _mstrText;
 	}
 
-	void CUIText::setColour(bool bUseThemesColour, const CColour& colour)
+	void CUIText::setTextColour(bool bUseThemeColour, const CColour& colour)
 	{
-		_mbUseThemeColour = bUseThemesColour;
-		_mColour = colour;
+		_mbUseThemeColour = bUseThemeColour;
+		_mColourText = colour;
 		_mbFramebufferNeedsUpdating = true;
+	}
+
+	void CUIText::setBackgroundColour(const CColour& colour)
+	{
+		_mColourFramebufferClear = colour;
+	}
+
+	void CUIText::setFont(bool bUseThemeFont, const std::string& strFontResourceToUse)
+	{
+		_mbUseThemeFont = bUseThemeFont;
+		_mstrFontResourceName = strFontResourceToUse;
+		_mbFramebufferNeedsUpdating = true;
+
+		if (!bUseThemeFont)
+		{
+			ThrowIfFalse(x->pResource->getFontExists(strFontResourceToUse), "CUIText::setFont(\"" + strFontResourceToUse + "\") failed. The named font resource does not exist.");
+		}
 	}
 }

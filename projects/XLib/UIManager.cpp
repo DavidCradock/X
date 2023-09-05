@@ -76,6 +76,16 @@ namespace X
 
 	}
 
+	CUIDefaultContainers* SCUIManager::getDefaultContainers(void)
+	{
+		return &_mDefaultContainers;
+	}
+
+	void SCUIManager::_initialiseDefaultContainers(void)
+	{
+		_mDefaultContainers.initialise();
+	}
+
 	void SCUIManager::_update(void)
 	{
 		// Sets _mstrMouseIsOver to hold name of container or window the mouse is currently over
@@ -88,6 +98,9 @@ namespace X
 		float fTimeDeltaSeconds = _mTimer.getSecondsPast();
 		if (fTimeDeltaSeconds > 0.1f)
 			fTimeDeltaSeconds = 0.1f;
+
+		// Update default containers
+		_mDefaultContainers.update(fTimeDeltaSeconds);
 
 		// For each container, update all of it's widgets
 		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)

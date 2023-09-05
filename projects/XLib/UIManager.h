@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "singleton.h"
 #include "UITheme.h"
+#include "UIDefaultContainers.h"
 #include "UIContainer.h"
 #include "UIWindow.h"
 #include "templateManagerNoRefLockable.h"
@@ -77,11 +78,20 @@ namespace X
 	// Most widgets need 18 images each, there's many widgets, so that's a lot of images to create, it's worth it because it allows quite a bit of flexibility.
 	// See CUITheme for more information on themes.
 	// 
-	// There are also some default windows which can be shown (hidden by default) and they are named as follows...
-	// X:Default:Statistics		// This shows FPS counter, also has a graph
-	// X:Default:FontGenerator	// A container with functionality to generate font files from fonts stored in the operating system
-	// X:Default:Settings		// Settings which are stored in SCSettings can be fiddled with in this container.
-	// They are created in SUIManager::_createDefaultContainers()
+	// Default containers:
+	// There are some default windows which are setup and updated automatically by the SCUIManager.
+	// They have some usefull functionality such as profiling, showing framerates with graphs, UI theme editors and more.
+	// You can obtain a list of their names by calling...
+	// SCUIManager::getDefaultContainers() which will return a pointer to the object responsible for creating and updating them _mDefaultContainers
+	// which has it's init() and update() methods called for us by SCUIManager.
+	// Once we've obtained a pointer to the default containers object which is of class CUIDefaultContainers, we can get a list of all the container names
+	// by accessing that object's names member which is a structure, SNames which holds std::strings each with the name of a default container.
+	// We can then set a default container as visible like we would with any other container.
+	// Here's an example showing how to show the "X:Default:Statistics" window...
+	// CUIContainer* pContainer = x->pUI->containerGet(pUI->getDefaultContainers()->names.statistics);
+	// pContainer->setVisible(true);
+	// We could instead just use the name directly as shown in the following example, but that involved remembering stuff!
+	// x->pUI->getContainer("X:Default:FontGenerator")->setVisible(true);
 	// 
 	// Implementation details:
 	// Containers are Z sorted and rendered one at a time, along with their widgets.
@@ -94,6 +104,7 @@ namespace X
 	{
 		friend class CUIButton;
 		friend class CUIScrollbar;
+		friend class SCApplicationManager;
 	public:
 		SCUIManager();
 
@@ -112,6 +123,13 @@ namespace X
 
 		// Called from SCApplicationManager::onWindowToggleFullscreen()
 		void onToggleFullscreen(void);
+
+		// Returns a pointer to the CUIDefaultContainers object in this class which contains
+		// All variables and data used by the default containers.
+		// We can access names of the default containers here (Useful if we can't remember their names) to then set them as 
+		// visible. For example, to set visible the statistics window...
+		// x->pUI->containerGet(getDefaultContainers()->names.mstrStatistics)->setVisible(true);
+		CUIDefaultContainers* getDefaultContainers(void);
 
 		/************************************************************************************************************************************************************/
 		/* Container related */
@@ -283,5 +301,10 @@ namespace X
 
 		// Helper method to move a colour towards a target colour
 		void _helperColourAdjust(CColour& colourToAdjust, const CColour& colourTarget, float fTimeDeltaSecs, float fFadeSpeed);
+
+		// Called via SCApplicationManager to initialise the default containers
+		void _initialiseDefaultContainers(void);
+
+		CUIDefaultContainers _mDefaultContainers;	// Objects to initialise and update the default containers.
 	};
 }
