@@ -64,12 +64,20 @@ namespace X
 
 		// Returns whether this button has been clicked upon or not.
 		// This is OK for a quick and dirty approach to checking button clicks, but if we have
-		// many buttons, they'll be a lot of if then statements in the calling code and things start
+		// many buttons, there will be a lot of if then statements in the calling code and things start
 		// to get inefficient.
-		// Don't forget to check if the widget's container is visible, otherwise there's no point checking
-		// to see if the widget has changed state as it will not have.
+		// If you are using this method, don't forget to check if the widget's container is visible, otherwise
+		// there's no point checking to see if the widget has changed state as it will not have.
 		// Instead of using this, use observers or function pointers for optimal performance.
 		bool getClicked(void) const;
+
+		// Set the C function which'll be called once the button has been clicked upon.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pSomeButton->setFunctionOnClicked(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnClicked(void (*function)(void));
 
 	private:
 		// Common amoung widgets
@@ -90,5 +98,8 @@ namespace X
 		};
 		state _mState;				// The current state of the button
 		bool _mbClicked;			// Holds whether the button has been clicked upon.
+
+		// Function pointer which can be set with setFunctionOnClicked() which gets called when the button gets clicked upon.
+		void (*_mfuncOnClicked)(void);
 	};
 }

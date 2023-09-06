@@ -81,6 +81,22 @@ namespace X
 
 		// Return computed tab dimensions
 		CVector2f getTabDims(void) const;
+
+		// Set the C function which'll be called while the scrollbar's tab is being moved.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pSomeUIScrollbar->setFunctionOnTabBeingMoved(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnTabBeingMoved(void (*function)(void));
+
+		// Set the C function which'll be called once the scrollbar's tab has finished being moved.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pSomeUIScrollbar->setFunctionOnTabMoved(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnTabMoved(void (*function)(void));
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -96,5 +112,11 @@ namespace X
 		CVector2f _mvTabPos;				// Computed in update() and used in render(). Tab position
 		CVector2f _mvTabDims;				// Computed in update() and used in render(). Tab dimensions
 		CColour _mTabColour;				// For fading between over/not over colours of tab
+
+		// Function pointer which can be set with setFunctionOnTabMoved() which gets called when the scrollbar's tab has moved
+		void (*_mfuncOnTabBeingMoved)(void);
+
+		// Function pointer which can be set with setFunctionOnTabMoved() which gets called once the scrollbar's tab has finished being moved
+		void (*_mfuncOnTabMoved)(void);
 	};
 }

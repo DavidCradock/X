@@ -45,58 +45,16 @@ namespace X
 		}
 
 		// Setup UserInterface theme
-		// Top most container
-		CUIContainer* pContainer = x->pUI->containerAdd("Container0");
-		pContainer->setDimensions(CVector2f(200, 200));
-		pContainer->setPosition(1400, 100);
-		CUIButton* pButton = pContainer->buttonAdd("0x0x100x24", 0, 0, 100, 24);
-		pContainer->buttonAdd("200x0x100x24", 200, 0, 100, 24);
-		pContainer->buttonAdd("0x200x100x24", 0, 200, 100, 24);
-
-		pContainer = x->pUI->containerAdd("Container 1 200x200");
-		pContainer->setPosition(1400, 400);
-		pContainer->textAdd("text", 0, 0, 200, 200, "Here's some text in a 200x200 CUIText object inside a 200x200 container object.\nLet's have a newline here shall we?");
-		pContainer->setDimensions(200, 200);
-
 		CUIWindow* pWindow = x->pUI->windowAdd("window1 200x200", false);
 		pWindow->setDimensions(CVector2f(200, 200));
-		pWindow->setPosition(1400-16, 800-30);
-		pWindow->buttonAdd("buttonC",   50,  100, 100, 24);
-		pWindow->buttonAdd("buttonT",   50, 100, 100, 24);
-//		pWindow->buttonAdd("buttonB",   50,  300, 100, 24);
-		pWindow->buttonAdd("buttonL",  50,  100, 100, 24);
-		pWindow->buttonAdd("buttonR",  300,  100, 100, 24);
-		pWindow->buttonAdd("button0x0", 0, 0, 100, 24);
-		pWindow->buttonAdd("button300x0", 300, 0, 100, 24);
-//		pWindow->buttonAdd("button0x300", 0, 300, 100, 24);
-		pWindow->textAdd("text0", 0, 30, 100, 20, "Hello World");
-		pWindow->textAdd("text1", 0, 60, 200, 200, "This is lots of text.\nRendered on multiple lines.\nThis may cause stuff to happen.");
+		pWindow->setPosition(1400-16, 200-30);
 
-		pWindow = x->pUI->windowAdd("Window2 200x200 No widgets outside");
-		pWindow->setDimensions(200, 200);
-		pWindow->setPosition(1400-16, 1200-30);
-		CUIText* pText;
-//		pText = pWindow->textAdd("textNormal", 0, 0, 200, 30, "Normal0,0,200,30");
-//		pText->setBackgroundColour(CColour(0, 0, 0, 0.5f));
-		pText = pWindow->textAdd("textCentered", 100, 75, 100, 40, "100,75,180,30");
-		pText->setBackgroundColour(CColour(0, 0, 0, 0.5f));
-		pText->setCentered(true);
-		
-		pWindow = x->pUI->windowAdd("Window3 200x200");
-		pWindow->setDimensions(200, 200);
-		pWindow->setPosition(1700 - 16, 1200 - 30);
-		pWindow->textAdd("text0", 0, 0, 200, 30, "Widget to right");
-		pWindow->textAdd("text1", 300, 0, 200, 30, "Here I am!");
 
-		pWindow = x->pUI->windowAdd("Window4 200x200");
-		pWindow->setDimensions(200, 200);
-		pWindow->setPosition(1400 - 16, 1500 - 30);
-		pWindow->textAdd("text0", 0, 0, 200, 30, "Widget below");
-		pWindow->textAdd("text1", 0, 300, 200, 30, "Here I am!");
+
 
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
-
+		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(9999, 0);
 	}
 
 	void CApplication::onStart(void)

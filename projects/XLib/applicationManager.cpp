@@ -412,9 +412,11 @@ namespace X
 			std::string strText = "Grid settings.";
 			CVector2f vScreenDims = x->pWindow->getDimensions();
 			CVector2f vScreenTextPos = x->pWindow->getDimensions() * 0.5f;
+			pFont->printCentered(strText, (int)vScreenTextPos.x+1, (int)vScreenTextPos.y+1, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(0.0f, 0.0f, 0.0f, _mfDebugGridTextAlpha));
 			pFont->printCentered(strText, (int)vScreenTextPos.x, (int)vScreenTextPos.y, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(1.0f, 1.0f, 1.0f, _mfDebugGridTextAlpha));
 			vScreenTextPos.y += pFont->getTextHeight();
 			strText = "Spacing X and Y: " + std::to_string(int(_mfDebugGridSpacing[0]));
+			pFont->printCentered(strText, (int)vScreenTextPos.x+1, (int)vScreenTextPos.y+1, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(0.0f, 0.0f, 0.0f, _mfDebugGridTextAlpha));
 			pFont->printCentered(strText, (int)vScreenTextPos.x, (int)vScreenTextPos.y, (int)vScreenDims.x, (int)vScreenDims.y, 1.0f, CColour(1.0f, 1.0f, 1.0f, _mfDebugGridTextAlpha));
 
 			

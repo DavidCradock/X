@@ -21,6 +21,19 @@ namespace X
 	{
 		// Update all of the widgets
 		CUIContainer::update(fTimeDeltaSec);
+
+		// Make sure window is on screen.
+		CVector2f vWindowDims = getDimsIncludingTheme();
+		CVector2f vAppWndDims = x->pWindow->getDimensions();
+		if (_mvPosition.x < 0)
+			_mvPosition.x = 0;
+		if (_mvPosition.x + vWindowDims.x > vAppWndDims.x)
+			_mvPosition.x = vAppWndDims.x - vWindowDims.x;
+		if (_mvPosition.y < 0)
+			_mvPosition.y = 0;
+		if (_mvPosition.y + vWindowDims.y > vAppWndDims.y)
+			_mvPosition.y = vAppWndDims.y - vWindowDims.y;
+
 	}
 
 	void CUIWindow::render(void)

@@ -30,40 +30,15 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-- Add centering of text rendering for CUIText
-- Implement observer pattern and function pointers for UI
-- Forward slashes for all file names/paths
-- Private implementation of private members and methods.
--
-- added fileManager and fileMemory, complete manager
-- Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
-- Look into atlas packer and fix double spacing issue.
-- 
-- Add A star pathfinding.
-- Add quad tree culling of all entities.
-- Add QuadTree to 2D world/layers
-- Set automatic positioning for shadows depthmap rendering in the scene manager
-- Test CFrustum class and culling of COctTree
-- Implement SceneManagerOctTree.
-- Add 2D and 3D particle systems.
-- Rewrite joy part of input.
-- Add padding to vector classes and test speed increase.
-- Add physics engine.
-- 
-- GUI rewrite
+- We need to try and reduce header file includes (Use PIMPL) as compile times are starting to suck.
+- UI rewrite
 - Implement UIDefaultContainers stuff
-- Things to improve...
-- Use texture atlas
-- Add more frame buffer usage to speed up everything
 - Add screen resize handling code (For fullscreen and window resize)
 - The current method of checking button presses is aweful, too many if statements. Research observer pattern, or signal and slots or delegates.
 - Add alignment (left, right, centreX, top, centreY, bottom)
-- UI: Add a scrollable sub container which has a scroll bar if the contents added do not fit.
-- UI: Implement Button
 - UI: Implement ButtonImage
 - UI: Implement Checkbox
 - UI: Implement Colour selector
-- UI: Implement Container
 - UI: Implement DraggableDock.
 - UI: Implement DraggableItem.
 - UI: Implement Image
@@ -78,11 +53,29 @@ Screenshot of "X:Default:FontGenerator" container window...
 - UI: Implement Scrollbar
 - UI: Implement Tab and TabContainer.
 - UI: Implement Taskbar.
-- UI: Implement Text
-- UI: Implement TextScroll
-- UI: Implement Theme
+- UI: Implement TextEdit.
 - UI: Implement Tooltip
 - REMOVE GUI.
+
+- Create a simple 2D image editor, I hate the tiny UI of my old version of Photoshop and all other 2D paint apps are awkward to use.
+- Forward slashes for all file names/paths
+- Private implementation of private members and methods.
+-
+- Added fileManager and fileMemory, now complete manager
+- Instead of using x->pWindow->getDims/getWidth etc... get the width of the back buffer frame buffer resource instead.
+- Look into atlas packer and fix double spacing issue.
+- 
+- Add A star pathfinding.
+- Add quad tree culling of all entities.
+- Add QuadTree to 2D world/layers
+- Set automatic positioning for shadows depthmap rendering in the scene manager
+- Test CFrustum class and culling of COctTree
+- Implement SceneManagerOctTree.
+- Add 2D and 3D particle systems.
+- Rewrite joy part of input.
+- Add padding to vector classes and test speed increase.
+- Add physics engine.
+- 
 
 ** Random notes **
 The measurement of force uses the unit known as the Newton after that guy who has a nasty experience with an apple.

@@ -14,6 +14,8 @@ namespace X
 		_mbVisible = true;
 		_mState = state::up;
 		_mbClicked = false;
+
+		_mfuncOnClicked = 0;
 	}
 
 	CUIButton::~CUIButton()
@@ -141,6 +143,10 @@ namespace X
 				if (x->pInput->mouse.leftButtonOnce())
 				{
 					_mbClicked = true;
+
+					// Call function pointer if it has been set
+					if (_mfuncOnClicked)
+						_mfuncOnClicked();
 				}
 			}
 		}	// if (bContainerHasMouseOver)
@@ -190,5 +196,10 @@ namespace X
 	bool CUIButton::getClicked(void) const
 	{
 		return _mbClicked;
+	}
+
+	void CUIButton::setFunctionOnClicked(void (*function)(void))
+	{
+		_mfuncOnClicked = function;
 	}
 }

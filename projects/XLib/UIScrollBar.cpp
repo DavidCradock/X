@@ -15,6 +15,9 @@ namespace X
 		_mfTabPosition = 0.5f;
 		_mbTabBeingMoved = false;
 		_mfTabRatio = 0.5f;
+
+		_mfuncOnTabBeingMoved = 0;
+		_mfuncOnTabMoved = 0;
 	}
 
 	CUIScrollbar::~CUIScrollbar()
@@ -188,8 +191,17 @@ namespace X
 		// the tab has been set to being moved
 		if (_mbTabBeingMoved)
 		{
+			// Call function pointer if set
+			if (_mfuncOnTabBeingMoved)
+				_mfuncOnTabBeingMoved();
+
 			if (!x->pInput->mouse.leftButDown())
+			{
 				_mbTabBeingMoved = false;
+				// Call function pointer if set
+				if (_mfuncOnTabMoved)
+					_mfuncOnTabMoved();
+			}
 			else
 			{
 				// Left mouse is down and tab is being moved
@@ -301,5 +313,15 @@ namespace X
 	CVector2f CUIScrollbar::getTabDims(void) const
 	{
 		return _mvTabDims;
+	}
+
+	void CUIScrollbar::setFunctionOnTabBeingMoved(void (*function)(void))
+	{
+		_mfuncOnTabBeingMoved = function;
+	}
+
+	void CUIScrollbar::setFunctionOnTabMoved(void (*function)(void))
+	{
+		_mfuncOnTabMoved = function;
 	}
 }

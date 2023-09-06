@@ -64,6 +64,9 @@
     <Filter Include="Image">
       <UniqueIdentifier>{708e56d8-6157-4376-8539-ff3ff2690cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Widgets">
+      <UniqueIdentifier>{29838f6a-6ce9-4c2b-9232-02b2972b3383}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -443,17 +446,11 @@
     <ClInclude Include="UIWindow.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="UIScrollBar.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="templateManagerNoRef.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="templateManagerNoRefLockable.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UIObserver.h">
       <Filter>UI</Filter>
@@ -464,11 +461,17 @@
     <ClInclude Include="timerMinimal.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="UIText.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="UIDefaultContainers.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScrollBar.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>UI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -815,23 +818,23 @@
     <ClCompile Include="UIWindow.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UIScrollBar.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="profiler.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="timerMinimal.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="UIText.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UIDefaultContainers.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScrollBar.cpp">
+      <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
