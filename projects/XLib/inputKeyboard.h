@@ -195,7 +195,7 @@ namespace X
 		bool repeat(unsigned char KC_KEYCODE) const;
 
 		// Set time in milliseconds until keyRepeat method will start to return true for a given key
-		void setRepeatInitialDelay(float fMilliseconds = 500.0f);
+		void setRepeatInitialDelay(float fMilliseconds = 600.0f);
 
 		// Set time in milliseconds for the time between keyRepeat returning true for a key, once the initial delay has passed.
 		void setRepeatRate(float fMilliseconds = 33.33f);
