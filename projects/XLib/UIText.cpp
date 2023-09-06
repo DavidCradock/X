@@ -19,6 +19,11 @@ namespace X
 		setTextColour(true);
 		setBackgroundColour();
 		setFont(true);
+
+		// Centering
+		_mbCentered = false;
+		_mvNonCenteredPos = _mvPosition;
+		_mvNonCenteredDims = _mvDimensions;
 	}
 
 	CUIText::~CUIText()
@@ -30,6 +35,8 @@ namespace X
 	{
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
+		_mvNonCenteredDims = _mvDimensions;
+		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;
 		_mpContainer->computeScrollbars();
 	}
@@ -37,6 +44,8 @@ namespace X
 	void CUIText::setDimensions(const CVector2f& vDimensions)
 	{
 		_mvDimensions = vDimensions;
+		_mvNonCenteredDims = _mvDimensions;
+		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;
 		_mpContainer->computeScrollbars();
 	}
@@ -50,12 +59,18 @@ namespace X
 	{
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
+		_mvNonCenteredPos = _mvPosition;
+		_helperComputeCenteredPosDims();
+		_mbFramebufferNeedsUpdating = true;
 		_mpContainer->computeScrollbars();
 	}
 
 	void CUIText::setPosition(const CVector2f& vPosition)
 	{
 		_mvPosition = vPosition;
+		_mvNonCenteredPos = _mvPosition;
+		_helperComputeCenteredPosDims();
+		_mbFramebufferNeedsUpdating = true;
 		_mpContainer->computeScrollbars();
 	}
 
@@ -102,10 +117,18 @@ namespace X
 
 			glDisable(GL_SCISSOR_TEST);
 			pFramebuffer->bindAsRenderTarget(true, false, _mColourFramebufferClear);
-			std::vector<std::string> vstrTemp;
-			int iTotalRenderedHeight;
-			
-			pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColourText);
+
+			// Render normally
+			if (!_mbCentered)
+			{
+				std::vector<std::string> vstrTemp;
+				int iTotalRenderedHeight;
+				pFont->printInRectNewline(true, _mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, vstrTemp, iTotalRenderedHeight, "\n", 1.0f, _mColourText);
+			}
+			else // Render centered (Although we're rendering to framebuffer, so render at 0,0
+			{
+				pFont->print(_mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, 1.0f, _mColourText);
+			}
 			glEnable(GL_SCISSOR_TEST);
 			pFramebuffer->unbindAsRenderTarget();
 
@@ -115,7 +138,8 @@ namespace X
 		}
 
 		// Compute position
-		CVector2f vTextPos = _mpContainer->getWidgetAreaTLCornerPosition();
+		CVector2f vTextPos;
+		vTextPos = _mpContainer->getWidgetAreaTLCornerPosition();
 		vTextPos += _mvPosition;
 		vTextPos += _mpContainer->getWidgetOffset();
 
@@ -129,6 +153,7 @@ namespace X
 	void CUIText::setText(const std::string& strText)
 	{
 		_mstrText = strText;
+		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;
 	}
 
@@ -153,11 +178,46 @@ namespace X
 	{
 		_mbUseThemeFont = bUseThemeFont;
 		_mstrFontResourceName = strFontResourceToUse;
+		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;
 
 		if (!bUseThemeFont)
-		{
 			ThrowIfFalse(x->pResource->getFontExists(strFontResourceToUse), "CUIText::setFont(\"" + strFontResourceToUse + "\") failed. The named font resource does not exist.");
+	}
+
+	void CUIText::setCentered(bool bCenterTheText)
+	{
+		_mbCentered = bCenterTheText;
+		_helperComputeCenteredPosDims();
+		_mbFramebufferNeedsUpdating = true;
+	}
+
+	void CUIText::_helperComputeCenteredPosDims(void)
+	{
+		if (_mbCentered)
+		{
+			CResourceFont* pFont;
+			if (_mbUseThemeFont)
+				pFont = x->pResource->getFont(_mpContainer->themeGetSettings()->fonts.text);
+			else
+				pFont = x->pResource->getFont(_mstrFontResourceName);
+			CVector2f vTextDims;
+			vTextDims.x = pFont->getTextWidth(_mstrText);
+			vTextDims.y = pFont->getTextHeight();
+			_mvDimensions = vTextDims;
+			vTextDims *= 0.5f;
+			_mvPosition = _mvNonCenteredPos - vTextDims;
 		}
+		else// Restore values to original ones
+		{
+			_mvPosition = _mvNonCenteredPos;
+			_mvDimensions = _mvNonCenteredDims;
+		}
+
+	}
+
+	void CUIText::setFramebufferNeedsUpdating(void)
+	{
+		_mbFramebufferNeedsUpdating = true;
 	}
 }

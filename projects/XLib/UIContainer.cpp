@@ -456,7 +456,7 @@ namespace X
 		auto itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
-			if (itText->second->_mbVisible)
+			if (itText->second->getVisible())
 			{
 				CVector2f vBRPos = itText->second->getPosition() + itText->second->getDimensions();
 				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
@@ -610,7 +610,7 @@ namespace X
 		auto itText = _mmapTexts.begin();
 		while (itText != _mmapTexts.end())
 		{
-			itText->second->_mbFramebufferNeedsUpdating = true;
+			itText->second->setFramebufferNeedsUpdating();
 			itText++;
 		}
 	}

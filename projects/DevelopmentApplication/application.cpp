@@ -75,7 +75,12 @@ namespace X
 		pWindow = x->pUI->windowAdd("Window2 200x200");
 		pWindow->setDimensions(200, 200);
 		pWindow->setPosition(1400-16, 1200-30);
-
+		CUIText* pText;
+//		pText = pWindow->textAdd("textNormal", 0, 0, 200, 30, "Normal0,0,200,30");
+//		pText->setBackgroundColour(CColour(0, 0, 0, 0.5f));
+		pText = pWindow->textAdd("textCentered", 100, 75, 100, 40, "100,75,180,30");
+		pText->setBackgroundColour(CColour(0, 0, 0, 0.5f));
+		pText->setCentered(true);
 		
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
