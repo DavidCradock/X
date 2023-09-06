@@ -30,6 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+- Add Atlas to CUIImage and add renderTo2DQuad methods to the atlas resource class.
 - We need to try and reduce header file includes (Use PIMPL) as compile times are starting to suck.
 - UI rewrite
 - Implement UIDefaultContainers stuff
@@ -42,8 +43,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - UI: Implement DraggableDock.
 - UI: Implement DraggableItem.
 - UI: Implement ImageAnimated
-- UI: Implement ImageDepthbuffer
-- UI: Implement ImageFramebuffer
 - UI: Implement Linegraph
 - UI: Implement Listbox
 - UI: Implement Manager

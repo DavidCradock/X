@@ -39,7 +39,7 @@ namespace X
 		// Returns dimensions of the texture
 		CVector2f getDimensions(void) const;
 	private:
-		CImage _mImage;				// Image holding the textures image data
+		CImage _mImage;				// Image holding the texture's image data
 		unsigned int _muiTextureID;	// OpenGL texture ID
 		CVector2f _mvDimensions;	// Dimensions of the texture
 	};

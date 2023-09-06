@@ -116,6 +116,11 @@ namespace X
 		// uiAtlasImageNumber should be a valid number (Use getNumAtlases()) otherwise an exception occurs
 		void renderAtlasTo2DQuad(int iPosX, int iPosY, int iWidth, int iHeight, unsigned int uiAtlasImageNumber, CColour colour = CColour());
 
+		// TODO Renders the named image stored in the atlas at the specified position and dimensions.
+		// If dimensions are <= 0, then the dimensions of the image are used.
+		// If the named image does not exist, an exception occurs
+		void renderAtlasImageTo2dQuad(int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strImageInAtlasName, CColour colour = CColour());
+
 		// Returns a pointer to the CImageAtlasPacker object so we can access the images
 		CImageAtlasPacker* getImageAtlasPacker(void);
 	private:

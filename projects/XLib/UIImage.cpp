@@ -10,6 +10,7 @@ namespace X
 		_mpContainer = pContainer;
 		_mvDimensions.set(200, 48);
 		_mbVisible = true;
+		_meResourceType = EResourceType::texture2DFromFile;
 	}
 
 	CUIImage::~CUIImage()
@@ -68,19 +69,65 @@ namespace X
 	{
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
-		if (_mstrTextureResourceName.size())
+		if (_mstrResourceName.size())
 		{
 			CVector2f vPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mvPosition + _mpContainer->getWidgetOffset();
-			x->pResource->getTexture2DFromFile(_mstrTextureResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+			if (EResourceType::texture2DFromFile == _meResourceType)
+				x->pResource->getTexture2DFromFile(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+			else if (EResourceType::texture2DFromImage == _meResourceType)
+				x->pResource->getTexture2DFromImage(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+			else if (EResourceType::framebuffer == _meResourceType)
+				x->pResource->getFramebuffer(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+			else if (EResourceType::depthbuffer == _meResourceType)
+				x->pResource->getDepthbuffer(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+			else if (EResourceType::atlas == _meResourceType)
+			{
+				if (_mstrImageInAtlasName.size())
+					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasImageTo2dQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mstrImageInAtlasName, _mColour);
+				else
+					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, 0, _mColour);
+			}
 		}
 	}
 
 	/******************************************************************* Widget specific *******************************************************************/
 
-	void CUIImage::setTexture(const std::string& strNameOfTexture2DFromFileResource)
+	void CUIImage::setTextureFromFile(const std::string& strResourceName)
 	{
-		_mstrTextureResourceName = strNameOfTexture2DFromFileResource;
-		ThrowIfFalse(x->pResource->getTexture2DFromFileExists(_mstrTextureResourceName), "CUIImage::setTexture(\"" + strNameOfTexture2DFromFileResource + "\") failed. The named texture resource does not exist.");
+		_mstrResourceName = strResourceName;
+		_meResourceType = EResourceType::texture2DFromFile;
+		ThrowIfFalse(x->pResource->getTexture2DFromFileExists(_mstrResourceName), "CUIImage::setTextureFromFile(\"" + strResourceName + "\") failed. The named texture resource does not exist.");
+	}
+
+	void CUIImage::setTextureFromImage(const std::string& strResourceName)
+	{
+		_mstrResourceName = strResourceName;
+		_meResourceType = EResourceType::texture2DFromImage;
+		ThrowIfFalse(x->pResource->getTexture2DFromImageExists(_mstrResourceName), "CUIImage::setTextureFromImage(\"" + strResourceName + "\") failed. The named texture resource does not exist.");
+	}
+
+	void CUIImage::setTextureDepthbuffer(const std::string& strResourceName)
+	{
+		_mstrResourceName = strResourceName;
+		_meResourceType = EResourceType::depthbuffer;
+		ThrowIfFalse(x->pResource->getDepthbufferExists(_mstrResourceName), "CUIImage::setTextureDepthbuffer(\"" + strResourceName + "\") failed. The named texture resource does not exist.");
+	}
+
+	void CUIImage::setTextureFramebuffer(const std::string& strResourceName)
+	{
+		_mstrResourceName = strResourceName;
+		_meResourceType = EResourceType::framebuffer;
+		ThrowIfFalse(x->pResource->getFramebufferExists(_mstrResourceName), "CUIImage::setTextureFramebuffer(\"" + strResourceName + "\") failed. The named texture resource does not exist.");
+	}
+
+	void CUIImage::setTextureAtlas(const std::string& strResourceName, const std::string& strImageInAtlasName)
+	{
+		_mstrResourceName = strResourceName;
+		_mstrImageInAtlasName = strImageInAtlasName;
+		_meResourceType = EResourceType::atlas;
+		ThrowIfFalse(x->pResource->getTexture2DAtlasExists(_mstrResourceName), "CUIImage::setTextureAtlas(\"" + strResourceName + "\") failed. The named texture resource does not exist.");
+		if (_mstrImageInAtlasName.size())
+			ThrowIfFalse(x->pResource->getTexture2DAtlas(strResourceName)->getImageNameExists(strImageInAtlasName), "CUIImage::setTextureAtlas(\"" + strResourceName + ", " + strImageInAtlasName + "\") failed. The named atlas exists, but the named image in the atlas does not.");
 	}
 
 	void CUIImage::setColour(const CColour& colour)

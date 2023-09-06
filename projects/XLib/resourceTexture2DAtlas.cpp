@@ -370,6 +370,50 @@ namespace X
 		unbind(0);
 	}
 
+	void CResourceTexture2DAtlas::renderAtlasImageTo2dQuad(int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strImageInAtlasName, CColour colour)
+	{
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT("X:default");
+		CResourceShader* pShader = x->pResource->getShader("X:VBCPT");
+
+		// Setup triangle geometry
+		pVB->removeGeom();
+
+		CVector2f vtcBL, vtcBR, vtcTL, vtcTR;
+		getTextureCoords(strImageInAtlasName, vtcTL, vtcTR, vtcBR, vtcBL);
+		CVector2f vDims;
+		vDims.x = float(iWidth);
+		vDims.y = float(iHeight);
+		CVector2f vImageDims = getImageDims(strImageInAtlasName);
+		if (iWidth < 1)
+			vDims.x = vImageDims.x;
+		if (iHeight < 1)
+			vDims.y = vImageDims.y;
+
+		pVB->addQuad2D(CVector2f(float(iPosX), float(iPosY)), vDims,
+			colour,	// Colour
+			vtcBL, vtcBR, vtcTR, vtcTL);	// Texture coordinates
+		pVB->update();
+
+		// Setup the matrices
+		CMatrix matWorld, matView;
+		CMatrix matProjection;
+		matProjection.setProjectionOrthographic(0.0f, float(x->pWindow->getWidth()), 0.0f, float(x->pWindow->getHeight()), -1.0f, 1.0f);
+		pShader->bind();
+		pShader->setMat4("matrixWorld", matWorld);
+		pShader->setMat4("matrixView", matView);
+		pShader->setMat4("matrixProjection", matProjection);
+
+		// Tell OpenGL, for each sampler, to which texture unit it belongs to
+		pShader->setInt("texture0", 0);
+
+		bind(0, strImageInAtlasName);
+		glDisable(GL_DEPTH_TEST);
+		//		glEnable(GL_BLEND);
+		pVB->render();
+		pShader->unbind();
+		unbind(0);
+	}
+
 	CImageAtlasPacker* CResourceTexture2DAtlas::getImageAtlasPacker(void)
 	{
 		return &_mAtlases;

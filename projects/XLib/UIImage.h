@@ -9,8 +9,9 @@ namespace X
 	class CUIContainer;
 
 	// A simple image.
-	// There's no borders or anything, just a simple texture resource to render.
+	// There are no borders or anything, just a simple texture resource to render.
 	// The named texture resource stored in SCResourceManager will be resized to this widget's set dimensions.
+	// That doesn't stop you from setting this widget's dimension to x->pResource->getTexture2DFromFile("filename")->getDimensions() though :)
 	class CUIImage
 	{
 		friend class CUIContainer;
@@ -51,7 +52,25 @@ namespace X
 
 		// Sets the name of the CResourceTexture2DFromFile stored in the SCResourceManager which is used to render this widget.
 		// If the resource doesn't exist, an exception occurs.
-		void setTexture(const std::string& strNameOfTexture2DFromFileResource);
+		void setTextureFromFile(const std::string& strResourceName);
+
+		// Sets the name of the CResourceTexture2DFromImage stored in the SCResourceManager which is used to render this widget.
+		// If the resource doesn't exist, an exception occurs.
+		void setTextureFromImage(const std::string& strResourceName);
+
+		// Sets the name of the CResourceDepthbuffer stored in the SCResourceManager which is used to render this widget.
+		// If the resource doesn't exist, an exception occurs.
+		void setTextureDepthbuffer(const std::string& strResourceName);
+
+		// Sets the name of the CResourceFramebuffer stored in the SCResourceManager which is used to render this widget.
+		// If the resource doesn't exist, an exception occurs.
+		void setTextureFramebuffer(const std::string& strResourceName);
+
+		// Sets the name of the CResourceTexture2DAtlas stored in SCResourceManager which is used to render this widget.
+		// If the resource doesn't exist, an exception occurs.
+		// If strImageInAtlasName is of zero length, then the whole atlas texture is rendered instead of just an image inside of it
+		// If strImageInAtlasName is not of 0 lenght and the image name in the atlas doesn't exist, an exception occurs.
+		void setTextureAtlas(const std::string& strResourceName, const std::string& strImageInAtlasName);
 
 		// Sets the colour multiplier used when rendering the image.
 		// By default, this is CColour(1,1,1,1);
@@ -64,9 +83,25 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		// The name of the CResourceTexture2DFromFile resource stored in SCResourceManager.
-		// Set with setTexture()
-		std::string _mstrTextureResourceName;
+		// The name of the resource stored in SCResourceManager.
+		// Set with setTexture???()
+		std::string _mstrResourceName;
+		enum EResourceType
+		{
+			depthbuffer,
+			framebuffer,
+			texture2DFromFile,
+			texture2DFromImage,
+			atlas
+		};
+		// Type of resource which _strResourceName is for.
+		// Set depending upon last called setTexture???? methods
+		EResourceType _meResourceType;
+
+		// If _mstrResourceName represents an atlas resource and _meResourceType specifies this,
+		// then this holds the name of the image stored in the atlas to use when rendering this widget.
+		std::string _mstrImageInAtlasName;
+
 		CColour _mColour;	// Colour multiplier used when rendering the texture image.
 	};
 }
