@@ -122,4 +122,12 @@
 #include "quadTreeEntity.h"
 #include "quadTreeNode.h"
 // User Interface
+#include "UIButton.h"
+#include "UIContainer.h"
+#include "UIDefaultContainers.h"
 #include "UIManager.h"
+#include "UIObserver.h"
+#include "UIScrollBar.h"
+#include "UIText.h"
+#include "UITheme.h"
+#include "UIWindow.h"

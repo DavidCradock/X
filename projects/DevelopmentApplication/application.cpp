@@ -72,7 +72,7 @@ namespace X
 		pWindow->textAdd("text0", 0, 30, 100, 20, "Hello World");
 		pWindow->textAdd("text1", 0, 60, 200, 200, "This is lots of text.\nRendered on multiple lines.\nThis may cause stuff to happen.");
 
-		pWindow = x->pUI->windowAdd("Window2 200x200");
+		pWindow = x->pUI->windowAdd("Window2 200x200 No widgets outside");
 		pWindow->setDimensions(200, 200);
 		pWindow->setPosition(1400-16, 1200-30);
 		CUIText* pText;
@@ -82,6 +82,18 @@ namespace X
 		pText->setBackgroundColour(CColour(0, 0, 0, 0.5f));
 		pText->setCentered(true);
 		
+		pWindow = x->pUI->windowAdd("Window3 200x200");
+		pWindow->setDimensions(200, 200);
+		pWindow->setPosition(1700 - 16, 1200 - 30);
+		pWindow->textAdd("text0", 0, 0, 200, 30, "Widget to right");
+		pWindow->textAdd("text1", 300, 0, 200, 30, "Here I am!");
+
+		pWindow = x->pUI->windowAdd("Window4 200x200");
+		pWindow->setDimensions(200, 200);
+		pWindow->setPosition(1400 - 16, 1500 - 30);
+		pWindow->textAdd("text0", 0, 0, 200, 30, "Widget below");
+		pWindow->textAdd("text1", 0, 300, 200, 30, "Here I am!");
+
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 

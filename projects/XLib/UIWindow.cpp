@@ -118,8 +118,12 @@ namespace X
 		// Let's store the width and height of those scroll bars and use them as an offset and use it below
 		// to position everything correctly...
 		CVector2f vScrollbarOffset;
-		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
-		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+
+		// Only offset if the scrollbars are visible
+		if (_mpScrollbarH->getVisible())
+			vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		if (_mpScrollbarV->getVisible())
+			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
 		CColour col = pSettings->colours.windowBGNotFocused;
 		if (_mbInFocus)
@@ -274,8 +278,12 @@ namespace X
 
 		// Add the additional space for the scrollbars.
 		CVector2f vScrollbarOffset;
-		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
-		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		// Only offset if the scrollbars are visible
+		if (_mpScrollbarH->getVisible())
+			vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		if (_mpScrollbarV->getVisible())
+			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+
 
 		CVector2f vDims = _mvContainersWidgetAreaDimensions;
 		vDims.x += idTL.vDims.x + idBR.vDims.x + vScrollbarOffset.x;

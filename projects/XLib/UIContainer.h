@@ -12,8 +12,6 @@ namespace X
 	class CUIContainer
 	{
 		friend class SCUIManager;
-//		friend class CUIButton;
-//		friend class CUIScrollbar;
 	public:
 		CUIContainer();
 
@@ -174,6 +172,7 @@ namespace X
 
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;
+
 		std::map<std::string, CUIButton*> _mmapButtons;			// Map holding each CUIButton widget
 		std::map<std::string, CUIScrollbar*> _mmapScrollbars;	// Map holding each CUIScrollbar widget
 		std::map<std::string, CUIText*> _mmapTexts;				// Map holding each CUIText widget
