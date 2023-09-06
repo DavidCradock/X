@@ -217,7 +217,7 @@ namespace X
 	/************************************************************************************************************************************************************/
 	/* All widget code below
 	*  When adding a new widget type, we add the usual widgetnameAdd(), widgetnameGet(), widgetnameRemove() and widgetnameRemoveall() methods,
-	*  then all CUIContainer methods below those need to be modified to include the new widget.
+	*  the map object in the header and then all CUIContainer methods below those need to be modified to include the new widget.
 	*  All the code above does not need to be modified to accomodate a new widget.
 	*/
 	/************************************************************************************************************************************************************/
@@ -273,6 +273,59 @@ namespace X
 			it++;
 		}
 		_mmapButtons.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
+	/* CUIImage */
+	/************************************************************************************************************************************************************/
+
+	CUIImage* CUIContainer::imageAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapImages.find(strName) != _mmapImages.end(), "CUIContainer::imageAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUIImage* pNewObject = new CUIImage(this);
+		ThrowIfFalse(pNewObject, "CUIContainer::imageAdd() failed to allocate memory for new object.");
+
+		_mmapImages[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUIImage* CUIContainer::imageGet(const std::string& strName)
+	{
+		auto it = _mmapImages.find(strName);
+		ThrowIfTrue(_mmapImages.end() == it, "CUIContainer::imageGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::imageRemove(const std::string& strName)
+	{
+		auto it = _mmapImages.find(strName);
+		if (_mmapImages.end() == it)
+			return;
+		delete it->second;
+		_mmapImages.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::imageRemoveAll(void)
+	{
+		auto it = _mmapImages.begin();
+		while (it != _mmapImages.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapImages.clear();
 		computeScrollbars();
 	}
 
@@ -390,6 +443,7 @@ namespace X
 	void CUIContainer::widgetRemoveAll(void)
 	{
 		buttonRemoveAll();
+		imageRemoveAll();
 		scrollbarRemoveAll();
 		textRemoveAll();
 
@@ -407,6 +461,8 @@ namespace X
 			itButton++;
 		}
 
+		// For each CUIImage widget (No need)
+
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
@@ -415,7 +471,7 @@ namespace X
 			itScrollbar++;
 		}
 
-		// For each CUIText object (No need)
+		// For each CUIText widget (No need)
 	}
 
 	void CUIContainer::_helperComputeMaxWidgetCornerPos(void)
@@ -435,6 +491,21 @@ namespace X
 					_mvMaxWidgetCornerPos.y = vBRPos.y;
 			}
 			itButton++;
+		}
+
+		// For each CUIImage widget
+		auto itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			if (itImage->second->_mbVisible)
+			{
+				CVector2f vBRPos = itImage->second->getPosition() + itImage->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itImage++;
 		}
 
 		// For each CUIScrollbar widget
@@ -479,6 +550,8 @@ namespace X
 			itButton->second->update(fTimeDeltaSec);
 			itButton++;
 		}
+
+		// For each CUIImage widget (No need)
 
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
@@ -546,6 +619,8 @@ namespace X
 			itButton++;
 		}
 
+		// For each CUIImage widget (No need)
+
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
@@ -584,7 +659,19 @@ namespace X
 			itButton++;
 		}
 
-		// For each CUIScrollbar widget (Not needed, doesn't have any font stuff)
+		// For each CUIImage widget (No need)
+
+		// For each CUIScrollbar widget (No need)
+
+
+
+		// For each CUIImage widget
+		auto itImage = _mmapImages.begin();
+		while (itImage != _mmapImages.end())
+		{
+			itImage->second->render();
+			itImage++;
+		}
 
 		// For each CUIText widget
 		auto itText = _mmapTexts.begin();

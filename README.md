@@ -41,7 +41,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - UI: Implement Colour selector
 - UI: Implement DraggableDock.
 - UI: Implement DraggableItem.
-- UI: Implement Image
 - UI: Implement ImageAnimated
 - UI: Implement ImageDepthbuffer
 - UI: Implement ImageFramebuffer

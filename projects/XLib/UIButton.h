@@ -42,13 +42,13 @@ namespace X
 		// Returns whether this widget is visible or not.
 		bool getVisible(void) const;
 
-		// Render this object's non-font stuff
+		// Render this widget
 		void render(CResourceVertexBufferCPT2* pVB);
 
-		// Render this object's font stuff
+		// Render this widget's font stuff
 		void renderFonts(void);
 	
-		// Update this object
+		// Update this widget
 		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget

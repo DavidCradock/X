@@ -49,9 +49,9 @@ namespace X
 		pWindow->setDimensions(CVector2f(200, 200));
 		pWindow->setPosition(1400-16, 200-30);
 
-
-
-
+		CResourceTexture2DFromFile* pTexture = x->pResource->addTexture2DFromFile("github_images/github_social_image.png", "github_images/github_social_image.png");
+		pWindow->imageAdd("github_images/github_social_image.png", 0, 0, pTexture->getDimensions().x, pTexture->getDimensions().y)->setTexture("github_images/github_social_image.png");
+		
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(9999, 0);

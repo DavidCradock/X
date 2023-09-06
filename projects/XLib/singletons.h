@@ -17,6 +17,7 @@
 #include "UIManager.h"
 #include "window.h"
 
+
 namespace X
 {
 	// A class to get pointers to all singletons found throughout the codebase.
