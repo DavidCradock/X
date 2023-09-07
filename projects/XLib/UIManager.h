@@ -263,6 +263,25 @@ namespace X
 
 		// Sets all windows as unfocused
 		void windowSetUnfocusedAll(void);
+
+		// Sets the name of the theme to use when setting mouse cursor images.
+		// Be default, the theme to use is "default"
+		// If the theme name doesn't exist, an exception occurs.
+		// Unlike containers and windows which can have a different theme each, the mouse cursor theme is global.
+		void setMouseCursorThemename(const std::string& strThemeName = "default");
+
+		// Returns the currently set theme name used for the mouse cursors
+		std::string getMouseCursorThemename(void);
+
+		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "normal"
+		void setMouseCursorToNormal(void);
+
+		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "busy"
+		void setMouseCursorToBusy(void);
+
+		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "window resize"
+		void setMouseCursorToWindowResize(void);
+
 	private:
 		CTimer _mTimer;
 
@@ -286,8 +305,14 @@ namespace X
 		std::string _mstrMouseIsOver;
 		bool _bMouseIsOverAWindow;	// Holds whether when _mstrMouseIsOver.size() > 0, whether the name is a window or container
 
-		// The name of the window which is currently being moved
+		// The name of the window which is currently being moved, if any
 		std::string _mstrWindowBeingMoved;
+
+		// The name of the window which is currently being resized, if any
+		std::string _mstrWindowBeingResized;
+
+		// If _mstrWindowBeingResized.size() > 0 then this holds which of the 8 corners/edges triggered the resizing
+		CUIWindow::EWindowArea _eWindowAreaTriggeredResizing;
 
 		// Add 9 quads to the passed vertex buffer, which represent the 9 grid cell images stored in the passed CUITheme::SImageType.
 		void _helperAddWidgetGridGeometry(
@@ -306,5 +331,13 @@ namespace X
 		void _initialiseDefaultContainers(void);
 
 		CUIDefaultContainers _mDefaultContainers;	// Objects to initialise and update the default containers.
+
+		std::string _mstrMouseCursorThemename;		// The theme name to use when setting the mouse cursor images. Set with setMouseCursorThemename()
+
+		// Called from _update to deal with moving windows
+		void _updateWindowMoving(void);
+
+		// Called from _update to deal with resizing windows
+		void _updateWindowResizing(void);
 	};
 }

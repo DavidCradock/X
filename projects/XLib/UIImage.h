@@ -11,7 +11,7 @@ namespace X
 	// A simple image.
 	// There are no borders or anything, just a simple texture resource to render.
 	// The named texture resource stored in SCResourceManager will be resized to this widget's set dimensions.
-	// That doesn't stop you from setting this widget's dimension to x->pResource->getTexture2DFromFile("filename")->getDimensions() though :)
+	// That doesn't stop you from setting this widget's dimension though :)
 	class CUIImage
 	{
 		friend class CUIContainer;
@@ -69,7 +69,7 @@ namespace X
 		// Sets the name of the CResourceTexture2DAtlas stored in SCResourceManager which is used to render this widget.
 		// If the resource doesn't exist, an exception occurs.
 		// If strImageInAtlasName is of zero length, then the whole atlas texture is rendered instead of just an image inside of it
-		// If strImageInAtlasName is not of 0 lenght and the image name in the atlas doesn't exist, an exception occurs.
+		// If strImageInAtlasName is not of 0 length and the image name in the atlas doesn't exist, an exception occurs.
 		void setTextureAtlas(const std::string& strResourceName, const std::string& strImageInAtlasName);
 
 		// Sets the colour multiplier used when rendering the image.

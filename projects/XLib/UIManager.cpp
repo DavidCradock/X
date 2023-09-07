@@ -7,6 +7,7 @@ namespace X
 	SCUIManager::SCUIManager()
 	{
 		_mTimer.update();
+		_mstrMouseCursorThemename = "default";
 	}
 
 	void SCUIManager::render(void)
@@ -108,24 +109,75 @@ namespace X
 			_mmanContainers.get(i)->update(fTimeDeltaSeconds);
 		}
 
-		// For each window
-
 		// Deal with moving windows
-		// Stop moving any windows if the mouse button if up
-		if (!x->pInput->mouse.leftButDown())
-			_mstrWindowBeingMoved.clear();
-		// If the mouse button has been pressed once, see if we can start moving a window
-		// and set _mstrMouseIsOver to the window's name
+		_updateWindowMoving();
+
+		// Deal with resizing windows
+		_updateWindowResizing();
+
+		// Deal with Z order of windows
+		// If a window is being moved or resized, surely it must be the window in front
+		if (_mstrWindowBeingMoved.size())
+			windowMoveToFront(_mstrWindowBeingMoved);
+		else if (_mstrWindowBeingResized.size())
+			windowMoveToFront(_mstrWindowBeingResized);
+
+		// If the cursor is over a window and the mouse button is down, bring that window to the front
+		else if (x->pInput->mouse.leftButtonOnce())
+		{
+			if (_bMouseIsOverAWindow)
+			{
+				if (_mstrMouseIsOver.size())
+				{
+					windowMoveToFront(_mstrMouseIsOver);
+				}
+			}
+		}
+		
+		// Deal with setting focus for all windows
 		if (x->pInput->mouse.leftButtonOnce())
 		{
-			// Is the mouse over a window or container?
+			if (_bMouseIsOverAWindow)
+			{
+				if (_mstrMouseIsOver.size())
+				{
+					windowSetFocused(_mstrMouseIsOver);
+				}
+			}
+		}
+
+		// For each window, update all of it's widgets
+		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		{
+			// Update the window's widgets
+			CUIWindow* pWindow = _mmanWindows.get(i);
+			pWindow->update(fTimeDeltaSeconds);
+		}
+	}
+
+	void SCUIManager::_updateWindowMoving(void)
+	{
+		// If a window is currently being resized, don't start moving any windows
+		if (_mstrWindowBeingResized.size())
+			return;
+
+		// Stop moving any windows if the mouse button is up
+		if (!x->pInput->mouse.leftButDown())
+			_mstrWindowBeingMoved.clear();
+
+		// If the mouse button has been pressed once, see if we can start moving a window
+		// and set _mstrWindowBeingMoved to _mstrMouseIsOver (the window's name)
+		if (x->pInput->mouse.leftButtonOnce())
+		{
+			// Is the mouse over either a container or a window?
 			if (_mstrMouseIsOver.size())
 			{
 				// Is the mouse over a window?
 				if (_bMouseIsOverAWindow)
 				{
-					// Get the window the mouse is over
+					// Get a pointer to the window the mouse is over
 					CUIWindow* pWindow = _mmanWindows.get(_mstrMouseIsOver);
+
 					// Check to see if the mouse cursor is over the window's titlebar
 					CRect rctTitlebar = pWindow->getTitlebarArea();
 					if (rctTitlebar.doesPositionFitWithin(x->pInput->mouse.getCursorPos()))
@@ -144,7 +196,7 @@ namespace X
 			CVector2f vNewPos = pWindow->getPosition();
 			vNewPos.x += x->pInput->mouse.getMouseDeltaGUI().x;
 			vNewPos.y += x->pInput->mouse.getMouseDeltaGUI().y;
-			
+
 			// Limit the window to the screen.
 			CVector2f vWindowActualDims = pWindow->getDimsIncludingTheme();
 			bool bLimitMouseMovementX = false;
@@ -187,43 +239,112 @@ namespace X
 			// Set position of the window
 			pWindow->setPosition(vNewPos);
 		}
+	}
 
-		// Deal with Z order of windows
-		// If a window is being moved, it MUST be the window in front
+	void SCUIManager::_updateWindowResizing(void)
+	{
+		// If a window is currently being moved, don't start resizing any windows
 		if (_mstrWindowBeingMoved.size())
+			return;
+
+		// Stop resizing any windows if the mouse button is up
+		if (!x->pInput->mouse.leftButDown())
 		{
-			windowMoveToFront(_mstrWindowBeingMoved);
+			if (_mstrWindowBeingResized.size())
+				x->pUI->setMouseCursorToNormal();
+			_mstrWindowBeingResized.clear();
+			
 		}
-		// If the cursor is over a window and the mouse button is down, bring that window to the front
-		else if (x->pInput->mouse.leftButtonOnce())
-		{
-			if (_bMouseIsOverAWindow)
-			{
-				if (_mstrMouseIsOver.size())
-				{
-					windowMoveToFront(_mstrMouseIsOver);
-				}
-			}
-		}
-		
-		// Deal with setting focus for all windows
+		// _mstrMouseIsOver holds the name of a container or window which the mouse is currently over
+		// _bMouseIsOverAWindow is set to differentiate between a container or window.
+		// _mstrMouseIsOver may have zero size if mouse isn't over anything.
+		// We've also checked to see if a window can and is being moved and if _mstrWindowBeingMoved has a length, then a window is being moved.
+		// 
+		// If the mouse button has been pressed once, see if we can start resizing a window
+		// and set _mstrWindowBeingResized to _mstrMouseIsOver (the window's name)
 		if (x->pInput->mouse.leftButtonOnce())
 		{
-			if (_bMouseIsOverAWindow)
+			// Is the mouse over either a container or a window?
+			if (_mstrMouseIsOver.size())
 			{
-				if (_mstrMouseIsOver.size())
+				// Is the mouse over a window?
+				if (_bMouseIsOverAWindow)
 				{
-					windowSetFocused(_mstrMouseIsOver);
+					// Get a pointer to the window the mouse is over
+					CUIWindow* pWindow = _mmanWindows.get(_mstrMouseIsOver);
+
+					// If the window is set to be resizable
+					if (pWindow->getResizable())
+					{
+						// Check to see if the mouse cursor is over one of the window's 8 edges/corners
+						CUIWindow::EWindowArea mouseOverResizeArea = pWindow->getMouseOverResizableArea();
+						if (CUIWindow::EWindowArea::mouseOverNone != mouseOverResizeArea)
+						{
+							// Start resizing the thing...
+							_mstrWindowBeingResized = _mstrMouseIsOver;
+
+							// Store which area the mouse is over
+							_eWindowAreaTriggeredResizing = mouseOverResizeArea;
+							x->pUI->setMouseCursorToWindowResize();
+						}
+					}
+
 				}
+
 			}
 		}
 
-		// For each window, update all of it's widgets
-		for (size_t i = 0; i < _mmanWindows.getNumber(); i++)
+		// Deal with updating the position and dimensions of a window that is set as being resized
+		if (_mstrWindowBeingResized.size())
 		{
-			// Update the window's widgets
-			CUIWindow* pWindow = _mmanWindows.get(i);
-			pWindow->update(fTimeDeltaSeconds);
+			
+			// Compute new position/dims of the window
+			CUIWindow* pWindow = _mmanWindows.get(_mstrWindowBeingResized);
+			CVector2f vNewPos = pWindow->getPosition();
+			vNewPos.x += x->pInput->mouse.getMouseDeltaGUI().x;
+			vNewPos.y += x->pInput->mouse.getMouseDeltaGUI().y;
+
+			// Limit the window to the screen.
+			CVector2f vWindowActualDims = pWindow->getDimsIncludingTheme();
+			bool bLimitMouseMovementX = false;
+			bool bLimitMouseMovementY = false;
+			// Off left edge of screen
+			if (vNewPos.x < 0)
+			{
+				vNewPos.x = 0;
+				bLimitMouseMovementX = true;
+			}
+			// Off right edge of screen
+			else if (vNewPos.x + vWindowActualDims.x > x->pWindow->getDimensions().x)
+			{
+				vNewPos.x = x->pWindow->getDimensions().x - vWindowActualDims.x;
+				bLimitMouseMovementX = true;
+			}
+			// Off top edge of screen
+			if (vNewPos.y < 0)
+			{
+				vNewPos.y = 0;
+				bLimitMouseMovementY = true;
+			}
+			// Off bottom edge of screen
+			else if (vNewPos.y + vWindowActualDims.y > x->pWindow->getDimensions().y)
+			{
+				vNewPos.y = x->pWindow->getDimensions().y - vWindowActualDims.y;
+				bLimitMouseMovementY = true;
+			}
+			// Limit movement of mouse cursor
+			if (bLimitMouseMovementX || bLimitMouseMovementY)
+			{
+				CVector2f vMouseOldPos = x->pInput->mouse.getCursorPos();
+				if (bLimitMouseMovementX)
+					vMouseOldPos.x -= x->pInput->mouse.getMouseDeltaGUI().x;
+				if (bLimitMouseMovementY)
+					vMouseOldPos.y -= x->pInput->mouse.getMouseDeltaGUI().y;
+				x->pInput->mouse.setMousePos(vMouseOldPos);
+			}
+
+			// Set position of the window
+			pWindow->setPosition(vNewPos);
 		}
 	}
 
@@ -776,5 +897,37 @@ namespace X
 			if (colourToAdjust.alpha < colourTarget.alpha)
 				colourToAdjust.alpha = colourTarget.alpha;
 		}
+	}
+
+	void SCUIManager::setMouseCursorThemename(const std::string& strThemeName)
+	{
+		ThrowIfFalse(themeExists(strThemeName), "SCUIManager::setMouseCursorThemename(\"" + strThemeName + "\") failed. The named theme does not exist.");
+		_mstrMouseCursorThemename = strThemeName;
+	}
+
+	std::string SCUIManager::getMouseCursorThemename(void)
+	{
+		return _mstrMouseCursorThemename;
+	}
+
+	void SCUIManager::setMouseCursorToNormal(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		x->pWindow->setMouseCursorImage(pSettings->cursors.normal);
+	}
+
+	void SCUIManager::setMouseCursorToBusy(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		x->pWindow->setMouseCursorImage(pSettings->cursors.busy);
+	}
+
+	void SCUIManager::setMouseCursorToWindowResize(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		x->pWindow->setMouseCursorImage(pSettings->cursors.windowResize);
 	}
 }

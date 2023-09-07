@@ -206,6 +206,14 @@ namespace X
 		// fScale should be between 0.0f and 1.0f and affects how "intense" the normals are generated. This value is clamped internally. Lower values increase the effect
 		// If this image contains no data, an exception occurs.
 		void normalmap(CImage& outputImage, float fScale = 1.0f) const;
+
+		// Uses glReadPixels() to read the contents of the currently set backbuffer/framebuffer into this image.
+		// This image must already have dimensions and it is those dimensions which are used during the glReadPixels call.
+		// vPosition is the offset from the bottom left corner of the source to start reading pixels from.
+		// If the position + dims go outside of the source, pixels are undefined
+		// If the image doesn't have any dimensions, this silently fails.
+		// Can read in either RGBA or RGB
+		void fillFromOpenGL(const CVector2f& vSourcePosTLCorner = CVector2f());
 	private:
 		unsigned char* _mpData;
 		unsigned int _muiDataSize;

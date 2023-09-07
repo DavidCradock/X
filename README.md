@@ -30,8 +30,9 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-- Add Atlas to CUIImage and add renderTo2DQuad methods to the atlas resource class.
+- Check CUIWindow::getTitlebarArea()
 - We need to try and reduce header file includes (Use PIMPL) as compile times are starting to suck.
+- Remove mouse cursor code from window and place in CUIManager
 - UI rewrite
 - Implement UIDefaultContainers stuff
 - Add screen resize handling code (For fullscreen and window resize)

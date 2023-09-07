@@ -186,6 +186,14 @@ namespace X
 //			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
 		};
 		
+		// Structure to hold the names of all the cursor files for the mouse cursor
+		struct SMouseCursors
+		{
+			std::string busy;							// .ani file to set the mouse cursor to when things are busy
+			std::string normal;							// .ani file to set the mouse cursor to when things are normal
+			std::string windowResize;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
+		};
+
 		// Structure to hold all floating point settings
 		struct SFloats
 		{
@@ -197,6 +205,8 @@ namespace X
 //			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 //			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
+			float windowResizeHandleOffsetX;		// The distance from a window's borders along X where clicking the mouse can begin window resizing.
+			float windowResizeHandleOffsetY;		// The distance from a window's borders along Y where clicking the mouse can begin window resizing.
 			float windowScrollbarHorizontalHeight;	// Height of a window's horizontal scrollbar
 			float windowScrollbarVerticalWidth;		// Width of a window's vertical scrollbar
 		};
@@ -210,6 +220,7 @@ namespace X
 			SFonts fonts;				// Holds all the names of all the fonts used by the theme
 			SImageNamesWidget images;	// Holds all the names of the images stored in a texture atlas used by this theme.
 			std::string imageDir;		// Holds the directory name containing each of the theme's images, for example "data/X/UI/default/images/"
+			SMouseCursors cursors;		// Holds all the mouse cursor file names used by the theme
 			std::string themeName;		// Holds the name of the theme.
 		};
 	private:

@@ -26,6 +26,9 @@ namespace X
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 
+		// Override this if you need it, by default, it does nothing (Virtual method).
+		// It is called just before the backbuffer is flipped to the front buffer in SCApplication's main loop.
+		void onFrameEnd(void);
 	private:
 		CTimer timer;
 	};

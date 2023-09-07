@@ -10,6 +10,7 @@ namespace X
 		_mbInFocus = false;
 		_mbVisible = true;
 		_mbContainerIsWindow = true;
+		setResizable(false, CVector2f(), CVector2f());
 	}
 
 	CUIWindow::~CUIWindow()
@@ -33,7 +34,6 @@ namespace X
 			_mvPosition.y = 0;
 		if (_mvPosition.y + vWindowDims.y > vAppWndDims.y)
 			_mvPosition.y = vAppWndDims.y - vWindowDims.y;
-
 	}
 
 	void CUIWindow::render(void)
@@ -314,7 +314,11 @@ namespace X
 
 		// Add the additional space for the scrollbars.
 		CVector2f vScrollbarOffset;
-		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+		// Only offset if the scrollbars are visible
+		if (_mpScrollbarH->getVisible())
+			vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		if (_mpScrollbarV->getVisible())
+			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
 		CRect area(
 			int(_mvPosition.x),
@@ -351,5 +355,135 @@ namespace X
 		x->pUI->windowMoveToFront(_mstrName);
 		x->pUI->windowSetUnfocusedAll();
 		x->pUI->windowSetFocused(_mstrName);
+	}
+
+	void CUIWindow::setResizable(bool bCanBeResized, float fMinWidth, float fMinHeight, float fMaxWidth, float fMaxHeight)
+	{
+		_mbIsResizable = bCanBeResized;
+		if (_mbIsResizable)
+		{
+			_mvResizeMinDims.set(fMinWidth, fMinHeight);
+			_mvResizeMaxDims.set(fMaxWidth, fMaxHeight);
+		}
+	}
+
+	void CUIWindow::setResizable(bool bCanBeResized, const CVector2f& vMinDims, const CVector2f& vMaxDims)
+	{
+		_mbIsResizable = bCanBeResized;
+		if (_mbIsResizable)
+		{
+			_mvResizeMinDims = vMinDims;
+			_mvResizeMaxDims = vMaxDims;
+		}
+	}
+
+	bool CUIWindow::getResizable(void) const
+	{
+		return _mbIsResizable;
+	}
+
+	void CUIWindow::getResizableDims(CVector2f& vMinDims, CVector2f& vMaxDims) const
+	{
+		vMinDims = _mvResizeMinDims;
+		vMaxDims = _mvResizeMaxDims;
+	}
+
+	CUIWindow::EWindowArea CUIWindow::getMouseOverResizableArea(void)
+	{
+		// If this window is not set to be resizable, bail out
+		if (!_mbIsResizable)
+			return EWindowArea::mouseOverNone;
+
+		// Get required stuff™
+		CUITheme* pTheme = themeGet();
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		CImageAtlasDetails idBL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBL);
+		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
+		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails idTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
+
+		// Add the additional space for the scrollbars.
+		CVector2f vScrollbarOffset;
+		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
+		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+
+		// Get offset from theme
+		CVector2f vWndAreaDims;
+		vWndAreaDims.x = pSettings->floats.windowResizeHandleOffsetX;
+		vWndAreaDims.y = pSettings->floats.windowResizeHandleOffsetY;
+
+		// Get mouse position for use below
+		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+
+		// Used below in calculations
+		CRect rect;
+
+		// Compute area of window's bottom edge, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x - 100);
+		rect.miMaxX = int(_mvPosition.x + 100);
+		rect.miMinY = int(_mvPosition.y - 100);
+		rect.miMaxY = int(_mvPosition.y + 100);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeB;
+
+		// Compute area of window's left edge, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeL;
+
+		// Compute area of window's right edge, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeR;
+
+		// Compute area of window's top edge, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeT;
+
+		// Compute area of window's bottom left corner, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x - pSettings->floats.windowResizeHandleOffsetX);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y + _mvContainersWidgetAreaDimensions.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverCornerBL;
+
+		// Compute area of window's bottom right corner, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverCornerBR;
+
+		// Compute area of window's top left corner, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverCornerTL;
+
+		// Compute area of window's top right corner, determine whether mouse is in this area, set area and return if true.
+		rect.miMinX = int(_mvPosition.x);
+		rect.miMaxX = int(_mvPosition.x);
+		rect.miMinY = int(_mvPosition.y);
+		rect.miMaxY = int(_mvPosition.y);
+		if (rect.doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverCornerTR;
+
+		// If we get here, the mouse cursor isn't over any valid areas which could enable window resizing.
+		return EWindowArea::mouseOverNone;
 	}
 }

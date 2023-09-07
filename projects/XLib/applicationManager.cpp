@@ -136,6 +136,11 @@ namespace X
 					_debugGridRender();
 				x->pProfiler->end("SCApplicationManager::_debugGridRender()");
 
+				// Call current applications onFrameEnd() method
+				x->pProfiler->begin("callCurrentApp_onFrameEnd()");
+				callCurrentApp_onFrameEnd();
+				x->pProfiler->end("callCurrentApp_onFrameEnd()");
+
 				x->pProfiler->end("main");
 //				x->pProfiler->printResults();
 
@@ -283,6 +288,13 @@ namespace X
 		// Update application runtime
 		it->second->mfApplicationSecondsRunning += _mTimer.getSecondsPast();
 		return it->second->onUpdate();
+	}
+
+	void SCApplicationManager::callCurrentApp_onFrameEnd(void)
+	{
+		auto it = _mApplications.find(_mstrCurrentApp);
+		ThrowIfTrue(it == _mApplications.end(), "SCApplicationManager::callCurrentApp_onFrameEnd(" + _mstrCurrentApp + " failed. Unable to find the named application");
+		it->second->onFrameEnd();
 	}
 
 	float SCApplicationManager::getApplicationRuntime(const std::string& applicationName) const

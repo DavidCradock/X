@@ -48,9 +48,10 @@ namespace X
 		CUIWindow* pWindow = x->pUI->windowAdd("window1 200x200", false);
 		pWindow->setDimensions(CVector2f(200, 200));
 		pWindow->setPosition(1400-16, 200-30);
+		pWindow->setResizable(true, CVector2f(200, 200), CVector2f(400, 400));
 
 		CResourceTexture2DFromFile* pTexture = x->pResource->addTexture2DFromFile("github_images/github_social_image.png", "github_images/github_social_image.png");
-		pWindow->imageAdd("github_images/github_social_image.png", 0, 0, pTexture->getDimensions().x, pTexture->getDimensions().y)->setTexture("github_images/github_social_image.png");
+		pWindow->imageAdd("github_images/github_social_image.png", 0, 0, pTexture->getDimensions().x, pTexture->getDimensions().y)->setTextureFromFile("github_images/github_social_image.png");
 		
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
@@ -106,6 +107,20 @@ namespace X
 			pStatsCont->setVisible(!pStatsCont->getVisible());
 		}
 		return true;
+	}
+
+	void CApplication::onFrameEnd(void)
+	{
+		if (x->pInput->key.once(KC_F9))
+		{
+			CResourceFramebuffer* pFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+			pFB->bindAsRenderTarget(false);
+			CImage img;
+			img.createBlank(x->pWindow->getWidth(), x->pWindow->getHeight(), 4);
+			img.fillFromOpenGL();
+			img.saveAsPNG("glReadPixels_output.png");
+			pFB->unbindAsRenderTarget();
+		}
 	}
 
 }

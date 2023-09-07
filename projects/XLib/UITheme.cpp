@@ -65,6 +65,11 @@ namespace X
 //		_helperReadImageType(file, _mSettings.images.tooltipBG);
 		_helperReadImageType(file, _mSettings.images.windowBG);
 
+		// Mouse cursors
+		x->pFile->readString(file, _mSettings.cursors.busy);
+		x->pFile->readString(file, _mSettings.cursors.normal);
+		x->pFile->readString(file, _mSettings.cursors.windowResize);
+
 		// Theme name
 		x->pFile->readString(file, _mSettings.themeName);
 
@@ -125,6 +130,11 @@ namespace X
 //		_helperWriteImageType(file, _mSettings.images.textScrollBG);
 //		_helperWriteImageType(file, _mSettings.images.tooltipBG);
 		_helperWriteImageType(file, _mSettings.images.windowBG);
+
+		// Mouse cursors
+		x->pFile->writeString(file, _mSettings.cursors.busy);
+		x->pFile->writeString(file, _mSettings.cursors.normal);
+		x->pFile->writeString(file, _mSettings.cursors.windowResize);
 
 		// Theme name
 		x->pFile->writeString(file, _mSettings.themeName);
@@ -256,6 +266,8 @@ namespace X
 //		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
+		_mSettings.floats.windowResizeHandleOffsetX = 3.0f;
+		_mSettings.floats.windowResizeHandleOffsetY = 3.0f;
 		_mSettings.floats.windowScrollbarHorizontalHeight = 24.0f;
 		_mSettings.floats.windowScrollbarVerticalWidth = 24.0f;
 
@@ -281,6 +293,10 @@ namespace X
 //		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
 //		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
 		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
+
+		_mSettings.cursors.busy			= "data/X/UI/default/cursors/new_default_busy.ani";
+		_mSettings.cursors.normal		= "data/X/UI/default/cursors/new_default_normal.ani";
+		_mSettings.cursors.windowResize = "data/X/UI/default/cursors/new_default_window_resize.ani";
 
 		// Theme name
 		_mSettings.themeName = "default";

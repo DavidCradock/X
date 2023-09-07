@@ -75,6 +75,9 @@ namespace X
 		// Returns false if the application wants to shutdown
 		bool callCurrentApp_onUpdate(void);
 
+		// Calls currently set application's onFrameEnd() method
+		void callCurrentApp_onFrameEnd(void);
+
 		mutable std::map<std::string, CApplicationBase*> _mApplications;	// Hash map which holds each named application
 		std::string _mstrCurrentApp;										// Application name of the current application.
 		CTimer _mTimer;														// Used to update application running time.

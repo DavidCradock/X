@@ -44,6 +44,40 @@ namespace X
 		// Sets this window to the foreground, aka top most and in focus
 		void setToFrontAndInFocus(void);
 
+		// Sets whether this window can be resized or not.
+		// By default, window resizing is disabled.
+		void setResizable(bool bCanBeResized, float fMinWidth, float fMinHeight, float fMaxWidth, float fMaxHeight);
+
+		// Sets whether this window can be resized or not.
+		// By default, window resizing is disabled.
+		void setResizable(bool bCanBeResized, const CVector2f& vMinDims, const CVector2f& vMaxDims);
+
+		// Returns whether this window is set to be resizable
+		bool getResizable(void) const;
+
+		// Sets given CVector2fs to min and max dims of the resizable window
+		void getResizableDims(CVector2f& vMinDims, CVector2f& vMaxDims) const;
+
+		// Used by getMouseOverResizableArea().
+		enum EWindowArea
+		{
+			mouseOverNone,
+			mouseOverCornerBL,
+			mouseOverCornerBR,
+			mouseOverCornerTL,
+			mouseOverCornerTR,
+			mouseOverEdgeB,
+			mouseOverEdgeL,
+			mouseOverEdgeR,
+			mouseOverEdgeT
+		};
+		// Used to detect whether we could resize this window in SCUIManager::_update()
+		// If the mouse cursor is over one of the 8 areas which could toggle window resizing,
+		// returns which area the mouse is over in the form of an EWindowArea enumeration.
+		// If the mouse cursor isn't over any of the areas, returns EWindowArea::mouseOverNone.
+		// Uses the window's currently set theme's windowResizeHandleOffsetX and Y values.
+		EWindowArea getMouseOverResizableArea(void);
+
 	private:
 		void _renderBorders(void);
 
@@ -56,5 +90,10 @@ namespace X
 
 		// Called from SCUIManager::onToggleFullscreen()
 		void _onToggleFullscreen(void);
+
+		// Resizable members
+		bool _mbIsResizable;		// Whether this window can be resized or not (Default is false)
+		CVector2f _mvResizeMinDims;	// Minimum dimensions this window can be resized to if _mbIsResizable == true
+		CVector2f _mvResizeMaxDims;	// Maximum dimensions this window can be resized to if _mbIsResizable == true
 	};
 }

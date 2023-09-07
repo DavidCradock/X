@@ -73,19 +73,19 @@ namespace X
 		{
 			CVector2f vPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mvPosition + _mpContainer->getWidgetOffset();
 			if (EResourceType::texture2DFromFile == _meResourceType)
-				x->pResource->getTexture2DFromFile(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+				x->pResource->getTexture2DFromFile(_mstrResourceName)->renderTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mColour);
 			else if (EResourceType::texture2DFromImage == _meResourceType)
-				x->pResource->getTexture2DFromImage(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+				x->pResource->getTexture2DFromImage(_mstrResourceName)->renderTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mColour);
 			else if (EResourceType::framebuffer == _meResourceType)
-				x->pResource->getFramebuffer(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+				x->pResource->getFramebuffer(_mstrResourceName)->renderTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mColour);
 			else if (EResourceType::depthbuffer == _meResourceType)
-				x->pResource->getDepthbuffer(_mstrResourceName)->renderTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mColour);
+				x->pResource->getDepthbuffer(_mstrResourceName)->renderTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mColour);
 			else if (EResourceType::atlas == _meResourceType)
 			{
 				if (_mstrImageInAtlasName.size())
-					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasImageTo2dQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, _mstrImageInAtlasName, _mColour);
+					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasImageTo2dQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mstrImageInAtlasName, _mColour);
 				else
-					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasTo2DQuad(vPos.x, vPos.y, _mvDimensions.x, _mvDimensions.y, 0, _mColour);
+					x->pResource->getTexture2DAtlas(_mstrResourceName)->renderAtlasTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, 0, _mColour);
 			}
 		}
 	}

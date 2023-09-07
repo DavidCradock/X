@@ -692,4 +692,15 @@ namespace X
 			}
 		}
 	}
+
+	void CImage::fillFromOpenGL(const CVector2f& vSourcePosTLCorner)
+	{
+		if (!_mpData)
+			return;
+		if (4 == _miNumChannels)
+			glReadPixels((int)vSourcePosTLCorner.x, (int)vSourcePosTLCorner.y, _miWidth, _miHeight, GL_RGBA, GL_UNSIGNED_BYTE, _mpData);
+		else if (3 == _miNumChannels)
+			glReadPixels((int)vSourcePosTLCorner.x, (int)vSourcePosTLCorner.y, _miWidth, _miHeight, GL_RGB, GL_UNSIGNED_BYTE, _mpData);
+		flipVertically();
+	}
 }

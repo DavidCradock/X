@@ -36,6 +36,10 @@ namespace X
 		// It's params are the new state of the window.
 		virtual void onWindowToggleFullscreen(bool bFullscreen, int iWindowWidth, int iWindowHeight);
 
+		// Override this if you need it, by default, it does nothing (Virtual method).
+		// It is called just before the backbuffer is flipped to the front buffer in SCApplication's main loop.
+		virtual void onFrameEnd(void);
+
 		float mfApplicationSecondsRunning;	// Number of seconds the application has been running. Updated by SCApplicationManager
 	protected:
 	};
