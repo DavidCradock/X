@@ -4,6 +4,7 @@
 #include "resourceDepthbuffer.h"
 #include "resourceFont.h"
 #include "resourceFramebuffer.h"
+#include "resourceMouseCursor.h"
 #include "resourceShader.h"
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
@@ -17,6 +18,7 @@
 namespace X
 {
 	// This resource manager holds various resources which require an OpenGL context.
+	// It also holds some which do not.
 	// All resources, once added are ready to go, aka RAII (Resource Acquistion Is Initialisation)
 	// All resources are derived from the CResourceBase class and have the pure virtual methods defined in their own files.
 	//
@@ -46,6 +48,12 @@ namespace X
 			std::string framebuffer_ui;							// Holds the name "X:ui" of the default framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
 //			std::string framebuffer_uitooltipFB;				// Holds the name "X:uitooltipFB" of the default framebuffer the UI tooltips are rendered to
 			std::string font_default;							// Holds the name "X:default" of the font object used for quick font rendering, usually used by debug code.
+			std::string mouseCursorDefaultNormal;				// Holds the name "X:default_normal" of the mouse cursor object used for the default state of the mouse cursor
+			std::string mouseCursorDefaultBusy;					// Holds the name "X:default_busy" of the mouse cursor object used for the busy state of the mouse cursor
+			std::string mouseCursorDefaultResize_TtoB;			// Holds the name "X:default_resize_TtoB" of the mouse cursor object used for the resizing horizontal state of the mouse cursor
+			std::string mouseCursorDefaultResize_LtoR;			// Holds the name "X:default_resize_LtoR" of the mouse cursor object used for the resizing vertical state of the mouse cursor
+			std::string mouseCursorDefaultResize_TLtoBR;		// Holds the name "X:default_resize_TLtoBR" of the mouse cursor object used for the resizing diagonal TL to BR state of the mouse cursor
+			std::string mouseCursorDefaultResize_TRtoBL;		// Holds the name "X:default_resize_TRtoBL" of the mouse cursor object used for the resizing diagonal TR to BL state of the mouse cursor
 			std::string shader_DRNE;							// Holds the name "X:DRNE" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and shadows
 			std::string shader_DRNE_noshadows;					// Holds the name "X:DRNE_noshadows" of the default shader which has vertex position, colour, texture coordinates and diffuse, roughness, normals and emission textures and NO shadows
 			std::string shader_depthbuffer_debug;				// Holds the name "X:depthbuffer_debug" of the default shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
@@ -190,6 +198,30 @@ namespace X
 		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
 		// If the resource has been marked as locked, which is done when they are added and bLocked is true, it is not removed.
 		void removeFramebuffer(const std::string& strResourceName);
+
+		/**************************************************************************************************************************************************
+		Mouse cursors
+		**************************************************************************************************************************************************/
+
+		// Adds a new mouse cursor object to the manager.
+		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
+		// strFilename is filename of either a .cur or .ani file holding the cursor's data.
+		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
+		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
+		CResourceMouseCursor* addMouseCursor(const std::string& strResourceName, const std::string& strFilename, bool bLocked = false);
+
+		// Returns a pointer to an existing resource
+		// If the resource couldn't be found, an exception is thrown
+		CResourceMouseCursor* getMouseCursor(const std::string& strResourceName);
+
+		// Returns whether a named resource exists
+		bool getMouseCursorExists(const std::string& strResourceName);
+
+		// Removes a previously added resource from this manager
+		// If the resource doesn't exist, this silently fails.
+		// If the resource has been added multiple times and it's count value is greater than 1, the value is reduced, but the resource remains.
+		// If the resource has been marked as locked, which is done when they are added and bLocked is true, it is not removed.
+		void removeMouseCursor(const std::string& strResourceName);
 
 		/**************************************************************************************************************************************************
 		Shader programs
@@ -436,6 +468,14 @@ namespace X
 			bool bLocked;						// Given to add method to prevent removal of this resource.
 		};
 		std::map<std::string, SResourceFramebuffer> _mmapResFramebuffers;
+
+		struct SResourceMouseCursor
+		{
+			CResourceMouseCursor* pResource;	// Pointer to the resource
+			unsigned int uiCount;				// Number of times the resource has been added
+			bool bLocked;						// Given to add method to prevent removal of this resource.
+		};
+		std::map<std::string, SResourceMouseCursor> _mmapResMouseCursors;
 
 		struct SResourceShader
 		{

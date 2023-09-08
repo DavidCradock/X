@@ -18,7 +18,7 @@ namespace X
 		// For each of the resources, call their onGLContextToBeDestroyed() methods.
 
 		// Depth buffers
-		std::map<std::string, SResourceDepthbuffer>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
+		auto itDepthbuffer = _mmapResDepthbuffers.begin();
 		while (itDepthbuffer != _mmapResDepthbuffers.end())
 		{
 			itDepthbuffer->second.pResource->onGLContextToBeDestroyed();
@@ -26,7 +26,7 @@ namespace X
 		}
 
 		// Fonts
-		std::map<std::string, SResourceFont>::iterator itFont = _mmapResFonts.begin();
+		auto itFont = _mmapResFonts.begin();
 		while (itFont != _mmapResFonts.end())
 		{
 			itFont->second.pResource->onGLContextToBeDestroyed();
@@ -34,15 +34,23 @@ namespace X
 		}
 
 		// Framebuffers
-		std::map<std::string, SResourceFramebuffer>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		auto itFramebuffer = _mmapResFramebuffers.begin();
 		while (itFramebuffer != _mmapResFramebuffers.end())
 		{
 			itFramebuffer->second.pResource->onGLContextToBeDestroyed();
 			itFramebuffer++;
 		}
 
+		// Mouse Cursors
+		auto itMouseCursor = _mmapResMouseCursors.begin();
+		while (itMouseCursor != _mmapResMouseCursors.end())
+		{
+			itMouseCursor->second.pResource->onGLContextToBeDestroyed();
+			itMouseCursor++;
+		}
+
 		// Shaders
-		std::map<std::string, SResourceShader>::iterator itShaders = _mmapResShaders.begin();
+		auto itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
 		{
 			itShaders->second.pResource->onGLContextToBeDestroyed();
@@ -50,7 +58,7 @@ namespace X
 		}
 
 		// Texture atlases
-		std::map<std::string, SResourceTexture2DAtlas>::iterator itTextureAtlas = _mmapResTextures2DAtlases.begin();
+		auto itTextureAtlas = _mmapResTextures2DAtlases.begin();
 		while (itTextureAtlas != _mmapResTextures2DAtlases.end())
 		{
 			itTextureAtlas->second.pResource->onGLContextToBeDestroyed();
@@ -58,7 +66,7 @@ namespace X
 		}
 
 		// Texture2DFromFiles
-		std::map<std::string, SResourceTexture2DFromFile>::iterator itTextures2D = _mmapResTextures2D.begin();
+		auto itTextures2D = _mmapResTextures2D.begin();
 		while (itTextures2D != _mmapResTextures2D.end())
 		{
 			itTextures2D->second.pResource->onGLContextToBeDestroyed();
@@ -66,7 +74,7 @@ namespace X
 		}
 
 		// Texture2DFromImages
-		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
+		auto itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
 		while (itTextures2DFromImage != _mmapResTextures2DFromImage.end())
 		{
 			itTextures2DFromImage->second.pResource->onGLContextToBeDestroyed();
@@ -74,7 +82,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT
-		std::map<std::string, SResourceVertexBufferCPT>::iterator itResourceVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
+		auto itResourceVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
 		while (itResourceVertexBufferCPT != _mmapResVertexBufferCPTs.end())
 		{
 			itResourceVertexBufferCPT->second.pResource->onGLContextToBeDestroyed();
@@ -82,7 +90,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT2
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		auto itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
 		while (itResourceVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
 		{
 			itResourceVertexBufferCPT2->second.pResource->onGLContextToBeDestroyed();
@@ -90,7 +98,7 @@ namespace X
 		}
 
 		// Vertex buffers BNT
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator itResourceVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
+		auto itResourceVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
 		while (itResourceVertexBufferCPTBNT != _mmapResVertexBufferCPTBNTs.end())
 		{
 			itResourceVertexBufferCPTBNT->second.pResource->onGLContextToBeDestroyed();
@@ -98,7 +106,7 @@ namespace X
 		}
 
 		// Vertex buffers instanced
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
+		auto itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
 		while (itResourceVertexBufferInstanced != _mmapResVertexBufferCPTInsts.end())
 		{
 			itResourceVertexBufferInstanced->second.pResource->onGLContextToBeDestroyed();
@@ -106,7 +114,7 @@ namespace X
 		}
 
 		// Vertex buffer lines
-		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		auto itVertexBufferLine = _mmapResVertexBufferLines.begin();
 		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
 		{
 			itVertexBufferLine->second.pResource->onGLContextToBeDestroyed();
@@ -119,7 +127,7 @@ namespace X
 		// For each of the resources, call their onGLContextCreated() methods.
 
 		// Depth buffers
-		std::map<std::string, SResourceDepthbuffer>::iterator itDepthbuffer = _mmapResDepthbuffers.begin();
+		auto itDepthbuffer = _mmapResDepthbuffers.begin();
 		while (itDepthbuffer != _mmapResDepthbuffers.end())
 		{
 			itDepthbuffer->second.pResource->onGLContextCreated();
@@ -127,7 +135,7 @@ namespace X
 		}
 
 		// Fonts
-		std::map<std::string, SResourceFont>::iterator itFont = _mmapResFonts.begin();
+		auto itFont = _mmapResFonts.begin();
 		while (itFont != _mmapResFonts.end())
 		{
 			itFont->second.pResource->onGLContextCreated();
@@ -135,15 +143,23 @@ namespace X
 		}
 
 		// Framebuffers
-		std::map<std::string, SResourceFramebuffer>::iterator itFramebuffer = _mmapResFramebuffers.begin();
+		auto itFramebuffer = _mmapResFramebuffers.begin();
 		while (itFramebuffer != _mmapResFramebuffers.end())
 		{
 			itFramebuffer->second.pResource->onGLContextCreated();
 			itFramebuffer++;
 		}
 
+		// Mouse Cursors
+		auto itMouseCursor = _mmapResMouseCursors.begin();
+		while (itMouseCursor != _mmapResMouseCursors.end())
+		{
+			itMouseCursor->second.pResource->onGLContextCreated();
+			itMouseCursor++;
+		}
+	
 		// Shaders
-		std::map<std::string, SResourceShader>::iterator itShaders = _mmapResShaders.begin();
+		auto itShaders = _mmapResShaders.begin();
 		while (itShaders != _mmapResShaders.end())
 		{
 			itShaders->second.pResource->onGLContextCreated();
@@ -151,7 +167,7 @@ namespace X
 		}
 
 		// Texture atlases
-		std::map<std::string, SResourceTexture2DAtlas>::iterator itTextureAtlas = _mmapResTextures2DAtlases.begin();
+		auto itTextureAtlas = _mmapResTextures2DAtlases.begin();
 		while (itTextureAtlas != _mmapResTextures2DAtlases.end())
 		{
 			itTextureAtlas->second.pResource->onGLContextCreated();
@@ -159,7 +175,7 @@ namespace X
 		}
 
 		// Texture2DFromFiles
-		std::map<std::string, SResourceTexture2DFromFile>::iterator itTextures2D = _mmapResTextures2D.begin();
+		auto itTextures2D = _mmapResTextures2D.begin();
 		while (itTextures2D != _mmapResTextures2D.end())
 		{
 			itTextures2D->second.pResource->onGLContextCreated();
@@ -167,7 +183,7 @@ namespace X
 		}
 
 		// Texture2DFromImages
-		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
+		auto itTextures2DFromImage = _mmapResTextures2DFromImage.begin();
 		while (itTextures2DFromImage != _mmapResTextures2DFromImage.end())
 		{
 			itTextures2DFromImage->second.pResource->onGLContextCreated();
@@ -175,7 +191,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT
-		std::map<std::string, SResourceVertexBufferCPT>::iterator itResourceVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
+		auto itResourceVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
 		while (itResourceVertexBufferCPT != _mmapResVertexBufferCPTs.end())
 		{
 			itResourceVertexBufferCPT->second.pResource->onGLContextCreated();
@@ -183,7 +199,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT2
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		auto itResourceVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
 		while (itResourceVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
 		{
 			itResourceVertexBufferCPT2->second.pResource->onGLContextCreated();
@@ -191,7 +207,7 @@ namespace X
 		}
 
 		// Vertex buffers BNT
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator itResourceVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
+		auto itResourceVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
 		while (itResourceVertexBufferCPTBNT != _mmapResVertexBufferCPTBNTs.end())
 		{
 			itResourceVertexBufferCPTBNT->second.pResource->onGLContextCreated();
@@ -199,7 +215,7 @@ namespace X
 		}
 
 		// Vertex buffers
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
+		auto itResourceVertexBufferInstanced = _mmapResVertexBufferCPTInsts.begin();
 		while (itResourceVertexBufferInstanced != _mmapResVertexBufferCPTInsts.end())
 		{
 			itResourceVertexBufferInstanced->second.pResource->onGLContextCreated();
@@ -207,7 +223,7 @@ namespace X
 		}
 
 		// Vertex buffer lines
-		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		auto itVertexBufferLine = _mmapResVertexBufferLines.begin();
 		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
 		{
 			itVertexBufferLine->second.pResource->onGLContextCreated();
@@ -217,28 +233,28 @@ namespace X
 
 	CResourceFramebuffer* SCResourceManager::getBackbuffer(void)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		auto it = _mmapResFramebuffers.find("X:backbuffer");
 		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbuffer() failed. X:backbuffer resource doesn't exist.");
 		return it->second.pResource;
 	}
 
 	CVector2f SCResourceManager::getBackbufferDims(void)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		auto it = _mmapResFramebuffers.find("X:backbuffer");
 		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferDims() failed. X:backbuffer resource doesn't exist.");
 		return it->second.pResource->getDimensions();
 	}
 
 	float SCResourceManager::getBackbufferWidth(void)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		auto it = _mmapResFramebuffers.find("X:backbuffer");
 		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferWidth() failed. X:backbuffer resource doesn't exist.");
 		return (float)it->second.pResource->getWidth();
 	}
 
 	float SCResourceManager::getBackbufferHeight(void)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find("X:backbuffer");
+		auto it = _mmapResFramebuffers.find("X:backbuffer");
 		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getBackbufferHeight() failed. X:backbuffer resource doesn't exist.");
 		return (float)it->second.pResource->getHeight();
 	}
@@ -532,6 +548,28 @@ namespace X
 		pRM->addFont(defaultRes.font_default, "data/X/fonts/satoshi_22", true);
 
 		/******************************************************************************************************************************
+		// Mouse cursors
+		******************************************************************************************************************************/
+		// An animated .ani file for busy mouse cursor
+		defaultRes.mouseCursorDefaultBusy = "X:default_busy";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultBusy, "data/X/cursors/default_busy.ani", true);
+		// An animated .ani file for normal mouse cursor
+		defaultRes.mouseCursorDefaultNormal = "X:default_normal";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultNormal, "data/X/cursors/default_normal.ani", true);
+		// An animated .ani file for resizing mouse cursor, left to right
+		defaultRes.mouseCursorDefaultResize_LtoR = "X:default_resize_LtoR";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultResize_LtoR, "data/X/cursors/default_resize_LtoR.ani", true);
+		// An animated .ani file for resizing mouse cursor, top left to bottom right
+		defaultRes.mouseCursorDefaultResize_TLtoBR = "X:default_resize_TLtoBR";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultResize_TLtoBR, "data/X/cursors/default_resize_TLtoBR.ani", true);
+		// An animated .ani file for resizing mouse cursor, top right to bottom left
+		defaultRes.mouseCursorDefaultResize_TRtoBL = "X:default_resize_TRtoBL";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultResize_TRtoBL, "data/X/cursors/default_resize_TRtoBL.ani", true);
+		// An animated .ani file for resizing mouse cursor, top to bottom
+		defaultRes.mouseCursorDefaultResize_TtoB = "X:default_resize_TtoB";
+		pRM->addMouseCursor(defaultRes.mouseCursorDefaultResize_TtoB, "data/X/cursors/default_resize_TtoB.ani", true);
+
+		/******************************************************************************************************************************
 		// Shaders
 		******************************************************************************************************************************/
 		// A shader for rendering a bound depth buffer to a 2D quad so we can view the depth values in the depth buffer
@@ -627,7 +665,7 @@ namespace X
 	void SCResourceManager::removeAllResources(void)
 	{
 		// Depth buffers
-		std::map<std::string, SResourceDepthbuffer>::iterator itDepthBuffer = _mmapResDepthbuffers.begin();
+		auto itDepthBuffer = _mmapResDepthbuffers.begin();
 		while (itDepthBuffer != _mmapResDepthbuffers.end())
 		{
 			if (itDepthBuffer->second.bLocked)	// Do not remove this resource
@@ -641,7 +679,7 @@ namespace X
 		}
 
 		// Fonts
-		std::map<std::string, SResourceFont>::iterator itFonts = _mmapResFonts.begin();
+		auto itFonts = _mmapResFonts.begin();
 		while (itFonts != _mmapResFonts.end())
 		{
 			if (itFonts->second.bLocked)	// Do not remove this resource
@@ -655,7 +693,7 @@ namespace X
 		}
 
 		// Frame buffers
-		std::map<std::string, SResourceFramebuffer>::iterator itFrameBuffer = _mmapResFramebuffers.begin();
+		auto itFrameBuffer = _mmapResFramebuffers.begin();
 		while (itFrameBuffer != _mmapResFramebuffers.end())
 		{
 			if (itFrameBuffer->second.bLocked)	// Do not remove this resource
@@ -668,8 +706,22 @@ namespace X
 			itFrameBuffer = _mmapResFramebuffers.begin();
 		}
 
+		// Mouse cursors
+		auto itMouseCursors = _mmapResMouseCursors.begin();
+		while (itMouseCursors != _mmapResMouseCursors.end())
+		{
+			if (itMouseCursors->second.bLocked)	// Do not remove this resource
+			{
+				itMouseCursors++;
+				continue;
+			}
+			delete itMouseCursors->second.pResource;
+			_mmapResMouseCursors.erase(itMouseCursors);
+			itMouseCursors = _mmapResMouseCursors.begin();
+		}
+
 		// Shaders
-		std::map<std::string, SResourceShader>::iterator itShader = _mmapResShaders.begin();
+		auto itShader = _mmapResShaders.begin();
 		while (itShader != _mmapResShaders.end())
 		{
 			if (itShader->second.bLocked)	// Do not remove this resource
@@ -683,7 +735,7 @@ namespace X
 		}
 
 		// Texture atlases
-		std::map<std::string, SResourceTexture2DAtlas>::iterator itAtlas = _mmapResTextures2DAtlases.begin();
+		auto itAtlas = _mmapResTextures2DAtlases.begin();
 		while (itAtlas != _mmapResTextures2DAtlases.end())
 		{
 			if (itAtlas->second.bLocked)	// Do not remove this resource
@@ -697,7 +749,7 @@ namespace X
 		}
 
 		// Textures from file
-		std::map<std::string, SResourceTexture2DFromFile>::iterator itTextureFile = _mmapResTextures2D.begin();
+		auto itTextureFile = _mmapResTextures2D.begin();
 		while (itTextureFile != _mmapResTextures2D.end())
 		{
 			if (itTextureFile->second.bLocked)	// Do not remove this resource
@@ -711,7 +763,7 @@ namespace X
 		}
 
 		// Textures from image
-		std::map<std::string, SResourceTexture2DFromImage>::iterator itTextureImage = _mmapResTextures2DFromImage.begin();
+		auto itTextureImage = _mmapResTextures2DFromImage.begin();
 		while (itTextureImage != _mmapResTextures2DFromImage.end())
 		{
 			if (itTextureImage->second.bLocked)	// Do not remove this resource
@@ -725,7 +777,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT
-		std::map<std::string, SResourceVertexBufferCPT>::iterator itVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
+		auto itVertexBufferCPT = _mmapResVertexBufferCPTs.begin();
 		while (itVertexBufferCPT != _mmapResVertexBufferCPTs.end())
 		{
 			if (itVertexBufferCPT->second.bLocked)	// Do not remove this resource
@@ -739,7 +791,7 @@ namespace X
 		}
 
 		// Vertex buffers CPT2
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator itVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
+		auto itVertexBufferCPT2 = _mmapResVertexBufferCPT2s.begin();
 		while (itVertexBufferCPT2 != _mmapResVertexBufferCPT2s.end())
 		{
 			if (itVertexBufferCPT2->second.bLocked)	// Do not remove this resource
@@ -753,7 +805,7 @@ namespace X
 		}
 
 		// Vertex buffers CPTBNT
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator itVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
+		auto itVertexBufferCPTBNT = _mmapResVertexBufferCPTBNTs.begin();
 		while (itVertexBufferCPTBNT != _mmapResVertexBufferCPTBNTs.end())
 		{
 			if (itVertexBufferCPTBNT->second.bLocked)	// Do not remove this resource
@@ -767,7 +819,7 @@ namespace X
 		}
 
 		// Vertex buffers instanced
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator itVertexBufferInstance = _mmapResVertexBufferCPTInsts.begin();
+		auto itVertexBufferInstance = _mmapResVertexBufferCPTInsts.begin();
 		while (itVertexBufferInstance != _mmapResVertexBufferCPTInsts.end())
 		{
 			if (itVertexBufferInstance->second.bLocked)	// Do not remove this resource
@@ -781,7 +833,7 @@ namespace X
 		}
 
 		// Vertex buffers lines
-		std::map<std::string, SResourceVertexBufferLine>::iterator itVertexBufferLine = _mmapResVertexBufferLines.begin();
+		auto itVertexBufferLine = _mmapResVertexBufferLines.begin();
 		while (itVertexBufferLine != _mmapResVertexBufferLines.end())
 		{
 			if (itVertexBufferLine->second.bLocked)	// Do not remove this resource
@@ -796,10 +848,14 @@ namespace X
 
 	}
 
+	/**************************************************************************************************************************************************
+	Depth buffers
+	**************************************************************************************************************************************************/
+
 	CResourceDepthbuffer* SCResourceManager::addDepthbuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
+		auto it = _mmapResDepthbuffers.find(strResourceName);
 		if (it != _mmapResDepthbuffers.end())
 		{
 			it->second.uiCount++;
@@ -816,7 +872,7 @@ namespace X
 
 	CResourceDepthbuffer* SCResourceManager::getDepthbuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
+		auto it = _mmapResDepthbuffers.find(strResourceName);
 		ThrowIfTrue(it == _mmapResDepthbuffers.end(), "SCResourceManager::getDepthbuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -828,7 +884,7 @@ namespace X
 
 	void SCResourceManager::removeDepthbuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceDepthbuffer>::iterator it = _mmapResDepthbuffers.find(strResourceName);
+		auto it = _mmapResDepthbuffers.find(strResourceName);
 		if (it == _mmapResDepthbuffers.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -842,13 +898,17 @@ namespace X
 		_mmapResDepthbuffers.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Fonts
+	**************************************************************************************************************************************************/
+
 	CResourceFont* SCResourceManager::addFont(const std::string& strResourceName, const std::string& strFontFilename, bool bLocked)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Font", strResourceName);
 
 		// If resource already exists
-		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
+		auto it = _mmapResFonts.find(strResourceName);
 		if (it != _mmapResFonts.end())
 		{
 			it->second.uiCount++;
@@ -865,7 +925,7 @@ namespace X
 
 	CResourceFont* SCResourceManager::getFont(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
+		auto it = _mmapResFonts.find(strResourceName);
 		ThrowIfTrue(it == _mmapResFonts.end(), "SCResourceManager::getFont(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -877,7 +937,7 @@ namespace X
 
 	void SCResourceManager::removeFont(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceFont>::iterator it = _mmapResFonts.find(strResourceName);
+		auto it = _mmapResFonts.find(strResourceName);
 		if (it == _mmapResFonts.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -891,10 +951,14 @@ namespace X
 		_mmapResFonts.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Frame buffers
+	**************************************************************************************************************************************************/
+
 	CResourceFramebuffer* SCResourceManager::addFramebuffer(const std::string& strResourceName, unsigned int uiWidth, unsigned int uiHeight, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		auto it = _mmapResFramebuffers.find(strResourceName);
 		if (it != _mmapResFramebuffers.end())
 		{
 			it->second.uiCount++;
@@ -911,7 +975,7 @@ namespace X
 
 	CResourceFramebuffer* SCResourceManager::getFramebuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		auto it = _mmapResFramebuffers.find(strResourceName);
 		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getFramebuffer(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -923,7 +987,7 @@ namespace X
 
 	void SCResourceManager::removeFramebuffer(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceFramebuffer>::iterator it = _mmapResFramebuffers.find(strResourceName);
+		auto it = _mmapResFramebuffers.find(strResourceName);
 		if (it == _mmapResFramebuffers.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -937,10 +1001,67 @@ namespace X
 		_mmapResFramebuffers.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Mouse cursors
+	**************************************************************************************************************************************************/
+
+	CResourceMouseCursor* SCResourceManager::addMouseCursor(const std::string& strResourceName, const std::string& strFilename, bool bLocked)
+	{
+		// Call loading screen
+		SCResourceLoadingScreen::getPointer()->loadingResource("Mouse Cursor", strResourceName);
+
+		// If resource already exists
+		auto it = _mmapResMouseCursors.find(strResourceName);
+		if (it != _mmapResMouseCursors.end())
+		{
+			it->second.uiCount++;
+			return it->second.pResource;
+		}
+		SResourceMouseCursor newRes;
+		newRes.bLocked = bLocked;
+		newRes.uiCount = 1;
+		newRes.pResource = new CResourceMouseCursor(strFilename);
+		ThrowIfFalse(newRes.pResource, "SCResourceManager::addMouseCursor(" + strResourceName + ") failed to allocate memory for new resource.");
+		_mmapResMouseCursors[strResourceName] = newRes;
+		return newRes.pResource;
+	}
+
+	CResourceMouseCursor* SCResourceManager::getMouseCursor(const std::string& strResourceName)
+	{
+		auto it = _mmapResMouseCursors.find(strResourceName);
+		ThrowIfTrue(it == _mmapResMouseCursors.end(), "SCResourceManager::getMouseCursor(" + strResourceName + ") failed. Named resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	bool SCResourceManager::getMouseCursorExists(const std::string& strResourceName)
+	{
+		return _mmapResMouseCursors.find(strResourceName) != _mmapResMouseCursors.end();
+	}
+
+	void SCResourceManager::removeMouseCursor(const std::string& strResourceName)
+	{
+		auto it = _mmapResMouseCursors.find(strResourceName);
+		if (it == _mmapResMouseCursors.end())
+			return;	// Doesn't exist.
+		if (it->second.bLocked)	// Locked
+			return;
+		if (it->second.uiCount > 1)
+		{
+			it->second.uiCount--;
+			return;
+		}
+		delete it->second.pResource;
+		_mmapResMouseCursors.erase(it);
+	}
+
+	/**************************************************************************************************************************************************
+	Shader programs
+	**************************************************************************************************************************************************/
+
 	CResourceShader* SCResourceManager::addShader(const std::string& strResourceName, const std::string& strVertexProgramFilename, const std::string& strFragmentProgramFilename, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
+		auto it = _mmapResShaders.find(strResourceName);
 		if (it != _mmapResShaders.end())
 		{
 			it->second.uiCount++;
@@ -957,7 +1078,7 @@ namespace X
 
 	CResourceShader* SCResourceManager::getShader(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
+		auto it = _mmapResShaders.find(strResourceName);
 		ThrowIfTrue(it == _mmapResShaders.end(), "SCResourceManager::getShader(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -969,7 +1090,7 @@ namespace X
 
 	void SCResourceManager::removeShader(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceShader>::iterator it = _mmapResShaders.find(strResourceName);
+		auto it = _mmapResShaders.find(strResourceName);
 		if (it == _mmapResShaders.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -983,13 +1104,17 @@ namespace X
 		_mmapResShaders.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Texture atlas
+	**************************************************************************************************************************************************/
+
 	CResourceTexture2DAtlas* SCResourceManager::addTexture2DAtlas(const std::string& strResourceName, const std::vector<std::string>& vecStrImageFilenames, bool bAllowRotationOfImages, unsigned int uiImageSpacing, bool bLocked, bool bFilteringNearest)
 	{
 		// Call loading screen
 		SCResourceLoadingScreen::getPointer()->loadingResource("Texture2DAtlas", strResourceName);
 
 		// If resource already exists
-		std::map<std::string, SResourceTexture2DAtlas>::iterator it = _mmapResTextures2DAtlases.find(strResourceName);
+		auto it = _mmapResTextures2DAtlases.find(strResourceName);
 		if (it != _mmapResTextures2DAtlases.end())
 		{
 			it->second.uiCount++;
@@ -1018,7 +1143,7 @@ namespace X
 
 	CResourceTexture2DAtlas* SCResourceManager::getTexture2DAtlas(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DAtlas>::iterator it = _mmapResTextures2DAtlases.find(strResourceName);
+		auto it = _mmapResTextures2DAtlases.find(strResourceName);
 		ThrowIfTrue(it == _mmapResTextures2DAtlases.end(), "SCResourceManager::getTexture2DAtlas(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1030,7 +1155,7 @@ namespace X
 
 	void SCResourceManager::removeTexture2DAtlas(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DAtlas>::iterator it = _mmapResTextures2DAtlases.find(strResourceName);
+		auto it = _mmapResTextures2DAtlases.find(strResourceName);
 		if (it == _mmapResTextures2DAtlases.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1040,10 +1165,13 @@ namespace X
 			it->second.uiCount--;
 			return;
 		}
-//		it->second.pResource->
 		delete it->second.pResource;
 		_mmapResTextures2DAtlases.erase(it);
 	}
+
+	/**************************************************************************************************************************************************
+	Texture 2D from file
+	**************************************************************************************************************************************************/
 
 	CResourceTexture2DFromFile* SCResourceManager::addTexture2DFromFile(const std::string& strResourceName, const std::string& strImageFilename, bool bFlipYaxis, bool bLocked)
 	{
@@ -1051,7 +1179,7 @@ namespace X
 		SCResourceLoadingScreen::getPointer()->loadingResource("Texture2DFromFile", strResourceName);
 
 		// If resource already exists
-		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
+		auto it = _mmapResTextures2D.find(strResourceName);
 		if (it != _mmapResTextures2D.end())
 		{
 			it->second.uiCount++;
@@ -1068,7 +1196,7 @@ namespace X
 
 	CResourceTexture2DFromFile* SCResourceManager::getTexture2DFromFile(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
+		auto it = _mmapResTextures2D.find(strResourceName);
 		ThrowIfTrue(it == _mmapResTextures2D.end(), "SCResourceManager::getTexture2DFromFile(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1080,7 +1208,7 @@ namespace X
 
 	void SCResourceManager::removeTexture2DFromFile(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DFromFile>::iterator it = _mmapResTextures2D.find(strResourceName);
+		auto it = _mmapResTextures2D.find(strResourceName);
 		if (it == _mmapResTextures2D.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1094,10 +1222,14 @@ namespace X
 		_mmapResTextures2D.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Texture 2D from image
+	**************************************************************************************************************************************************/
+
 	CResourceTexture2DFromImage* SCResourceManager::addTexture2DFromImage(const std::string& strResourceName, const CImage& image, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		auto it = _mmapResTextures2DFromImage.find(strResourceName);
 		if (it != _mmapResTextures2DFromImage.end())
 		{
 			it->second.uiCount++;
@@ -1114,7 +1246,7 @@ namespace X
 
 	CResourceTexture2DFromImage* SCResourceManager::getTexture2DFromImage(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		auto it = _mmapResTextures2DFromImage.find(strResourceName);
 		ThrowIfTrue(it == _mmapResTextures2DFromImage.end(), "SCResourceManager::getTexture2DFromImage(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1126,7 +1258,7 @@ namespace X
 
 	void SCResourceManager::removeTexture2DFromImage(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceTexture2DFromImage>::iterator it = _mmapResTextures2DFromImage.find(strResourceName);
+		auto it = _mmapResTextures2DFromImage.find(strResourceName);
 		if (it == _mmapResTextures2DFromImage.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1140,10 +1272,14 @@ namespace X
 		_mmapResTextures2DFromImage.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Vertex buffer CPT (Colour, Position and Texture coordinates)
+	**************************************************************************************************************************************************/
+
 	CResourceVertexBufferCPT* SCResourceManager::addVertexBufferCPT(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferCPT>::iterator it = _mmapResVertexBufferCPTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTs.find(strResourceName);
 		if (it != _mmapResVertexBufferCPTs.end())
 		{
 			it->second.uiCount++;
@@ -1160,7 +1296,7 @@ namespace X
 
 	CResourceVertexBufferCPT* SCResourceManager::getVertexBufferCPT(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPT>::iterator it = _mmapResVertexBufferCPTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTs.find(strResourceName);
 		ThrowIfTrue(it == _mmapResVertexBufferCPTs.end(), "SCResourceManager::getVertexBufferCPT(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1172,7 +1308,7 @@ namespace X
 
 	void SCResourceManager::removeVertexBufferCPT(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPT>::iterator it = _mmapResVertexBufferCPTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTs.find(strResourceName);
 		if (it == _mmapResVertexBufferCPTs.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1186,10 +1322,14 @@ namespace X
 		_mmapResVertexBufferCPTs.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Vertex buffer CPT2 (Colour, Position and 2 x Texture coordinates)
+	**************************************************************************************************************************************************/
+
 	CResourceVertexBufferCPT2* SCResourceManager::addVertexBufferCPT2(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		auto it = _mmapResVertexBufferCPT2s.find(strResourceName);
 		if (it != _mmapResVertexBufferCPT2s.end())
 		{
 			it->second.uiCount++;
@@ -1206,7 +1346,7 @@ namespace X
 
 	CResourceVertexBufferCPT2* SCResourceManager::getVertexBufferCPT2(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		auto it = _mmapResVertexBufferCPT2s.find(strResourceName);
 		ThrowIfTrue(it == _mmapResVertexBufferCPT2s.end(), "SCResourceManager::getVertexBufferCPT2(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1218,7 +1358,7 @@ namespace X
 
 	void SCResourceManager::removeVertexBufferCPT2(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPT2>::iterator it = _mmapResVertexBufferCPT2s.find(strResourceName);
+		auto it = _mmapResVertexBufferCPT2s.find(strResourceName);
 		if (it == _mmapResVertexBufferCPT2s.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1232,10 +1372,14 @@ namespace X
 		_mmapResVertexBufferCPT2s.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Vertex buffer CPT BNT (Colour, Position, Texture coordinate, Binormal, Normal and Tangent)
+	**************************************************************************************************************************************************/
+
 	CResourceVertexBufferCPTBNT* SCResourceManager::addVertexBufferCPTBNT(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
 		if (it != _mmapResVertexBufferCPTBNTs.end())
 		{
 			it->second.uiCount++;
@@ -1252,7 +1396,7 @@ namespace X
 
 	CResourceVertexBufferCPTBNT* SCResourceManager::getVertexBufferCPTBNT(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
 		ThrowIfTrue(it == _mmapResVertexBufferCPTBNTs.end(), "SCResourceManager::getVertexBufferCPTBNT(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1264,7 +1408,7 @@ namespace X
 
 	void SCResourceManager::removeVertexBufferCPTBNT(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPTBNT>::iterator it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTBNTs.find(strResourceName);
 		if (it == _mmapResVertexBufferCPTBNTs.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1278,10 +1422,14 @@ namespace X
 		_mmapResVertexBufferCPTBNTs.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Vertex buffer instanced
+	**************************************************************************************************************************************************/
+
 	CResourceVertexBufferCPTInst* SCResourceManager::addVertexBufferCPTInst(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTInsts.find(strResourceName);
 		if (it != _mmapResVertexBufferCPTInsts.end())
 		{
 			it->second.uiCount++;
@@ -1298,7 +1446,7 @@ namespace X
 
 	CResourceVertexBufferCPTInst* SCResourceManager::getVertexBufferCPTInst(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTInsts.find(strResourceName);
 		ThrowIfTrue(it == _mmapResVertexBufferCPTInsts.end(), "SCResourceManager::getVertexBufferCPTInst(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1310,7 +1458,7 @@ namespace X
 
 	void SCResourceManager::removeVertexBufferCPTInst(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferCPTInst>::iterator it = _mmapResVertexBufferCPTInsts.find(strResourceName);
+		auto it = _mmapResVertexBufferCPTInsts.find(strResourceName);
 		if (it == _mmapResVertexBufferCPTInsts.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked
@@ -1324,10 +1472,14 @@ namespace X
 		_mmapResVertexBufferCPTInsts.erase(it);
 	}
 
+	/**************************************************************************************************************************************************
+	Vertex buffer, line rendering
+	**************************************************************************************************************************************************/
+
 	CResourceVertexBufferLine* SCResourceManager::addVertexBufferLine(const std::string& strResourceName, bool bLocked)
 	{
 		// If resource already exists
-		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		auto it = _mmapResVertexBufferLines.find(strResourceName);
 		if (it != _mmapResVertexBufferLines.end())
 		{
 			it->second.uiCount++;
@@ -1344,7 +1496,7 @@ namespace X
 
 	CResourceVertexBufferLine* SCResourceManager::getVertexBufferLine(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		auto it = _mmapResVertexBufferLines.find(strResourceName);
 		ThrowIfTrue(it == _mmapResVertexBufferLines.end(), "SCResourceManager::getVertexBufferLine(" + strResourceName + ") failed. Named resource doesn't exist.");
 		return it->second.pResource;
 	}
@@ -1356,7 +1508,7 @@ namespace X
 
 	void SCResourceManager::removeVertexBufferLine(const std::string& strResourceName)
 	{
-		std::map<std::string, SResourceVertexBufferLine>::iterator it = _mmapResVertexBufferLines.find(strResourceName);
+		auto it = _mmapResVertexBufferLines.find(strResourceName);
 		if (it == _mmapResVertexBufferLines.end())
 			return;	// Doesn't exist.
 		if (it->second.bLocked)	// Locked

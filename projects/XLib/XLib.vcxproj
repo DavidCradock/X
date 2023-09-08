@@ -81,6 +81,7 @@
     <ClInclude Include="rect.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceLoadingScreen.h" />
+    <ClInclude Include="resourceMouseCursor.h" />
     <ClInclude Include="resourceTexture2DAtlas.h" />
     <ClInclude Include="resourceTexture2DFromImage.h" />
     <ClInclude Include="resourceVertexBufferCPT2.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="rect.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceLoadingScreen.cpp" />
+    <ClCompile Include="resourceMouseCursor.cpp" />
     <ClCompile Include="resourceTexture2DAtlas.cpp" />
     <ClCompile Include="resourceTexture2DFromImage.cpp" />
     <ClCompile Include="resourceVertexBufferCPT2.cpp" />

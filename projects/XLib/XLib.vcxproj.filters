@@ -476,6 +476,9 @@
     <ClInclude Include="UIImage.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="resourceMouseCursor.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -841,6 +844,9 @@
     </ClCompile>
     <ClCompile Include="UIImage.cpp">
       <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceMouseCursor.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
