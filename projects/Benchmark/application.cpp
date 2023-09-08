@@ -62,7 +62,7 @@ namespace X
 		x->pWindow->setText("X: Benchmark. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		x->pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
-		x->pInput->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+		x->pUI->setMouseCursorToNormal();
 
 		// Turn off VSync, we're benchmarking!
 		x->pWindow->setVsync(false);

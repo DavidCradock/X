@@ -206,6 +206,8 @@ namespace X
 		// Adds a new mouse cursor object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
 		// strFilename is filename of either a .cur or .ani file holding the cursor's data.
+		// strFilename can be set to a string of zero length. If this is the case, nothing is loaded and when a call to the resource's set() method,
+		// the operating system's default mouse cursor image is set.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.
 		CResourceMouseCursor* addMouseCursor(const std::string& strResourceName, const std::string& strFilename, bool bLocked = false);

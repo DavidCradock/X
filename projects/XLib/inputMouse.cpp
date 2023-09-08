@@ -9,6 +9,7 @@ namespace X
 	{
 		windowHandle = NULL;
 		lpDIDeviceM = NULL;
+		lpDI = NULL;
 		leftButOnce[0] = false;
 		leftButOnce[1] = false;
 		midButOnce[0] = false;
@@ -215,10 +216,5 @@ namespace X
 	void CInputMouse::setMousePos(const CVector2f& vNewPosition)
 	{
 		setMousePos((int)vNewPosition.x, (int)vNewPosition.y);
-	}
-
-	void CInputMouse::setMouseCursorImage(const std::string& strAniFilename)
-	{
-		x->pWindow->setMouseCursorImage(strAniFilename);
 	}
 }

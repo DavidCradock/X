@@ -75,6 +75,10 @@ namespace X
 			_mmanWindows.get(i)->_onToggleFullscreen();
 		}
 
+		// When the window is toggled between windowed and fullscreen, it is destroyed.
+		// Because of this, the mouse cursor needs to be reset to what it was prior to the window being destroyed.
+		// We do this here...
+		x->pResource->getMouseCursor(x->pUI->getPreviouslySetMouseCursor())->set();
 	}
 
 	CUIDefaultContainers* SCUIManager::getDefaultContainers(void)
@@ -285,7 +289,7 @@ namespace X
 
 							// Store which area the mouse is over
 							_eWindowAreaTriggeredResizing = mouseOverResizeArea;
-							x->pUI->setMouseCursorToWindowResize();
+							x->pUI->setMouseCursorToWindowResizeLtoR();
 						}
 					}
 
@@ -910,24 +914,110 @@ namespace X
 		return _mstrMouseCursorThemename;
 	}
 
-	void SCUIManager::setMouseCursorToNormal(void)
-	{
-		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
-		const CUITheme::SSettings* pSettings = pTheme->getSettings();
-		x->pWindow->setMouseCursorImage(pSettings->cursors.normal);
-	}
-
 	void SCUIManager::setMouseCursorToBusy(void)
 	{
 		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
-		x->pWindow->setMouseCursorImage(pSettings->cursors.busy);
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.busy);
+		pMouseCursor->set();
 	}
 
-	void SCUIManager::setMouseCursorToWindowResize(void)
+	std::string SCUIManager::getMouseCursorResourceNameBusy(void)
 	{
 		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
-		x->pWindow->setMouseCursorImage(pSettings->cursors.windowResize);
+		return pSettings->cursors.busy;
+	}
+
+	void SCUIManager::setMouseCursorToNormal(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.normal);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getMouseCursorResourceNameNormal(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		return pSettings->cursors.normal;
+	}
+
+	void SCUIManager::setMouseCursorToWindowResizeLtoR(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.resize_LtoR);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getMouseCursorResourceNameResizeLtoR(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		return pSettings->cursors.resize_LtoR;
+	}
+
+	void SCUIManager::setMouseCursorToWindowResizeTLtoBR(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.resize_TLtoBR);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getMouseCursorResourceNameResizeTLtoBR(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		return pSettings->cursors.resize_TLtoBR;
+	}
+
+	void SCUIManager::setMouseCursorToWindowResizeTRtoBL(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.resize_TRtoBL);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getMouseCursorResourceNameResizeTRtoBL(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		return pSettings->cursors.resize_TRtoBL;
+	}
+
+	void SCUIManager::setMouseCursorToWindowResizeTtoB(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(pSettings->cursors.resize_TtoB);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getMouseCursorResourceNameResizeTtoB(void)
+	{
+		CUITheme* pTheme = themeGet(_mstrMouseCursorThemename);
+		const CUITheme::SSettings* pSettings = pTheme->getSettings();
+		return pSettings->cursors.resize_TtoB;
+	}
+
+	void SCUIManager::setMouseCursorToResource(const std::string& strMouseCursorResourceName)
+	{
+		ThrowIfFalse(x->pResource->getMouseCursorExists(strMouseCursorResourceName), "SCUIManager::setMouseCursorToResource(\"" + strMouseCursorResourceName + "\") failed. The named mouse cursor resource does not exist.");
+		CResourceMouseCursor* pMouseCursor = x->pResource->getMouseCursor(strMouseCursorResourceName);
+		pMouseCursor->set();
+	}
+
+	std::string SCUIManager::getPreviouslySetMouseCursor(void) const
+	{
+		return _mstrMouseCursorResNamePreviouslySet;
+	}
+
+	void SCUIManager::setPreviouslySetMouseCursor(const std::string& strResourceName)
+	{
+		_mstrMouseCursorResNamePreviouslySet = strResourceName;
 	}
 }

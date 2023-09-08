@@ -70,10 +70,6 @@ namespace X
 		// Returns mouse cursor position
 		inline CVector2f getCursorPos(void) const { return CVector2f(mouseX, mouseY); }
 
-		// Sets the mouse cursor to use the specified ".ani" file
-		// If the file couldn't be loaded, an exception occurs.
-		// If passing an empty string, the default system mouse cursor is set.
-		void setMouseCursorImage(const std::string& strAniFilename = "data/X/cursors/default.ani");
 	private:
 		LPDIRECTINPUT8 lpDI;				// Pointer to main DirectX input object
 		LPDIRECTINPUTDEVICE8 lpDIDeviceM;	// DirectX input device object for the mouse

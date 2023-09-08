@@ -417,16 +417,14 @@ namespace X
 		_mbWindowFullscreen = !_mbWindowFullscreen;
 		createWindow(_mstrWindowTitle);
 
-		// Reload mouse cursor
-		setMouseCursorImage(_mstrCursorName);
-
 		// Now call the method which recreates all resources to the GPU which require an OpenGL context, putting everything back again to the original state.
 		x->pResource->onGLContextRecreated();
 
 		// Resize backbuffer
 		x->pResource->getBackbuffer()->resizeToWindowDimsScaled();
 
-		// Call application manager's onToggleFullscreen to call all app's method too.
+		// Call SCApplicationManager::onToggleFullscreen to call all app's method too.
+		// That method calls SCUIManager::onToggleFullscreen
 		x->pAppMan->onWindowToggleFullscreen(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
 	}
 
@@ -453,40 +451,5 @@ namespace X
 		return (unsigned int)dmCurrent.dmDisplayFrequency;
 	}
 
-	void SCWindow::setMouseCursorImage(const std::string& strAniFilename)
-	{
-		// Store name for fullscreen toggle and retrieval from getSetMouseCursorFilename()
-		_mstrCursorName = strAniFilename;
 
-		std::string strCursorFilename = strAniFilename;
-		HCURSOR hCursor = NULL;
-
-		// Load default arrow
-		if (!strAniFilename.size())
-		{
-			hCursor = LoadCursor(NULL, IDC_ARROW);
-			SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
-			SetCursor(hCursor);
-			return;
-		}
-
-		hCursor = LoadCursorFromFile(StringUtils::stringToWide(strCursorFilename).c_str());
-		ThrowIfTrue(!hCursor, "CInputMouse::setMouseCursorImage() failed. The given filename of " + strAniFilename + " could not be loaded with LoadCursorFromFile().");
-		SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)hCursor);
-		SetCursor(hCursor);
-	}
-
-	std::string SCWindow::getSetMouseCursorFilename(void)
-	{
-		return _mstrCursorName;
-	}
-
-	CVector2f SCWindow::getMouseCursorDimensions(void) const
-	{
-		// Bit of a hack here.
-		// But I was unable to find a function in MSDN which returns the dimensions of a cursor image.
-		// So, as all cursor images we use are 64x64, we'll hackily return that for now.
-		CVector2f vDims(64, 64);
-		return vDims;
-	}
 }

@@ -31,7 +31,7 @@ namespace X
 		x->pWindow->setText("X: Demos. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window.");
 		x->pWindow->setIcon(IDI_ICON1);
 		// Set mouse cursor
-		x->pInput->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+		x->pUI->setMouseCursorToNormal();
 
 		// Create GUI to switch between states
 		CGUIContainer* pCont = x->pGUI->addContainer("DemoStates");

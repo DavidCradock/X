@@ -83,17 +83,6 @@ namespace X
 		// Returns currently set refresh rate of the display
 		unsigned int getRefreshRate(void) const;
 		
-		// Sets the mouse cursor to use the specified ".ani" file
-		// If the file couldn't be loaded, an exception occurs.
-		// If passing an empty string, the default system mouse cursor is set.
-		void setMouseCursorImage(const std::string& strAniFilename = "data/X/cursors/default.ani");
-
-		// Returns the filename previously set by setMouseCursorImage()
-		std::string getSetMouseCursorFilename(void);
-
-		// Returns dimensions of the mouse cursor.
-		CVector2f getMouseCursorDimensions(void) const;
-
 	private:
 		WNDCLASS _mWindowClass;			// Window class used to create the window
 		HINSTANCE _mhInstance;			// Application instance handle
@@ -106,7 +95,7 @@ namespace X
 		CColour _mClearColour;			// The clear colour set by setClearColour();
 		HGLRC _mhGLRenderContext;		// OpenGL rendering context
 		HDC _mhDeviceContext;			// Device context for the window
-		std::string _mstrCursorName;	// Holds the cursor name given to setMouseCursorImage() so it is re-loaded on fullscreen toggle
+
 		// Resize the window's OpenGL viewport
 		void _resizeOpenGLViewport(unsigned int iNewWidth, unsigned int iNewHeight);
 	};

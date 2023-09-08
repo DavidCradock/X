@@ -64,10 +64,6 @@ namespace X
 		// By default, this is set to 1.0
 		void setFadeOut(float fFadeOutTimeSeconds = 1.0f);
 
-		// Set the filename the mouse cursor will be changed to during the loading screen
-		// By default, this is set to "data/X/cursors/new_default_busy.ani"
-		void setMouseCursorBusyFilename(const std::string strFilename);
-
 		// Sets the GUI progress bar position and dimensions
 		// By default, position is set to (pWindow->getDimensions().x * 0.5f) - 300.0f, pWindow->getDimensions().y * 0.5f
 		// and dimensions set to 600.0f, 50.0f
@@ -111,7 +107,6 @@ namespace X
 		std::string _mstrBackgroundImage;			// The filename of an image to display in the background of the loading screen.
 		float _mfFadeOutTimeSeconds;				// The number of seconds the loading screen takes to fade out.
 		float _mfFadeInTimeSeconds;					// The number of seconds the loading screen takes to fade in.
-		std::string _mstrMouseCursorBusyFilename;	// The filename of the .ani filename which the mouse cursor will be set to for duration of loading screen.
 		CVector2f _mvProgressBarPosition;			// The progress bar's position
 		CVector2f _mvProgressBarDims;				// The progress bar's dimensions
 		CVector2f _mvInfoTextLine1Pos;
@@ -128,7 +123,7 @@ namespace X
 		bool _mbVsyncStatePriorToLoading;	// We store the currently set VSync state in onInit() and set it back again in onInitEnd()
 		float _mfFadeOutCountdown;			// Used to fade out in onInitEnd();
 		float _mfFadeInCountdown;			// Used to fade in, in onInit();
-		std::string _mstrInitialMouseCursorFilename;	// The mouse cursor which was set by SCWindow prior to changing it to busy
+		std::string _mstrInitialMouseCursorFilename;	// The mouse cursor which was set prior to changing it to busy
 
 		// Used by onInit and onInitEnd to store and restore all GUI container visibility states
 		struct SContainerState

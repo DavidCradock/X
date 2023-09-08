@@ -191,7 +191,10 @@ namespace X
 		{
 			std::string busy;							// .ani file to set the mouse cursor to when things are busy
 			std::string normal;							// .ani file to set the mouse cursor to when things are normal
-			std::string windowResize;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
+			std::string resize_LtoR;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
+			std::string resize_TLtoBR;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
+			std::string resize_TRtoBL;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
+			std::string resize_TtoB;					// .ani file to set the mouse cursor to when a UI window maybe/is being resized.
 		};
 
 		// Structure to hold all floating point settings

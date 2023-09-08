@@ -68,7 +68,10 @@ namespace X
 		// Mouse cursors
 		x->pFile->readString(file, _mSettings.cursors.busy);
 		x->pFile->readString(file, _mSettings.cursors.normal);
-		x->pFile->readString(file, _mSettings.cursors.windowResize);
+		x->pFile->readString(file, _mSettings.cursors.resize_LtoR);
+		x->pFile->readString(file, _mSettings.cursors.resize_TLtoBR);
+		x->pFile->readString(file, _mSettings.cursors.resize_TRtoBL);
+		x->pFile->readString(file, _mSettings.cursors.resize_TtoB);
 
 		// Theme name
 		x->pFile->readString(file, _mSettings.themeName);
@@ -134,7 +137,10 @@ namespace X
 		// Mouse cursors
 		x->pFile->writeString(file, _mSettings.cursors.busy);
 		x->pFile->writeString(file, _mSettings.cursors.normal);
-		x->pFile->writeString(file, _mSettings.cursors.windowResize);
+		x->pFile->writeString(file, _mSettings.cursors.resize_LtoR);
+		x->pFile->writeString(file, _mSettings.cursors.resize_TLtoBR);
+		x->pFile->writeString(file, _mSettings.cursors.resize_TRtoBL);
+		x->pFile->writeString(file, _mSettings.cursors.resize_TtoB);
 
 		// Theme name
 		x->pFile->writeString(file, _mSettings.themeName);
@@ -170,6 +176,14 @@ namespace X
 //		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
 		x->pResource->addFont(_mSettings.fonts.windowTitlebar, _mSettings.fonts.windowTitlebar, false);
+
+		// Mouse cursors
+		x->pResource->addMouseCursor(_mSettings.cursors.busy, _mSettings.cursors.busy, false);
+		x->pResource->addMouseCursor(_mSettings.cursors.normal, _mSettings.cursors.normal, false);
+		x->pResource->addMouseCursor(_mSettings.cursors.resize_LtoR, _mSettings.cursors.resize_LtoR, false);
+		x->pResource->addMouseCursor(_mSettings.cursors.resize_TLtoBR, _mSettings.cursors.resize_TLtoBR, false);
+		x->pResource->addMouseCursor(_mSettings.cursors.resize_TRtoBL, _mSettings.cursors.resize_TRtoBL, false);
+		x->pResource->addMouseCursor(_mSettings.cursors.resize_TtoB, _mSettings.cursors.resize_TtoB, false);
 
 		// Build/rebuild normal images
 		_helperBuildNormalImages(bOverwriteNormalImages);
@@ -208,6 +222,14 @@ namespace X
 //		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
 		x->pResource->removeFont(_mSettings.fonts.windowTitlebar);
+
+		// Mouse cursors
+		x->pResource->removeMouseCursor(_mSettings.cursors.busy);
+		x->pResource->removeMouseCursor(_mSettings.cursors.normal);
+		x->pResource->removeMouseCursor(_mSettings.cursors.resize_LtoR);
+		x->pResource->removeMouseCursor(_mSettings.cursors.resize_TLtoBR);
+		x->pResource->removeMouseCursor(_mSettings.cursors.resize_TRtoBL);
+		x->pResource->removeMouseCursor(_mSettings.cursors.resize_TtoB);
 
 		// Texture atlas
 		strTmp = "UI_THEME_" + _mSettings.themeName;
@@ -294,9 +316,13 @@ namespace X
 //		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
 		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
 
-		_mSettings.cursors.busy			= "data/X/UI/default/cursors/new_default_busy.ani";
-		_mSettings.cursors.normal		= "data/X/UI/default/cursors/new_default_normal.ani";
-		_mSettings.cursors.windowResize = "data/X/UI/default/cursors/new_default_window_resize.ani";
+		// Mouse cursors
+		_mSettings.cursors.busy				= "data/X/cursors/default_busy.ani";
+		_mSettings.cursors.normal			= "data/X/cursors/default_normal.ani";
+		_mSettings.cursors.resize_LtoR		= "data/X/cursors/default_resize_LtoR.ani";
+		_mSettings.cursors.resize_TLtoBR	= "data/X/cursors/default_resize_TLtoBR.ani";
+		_mSettings.cursors.resize_TRtoBL	= "data/X/cursors/default_resize_TRtoBL.ani";
+		_mSettings.cursors.resize_TtoB		= "data/X/cursors/default_resize_TtoB.ani";
 
 		// Theme name
 		_mSettings.themeName = "default";

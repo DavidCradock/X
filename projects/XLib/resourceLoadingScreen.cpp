@@ -17,7 +17,6 @@ namespace X
 		_miNumResourcesLoaded = 0;
 		setFadeIn();
 		setFadeOut();
-		_mstrMouseCursorBusyFilename = "data/X/cursors/new_default_busy.ani";
 		_mvProgressBarPosition.set((pWindow->getDimensions().x * 0.5f) - 300.0f, (pWindow->getDimensions().y * 0.5f));
 		_mvProgressBarDims.set(600.0f, 50.0f);
 		_mvInfoTextLine1Pos.set((pWindow->getDimensions().x * 0.5f), (pWindow->getDimensions().y * 0.5f) + 130.0f);
@@ -59,11 +58,11 @@ namespace X
 
 		// During the onInit() method of our application, the mouse cursor may be set.
 		// Check this, store it's name to restore to onInitEnd() and re-set the busy cursor
-		if (x->pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
+		if (x->pUI->getPreviouslySetMouseCursor() != x->pUI->getMouseCursorResourceNameBusy())// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();	// Store the new cursor name
 			// Set cursor back to busy
-			x->pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
+			x->pUI->setMouseCursorToBusy();
 		}
 	}
 
@@ -87,10 +86,10 @@ namespace X
 		_mvecContainerVisibilityStates.clear();
 		
 		// Deal with mouse cursor switch to busy
-		// Get previously set name of mouse cursor from SCWindow for restoration afterwards
-		_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();
+		// Get previously set name of mouse cursor for restoration afterwards
+		_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();
 		// Set cursor to busy
-		x->pWindow->setMouseCursorImage(_mstrMouseCursorBusyFilename);
+		x->pUI->setMouseCursorToBusy();
 
 		// Fade in
 		// Fade out..
@@ -114,12 +113,12 @@ namespace X
 
 		// Set cursor to what it was set to before all this began
 		// During the onInit() method of our application, the mouse cursor may be set.
-		if (x->pWindow->getSetMouseCursorFilename() != _mstrMouseCursorBusyFilename)	// If cursor has been changed
+		if (x->pUI->getPreviouslySetMouseCursor() != x->pUI->getMouseCursorResourceNameBusy())	// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = x->pWindow->getSetMouseCursorFilename();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();	// Store the new cursor name
 		}
 
-		x->pWindow->setMouseCursorImage(_mstrInitialMouseCursorFilename);
+		x->pUI->setMouseCursorToResource(_mstrInitialMouseCursorFilename);
 
 		// Fade out..
 		_mfFadeOutCountdown = _mfFadeOutTimeSeconds;
@@ -384,11 +383,6 @@ namespace X
 	void SCResourceLoadingScreen::setFadeOut(float fFadeOutTimeSeconds)
 	{
 		_mfFadeOutTimeSeconds = fFadeOutTimeSeconds;
-	}
-
-	void SCResourceLoadingScreen::setMouseCursorBusyFilename(const std::string strFilename)
-	{
-		_mstrMouseCursorBusyFilename = strFilename;
 	}
 
 	void SCResourceLoadingScreen::setProgressBar(const CVector2f& vPosition, const CVector2f& vDimensions)

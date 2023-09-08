@@ -1020,7 +1020,7 @@ namespace X
 		SResourceMouseCursor newRes;
 		newRes.bLocked = bLocked;
 		newRes.uiCount = 1;
-		newRes.pResource = new CResourceMouseCursor(strFilename);
+		newRes.pResource = new CResourceMouseCursor(strFilename, strResourceName);
 		ThrowIfFalse(newRes.pResource, "SCResourceManager::addMouseCursor(" + strResourceName + ") failed to allocate memory for new resource.");
 		_mmapResMouseCursors[strResourceName] = newRes;
 		return newRes.pResource;
