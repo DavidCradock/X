@@ -187,6 +187,7 @@ namespace X
 		};
 		
 		// Structure to hold the names of all the cursor files for the mouse cursor
+		// The SCUIManager uses these to set the operating system's mouse cursor.
 		struct SMouseCursors
 		{
 			std::string busy;							// .ani file to set the mouse cursor to when things are busy

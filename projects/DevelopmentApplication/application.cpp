@@ -14,7 +14,7 @@ namespace X
 		x->pWindow->setIcon(IDI_ICON1);
 
 		// Set mouse cursor
-		SCInputManager::getPointer()->mouse.setMouseCursorImage("data/X/cursors/new_default.ani");
+		x->pUI->mouseCursorSetToNormal();
 
 		// End of loading screen
 		x->pLoadingScreen->onInitEnd();

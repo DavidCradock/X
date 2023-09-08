@@ -51,7 +51,7 @@ namespace X
 		{
 			SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)_mhCursor);
 			SetCursor(_mhCursor);
-			x->pUI->setPreviouslySetMouseCursor(_mstrResourceName);
+			x->pUI->mouseCursorSetPreviouslySet(_mstrResourceName);
 		}
 	}
 }

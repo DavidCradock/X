@@ -58,11 +58,11 @@ namespace X
 
 		// During the onInit() method of our application, the mouse cursor may be set.
 		// Check this, store it's name to restore to onInitEnd() and re-set the busy cursor
-		if (x->pUI->getPreviouslySetMouseCursor() != x->pUI->getMouseCursorResourceNameBusy())// If cursor has been changed
+		if (x->pUI->mouseCursorGetPreviouslySet() != x->pUI->mouseCursorGetResourceNameBusy())// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pUI->mouseCursorGetPreviouslySet();	// Store the new cursor name
 			// Set cursor back to busy
-			x->pUI->setMouseCursorToBusy();
+			x->pUI->mouseCursorSetToBusy();
 		}
 	}
 
@@ -87,9 +87,9 @@ namespace X
 		
 		// Deal with mouse cursor switch to busy
 		// Get previously set name of mouse cursor for restoration afterwards
-		_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();
+		_mstrInitialMouseCursorFilename = x->pUI->mouseCursorGetPreviouslySet();
 		// Set cursor to busy
-		x->pUI->setMouseCursorToBusy();
+		x->pUI->mouseCursorSetToBusy();
 
 		// Fade in
 		// Fade out..
@@ -113,12 +113,12 @@ namespace X
 
 		// Set cursor to what it was set to before all this began
 		// During the onInit() method of our application, the mouse cursor may be set.
-		if (x->pUI->getPreviouslySetMouseCursor() != x->pUI->getMouseCursorResourceNameBusy())	// If cursor has been changed
+		if (x->pUI->mouseCursorGetPreviouslySet() != x->pUI->mouseCursorGetResourceNameBusy())	// If cursor has been changed
 		{
-			_mstrInitialMouseCursorFilename = x->pUI->getPreviouslySetMouseCursor();	// Store the new cursor name
+			_mstrInitialMouseCursorFilename = x->pUI->mouseCursorGetPreviouslySet();	// Store the new cursor name
 		}
 
-		x->pUI->setMouseCursorToResource(_mstrInitialMouseCursorFilename);
+		x->pUI->mouseCursorSetToResource(_mstrInitialMouseCursorFilename);
 
 		// Fade out..
 		_mfFadeOutCountdown = _mfFadeOutTimeSeconds;

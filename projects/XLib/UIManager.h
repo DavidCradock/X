@@ -273,67 +273,67 @@ namespace X
 		// Be default, the theme to use is "default"
 		// If the theme name doesn't exist, an exception occurs.
 		// Unlike containers and windows which can have a different theme each, the mouse cursor theme is global for the entire application.
-		void setMouseCursorThemename(const std::string& strThemeName = "default");
+		void mouseCursorSetThemename(const std::string& strThemeName = "default");
 
 		// Returns the currently set theme name used for the mouse cursors
-		std::string getMouseCursorThemename(void);
+		std::string mouseCursorGetThemename(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "busy"
-		void setMouseCursorToBusy(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "busy"
+		void mouseCursorSetToBusy(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the busy mouse cursor
-		std::string getMouseCursorResourceNameBusy(void);
+		std::string mouseCursorGetResourceNameBusy(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "normal"
-		void setMouseCursorToNormal(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "normal"
+		void mouseCursorSetToNormal(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the normal mouse cursor
-		std::string getMouseCursorResourceNameNormal(void);
+		std::string mouseCursorGetResourceNameNormal(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "window resize LtoR"
-		void setMouseCursorToWindowResizeLtoR(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "window resize LtoR"
+		void mouseCursorSetToWindowResizeLtoR(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the resizeLtoR mouse cursor
-		std::string getMouseCursorResourceNameResizeLtoR(void);
+		std::string mouseCursorGetResourceNameResizeLtoR(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "window resize TLtoBR"
-		void setMouseCursorToWindowResizeTLtoBR(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "window resize TLtoBR"
+		void mouseCursorSetToWindowResizeTLtoBR(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the resizeTLtoBR mouse cursor
-		std::string getMouseCursorResourceNameResizeTLtoBR(void);
+		std::string mouseCursorGetResourceNameResizeTLtoBR(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "window resize TRtoBL"
-		void setMouseCursorToWindowResizeTRtoBL(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "window resize TRtoBL"
+		void mouseCursorSetToWindowResizeTRtoBL(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the resizeTRtoBL mouse cursor
-		std::string getMouseCursorResourceNameResizeTRtoBL(void);
+		std::string mouseCursorGetResourceNameResizeTRtoBL(void);
 
-		// Using the theme set with setMouseCursorThemename(), sets the mouse cursor image to "window resize TtoB"
-		void setMouseCursorToWindowResizeTtoB(void);
+		// Using the theme set with mouseCursorSetThemename(), sets the mouse cursor image to "window resize TtoB"
+		void mouseCursorSetToWindowResizeTtoB(void);
 
-		// Using the theme set with setMouseCursorThemename(), returns the name of the CResourceMouseCursor
+		// Using the theme set with mouseCursorSetThemename(), returns the name of the CResourceMouseCursor
 		// object stored in SCResourceManager for the resizeTtoB mouse cursor
-		std::string getMouseCursorResourceNameResizeTtoB(void);
+		std::string mouseCursorGetResourceNameResizeTtoB(void);
 
 		// Sets the mouse cursor to the named CResourceMouseCursor object which is in the SCResourceManager object.
 		// If the resource could not be found, an exception occurs.
-		void setMouseCursorToResource(const std::string& strMouseCursorResourceName);
+		void mouseCursorSetToResource(const std::string& strMouseCursorResourceName);
 
 		// If a CResourceMouseCursor resource's set() method is called, then name of that mouse cursor resource is stored in this
 		// manager class's _mstrMouseCursorResNamePreviouslySet member.
 		// It is used to restore the mouse cursor in the event of the window being destroyed and recreated due to toggling fullscreen.
 		// It is also used by the SCResourceLoadingScreen class
 		// Here, we get the name of that CResourceMouseCursor object.
-		std::string getPreviouslySetMouseCursor(void) const;
+		std::string mouseCursorGetPreviouslySet(void) const;
 
 		// Sets the name of the CResourceMouseCursor object which has had it's set() method called.
 		// This is called from CResourceMouseCursor::set()
-		void setPreviouslySetMouseCursor(const std::string& strResourceName);
+		void mouseCursorSetPreviouslySet(const std::string& strResourceName);
 	private:
 		CTimer _mTimer;
 
