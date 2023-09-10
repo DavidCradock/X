@@ -38,6 +38,14 @@ namespace X
 			itWindow++;
 		}
 
+		// Debug rendering of the window resizing areas
+//		itWindow = _mlistWindowZOrder.begin();
+//		while (itWindow != _mlistWindowZOrder.end())
+//		{
+//			_mmanWindows.get(*itWindow)->_debugRenderAreas();
+//			itWindow++;
+//		}
+		
 		pUIFB->unbindAsRenderTarget();
 	}
 
@@ -251,104 +259,190 @@ namespace X
 		if (_mstrWindowBeingMoved.size())
 			return;
 
-		// Stop resizing any windows if the mouse button is up
-		if (!x->pInput->mouse.leftButDown())
-		{
-			if (_mstrWindowBeingResized.size())
-				x->pUI->mouseCursorSetToNormal();
-			_mstrWindowBeingResized.clear();
-			
-		}
 		// _mstrMouseIsOver holds the name of a container or window which the mouse is currently over
 		// _bMouseIsOverAWindow is set to differentiate between a container or window.
 		// _mstrMouseIsOver may have zero size if mouse isn't over anything.
 		// We've also checked to see if a window can and is being moved and if _mstrWindowBeingMoved has a length, then a window is being moved.
-		// 
 		// If the mouse button has been pressed once, see if we can start resizing a window
 		// and set _mstrWindowBeingResized to _mstrMouseIsOver (the window's name)
-		if (x->pInput->mouse.leftButtonOnce())
+
+		if (!_mstrMouseIsOver.size())
+			mouseCursorSetToNormal();
+
+		// Is the mouse over either a container or a window?
+		if (_mstrMouseIsOver.size())
 		{
-			// Is the mouse over either a container or a window?
-			if (_mstrMouseIsOver.size())
+			// Is the mouse over a window?
+			if (_bMouseIsOverAWindow)
 			{
-				// Is the mouse over a window?
-				if (_bMouseIsOverAWindow)
+				// Get a pointer to the window the mouse is over
+				CUIWindow* pWindow = _mmanWindows.get(_mstrMouseIsOver);
+
+				// If the window is set to be resizable
+				if (pWindow->getResizable())
 				{
-					// Get a pointer to the window the mouse is over
-					CUIWindow* pWindow = _mmanWindows.get(_mstrMouseIsOver);
-
-					// If the window is set to be resizable
-					if (pWindow->getResizable())
+					// Check to see if the mouse cursor is over one of the window's 8 edges/corners
+					CUIWindow::EWindowArea mouseOverResizeArea = pWindow->_getMouseOverResizableArea();
+					if (CUIWindow::EWindowArea::mouseOverNone != mouseOverResizeArea)
 					{
-						// Check to see if the mouse cursor is over one of the window's 8 edges/corners
-						CUIWindow::EWindowArea mouseOverResizeArea = pWindow->getMouseOverResizableArea();
-						if (CUIWindow::EWindowArea::mouseOverNone != mouseOverResizeArea)
-						{
-							// Start resizing the thing...
-							_mstrWindowBeingResized = _mstrMouseIsOver;
-
-							// Store which area the mouse is over
-							_eWindowAreaTriggeredResizing = mouseOverResizeArea;
+						// Set correct mouse cursor
+						if (CUIWindow::EWindowArea::mouseOverCornerBL == mouseOverResizeArea)
+							x->pUI->mouseCursorSetToWindowResizeTRtoBL();
+						else if (CUIWindow::EWindowArea::mouseOverCornerBR == mouseOverResizeArea)
+							x->pUI->mouseCursorSetToWindowResizeTLtoBR();
+//						else if (CUIWindow::EWindowArea::mouseOverCornerTL == mouseOverResizeArea)
+//							x->pUI->mouseCursorSetToWindowResizeTLtoBR();
+//						else if (CUIWindow::EWindowArea::mouseOverCornerTR == mouseOverResizeArea)
+//							x->pUI->mouseCursorSetToWindowResizeTRtoBL();
+						else if (CUIWindow::EWindowArea::mouseOverEdgeB == mouseOverResizeArea)
+							x->pUI->mouseCursorSetToWindowResizeTtoB();
+						else if (CUIWindow::EWindowArea::mouseOverEdgeL == mouseOverResizeArea)
 							x->pUI->mouseCursorSetToWindowResizeLtoR();
-						}
+						else if (CUIWindow::EWindowArea::mouseOverEdgeR == mouseOverResizeArea)
+							x->pUI->mouseCursorSetToWindowResizeLtoR();
+//						else if (CUIWindow::EWindowArea::mouseOverEdgeT == mouseOverResizeArea)
+//							x->pUI->mouseCursorSetToWindowResizeTtoB();
+					}
+					else
+					{
+						x->pUI->mouseCursorSetToNormal();
 					}
 
-				}
+					if (x->pInput->mouse.leftButtonOnce())
+					{
+						// Start resizing the thing...
+						_mstrWindowBeingResized = _mstrMouseIsOver;
 
+						// Store which area the mouse is over
+						_eWindowAreaTriggeredResizing = mouseOverResizeArea;
+					}
+				}
 			}
 		}
 
 		// Deal with updating the position and dimensions of a window that is set as being resized
 		if (_mstrWindowBeingResized.size())
 		{
-			
-			// Compute new position/dims of the window
 			CUIWindow* pWindow = _mmanWindows.get(_mstrWindowBeingResized);
-			CVector2f vNewPos = pWindow->getPosition();
-			vNewPos.x += x->pInput->mouse.getMouseDeltaGUI().x;
-			vNewPos.y += x->pInput->mouse.getMouseDeltaGUI().y;
+			CVector2f vMouseDelta = x->pInput->mouse.getMouseDeltaGUI();
 
-			// Limit the window to the screen.
-			CVector2f vWindowActualDims = pWindow->getDimsIncludingTheme();
-			bool bLimitMouseMovementX = false;
-			bool bLimitMouseMovementY = false;
-			// Off left edge of screen
-			if (vNewPos.x < 0)
-			{
-				vNewPos.x = 0;
-				bLimitMouseMovementX = true;
-			}
-			// Off right edge of screen
-			else if (vNewPos.x + vWindowActualDims.x > x->pWindow->getDimensions().x)
-			{
-				vNewPos.x = x->pWindow->getDimensions().x - vWindowActualDims.x;
-				bLimitMouseMovementX = true;
-			}
-			// Off top edge of screen
-			if (vNewPos.y < 0)
-			{
-				vNewPos.y = 0;
-				bLimitMouseMovementY = true;
-			}
-			// Off bottom edge of screen
-			else if (vNewPos.y + vWindowActualDims.y > x->pWindow->getDimensions().y)
-			{
-				vNewPos.y = x->pWindow->getDimensions().y - vWindowActualDims.y;
-				bLimitMouseMovementY = true;
-			}
-			// Limit movement of mouse cursor
-			if (bLimitMouseMovementX || bLimitMouseMovementY)
-			{
-				CVector2f vMouseOldPos = x->pInput->mouse.getCursorPos();
-				if (bLimitMouseMovementX)
-					vMouseOldPos.x -= x->pInput->mouse.getMouseDeltaGUI().x;
-				if (bLimitMouseMovementY)
-					vMouseOldPos.y -= x->pInput->mouse.getMouseDeltaGUI().y;
-				x->pInput->mouse.setMousePos(vMouseOldPos);
-			}
+			// Depending upon which area triggered the resizing which is stored in _eWindowAreaTriggeredResizing,
+			// Adjust dimensions and position of window accordingly.
 
-			// Set position of the window
-			pWindow->setPosition(vNewPos);
+			CVector2f vPos = pWindow->getPosition();
+			CVector2f vDims = pWindow->getDimensions();
+			CVector2f vMinDims;
+			CVector2f vMaxDims;
+			pWindow->getResizableDims(vMinDims, vMaxDims);
+
+			if (CUIWindow::EWindowArea::mouseOverCornerBL == _eWindowAreaTriggeredResizing)
+			{
+				if (vMouseDelta.x > 0 && vDims.x > vMinDims.x)
+				{
+					vPos.x += vMouseDelta.x;
+					vDims.x -= vMouseDelta.x;
+				}
+				else if (vMouseDelta.x < 0 && vDims.x < vMaxDims.x)
+				{
+					vPos.x += vMouseDelta.x;
+					vDims.x -= vMouseDelta.x;
+				}
+				if (vMouseDelta.y > 0 && vDims.y < vMaxDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+				else if (vMouseDelta.y < 0 && vDims.y > vMinDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+			}
+			else if (CUIWindow::EWindowArea::mouseOverCornerBR == _eWindowAreaTriggeredResizing)
+			{
+				if (vMouseDelta.x > 0 && vDims.x < vMaxDims.x)
+				{
+					vDims.x += vMouseDelta.x;
+				}
+				else if (vMouseDelta.x < 0 && vDims.x > vMinDims.x)
+				{
+					vDims.x += vMouseDelta.x;
+				}
+				if (vMouseDelta.y > 0 && vDims.y < vMaxDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+				else if (vMouseDelta.y < 0 && vDims.y > vMinDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+			}
+			else if (CUIWindow::EWindowArea::mouseOverCornerTL == _eWindowAreaTriggeredResizing)
+			{
+//				vPos.x += vMouseDelta.x;
+//				vPos.y += vMouseDelta.y;
+//				vDims.x += vMouseDelta.x;
+//				vDims.y += vMouseDelta.y;
+			}
+			else if (CUIWindow::EWindowArea::mouseOverCornerTR == _eWindowAreaTriggeredResizing)
+			{
+//				vPos.x += vMouseDelta.x;
+//				vPos.y += vMouseDelta.y;
+//				vDims.x += vMouseDelta.x;
+//				vDims.y += vMouseDelta.y;
+			}
+			else if (CUIWindow::EWindowArea::mouseOverEdgeB == _eWindowAreaTriggeredResizing)
+			{
+				if (vMouseDelta.y > 0 && vDims.y < vMaxDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+				else if (vMouseDelta.y < 0 && vDims.y > vMinDims.y)
+				{
+					vDims.y += vMouseDelta.y;
+				}
+			}
+			else if (CUIWindow::EWindowArea::mouseOverEdgeL == _eWindowAreaTriggeredResizing)
+			{
+				if (vMouseDelta.x > 0 && vDims.x > vMinDims.x)
+				{
+					vPos.x += vMouseDelta.x;
+					vDims.x -= vMouseDelta.x;
+				}
+				else if (vMouseDelta.x < 0 && vDims.x < vMaxDims.x)
+				{
+					vPos.x += vMouseDelta.x;
+					vDims.x -= vMouseDelta.x;
+				}
+			}
+			else if (CUIWindow::EWindowArea::mouseOverEdgeR == _eWindowAreaTriggeredResizing)
+			{
+				if (vMouseDelta.x > 0 && vDims.x < vMaxDims.x)
+				{
+					vDims.x += vMouseDelta.x;
+				}
+				else if (vMouseDelta.x < 0 && vDims.x > vMinDims.x)
+				{
+					vDims.x += vMouseDelta.x;
+				}
+			}
+			else if (CUIWindow::EWindowArea::mouseOverEdgeT == _eWindowAreaTriggeredResizing)
+			{
+//				vPos.x += vMouseDelta.x;
+//				vPos.y += vMouseDelta.y;
+//				vDims.x += vMouseDelta.x;
+//				vDims.y += vMouseDelta.y;
+			}
+			pWindow->setPosition(vPos);
+			pWindow->setDimensions(vDims);
+		}
+
+		// Stop resizing any windows if the mouse button is up
+		if (_mstrWindowBeingResized.size())
+		{
+			if (!x->pInput->mouse.leftButDown())
+			{
+				x->pUI->mouseCursorSetToNormal();
+				_mstrWindowBeingResized.clear();
+			}
 		}
 	}
 

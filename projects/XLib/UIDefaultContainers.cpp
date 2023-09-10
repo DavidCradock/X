@@ -10,6 +10,7 @@ namespace X
 	{
 		_mbInitialised = false;
 		// Set names of each default container
+		names.console = "X:Default:Console";
 		names.fontGenerator = "X:Default:FontGenerator";
 		names.profiling = "X:Default:Profiling";
 		names.settings = "X:Default:Settings";
@@ -24,6 +25,7 @@ namespace X
 		_mbInitialised = true;
 
 		// Call each default container's init method
+		_initConsole();
 		_initFontGenerator();
 		_initProfiling();
 		_initSettings();
@@ -34,11 +36,31 @@ namespace X
 	void CUIDefaultContainers::update(float fTimeDeltaSecs)
 	{
 		// Call each default container's update method
+		_updateConsole(fTimeDeltaSecs);
 		_updateFontGenerator(fTimeDeltaSecs);
 		_updateProfiling(fTimeDeltaSecs);
 		_updateSettings(fTimeDeltaSecs);
 		_updateStatistics(fTimeDeltaSecs);
 		_updateUIThemeEditor(fTimeDeltaSecs);
+	}
+
+	/************************************************************************************************************************************************************/
+	/* Console */
+	/************************************************************************************************************************************************************/
+
+	void CUIDefaultContainers::_initConsole(void)
+	{
+		CUIWindow* pWindow = x->pUI->windowAdd(names.console, true);
+		pWindow->setVisible(false);
+	}
+
+	void CUIDefaultContainers::_updateConsole(float fTimeDeltaSec)
+	{
+		// Is the window visible? If not, simply return
+		CUIWindow* pWindow = x->pUI->windowGet(names.console);
+		if (!pWindow->getVisible())
+			return;
+
 	}
 
 	/************************************************************************************************************************************************************/

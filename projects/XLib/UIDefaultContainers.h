@@ -21,6 +21,10 @@ namespace X
 		// This saves us from having to remember their names.
 		struct SNames
 		{
+			// Holds the name of the default container called "X:Default:Console"
+			// A text based console/terminal for executing various commands.
+			std::string console;
+
 			// Holds the name of the default container called "X:Default:FontGenerator"
 			// A container with functionality to generate font files from fonts stored in the operating system which
 			// can then be loaded by the SCResourceManager for the font resources.
@@ -47,6 +51,9 @@ namespace X
 	private:
 		// Is set to true once initialise() has been called.
 		bool _mbInitialised;
+
+		void _initConsole(void);							// Init method called from initialise() for "X:Default:Console" default container.
+		void _updateConsole(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Console" default container.
 
 		void _initFontGenerator(void);						// Init method called from initialise() for "X:Default:FontGenerator" default container.
 		void _updateFontGenerator(float fTimeDeltaSec);		// Update method called from update() for "X:Default:FontGenerator" default container.

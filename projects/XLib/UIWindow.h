@@ -24,6 +24,7 @@ namespace X
 
 		// Returns the dims of this window (not just the widget area),
 		// including the borders of this window's currently set theme.
+		// This does NOT represent actual screen position.
 		CVector2f getDimsIncludingTheme(void);
 
 		// Returns a CRect which represents the area of the window's titlebar
@@ -56,27 +57,8 @@ namespace X
 		bool getResizable(void) const;
 
 		// Sets given CVector2fs to min and max dims of the resizable window
+		// which were set with setResizable()
 		void getResizableDims(CVector2f& vMinDims, CVector2f& vMaxDims) const;
-
-		// Used by getMouseOverResizableArea().
-		enum EWindowArea
-		{
-			mouseOverNone,
-			mouseOverCornerBL,
-			mouseOverCornerBR,
-			mouseOverCornerTL,
-			mouseOverCornerTR,
-			mouseOverEdgeB,
-			mouseOverEdgeL,
-			mouseOverEdgeR,
-			mouseOverEdgeT
-		};
-		// Used to detect whether we could resize this window in SCUIManager::_update()
-		// If the mouse cursor is over one of the 8 areas which could toggle window resizing,
-		// returns which area the mouse is over in the form of an EWindowArea enumeration.
-		// If the mouse cursor isn't over any of the areas, returns EWindowArea::mouseOverNone.
-		// Uses the window's currently set theme's windowResizeHandleOffsetX and Y values.
-		EWindowArea getMouseOverResizableArea(void);
 
 	private:
 		void _renderBorders(void);
@@ -95,5 +77,35 @@ namespace X
 		bool _mbIsResizable;		// Whether this window can be resized or not (Default is false)
 		CVector2f _mvResizeMinDims;	// Minimum dimensions this window can be resized to if _mbIsResizable == true
 		CVector2f _mvResizeMaxDims;	// Maximum dimensions this window can be resized to if _mbIsResizable == true
+
+		// Used by getMouseOverResizableArea().
+		enum EWindowArea
+		{
+			mouseOverCornerBL,
+			mouseOverCornerBR,
+			mouseOverCornerTL,
+			mouseOverCornerTR,
+			mouseOverEdgeB,
+			mouseOverEdgeL,
+			mouseOverEdgeR,
+			mouseOverEdgeT,
+			mouseOverNone
+		};
+		// Used to detect whether we could resize this window in SCUIManager::_update()
+		// If the mouse cursor is over one of the 8 areas which could toggle window resizing,
+		// returns which area the mouse is over in the form of an EWindowArea enumeration.
+		// If the mouse cursor isn't over any of the areas, returns EWindowArea::mouseOverNone.
+		// _computeResizableAreas is called from here
+		EWindowArea _getMouseOverResizableArea(void);
+
+		// Stores computed screen positions of each area as a rect and stores in _mrctResizeArea[9]
+		void _computeResizableAreas(void);
+
+		// Resizable areas of the window, computed in _computeResizableAreas()
+		// Use EWindowArea to access correct area
+		CRect _mrctResizeArea[9];
+
+		// Debug rendering of computed areas in _mrctResizeArea
+		void _debugRenderAreas(void);
 	};
 }

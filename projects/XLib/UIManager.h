@@ -121,8 +121,8 @@ namespace X
 		// This is called from the application manager during initialisation.
 		void reset(void);
 
-		// Called from SCApplicationManager::onWindowToggleFullscreen() which is called from
-		// 
+		// Called from SCApplicationManager::onWindowToggleFullscreen() which
+		// is called from SCWindow::toggleFullscreen()
 		void onToggleFullscreen(void);
 
 		// Returns a pointer to the CUIDefaultContainers object in this class which contains
@@ -270,7 +270,7 @@ namespace X
 		/************************************************************************************************************************************************************/
 
 		// Sets the name of the theme to use when setting mouse cursor images.
-		// Be default, the theme to use is "default"
+		// By default, the theme to use is "default"
 		// If the theme name doesn't exist, an exception occurs.
 		// Unlike containers and windows which can have a different theme each, the mouse cursor theme is global for the entire application.
 		void mouseCursorSetThemename(const std::string& strThemeName = "default");

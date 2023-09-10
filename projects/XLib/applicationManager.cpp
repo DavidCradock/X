@@ -313,7 +313,6 @@ namespace X
 			it++;
 		}
 
-		// Call SCUIManager::onToggleFullscreen()
 		x->pUI->onToggleFullscreen();
 	}
 

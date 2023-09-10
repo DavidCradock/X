@@ -297,7 +297,6 @@ namespace X
 		if (_mpScrollbarV->getVisible())
 			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
-
 		CVector2f vDims = _mvContainersWidgetAreaDimensions;
 		vDims.x += idTL.vDims.x + idBR.vDims.x + vScrollbarOffset.x;
 		vDims.y += idTL.vDims.y + idBR.vDims.y + vScrollbarOffset.y;
@@ -320,11 +319,19 @@ namespace X
 		if (_mpScrollbarV->getVisible())
 			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
+		// Normal area when window is set as NOT resizable
 		CRect area(
 			int(_mvPosition.x),
 			int(_mvPosition.y),
 			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL.vDims.x + idTR.vDims.x + vScrollbarOffset.x),
 			int(_mvPosition.y + idTL.vDims.y));
+
+		// If the window is set to resizable, we offset the top of this down by the currently set theme's setting of windowResizeHandleOffsetY
+		if (_mbIsResizable)
+		{
+			area.miMaxY += (int)pSettings->floats.windowResizeHandleOffsetY;
+		}
+
 		return area;
 	}
 
@@ -388,102 +395,170 @@ namespace X
 		vMaxDims = _mvResizeMaxDims;
 	}
 
-	CUIWindow::EWindowArea CUIWindow::getMouseOverResizableArea(void)
+	void CUIWindow::_computeResizableAreas(void)
 	{
 		// If this window is not set to be resizable, bail out
 		if (!_mbIsResizable)
-			return EWindowArea::mouseOverNone;
+			return;
 
 		// Get required stuff™
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idBL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBL);
-		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
-		CImageAtlasDetails idTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
+		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
 
-		// Add the additional space for the scrollbars.
+		// Additional space for the scrollbars.
+		// Only offset if the scrollbars are visible
 		CVector2f vScrollbarOffset;
-		vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
-		vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		if (_mpScrollbarH->getVisible())
+			vScrollbarOffset.y = pSettings->floats.windowScrollbarHorizontalHeight;
+		if (_mpScrollbarV->getVisible())
+			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
-		// Get offset from theme
-		CVector2f vWndAreaDims;
-		vWndAreaDims.x = pSettings->floats.windowResizeHandleOffsetX;
-		vWndAreaDims.y = pSettings->floats.windowResizeHandleOffsetY;
+		// Get resize offset from theme
+		CVector2f vResizeOffset;
+		vResizeOffset.x = pSettings->floats.windowResizeHandleOffsetX;
+		vResizeOffset.y = pSettings->floats.windowResizeHandleOffsetY;
+
+		// When computing each of these areas, we get the edge position and then offset inwards towards the centre of the window
+		// by the currently set theme's windowResizeHandleOffsetX and Y values
+
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinX = int(_mvPosition.x + idTL.vDims.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinX = int(_mvPosition.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinY = int(_mvPosition.y + idTL.vDims.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinY = int(_mvPosition.y + idTL.vDims.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX = int(_mvPosition.x + idTL.vDims.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY = int(_mvPosition.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxY = int(_mvPosition.y + vResizeOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinX = int(_mvPosition.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinX = int(_mvPosition.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinY = int(_mvPosition.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxY = int(_mvPosition.y + vResizeOffset.y);
+
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinY = int(_mvPosition.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxY = int(_mvPosition.y + vResizeOffset.y);
+	}
+
+	CUIWindow::EWindowArea CUIWindow::_getMouseOverResizableArea(void)
+	{
+		// If this window is not set to be resizable, bail out
+		if (!_mbIsResizable)
+			return EWindowArea::mouseOverNone;
+
+		// Update resizable area rects stored in _mrctResizeArea[8]
+		_computeResizableAreas();
 
 		// Get mouse position for use below
 		CVector2f vMousePos = x->pInput->mouse.getCursorPos();
 
-		// Used below in calculations
-		CRect rect;
-
-		// Compute area of window's bottom edge, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x - 100);
-		rect.miMaxX = int(_mvPosition.x + 100);
-		rect.miMinY = int(_mvPosition.y - 100);
-		rect.miMaxY = int(_mvPosition.y + 100);
-		if (rect.doesPositionFitWithin(vMousePos))
+		if (_mrctResizeArea[EWindowArea::mouseOverEdgeB].doesPositionFitWithin(vMousePos))
 			return EWindowArea::mouseOverEdgeB;
 
-		// Compute area of window's left edge, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
-			return EWindowArea::mouseOverEdgeL;
-
-		// Compute area of window's right edge, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
-			return EWindowArea::mouseOverEdgeR;
-
-		// Compute area of window's top edge, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
-			return EWindowArea::mouseOverEdgeT;
-
-		// Compute area of window's bottom left corner, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x - pSettings->floats.windowResizeHandleOffsetX);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y + _mvContainersWidgetAreaDimensions.y);
-		if (rect.doesPositionFitWithin(vMousePos))
-			return EWindowArea::mouseOverCornerBL;
-
-		// Compute area of window's bottom right corner, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
+		if (_mrctResizeArea[EWindowArea::mouseOverCornerBR].doesPositionFitWithin(vMousePos))
 			return EWindowArea::mouseOverCornerBR;
 
-		// Compute area of window's top left corner, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
+		if (_mrctResizeArea[EWindowArea::mouseOverCornerBL].doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverCornerBL;
+		
+		if (_mrctResizeArea[EWindowArea::mouseOverEdgeR].doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeR;
+		
+		if (_mrctResizeArea[EWindowArea::mouseOverEdgeL].doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeL;
+		
+		if (_mrctResizeArea[EWindowArea::mouseOverEdgeT].doesPositionFitWithin(vMousePos))
+			return EWindowArea::mouseOverEdgeT;
+		
+		if (_mrctResizeArea[EWindowArea::mouseOverCornerTL].doesPositionFitWithin(vMousePos))
 			return EWindowArea::mouseOverCornerTL;
 
-		// Compute area of window's top right corner, determine whether mouse is in this area, set area and return if true.
-		rect.miMinX = int(_mvPosition.x);
-		rect.miMaxX = int(_mvPosition.x);
-		rect.miMinY = int(_mvPosition.y);
-		rect.miMaxY = int(_mvPosition.y);
-		if (rect.doesPositionFitWithin(vMousePos))
+		if (_mrctResizeArea[EWindowArea::mouseOverCornerTR].doesPositionFitWithin(vMousePos))
 			return EWindowArea::mouseOverCornerTR;
 
 		// If we get here, the mouse cursor isn't over any valid areas which could enable window resizing.
 		return EWindowArea::mouseOverNone;
+	}
+
+	void CUIWindow::_debugRenderAreas(void)
+	{
+		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_VBCPT);
+		CResourceVertexBufferCPT* pVB = x->pResource->getVertexBufferCPT(x->pResource->defaultRes.vertexbufferCPT_default);
+		CResourceTexture2DFromFile* pTexture = x->pResource->getTexture2DFromFile(x->pResource->defaultRes.texture2DFromFile_default_white);
+		CMatrix matrixWorld, matrixView, matrixProjection;
+		matrixProjection.setProjectionOrthographic();
+		pShader->bind();
+		pTexture->bind();
+		pShader->setMat4("matrixWorld", matrixWorld);
+		pShader->setMat4("matrixView", matrixView);
+		pShader->setMat4("matrixProjection", matrixProjection);
+		pVB->removeGeom();
+
+		pVB->addQuad2D(	CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinY),
+						CVector2f(	(float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinX,
+									(float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinY),	CColour(1, 0, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinY), CColour(1, 0, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinY), CColour(1, 0, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinY), CColour(1, 0, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY), CColour(1, 1, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinY), CColour(1, 1, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinY), CColour(1, 1, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY), CColour(1, 1, 0, 1));
+
+		pVB->addQuad2D(CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinX, (float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinY),
+			CVector2f((float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxX - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinX,
+				(float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxY - (float)_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinY), CColour(1, 1, 0, 1));
+
+		pVB->update();
+		pVB->render();
+		pVB->removeGeom();
+		pTexture->unbind();
+		pShader->unbind();
 	}
 }
