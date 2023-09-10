@@ -129,6 +129,7 @@ namespace X
 		struct SFonts
 		{
 			std::string button;						// Font used when rendering a button's text
+			std::string buttonImage;				// Font used when rendering a buttonImage's text
 			std::string text;						// Font used when rendering a UIText widget.
 //			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
 //			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
@@ -145,9 +146,14 @@ namespace X
 			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
 			CColour buttonTextOver;						// Colour of a button's text when mouse is over
 			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
-//			CColour buttonImageDown;					// CUIButtonImage's colour when mouse is over and clicked
-//			CColour buttonImageOver;					// CUIButtonImage's colour when mouse is over
-//			CColour buttonImageUp;						// CUIButtonImage's colour when mouse is not over
+
+			CColour buttonImageBGDown;					// Colour of a buttonImage's BG when mouse is over and clicked
+			CColour buttonImageBGOver;					// Colour of a buttonImage's BG when mouse is over
+			CColour buttonImageBGUp;					// Colour of a buttonImage's BG when mouse is not over
+			CColour buttonImageTextDown;				// Colour of a buttonImage's text when mouse is over and clicked
+			CColour buttonImageTextOver;				// Colour of a buttonImage's text when mouse is over
+			CColour buttonImageTextUp;					// Colour of a buttonImage's text when mouse is not over
+
 //			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
 //			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
 			CColour mouseLight;							// Colour emitted from the mouse cursor
@@ -202,7 +208,7 @@ namespace X
 		struct SFloats
 		{
 			float buttonFadeSpeed;					// Rate at which button text and BG colours interpolate between
-//			float buttonImageTextFadeSpeed;			// Rate at which button image colours interpolate between
+			float buttonImageFadeSpeed;				// Rate at which button text and image colours interpolate between
 //			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
 			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between

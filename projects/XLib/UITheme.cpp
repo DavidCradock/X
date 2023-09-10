@@ -44,6 +44,7 @@ namespace X
 
 		// Fonts
 		x->pFile->readString(file, _mSettings.fonts.button);
+		x->pFile->readString(file, _mSettings.fonts.buttonImage);
 		x->pFile->readString(file, _mSettings.fonts.text);
 //		x->pFile->readString(file, _mSettings.fonts.textEdit);
 //		x->pFile->readString(file, _mSettings.fonts.textScroll);
@@ -113,6 +114,7 @@ namespace X
 
 		// Fonts
 		x->pFile->writeString(file, _mSettings.fonts.button);
+		x->pFile->writeString(file, _mSettings.fonts.buttonImage);
 		x->pFile->writeString(file, _mSettings.fonts.text);
 //		x->pFile->writeString(file, _mSettings.fonts.textEdit);
 //		x->pFile->writeString(file, _mSettings.fonts.textScroll);
@@ -172,6 +174,7 @@ namespace X
 
 		// Fonts
 		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
+		x->pResource->addFont(_mSettings.fonts.buttonImage, _mSettings.fonts.buttonImage, false);
 		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
 //		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
@@ -218,6 +221,7 @@ namespace X
 
 		// Fonts
 		x->pResource->removeFont(_mSettings.fonts.button);
+		x->pResource->removeFont(_mSettings.fonts.buttonImage);
 		x->pResource->removeFont(_mSettings.fonts.text);
 //		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
@@ -257,9 +261,12 @@ namespace X
 		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.buttonTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.buttonTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
-//		_mSettings.colours.buttonImageDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonImageOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.buttonImageUp.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonImageBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonImageBGOver.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.buttonImageBGUp.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.buttonImageTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.buttonImageTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.buttonImageTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
@@ -281,7 +288,7 @@ namespace X
 
 		// Floats
 		_mSettings.floats.buttonFadeSpeed = 5.0f;
-//		_mSettings.floats.buttonImageTextFadeSpeed = 5.0f;
+		_mSettings.floats.buttonImageFadeSpeed = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeed = 1.0f;
 		_mSettings.floats.normalMouseCursorDistance = 50.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
@@ -295,6 +302,7 @@ namespace X
 
 		// Fonts
 		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.buttonImage = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";

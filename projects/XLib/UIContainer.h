@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "UIButton.h"
+#include "UIButtonImage.h"
 #include "UIImage.h"
 #include "UIScrollBar.h"
 #include "UIText.h"
@@ -116,6 +117,27 @@ namespace X
 		void buttonRemoveAll(void);
 
 		/************************************************************************************************************************************************************/
+		/* Button Images */
+		/************************************************************************************************************************************************************/
+
+		// Add button to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// Checks to see if the named 2D texture resources exist and if not, an exception occurs.
+		// All state texture images should be the same dimensions.
+		CUIButtonImage* buttonImageAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUIButtonImage* buttonImageGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void buttonImageRemove(const std::string& strName);
+
+		// Removes all buttons from this container
+		void buttonImageRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
 		/* Images */
 		/************************************************************************************************************************************************************/
 
@@ -193,10 +215,11 @@ namespace X
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;
 
-		std::map<std::string, CUIButton*> _mmapButtons;			// Map holding each CUIButton widget
-		std::map<std::string, CUIImage*> _mmapImages;			// Map holding each CUIImage widget
-		std::map<std::string, CUIScrollbar*> _mmapScrollbars;	// Map holding each CUIScrollbar widget
-		std::map<std::string, CUIText*> _mmapTexts;				// Map holding each CUIText widget
+		std::map<std::string, CUIButton*> _mmapButtons;				// Map holding each CUIButton widget
+		std::map<std::string, CUIButtonImage*> _mmapButtonImages;	// Map holding each CUIButtonImage widget
+		std::map<std::string, CUIImage*> _mmapImages;				// Map holding each CUIImage widget
+		std::map<std::string, CUIScrollbar*> _mmapScrollbars;		// Map holding each CUIScrollbar widget
+		std::map<std::string, CUIText*> _mmapTexts;					// Map holding each CUIText widget
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;

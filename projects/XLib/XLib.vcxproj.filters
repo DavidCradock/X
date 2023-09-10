@@ -67,6 +67,9 @@
     <Filter Include="UI\Widgets">
       <UniqueIdentifier>{29838f6a-6ce9-4c2b-9232-02b2972b3383}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\Added to UI">
+      <UniqueIdentifier>{8470523f-45bf-44a8-86b1-48d7fe2b8dd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -143,40 +146,16 @@
     <ClInclude Include="OpenGL\wglext.h">
       <Filter>OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="GUIButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContainer.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIImage.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIImageAnimated.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUILineGraph.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIManager.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIProgressBar.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUISlider.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIText.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUITextEdit.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITheme.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIBaseObject.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIDraggableDock.h">
@@ -197,16 +176,10 @@
     <ClInclude Include="GUITaskbar.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
-    <ClInclude Include="GUIImageFramebuffer.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUITextScroll.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIButtonImage.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIImageDepthbuffer.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUITooltip.h">
@@ -479,6 +452,39 @@
     <ClInclude Include="resourceMouseCursor.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GUIBaseObject.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIButton.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContainer.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImage.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageFramebuffer.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIImageDepthbuffer.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISlider.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIText.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITheme.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIManager.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButtonImage.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -539,40 +545,16 @@
     <ClCompile Include="audioManager.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="GUIButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContainer.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIImage.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUIImageAnimated.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUILineGraph.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIManager.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUIProgressBar.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUISlider.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIText.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUITextEdit.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITheme.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIBaseObject.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIDraggableDock.cpp">
@@ -593,16 +575,10 @@
     <ClCompile Include="GUITaskbar.cpp">
       <Filter>GUI\TODO</Filter>
     </ClCompile>
-    <ClCompile Include="GUIImageFramebuffer.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUITextScroll.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIButtonImage.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIImageDepthbuffer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
@@ -847,6 +823,39 @@
     </ClCompile>
     <ClCompile Include="resourceMouseCursor.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIBaseObject.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButton.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContainer.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImage.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageDepthbuffer.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImageFramebuffer.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISlider.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIText.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITheme.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButtonImage.cpp">
+      <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

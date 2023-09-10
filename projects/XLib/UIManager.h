@@ -103,6 +103,7 @@ namespace X
 	class SCUIManager : public CSingleton<SCUIManager>
 	{
 		friend class CUIButton;
+		friend class CUIButtonImage;
 		friend class CUIScrollbar;
 		friend class SCApplicationManager;
 	public:

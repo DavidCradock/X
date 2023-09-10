@@ -277,6 +277,65 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUIButtonImage */
+	/************************************************************************************************************************************************************/
+
+	CUIButtonImage* CUIContainer::buttonImageAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapButtonImages.find(strName) != _mmapButtonImages.end(), "CUIContainer::buttonImageAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Make sure the texture resources exist
+		ThrowIfFalse(x->pResource->getTexture2DFromFileExists(strTextureFromFileResourceNameUp), "CUIContainer::buttonImageAdd(\"" + strTextureFromFileResourceNameUp + "\") failed. The named resource does not exist.");
+		ThrowIfFalse(x->pResource->getTexture2DFromFileExists(strTextureFromFileResourceNameOver), "CUIContainer::buttonImageAdd(\"" + strTextureFromFileResourceNameOver + "\") failed. The named resource does not exist.");
+		ThrowIfFalse(x->pResource->getTexture2DFromFileExists(strTextureFromFileResourceNameDown), "CUIContainer::buttonImageAdd(\"" + strTextureFromFileResourceNameDown + "\") failed. The named resource does not exist.");
+
+		// Create new object
+		CUIButtonImage* pNewObject = new CUIButtonImage(this, strTextureFromFileResourceNameUp, strTextureFromFileResourceNameOver, strTextureFromFileResourceNameDown);
+		ThrowIfFalse(pNewObject, "CUIContainer::buttonImageAdd() failed to allocate memory for new object.");
+
+		_mmapButtonImages[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+		pNewObject->setText(strName);
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUIButtonImage* CUIContainer::buttonImageGet(const std::string& strName)
+	{
+		auto it = _mmapButtonImages.find(strName);
+		ThrowIfTrue(_mmapButtonImages.end() == it, "CUIContainer::buttonImageGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::buttonImageRemove(const std::string& strName)
+	{
+		auto it = _mmapButtonImages.find(strName);
+		if (_mmapButtonImages.end() == it)
+			return;
+		delete it->second;
+		_mmapButtonImages.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::buttonImageRemoveAll(void)
+	{
+		auto it = _mmapButtonImages.begin();
+		while (it != _mmapButtonImages.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapButtonImages.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* CUIImage */
 	/************************************************************************************************************************************************************/
 
@@ -443,6 +502,7 @@ namespace X
 	void CUIContainer::widgetRemoveAll(void)
 	{
 		buttonRemoveAll();
+		buttonImageRemoveAll();
 		imageRemoveAll();
 		scrollbarRemoveAll();
 		textRemoveAll();
@@ -459,6 +519,14 @@ namespace X
 		{
 			itButton->second->reset();
 			itButton++;
+		}
+
+		// For each CUIButtonImage widget
+		auto itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->reset();
+			itButtonImage++;
 		}
 
 		// For each CUIImage widget (No need)
@@ -491,6 +559,21 @@ namespace X
 					_mvMaxWidgetCornerPos.y = vBRPos.y;
 			}
 			itButton++;
+		}
+
+		// For each CUIButtonImage widget
+		auto itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			if (itButtonImage->second->_mbVisible)
+			{
+				CVector2f vBRPos = itButtonImage->second->getPosition() + itButtonImage->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itButtonImage++;
 		}
 
 		// For each CUIImage widget
@@ -537,8 +620,6 @@ namespace X
 			}
 			itText++;
 		}
-
-
 	}
 
 	void CUIContainer::update(float fTimeDeltaSec)
@@ -549,6 +630,14 @@ namespace X
 		{
 			itButton->second->update(fTimeDeltaSec);
 			itButton++;
+		}
+
+		// For each CUIButtonImage widget
+		auto itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->update(fTimeDeltaSec);
+			itButtonImage++;
 		}
 
 		// For each CUIImage widget (No need)
@@ -619,6 +708,8 @@ namespace X
 			itButton++;
 		}
 
+		// For each CUIButtonImage widget (No need)
+
 		// For each CUIImage widget (No need)
 
 		// For each CUIScrollbar widget
@@ -650,6 +741,7 @@ namespace X
 		glEnable(GL_DEPTH_TEST);
 
 		// Render font stuff
+		
 		// For each CUIButton widget, render non-font stuff
 		glEnable(GL_SCISSOR_TEST);
 		itButton = _mmapButtons.begin();
@@ -657,6 +749,14 @@ namespace X
 		{
 			itButton->second->renderFonts();
 			itButton++;
+		}
+
+		// For each CUIButtonImage widget
+		auto itButtonImage = _mmapButtonImages.begin();
+		while (itButtonImage != _mmapButtonImages.end())
+		{
+			itButtonImage->second->render();
+			itButtonImage++;
 		}
 
 		// For each CUIImage widget (No need)

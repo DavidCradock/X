@@ -130,6 +130,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="timerMinimal.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIButtonImage.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIDefaultContainers.h" />
     <ClInclude Include="UIImage.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="timerMinimal.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIButtonImage.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIDefaultContainers.cpp" />
     <ClCompile Include="UIImage.cpp" />
