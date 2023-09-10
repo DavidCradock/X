@@ -152,8 +152,6 @@ namespace X
 			CColour buttonImageTextDown;				// Colour of a buttonImage's text when mouse is over and clicked
 			CColour buttonImageTextOver;				// Colour of a buttonImage's text when mouse is over
 			CColour buttonImageTextUp;					// Colour of a buttonImage's text when mouse is not over
-//			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
-//			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
 			CColour mouseLight;							// Colour emitted from the mouse cursor
 			CColour progressBarBG;						// CUIProgressBar's background vertex colour
 			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour

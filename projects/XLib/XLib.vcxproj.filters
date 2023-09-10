@@ -152,9 +152,6 @@
     <ClInclude Include="GUILineGraph.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIProgressBar.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUITextEdit.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -175,9 +172,6 @@
     </ClInclude>
     <ClInclude Include="GUITaskbar.h">
       <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITextScroll.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
@@ -365,9 +359,6 @@
     <ClInclude Include="2DMapImageType.h">
       <Filter>2D</Filter>
     </ClInclude>
-    <ClInclude Include="GUISubContainer.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="singleton.h">
       <Filter>Patterns</Filter>
     </ClInclude>
@@ -488,6 +479,18 @@
     <ClInclude Include="UIProgressbar.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="GUIProgressBar.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISubContainer.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextScroll.h">
+      <Filter>GUI\TODO</Filter>
+    </ClInclude>
+    <ClInclude Include="UILineGraph.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -554,9 +557,6 @@
     <ClCompile Include="GUILineGraph.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIProgressBar.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUITextEdit.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -577,9 +577,6 @@
     </ClCompile>
     <ClCompile Include="GUITaskbar.cpp">
       <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITextScroll.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
@@ -761,9 +758,6 @@
     <ClCompile Include="2DMapImageType.cpp">
       <Filter>2D</Filter>
     </ClCompile>
-    <ClCompile Include="GUISubContainer.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="messaging.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
@@ -861,6 +855,18 @@
       <Filter>GUI\Added to UI</Filter>
     </ClCompile>
     <ClCompile Include="UIProgressbar.cpp">
+      <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIProgressBar.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISubContainer.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextScroll.cpp">
+      <Filter>GUI\TODO</Filter>
+    </ClCompile>
+    <ClCompile Include="UILineGraph.cpp">
       <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>

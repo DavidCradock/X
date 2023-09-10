@@ -389,6 +389,59 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUILineGraph */
+	/************************************************************************************************************************************************************/
+
+	CUILineGraph* CUIContainer::lineGraphAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapLineGraphs.find(strName) != _mmapLineGraphs.end(), "CUIContainer::lineGraphAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUILineGraph* pNewObject = new CUILineGraph(this);
+		ThrowIfFalse(pNewObject, "CUIContainer::lineGraphAdd() failed to allocate memory for new object.");
+
+		_mmapLineGraphs[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUILineGraph* CUIContainer::lineGraphGet(const std::string& strName)
+	{
+		auto it = _mmapLineGraphs.find(strName);
+		ThrowIfTrue(_mmapLineGraphs.end() == it, "CUIContainer::lineGraphGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::lineGraphRemove(const std::string& strName)
+	{
+		auto it = _mmapLineGraphs.find(strName);
+		if (_mmapLineGraphs.end() == it)
+			return;
+		delete it->second;
+		_mmapLineGraphs.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::lineGraphRemoveAll(void)
+	{
+		auto it = _mmapLineGraphs.begin();
+		while (it != _mmapLineGraphs.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapLineGraphs.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* CUIProgressbar */
 	/************************************************************************************************************************************************************/
 
@@ -557,6 +610,7 @@ namespace X
 		buttonRemoveAll();
 		buttonImageRemoveAll();
 		imageRemoveAll();
+		lineGraphRemoveAll();
 		progressbarRemoveAll();
 		scrollbarRemoveAll();
 		textRemoveAll();
@@ -584,6 +638,8 @@ namespace X
 		}
 
 		// For each CUIImage widget (No need)
+
+		// For each CUILineGraph widget (No need)
 
 		// For eacg CUIProgressbar widger (No need)
 
@@ -645,6 +701,21 @@ namespace X
 					_mvMaxWidgetCornerPos.y = vBRPos.y;
 			}
 			itImage++;
+		}
+
+		// For each CUILineGraph widget
+		auto itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			if (itLineGraph->second->_mbVisible)
+			{
+				CVector2f vBRPos = itLineGraph->second->getPosition() + itLineGraph->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itLineGraph++;
 		}
 
 		// For each CUIProgressbar widget
@@ -712,6 +783,14 @@ namespace X
 		}
 
 		// For each CUIImage widget (No need)
+
+		// For each CUILineGraph widget
+		auto itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->update(fTimeDeltaSec);
+			itLineGraph++;
+		}
 
 		// For each CUIProgressbar widget (No need)
 
@@ -785,6 +864,8 @@ namespace X
 
 		// For each CUIImage widget (No need)
 
+		// For each CUILineGraph widget (No need)
+
 		// For each CUIProgressbar widget
 		auto itProgressbar = _mmapProgressbars.begin();
 		while (itProgressbar != _mmapProgressbars.end())
@@ -840,14 +921,6 @@ namespace X
 			itButtonImage++;
 		}
 
-		// For each CUIImage widget (No need)
-
-		// For each CUIProgressbar widget (No need)
-
-		// For each CUIScrollbar widget (No need)
-
-
-
 		// For each CUIImage widget
 		auto itImage = _mmapImages.begin();
 		while (itImage != _mmapImages.end())
@@ -855,6 +928,20 @@ namespace X
 			itImage->second->render();
 			itImage++;
 		}
+
+		// For each CUILineGraph widget
+		auto itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->render();
+			itLineGraph++;
+		}
+
+		// For each CUIProgressbar widget (No need)
+
+		// For each CUIScrollbar widget (No need)
+
+		
 
 		// For each CUIText widget
 		auto itText = _mmapTexts.begin();

@@ -267,8 +267,6 @@ namespace X
 		_mSettings.colours.buttonImageTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.buttonImageTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.buttonImageTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
-//		_mSettings.colours.containerTitlebarTextInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.containerTitlebarTextNotInFocus.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
 		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 0.5f);
@@ -284,7 +282,7 @@ namespace X
 		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 0.9f);
 		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
 		_mSettings.colours.windowTitlebarTextFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowTitlebarTextNotFocused.set(1.0f, 1.0f, 1.0f, 0.9f);
+		_mSettings.colours.windowTitlebarTextNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
 
 		// Floats
 		_mSettings.floats.buttonFadeSpeed = 5.0f;

@@ -432,6 +432,11 @@ namespace X
 //				vDims.y += vMouseDelta.y;
 			}
 			pWindow->setPosition(vPos);
+
+			// Limit dims to min/max
+			clamp(vDims.x, vMinDims.x, vMaxDims.x);
+			clamp(vDims.y, vMinDims.y, vMaxDims.y);
+
 			pWindow->setDimensions(vDims);
 		}
 
