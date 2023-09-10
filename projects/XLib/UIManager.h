@@ -104,6 +104,7 @@ namespace X
 	{
 		friend class CUIButton;
 		friend class CUIButtonImage;
+		friend class CUIProgressbar;
 		friend class CUIScrollbar;
 		friend class SCApplicationManager;
 	public:

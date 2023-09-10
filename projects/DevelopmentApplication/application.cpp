@@ -49,6 +49,7 @@ namespace X
 		pWindow->setDimensions(CVector2f(200, 200));
 		pWindow->setPosition(1400-16, 200-30);
 		pWindow->setResizable(true, CVector2f(200, 200), CVector2f(400, 400));
+		pWindow->progressbarAdd("pb1", 0, 0, 200, 30);
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(9999, 0);
@@ -64,6 +65,11 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
+		static float sfProgress = 0.0f;
+		sfProgress += timer.getSecondsPast();
+		if (sfProgress >= 1.0f)
+			sfProgress = 0.0f;
+		x->pUI->windowGet("window1 200x200")->progressbarGet("pb1")->setProgress(sfProgress);
 
 		// Timer delta
 		timer.update();

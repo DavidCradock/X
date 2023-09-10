@@ -389,6 +389,59 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUIProgressbar */
+	/************************************************************************************************************************************************************/
+
+	CUIProgressbar* CUIContainer::progressbarAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapProgressbars.find(strName) != _mmapProgressbars.end(), "CUIContainer::progressbarAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUIProgressbar* pNewObject = new CUIProgressbar(this);
+		ThrowIfFalse(pNewObject, "CUIContainer::progressbarAdd() failed to allocate memory for new object.");
+
+		_mmapProgressbars[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUIProgressbar* CUIContainer::progressbarGet(const std::string& strName)
+	{
+		auto it = _mmapProgressbars.find(strName);
+		ThrowIfTrue(_mmapProgressbars.end() == it, "CUIContainer::progressbarGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::progressbarRemove(const std::string& strName)
+	{
+		auto it = _mmapProgressbars.find(strName);
+		if (_mmapProgressbars.end() == it)
+			return;
+		delete it->second;
+		_mmapProgressbars.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::progressbarRemoveAll(void)
+	{
+		auto it = _mmapProgressbars.begin();
+		while (it != _mmapProgressbars.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapProgressbars.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* CUIScrollbar */
 	/************************************************************************************************************************************************************/
 
@@ -504,6 +557,7 @@ namespace X
 		buttonRemoveAll();
 		buttonImageRemoveAll();
 		imageRemoveAll();
+		progressbarRemoveAll();
 		scrollbarRemoveAll();
 		textRemoveAll();
 
@@ -530,6 +584,8 @@ namespace X
 		}
 
 		// For each CUIImage widget (No need)
+
+		// For eacg CUIProgressbar widger (No need)
 
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
@@ -591,6 +647,21 @@ namespace X
 			itImage++;
 		}
 
+		// For each CUIProgressbar widget
+		auto itProgressbar = _mmapProgressbars.begin();
+		while (itProgressbar != _mmapProgressbars.end())
+		{
+			if (itProgressbar->second->_mbVisible)
+			{
+				CVector2f vBRPos = itProgressbar->second->getPosition() + itProgressbar->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itProgressbar++;
+		}
+
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
@@ -641,6 +712,8 @@ namespace X
 		}
 
 		// For each CUIImage widget (No need)
+
+		// For each CUIProgressbar widget (No need)
 
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
@@ -712,6 +785,14 @@ namespace X
 
 		// For each CUIImage widget (No need)
 
+		// For each CUIProgressbar widget
+		auto itProgressbar = _mmapProgressbars.begin();
+		while (itProgressbar != _mmapProgressbars.end())
+		{
+			itProgressbar->second->render(pVB);
+			itProgressbar++;
+		}
+
 		// For each CUIScrollbar widget
 		auto itScrollbar = _mmapScrollbars.begin();
 		while (itScrollbar != _mmapScrollbars.end())
@@ -761,6 +842,8 @@ namespace X
 
 		// For each CUIImage widget (No need)
 
+		// For each CUIProgressbar widget (No need)
+
 		// For each CUIScrollbar widget (No need)
 
 
@@ -780,8 +863,6 @@ namespace X
 			itText->second->render();
 			itText++;
 		}
-
-
 
 		glDisable(GL_SCISSOR_TEST);
 	}

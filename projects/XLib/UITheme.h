@@ -115,8 +115,8 @@ namespace X
 //			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
 //			SImageType checkboxBGOFF;		// Image names for CUICheckbox's OFF state
 //			SImageType lineGraphBG;			// Image names for CUILineGraph's background
-//			SImageType progressBarBG;		// Image names for CUIProgressBar's background
-//			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
+			SImageType progressBarBG;		// Image names for CUIProgressBar's background
+			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
 			SImageType scrollbarBG;			// Image names for CUIScrollbar's background
 			SImageType scrollbarTab;		// Image names for CUIScrollbar's tab
 //			SImageType textEditBG;			// Image names for CUITextEdit's background.
@@ -146,19 +146,17 @@ namespace X
 			CColour buttonTextDown;						// Colour of a button's text when mouse is over and clicked
 			CColour buttonTextOver;						// Colour of a button's text when mouse is over
 			CColour buttonTextUp;						// Colour of a button's text when mouse is not over
-
 			CColour buttonImageBGDown;					// Colour of a buttonImage's BG when mouse is over and clicked
 			CColour buttonImageBGOver;					// Colour of a buttonImage's BG when mouse is over
 			CColour buttonImageBGUp;					// Colour of a buttonImage's BG when mouse is not over
 			CColour buttonImageTextDown;				// Colour of a buttonImage's text when mouse is over and clicked
 			CColour buttonImageTextOver;				// Colour of a buttonImage's text when mouse is over
 			CColour buttonImageTextUp;					// Colour of a buttonImage's text when mouse is not over
-
 //			CColour containerTitlebarTextInFocus;		// Colour of a container's titlebar text when the container is in focus.
 //			CColour containerTitlebarTextNotInFocus;	// Colour of a container's titlebar text when the container is not in focus.
 			CColour mouseLight;							// Colour emitted from the mouse cursor
-//			CColour progressBarBG;						// CUIProgressBar's background vertex colour
-//			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
+			CColour progressBarBG;						// CUIProgressBar's background vertex colour
+			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour
 			CColour scrollbarBG;						// CUIScrollbar's  BG colour.
 			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
 			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over

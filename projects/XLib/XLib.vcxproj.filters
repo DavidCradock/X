@@ -179,9 +179,6 @@
     <ClInclude Include="GUITextScroll.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIButtonImage.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -485,6 +482,12 @@
     <ClInclude Include="UIButtonImage.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="GUIButtonImage.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIProgressbar.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -576,9 +579,6 @@
       <Filter>GUI\TODO</Filter>
     </ClCompile>
     <ClCompile Include="GUITextScroll.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIButtonImage.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
@@ -855,6 +855,12 @@
       <Filter>GUI\Added to UI</Filter>
     </ClCompile>
     <ClCompile Include="UIButtonImage.cpp">
+      <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIButtonImage.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIProgressbar.cpp">
       <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
