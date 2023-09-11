@@ -50,6 +50,7 @@ namespace X
 		pWindow->setPosition(1400-16, 200-30);
 		pWindow->setResizable(true, CVector2f(200, 200), CVector2f(400, 400));
 		pWindow->progressbarAdd("pb1", 0, 0, 200, 30);
+		CUITextEdit* pTextEdit = pWindow->textEditAdd("textedit", 0, 50, 100, 40, "Hello");
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
 		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);

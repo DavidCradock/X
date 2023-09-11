@@ -149,12 +149,6 @@
     <ClInclude Include="GUIImageAnimated.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUILineGraph.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITextEdit.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUIDraggableDock.h">
       <Filter>GUI\TODO</Filter>
     </ClInclude>
@@ -491,6 +485,15 @@
     <ClInclude Include="UILineGraph.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="GUILineGraph.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UITextEdit.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -552,12 +555,6 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="GUIImageAnimated.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUILineGraph.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITextEdit.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIDraggableDock.cpp">
@@ -868,6 +865,15 @@
     </ClCompile>
     <ClCompile Include="UILineGraph.cpp">
       <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILineGraph.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UITextEdit.cpp">
+      <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextEdit.cpp">
+      <Filter>GUI\Added to UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

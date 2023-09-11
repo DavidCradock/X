@@ -107,6 +107,7 @@ namespace X
 		friend class CUILineGraph;
 		friend class CUIProgressbar;
 		friend class CUIScrollbar;
+		friend class CUITextEdit;
 		friend class SCApplicationManager;
 	public:
 		SCUIManager();

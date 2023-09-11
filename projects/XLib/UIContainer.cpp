@@ -602,6 +602,60 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUITextEdit */
+	/************************************************************************************************************************************************************/
+
+	CUITextEdit* CUIContainer::textEditAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapTextEdits.find(strName) != _mmapTextEdits.end(), "CUIContainer::textEditAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUITextEdit* pNewObject = new CUITextEdit(this, strName);
+		ThrowIfFalse(pNewObject, "CUIContainer::textEditAdd() failed to allocate memory for new object.");
+
+		_mmapTextEdits[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+		pNewObject->setText(strText);
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUITextEdit* CUIContainer::textEditGet(const std::string& strName)
+	{
+		auto it = _mmapTextEdits.find(strName);
+		ThrowIfTrue(_mmapTextEdits.end() == it, "CUIContainer::textEditGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::textEditRemove(const std::string& strName)
+	{
+		auto it = _mmapTextEdits.find(strName);
+		if (_mmapTextEdits.end() == it)
+			return;
+		delete it->second;
+		_mmapTextEdits.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::textEditRemoveAll(void)
+	{
+		auto it = _mmapTextEdits.begin();
+		while (it != _mmapTextEdits.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapTextEdits.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* All code below here needs to be modified to accomodate a new widget */
 	/************************************************************************************************************************************************************/
 
@@ -614,6 +668,7 @@ namespace X
 		progressbarRemoveAll();
 		scrollbarRemoveAll();
 		textRemoveAll();
+		textEditRemoveAll();
 
 		// Recompute this container's scrollbars
 		computeScrollbars();
@@ -652,6 +707,14 @@ namespace X
 		}
 
 		// For each CUIText widget (No need)
+
+		// For each CUITextEdit widget
+		auto itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->reset();
+			itTextEdit++;
+		}
 	}
 
 	void CUIContainer::_helperComputeMaxWidgetCornerPos(void)
@@ -762,6 +825,21 @@ namespace X
 			}
 			itText++;
 		}
+
+		// For each CUITextEdit object
+		auto itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			if (itTextEdit->second->getVisible())
+			{
+				CVector2f vBRPos = itTextEdit->second->getPosition() + itTextEdit->second->getDimensions();
+				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+					_mvMaxWidgetCornerPos.x = vBRPos.x;
+				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+					_mvMaxWidgetCornerPos.y = vBRPos.y;
+			}
+			itTextEdit++;
+		}
 	}
 
 	void CUIContainer::update(float fTimeDeltaSec)
@@ -804,6 +882,13 @@ namespace X
 
 		// For each CUIText widget (No need)
 
+		// For each CUITextEdit widget
+		auto itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->update(fTimeDeltaSec);
+			itTextEdit++;
+		}
 
 		// The container's two scrollbars
 		_mpScrollbarH->update(fTimeDeltaSec, false);
@@ -888,6 +973,14 @@ namespace X
 			itScrollbar++;
 		}
 
+		// For each CUITextEdit widget
+		auto itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->render(pVB);
+			itTextEdit++;
+		}
+
 		// Render all the widget backgrounds added above
 		glEnable(GL_SCISSOR_TEST);
 		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
@@ -957,6 +1050,14 @@ namespace X
 			itText++;
 		}
 
+		// For each CUITextEdit widget
+		itTextEdit = _mmapTextEdits.begin();
+		while (itTextEdit != _mmapTextEdits.end())
+		{
+			itTextEdit->second->renderFonts();
+			itTextEdit++;
+		}
+
 		glDisable(GL_SCISSOR_TEST);
 	}
 
@@ -974,6 +1075,7 @@ namespace X
 			itText->second->setFramebufferNeedsUpdating();
 			itText++;
 		}
+
 	}
 
 	/************************************************************************************************************************************************************/

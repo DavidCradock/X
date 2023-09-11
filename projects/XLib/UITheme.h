@@ -119,7 +119,7 @@ namespace X
 			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
 			SImageType scrollbarBG;			// Image names for CUIScrollbar's background
 			SImageType scrollbarTab;		// Image names for CUIScrollbar's tab
-//			SImageType textEditBG;			// Image names for CUITextEdit's background.
+			SImageType textEditBG;			// Image names for CUITextEdit's background.
 //			SImageType textScrollBG;		// Image names for CUITextScroll's background.
 //			SImageType tooltipBG;			// Image names for CUITooltip's background.
 			SImageType windowBG;			// Image names for CUIWindow's background.
@@ -131,7 +131,7 @@ namespace X
 			std::string button;						// Font used when rendering a button's text
 			std::string buttonImage;				// Font used when rendering a buttonImage's text
 			std::string text;						// Font used when rendering a UIText widget.
-//			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
+			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
 //			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
 			std::string windowTitlebar;				// Font used when rendering a window's titlebar text.
 		};
@@ -160,8 +160,8 @@ namespace X
 			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
 			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over
 			CColour text;								// CUIText font colour
-//			CColour textEditActive;						// CUITextEdit's text colour when active
-//			CColour textEditInactive;					// CUITextEdit's text colour when inactive
+			CColour textEditTextActive;					// CUITextEdit's text colour when active
+			CColour textEditTextInactive;				// CUITextEdit's text colour when inactive
 //			CColour textScrollBG;						// CUITextScroll's colour
 //			CColour textScrollText;						// CUITextScroll's text colour
 //			CColour tooltipText;						// Tool tip text colour
@@ -209,7 +209,7 @@ namespace X
 //			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
 			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between
-//			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
+			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 //			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
 			float windowResizeHandleOffsetX;		// The distance from a window's borders along X where clicking the mouse can begin window resizing.

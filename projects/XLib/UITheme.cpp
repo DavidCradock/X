@@ -46,7 +46,7 @@ namespace X
 		x->pFile->readString(file, _mSettings.fonts.button);
 		x->pFile->readString(file, _mSettings.fonts.buttonImage);
 		x->pFile->readString(file, _mSettings.fonts.text);
-//		x->pFile->readString(file, _mSettings.fonts.textEdit);
+		x->pFile->readString(file, _mSettings.fonts.textEdit);
 //		x->pFile->readString(file, _mSettings.fonts.textScroll);
 		x->pFile->readString(file, _mSettings.fonts.windowTitlebar);
 
@@ -61,7 +61,7 @@ namespace X
 		_helperReadImageType(file, _mSettings.images.progressBarFiller);
 		_helperReadImageType(file, _mSettings.images.scrollbarBG);
 		_helperReadImageType(file, _mSettings.images.scrollbarTab);
-//		_helperReadImageType(file, _mSettings.images.textEditBG);
+		_helperReadImageType(file, _mSettings.images.textEditBG);
 //		_helperReadImageType(file, _mSettings.images.textScrollBG);
 //		_helperReadImageType(file, _mSettings.images.tooltipBG);
 		_helperReadImageType(file, _mSettings.images.windowBG);
@@ -116,7 +116,7 @@ namespace X
 		x->pFile->writeString(file, _mSettings.fonts.button);
 		x->pFile->writeString(file, _mSettings.fonts.buttonImage);
 		x->pFile->writeString(file, _mSettings.fonts.text);
-//		x->pFile->writeString(file, _mSettings.fonts.textEdit);
+		x->pFile->writeString(file, _mSettings.fonts.textEdit);
 //		x->pFile->writeString(file, _mSettings.fonts.textScroll);
 		x->pFile->writeString(file, _mSettings.fonts.windowTitlebar);
 
@@ -131,7 +131,7 @@ namespace X
 		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
 		_helperWriteImageType(file, _mSettings.images.scrollbarBG);
 		_helperWriteImageType(file, _mSettings.images.scrollbarTab);
-//		_helperWriteImageType(file, _mSettings.images.textEditBG);
+		_helperWriteImageType(file, _mSettings.images.textEditBG);
 //		_helperWriteImageType(file, _mSettings.images.textScrollBG);
 //		_helperWriteImageType(file, _mSettings.images.tooltipBG);
 		_helperWriteImageType(file, _mSettings.images.windowBG);
@@ -176,7 +176,7 @@ namespace X
 		x->pResource->addFont(_mSettings.fonts.button, _mSettings.fonts.button, false);
 		x->pResource->addFont(_mSettings.fonts.buttonImage, _mSettings.fonts.buttonImage, false);
 		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
-//		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
+		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
 		x->pResource->addFont(_mSettings.fonts.windowTitlebar, _mSettings.fonts.windowTitlebar, false);
 
@@ -223,7 +223,7 @@ namespace X
 		x->pResource->removeFont(_mSettings.fonts.button);
 		x->pResource->removeFont(_mSettings.fonts.buttonImage);
 		x->pResource->removeFont(_mSettings.fonts.text);
-//		x->pResource->removeFont(_mSettings.fonts.textEdit);
+		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
 		x->pResource->removeFont(_mSettings.fonts.windowTitlebar);
 
@@ -275,8 +275,8 @@ namespace X
 		_mSettings.colours.scrollbarTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
 		_mSettings.colours.scrollbarTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.textEditActive.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.textEditInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.textEditTextActive.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.textEditTextInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -291,7 +291,7 @@ namespace X
 //		_mSettings.floats.checkboxFadeSpeed = 1.0f;
 		_mSettings.floats.normalMouseCursorDistance = 50.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
-//		_mSettings.floats.textEditFlashSpeed = 4.0f;
+		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
 //		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
 		_mSettings.floats.windowResizeHandleOffsetX = 12.0f;
@@ -303,7 +303,7 @@ namespace X
 		_mSettings.fonts.button = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.buttonImage = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
-//		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";
 
@@ -318,7 +318,7 @@ namespace X
 		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.scrollbarBG, "data/X/UI/default/images/scrollbarBG");
 		_helperSetNames(_mSettings.images.scrollbarTab, "data/X/UI/default/images/scrollbarTab");
-//		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/textEditBG");
+		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/genericBG");
 //		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
 //		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
 		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
@@ -352,7 +352,7 @@ namespace X
 		_helperCheckImageDimsAreOK(_mSettings.images.progressBarFiller, "progressBarFiller");
 		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarBG, "scrollbarBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarTab, "scrollbarTab");
-//		_helperCheckImageDimsAreOK(_mSettings.images.textEditBG, "textEditBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.textEditBG, "textEditBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.textScrollBG, "textScrollBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.tooltipBG, "tooltipBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.windowBG, "windowBG");
@@ -370,7 +370,7 @@ namespace X
 		_helperBuildNormalImages(_mSettings.images.progressBarFiller, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.scrollbarBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.scrollbarTab, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.textEditBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.textEditBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.textScrollBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.tooltipBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.windowBG, bOverwriteNormalImages);

@@ -140,6 +140,7 @@
     <ClInclude Include="UIProgressbar.h" />
     <ClInclude Include="UIScrollBar.h" />
     <ClInclude Include="UIText.h" />
+    <ClInclude Include="UITextEdit.h" />
     <ClInclude Include="UITheme.h" />
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="utilities.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="UIProgressbar.cpp" />
     <ClCompile Include="UIScrollBar.cpp" />
     <ClCompile Include="UIText.cpp" />
+    <ClCompile Include="UITextEdit.cpp" />
     <ClCompile Include="UITheme.cpp" />
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="utilities.cpp" />

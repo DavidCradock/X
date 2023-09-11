@@ -7,6 +7,7 @@
 #include "UIProgressbar.h"
 #include "UIScrollBar.h"
 #include "UIText.h"
+#include "UITextEdit.h"
 #include "UITheme.h"
 
 namespace X
@@ -235,6 +236,25 @@ namespace X
 
 		// Removes all text from this container
 		void textRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
+		/* TextEdit */
+		/************************************************************************************************************************************************************/
+
+		// Add text edit widget to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUITextEdit* textEditAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUITextEdit* textEditGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void textEditRemove(const std::string& strName);
+
+		// Removes all text from this container
+		void textEditRemoveAll(void);
 	protected:
 		// Dimensions of the container's widget area, set by setDimensions();
 		CVector2f _mvContainersWidgetAreaDimensions;
@@ -262,6 +282,7 @@ namespace X
 		std::map<std::string, CUIProgressbar*> _mmapProgressbars;	// Map holding each CUIProgressbar widget
 		std::map<std::string, CUIScrollbar*> _mmapScrollbars;		// Map holding each CUIScrollbar widget
 		std::map<std::string, CUIText*> _mmapTexts;					// Map holding each CUIText widget
+		std::map<std::string, CUITextEdit*> _mmapTextEdits;			// Map holding each CUITextEdit widget
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;
