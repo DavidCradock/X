@@ -30,11 +30,11 @@ namespace X
 		// Audio
 //		_helperReadAudio(file, _mSettings.audio.buttonClicked);
 //		_helperReadAudio(file, _mSettings.audio.buttonImageClicked);
-//		_helperReadAudio(file, _mSettings.audio.textEditActivate);
-//		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
-//		_helperReadAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
-//		_helperReadAudio(file, _mSettings.audio.textEditReturn);
-//		_helperReadAudio(file, _mSettings.audio.textEditTextAdd);
+		_helperReadAudio(file, _mSettings.audio.textEditActivate);
+		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
+		_helperReadAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
+		_helperReadAudio(file, _mSettings.audio.textEditReturn);
+		_helperReadAudio(file, _mSettings.audio.textEditTextAdd);
 
 		// Colours
 		x->pFile->read(file, _mSettings.colours);
@@ -100,11 +100,11 @@ namespace X
 		// Audio
 //		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
 //		_helperWriteAudio(file, _mSettings.audio.buttonImageClicked);
-//		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
-//		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
-//		_helperWriteAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
-//		_helperWriteAudio(file, _mSettings.audio.textEditReturn);
-//		_helperWriteAudio(file, _mSettings.audio.textEditTextAdd);
+		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
+		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
+		_helperWriteAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
+		_helperWriteAudio(file, _mSettings.audio.textEditReturn);
+		_helperWriteAudio(file, _mSettings.audio.textEditTextAdd);
 
 		// Colours
 		x->pFile->write(file, _mSettings.colours);
@@ -165,11 +165,11 @@ namespace X
 		pAM->addNewSampleGroup("UI");
 //		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 //		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		pAM->loadSampleGroup("UI");
 
 		// Fonts
@@ -213,11 +213,11 @@ namespace X
 		pAM->unloadSampleGroup("UI");
 //		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 //		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.textEditReturn.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.textEditTextAdd.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 
 		// Fonts
 		x->pResource->removeFont(_mSettings.fonts.button);
@@ -247,11 +247,11 @@ namespace X
 		// Audio
 //		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
 //		_helperSetAudio(_mSettings.audio.buttonImageClicked, "data/X/UI/default/buttonImageClicked.wav", 1.0f, 0.8f);
-//		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
-//		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
-//		_helperSetAudio(_mSettings.audio.textEditNoMoreCharSpace, "data/X/UI/default/textEditNoMoreCharSpace.wav", 1.0f, 0.2f);
-//		_helperSetAudio(_mSettings.audio.textEditReturn, "data/X/UI/default/textEditReturn.wav", 1.0f, 0.8f);
-//		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
+		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
+		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
+		_helperSetAudio(_mSettings.audio.textEditNoMoreCharSpace, "data/X/UI/default/textEditNoMoreCharSpace.wav", 1.0f, 0.2f);
+		_helperSetAudio(_mSettings.audio.textEditReturn, "data/X/UI/default/textEditReturn.wav", 1.0f, 0.8f);
+		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
 
 		// Colours
 		_mSettings.colours.ambientLight.set(0.7f, 0.7f, 0.7f, 1.0f);

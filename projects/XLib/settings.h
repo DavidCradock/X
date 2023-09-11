@@ -49,6 +49,11 @@ namespace X
 		// This re-saves the settings file.
 		void setWindowVSync(bool bFullscreen);
 
+		// Sets the global volume level for the user interface ranging from 0 to 1
+		void setUIVolume(float fVolume);
+
+		// Returns the global volume level for the user interface ranging from 0 to 1
+		float getUIVolume(void) const;
 	private:
 
 		// Sets all settings to default values
@@ -63,6 +68,9 @@ namespace X
 
 		// Whether the application window should set VSync to enabled or not
 		bool _mbWindowVSync;
+
+		// Global volume scale for the user interface
+		float _mfUIVolume;
 
 	};
 }

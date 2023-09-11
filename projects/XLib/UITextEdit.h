@@ -91,14 +91,13 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		
 		CTimer _mTimer;
 		enum state
 		{
 			active,
 			inactive
 		};
-		std::string _mstrText;			// The text to be rendered on top of this object
+		std::string _mstrText;			// The text string of this object
 		state _mState;
 		CColour _mTextColour;			// Current colour of text based on state
 		float _mfAddFlashingCursor;		// value is incremented and if above 1, adds an additional character to the text edit when active

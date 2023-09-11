@@ -190,7 +190,7 @@ namespace X
 			// Determine if mouse cursor is over
 			if (vMousePos.x > vWidgetTL.x)
 				if (vMousePos.x < vWidgetBR.x)
-					if (vMousePos.y > vWidgetTL.x)
+					if (vMousePos.y > vWidgetTL.y)
 						if (vMousePos.y < vWidgetBR.y)
 							bMouseOver = true;
 
@@ -203,7 +203,7 @@ namespace X
 					if (_mState != state::active)
 					{
 						_mState = state::active;
-//						x->pAudio->getEmitter(pTheme->mAudio.textEditActivate.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditActivate.fVolume, pTheme->mAudio.textEditActivate.fPitch);
+						x->pAudio->getEmitter(pThemeSettings->audio.textEditActivate.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditActivate.volume, pThemeSettings->audio.textEditActivate.pitch);
 					}
 				}
 			}
@@ -247,7 +247,7 @@ namespace X
 			if (x->pInput->key.once(KC_RETURN) || x->pInput->key.once(KC_NUMPADENTER))
 			{
 				_mState = state::inactive;
-//				x->pAudio->getEmitter(pTheme->mAudio.textEditReturn.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditReturn.fVolume, pTheme->mAudio.textEditReturn.fPitch);
+				x->pAudio->getEmitter(pThemeSettings->audio.textEditReturn.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditReturn.volume, pThemeSettings->audio.textEditReturn.pitch);
 				// Check to see if we're only accepting numbers with _mbNumberInputOnly and if so, check the string and empty it if it isn't a number
 				if (_mbIntegerInputOnly)
 				{
@@ -266,7 +266,7 @@ namespace X
 					if (_mstrText.length() > 0)
 					{
 						_mstrText.pop_back();
-//						x->pAudio->getEmitter(pTheme->mAudio.textEditBackspace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditBackspace.fVolume, pTheme->mAudio.textEditBackspace.fPitch);
+						x->pAudio->getEmitter(pThemeSettings->audio.textEditBackspace.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditBackspace.volume, pThemeSettings->audio.textEditBackspace.pitch);
 					}
 				}
 				else
@@ -277,11 +277,11 @@ namespace X
 						if (_mstrText.length() < _muiMaxChars)
 						{
 							_mstrText += strNewChar;
-//							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
+							x->pAudio->getEmitter(pThemeSettings->audio.textEditTextAdd.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditTextAdd.volume, pThemeSettings->audio.textEditTextAdd.pitch);
 						}
 						else
 						{
-//							x->pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
+							x->pAudio->getEmitter(pThemeSettings->audio.textEditNoMoreCharSpace.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditNoMoreCharSpace.volume, pThemeSettings->audio.textEditNoMoreCharSpace.pitch);
 						}
 					}
 					if (x->pInput->key.repeat(KC_SPACE))
@@ -289,11 +289,11 @@ namespace X
 						if (_mstrText.length() < _muiMaxChars)
 						{
 							_mstrText += " ";
-//							x->pAudio->getEmitter(pTheme->mAudio.textEditTextAdd.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditTextAdd.fVolume, pTheme->mAudio.textEditTextAdd.fPitch);
+							x->pAudio->getEmitter(pThemeSettings->audio.textEditTextAdd.sampleName)->play(x->pSettings->getUIVolume()* pThemeSettings->audio.textEditTextAdd.volume, pThemeSettings->audio.textEditTextAdd.pitch);
 						}
 						else
 						{
-//							x->pAudio->getEmitter(pTheme->mAudio.textEditNoMoreCharSpace.strSampleName)->play(x->pGUI->getAudioVol() * pTheme->mAudio.textEditNoMoreCharSpace.fVolume, pTheme->mAudio.textEditNoMoreCharSpace.fPitch);
+							x->pAudio->getEmitter(pThemeSettings->audio.textEditNoMoreCharSpace.sampleName)->play(x->pSettings->getUIVolume()* pThemeSettings->audio.textEditNoMoreCharSpace.volume, pThemeSettings->audio.textEditNoMoreCharSpace.pitch);
 						}
 					}
 				}
@@ -306,9 +306,7 @@ namespace X
 
 	void CUITextEdit::reset(void)
 	{
-		const CUITheme::SSettings* pSettings = _mpContainer->themeGetSettings();
-//		_mColourBG = pSettings->colours.buttonBGUp;
-//		_mColourText = pSettings->colours.buttonTextUp;
+		_mState = state::inactive;
 	}
 
 	/******************************************************************* Widget specific *******************************************************************/

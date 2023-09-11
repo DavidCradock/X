@@ -182,11 +182,11 @@ namespace X
 		{
 //			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
 //			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
-//			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
-//			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
-//			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
-//			AudioSampleInfo textEditReturn;				// Audio sample to play when a text edit box is activated and the return key is pressed.
-//			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
+			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
+			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
+			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
+			AudioSampleInfo textEditReturn;				// Audio sample to play when a text edit box is activated and the return key is pressed.
+			AudioSampleInfo textEditTextAdd;			// Audio sample to play when a text edit box is activated and a characted is being added to it's current string.
 		};
 		
 		// Structure to hold the names of all the cursor files for the mouse cursor

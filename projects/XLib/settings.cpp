@@ -22,7 +22,7 @@ namespace X
 
 		// Open file in text mode
 		std::ifstream file;
-		file.open(strFilename, std::ofstream::in);
+		file.open(strFilename, std::ifstream::in);
 		if (!file.is_open())
 		{
 			pLog->add("SCSettings::load(" + strFilename + ") failed to load from file.");
@@ -49,7 +49,9 @@ namespace X
 		file >> strWord;	space = file.get();	// Setting name, then space
 		file >> _mbWindowVSync;
 
-
+		// _mfUIVolume
+		file >> strWord;	space = file.get();	// Setting name, then space
+		file >> _mfUIVolume;
 
 
 
@@ -90,6 +92,10 @@ namespace X
 		str = "WindowVSync: " + std::to_string(_mbWindowVSync) + "\n";
 		file << str;
 		
+		// _mfUIVolume
+		str = "UIVolume: " + std::to_string(_mfUIVolume) + "\n";
+		file << str;
+
 
 
 		// Make sure there were no errors
@@ -105,6 +111,7 @@ namespace X
 		_mfBackbufferScale = 1.0f;
 		_mbWindowFullscreen = false;
 		_mbWindowVSync = true;
+		_mfUIVolume = 1.0f;
 	}
 
 	void SCSettings::setBackbufferScale(float fBackbufferScale)
@@ -139,5 +146,16 @@ namespace X
 	{
 		_mbWindowVSync = bFullscreen;
 		save();
+	}
+
+	void SCSettings::setUIVolume(float fVolume)
+	{
+		_mfUIVolume = fVolume;
+		clamp(_mfUIVolume, 0.0f, 1.0f);
+	}
+
+	float SCSettings::getUIVolume(void) const
+	{
+		return _mfUIVolume;
 	}
 }
