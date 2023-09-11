@@ -864,7 +864,13 @@ namespace X
 
 		// For each CUIImage widget (No need)
 
-		// For each CUILineGraph widget (No need)
+		// For each CUILineGraph widget
+		auto itLineGraph = _mmapLineGraphs.begin();
+		while (itLineGraph != _mmapLineGraphs.end())
+		{
+			itLineGraph->second->renderBG(pVB);
+			itLineGraph++;
+		}
 
 		// For each CUIProgressbar widget
 		auto itProgressbar = _mmapProgressbars.begin();
@@ -930,10 +936,10 @@ namespace X
 		}
 
 		// For each CUILineGraph widget
-		auto itLineGraph = _mmapLineGraphs.begin();
+		itLineGraph = _mmapLineGraphs.begin();
 		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			itLineGraph->second->render();
+			itLineGraph->second->renderLines();
 			itLineGraph++;
 		}
 

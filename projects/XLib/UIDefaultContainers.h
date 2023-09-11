@@ -1,5 +1,6 @@
 #pragma once
 #include "PCH.h"
+#include "timer.h"
 
 namespace X
 {
@@ -73,6 +74,12 @@ namespace X
 
 		void _initStatistics(void);							// Init method called from initialise() for "X:Default:Statistics" default container.
 		void _updateStatistics(float fTimeDeltaSec);		// Update method called from update() for "X:Default:Statistics" default container.
+		struct SStatistics
+		{
+			float fAddValueToLinegraphDataset;	// Time counter used to add a new value to the data set.
+			CTimer timer;
+		};
+		SStatistics _mStatistics;
 
 		void _initUIThemeEditor(void);						// Init method called from initialise() for "X:Default:UIThemeEditor" default container.
 		void _updateUIThemeEditor(float fTimeDeltaSec);		// Update method called from update() for "X:Default:UIThemeEditor" default container.

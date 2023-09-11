@@ -92,6 +92,9 @@ namespace X
 
 	void CUIText::render(void)
 	{
+		if (!_mbVisible)
+			return;
+
 		// Get pointer to this widget's frame buffer
 		CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer(_mstrFramebufferName);
 

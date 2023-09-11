@@ -52,7 +52,10 @@ namespace X
 		pWindow->progressbarAdd("pb1", 0, 0, 200, 30);
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
-		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(9999, 0);
+		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);
+
+		// Show old GUI statistics
+		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
 	}
 
 	void CApplication::onStart(void)

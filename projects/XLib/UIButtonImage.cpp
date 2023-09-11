@@ -91,6 +91,9 @@ namespace X
 
 	void CUIButtonImage::render(void)
 	{
+		if (!_mbVisible)
+			return;
+
 		// Render image
 		CVector2f vWidgetOffset = _mpContainer->getWidgetOffset();
 		CVector2f vPos = vWidgetOffset + _mvPosition;

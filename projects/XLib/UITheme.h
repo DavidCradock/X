@@ -114,7 +114,7 @@ namespace X
 //			SImageType checkboxBGNormal;	// Image names for CUICheckbox's normal state
 //			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
 //			SImageType checkboxBGOFF;		// Image names for CUICheckbox's OFF state
-//			SImageType lineGraphBG;			// Image names for CUILineGraph's background
+			SImageType lineGraphBG;			// Image names for CUILineGraph's background
 			SImageType progressBarBG;		// Image names for CUIProgressBar's background
 			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
 			SImageType scrollbarBG;			// Image names for CUIScrollbar's background
@@ -152,6 +152,7 @@ namespace X
 			CColour buttonImageTextDown;				// Colour of a buttonImage's text when mouse is over and clicked
 			CColour buttonImageTextOver;				// Colour of a buttonImage's text when mouse is over
 			CColour buttonImageTextUp;					// Colour of a buttonImage's text when mouse is not over
+			CColour linegraphBG;						// CUILineGraph's background vertex colour
 			CColour mouseLight;							// Colour emitted from the mouse cursor
 			CColour progressBarBG;						// CUIProgressBar's background vertex colour
 			CColour progressBarFiller;					// CUIProgressBar's filler vertex colour

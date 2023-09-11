@@ -67,6 +67,9 @@ namespace X
 
 	void CUIImage::render(void)
 	{
+		if (!_mbVisible)
+			return;
+
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		if (_mstrResourceName.size())

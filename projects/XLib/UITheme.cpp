@@ -56,7 +56,7 @@ namespace X
 //		_helperReadImageType(file, _mSettings.images.checkboxBGNormal);
 //		_helperReadImageType(file, _mSettings.images.checkboxBGOFF);
 //		_helperReadImageType(file, _mSettings.images.checkboxBGON);
-//		_helperReadImageType(file, _mSettings.images.lineGraphBG);
+		_helperReadImageType(file, _mSettings.images.lineGraphBG);
 		_helperReadImageType(file, _mSettings.images.progressBarBG);
 		_helperReadImageType(file, _mSettings.images.progressBarFiller);
 		_helperReadImageType(file, _mSettings.images.scrollbarBG);
@@ -126,7 +126,7 @@ namespace X
 //		_helperWriteImageType(file, _mSettings.images.checkboxBGNormal);
 //		_helperWriteImageType(file, _mSettings.images.checkboxBGOFF);
 //		_helperWriteImageType(file, _mSettings.images.checkboxBGON);
-//		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
+		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
 		_helperWriteImageType(file, _mSettings.images.progressBarBG);
 		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
 		_helperWriteImageType(file, _mSettings.images.scrollbarBG);
@@ -267,6 +267,7 @@ namespace X
 		_mSettings.colours.buttonImageTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.buttonImageTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.buttonImageTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.linegraphBG.set(0.5f, 0.5f, 0.5f, 1.0f);
 		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
 		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 0.5f);
@@ -312,7 +313,7 @@ namespace X
 //		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
 //		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");
 //		_helperSetNames(_mSettings.images.checkboxBGON, "data/X/UI/default/images/checkboxBGON");
-//		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/lineGraphBG");
+		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.progressBarBG, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.scrollbarBG, "data/X/UI/default/images/scrollbarBG");
@@ -346,7 +347,7 @@ namespace X
 //		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGNormal, "checkboxBGNormal");
 //		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOFF, "checkboxBGOFF");
 //		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGON, "checkboxBGON");
-//		_helperCheckImageDimsAreOK(_mSettings.images.lineGraphBG, "lineGraphBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.lineGraphBG, "lineGraphBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.progressBarBG, "progressBarBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.progressBarFiller, "progressBarFiller");
 		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarBG, "scrollbarBG");
@@ -364,7 +365,7 @@ namespace X
 //		_helperBuildNormalImages(_mSettings.images.checkboxBGNormal, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.checkboxBGOFF, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.checkboxBGON, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.lineGraphBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.lineGraphBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.progressBarBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.progressBarFiller, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.scrollbarBG, bOverwriteNormalImages);

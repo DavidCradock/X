@@ -72,6 +72,9 @@ namespace X
 
 	void CUIButton::render(CResourceVertexBufferCPT2* pVB)
 	{
+		if (!_mbVisible)
+			return;
+
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells

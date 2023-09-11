@@ -69,6 +69,9 @@ namespace X
 
 	void CUIProgressbar::render(CResourceVertexBufferCPT2* pVB)
 	{
+		if (!_mbVisible)
+			return;
+
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
