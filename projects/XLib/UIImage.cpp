@@ -8,7 +8,7 @@ namespace X
 	CUIImage::CUIImage(CUIContainer* pContainer)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(200, 48);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_meResourceType = EResourceType::texture2DFromFile;
 	}

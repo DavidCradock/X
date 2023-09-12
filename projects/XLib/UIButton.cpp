@@ -10,7 +10,7 @@ namespace X
 	CUIButton::CUIButton(CUIContainer* pContainer)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(200, 48);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_mState = state::up;
 		_mbClicked = false;

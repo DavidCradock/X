@@ -11,7 +11,7 @@ namespace X
 	CUITextEdit::CUITextEdit(CUIContainer* pContainer, const std::string& strWidgetName)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(200, 48);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 
 		_mState = state::inactive;

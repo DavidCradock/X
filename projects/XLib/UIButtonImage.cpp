@@ -10,7 +10,7 @@ namespace X
 	CUIButtonImage::CUIButtonImage(CUIContainer* pContainer, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(200, 48);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_mState = state::up;
 		_mbClicked = false;

@@ -56,7 +56,7 @@ namespace X
 	CUILineGraph::CUILineGraph(CUIContainer* pContainer)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(200, 48);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 	}
 

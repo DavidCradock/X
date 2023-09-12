@@ -10,7 +10,7 @@ namespace X
 	CUIText::CUIText(CUIContainer* pContainer, const std::string& strWidgetName)
 	{
 		_mpContainer = pContainer;
-		_mvDimensions.set(100, 100);
+		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 
 		_mbFramebufferNeedsUpdating = true;
