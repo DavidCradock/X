@@ -66,7 +66,7 @@ namespace X
 		strTxt += "These images can be used to represent an entity's rotation, or an animation sequence.\n \n";
 		strTxt += "CEntityLine entities use a CResourceLine object to render lines. These lines can be cubes, circles or simple lines and unlike the previously mentioned entities, can actually be rotated. They are generally used for debug rendering.\n \n";
 		strTxt += "CEntityRot entities, unlike CEntities, do not (Although can do) use multiple images stored in an atlas to represent their rotations, but instead, have their vertices rotated on the GPU via a world matrix prior to being sent to the graphics device. This allows for more flexibility (Being able to be rotated), at the expense of less efficiency (No batching).\n";
-		pCont->addTextScroll("TextScroll", 0, 0, 640, 640, strTxt);
+		pCont->addText("TextScroll", 0, 0, strTxt);
 
 		timer.update();
 	}

@@ -92,14 +92,6 @@ namespace X
 			itImageFB++;
 		}
 
-		// Render each text scroll object
-		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
-		while (itTextScroll != _mmapTextScrolls.end())
-		{
-			itTextScroll->second->render(this, strFramebufferToSampleFrom);
-			itTextScroll++;
-		}
-
 		// Render each of the button images
 		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
@@ -122,14 +114,6 @@ namespace X
 		{
 			itCheckbox->second->render(this, strFramebufferToSampleFrom);
 			itCheckbox++;
-		}
-
-		// Render each sub container
-		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
-		while (itSubContainer != _mmapSubContainers.end())
-		{
-			itSubContainer->second->render(this, strFramebufferToSampleFrom);
-			itSubContainer++;
 		}
 
 		// Render each text
@@ -213,14 +197,6 @@ namespace X
 		{
 			itImageFB->second->mpTooltip->render(this, strFramebufferToSampleFrom);
 			itImageFB++;
-		}
-
-		// Render each text scroll object's tooltip
-		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
-		while (itTextScroll != _mmapTextScrolls.end())
-		{
-			itTextScroll->second->mpTooltip->render(this, strFramebufferToSampleFrom);
-			itTextScroll++;
 		}
 
 		// Render each of the button images's tooltip
@@ -432,14 +408,6 @@ namespace X
 			itImageFB++;
 		}
 
-		// Text scroll objects
-		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
-		while (itTextScroll != _mmapTextScrolls.end())
-		{
-			itTextScroll->second->update(this, bContainerAcceptingMouseClicks);
-			itTextScroll++;
-		}
-
 		// Button images
 		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
@@ -462,14 +430,6 @@ namespace X
 		{
 			itCheckbox->second->update(this, bContainerAcceptingMouseClicks);
 			itCheckbox++;
-		}
-
-		// Sub containers
-		std::map<std::string, CGUISubContainer*>::iterator itSubContainer = _mmapSubContainers.begin();
-		while (itSubContainer != _mmapSubContainers.end())
-		{
-			itSubContainer->second->update(this, bContainerAcceptingMouseClicks);
-			itSubContainer++;
 		}
 
 		return bMouseOver;
@@ -581,14 +541,6 @@ namespace X
 			itImageFB++;
 		}
 
-		// Text scroll objects
-		std::map<std::string, CGUITextScroll*>::iterator itTextScroll = _mmapTextScrolls.begin();
-		while (itTextScroll != _mmapTextScrolls.end())
-		{
-			itTextScroll->second->mpTooltip->resetFade();
-			itTextScroll++;
-		}
-
 		// Button images
 		std::map<std::string, CGUIButtonImage*>::iterator itButtonImage = _mmapButtonImages.begin();
 		while (itButtonImage != _mmapButtonImages.end())
@@ -635,11 +587,9 @@ namespace X
 		removeAllImages();
 		removeAllImageAnimateds();
 		removeAllImageFramebuffers();
-		removeAllTextScrolls();
 		removeAllButtonImages();
 		removeAllImageDepthbuffers();
 		removeAllCheckboxes();
-		removeAllSubContainers();
 	}
 
 	void CGUIContainer::_renderContainer(const std::string& strFramebufferToSampleFrom)
@@ -1298,66 +1248,6 @@ namespace X
 	}
 
 	/**************************************************************************************************************************************************
-	Text scroll
-	**************************************************************************************************************************************************/
-
-	CGUITextScroll* CGUIContainer::addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
-	{
-		// If resource already exists
-		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
-		ThrowIfTrue(it != _mmapTextScrolls.end(), "CGUIContainer::addTextScroll(" + strName + ") failed. The named object already exists.");
-		CGUITextScroll* pNewRes = new CGUITextScroll;
-		ThrowIfFalse(pNewRes, "CGUIContainer::addTextScroll(" + strName + ") failed. Could not allocate memory for the new object.");
-		pNewRes->mfPositionX = fPosX;
-		pNewRes->mfPositionY = fPosY;
-		pNewRes->mfWidth = fWidth;
-		pNewRes->mfHeight = fHeight;
-		pNewRes->_mstrText = strText;
-		// Create name of framebuffer
-		pNewRes->_mstrFBName = "GUITextScrollFB_" + _mstrName + "_" + strName;
-
-		// Check to see if the framebuffer resource name already exists
-		ThrowIfTrue(x->pResource->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addTextScroll(" + strName + ") failed. The name must be unique for all TextScroll objects.");
-
-		// Create framebuffer in SCResourceManager
-		x->pResource->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fWidth), unsigned int(fHeight));
-
-		_mmapTextScrolls[strName] = pNewRes;
-		return pNewRes;
-	}
-
-	CGUITextScroll* CGUIContainer::getTextScroll(const std::string& strName) const
-	{
-		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
-		ThrowIfTrue(it == _mmapTextScrolls.end(), "CGUIContainer::getTextScroll(" + strName + ") failed. The named object doesn't exist.");
-		return it->second;
-	}
-
-	void CGUIContainer::removeTextScroll(const std::string& strName)
-	{
-		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.find(strName);
-		if (it == _mmapTextScrolls.end())
-			return;
-
-		// Remove framebuffer resource from resource manager
-		x->pResource->removeFramebuffer(it->second->_mstrFBName);
-
-		delete it->second;
-		_mmapTextScrolls.erase(it);
-	}
-
-	void CGUIContainer::removeAllTextScrolls(void)
-	{
-		std::map<std::string, CGUITextScroll*>::iterator it = _mmapTextScrolls.begin();
-		while (it != _mmapTextScrolls.end())
-		{
-			delete it->second;
-			_mmapTextScrolls.erase(it);
-			it = _mmapTextScrolls.begin();
-		}
-	}
-
-	/**************************************************************************************************************************************************
 	Button image
 	**************************************************************************************************************************************************/
 
@@ -1527,60 +1417,5 @@ namespace X
 		}
 	}
 
-	/**************************************************************************************************************************************************
-	Sub containers
-	**************************************************************************************************************************************************/
 
-	CGUISubContainer* CGUIContainer::addSubContainer(const std::string& strName, float fPosX, float fPosY, float fDimsX, float fDimsY)
-	{
-		// If resource already exists
-		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
-		ThrowIfTrue(it != _mmapSubContainers.end(), "CGUIContainer::addSubContainer(" + strName + ") failed. The named object already exists.");
-		CGUISubContainer* pNewRes = new CGUISubContainer;
-		ThrowIfFalse(pNewRes, "CGUIContainer::addSubContainer(" + strName + ") failed. Could not allocate memory for the new object.");
-		pNewRes->mfPositionX = fPosX;
-		pNewRes->mfPositionY = fPosY;
-		pNewRes->setDimensions(fDimsX, fDimsY);
-		pNewRes->_mstrName = strName;
-		pNewRes->_mbVisible = true;
-
-		// Create name of framebuffer
-		pNewRes->_mstrFBName = "GUISubContainerFB_" + _mstrName + "_" + strName;
-
-		// Check to see if the framebuffer resource name already exists
-		ThrowIfTrue(x->pResource->getFramebufferExists(pNewRes->_mstrFBName), "CGUIContainer::addSubContainer(" + strName + ") failed. The name must be unique for all SubContainer objects.");
-
-		// Create framebuffer in SCResourceManager
-		x->pResource->addFramebuffer(pNewRes->_mstrFBName, unsigned int(fDimsX), unsigned int(fDimsY));
-
-		_mmapSubContainers[strName] = pNewRes;
-		return pNewRes;
-	}
-
-	CGUISubContainer* CGUIContainer::getSubContainer(const std::string& strName) const
-	{
-		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
-		ThrowIfTrue(it == _mmapSubContainers.end(), "CGUIContainer::getSubContainer(" + strName + ") failed. The named object doesn't exist.");
-		return it->second;
-	}
-
-	void CGUIContainer::removeSubContainer(const std::string& strName)
-	{
-		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.find(strName);
-		if (it == _mmapSubContainers.end())
-			return;
-		delete it->second;
-		_mmapSubContainers.erase(it);
-	}
-
-	void CGUIContainer::removeAllSubContainers(void)
-	{
-		std::map<std::string, CGUISubContainer*>::iterator it = _mmapSubContainers.begin();
-		while (it != _mmapSubContainers.end())
-		{
-			delete it->second;
-			_mmapSubContainers.erase(it);
-			it = _mmapSubContainers.begin();
-		}
-	}
 }

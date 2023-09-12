@@ -72,15 +72,37 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUILineGraph::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUILineGraph::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUILineGraph::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUILineGraph::getDimensionsMinimum(void) const
+	{
+		CUITheme* pTheme = _mpContainer->themeGet();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+
+		CVector2f vMinimumDims;
+		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.cornerTL);
+		vMinimumDims = pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.cornerBR);
+		vMinimumDims += pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.edgeT);
+		vMinimumDims.x += pID->vDims.x;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.edgeR);
+		vMinimumDims.y += pID->vDims.y;
+		return vMinimumDims;
 	}
 
 	void CUILineGraph::setPosition(float fX, float fY)
@@ -90,10 +112,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUILineGraph::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUILineGraph::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUILineGraph::getPosition(void) const
@@ -117,7 +143,7 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
 		x->pUI->_helperAddWidgetGridGeometry(
@@ -129,8 +155,11 @@ namespace X
 			pVB);
 	}
 
-	void CUILineGraph::renderLines(void)
+	void CUILineGraph::renderNonBG(void)
 	{
+		if (!_mpContainer->getVisible())
+			return;
+
 		// Get required resources needed to render
 		CResourceVertexBufferLine* pLine = x->pResource->getVertexBufferLine(x->pResource->defaultRes.vertexbufferLine_default);
 		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_VBCPT);

@@ -38,8 +38,11 @@ namespace X
 
 	void CUIWindow::render(void)
 	{
+
 		if (!_mbVisible)
 			return;
+
+		x->pProfiler->begin("CUIWindow::render()");
 
 		_renderBorders();
 
@@ -50,7 +53,8 @@ namespace X
 		CUITheme* pTheme = x->pUI->themeGet(_mstrThemename);
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceFont* pFont = x->pResource->getFont(pSettings->fonts.windowTitlebar);
-		CImageAtlasDetails idTL = pTheme->getTextureAtlas()->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTL);
 		float fTextHeight = pFont->getTextHeight();
 		CColour colour;
 		if (_mbInFocus)
@@ -58,10 +62,12 @@ namespace X
 		else
 			colour = pSettings->colours.windowTitlebarTextNotFocused;
 		CVector2f vTextPos = _mvPosition;
-		vTextPos.x += idTL.vDims.x;
-		vTextPos.y += idTL.vDims.y * 0.5f;
+		vTextPos.x += idTL->vDims.x;
+		vTextPos.y += idTL->vDims.y * 0.5f;
 		vTextPos.y -= fTextHeight * 0.5f;
 		pFont->print(_mstrTitlebarText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, colour);
+
+		x->pProfiler->end("CUIWindow::render()");
 	}
 
 	void CUIWindow::_renderBorders(void)
@@ -104,24 +110,24 @@ namespace X
 		pVB->removeGeom();
 
 		// Get image details for the 3x3 cell images
-		CImageAtlasDetails idColC = pAtlas->getImageDetails(pSettings->images.windowBG.colour.centre);
-		CImageAtlasDetails idColBL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBL);
-		CImageAtlasDetails idColBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
-		CImageAtlasDetails idColTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
-		CImageAtlasDetails idColTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
-		CImageAtlasDetails idColB = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeB);
-		CImageAtlasDetails idColL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeL);
-		CImageAtlasDetails idColR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeR);
-		CImageAtlasDetails idColT = pAtlas->getImageDetails(pSettings->images.windowBG.colour.edgeT);
-		CImageAtlasDetails idNormC = pAtlas->getImageDetails(pSettings->images.windowBG.normal.centre);
-		CImageAtlasDetails idNormBL = pAtlas->getImageDetails(pSettings->images.windowBG.normal.cornerBL);
-		CImageAtlasDetails idNormBR = pAtlas->getImageDetails(pSettings->images.windowBG.normal.cornerBR);
-		CImageAtlasDetails idNormTL = pAtlas->getImageDetails(pSettings->images.windowBG.normal.cornerTL);
-		CImageAtlasDetails idNormTR = pAtlas->getImageDetails(pSettings->images.windowBG.normal.cornerTR);
-		CImageAtlasDetails idNormB = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeB);
-		CImageAtlasDetails idNormL = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeL);
-		CImageAtlasDetails idNormR = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeR);
-		CImageAtlasDetails idNormT = pAtlas->getImageDetails(pSettings->images.windowBG.normal.edgeT);
+		CImageAtlasDetails* idColC = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.centre);
+		CImageAtlasDetails* idColBL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerBL);
+		CImageAtlasDetails* idColBR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerBR);
+		CImageAtlasDetails* idColTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails* idColTR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTR);
+		CImageAtlasDetails* idColB = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.edgeB);
+		CImageAtlasDetails* idColL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.edgeL);
+		CImageAtlasDetails* idColR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.edgeR);
+		CImageAtlasDetails* idColT = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.edgeT);
+		CImageAtlasDetails* idNormC = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.centre);
+		CImageAtlasDetails* idNormBL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.cornerBL);
+		CImageAtlasDetails* idNormBR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.cornerBR);
+		CImageAtlasDetails* idNormTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.cornerTL);
+		CImageAtlasDetails* idNormTR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.cornerTR);
+		CImageAtlasDetails* idNormB = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.edgeB);
+		CImageAtlasDetails* idNormL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.edgeL);
+		CImageAtlasDetails* idNormR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.edgeR);
+		CImageAtlasDetails* idNormT = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.normal.edgeT);
 
 		// When rendering these borders, we need to add the additional space for the scrollbars.
 		// The widgets' area remains the same.
@@ -144,133 +150,133 @@ namespace X
 
 		// Top left corner
 		CVector2f vPos = _mvPosition;
-		CVector2f vDims = idColTL.vDims;
+		CVector2f vDims = idColTL->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColTL.sTexCoords.vBL,
-			idColTL.sTexCoords.vBR,
-			idColTL.sTexCoords.vTR,
-			idColTL.sTexCoords.vTL,
-			idNormTL.sTexCoords.vBL,
-			idNormTL.sTexCoords.vBR,
-			idNormTL.sTexCoords.vTR,
-			idNormTL.sTexCoords.vTL);
+			idColTL->sTexCoords.vBL,
+			idColTL->sTexCoords.vBR,
+			idColTL->sTexCoords.vTR,
+			idColTL->sTexCoords.vTL,
+			idNormTL->sTexCoords.vBL,
+			idNormTL->sTexCoords.vBR,
+			idNormTL->sTexCoords.vTR,
+			idNormTL->sTexCoords.vTL);
 
 		// Top edge
-		vPos.x = _mvPosition.x + idColTL.vDims.x;
+		vPos.x = _mvPosition.x + idColTL->vDims.x;
 		vPos.y = _mvPosition.y;
 		vDims.x = _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
-		vDims.y = idColT.vDims.y;
+		vDims.y = idColT->vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColT.sTexCoords.vBL,
-			idColT.sTexCoords.vBR,
-			idColT.sTexCoords.vTR,
-			idColT.sTexCoords.vTL,
-			idNormT.sTexCoords.vBL,
-			idNormT.sTexCoords.vBR,
-			idNormT.sTexCoords.vTR,
-			idNormT.sTexCoords.vTL);
+			idColT->sTexCoords.vBL,
+			idColT->sTexCoords.vBR,
+			idColT->sTexCoords.vTR,
+			idColT->sTexCoords.vTL,
+			idNormT->sTexCoords.vBL,
+			idNormT->sTexCoords.vBR,
+			idNormT->sTexCoords.vTR,
+			idNormT->sTexCoords.vTL);
 
 		// Top right corner
-		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
+		vPos.x = _mvPosition.x + idColTL->vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
 		vPos.y = _mvPosition.y;
-		vDims = idColTR.vDims;
+		vDims = idColTR->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColTR.sTexCoords.vBL,
-			idColTR.sTexCoords.vBR,
-			idColTR.sTexCoords.vTR,
-			idColTR.sTexCoords.vTL,
-			idNormTR.sTexCoords.vBL,
-			idNormTR.sTexCoords.vBR,
-			idNormTR.sTexCoords.vTR,
-			idNormTR.sTexCoords.vTL);
+			idColTR->sTexCoords.vBL,
+			idColTR->sTexCoords.vBR,
+			idColTR->sTexCoords.vTR,
+			idColTR->sTexCoords.vTL,
+			idNormTR->sTexCoords.vBL,
+			idNormTR->sTexCoords.vBR,
+			idNormTR->sTexCoords.vTR,
+			idNormTR->sTexCoords.vTL);
 
 		// Left edge
 		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y;
-		vDims.x = idColL.vDims.x;
+		vPos.y = _mvPosition.y + idColTL->vDims.y;
+		vDims.x = idColL->vDims.x;
 		vDims.y = _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColL.sTexCoords.vBL,
-			idColL.sTexCoords.vBR,
-			idColL.sTexCoords.vTR,
-			idColL.sTexCoords.vTL,
-			idNormL.sTexCoords.vBL,
-			idNormL.sTexCoords.vBR,
-			idNormL.sTexCoords.vTR,
-			idNormL.sTexCoords.vTL);
+			idColL->sTexCoords.vBL,
+			idColL->sTexCoords.vBR,
+			idColL->sTexCoords.vTR,
+			idColL->sTexCoords.vTL,
+			idNormL->sTexCoords.vBL,
+			idNormL->sTexCoords.vBR,
+			idNormL->sTexCoords.vTR,
+			idNormL->sTexCoords.vTL);
 
 		// Centre
-		vPos.x = _mvPosition.x + idColTL.vDims.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y;
+		vPos.x = _mvPosition.x + idColTL->vDims.x;
+		vPos.y = _mvPosition.y + idColTL->vDims.y;
 		vDims = _mvContainersWidgetAreaDimensions;
 		vDims += vScrollbarOffset;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColC.sTexCoords.vBL,
-			idColC.sTexCoords.vBR,
-			idColC.sTexCoords.vTR,
-			idColC.sTexCoords.vTL,
-			idNormC.sTexCoords.vBL,
-			idNormC.sTexCoords.vBR,
-			idNormC.sTexCoords.vTR,
-			idNormC.sTexCoords.vTL);
+			idColC->sTexCoords.vBL,
+			idColC->sTexCoords.vBR,
+			idColC->sTexCoords.vTR,
+			idColC->sTexCoords.vTL,
+			idNormC->sTexCoords.vBL,
+			idNormC->sTexCoords.vBR,
+			idNormC->sTexCoords.vTR,
+			idNormC->sTexCoords.vTL);
 
 		// Right edge
-		vPos.x = _mvPosition.x + idColTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y;
-		vDims.x = idColR.vDims.x;
+		vPos.x = _mvPosition.x + idColTL->vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
+		vPos.y = _mvPosition.y + idColTL->vDims.y;
+		vDims.x = idColR->vDims.x;
 		vDims.y = _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColR.sTexCoords.vBL,
-			idColR.sTexCoords.vBR,
-			idColR.sTexCoords.vTR,
-			idColR.sTexCoords.vTL,
-			idNormR.sTexCoords.vBL,
-			idNormR.sTexCoords.vBR,
-			idNormR.sTexCoords.vTR,
-			idNormR.sTexCoords.vTL);
+			idColR->sTexCoords.vBL,
+			idColR->sTexCoords.vBR,
+			idColR->sTexCoords.vTR,
+			idColR->sTexCoords.vTL,
+			idNormR->sTexCoords.vBL,
+			idNormR->sTexCoords.vBR,
+			idNormR->sTexCoords.vTR,
+			idNormR->sTexCoords.vTL);
 
 		// Bottom left corner
 		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
-		vDims = idColBL.vDims;
+		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
+		vDims = idColBL->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColBL.sTexCoords.vBL,
-			idColBL.sTexCoords.vBR,
-			idColBL.sTexCoords.vTR,
-			idColBL.sTexCoords.vTL,
-			idNormBL.sTexCoords.vBL,
-			idNormBL.sTexCoords.vBR,
-			idNormBL.sTexCoords.vTR,
-			idNormBL.sTexCoords.vTL);
+			idColBL->sTexCoords.vBL,
+			idColBL->sTexCoords.vBR,
+			idColBL->sTexCoords.vTR,
+			idColBL->sTexCoords.vTL,
+			idNormBL->sTexCoords.vBL,
+			idNormBL->sTexCoords.vBR,
+			idNormBL->sTexCoords.vTR,
+			idNormBL->sTexCoords.vTL);
 
 		// Bottom edge
-		vPos.x = _mvPosition.x + idColBL.vDims.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
+		vPos.x = _mvPosition.x + idColBL->vDims.x;
+		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
 		vDims.x = _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
-		vDims.y = idColB.vDims.y;
+		vDims.y = idColB->vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColB.sTexCoords.vBL,
-			idColB.sTexCoords.vBR,
-			idColB.sTexCoords.vTR,
-			idColB.sTexCoords.vTL,
-			idNormB.sTexCoords.vBL,
-			idNormB.sTexCoords.vBR,
-			idNormB.sTexCoords.vTR,
-			idNormB.sTexCoords.vTL);
+			idColB->sTexCoords.vBL,
+			idColB->sTexCoords.vBR,
+			idColB->sTexCoords.vTR,
+			idColB->sTexCoords.vTL,
+			idNormB->sTexCoords.vBL,
+			idNormB->sTexCoords.vBR,
+			idNormB->sTexCoords.vTR,
+			idNormB->sTexCoords.vTL);
 
 		// Bottom right corner
-		vPos.x = _mvPosition.x + idColBL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
-		vPos.y = _mvPosition.y + idColTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
-		vDims = idColBR.vDims;
+		vPos.x = _mvPosition.x + idColBL->vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x;
+		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y;
+		vDims = idColBR->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
-			idColBR.sTexCoords.vBL,
-			idColBR.sTexCoords.vBR,
-			idColBR.sTexCoords.vTR,
-			idColBR.sTexCoords.vTL,
-			idNormBR.sTexCoords.vBL,
-			idNormBR.sTexCoords.vBR,
-			idNormBR.sTexCoords.vTR,
-			idNormBR.sTexCoords.vTL);
+			idColBR->sTexCoords.vBL,
+			idColBR->sTexCoords.vBR,
+			idColBR->sTexCoords.vTR,
+			idColBR->sTexCoords.vTL,
+			idNormBR->sTexCoords.vBL,
+			idNormBR->sTexCoords.vBR,
+			idNormBR->sTexCoords.vTR,
+			idNormBR->sTexCoords.vTL);
 
 		pVB->update();
 		pVB->render();

@@ -69,7 +69,7 @@ namespace X
 		void removeAllResources(void);
 		
 		// Returns a pointer to the _mSettings object so we can access any of the settings for the theme.
-		const SSettings* getSettings(void);
+		SSettings* getSettings(void);
 
 		// Returns a pointer to the _mSettings object so we can modify them.
 		// This removes all the resources from the various managers by calling removeAllResources() before returning.
@@ -111,9 +111,10 @@ namespace X
 		{
 			SImageType buttonBG;			// Image names for CUIButton's background
 //			SImageType buttonImageBG;		// Image names for CUIButtonImage's background
-//			SImageType checkboxBGNormal;	// Image names for CUICheckbox's normal state
-//			SImageType checkboxBGON;		// Image names for CUICheckbox's ON state
-//			SImageType checkboxBGOFF;		// Image names for CUICheckbox's OFF state
+			SImageType checkboxBGOff;		// Image names for CUICheckbox's OFF state
+			SImageType checkboxBGOffOver;	// Image names for CUICheckbox's OFF, with mouse over state
+			SImageType checkboxBGOn;		// Image names for CUICheckbox's ON state
+			SImageType checkboxBGOnOver;	// Image names for CUICheckbox's ON, with mouse over state
 			SImageType lineGraphBG;			// Image names for CUILineGraph's background
 			SImageType progressBarBG;		// Image names for CUIProgressBar's background
 			SImageType progressBarFiller;	// Image names for CUIProgressBar's filler
@@ -152,6 +153,10 @@ namespace X
 			CColour buttonImageTextDown;				// Colour of a buttonImage's text when mouse is over and clicked
 			CColour buttonImageTextOver;				// Colour of a buttonImage's text when mouse is over
 			CColour buttonImageTextUp;					// Colour of a buttonImage's text when mouse is not over
+			CColour checkboxBGOff;						// Colour of a CUICheckbox's OFF state
+			CColour checkboxBGOffOver;					// Colour of a CUICheckbox's OFF, with mouse over state
+			CColour checkboxBGOn;						// Colour of a CUICheckbox's ON state
+			CColour checkboxBGOnOver;					// Colour of a CUICheckbox's ON, with mouse over state
 			CColour linegraphBG;						// CUILineGraph's background vertex colour
 			CColour mouseLight;							// Colour emitted from the mouse cursor
 			CColour progressBarBG;						// CUIProgressBar's background vertex colour
@@ -180,7 +185,7 @@ namespace X
 		};
 		struct SAudio
 		{
-//			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
+			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
 //			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
 			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
 			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed

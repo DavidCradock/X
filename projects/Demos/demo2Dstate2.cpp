@@ -18,7 +18,7 @@ namespace X
 		strTxt += "The particle system's emitter follows the mouse cursor.\n";
 		strTxt += "Cursor keys move the camera.\n";
 		strTxt += " \nDetails...\n";
-		pCont->addTextScroll("TextScroll2", 0, 0, 640, 240, strTxt);
+		pCont->addText("TextScroll2", 0, 0, strTxt);
 
 		// Add text which has information about the particle system
 		CGUITheme* pTheme = x->pGUI->getTheme(pCont->getThemeName());

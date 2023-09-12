@@ -90,7 +90,7 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.profiling, true);
 //		pWindow->setVisible(false);
-		pWindow->setDimensions(800, 400);
+		pWindow->setDimensions(900, 400);
 		pWindow->setPositionCentre();
 		pWindow->setToFrontAndInFocus();
 
@@ -130,9 +130,9 @@ namespace X
 			fColumnWidth[1] = pFont->getTextWidth("Milliseconds ");
 			fColumnWidth[2] = pFont->getTextWidth("Code Section Name ");
 
-			pWindow->textAdd("TitlePercentMain", 0, vTextPos.y, fColumnWidth[0], fTextHeight, "% of \"main\"");
-			pWindow->textAdd("TitleMS", 140, vTextPos.y, fColumnWidth[1], fTextHeight, "Milliseconds");
-			pWindow->textAdd("TitleSectionName", 300, vTextPos.y, fColumnWidth[2], fTextHeight, "Code Section Name");
+			pWindow->textAdd("TitlePercentMain", 0.0f, vTextPos.y, fColumnWidth[0], fTextHeight, "% of \"main\"");
+			pWindow->textAdd("TitleMS", 140.0f, vTextPos.y, fColumnWidth[1], fTextHeight, "Milliseconds");
+			pWindow->textAdd("TitleSectionName", 300.0f, vTextPos.y, fColumnWidth[2], fTextHeight, "Code Section Name");
 			vTextPos.y += fTextHeight;
 			for (size_t i = 0; i < vResults.size(); i++)
 			{
@@ -141,20 +141,20 @@ namespace X
 				std::string strLine;
 				StringUtils::appendFloat(strLine, vResults[i].fPercentageOfMain, 1);
 				strLine += "%";
-				pWindow->textAdd(strTextName, fColumnWidth[0] * 0.5f, vTextPos.y, vWndDims.x, fTextHeight, strLine);
+				pWindow->textAdd(strTextName, 0.0f, vTextPos.y, vWndDims.x, fTextHeight, strLine);
 
 				// Milliseconds
 				strTextName = "Milliseconds:" + std::to_string(i);
 				strLine.clear();
 				StringUtils::appendDouble(strLine, vResults[i].dAccumulatedTimeSeconds * 1000, 3);
 				strLine += "ms";
-				pWindow->textAdd(strTextName, 140 + (fColumnWidth[1] * 0.5f), vTextPos.y, 160, fTextHeight, strLine);
+				pWindow->textAdd(strTextName, 140.0f, vTextPos.y, 160.0f, fTextHeight, strLine);
 
 				// Section name
 				// We need to compute how wide the text so we can add the text widget with that size.
 				float fTextWidth = pFont->getTextWidth(vResults[i].strSectionName);
 				strTextName = "SectionName:" + std::to_string(i);
-				pWindow->textAdd(strTextName, 300 + (fColumnWidth[2] * 0.5f), vTextPos.y, fTextWidth + 10, fTextHeight, vResults[i].strSectionName);
+				pWindow->textAdd(strTextName, 300.0f, vTextPos.y, fTextWidth + 10, fTextHeight, vResults[i].strSectionName);
 
 				vTextPos.y += fTextHeight;
 			}
@@ -202,25 +202,38 @@ namespace X
 
 		float fTextHeight = x->pResource->getFont(pWindow->themeGetSettings()->fonts.text)->getTextHeight();
 		float fYpos = 140.0f;
-		pWindow->textAdd("Text_FPSMin", 0, fYpos, pWindow->getDimensions().x, fTextHeight, "FPSMin: ");
-		pWindow->textAdd("Text_FPS", 0, fYpos, 200, fTextHeight, "FPS: ");
-		pWindow->textAdd("Text_FPSMax", 0, fYpos, 100, fTextHeight, "FPSMax: ");
+		pWindow->textAdd("Text_FPSMin", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, "FPSMin: ");
+		pWindow->textAdd("Text_FPS", 0.0f, fYpos, 200.0f, fTextHeight, "FPS: ");
+		pWindow->textAdd("Text_FPSMax", 0.0f, fYpos, 100.0f, fTextHeight, "FPSMax: ");
 		fYpos += fTextHeight;
 
-		pWindow->textAdd("Text_FPSAVR", 0, fYpos, pWindow->getDimensions().x, fTextHeight, "FPSAVR: ");
+		pWindow->textAdd("Text_FPSAVR", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, "FPSAVR: ");
 		fYpos += fTextHeight;
 
 		// VSync enabled/disabled and desktop Hz
-		pWindow->textAdd("VSyncONOFF", 0, fYpos, pWindow->getDimensions().x, fTextHeight, "VSync: ON");	fYpos += fTextHeight;
-		pWindow->textAdd("Text_Mem1", 0, fYpos, pWindow->getDimensions().x, fTextHeight, "");	fYpos += fTextHeight;
-		pWindow->textAdd("Text_Mem2", 0, fYpos, pWindow->getDimensions().x, fTextHeight, "");	fYpos += fTextHeight;
+		std::string strTxt;
+		_mStatistics.bvsyncEnabled = x->pWindow->getVSyncEnabled();
+		if (x->pWindow->getVSyncEnabled())
+		{
+			strTxt = "VSync: On. Desktop Hz: ";
+			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+		}
+		else
+		{
+			strTxt = "VSync: Off. Desktop Hz: ";
+			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+		}
+		pWindow->textAdd("VSyncONOFF", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, strTxt);	fYpos += fTextHeight;
+		
+		pWindow->textAdd("Text_Mem1", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, "");	fYpos += fTextHeight;
+		pWindow->textAdd("Text_Mem2", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, "");	fYpos += fTextHeight;
 
 		// CPU info
-		pWindow->textAdd("CPU_info", 0, fYpos, pWindow->getDimensions().x, fTextHeight, ""); fYpos += fTextHeight;
+		pWindow->textAdd("CPU_info", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, ""); fYpos += fTextHeight;
 
 		// Close button
 		fYpos += 10;
-		CUIButton* pButton = pWindow->buttonAdd("Close", 225 - 50, fYpos, 100, 30); fYpos += 30.0f;
+		CUIButton* pButton = pWindow->buttonAdd("Close", 225.0f - 50.0f, fYpos, 100.0f, 30.0f); fYpos += 30.0f;
 //		pButton->mpTooltip->setAsText("Close window.");
 
 	}
@@ -250,9 +263,9 @@ namespace X
 			pDataSetFPS->addValue(_mStatistics.timer.getFPS());
 			pDataSetFPSAVR->addValue(_mStatistics.timer.getFPSAveraged());
 
-			while (pDataSetFPS->getNumValues() > 60)
+			while (pDataSetFPS->getNumValues() > 30)
 				pDataSetFPS->removeValue();
-			while (pDataSetFPSAVR->getNumValues() > 60)
+			while (pDataSetFPSAVR->getNumValues() > 30)
 				pDataSetFPSAVR->removeValue();
 
 			// Set min and max text
@@ -294,6 +307,7 @@ namespace X
 		vNewPos.x = 225 - (0.5f * pFont->getTextWidth(strTxt));
 		pText->setPosition(vNewPos);
 
+		
 		strTxt = "FPS Average: ";
 		StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPSAveraged(), 1);
 		strTxt += " (";
@@ -307,17 +321,21 @@ namespace X
 		pWindow->textGet("Text_FPSAVR")->setTextColour(false, col);
 
 		// VSync text
-		if (x->pWindow->getVSyncEnabled())
+		if (_mStatistics.bvsyncEnabled != x->pWindow->getVSyncEnabled())
 		{
-			strTxt = "VSync: On. Desktop Hz: ";
-			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
-			pWindow->textGet("VSyncONOFF")->setText(strTxt);
-		}
-		else
-		{
-			strTxt = "VSync: Off. Desktop Hz: ";
-			StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
-			pWindow->textGet("VSyncONOFF")->setText(strTxt);
+			_mStatistics.bvsyncEnabled = x->pWindow->getVSyncEnabled();
+			if (x->pWindow->getVSyncEnabled())
+			{
+				strTxt = "VSync: On. Desktop Hz: ";
+				StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+				pWindow->textGet("VSyncONOFF")->setText(strTxt);
+			}
+			else
+			{
+				strTxt = "VSync: Off. Desktop Hz: ";
+				StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+				pWindow->textGet("VSyncONOFF")->setText(strTxt);
+			}
 		}
 
 		// CPU info

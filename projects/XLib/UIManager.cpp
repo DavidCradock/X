@@ -13,7 +13,11 @@ namespace X
 	void SCUIManager::render(void)
 	{
 		// Update everything first
+		x->pProfiler->begin("x->pUI->_update()");
 		_update();
+		x->pProfiler->end("x->pUI->_update()");
+
+		x->pProfiler->begin("SCUIManager::render()");
 
 		// Make sure the UI framebuffer is of the same size as the window
 		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
@@ -47,6 +51,8 @@ namespace X
 //		}
 		
 		pUIFB->unbindAsRenderTarget();
+
+		x->pProfiler->end("SCUIManager::render()");
 	}
 
 	std::string SCUIManager::getMouseIsOverWhichContainer(void)
@@ -750,7 +756,7 @@ namespace X
 	void SCUIManager::_helperAddWidgetGridGeometry(
 		const CVector2f& vPosition,
 		const CVector2f& vDimensions,
-		CUITheme::SImageType imageType,
+		CUITheme::SImageType &imageType,
 		const CColour& colour,
 		CUIContainer* pContainer,
 		CResourceVertexBufferCPT2* pVB)
@@ -758,24 +764,24 @@ namespace X
 		CUITheme* pTheme = pContainer->themeGet();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		
-		CImageAtlasDetails idColC = pAtlas->getImageDetails(imageType.colour.centre);
-		CImageAtlasDetails idNormC = pAtlas->getImageDetails(imageType.normal.centre);
-		CImageAtlasDetails idColBL = pAtlas->getImageDetails(imageType.colour.cornerBL);
-		CImageAtlasDetails idNormBL = pAtlas->getImageDetails(imageType.normal.cornerBL);
-		CImageAtlasDetails idColBR = pAtlas->getImageDetails(imageType.colour.cornerBR);
-		CImageAtlasDetails idNormBR = pAtlas->getImageDetails(imageType.normal.cornerBR);
-		CImageAtlasDetails idColTL = pAtlas->getImageDetails(imageType.colour.cornerTL);
-		CImageAtlasDetails idNormTL = pAtlas->getImageDetails(imageType.normal.cornerTL);
-		CImageAtlasDetails idColTR = pAtlas->getImageDetails(imageType.colour.cornerTR);
-		CImageAtlasDetails idNormTR = pAtlas->getImageDetails(imageType.normal.cornerTR);
-		CImageAtlasDetails idColB = pAtlas->getImageDetails(imageType.colour.edgeB);
-		CImageAtlasDetails idNormB = pAtlas->getImageDetails(imageType.normal.edgeB);
-		CImageAtlasDetails idColL = pAtlas->getImageDetails(imageType.colour.edgeL);
-		CImageAtlasDetails idNormL = pAtlas->getImageDetails(imageType.normal.edgeL);
-		CImageAtlasDetails idColR = pAtlas->getImageDetails(imageType.colour.edgeR);
-		CImageAtlasDetails idNormR = pAtlas->getImageDetails(imageType.normal.edgeR);
-		CImageAtlasDetails idColT = pAtlas->getImageDetails(imageType.colour.edgeT);
-		CImageAtlasDetails idNormT = pAtlas->getImageDetails(imageType.normal.edgeT);
+		CImageAtlasDetails* idColC = pAtlas->getImageDetailsPointer(imageType.colour.centre);
+		CImageAtlasDetails* idNormC = pAtlas->getImageDetailsPointer(imageType.normal.centre);
+		CImageAtlasDetails* idColBL = pAtlas->getImageDetailsPointer(imageType.colour.cornerBL);
+		CImageAtlasDetails* idNormBL = pAtlas->getImageDetailsPointer(imageType.normal.cornerBL);
+		CImageAtlasDetails* idColBR = pAtlas->getImageDetailsPointer(imageType.colour.cornerBR);
+		CImageAtlasDetails* idNormBR = pAtlas->getImageDetailsPointer(imageType.normal.cornerBR);
+		CImageAtlasDetails* idColTL = pAtlas->getImageDetailsPointer(imageType.colour.cornerTL);
+		CImageAtlasDetails* idNormTL = pAtlas->getImageDetailsPointer(imageType.normal.cornerTL);
+		CImageAtlasDetails* idColTR = pAtlas->getImageDetailsPointer(imageType.colour.cornerTR);
+		CImageAtlasDetails* idNormTR = pAtlas->getImageDetailsPointer(imageType.normal.cornerTR);
+		CImageAtlasDetails* idColB = pAtlas->getImageDetailsPointer(imageType.colour.edgeB);
+		CImageAtlasDetails* idNormB = pAtlas->getImageDetailsPointer(imageType.normal.edgeB);
+		CImageAtlasDetails* idColL = pAtlas->getImageDetailsPointer(imageType.colour.edgeL);
+		CImageAtlasDetails* idNormL = pAtlas->getImageDetailsPointer(imageType.normal.edgeL);
+		CImageAtlasDetails* idColR = pAtlas->getImageDetailsPointer(imageType.colour.edgeR);
+		CImageAtlasDetails* idNormR = pAtlas->getImageDetailsPointer(imageType.normal.edgeR);
+		CImageAtlasDetails* idColT = pAtlas->getImageDetailsPointer(imageType.colour.edgeT);
+		CImageAtlasDetails* idNormT = pAtlas->getImageDetailsPointer(imageType.normal.edgeT);
 
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 
@@ -786,165 +792,165 @@ namespace X
 		CVector2f vDims;
 
 		// Top left corner
-		vDims = idColTL.vDims;
+		vDims = idColTL->vDims;
 		CVector2f vCellPos = vPos;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColTL.sTexCoords.vBL,
-			idColTL.sTexCoords.vBR,
-			idColTL.sTexCoords.vTR,
-			idColTL.sTexCoords.vTL,
-			idNormTL.sTexCoords.vBL,
-			idNormTL.sTexCoords.vBR,
-			idNormTL.sTexCoords.vTR,
-			idNormTL.sTexCoords.vTL);
+			idColTL->sTexCoords.vBL,
+			idColTL->sTexCoords.vBR,
+			idColTL->sTexCoords.vTR,
+			idColTL->sTexCoords.vTL,
+			idNormTL->sTexCoords.vBL,
+			idNormTL->sTexCoords.vBR,
+			idNormTL->sTexCoords.vTR,
+			idNormTL->sTexCoords.vTL);
 
 		// Top edge
 		vCellPos = vPos;
-		vCellPos.x += idColTL.vDims.x;
-		vDims.x = vDimensions.x - idColTR.vDims.x;
-		vDims.y = idColT.vDims.y;
+		vCellPos.x += idColTL->vDims.x;
+		vDims.x = vDimensions.x - idColTR->vDims.x;
+		vDims.y = idColT->vDims.y;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColT.sTexCoords.vBL,
-			idColT.sTexCoords.vBR,
-			idColT.sTexCoords.vTR,
-			idColT.sTexCoords.vTL,
-			idNormT.sTexCoords.vBL,
-			idNormT.sTexCoords.vBR,
-			idNormT.sTexCoords.vTR,
-			idNormT.sTexCoords.vTL);
+			idColT->sTexCoords.vBL,
+			idColT->sTexCoords.vBR,
+			idColT->sTexCoords.vTR,
+			idColT->sTexCoords.vTL,
+			idNormT->sTexCoords.vBL,
+			idNormT->sTexCoords.vBR,
+			idNormT->sTexCoords.vTR,
+			idNormT->sTexCoords.vTL);
 
 		// Top right corner
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColTR.vDims.x;
-		vDims = idColTR.vDims;
+		vCellPos.x += vDimensions.x - idColTR->vDims.x;
+		vDims = idColTR->vDims;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColTR.sTexCoords.vBL,
-			idColTR.sTexCoords.vBR,
-			idColTR.sTexCoords.vTR,
-			idColTR.sTexCoords.vTL,
-			idNormTR.sTexCoords.vBL,
-			idNormTR.sTexCoords.vBR,
-			idNormTR.sTexCoords.vTR,
-			idNormTR.sTexCoords.vTL);
+			idColTR->sTexCoords.vBL,
+			idColTR->sTexCoords.vBR,
+			idColTR->sTexCoords.vTR,
+			idColTR->sTexCoords.vTL,
+			idNormTR->sTexCoords.vBL,
+			idNormTR->sTexCoords.vBR,
+			idNormTR->sTexCoords.vTR,
+			idNormTR->sTexCoords.vTL);
 
 		// Left edge
 		vCellPos = vPos;
-		vCellPos.y += idColTL.vDims.y;
-		vDims.x = idColL.vDims.x;
-		vDims.y = vDimensions.y - idColTL.vDims.y - idColBL.vDims.y;
+		vCellPos.y += idColTL->vDims.y;
+		vDims.x = idColL->vDims.x;
+		vDims.y = vDimensions.y - idColTL->vDims.y - idColBL->vDims.y;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColL.sTexCoords.vBL,
-			idColL.sTexCoords.vBR,
-			idColL.sTexCoords.vTR,
-			idColL.sTexCoords.vTL,
-			idNormL.sTexCoords.vBL,
-			idNormL.sTexCoords.vBR,
-			idNormL.sTexCoords.vTR,
-			idNormL.sTexCoords.vTL);
+			idColL->sTexCoords.vBL,
+			idColL->sTexCoords.vBR,
+			idColL->sTexCoords.vTR,
+			idColL->sTexCoords.vTL,
+			idNormL->sTexCoords.vBL,
+			idNormL->sTexCoords.vBR,
+			idNormL->sTexCoords.vTR,
+			idNormL->sTexCoords.vTL);
 
 		// Centre
 		vCellPos = vPos;
-		vCellPos.x += idColL.vDims.x;
-		vCellPos.y += idColTL.vDims.y;
-		vDims.x = vDimensions.x - idColL.vDims.x - idColR.vDims.x;
-		vDims.y = vDimensions.y - idColTL.vDims.y - idColBL.vDims.y;
+		vCellPos.x += idColL->vDims.x;
+		vCellPos.y += idColTL->vDims.y;
+		vDims.x = vDimensions.x - idColL->vDims.x - idColR->vDims.x;
+		vDims.y = vDimensions.y - idColTL->vDims.y - idColBL->vDims.y;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColC.sTexCoords.vBL,
-			idColC.sTexCoords.vBR,
-			idColC.sTexCoords.vTR,
-			idColC.sTexCoords.vTL,
-			idNormC.sTexCoords.vBL,
-			idNormC.sTexCoords.vBR,
-			idNormC.sTexCoords.vTR,
-			idNormC.sTexCoords.vTL);
+			idColC->sTexCoords.vBL,
+			idColC->sTexCoords.vBR,
+			idColC->sTexCoords.vTR,
+			idColC->sTexCoords.vTL,
+			idNormC->sTexCoords.vBL,
+			idNormC->sTexCoords.vBR,
+			idNormC->sTexCoords.vTR,
+			idNormC->sTexCoords.vTL);
 
 		// Right edge
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColR.vDims.x;
-		vCellPos.y += idColTL.vDims.y;
-		vDims.x = idColR.vDims.x;
-		vDims.y = vDimensions.y - idColL.vDims.y - idColR.vDims.y;
+		vCellPos.x += vDimensions.x - idColR->vDims.x;
+		vCellPos.y += idColTL->vDims.y;
+		vDims.x = idColR->vDims.x;
+		vDims.y = vDimensions.y - idColL->vDims.y - idColR->vDims.y;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColR.sTexCoords.vBL,
-			idColR.sTexCoords.vBR,
-			idColR.sTexCoords.vTR,
-			idColR.sTexCoords.vTL,
-			idNormR.sTexCoords.vBL,
-			idNormR.sTexCoords.vBR,
-			idNormR.sTexCoords.vTR,
-			idNormR.sTexCoords.vTL);
+			idColR->sTexCoords.vBL,
+			idColR->sTexCoords.vBR,
+			idColR->sTexCoords.vTR,
+			idColR->sTexCoords.vTL,
+			idNormR->sTexCoords.vBL,
+			idNormR->sTexCoords.vBR,
+			idNormR->sTexCoords.vTR,
+			idNormR->sTexCoords.vTL);
 
 		// Bottom left corner
 		vCellPos = vPos;
-		vCellPos.y += vDimensions.y - idColBL.vDims.y;
-		vDims = idColBL.vDims;
+		vCellPos.y += vDimensions.y - idColBL->vDims.y;
+		vDims = idColBL->vDims;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColBL.sTexCoords.vBL,
-			idColBL.sTexCoords.vBR,
-			idColBL.sTexCoords.vTR,
-			idColBL.sTexCoords.vTL,
-			idNormBL.sTexCoords.vBL,
-			idNormBL.sTexCoords.vBR,
-			idNormBL.sTexCoords.vTR,
-			idNormBL.sTexCoords.vTL);
+			idColBL->sTexCoords.vBL,
+			idColBL->sTexCoords.vBR,
+			idColBL->sTexCoords.vTR,
+			idColBL->sTexCoords.vTL,
+			idNormBL->sTexCoords.vBL,
+			idNormBL->sTexCoords.vBR,
+			idNormBL->sTexCoords.vTR,
+			idNormBL->sTexCoords.vTL);
 
 		// Bottom edge
 		vCellPos = vPos;
-		vCellPos.x += idColBL.vDims.x;
-		vCellPos.y += vDimensions.y - idColB.vDims.y;
-		vDims.x = vDimensions.x - idColBL.vDims.x - idColBR.vDims.x;
-		vDims.y = idColB.vDims.y;
+		vCellPos.x += idColBL->vDims.x;
+		vCellPos.y += vDimensions.y - idColB->vDims.y;
+		vDims.x = vDimensions.x - idColBL->vDims.x - idColBR->vDims.x;
+		vDims.y = idColB->vDims.y;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColB.sTexCoords.vBL,
-			idColB.sTexCoords.vBR,
-			idColB.sTexCoords.vTR,
-			idColB.sTexCoords.vTL,
-			idNormB.sTexCoords.vBL,
-			idNormB.sTexCoords.vBR,
-			idNormB.sTexCoords.vTR,
-			idNormB.sTexCoords.vTL);
+			idColB->sTexCoords.vBL,
+			idColB->sTexCoords.vBR,
+			idColB->sTexCoords.vTR,
+			idColB->sTexCoords.vTL,
+			idNormB->sTexCoords.vBL,
+			idNormB->sTexCoords.vBR,
+			idNormB->sTexCoords.vTR,
+			idNormB->sTexCoords.vTL);
 
 		// Bottom right corner
 		vCellPos = vPos;
-		vCellPos.x += vDimensions.x - idColBR.vDims.x;
-		vCellPos.y += vDimensions.y - idColBR.vDims.y;
-		vDims = idColBR.vDims;
+		vCellPos.x += vDimensions.x - idColBR->vDims.x;
+		vCellPos.y += vDimensions.y - idColBR->vDims.y;
+		vDims = idColBR->vDims;
 		pVB->addQuad2D(
 			vCellPos,
 			vDims,
 			colour,
-			idColBR.sTexCoords.vBL,
-			idColBR.sTexCoords.vBR,
-			idColBR.sTexCoords.vTR,
-			idColBR.sTexCoords.vTL,
-			idNormBR.sTexCoords.vBL,
-			idNormBR.sTexCoords.vBR,
-			idNormBR.sTexCoords.vTR,
-			idNormBR.sTexCoords.vTL);
+			idColBR->sTexCoords.vBL,
+			idColBR->sTexCoords.vBR,
+			idColBR->sTexCoords.vTR,
+			idColBR->sTexCoords.vTL,
+			idNormBR->sTexCoords.vBL,
+			idNormBR->sTexCoords.vBR,
+			idNormBR->sTexCoords.vTR,
+			idNormBR->sTexCoords.vTL);
 	}
 
 	void SCUIManager::_helperColourAdjust(CColour& colourToAdjust, const CColour& colourTarget, float fTimeDeltaSecs, float fFadeSpeed)

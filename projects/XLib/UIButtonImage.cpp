@@ -33,7 +33,7 @@ namespace X
 			_mvDimensions.x = fX;
 		else
 			_mvDimensions.x = x->pResource->getTexture2DFromFile(_mstrTextureUp)->getDimensions().x;
-		
+
 		if (fY >= 1)
 			_mvDimensions.y = fY;
 		else
@@ -41,23 +41,25 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIButtonImage::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUIButtonImage::setDimensions(const CVector2f& vDimensions)
 	{
-		if (vDimensions.x >= 1)
-			_mvDimensions.x = vDimensions.x;
-		else
-			_mvDimensions.x = x->pResource->getTexture2DFromFile(_mstrTextureUp)->getDimensions().x;
-
-		if (vDimensions.y >= 1)
-			_mvDimensions.y = vDimensions.y;
-		else
-			_mvDimensions.x = x->pResource->getTexture2DFromFile(_mstrTextureUp)->getDimensions().y;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIButtonImage::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUIButtonImage::getDimensionsMinimum(void) const
+	{
+		CVector2f vMinimumDims(1.0f, 1.0f);
+		return vMinimumDims;
 	}
 
 	void CUIButtonImage::setPosition(float fX, float fY)
@@ -67,10 +69,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIButtonImage::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIButtonImage::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIButtonImage::getPosition(void) const
@@ -89,7 +95,7 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIButtonImage::render(void)
+	void CUIButtonImage::renderNonBG(void)
 	{
 		if (!_mbVisible)
 			return;
@@ -119,6 +125,9 @@ namespace X
 
 	void CUIButtonImage::update(float fTimeDeltaSec)
 	{
+		if (!_mpContainer->getVisible())
+			return;
+
 		// Determine whether the mouse cursor is over this widget's container or not.
 		// This is all to prevent doing expensive checks if we don't need to.
 		bool bContainerHasMouseOver = false;

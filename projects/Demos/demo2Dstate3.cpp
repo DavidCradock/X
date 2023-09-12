@@ -17,7 +17,7 @@ namespace X
 		strTxt += "Controls...\n";
 		strTxt += "Cursor keys move the camera.\n";
 		strTxt += " \nDetails...\n";
-		pCont->addTextScroll("TextScroll3", 0, 0, 640, 240, strTxt);
+		pCont->addText("TextScroll3", 0, 0, strTxt);
 
 		// Create entity's random position and velocity
 		CVector2f vWndDims = x->pWindow->getDimensions();

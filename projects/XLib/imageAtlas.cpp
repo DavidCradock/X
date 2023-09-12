@@ -407,6 +407,13 @@ namespace X
 		return it->second;
 	}
 
+	CImageAtlasDetails* CImageAtlasPacker::getImageDetailsPointer(const std::string& strImageName) const
+	{
+		std::map<std::string, CImageAtlasDetails>::iterator it = _mmapImageDetails.find(strImageName);
+		ThrowIfTrue(it == _mmapImageDetails.end(), "CImageAtlasPacker::getImageDetailsPointer(" + strImageName + ") failed. Named image doesn't exist.");
+		return &it->second;
+	}
+
 	void CImageAtlasPacker::reset(void)
 	{
 		for (unsigned int ui = 0; ui < _mvAtlasImages.size(); ui++)

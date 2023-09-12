@@ -17,7 +17,7 @@ namespace X
 //		strTxt += "\n";
 //		strTxt += "\n";
 //		strTxt += "\n";
-		CGUITextScroll* pTS = pCont->addTextScroll("demoGUITS", 0, 0, 320, 170, strTxt);
+		CGUIText* pTS = pCont->addText("demoGUITS", 0, 0, strTxt);
 		pCont->addButton("Statistics", 0, 180, 320, 40, "Statistics.")->mpTooltip->setAsText("Click me to toggle the statistics window as visible or not.");
 		pCont->addButton("FontGenerator", 0, 230, 320, 40, "Font Generator.")->mpTooltip->setAsText("Click me to toggle the font generator window as visible or not.");
 		pCont->addButton("Settings", 0, 280, 320, 40, "Settings.")->mpTooltip->setAsText("Click me to toggle the settings window as visiable or not.");

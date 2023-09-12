@@ -10,10 +10,8 @@
 #include "GUIImageFramebuffer.h"
 #include "GUILineGraph.h"
 #include "GUIProgressBar.h"
-#include "GUISubContainer.h"
 #include "GUIText.h"
 #include "GUITextEdit.h"
-#include "GUITextScroll.h"
 #include "GUITheme.h"
 #include "GUISlider.h"
 
@@ -275,28 +273,6 @@ namespace X
 		void removeAllImageFramebuffers(void);
 
 		/**************************************************************************************************************************************************
-		Text scroll
-		**************************************************************************************************************************************************/
-
-		// Add text scroll object to this container and return a pointer to it
-		// If the name already exists, an exception occurs
-		// The position of the object is the offset from the top left corner of the container's centre area not including the container's edge images
-		// Please note: The name should be unique for all text scroll objects added to this container as it is used to create the unique framebuffer resource.
-		// If the name is not unique, an exception occurs.
-		CGUITextScroll* addTextScroll(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
-
-		// Returns a pointer to the named object
-		// If the object doesn't exist, an exception occurs
-		CGUITextScroll* getTextScroll(const std::string& strName) const;
-
-		// Removes the named object from the container
-		// If the named object doesn't exist, this silently fails
-		void removeTextScroll(const std::string& strName);
-
-		// Removes all text scrolls from this container
-		void removeAllTextScrolls(void);
-
-		/**************************************************************************************************************************************************
 		Button image
 		**************************************************************************************************************************************************/
 
@@ -361,25 +337,6 @@ namespace X
 		// Removes all check boxes from this container
 		void removeAllCheckboxes(void);
 
-		/**************************************************************************************************************************************************
-		Sub containers
-		**************************************************************************************************************************************************/
-
-		// Add a sub container to this container and return a pointer to it
-		// If the name already exists, an exception occurs
-		CGUISubContainer* addSubContainer(const std::string& strName, float fPosX, float fPosY, float fDimsX, float fDimsY);
-
-		// Returns a pointer to the named object
-		// If the object doesn't exist, an exception occurs
-		CGUISubContainer* getSubContainer(const std::string& strName) const;
-
-		// Removes the named object from the container
-		// If the named object doesn't exist, this silently fails
-		void removeSubContainer(const std::string& strName);
-
-		// Removes all sub containers from this container
-		void removeAllSubContainers(void);
-
 		std::string mstrTitleText;	// Title text
 	private:
 		bool _mbLocked;				// When added via SCGUIManager, this may be set to true to prevent removal of this container. It's used to prevent removal of the default containers.
@@ -399,11 +356,9 @@ namespace X
 		mutable std::map<std::string, CGUIImage*> _mmapImages;							// Hashmap for each added image
 		mutable std::map<std::string, CGUIImageAnimated*> _mmapImageAnimateds;			// Hashmap for each added image animated
 		mutable std::map<std::string, CGUIImageFramebuffer*> _mmapImageFramebuffers;	// Hashmap for each added image framebuffer 
-		mutable std::map<std::string, CGUITextScroll*> _mmapTextScrolls;				// Hashmap for each added text scroll
 		mutable std::map<std::string, CGUIButtonImage*> _mmapButtonImages;				// Hashmap for each added button image
 		mutable std::map<std::string, CGUIImageDepthbuffer*> _mmapImageDepthbuffers;	// Hashmap for each added image depthbuffer
 		mutable std::map<std::string, CGUICheckbox*> _mmapCheckboxes;					// Hashmap for each added check box
-		mutable std::map<std::string, CGUISubContainer*> _mmapSubContainers;			// Hashmap for each added sub container.
 
 		// Render this container
 		void _renderContainer(const std::string& strFramebufferToSampleFrom);

@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "UIButton.h"
+#include "UICheckbox.h"
 #include "utilities.h"
 #include "UIContainer.h"
 #include "singletons.h"
@@ -7,7 +7,7 @@
 
 namespace X
 {
-	CUIButton::CUIButton(CUIContainer* pContainer)
+	CUICheckbox::CUICheckbox(CUIContainer* pContainer)
 	{
 		_mpContainer = pContainer;
 		_mvDimensions.set(200, 48);
@@ -18,87 +18,85 @@ namespace X
 		_mfuncOnClicked = 0;
 	}
 
-	CUIButton::~CUIButton()
+	CUICheckbox::~CUICheckbox()
 	{
 
 	}
 
-	void CUIButton::setDimensions(float fX, float fY)
+	void CUICheckbox::setDimensions(float fX, float fY)
 	{
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
 		_mpContainer->computeScrollbars();
 	}
 
-	void CUIButton::setDimensions(int iX, int iY)
+	void CUICheckbox::setDimensions(int iX, int iY)
 	{
 		setDimensions(float(iX), float(iY));
 	}
 
-	void CUIButton::setDimensions(const CVector2f& vDimensions)
+	void CUICheckbox::setDimensions(const CVector2f& vDimensions)
 	{
 		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
-	CVector2f CUIButton::getDimensions(void) const
+	CVector2f CUICheckbox::getDimensions(void) const
 	{
 		return _mvDimensions;
 	}
 
-	CVector2f CUIButton::getDimensionsMinimum(void) const
+	CVector2f CUICheckbox::getDimensionsMinimum(void) const
 	{
 		CUITheme* pTheme = _mpContainer->themeGet();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		CVector2f vMinimumDims;
-		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.buttonBG.colour.cornerTL);
+		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.checkboxBGOff.colour.cornerTL);
 		vMinimumDims = pID->vDims;
-		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.buttonBG.colour.cornerBR);
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.checkboxBGOff.colour.cornerBR);
 		vMinimumDims += pID->vDims;
-		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.buttonBG.colour.edgeT);
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.checkboxBGOff.colour.edgeT);
 		vMinimumDims.x += pID->vDims.x;
-		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.buttonBG.colour.edgeR);
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.checkboxBGOff.colour.edgeR);
 		vMinimumDims.y += pID->vDims.y;
 		return vMinimumDims;
 	}
 
-	void CUIButton::setPosition(float fX, float fY)
+	void CUICheckbox::setPosition(float fX, float fY)
 	{
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
 		_mpContainer->computeScrollbars();
 	}
 
-	void CUIButton::setPosition(int iX, int iY)
+	void CUICheckbox::setPosition(int iX, int iY)
 	{
 		setPosition(float(iX), float(iY));
 	}
 
-	void CUIButton::setPosition(const CVector2f& vPosition)
+	void CUICheckbox::setPosition(const CVector2f& vPosition)
 	{
 		setPosition(vPosition.x, vPosition.y);
 	}
 
-	CVector2f CUIButton::getPosition(void) const
+	CVector2f CUICheckbox::getPosition(void) const
 	{
 		return _mvPosition;
 	}
 
-	void CUIButton::setVisible(bool bVisible)
+	void CUICheckbox::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
-		if (!_mbVisible)
-			reset();
 		_mpContainer->computeScrollbars();
 	}
 
-	bool CUIButton::getVisible(void) const
+	bool CUICheckbox::getVisible(void) const
 	{
 		return _mbVisible;
 	}
 
-	void CUIButton::renderBG(CResourceVertexBufferCPT2* pVB)
+	void CUICheckbox::renderBG(CResourceVertexBufferCPT2* pVB)
 	{
 		if (!_mbVisible)
 			return;
@@ -115,7 +113,7 @@ namespace X
 			pVB);
 	}
 
-	void CUIButton::renderNonBG(void)
+	void CUICheckbox::renderNonBG(void)
 	{
 		if (!_mpContainer->getVisible())
 			return;
@@ -132,7 +130,7 @@ namespace X
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, _mColourText);
 	}
 
-	void CUIButton::update(float fTimeDeltaSec)
+	void CUICheckbox::update(float fTimeDeltaSec)
 	{
 //		if (!_mpContainer->getVisible())
 //			return;
@@ -215,32 +213,31 @@ namespace X
 		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
 	}
 
-	void CUIButton::reset(void)
+	void CUICheckbox::reset(void)
 	{
 		const CUITheme::SSettings* pSettings = _mpContainer->themeGetSettings();
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
-		_mState = state::up;
 	}
 
 	/******************************************************************* Widget specific *******************************************************************/
 
-	void CUIButton::setText(const std::string& strText)
+	void CUICheckbox::setText(const std::string& strText)
 	{
 		_mstrText = strText;
 	}
 
-	std::string CUIButton::getText(void) const
+	std::string CUICheckbox::getText(void) const
 	{
 		return _mstrText;
 	}
 
-	bool CUIButton::getClicked(void) const
+	bool CUICheckbox::getClicked(void) const
 	{
 		return _mbClicked;
 	}
 
-	void CUIButton::setFunctionOnClicked(void (*function)(void))
+	void CUICheckbox::setFunctionOnClicked(void (*function)(void))
 	{
 		_mfuncOnClicked = function;
 	}

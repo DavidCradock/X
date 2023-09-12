@@ -81,7 +81,7 @@ namespace X
 		strTxt += "be covered and make it so an entity within the uncovered area would not fit.\n";
 		strTxt += "The intial region is set to (-1024, +1024)";
 
-		pCont->addTextScroll("TextScroll", 0, 0, 450, 500, strTxt);
+		pCont->addText("TextScroll", 0, 0, strTxt);
 		pCont->addText("CameraPos", 0.0f, 520.0f, "CameraPos: ");
 		pCont->addText("NumEntities", 0, 550, "NumEntities: ");
 		pCont->addText("NodeDepth", 0, 580, "");

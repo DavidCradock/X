@@ -38,10 +38,14 @@ namespace X
 		computeScrollbars();
 	}
 
+	void CUIContainer::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUIContainer::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvContainersWidgetAreaDimensions = vDimensions;
-		computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIContainer::getDimensions(void) const
@@ -55,9 +59,14 @@ namespace X
 		_mvPosition.y = fY;
 	}
 
+	void CUIContainer::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIContainer::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIContainer::getPosition(void) const
@@ -68,6 +77,7 @@ namespace X
 	void CUIContainer::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		reset();
 	}
 
 	bool CUIContainer::getVisible(void) const
@@ -85,7 +95,7 @@ namespace X
 		return x->pUI->themeGet(_mstrThemename);
 	}
 
-	const CUITheme::SSettings* CUIContainer::themeGetSettings(void) const
+	CUITheme::SSettings* CUIContainer::themeGetSettings(void) const
 	{
 		return x->pUI->themeGet(_mstrThemename)->getSettings();
 	}
@@ -110,7 +120,8 @@ namespace X
 		if (_mbContainerIsWindow)
 		{
 			CUITheme* pTheme = x->pUI->themeGet(_mstrThemename);
-			vPosition += pTheme->getTextureAtlas()->getImageDetails(pTheme->getSettings()->images.windowBG.colour.cornerTL).vDims;
+			CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+			vPosition += pAtlas->getImageDetailsPointer(pTheme->getSettings()->images.windowBG.colour.cornerTL)->vDims;
 		}
 		return vPosition;
 	}
@@ -247,6 +258,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUIButton* CUIContainer::buttonAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return buttonAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+	}
+
 	CUIButton* CUIContainer::buttonGet(const std::string& strName)
 	{
 		auto it = _mmapButtons.find(strName);
@@ -306,6 +322,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUIButtonImage* CUIContainer::buttonImageAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown)
+	{
+		return buttonImageAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight), strTextureFromFileResourceNameUp, strTextureFromFileResourceNameOver, strTextureFromFileResourceNameDown);
+	}
+
 	CUIButtonImage* CUIContainer::buttonImageGet(const std::string& strName)
 	{
 		auto it = _mmapButtonImages.find(strName);
@@ -336,6 +357,65 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUICheckbox */
+	/************************************************************************************************************************************************************/
+
+	CUICheckbox* CUIContainer::checkboxAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapCheckboxes.find(strName) != _mmapCheckboxes.end(), "CUIContainer::checkboxAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUICheckbox* pNewObject = new CUICheckbox(this);
+		ThrowIfFalse(pNewObject, "CUIContainer::checkboxAdd() failed to allocate memory for new object.");
+
+		_mmapCheckboxes[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+		pNewObject->setText(strName);
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUICheckbox* CUIContainer::checkboxAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return checkboxAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+	}
+
+	CUICheckbox* CUIContainer::checkboxGet(const std::string& strName)
+	{
+		auto it = _mmapCheckboxes.find(strName);
+		ThrowIfTrue(_mmapCheckboxes.end() == it, "CUIContainer::checkboxGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::checkboxRemove(const std::string& strName)
+	{
+		auto it = _mmapCheckboxes.find(strName);
+		if (_mmapCheckboxes.end() == it)
+			return;
+		delete it->second;
+		_mmapCheckboxes.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::checkboxRemoveAll(void)
+	{
+		auto it = _mmapCheckboxes.begin();
+		while (it != _mmapCheckboxes.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapCheckboxes.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* CUIImage */
 	/************************************************************************************************************************************************************/
 
@@ -357,6 +437,11 @@ namespace X
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
 		computeScrollbars();
 		return pNewObject;
+	}
+
+	CUIImage* CUIContainer::imageAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return imageAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
 	}
 
 	CUIImage* CUIContainer::imageGet(const std::string& strName)
@@ -412,6 +497,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUILineGraph* CUIContainer::lineGraphAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return lineGraphAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+	}
+
 	CUILineGraph* CUIContainer::lineGraphGet(const std::string& strName)
 	{
 		auto it = _mmapLineGraphs.find(strName);
@@ -465,6 +555,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUIProgressbar* CUIContainer::progressbarAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return progressbarAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+	}
+
 	CUIProgressbar* CUIContainer::progressbarGet(const std::string& strName)
 	{
 		auto it = _mmapProgressbars.find(strName);
@@ -516,6 +611,11 @@ namespace X
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
 		computeScrollbars();
 		return pNewObject;
+	}
+
+	CUIScrollbar* CUIContainer::scrollbarAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, float fTabRatio)
+	{
+		return scrollbarAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight), fTabRatio);
 	}
 
 	CUIScrollbar* CUIContainer::scrollbarGet(const std::string& strName)
@@ -572,6 +672,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUIText* CUIContainer::textAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strText)
+	{
+		return textAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight), strText);
+	}
+
 	CUIText* CUIContainer::textGet(const std::string& strName)
 	{
 		auto it = _mmapTexts.find(strName);
@@ -626,6 +731,11 @@ namespace X
 		return pNewObject;
 	}
 
+	CUITextEdit* CUIContainer::textEditAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strText)
+	{
+		return textEditAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight), strText);
+	}
+
 	CUITextEdit* CUIContainer::textEditGet(const std::string& strName)
 	{
 		auto it = _mmapTextEdits.find(strName);
@@ -656,13 +766,14 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
-	/* All code below here needs to be modified to accomodate a new widget */
+	/* All code below here needs to be modified to accommodate a new widget */
 	/************************************************************************************************************************************************************/
 
 	void CUIContainer::widgetRemoveAll(void)
 	{
 		buttonRemoveAll();
 		buttonImageRemoveAll();
+		checkboxRemoveAll();
 		imageRemoveAll();
 		lineGraphRemoveAll();
 		progressbarRemoveAll();
@@ -676,20 +787,31 @@ namespace X
 
 	void CUIContainer::reset(void)
 	{
-		// For each CUIButton widget
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
 		{
-			itButton->second->reset();
-			itButton++;
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
+			{
+				it->second->reset();
+				it++;
+			}
 		}
 
-		// For each CUIButtonImage widget
-		auto itButtonImage = _mmapButtonImages.begin();
-		while (itButtonImage != _mmapButtonImages.end())
 		{
-			itButtonImage->second->reset();
-			itButtonImage++;
+			auto it = _mmapButtonImages.begin();
+			while (it != _mmapButtonImages.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
+			{
+				it->second->reset();
+				it++;
+			}
 		}
 
 		// For each CUIImage widget (No need)
@@ -698,196 +820,240 @@ namespace X
 
 		// For eacg CUIProgressbar widger (No need)
 
-		// For each CUIScrollbar widget
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
 		{
-			itScrollbar->second->reset();
-			itScrollbar++;
+			auto it = _mmapScrollbars.begin();
+			while (it != _mmapScrollbars.end())
+			{
+				it->second->reset();
+				it++;
+			}
 		}
 
 		// For each CUIText widget (No need)
 
-		// For each CUITextEdit widget
-		auto itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
 		{
-			itTextEdit->second->reset();
-			itTextEdit++;
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->reset();
+				it++;
+			}
 		}
+
 	}
 
 	void CUIContainer::_helperComputeMaxWidgetCornerPos(void)
 	{
 		_mvMaxWidgetCornerPos.setZero();
 
-		// For each CUIButton widget
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
 		{
-			if (itButton->second->_mbVisible)
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
 			{
-				CVector2f vBRPos = itButton->second->getPosition() + itButton->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itButton++;
 		}
 
-		// For each CUIButtonImage widget
-		auto itButtonImage = _mmapButtonImages.begin();
-		while (itButtonImage != _mmapButtonImages.end())
 		{
-			if (itButtonImage->second->_mbVisible)
+			auto it = _mmapButtonImages.begin();
+			while (it != _mmapButtonImages.end())
 			{
-				CVector2f vBRPos = itButtonImage->second->getPosition() + itButtonImage->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itButtonImage++;
 		}
 
-		// For each CUIImage widget
-		auto itImage = _mmapImages.begin();
-		while (itImage != _mmapImages.end())
 		{
-			if (itImage->second->_mbVisible)
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
 			{
-				CVector2f vBRPos = itImage->second->getPosition() + itImage->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itImage++;
 		}
 
-		// For each CUILineGraph widget
-		auto itLineGraph = _mmapLineGraphs.begin();
-		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			if (itLineGraph->second->_mbVisible)
+			auto it = _mmapImages.begin();
+			while (it != _mmapImages.end())
 			{
-				CVector2f vBRPos = itLineGraph->second->getPosition() + itLineGraph->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itLineGraph++;
 		}
 
-		// For each CUIProgressbar widget
-		auto itProgressbar = _mmapProgressbars.begin();
-		while (itProgressbar != _mmapProgressbars.end())
 		{
-			if (itProgressbar->second->_mbVisible)
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
 			{
-				CVector2f vBRPos = itProgressbar->second->getPosition() + itProgressbar->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itProgressbar++;
 		}
 
-		// For each CUIScrollbar widget
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
 		{
-			if (itScrollbar->second->_mbVisible)
+			auto it = _mmapProgressbars.begin();
+			while (it != _mmapProgressbars.end())
 			{
-				CVector2f vBRPos = itScrollbar->second->getPosition() + itScrollbar->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itScrollbar++;
 		}
 
-		// For each CUIText object
-		auto itText = _mmapTexts.begin();
-		while (itText != _mmapTexts.end())
 		{
-			if (itText->second->getVisible())
+			auto it = _mmapScrollbars.begin();
+			while (it != _mmapScrollbars.end())
 			{
-				CVector2f vBRPos = itText->second->getPosition() + itText->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itText++;
 		}
 
-		// For each CUITextEdit object
-		auto itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
 		{
-			if (itTextEdit->second->getVisible())
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
 			{
-				CVector2f vBRPos = itTextEdit->second->getPosition() + itTextEdit->second->getDimensions();
-				if (_mvMaxWidgetCornerPos.x < vBRPos.x)
-					_mvMaxWidgetCornerPos.x = vBRPos.x;
-				if (_mvMaxWidgetCornerPos.y < vBRPos.y)
-					_mvMaxWidgetCornerPos.y = vBRPos.y;
+				if (it->second->getVisible())
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
 			}
-			itTextEdit++;
+		}
+
+		{
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				if (it->second->getVisible())
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
+			}
 		}
 	}
 
 	void CUIContainer::update(float fTimeDeltaSec)
 	{
-		// For each CUIButton widget
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
+//		if (!_mbVisible)
+//			return;
+
 		{
-			itButton->second->update(fTimeDeltaSec);
-			itButton++;
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
 		}
 
-		// For each CUIButtonImage widget
-		auto itButtonImage = _mmapButtonImages.begin();
-		while (itButtonImage != _mmapButtonImages.end())
 		{
-			itButtonImage->second->update(fTimeDeltaSec);
-			itButtonImage++;
+			auto it = _mmapButtonImages.begin();
+			while (it != _mmapButtonImages.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
 		}
 
 		// For each CUIImage widget (No need)
 
-		// For each CUILineGraph widget
-		auto itLineGraph = _mmapLineGraphs.begin();
-		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			itLineGraph->second->update(fTimeDeltaSec);
-			itLineGraph++;
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
 		}
 
 		// For each CUIProgressbar widget (No need)
 
-		// For each CUIScrollbar widget
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
 		{
-			itScrollbar->second->update(fTimeDeltaSec);
-			itScrollbar++;
+			auto it = _mmapScrollbars.begin();
+			while (it != _mmapScrollbars.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
 		}
 
 		// For each CUIText widget (No need)
 
-		// For each CUITextEdit widget
-		auto itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
 		{
-			itTextEdit->second->update(fTimeDeltaSec);
-			itTextEdit++;
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
 		}
 
 		// The container's two scrollbars
@@ -902,7 +1068,99 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-		// Get required resources needed to render things
+		x->pProfiler->begin("CUIContainer::render()_renderWidgetBackgrounds()");
+		_renderWidgetBackgrounds();
+		x->pProfiler->end("CUIContainer::render()_renderWidgetBackgrounds()");
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG");
+
+		glEnable(GL_SCISSOR_TEST);
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG_buttons");
+		{
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+		x->pProfiler->end("CUIContainer::render()_renderNonBG_buttons");
+
+		{
+			auto it = _mmapButtonImages.begin();
+			while (it != _mmapButtonImages.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG_checkboxes");
+		{
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+		x->pProfiler->end("CUIContainer::render()_renderNonBG_checkboxes");
+
+		{
+			auto it = _mmapImages.begin();
+			while (it != _mmapImages.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG_linegraphs");
+		{
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+		x->pProfiler->end("CUIContainer::render()_renderNonBG_linegraphs");
+
+		// For each CUIProgressbar widget (No need)
+
+		// For each CUIScrollbar widget (No need)
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG_texts");
+		{
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+		x->pProfiler->end("CUIContainer::render()_renderNonBG_texts");
+
+		x->pProfiler->begin("CUIContainer::render()_renderNonBG_textEdits");
+		glEnable(GL_SCISSOR_TEST);
+		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
+		{
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+		glDisable(GL_SCISSOR_TEST);
+		x->pProfiler->end("CUIContainer::render()_renderNonBG_textEdits");
+
+		x->pProfiler->end("CUIContainer::render()_renderNonBG");
+	}
+
+	void CUIContainer::_renderWidgetBackgrounds(void)
+	{
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
 		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui);
 		CResourceFramebuffer* pUIFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
@@ -937,48 +1195,62 @@ namespace X
 
 		pVB->removeGeom();
 
-		// For each CUIButton widget
-		auto itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
 		{
-			itButton->second->render(pVB);
-			itButton++;
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
 		}
 
 		// For each CUIButtonImage widget (No need)
 
+		{
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
+		}
+
 		// For each CUIImage widget (No need)
 
-		// For each CUILineGraph widget
-		auto itLineGraph = _mmapLineGraphs.begin();
-		while (itLineGraph != _mmapLineGraphs.end())
 		{
-			itLineGraph->second->renderBG(pVB);
-			itLineGraph++;
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
 		}
 
-		// For each CUIProgressbar widget
-		auto itProgressbar = _mmapProgressbars.begin();
-		while (itProgressbar != _mmapProgressbars.end())
 		{
-			itProgressbar->second->render(pVB);
-			itProgressbar++;
+			auto it = _mmapProgressbars.begin();
+			while (it != _mmapProgressbars.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
 		}
 
-		// For each CUIScrollbar widget
-		auto itScrollbar = _mmapScrollbars.begin();
-		while (itScrollbar != _mmapScrollbars.end())
 		{
-			itScrollbar->second->render(pVB);
-			itScrollbar++;
+			auto it = _mmapScrollbars.begin();
+			while (it != _mmapScrollbars.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
 		}
 
-		// For each CUITextEdit widget
-		auto itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
 		{
-			itTextEdit->second->render(pVB);
-			itTextEdit++;
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->renderBG(pVB);
+				it++;
+			}
 		}
 
 		// Render all the widget backgrounds added above
@@ -989,10 +1261,9 @@ namespace X
 		pVB->removeGeom();
 		glDisable(GL_SCISSOR_TEST);
 
-		// Render the two scrollbars used for scrolling through contents of the container
-		pVB->removeGeom();
-		_mpScrollbarH->render(pVB, false);
-		_mpScrollbarV->render(pVB, false);
+		// Render the container's scrollbars
+		_mpScrollbarH->renderBG(pVB, false);
+		_mpScrollbarV->renderBG(pVB, false);
 		pVB->update();
 		pVB->render();
 		pVB->removeGeom();
@@ -1000,65 +1271,6 @@ namespace X
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
-
-		// Render font stuff
-		
-		// For each CUIButton widget, render non-font stuff
-		glEnable(GL_SCISSOR_TEST);
-		itButton = _mmapButtons.begin();
-		while (itButton != _mmapButtons.end())
-		{
-			itButton->second->renderFonts();
-			itButton++;
-		}
-
-		// For each CUIButtonImage widget
-		auto itButtonImage = _mmapButtonImages.begin();
-		while (itButtonImage != _mmapButtonImages.end())
-		{
-			itButtonImage->second->render();
-			itButtonImage++;
-		}
-
-		// For each CUIImage widget
-		auto itImage = _mmapImages.begin();
-		while (itImage != _mmapImages.end())
-		{
-			itImage->second->render();
-			itImage++;
-		}
-
-		// For each CUILineGraph widget
-		itLineGraph = _mmapLineGraphs.begin();
-		while (itLineGraph != _mmapLineGraphs.end())
-		{
-			itLineGraph->second->renderLines();
-			itLineGraph++;
-		}
-
-		// For each CUIProgressbar widget (No need)
-
-		// For each CUIScrollbar widget (No need)
-
-		
-
-		// For each CUIText widget
-		auto itText = _mmapTexts.begin();
-		while (itText != _mmapTexts.end())
-		{
-			itText->second->render();
-			itText++;
-		}
-
-		// For each CUITextEdit widget
-		itTextEdit = _mmapTextEdits.begin();
-		while (itTextEdit != _mmapTextEdits.end())
-		{
-			itTextEdit->second->renderFonts();
-			itTextEdit++;
-		}
-
-		glDisable(GL_SCISSOR_TEST);
 	}
 
 	void CUIContainer::renderTooltips(void)
@@ -1068,13 +1280,15 @@ namespace X
 
 	void CUIContainer::_onToggleFullscreen(void)
 	{
-		// For each CUIText widget
-		auto itText = _mmapTexts.begin();
-		while (itText != _mmapTexts.end())
 		{
-			itText->second->setFramebufferNeedsUpdating();
-			itText++;
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
+			{
+				it->second->setFramebufferNeedsUpdating();
+				it++;
+			}
 		}
+
 
 	}
 

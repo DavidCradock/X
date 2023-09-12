@@ -198,7 +198,7 @@ namespace X
 		strTxt += "Press the return key to toggle turbo training speed.\n \n";
 		strTxt += "Information...\n";
 		strTxt += "This is the same as state0, but using the 3D scene manager instead of the 2D renderer.\n";
-		pCont->addTextScroll("state2TextScroll", 310, 0, 340, 300, strTxt);
+		pCont->addText("state2TextScroll", 310, 0, strTxt);
 		pCont->addText("best_fitness", 0, 0, "Best Fitness: 0")->setColour(false, colBest);
 		pCont->addText("aver_fitness", 0, 30, "Average Fitness: 0")->setColour(false, colAverage);
 		pCont->addText("worst_fitness", 0, 60, "Worst Fitness: 0")->setColour(false, colWorst);

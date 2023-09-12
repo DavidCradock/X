@@ -2,6 +2,7 @@
 #include "UITextEdit.h"
 #include "utilities.h"
 #include "UIContainer.h"
+#include "UIText.h"
 #include "singletons.h"
 #include "UITheme.h"
 
@@ -20,10 +21,14 @@ namespace X
 		_mbWasActiveEnterPressed = false;
 		_mfuncOnEnterPressed = NULL;
 
+		_mpTextWidget = new CUIText(pContainer, strWidgetName);
+		ThrowIfFalse(_mpTextWidget, "CUITextEdit::CUITextEdit() failed to allocate memory for the widget's CUIText object.");
+		_mpTextWidget->setFont(false, pContainer->themeGetSettings()->fonts.textEdit);
 	}
 
 	CUITextEdit::~CUITextEdit()
 	{
+		delete _mpTextWidget;
 	}
 
 	void CUITextEdit::setDimensions(float fX, float fY)
@@ -33,15 +38,37 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUITextEdit::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUITextEdit::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUITextEdit::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUITextEdit::getDimensionsMinimum(void) const
+	{
+		CUITheme* pTheme = _mpContainer->themeGet();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+
+		CVector2f vMinimumDims;
+		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.cornerTL);
+		vMinimumDims = pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.cornerBR);
+		vMinimumDims += pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.edgeT);
+		vMinimumDims.x += pID->vDims.x;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.edgeR);
+		vMinimumDims.y += pID->vDims.y;
+		return vMinimumDims;
 	}
 
 	void CUITextEdit::setPosition(float fX, float fY)
@@ -51,10 +78,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUITextEdit::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUITextEdit::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUITextEdit::getPosition(void) const
@@ -73,12 +104,12 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUITextEdit::render(CResourceVertexBufferCPT2* pVB)
+	void CUITextEdit::renderBG(CResourceVertexBufferCPT2* pVB)
 	{
 		if (!_mbVisible)
 			return;
 
-		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		CColour col;
 		// Add geometry for the 9 grid cells
@@ -91,17 +122,18 @@ namespace X
 			pVB);
 	}
 
-	void CUITextEdit::renderFonts(void)
+	void CUITextEdit::renderNonBG(void)
 	{
+		if (!_mpContainer->getVisible())
+			return;
+
 		CUITheme* pTheme = _mpContainer->themeGet();
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 		
-		// Get required resources needed to render
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 		CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerTL);
 		CImageAtlasDetails idBR = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerBR);
 
-		// Now render the font stuff
 		int iRTDims[2];
 		iRTDims[0] = int(x->pWindow->getWidth());
 		iRTDims[1] = int(x->pWindow->getHeight());
@@ -115,48 +147,36 @@ namespace X
 				strFinalText += "_";
 		}
 
-		CVector2f vTextPosTL = _mpContainer->getWidgetAreaTLCornerPosition();
+		CVector2f vTextPosTL;
 		vTextPosTL += _mvPosition;
-		vTextPosTL += _mpContainer->getWidgetOffset();
 		vTextPosTL += idTL.vDims;
-		CVector2f vTextPosBR = _mpContainer->getWidgetAreaTLCornerPosition();
+		CVector2f vTextPosBR;
 		vTextPosBR += _mvPosition;
-		vTextPosBR += _mpContainer->getWidgetOffset();
 		vTextPosBR += _mvDimensions;
 		vTextPosBR -= idBR.vDims;
-
-		// Enable stencil mask
-		glEnable(GL_SCISSOR_TEST);
-		int iScissorX = int(vTextPosTL.x);
-		int iScissorY = iRTDims[1] - int(vTextPosBR.y);
-		glScissor(iScissorX, iScissorY, GLsizei(_mvDimensions.x - idTL.vDims.x - idBR.vDims.x), (GLsizei)_mvDimensions.y);
 
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;
 		std::string strTextTemp = _mstrText + "_";	// We use this to compute width to prevent moving forward and backwards of text when cursor flashes.
 		int iTextWidth = (int)pFont->getTextWidth(strTextTemp, 1.0f);
 		if (iTextWidth > int(_mvDimensions.x - idTL.vDims.x - idBR.vDims.x))
-		{
-			//iOffsetX = int(mfWidth - iTextWidth - vTexDimsPoint6.x);
 			iOffsetX = int(_mvDimensions.x - iTextWidth - idTL.vDims.x - idBR.vDims.x);
-		}
 
 		// Reset the offset so that the beginning of the text is displayed, IF the text edit box is not active
 		if (_mState == state::inactive)
 			iOffsetX = 0;
 
-		pFont->print(strFinalText,			// The text
-			int(iOffsetX + vTextPosTL.x),	// X position
-			int(vTextPosTL.y),				// Y position
-			iRTDims[0], iRTDims[1],	// Render target dims
-			1.0f,					// Scaling
-			_mTextColour);			// Colour
-
-		glDisable(GL_SCISSOR_TEST);
+		_mpTextWidget->setText("Hello");
+		_mpTextWidget->setPosition(iOffsetX + vTextPosTL.x, vTextPosTL.y);
+		_mpTextWidget->setDimensions(_mvDimensions);
+		_mpTextWidget->renderNonBG();
 	}
 
 	void CUITextEdit::update(float fTimeDeltaSec)
 	{
+		if (!_mpContainer->getVisible())
+			return;
+
 		// Determine whether the mouse cursor is over this widget's container or not.
 		// This is all to prevent doing expensive checks if we don't need to.
 		bool bContainerHasMouseOver = false;

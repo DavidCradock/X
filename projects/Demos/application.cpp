@@ -42,7 +42,7 @@ namespace X
 		strTxt += "This contains all the demos which act as unit tests for X.\n";
 		strTxt += "You may enter a demo state with the buttons below.\n";
 		strTxt += "Once a demo state has been entered, you can bring up this window again with the \"Demo States\" button found at the lower right corner of the screen.\n";
-		CGUITextScroll* pTextScroll = pCont->addTextScroll("DemoStatesTextScroll", 0, 0, 640, 200, strTxt);
+		CGUIText* pTextScroll = pCont->addText("DemoStatesTextScroll", 0, 0, strTxt);
 		CGUIButton* pBut;
 		CVector2f vTxtPos(0.0f, 210.0f);
 		pBut = pCont->addButton("2D", vTxtPos.x, vTxtPos.y, 200, 30, "2D"); vTxtPos.y += 40;								pBut->mpTooltip->setAsText("2D rendering of stuff.");

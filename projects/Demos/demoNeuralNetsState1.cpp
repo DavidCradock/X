@@ -394,7 +394,7 @@ namespace X
 		strTxt += "Press the return key to toggle turbo training speed.\n \n";
 		strTxt += "Information...\n";
 		strTxt += "Apart from the above changes, everything is the same as in the previous state where each network is given a direction vector to it's food.\n";
-		pCont->addTextScroll("state1TextScroll", 610, 0, 340, 300, strTxt);
+		pCont->addText("state1TextScroll", 610, 0, strTxt);
 
 		pCont->addText("best_fitness", 0, 0, "Best Fitness: 0")->setColour(false, colBest);
 		pCont->addText("aver_fitness", 0, 30, "Average Fitness: 0")->setColour(false, colAverage);

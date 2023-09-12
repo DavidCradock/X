@@ -327,6 +327,11 @@ namespace X
 		return _mAtlases.getImageDetails(strImageName);
 	}
 
+	CImageAtlasDetails* CResourceTexture2DAtlas::getImageDetailsPointer(const std::string& strImageName) const
+	{
+		return _mAtlases.getImageDetailsPointer(strImageName);
+	}
+
 	unsigned int CResourceTexture2DAtlas::getImageTextureID(const std::string& strImageName) const
 	{
 		CImageAtlasDetails iad = _mAtlases.getImageDetails(strImageName);

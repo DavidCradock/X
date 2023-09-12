@@ -29,6 +29,13 @@ namespace X
 		// If the float is 1.0f, the returned colour will be the one given.
 		CColour interpolate(const CColour other, float fValue) const;
 
+		bool operator == (const CColour& col)
+		{
+			if (red == col.red && green == col.green && blue == col.blue && alpha == col.alpha)
+				return true;
+			return false;
+		}
+
 		float red;		// Red colour between 0.0f and 1.0f
 		float green;	// Green colour between 0.0f and 1.0f
 		float blue;		// Blue colour between 0.0f and 1.0f

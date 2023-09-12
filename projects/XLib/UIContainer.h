@@ -2,6 +2,7 @@
 #include "PCH.h"
 #include "UIButton.h"
 #include "UIButtonImage.h"
+#include "UICheckbox.h"
 #include "UIImage.h"
 #include "UILineGraph.h"
 #include "UIProgressbar.h"
@@ -30,6 +31,11 @@ namespace X
 		// This sets _mvContainersWidgetAreaDimensions which is the dimensions of the container's widget area.
 		// The actual container's dimensions onscreen will be larger than this if it is a window,
 		// as a window has borders and the two scrollbars.
+		void setDimensions(int iX, int iY);
+
+		// This sets _mvContainersWidgetAreaDimensions which is the dimensions of the container's widget area.
+		// The actual container's dimensions onscreen will be larger than this if it is a window,
+		// as a window has borders and the two scrollbars.
 		void setDimensions(const CVector2f& vDimensions);
 
 		// Returns the dimensions of this container.
@@ -41,6 +47,11 @@ namespace X
 		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
 		// If the container is a window, then this is the position of the window's top left corner of it's borders.
 		void setPosition(float fX, float fY);
+
+		// Sets the position of this container.
+		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
+		// If the container is a window, then this is the position of the window's top left corner of it's borders.
+		void setPosition(int iX, int iY);
 
 		// Sets the position of this container.
 		// If the container is not a window, then this is the top left position of the widget area, where widgets can be placed.
@@ -75,7 +86,7 @@ namespace X
 		CUITheme* themeGet(void) const;
 
 		// Returns a pointer to the theme's settings this container uses.
-		const CUITheme::SSettings* themeGetSettings(void) const;
+		CUITheme::SSettings* themeGetSettings(void) const;
 
 		// Set theme this container uses for it's widgets and scrollbars
 		void themeNameSet(const std::string& strThemeToUse);
@@ -108,6 +119,10 @@ namespace X
 		// If the name already exists, an exception occurs
 		CUIButton* buttonAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
+		// Add button to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIButton* buttonAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
+
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
 		CUIButton* buttonGet(const std::string& strName);
@@ -123,11 +138,17 @@ namespace X
 		/* Button Images */
 		/************************************************************************************************************************************************************/
 
-		// Add button to this container and return a pointer to it
+		// Add button image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		// Checks to see if the named 2D texture resources exist and if not, an exception occurs.
 		// All state texture images should be the same dimensions.
 		CUIButtonImage* buttonImageAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown);
+
+		// Add button image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// Checks to see if the named 2D texture resources exist and if not, an exception occurs.
+		// All state texture images should be the same dimensions.
+		CUIButtonImage* buttonImageAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strTextureFromFileResourceNameUp, const std::string& strTextureFromFileResourceNameOver, const std::string& strTextureFromFileResourceNameDown);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
@@ -141,12 +162,39 @@ namespace X
 		void buttonImageRemoveAll(void);
 
 		/************************************************************************************************************************************************************/
+		/* Checkboxes */
+		/************************************************************************************************************************************************************/
+
+		// Add check box to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUICheckbox* checkboxAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Add check box to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUICheckbox* checkboxAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUICheckbox* checkboxGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void checkboxRemove(const std::string& strName);
+
+		// Removes all buttons from this container
+		void checkboxRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
 		/* Images */
 		/************************************************************************************************************************************************************/
 
 		// Add image to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		CUIImage* imageAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Add image to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIImage* imageAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
@@ -167,6 +215,10 @@ namespace X
 		// If the name already exists, an exception occurs
 		CUILineGraph* lineGraphAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
 
+		// Add linegraph to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUILineGraph* lineGraphAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
+
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
 		CUILineGraph* lineGraphGet(const std::string& strName);
@@ -185,6 +237,10 @@ namespace X
 		// Add progressbar to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		CUIProgressbar* progressbarAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Add progressbar to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIProgressbar* progressbarAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
@@ -207,6 +263,12 @@ namespace X
 		// fTabRatio is a value which is multiplied by the width/height(Depending on orientation) of the scrollbar's dims, to obtain tab dimensions
 		CUIScrollbar* scrollbarAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, float fTabRatio = 0.05f);
 
+		// Add scrollbar to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		// If the width is greater than height, it is set as a horizontal scrollbar, else vertical.
+		// fTabRatio is a value which is multiplied by the width/height(Depending on orientation) of the scrollbar's dims, to obtain tab dimensions
+		CUIScrollbar* scrollbarAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, float fTabRatio = 0.05f);
+
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
 		CUIScrollbar* scrollbarGet(const std::string& strName);
@@ -226,6 +288,10 @@ namespace X
 		// If the name already exists, an exception occurs
 		CUIText* textAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
 
+		// Add text to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIText* textAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strText);
+
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
 		CUIText* textGet(const std::string& strName);
@@ -244,6 +310,10 @@ namespace X
 		// Add text edit widget to this container and return a pointer to it
 		// If the name already exists, an exception occurs
 		CUITextEdit* textEditAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText);
+
+		// Add text edit widget to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUITextEdit* textEditAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strText);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs
@@ -277,6 +347,7 @@ namespace X
 
 		std::map<std::string, CUIButton*> _mmapButtons;				// Map holding each CUIButton widget
 		std::map<std::string, CUIButtonImage*> _mmapButtonImages;	// Map holding each CUIButtonImage widget
+		std::map<std::string, CUICheckbox*> _mmapCheckboxes;		// Map holding each CUICheckbox widget
 		std::map<std::string, CUIImage*> _mmapImages;				// Map holding each CUIImage widget
 		std::map<std::string, CUILineGraph*> _mmapLineGraphs;		// Map holding each CUILineGraph widget
 		std::map<std::string, CUIProgressbar*> _mmapProgressbars;	// Map holding each CUIProgressbar widget
@@ -315,5 +386,10 @@ namespace X
 
 		// Called from SCUIManager::onToggleFullscreen()
 		void _onToggleFullscreen(void);
+
+		// Called from render to render all this container's widget backgrounds.
+		// Also renders the container's two scrollbars used for scrolling through contents of the container.
+		void _renderWidgetBackgrounds(void);
+
 	};
 }

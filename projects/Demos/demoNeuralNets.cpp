@@ -69,7 +69,7 @@ namespace X
 		strTxt += "State0.\nThis state shows training of a neural network whereby some networks try to eat as much food as possible.\n \n";
 		strTxt += "State1.\nThis state adds red evil critters which try to eat the smaller critters which still just eat food.\n \n";
 		strTxt += "State2.\nThis is the same as state 0, but using the 3D renderer instead of the 2D one.";
-		pCont->addTextScroll("desc", 110, 0, 340, 300, strTxt);
+		pCont->addText("desc", 110, 0, strTxt);
 
 		// End of loading screen
 		x->pLoadingScreen->onInitEnd();

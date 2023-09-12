@@ -28,7 +28,7 @@ namespace X
 		ThrowIfFalse(file.is_open(), "CUITheme::load(" + filename + ") failed to open file for reading.");
 
 		// Audio
-//		_helperReadAudio(file, _mSettings.audio.buttonClicked);
+		_helperReadAudio(file, _mSettings.audio.buttonClicked);
 //		_helperReadAudio(file, _mSettings.audio.buttonImageClicked);
 		_helperReadAudio(file, _mSettings.audio.textEditActivate);
 		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
@@ -53,9 +53,10 @@ namespace X
 		// Images
 		_helperReadImageType(file, _mSettings.images.buttonBG);
 //		_helperReadImageType(file, _mSettings.images.buttonImageBG);
-//		_helperReadImageType(file, _mSettings.images.checkboxBGNormal);
-//		_helperReadImageType(file, _mSettings.images.checkboxBGOFF);
-//		_helperReadImageType(file, _mSettings.images.checkboxBGON);
+		_helperReadImageType(file, _mSettings.images.checkboxBGOff);
+		_helperReadImageType(file, _mSettings.images.checkboxBGOffOver);
+		_helperReadImageType(file, _mSettings.images.checkboxBGOn);
+		_helperReadImageType(file, _mSettings.images.checkboxBGOnOver);
 		_helperReadImageType(file, _mSettings.images.lineGraphBG);
 		_helperReadImageType(file, _mSettings.images.progressBarBG);
 		_helperReadImageType(file, _mSettings.images.progressBarFiller);
@@ -98,7 +99,7 @@ namespace X
 		ThrowIfFalse(file.is_open(), "CUITheme::save(" + filename + ") failed to open file for writing.");
 
 		// Audio
-//		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
+		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
 //		_helperWriteAudio(file, _mSettings.audio.buttonImageClicked);
 		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
 		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
@@ -123,9 +124,10 @@ namespace X
 		// Images
 		_helperWriteImageType(file, _mSettings.images.buttonBG);
 //		_helperWriteImageType(file, _mSettings.images.buttonImageBG);
-//		_helperWriteImageType(file, _mSettings.images.checkboxBGNormal);
-//		_helperWriteImageType(file, _mSettings.images.checkboxBGOFF);
-//		_helperWriteImageType(file, _mSettings.images.checkboxBGON);
+		_helperWriteImageType(file, _mSettings.images.checkboxBGOff);
+		_helperWriteImageType(file, _mSettings.images.checkboxBGOffOver);
+		_helperWriteImageType(file, _mSettings.images.checkboxBGOn);
+		_helperWriteImageType(file, _mSettings.images.checkboxBGOnOver);
 		_helperWriteImageType(file, _mSettings.images.lineGraphBG);
 		_helperWriteImageType(file, _mSettings.images.progressBarBG);
 		_helperWriteImageType(file, _mSettings.images.progressBarFiller);
@@ -163,7 +165,7 @@ namespace X
 		// Audio
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->addNewSampleGroup("UI");
-//		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
+		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 //		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
@@ -211,7 +213,7 @@ namespace X
 		// Audio
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->unloadSampleGroup("UI");
-//		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
+		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 //		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
@@ -245,7 +247,7 @@ namespace X
 	void CUITheme::_setSettingsToDefault(void)
 	{
 		// Audio
-//		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
+		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
 //		_helperSetAudio(_mSettings.audio.buttonImageClicked, "data/X/UI/default/buttonImageClicked.wav", 1.0f, 0.8f);
 		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
 		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
@@ -267,6 +269,10 @@ namespace X
 		_mSettings.colours.buttonImageTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.buttonImageTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.buttonImageTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.checkboxBGOff.set(0.7f, 0.7f, 0.7f, 1.0f);
+		_mSettings.colours.checkboxBGOffOver.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.checkboxBGOn.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.checkboxBGOnOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.linegraphBG.set(0.5f, 0.5f, 0.5f, 1.0f);
 		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
 		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -310,9 +316,10 @@ namespace X
 		// Image file names
 		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/genericBG");
 //		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
-//		_helperSetNames(_mSettings.images.checkboxBGNormal, "data/X/UI/default/images/checkboxBGNormal");
-//		_helperSetNames(_mSettings.images.checkboxBGOFF, "data/X/UI/default/images/checkboxBGOFF");
-//		_helperSetNames(_mSettings.images.checkboxBGON, "data/X/UI/default/images/checkboxBGON");
+		_helperSetNames(_mSettings.images.checkboxBGOff, "data/X/UI/default/images/genericBG");
+		_helperSetNames(_mSettings.images.checkboxBGOffOver, "data/X/UI/default/images/genericBG");
+		_helperSetNames(_mSettings.images.checkboxBGOn, "data/X/UI/default/images/genericBG");
+		_helperSetNames(_mSettings.images.checkboxBGOnOver, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.lineGraphBG, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.progressBarBG, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.progressBarFiller, "data/X/UI/default/images/genericBG");
@@ -344,9 +351,10 @@ namespace X
 		// Note: The second parameter for the below method calls can be anything, it's used during creating of the exception text.
 		_helperCheckImageDimsAreOK(_mSettings.images.buttonBG, "buttonBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.buttonImageBG, "buttonImageBG");
-//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGNormal, "checkboxBGNormal");
-//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOFF, "checkboxBGOFF");
-//		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGON, "checkboxBGON");
+		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOff, "checkboxBGOff");
+		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOffOver, "checkboxBGOffOver");
+		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOn, "checkboxBGOn");
+		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOnOver, "checkboxBGOnOver");
 		_helperCheckImageDimsAreOK(_mSettings.images.lineGraphBG, "lineGraphBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.progressBarBG, "progressBarBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.progressBarFiller, "progressBarFiller");
@@ -362,9 +370,10 @@ namespace X
 	{
 		_helperBuildNormalImages(_mSettings.images.buttonBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.buttonImageBG, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.checkboxBGNormal, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.checkboxBGOFF, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.checkboxBGON, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.checkboxBGOff, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.checkboxBGOffOver, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.checkboxBGOn, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.checkboxBGOnOver, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.lineGraphBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.progressBarBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.progressBarFiller, bOverwriteNormalImages);
@@ -413,7 +422,7 @@ namespace X
 		imageType.normal.edgeT = strBaseName + "_normal_edgeT.png";
 	}
 
-	const CUITheme::SSettings* CUITheme::getSettings(void)
+	CUITheme::SSettings* CUITheme::getSettings(void)
 	{
 		return &_mSettings;
 	}

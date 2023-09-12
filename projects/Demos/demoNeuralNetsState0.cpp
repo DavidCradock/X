@@ -214,7 +214,7 @@ namespace X
 		strTxt += "Various methods are used when creating the children, including mutating the genomes slighty, just like in nature and selecting the best performing critters' minds and making copies of those to insert ";
 		strTxt += "into the new population, guaranteeing that the networks with the highest fitness values are in the new population.\n \n";
 		strTxt += "Over time, the populations improve their behaviour (If we've chosen our inputs, use the outputs correctly to determine their movement and have setup the neural networks with the correct configuration.\n";
-		pCont->addTextScroll("state0TextScroll", 310, 0, 340, 300, strTxt);
+		pCont->addText("state0TextScroll", 310, 0, strTxt);
 		pCont->addText("best_fitness", 0, 0, "Best Fitness: 0")->setColour(false, colBest);
 		pCont->addText("aver_fitness", 0, 30, "Average Fitness: 0")->setColour(false, colAverage);
 		pCont->addText("worst_fitness", 0, 60, "Worst Fitness: 0")->setColour(false, colWorst);

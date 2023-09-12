@@ -23,7 +23,7 @@ namespace X
 		strTxt += "Moving the mouse over a tile will highlight it and with a left mouse click, will set it to the currently set tile brush.\n";
 		strTxt += "Create a new map by clicking on the \"New Map\" button in the \"Editing\" window after setting the desired number of tiles in the text edit boxes above the button.\n";
 		strTxt += "\n";
-		pCont->addTextScroll("TextScroll4", 0, 0, 640, 240, strTxt);
+//		pCont->addTextScroll("TextScroll4", 0, 0, 640, 240, strTxt);
 
 		// Add text
 		CGUIText* pText = pCont->addText("campos", 0, 250, "");
@@ -80,7 +80,6 @@ namespace X
 
 		// Load in textures for the GUI to use as images
 		// and create image buttons for them and add them to the sub container, which we create next...
-		CGUISubContainer* pSubCont = pCont->addSubContainer("tiles", 0, 260, 320, 380);
 
 		std::vector<std::string> vecstrTiles = StringUtils::getFilesInDir("data/x/textures/map_tiles/");
 		CVector2f vButtonPos(0, 260);
@@ -90,7 +89,7 @@ namespace X
 			std::string strButName = "but_";
 			strButName += vecstrTiles[i];
 			//CGUIButtonImage* pButImage = pCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
-			CGUIButtonImage* pButImage = pSubCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
+//			CGUIButtonImage* pButImage = pSubCont->addButtonImage(strButName, vButtonPos.x, vButtonPos.y, vecstrTiles[i], vecstrTiles[i], vecstrTiles[i], 32, 32);
 			vButtonPos.y += 40;
 			if (vButtonPos.y > pCont->getDimensions().y)
 			{

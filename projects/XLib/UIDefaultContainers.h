@@ -78,6 +78,7 @@ namespace X
 		{
 			float fAddValueToLinegraphDataset;	// Time counter used to add a new value to the data set.
 			CTimer timer;
+			bool bvsyncEnabled;					// Used for comparison and only update text when value has changed
 		};
 		SStatistics _mStatistics;
 

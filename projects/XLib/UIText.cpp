@@ -33,6 +33,9 @@ namespace X
 
 	void CUIText::setDimensions(float fX, float fY)
 	{
+		if (fX == _mvDimensions.x)
+			if (fY == _mvDimensions.y)
+				return;
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
 		_mvNonCenteredDims = _mvDimensions;
@@ -41,13 +44,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIText::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUIText::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
-		_mvNonCenteredDims = _mvDimensions;
-		_helperComputeCenteredPosDims();
-		_mbFramebufferNeedsUpdating = true;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIText::getDimensions(void) const
@@ -55,8 +59,18 @@ namespace X
 		return _mvDimensions;
 	}
 
+	CVector2f CUIText::getDimensionsMinimum(void) const
+	{
+		CVector2f vMinimumDims(1.0f, 1.0f);
+		return vMinimumDims;
+	}
+
 	void CUIText::setPosition(float fX, float fY)
 	{
+		if (_mvPosition.x == fX)
+			if (_mvPosition.y == fY)
+				return;
+
 		_mvPosition.x = fX;
 		_mvPosition.y = fY;
 		_mvNonCenteredPos = _mvPosition;
@@ -65,13 +79,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIText::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIText::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mvNonCenteredPos = _mvPosition;
-		_helperComputeCenteredPosDims();
-		_mbFramebufferNeedsUpdating = true;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIText::getPosition(void) const
@@ -81,6 +96,9 @@ namespace X
 
 	void CUIText::setVisible(bool bVisible)
 	{
+		if (_mbVisible == bVisible)
+			return;
+
 		_mbVisible = bVisible;
 		_mpContainer->computeScrollbars();
 	}
@@ -90,7 +108,7 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIText::render(void)
+	void CUIText::renderNonBG(void)
 	{
 		if (!_mbVisible)
 			return;
@@ -155,6 +173,9 @@ namespace X
 
 	void CUIText::setText(const std::string& strText)
 	{
+		if (strText == _mstrText)
+			return;
+
 		_mstrText = strText;
 		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;
@@ -167,6 +188,10 @@ namespace X
 
 	void CUIText::setTextColour(bool bUseThemeColour, const CColour& colour)
 	{
+		if (_mbUseThemeColour == bUseThemeColour)
+			if (_mColourText == colour)
+				return;
+
 		_mbUseThemeColour = bUseThemeColour;
 		_mColourText = colour;
 		_mbFramebufferNeedsUpdating = true;
@@ -174,11 +199,19 @@ namespace X
 
 	void CUIText::setBackgroundColour(const CColour& colour)
 	{
+		if (colour == _mColourFramebufferClear)
+			return;
+
 		_mColourFramebufferClear = colour;
+		_mbFramebufferNeedsUpdating = true;
 	}
 
 	void CUIText::setFont(bool bUseThemeFont, const std::string& strFontResourceToUse)
 	{
+		if (bUseThemeFont == _mbUseThemeFont)
+			if (strFontResourceToUse == _mstrFontResourceName)
+				return;
+
 		_mbUseThemeFont = bUseThemeFont;
 		_mstrFontResourceName = strFontResourceToUse;
 		_helperComputeCenteredPosDims();
@@ -190,6 +223,9 @@ namespace X
 
 	void CUIText::setCentered(bool bCenterTheText)
 	{
+		if (bCenterTheText == _mbCentered)
+			return;
+
 		_mbCentered = bCenterTheText;
 		_helperComputeCenteredPosDims();
 		_mbFramebufferNeedsUpdating = true;

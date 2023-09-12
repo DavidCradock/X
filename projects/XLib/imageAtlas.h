@@ -108,6 +108,11 @@ namespace X
 		// If an invalid image name is given, an exception occurs
 		CImageAtlasDetails getImageDetails(const std::string& strImageName) const;
 
+		// Returns a pointer to the named image's details
+		// Call createAtlasImages() first.
+		// If an invalid image name is given, an exception occurs
+		CImageAtlasDetails* getImageDetailsPointer(const std::string& strImageName) const;
+
 		// Returns whether the named image exists or not
 		bool getImageExists(const std::string& strImageName) const;
 	private:

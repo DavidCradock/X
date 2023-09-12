@@ -73,7 +73,7 @@ namespace X
 		strTxt += "Because of this, although they use instancing, they are still slower to render than the simpler C2DEntity object.\n";
 		strTxt += "But that is OK! The added ability of rotation is worth it\n";
 		strTxt += "Try switching between state 0 and 1 and notice the framerate differences.\n";
-		pCont->addTextScroll("TextScroll1", 0, 0, 640, 640, strTxt);
+		pCont->addText("TextScroll1", 0, 0, strTxt);
 
 		timer.update();
 	}

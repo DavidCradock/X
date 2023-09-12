@@ -532,14 +532,6 @@ namespace X
 		_mDefContFontGen.iWeight = 400;
 		_mDefContFontGen.strFontName = "arial";
 		
-		// Text explaining stuff
-		CGUITextScroll* pTextScroll = pCont->addTextScroll("X:Default:FontGenerator:TextScroll", 0, 0, 420, 385, "");
-		std::string strTxt = "This Font Generator window is used to create, preview and save files for use with the SCResourceManager and it's CResourceFont class.\n \n";
-		strTxt += "Start by typing the name of the font installed on the operating system, then set the height and weight in the text edit boxes and toggle anti-aliasing, italics, underling and strikeout with the buttons.\n";
-		strTxt += "Whenever you change a setting, the the pair of font files \"font_output.fnt\" and \"font_output.png\" are saved to this application's root directory.\n";
-		strTxt += "Happy font creating! :)";
-		pTextScroll->setText(strTxt);
-
 		// Text edit box for font name
 		pTextEdit = pCont->addTextEdit("textedit:fontname", 440, fYpos, 200, 40, _mDefContFontGen.strFontName);
 		pTextEdit->mpTooltip->setAsText("Type the name of the full font installed on your operating system here.");
@@ -547,7 +539,7 @@ namespace X
 		fYpos += 45;
 
 		// Text edit box for font height
-		strTxt.clear();
+		std::string strTxt;
 		StringUtils::appendInt(strTxt, _mDefContFontGen.iHeight);
 		pTextEdit = pCont->addTextEdit("textedit:fontheight", 440, fYpos, 200, 40, strTxt);
 		pTextEdit->mpTooltip->setAsText("Type the height of the font here.");
@@ -592,6 +584,7 @@ namespace X
 	void SCGUIManager::_updateDefaultContainerFontGenerator(void)
 	{
 		CGUIContainer* pCont = getContainer("X:Default:FontGenerator");
+
 		int iTotalRenderedHeight;
 		
 		// Close button

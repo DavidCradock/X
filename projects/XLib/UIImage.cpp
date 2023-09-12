@@ -25,15 +25,25 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIImage::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUIImage::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIImage::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUIImage::getDimensionsMinimum(void) const
+	{
+		CVector2f vMinimumDims(1.0f, 1.0f);
+		return vMinimumDims;
 	}
 
 	void CUIImage::setPosition(float fX, float fY)
@@ -43,10 +53,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIImage::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIImage::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIImage::getPosition(void) const
@@ -65,7 +79,7 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIImage::render(void)
+	void CUIImage::renderNonBG(void)
 	{
 		if (!_mbVisible)
 			return;

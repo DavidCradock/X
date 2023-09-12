@@ -30,17 +30,39 @@ namespace X
 		_mvDimensions.x = fX;
 		_mvDimensions.y = fY;
 		_mpContainer->computeScrollbars();
+	}
 
+	void CUIScrollbar::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
 	}
 
 	void CUIScrollbar::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIScrollbar::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUIScrollbar::getDimensionsMinimum(void) const
+	{
+		CUITheme* pTheme = _mpContainer->themeGet();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+
+		CVector2f vMinimumDims;
+		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.scrollbarBG.colour.cornerTL);
+		vMinimumDims = pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.scrollbarBG.colour.cornerBR);
+		vMinimumDims += pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.scrollbarBG.colour.edgeT);
+		vMinimumDims.x += pID->vDims.x;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.scrollbarBG.colour.edgeR);
+		vMinimumDims.y += pID->vDims.y;
+		return vMinimumDims;
 	}
 
 	void CUIScrollbar::setPosition(float fX, float fY)
@@ -50,10 +72,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIScrollbar::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIScrollbar::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIScrollbar::getPosition(void) const
@@ -72,12 +98,12 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIScrollbar::render(CResourceVertexBufferCPT2* pVB, bool bUseWidgetScrollbarOffset)
+	void CUIScrollbar::renderBG(CResourceVertexBufferCPT2* pVB, bool bUseWidgetScrollbarOffset)
 	{
 		if (!_mbVisible)
 			return;
 
-		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		
 		if (_mbVisible)
@@ -111,6 +137,9 @@ namespace X
 
 	void CUIScrollbar::update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset)
 	{
+		if (!_mpContainer->getVisible())
+			return;
+
 		// Determine whether this widget's container is accepting mouse input
 		bool bAcceptingMouseInput = false;
 		// Get name of the window, or container which the mouse cursor is over

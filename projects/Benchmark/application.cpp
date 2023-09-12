@@ -138,7 +138,7 @@ namespace X
 		strTxt += "Here we perform various tests to stress the CPU, GPU, memory and storage device which the application is run from.\n";
 		strTxt += "After all the tests have been completed, we calculate an arbitrary score and show the results from each of the tests.\n";
 		strTxt += "When you're ready to begin, feel free to click the button below, or press space bar or the return key.";
-		CGUITextScroll* pTextScroll = pCont->addTextScroll("TextScroll", 0, 0, 320, 200, strTxt);
+		CGUIText* pTextScroll = pCont->addText("TextScroll", 0, 0, strTxt);
 
 		// Add begin button
 		CGUIButton* pButton = pCont->addButton("Begin", 160 - 150, 210, 300, 40, "Begin Benchmark");

@@ -27,15 +27,37 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIProgressbar::setDimensions(int iX, int iY)
+	{
+		setDimensions(float(iX), float(iY));
+	}
+
 	void CUIProgressbar::setDimensions(const CVector2f& vDimensions)
 	{
-		_mvDimensions = vDimensions;
-		_mpContainer->computeScrollbars();
+		setDimensions(vDimensions.x, vDimensions.y);
 	}
 
 	CVector2f CUIProgressbar::getDimensions(void) const
 	{
 		return _mvDimensions;
+	}
+
+	CVector2f CUIProgressbar::getDimensionsMinimum(void) const
+	{
+		CUITheme* pTheme = _mpContainer->themeGet();
+		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+
+		CVector2f vMinimumDims;
+		CImageAtlasDetails* pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.progressBarBG.colour.cornerTL);
+		vMinimumDims = pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.progressBarBG.colour.cornerBR);
+		vMinimumDims += pID->vDims;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.progressBarBG.colour.edgeT);
+		vMinimumDims.x += pID->vDims.x;
+		pID = pAtlas->getImageDetailsPointer(pThemeSettings->images.progressBarBG.colour.edgeR);
+		vMinimumDims.y += pID->vDims.y;
+		return vMinimumDims;
 	}
 
 	void CUIProgressbar::setPosition(float fX, float fY)
@@ -45,10 +67,14 @@ namespace X
 		_mpContainer->computeScrollbars();
 	}
 
+	void CUIProgressbar::setPosition(int iX, int iY)
+	{
+		setPosition(float(iX), float(iY));
+	}
+
 	void CUIProgressbar::setPosition(const CVector2f& vPosition)
 	{
-		_mvPosition = vPosition;
-		_mpContainer->computeScrollbars();
+		setPosition(vPosition.x, vPosition.y);
 	}
 
 	CVector2f CUIProgressbar::getPosition(void) const
@@ -67,12 +93,12 @@ namespace X
 		return _mbVisible;
 	}
 
-	void CUIProgressbar::render(CResourceVertexBufferCPT2* pVB)
+	void CUIProgressbar::renderBG(CResourceVertexBufferCPT2* pVB)
 	{
 		if (!_mbVisible)
 			return;
 
-		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
 		x->pUI->_helperAddWidgetGridGeometry(

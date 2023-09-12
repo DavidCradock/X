@@ -107,26 +107,26 @@ namespace X
 				x->pProfiler->end("x->pGUI->render()");
 
 				// Update and render the UI to the "X:ui" framebuffer
-				x->pProfiler->begin("x->pUI->render()");
+				x->pProfiler->begin("x->pUI->render() (From SCApplicationManager::main())");
 				x->pUI->render();
-				x->pProfiler->end("x->pUI->render()");
+				x->pProfiler->end("x->pUI->render() (From SCApplicationManager::main())");
 
 				// Now render the "X:backbuffer" to the backbuffer
-				x->pProfiler->begin("render X:backbuffer to backbuffer");
+//				x->pProfiler->begin("render X:backbuffer to backbuffer");
 				glEnable(GL_BLEND);
 				glDisable(GL_DEPTH_TEST);
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_backbuffer_FB)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				x->pProfiler->end("render X:backbuffer to backbuffer");
+//				x->pProfiler->end("render X:backbuffer to backbuffer");
 
 				// Now render the "X:gui" to the backbuffer
-				x->pProfiler->begin("render X:gui framebuffer");
+//				x->pProfiler->begin("render X:gui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_gui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				x->pProfiler->end("render X:gui framebuffer");
+//				x->pProfiler->end("render X:gui framebuffer");
 
 				// Now render the "X::ui" framebuffer to the backbuffer
-				x->pProfiler->begin("render X:ui framebuffer");
+//				x->pProfiler->begin("render X:ui framebuffer");
 				x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui)->renderTo2DQuad(0, 0, x->pWindow->getWidth(), x->pWindow->getHeight());
-				x->pProfiler->end("render X:ui framebuffer");
+//				x->pProfiler->end("render X:ui framebuffer");
 
 				glDisable(GL_BLEND);
 

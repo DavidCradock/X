@@ -30,9 +30,16 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+
+Checkbox has 4 centre images off, offOver, on, onOver. Plus 9 BG.
+All widgets should be set to minimal dims of theme upon construction.
+Each widget should have setDimsFromTheme(int addioanalWidth, additional Height)
+Add tooltips
+Add large UI stress test windows in application and record stats in release/no debug
+Add a SCRenderer class and add state changing stuff such as glEnable(GL_BLEND), culling, scissor testing etc.
+RenderBG() should be for each widget and change name of that helpergridrendersendvertex method
 - Check CUIWindow::getTitlebarArea()
 - We need to try and reduce header file includes (Use PIMPL) as compile times are starting to suck.
-- Remove mouse cursor code from window and place in CUIManager
 - UI rewrite
 - Implement UIDefaultContainers stuff
 - Add screen resize handling code (For fullscreen and window resize)
@@ -48,7 +55,6 @@ Screenshot of "X:Default:FontGenerator" container window...
 - UI: Implement Menu.
 - UI: Implement Tab and TabContainer.
 - UI: Implement Taskbar.
-- UI: Implement TextEdit.
 - UI: Implement Tooltip
 - REMOVE GUI.
 

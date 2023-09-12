@@ -20,17 +20,27 @@ namespace X
 		void setDimensions(float fX, float fY);
 
 		// Sets the dimensions of the widget.
+		void setDimensions(int iX, int iY);
+
+		// Sets the dimensions of the widget.
 		void setDimensions(const CVector2f& vDimensions);
 
 		// Returns the dimensions of the widget.
 		CVector2f getDimensions(void) const;
 
+		// Returns the minimum dimensions of this widget based upon the container's currently set theme.
+		CVector2f getDimensionsMinimum(void) const;
+
 		// Sets the position of this widget in relation to it's container.
-		// Both axis should be at least zero. I wish there was an unsigned float, but oh well :)
+		// Both axis should be at least zero.
 		void setPosition(float fX, float fY);
 
 		// Sets the position of this widget in relation to it's container.
-		// Both axis should be at least zero. I wish there was an unsigned float, but oh well :)
+		// Both axis should be at least zero.
+		void setPosition(int iX, int iY);
+
+		// Sets the position of this widget in relation to it's container.
+		// Both axis should be at least zero.
 		void setPosition(const CVector2f& vPosition);
 
 		// Returns the position of the widget in relation to it's container.
@@ -42,11 +52,11 @@ namespace X
 		// Returns whether this widget is visible or not.
 		bool getVisible(void) const;
 
-		// Render this widget
-		void render(CResourceVertexBufferCPT2* pVB);
+		// Render this widget's background grid of 9 quads
+		void renderBG(CResourceVertexBufferCPT2* pVB);
 
-		// Render this widget's font stuff
-		void renderFonts(void);
+		// Render this widget's non-background items
+		void renderNonBG(void);
 	
 		// Update this widget
 		void update(float fTimeDeltaSec);

@@ -11,7 +11,7 @@ namespace X
 		std::string strTxt;
 		strTxt += "Toggle between instanced and non-instanced rendering with the button below.\n";
 		strTxt += "Press F3 to show the statistics window and F2 to toggle VSync on or off.";
-		pCont->addTextScroll("instanceText", 0, 0, 320, 170, strTxt);
+		pCont->addText("instanceText", 0, 0, strTxt);
 		pCont->addButton("toggleInstanced", 0, 180, 320, 40, "Toggle Instanced")->mpTooltip->setAsText("Toggle beween instanced and non-instanced rendering here.");
 		pCont->addText("instancingMode", 0, 230, "Instancing is ON.");
 		_mbInstancedEnabled = true;

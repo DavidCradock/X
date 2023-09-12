@@ -149,24 +149,6 @@
     <ClInclude Include="GUIImageAnimated.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIDraggableDock.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIDraggableItem.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIMenu.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITab.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITabContainer.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITaskbar.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
     <ClInclude Include="GUITooltip.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -476,12 +458,6 @@
     <ClInclude Include="GUIProgressBar.h">
       <Filter>GUI\Added to UI</Filter>
     </ClInclude>
-    <ClInclude Include="GUISubContainer.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
-    <ClInclude Include="GUITextScroll.h">
-      <Filter>GUI\TODO</Filter>
-    </ClInclude>
     <ClInclude Include="UILineGraph.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
@@ -493,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="GUITextEdit.h">
       <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckbox.h">
+      <Filter>UI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -556,24 +535,6 @@
     </ClCompile>
     <ClCompile Include="GUIImageAnimated.cpp">
       <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIDraggableDock.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIDraggableItem.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIMenu.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITab.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITabContainer.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITaskbar.cpp">
-      <Filter>GUI\TODO</Filter>
     </ClCompile>
     <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
@@ -857,12 +818,6 @@
     <ClCompile Include="GUIProgressBar.cpp">
       <Filter>GUI\Added to UI</Filter>
     </ClCompile>
-    <ClCompile Include="GUISubContainer.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITextScroll.cpp">
-      <Filter>GUI\TODO</Filter>
-    </ClCompile>
     <ClCompile Include="UILineGraph.cpp">
       <Filter>UI\Widgets</Filter>
     </ClCompile>
@@ -874,6 +829,9 @@
     </ClCompile>
     <ClCompile Include="GUITextEdit.cpp">
       <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckbox.cpp">
+      <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

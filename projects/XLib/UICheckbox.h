@@ -3,20 +3,18 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceVertexBufferCPT2.h"
 #include "UITheme.h"
-#include "timer.h"
 
 namespace X
 {
 	class CUIContainer;
-	class CUIText;
 
-	// A clickable text edit widget where we can edit the text inside of it
-	class CUITextEdit
+	// A clickable checkbox
+	class CUICheckbox
 	{
 		friend class CUIContainer;
 	public:
-		CUITextEdit(CUIContainer* pContainer, const std::string& strWidgetName);
-		~CUITextEdit();
+		CUICheckbox(CUIContainer* pContainer);
+		~CUICheckbox();
 
 		// Sets the dimensions of the widget.
 		void setDimensions(float fX, float fY);
@@ -68,31 +66,28 @@ namespace X
 
 		/******************************************************************* Widget specific *******************************************************************/
 
-		// Sets the text in this object
+		// Sets the text string to be rendered over the top of the button
 		void setText(const std::string& strText);
 
-		// Returns the text stored in this object
+		// Returns the text string that's used to render the text over this button.
 		std::string getText(void) const;
 
-		// Maximum number of characters the edit box is allowed
-		void setMaxChars(unsigned int iMaxChars);
+		// Returns whether this button has been clicked upon or not.
+		// This is OK for a quick and dirty approach to checking button clicks, but if we have
+		// many buttons, there will be a lot of if then statements in the calling code and things start
+		// to get inefficient.
+		// If you are using this method, don't forget to check if the widget's container is visible, otherwise
+		// there's no point checking to see if the widget has changed state as it will not have.
+		// Instead of using this, use observers or function pointers for optimal performance.
+		bool getClicked(void) const;
 
-		// Only allow input of numbers?
-		void setIntegerInputOnly(bool bAllowNumbersOnly);
-
-		// Returns true if the text edit was active and is now in-active via enter key
-		bool getEnterPressed(void) const;
-
-		// Set the C function which'll be called once the text edit box is active and enter key is pressed
-		// To use, create a function with the following syntax...
-		// void MyFunc(const std::string &strText)
-		// { 
-		// // do stuff here
-		// // text contains the text within the text edit box
-		// }
-		// CGUITextEdit *p = x->pGUI->getTextEdit("MyTextEdit");
-		// p->setOnEnter(MyFunc);
-		void setOnEnter(void (*func)(const std::string& text));
+		// Set the C function which'll be called once the button has been clicked upon.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pSomeButton->setFunctionOnClicked(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnClicked(void (*function)(void));
 
 	private:
 		// Common amoung widgets
@@ -102,26 +97,19 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		CTimer _mTimer;
-		enum state
+		std::string _mstrText;				// Text string to be rendered
+		CColour _mColourBG;					// Current BG colour (fading between up/over/down states)
+		CColour _mColourText;				// Current text colour (fading between up/over/down states)
+		enum state	// The three states of a button
 		{
-			active,
-			inactive
+			up,		// Mouse is not over the button
+			over,	// Mouse is over the button
+			down	// Mouse is over the button and left mouse button is pressed
 		};
-		std::string _mstrText;			// The text string of this object
-		state _mState;
-		CColour _mTextColour;			// Current colour of text based on state
-		float _mfAddFlashingCursor;		// value is incremented and if above 1, adds an additional character to the text edit when active
-		unsigned int _muiMaxChars;		// Maximum number of characters this text edit can hold
-		bool _mbIntegerInputOnly;		// Only allow number input?
-		bool _mbWasActiveEnterPressed;	// Is only true for one program loop
+		state _mState;				// The current state of the button
+		bool _mbClicked;			// Holds whether the button has been clicked upon.
 
-		CUIText* _mpTextWidget;			// Text widget for rendering this widget's text.
-
-		// Checks to see if the text contains a number and if not, resets it to zero
-		void _checkIsNumber(bool bResetToZero);
-
-		// Function pointer which can be set with setOnEnter() which gets called when the text edit box was active and the enter key has been pressed.
-		void (*_mfuncOnEnterPressed)(const std::string& strText);
+		// Function pointer which can be set with setFunctionOnClicked() which gets called when the button gets clicked upon.
+		void (*_mfuncOnClicked)(void);
 	};
 }

@@ -112,7 +112,7 @@ namespace X
 		strTxt += "This state shows training of a neural network where???.\n \n";
 		strTxt += "Press the space bar to toggle proceeding to the next generation.\n";
 		strTxt += "Press the return key to toggle turbo training speed.\n \n";
-		pCont->addTextScroll("state3TextScroll", 310, 0, 340, 300, strTxt);
+		pCont->addText("state3TextScroll", 310, 0, strTxt);
 		pCont->addText("best_fitness", 0, 0, "Best Fitness: 0")->setColour(false, colBest);
 		pCont->addText("aver_fitness", 0, 30, "Average Fitness: 0")->setColour(false, colAverage);
 		pCont->addText("worst_fitness", 0, 60, "Worst Fitness: 0")->setColour(false, colWorst);

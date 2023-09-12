@@ -104,6 +104,10 @@ namespace X
 		// If an invalid image name is given, an exception occurs
 		CImageAtlasDetails getImageDetails(const std::string& strImageName) const;
 
+		// Returns a pointer to the named image's details
+		// If an invalid image name is given, an exception occurs
+		CImageAtlasDetails* getImageDetailsPointer(const std::string& strImageName) const;
+
 		// Returns OpenGL texture ID for the named image stored within the texture atlas.
 		// As an atlas can have more than one texture to store all of it's images, different images within an atlas may have a different texture ID
 		// If an invalid image name is given, an exception occurs.

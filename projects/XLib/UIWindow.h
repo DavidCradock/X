@@ -91,6 +91,7 @@ namespace X
 			mouseOverEdgeT,
 			mouseOverNone
 		};
+
 		// Used to detect whether we could resize this window in SCUIManager::_update()
 		// If the mouse cursor is over one of the 8 areas which could toggle window resizing,
 		// returns which area the mouse is over in the form of an EWindowArea enumeration.
