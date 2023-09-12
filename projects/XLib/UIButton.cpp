@@ -106,7 +106,7 @@ namespace X
 		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		// Add geometry for the 9 grid cells
-		x->pUI->_helperAddWidgetGridGeometry(
+		x->pUI->_helperAddWidgetBGGeometry(
 			_mvPosition + _mpContainer->getWidgetOffset(),
 			_mvDimensions,
 			pThemeSettings->images.buttonBG,

@@ -372,10 +372,10 @@ namespace X
 		CUIWindow::EWindowArea _eWindowAreaTriggeredResizing;
 
 		// Add 9 quads to the passed vertex buffer, which represent the 9 grid cell images stored in the passed CUITheme::SImageType.
-		void _helperAddWidgetGridGeometry(
+		void _helperAddWidgetBGGeometry(
 			const CVector2f& vPosition,			// The position of the widget's top left corner offset from the container's top left corner of the widget area.
 			const CVector2f& vDimensions,		// The total dimensions of the widget
-			CUITheme::SImageType &imageType,		// The names of the 9 images stored in the theme's atlas texture and is used to obtain the dimensions of each image and it's texture coordinates.
+			CUITheme::SImageType &imageType,	// The names of the 9 images stored in the theme's atlas texture and is used to obtain the dimensions of each image and it's texture coordinates.
 			const CColour& colour,				// The colour used for the vertex colours.
 			CUIContainer* pContainer,			// The container which the widget belongs to.
 			CResourceVertexBufferCPT2* pVB		// A CResourceVertexBufferCPT2 pointer which the computed vertex positions/texture coordinates will be added to.

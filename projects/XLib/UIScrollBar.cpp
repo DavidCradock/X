@@ -113,7 +113,7 @@ namespace X
 			if (bUseWidgetScrollbarOffset)
 				vPos += _mpContainer->getWidgetOffset();
 
-			x->pUI->_helperAddWidgetGridGeometry(
+			x->pUI->_helperAddWidgetBGGeometry(
 				vPos,
 				_mvDimensions,
 				pThemeSettings->images.scrollbarBG,
@@ -125,7 +125,7 @@ namespace X
 			vPos = _mvTabPos;
 			if (bUseWidgetScrollbarOffset)
 				vPos += _mpContainer->getWidgetOffset();
-			x->pUI->_helperAddWidgetGridGeometry(
+			x->pUI->_helperAddWidgetBGGeometry(
 				vPos,
 				_mvTabDims,
 				pThemeSettings->images.scrollbarTab,

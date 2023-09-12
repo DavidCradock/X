@@ -753,7 +753,7 @@ namespace X
 	}
 
 	
-	void SCUIManager::_helperAddWidgetGridGeometry(
+	void SCUIManager::_helperAddWidgetBGGeometry(
 		const CVector2f& vPosition,
 		const CVector2f& vDimensions,
 		CUITheme::SImageType &imageType,
