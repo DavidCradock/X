@@ -292,8 +292,8 @@ namespace X
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
-		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
+		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails* idBR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerBR);
 
 		// Add the additional space for the scrollbars.
 		CVector2f vScrollbarOffset;
@@ -304,8 +304,8 @@ namespace X
 			vScrollbarOffset.x = pSettings->floats.windowScrollbarVerticalWidth;
 
 		CVector2f vDims = _mvContainersWidgetAreaDimensions;
-		vDims.x += idTL.vDims.x + idBR.vDims.x + vScrollbarOffset.x;
-		vDims.y += idTL.vDims.y + idBR.vDims.y + vScrollbarOffset.y;
+		vDims.x += idTL->vDims.x + idBR->vDims.x + vScrollbarOffset.x;
+		vDims.y += idTL->vDims.y + idBR->vDims.y + vScrollbarOffset.y;
 		return vDims;
 	}
 
@@ -314,8 +314,8 @@ namespace X
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
-		CImageAtlasDetails idTR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTR);
+		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails* idTR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTR);
 
 		// Add the additional space for the scrollbars.
 		CVector2f vScrollbarOffset;
@@ -329,8 +329,8 @@ namespace X
 		CRect area(
 			int(_mvPosition.x),
 			int(_mvPosition.y),
-			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL.vDims.x + idTR.vDims.x + vScrollbarOffset.x),
-			int(_mvPosition.y + idTL.vDims.y));
+			int(_mvPosition.x + _mvContainersWidgetAreaDimensions.x + idTL->vDims.x + idTR->vDims.x + vScrollbarOffset.x),
+			int(_mvPosition.y + idTL->vDims.y));
 
 		// If the window is set to resizable, we offset the top of this down by the currently set theme's setting of windowResizeHandleOffsetY
 		if (_mbIsResizable)
@@ -411,8 +411,8 @@ namespace X
 		CUITheme* pTheme = themeGet();
 		const CUITheme::SSettings* pSettings = pTheme->getSettings();
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idTL = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerTL);
-		CImageAtlasDetails idBR = pAtlas->getImageDetails(pSettings->images.windowBG.colour.cornerBR);
+		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerTL);
+		CImageAtlasDetails* idBR = pAtlas->getImageDetailsPointer(pSettings->images.windowBG.colour.cornerBR);
 
 		// Additional space for the scrollbars.
 		// Only offset if the scrollbars are visible
@@ -430,43 +430,43 @@ namespace X
 		// When computing each of these areas, we get the edge position and then offset inwards towards the centre of the window
 		// by the currently set theme's windowResizeHandleOffsetX and Y values
 
-		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinX = int(_mvPosition.x + idTL.vDims.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinX = int(_mvPosition.x + idTL->vDims.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMinY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeB].miMaxY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y);
 
 		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinX = int(_mvPosition.x);
 		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinY = int(_mvPosition.y + idTL.vDims.y);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMinY = int(_mvPosition.y + idTL->vDims.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeL].miMaxY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
 
-		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinY = int(_mvPosition.y + idTL.vDims.y);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMinY = int(_mvPosition.y + idTL->vDims.y);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeR].miMaxY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + vScrollbarOffset.y);
 
-		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX = int(_mvPosition.x + idTL.vDims.x);
-		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinX = int(_mvPosition.x + idTL->vDims.x);
+		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + vScrollbarOffset.x);
 		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMinY = int(_mvPosition.y);
 		_mrctResizeArea[EWindowArea::mouseOverEdgeT].miMaxY = int(_mvPosition.y + vResizeOffset.y);
 
 		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinX = int(_mvPosition.x);
 		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
-		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMinY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBL].miMaxY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y);
 
-		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y - vResizeOffset.y);
-		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxY = int(_mvPosition.y + idTL.vDims.y + _mvContainersWidgetAreaDimensions.y + idBR.vDims.y + vScrollbarOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMinY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y - vResizeOffset.y);
+		_mrctResizeArea[EWindowArea::mouseOverCornerBR].miMaxY = int(_mvPosition.y + idTL->vDims.y + _mvContainersWidgetAreaDimensions.y + idBR->vDims.y + vScrollbarOffset.y);
 
 		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinX = int(_mvPosition.x);
 		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxX = int(_mvPosition.x + vResizeOffset.x);
 		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMinY = int(_mvPosition.y);
 		_mrctResizeArea[EWindowArea::mouseOverCornerTL].miMaxY = int(_mvPosition.y + vResizeOffset.y);
 
-		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x - vResizeOffset.x);
-		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxX = int(_mvPosition.x + idTL.vDims.x + _mvContainersWidgetAreaDimensions.x + idBR.vDims.x + vScrollbarOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x - vResizeOffset.x);
+		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxX = int(_mvPosition.x + idTL->vDims.x + _mvContainersWidgetAreaDimensions.x + idBR->vDims.x + vScrollbarOffset.x);
 		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMinY = int(_mvPosition.y);
 		_mrctResizeArea[EWindowArea::mouseOverCornerTR].miMaxY = int(_mvPosition.y + vResizeOffset.y);
 	}

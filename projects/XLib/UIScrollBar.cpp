@@ -90,6 +90,8 @@ namespace X
 	void CUIScrollbar::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		if (!_mbVisible)
+			reset();
 		_mpContainer->computeScrollbars();
 	}
 

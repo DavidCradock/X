@@ -96,6 +96,10 @@ namespace X
 			}
 		}
 		SCWindow::getPointer()->setVsync(false);
+
+		// Real simple as it gets framerate text
+		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
+		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 	}
 
 	void CApplication::onStart(void)
@@ -108,6 +112,7 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
+
 //		static float sfProgress = 0.0f;
 //		sfProgress += timer.getSecondsPast();
 //		if (sfProgress >= 1.0f)
@@ -116,6 +121,16 @@ namespace X
 
 		// Timer delta
 		timer.update();
+
+		static float sfUpdate = 1.0f;
+		sfUpdate -= timer.getSecondsPast();
+		if (sfUpdate <= 0.0f)
+		{
+			sfUpdate = 1.0f;
+			std::string strTxt = "FPS: ";
+			StringUtils::appendFloat(strTxt, timer.getFPSAveraged(), 1);
+			x->pUI->containerGet("FPSonly")->textGet("FPS")->setText(strTxt);
+		}
 
 		// G key to toggle debug grid
 		if (x->pInput->key.once(KC_G))

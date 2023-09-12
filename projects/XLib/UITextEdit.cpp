@@ -96,6 +96,8 @@ namespace X
 	void CUITextEdit::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		if (!_mbVisible)
+			reset();
 		_mpContainer->computeScrollbars();
 	}
 
@@ -131,8 +133,8 @@ namespace X
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
 		
 		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerTL);
-		CImageAtlasDetails idBR = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerBR);
+		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.cornerTL);
+		CImageAtlasDetails* idBR = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.cornerBR);
 
 		int iRTDims[2];
 		iRTDims[0] = int(x->pWindow->getWidth());
@@ -149,18 +151,18 @@ namespace X
 
 		CVector2f vTextPosTL;
 		vTextPosTL += _mvPosition;
-		vTextPosTL += idTL.vDims;
+		vTextPosTL += idTL->vDims;
 		CVector2f vTextPosBR;
 		vTextPosBR += _mvPosition;
 		vTextPosBR += _mvDimensions;
-		vTextPosBR -= idBR.vDims;
+		vTextPosBR -= idBR->vDims;
 
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;
 		std::string strTextTemp = _mstrText + "_";	// We use this to compute width to prevent moving forward and backwards of text when cursor flashes.
 		int iTextWidth = (int)pFont->getTextWidth(strTextTemp, 1.0f);
-		if (iTextWidth > int(_mvDimensions.x - idTL.vDims.x - idBR.vDims.x))
-			iOffsetX = int(_mvDimensions.x - iTextWidth - idTL.vDims.x - idBR.vDims.x);
+		if (iTextWidth > int(_mvDimensions.x - idTL->vDims.x - idBR->vDims.x))
+			iOffsetX = int(_mvDimensions.x - iTextWidth - idTL->vDims.x - idBR->vDims.x);
 
 		// Reset the offset so that the beginning of the text is displayed, IF the text edit box is not active
 		if (_mState == state::inactive)
@@ -196,10 +198,9 @@ namespace X
 		while (_mfAddFlashingCursor >= 2.0f)
 			_mfAddFlashingCursor -= 2.0f;
 
-		CUITheme* pTheme = _mpContainer->themeGet();
-		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
-		CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerTL);
-//		CImageAtlasDetails idBR = pAtlas->getImageDetails(pThemeSettings->images.textEditBG.colour.cornerBR);
+//		CUITheme* pTheme = _mpContainer->themeGet();
+//		CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
+//		CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pThemeSettings->images.textEditBG.colour.cornerTL);
 
 		CVector2f vWidgetTL = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition;
 		CVector2f vWidgetBR = vWidgetTL + _mvDimensions;

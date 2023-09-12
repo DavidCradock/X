@@ -30,6 +30,7 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
+setVisible for all widgets should call reset() if false is parsed.
 Checkbox has 4 centre images off, offOver, on, onOver. Plus 9 BG.
 All widgets should be set to minimal dims of theme upon construction.
 Each widget should have setDimsFromTheme(int addioanalWidth, additional Height)

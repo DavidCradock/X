@@ -77,7 +77,8 @@ namespace X
 	void CUIContainer::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
-		reset();
+		if (!_mbVisible)
+			reset();
 	}
 
 	bool CUIContainer::getVisible(void) const

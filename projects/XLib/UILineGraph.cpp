@@ -221,8 +221,8 @@ namespace X
 			CUITheme* pTheme = _mpContainer->themeGet();
 			CResourceTexture2DAtlas* pAtlas = pTheme->getTextureAtlas();
 			const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
-			CImageAtlasDetails idTL = pAtlas->getImageDetails(pThemeSettings->images.lineGraphBG.colour.cornerTL);
-			CImageAtlasDetails idBR = pAtlas->getImageDetails(pThemeSettings->images.lineGraphBG.colour.cornerBR);
+			CImageAtlasDetails* idTL = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.cornerTL);
+			CImageAtlasDetails* idBR = pAtlas->getImageDetailsPointer(pThemeSettings->images.lineGraphBG.colour.cornerBR);
 			// Now we have access to idTL.vDims and idBR.vDims.
 
 
@@ -230,9 +230,9 @@ namespace X
 			// Now we have maximum number of entries and highest/lowest values of the values within each dataset
 			// vPosMulti is used to determine position of each line segment...
 			CVector2f vPosMulti;
-			vPosMulti.x = _mvDimensions.x - idTL.vDims.x - idBR.vDims.x;
+			vPosMulti.x = _mvDimensions.x - idTL->vDims.x - idBR->vDims.x;
 			vPosMulti.x /= (0.01f + iMaxNumEntries);
-			vPosMulti.y = _mvDimensions.y - idTL.vDims.y - idBR.vDims.y;
+			vPosMulti.y = _mvDimensions.y - idTL->vDims.y - idBR->vDims.y;
 			vPosMulti.y /= (0.01f + (fHighestValue - fLowestValue));
 			float fAbsLowestVal = (float)abs(fLowestValue);
 
@@ -243,8 +243,8 @@ namespace X
 			// For each data set (line)
 			it = _mmapDataSets.begin();
 			CVector3f vPosBL(
-				_mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetOffset().x + idTL.vDims.x,
-				_mpContainer->getWidgetAreaTLCornerPosition().y + _mpContainer->getWidgetOffset().y + _mvDimensions.y - idBR.vDims.y,
+				_mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetOffset().x + idTL->vDims.x,
+				_mpContainer->getWidgetAreaTLCornerPosition().y + _mpContainer->getWidgetOffset().y + _mvDimensions.y - idBR->vDims.y,
 				0.0f);	// Bottom left corner of widget
 			vert.position.z = 0.0f;
 

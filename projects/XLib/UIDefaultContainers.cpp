@@ -285,7 +285,7 @@ namespace X
 
 			pText = pWindow->textGet("Text_FPSMax");
 			pText->setText(str);
-			// Set position
+
 			CVector2f vNewPos = pText->getPosition();
 			vNewPos.x = pWindow->getDimensions().x - pFont->getTextWidth(str)-20;
 			pText->setPosition(vNewPos);
@@ -294,60 +294,62 @@ namespace X
 			str = "FPS Min: " + std::to_string((int)fMin);
 			pText = pWindow->textGet("Text_FPSMin");
 			pText->setText(str);
-		}
 
-		// Update text values, "Text_FPSMax" and  "Text_FPSMin" have been updated above
-		std::string strTxt;
-		strTxt = "FPS: ";
-		StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPS(), 1);
-		pText = pWindow->textGet("Text_FPS");
-		pText->setText(strTxt);
-		// Also set position
-		CVector2f vNewPos = pText->getPosition();
-		vNewPos.x = 225 - (0.5f * pFont->getTextWidth(strTxt));
-		pText->setPosition(vNewPos);
+			// Update text values, "Text_FPSMax" and  "Text_FPSMin" have been updated above
+			std::string strTxt;
+			strTxt = "FPS: ";
+			StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPS(), 1);
+			pText = pWindow->textGet("Text_FPS");
+			pText->setText(strTxt);
+			// Also set position
+			vNewPos = pText->getPosition();
+			vNewPos.x = 225 - (0.5f * pFont->getTextWidth(strTxt));
+			pText->setPosition(vNewPos);
+
+
+			strTxt = "FPS Average: ";
+			StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPSAveraged(), 1);
+			strTxt += " (";
+			StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPSAveragedTimeUntilNextUpdate(), 1);
+			strTxt += ")";
+			pWindow->textGet("Text_FPSAVR")->setText(strTxt);
+			// Also update colour based on whether it's above or below refresh rate
+			CColour col(0.0f, 1.0f, 0.0f, 1.0f);
+			if (_mStatistics.timer.getFPSAveraged() < (float)x->pWindow->getRefreshRate() - 1)
+				col.set(1.0f, 0.0f, 0.0f, 1.0f);
+			pWindow->textGet("Text_FPSAVR")->setTextColour(false, col);
+
+			// VSync text
+			if (_mStatistics.bvsyncEnabled != x->pWindow->getVSyncEnabled())
+			{
+				_mStatistics.bvsyncEnabled = x->pWindow->getVSyncEnabled();
+				if (x->pWindow->getVSyncEnabled())
+				{
+					strTxt = "VSync: On. Desktop Hz: ";
+					StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+					pWindow->textGet("VSyncONOFF")->setText(strTxt);
+				}
+				else
+				{
+					strTxt = "VSync: Off. Desktop Hz: ";
+					StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
+					pWindow->textGet("VSyncONOFF")->setText(strTxt);
+				}
+			}
+
+			// CPU info
+			strTxt = "CPU Logical Cores Count: ";
+			StringUtils::appendInt(strTxt, getCPULogicalCores());
+			pWindow->textGet("CPU_info")->setText(strTxt);
+
+			// Memory text
+			SMemInfo memInfo;
+			getMemInfo(memInfo);
+			pWindow->textGet("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
+			pWindow->textGet("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
+		}
 
 		
-		strTxt = "FPS Average: ";
-		StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPSAveraged(), 1);
-		strTxt += " (";
-		StringUtils::appendFloat(strTxt, _mStatistics.timer.getFPSAveragedTimeUntilNextUpdate(), 1);
-		strTxt += ")";
-		pWindow->textGet("Text_FPSAVR")->setText(strTxt);
-		// Also update colour based on whether it's above or below refresh rate
-		CColour col(0.0f, 1.0f, 0.0f, 1.0f);
-		if (_mStatistics.timer.getFPSAveraged() < (float)x->pWindow->getRefreshRate() - 1)
-			col.set(1.0f, 0.0f, 0.0f, 1.0f);
-		pWindow->textGet("Text_FPSAVR")->setTextColour(false, col);
-
-		// VSync text
-		if (_mStatistics.bvsyncEnabled != x->pWindow->getVSyncEnabled())
-		{
-			_mStatistics.bvsyncEnabled = x->pWindow->getVSyncEnabled();
-			if (x->pWindow->getVSyncEnabled())
-			{
-				strTxt = "VSync: On. Desktop Hz: ";
-				StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
-				pWindow->textGet("VSyncONOFF")->setText(strTxt);
-			}
-			else
-			{
-				strTxt = "VSync: Off. Desktop Hz: ";
-				StringUtils::appendUInt(strTxt, x->pWindow->getRefreshRate());
-				pWindow->textGet("VSyncONOFF")->setText(strTxt);
-			}
-		}
-
-		// CPU info
-		strTxt = "CPU Logical Cores Count: ";
-		StringUtils::appendInt(strTxt, getCPULogicalCores());
-		pWindow->textGet("CPU_info")->setText(strTxt);
-
-		// Memory text
-		SMemInfo memInfo;
-		getMemInfo(memInfo);
-		pWindow->textGet("Text_Mem1")->setText("MemProcessWorkingSetSize: " + std::to_string(((memInfo.proc.iWorkingSetSize / 1024) / 1024)) + "MB");
-		pWindow->textGet("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
 
 		// Close button
 		CUIButton* pButton = pWindow->buttonGet("Close");

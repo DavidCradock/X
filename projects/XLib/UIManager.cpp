@@ -139,19 +139,8 @@ namespace X
 			windowMoveToFront(_mstrWindowBeingMoved);
 		else if (_mstrWindowBeingResized.size())
 			windowMoveToFront(_mstrWindowBeingResized);
-
-		// If the cursor is over a window and the mouse button is down, bring that window to the front
-		else if (x->pInput->mouse.leftButtonOnce())
-		{
-			if (_bMouseIsOverAWindow)
-			{
-				if (_mstrMouseIsOver.size())
-				{
-					windowMoveToFront(_mstrMouseIsOver);
-				}
-			}
-		}
 		
+		// If the cursor is over a window and the mouse button is down, bring that window to the front and set that window as focused
 		// Deal with setting focus for all windows
 		if (x->pInput->mouse.leftButtonOnce())
 		{
@@ -159,6 +148,7 @@ namespace X
 			{
 				if (_mstrMouseIsOver.size())
 				{
+					windowMoveToFront(_mstrMouseIsOver);
 					windowSetFocused(_mstrMouseIsOver);
 				}
 			}

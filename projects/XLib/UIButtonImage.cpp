@@ -87,6 +87,8 @@ namespace X
 	void CUIButtonImage::setVisible(bool bVisible)
 	{
 		_mbVisible = bVisible;
+		if (!_mbVisible)
+			reset();
 		_mpContainer->computeScrollbars();
 	}
 
