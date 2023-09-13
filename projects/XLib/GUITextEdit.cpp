@@ -53,7 +53,7 @@ namespace X
 		x->pRenderer->scissorTestEnable();
 		int iScissorX = int(pContainer->mfPositionX + mfPositionX + vTexDimsPoint3.x);
 		int iScissorY = iRTDims[1] - int(pContainer->mfPositionY + mfPositionY + mfHeight - vTexDimsPoint3.y + pTheme->mOffsets.textEditText.iOffsetY);
-		x->pRenderer->scissorTestSet(iScissorX, iScissorY, int(mfWidth - vTexDimsPoint6.x), (int)mfHeight);
+		x->pRenderer->scissorTest(iScissorX, iScissorY, int(mfWidth - vTexDimsPoint6.x), (int)mfHeight);
 
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;

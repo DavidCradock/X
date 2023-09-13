@@ -5,13 +5,6 @@ namespace X
 {
 	RendererOpenGL::RendererOpenGL()
 	{
-		blendEnabled = false;
-
-		scissorTestEnabled = false;
-		scissorTestPositionX = 0;
-		scissorTestPositionY = 0;
-		scissorTestWidth = 0;
-		scissorTestHeight = 0;
 	}
 	
 	RendererOpenGL::~RendererOpenGL()
@@ -21,42 +14,49 @@ namespace X
 
 	void RendererOpenGL::blendDisable(void)
 	{
-		blendEnabled = false;
 		glDisable(GL_BLEND);
 	}
 
 	void RendererOpenGL::blendEnable(void)
 	{
-		blendEnabled = true;
 		glEnable(GL_BLEND);
 	}
 
-	void RendererOpenGL::scissorTestGet(int &positionX, int &positionY, int &width, int &height) const
+	void RendererOpenGL::blendFunction(EBlendFunction blendFunc)
 	{
-		positionX = scissorTestPositionX;
-		positionY = scissorTestPositionY;
-		width = scissorTestWidth;
-		height = scissorTestHeight;
+		switch (blendFunc)
+		{
+		case EBlendFunction::SourceAlpha_One:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		case EBlendFunction::SourceAlpha_OneMinusSourceAlpha:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			break;
+		}
 	}
 
-	void RendererOpenGL::scissorTestSet(int positionX, int positionY, int width, int height)
+	void RendererOpenGL::depthTestDisable(void)
 	{
-		scissorTestPositionX = positionX;
-		scissorTestPositionY = positionY;
-		scissorTestWidth = width;
-		scissorTestHeight = height;
-		glScissor((int)scissorTestPositionX, (int)scissorTestPositionY, (int)scissorTestWidth, (int)scissorTestHeight);
+		glDisable(GL_DEPTH_TEST);
+	}
+
+	void RendererOpenGL::depthTestEnable(void)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+
+	void RendererOpenGL::scissorTest(int iPositionX, int iPositionY, int iWidth, int iHeight)
+	{
+		glScissor(iPositionX, iPositionY, iWidth, iHeight);
 	}
 
 	void RendererOpenGL::scissorTestEnable(void)
 	{
-		scissorTestEnabled = true;
 		glEnable(GL_SCISSOR_TEST);
 	}
 
 	void RendererOpenGL::scissorTestDisable(void)
 	{
-		scissorTestEnabled = false;
 		glDisable(GL_SCISSOR_TEST);
 	}
 

@@ -30,10 +30,9 @@ Screenshot of "X:Default:FontGenerator" container window...
 ![Screenshot of the X:Default:FontGenerator container window generating and displaying font files from a font installed in the operating system.](https://github.com/DavidCradock/X/blob/38a31307b9ecdecf7225171ee055127a4ebc05a9/github_images/githun_font_generator_window_2023_08_02.png)
 
 ** TODO **
-Finish off implementing checkbox. Has 4 centre images off, offOver, on, onOver. Plus 9 BG.
-Finish off impl textedit.
+Remove all unnessessary comments. Some of them are bloomin' obvious (// Set bool to true lol)
 Add tooltips
-Add large UI stress test windows in application and record stats in release/no debug
+
 Add a SCRenderer class and add state changing stuff such as glEnable(GL_BLEND), culling, scissor testing etc.
 - Check CUIWindow::getTitlebarArea()
 - UI rewrite
@@ -41,7 +40,6 @@ Add a SCRenderer class and add state changing stuff such as glEnable(GL_BLEND), 
 - Add screen resize handling code (For fullscreen and window resize)
 - The current method of checking button presses is aweful, too many if statements. Research observer pattern, or signal and slots or delegates.
 - Add alignment (left, right, centreX, top, centreY, bottom)
-- UI: Implement Checkbox
 - UI: Implement Colour selector
 - UI: Implement DraggableDock.
 - UI: Implement DraggableItem.

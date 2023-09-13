@@ -12,20 +12,16 @@ namespace X
 
 		void blendDisable(void);
 		void blendEnable(void);
+		void blendFunction(EBlendFunction blendFunc);
 
-		void scissorTestGet(int &positionX, int &positionY, int &width, int &height) const;
-		void scissorTestSet(int positionX, int positionY, int width, int height);
+		void depthTestDisable(void);
+		void depthTestEnable(void);
+
+		void scissorTest(int iPositionX, int iPositionY, int iWidth, int iHeight);
 		void scissorTestDisable(void);
 		void scissorTestEnable(void);
 
 	private:
 
-		bool blendEnabled;
-
-		bool scissorTestEnabled;
-		int scissorTestPositionX;
-		int scissorTestPositionY;
-		int scissorTestWidth;
-		int scissorTestHeight;
 	};
 }

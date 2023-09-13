@@ -109,6 +109,11 @@ namespace X
 		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
 		CColour col;
+		if (_mState == state::active)
+			col = pThemeSettings->colours.textEditBGActive;
+		else
+			col = pThemeSettings->colours.textEditBGInactive;
+
 		// Add geometry for the 9 grid cells
 		x->pUI->_helperAddWidgetBGGeometry(
 			_mvPosition + _mpContainer->getWidgetOffset(),
@@ -160,19 +165,24 @@ namespace X
 		vScissorDims.y = _mpContainer->getWidgetAreaDimensions().y;
 		CVector2f vScissorPos;
 		vScissorPos.x = _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x;
-		vScissorPos.y = x->pWindow->getHeight();	// Top of screen
+		vScissorPos.y = (float)x->pWindow->getHeight();	// Top of screen
 		vScissorPos.y -= _mpContainer->getWidgetAreaTLCornerPosition().y;
 		vScissorPos.y -= _mpContainer->getWidgetAreaDimensions().y;
 		//vScissorPos.y -= (_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + _mpContainer->getWidgetOffset().y + idTL->vDims.y);
 		
-
 		x->pRenderer->scissorTestEnable();
-		x->pRenderer->scissorTestSet((int)vScissorPos.x, (int)vScissorPos.y, (int)vScissorDims.x, (int)vScissorDims.y);
+		x->pRenderer->scissorTest((int)vScissorPos.x, (int)vScissorPos.y, (int)vScissorDims.x, (int)vScissorDims.y);
+
+		CColour col;
+		if (_mState == state::active)
+			col = pThemeSettings->colours.textEditTextActive;
+		else
+			col = pThemeSettings->colours.textEditTextInactive;
 
 		pFont->print(strFinalText,
-			iOffsetX + _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x,
-			_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + idTL->vDims.y + _mpContainer->getWidgetOffset().y,
-			x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour());
+			int(iOffsetX + _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x),
+			int(_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + idTL->vDims.y + _mpContainer->getWidgetOffset().y),
+			x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, col);
 		
 		x->pRenderer->scissorTestDisable();
 

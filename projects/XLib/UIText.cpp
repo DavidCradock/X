@@ -193,7 +193,10 @@ namespace X
 				return;
 
 		_mbUseThemeColour = bUseThemeColour;
-		_mColourText = colour;
+		if (_mbUseThemeColour)
+			_mColourText = _mpContainer->themeGetSettings()->colours.text;
+		else
+			_mColourText = colour;
 		_mbFramebufferNeedsUpdating = true;
 	}
 

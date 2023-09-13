@@ -96,6 +96,10 @@ namespace X
 
 		_mProfiling.fUpdateDelay = 0.0f;
 		_mProfiling.fUpdateDelaySeconds = 1.0f;
+		_mProfiling.bPaused = false;
+		CUIButton* pButton = pWindow->buttonAdd("pause", 800 - 5, 0, 100, 24);
+		CUIText* pText = pWindow->textAdd("paused", 700, 0, 100, 30, "Running");
+		pText->setTextColour(false, CColour(0.0f, 1.0f, 0.0f, 1.0f));
 
 	}
 
@@ -112,16 +116,47 @@ namespace X
 		if (_mProfiling.fUpdateDelay <= 0.0f)
 		{
 			_mProfiling.fUpdateDelay = _mProfiling.fUpdateDelaySeconds;
-			bUpdateText = true;
+
+			if (!_mProfiling.bPaused)
+				bUpdateText = true;
 		}
 
+		if (pWindow->buttonGet("pause")->getClicked())
+		{
+			_mProfiling.bPaused = !_mProfiling.bPaused;
+			CUIText* pText = pWindow->textGet("paused");
+			if (_mProfiling.bPaused)
+			{
+				pText->setText("Paused");
+				pText->setTextColour(false, CColour(1.0f, 0.0f, 0.0f, 1.0f));
+			}
+			else
+			{
+				pText->setText("Running");
+				pText->setTextColour(false, CColour(0.0f, 1.0f, 0.0f, 1.0f));
+			}
+		}
 		if (bUpdateText)
 		{
 			pWindow->textRemoveAll();
+			pWindow->progressbarRemoveAll();
+
+			CUIText* pText = pWindow->textAdd("paused", 700, 0, 100, 30, "");
+			if (_mProfiling.bPaused)
+			{
+				pText->setText("Paused");
+				pText->setTextColour(false, CColour(1.0f, 0.0f, 0.0f, 1.0f));
+			}
+			else
+			{
+				pText->setText("Running");
+				pText->setTextColour(false, CColour(0.0f, 1.0f, 0.0f, 1.0f));
+			}
+
 			CVector2f vTextPos(0, 0);
 			const CUITheme::SSettings* pThemeSettings = pWindow->themeGetSettings();
 			CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.text);
-			float fTextHeight = pFont->getTextHeight();
+			float fTextHeight = pFont->getTextHeight() + 3;
 			CVector2f vWndDims = pWindow->getDimensions();
 			std::vector<SProfilerResults> vResults = x->pProfiler->getResults();
 			// Add title text
@@ -142,6 +177,10 @@ namespace X
 				StringUtils::appendFloat(strLine, vResults[i].fPercentageOfMain, 1);
 				strLine += "%";
 				pWindow->textAdd(strTextName, 0.0f, vTextPos.y, vWndDims.x, fTextHeight, strLine);
+
+				// Progress bar
+				CUIProgressbar* pPB = pWindow->progressbarAdd(strTextName, 0.0f, vTextPos.y, 120.0f, 24.0f);
+				pPB->setProgress(vResults[i].fPercentageOfMain * 0.01f);
 
 				// Milliseconds
 				strTextName = "Milliseconds:" + std::to_string(i);

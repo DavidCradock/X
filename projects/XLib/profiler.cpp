@@ -83,7 +83,7 @@ namespace X
 
 	bool sortByVal(const std::pair<std::string, CProfiler::SSection>& a, const std::pair<std::string, CProfiler::SSection>& b)
 	{
-		return (a.second.dAccumulatedTimeInSeconds < b.second.dAccumulatedTimeInSeconds);
+		return (a.second.dAccumulatedTimeInSeconds > b.second.dAccumulatedTimeInSeconds);
 	}
 
 	std::vector<SProfilerResults> CProfiler::getResults(bool bReturnCachedResults)

@@ -256,10 +256,10 @@ namespace X
 		_helperSetAudio(_mSettings.audio.textEditTextAdd, "data/X/UI/default/textEditTextAdd.wav", 1.0f, 0.8f);
 
 		// Colours
-		_mSettings.colours.ambientLight.set(0.7f, 0.7f, 0.7f, 1.0f);
-		_mSettings.colours.buttonBGDown.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.buttonBGOver.set(0.9f, 0.9f, 0.9f, 1.0f);
-		_mSettings.colours.buttonBGUp.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.ambientLight.set(0.5f, 0.5f, 0.5f, 1.0f);
+		_mSettings.colours.buttonBGDown.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.buttonBGOver.set(0.7f, 0.7f, 0.7f, 1.0f);
+		_mSettings.colours.buttonBGUp.set(0.6f, 0.6f, 0.6f, 1.0f);
 		_mSettings.colours.buttonTextDown.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.buttonTextOver.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.buttonTextUp.set(0.8f, 0.8f, 0.8f, 1.0f);
@@ -274,28 +274,30 @@ namespace X
 		_mSettings.colours.checkboxBGOn.set(0.9f, 0.9f, 0.9f, 1.0f);
 		_mSettings.colours.checkboxBGOnOver.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.linegraphBG.set(0.5f, 0.5f, 0.5f, 1.0f);
-		_mSettings.colours.mouseLight.set(0.3f, 0.3f, 0.3f, 1.0f);
-		_mSettings.colours.progressBarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.progressBarFiller.set(1.0f, 1.0f, 1.0f, 0.5f);
-		_mSettings.colours.scrollbarBG.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.scrollbarTabNotOver.set(1.0f, 1.0f, 1.0f, 0.5f);
-		_mSettings.colours.scrollbarTabOver.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.text.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textEditTextActive.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.textEditTextInactive.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.mouseLight.set(1.0f, 0.5f, 0.1f, 1.0f);
+		_mSettings.colours.progressBarBG.set(0.6f, 0.6f, 0.6f, 1.0f);
+		_mSettings.colours.progressBarFiller.set(0.7f, 0.7f, 0.7f, 0.5f);
+		_mSettings.colours.scrollbarBG.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.scrollbarTabNotOver.set(0.6f, 0.6f, 0.6f, 0.5f);
+		_mSettings.colours.scrollbarTabOver.set(0.8f, 0.4f, 0.1f, 1.0f);
+		_mSettings.colours.text.set(0.7f, 0.7f, 0.7f, 1.0f);
+		_mSettings.colours.textEditBGActive.set(0.6f, 0.6f, 0.6f, 1.0f);
+		_mSettings.colours.textEditBGInactive.set(0.6f, 0.6f, 0.6f, 1.0f);
+		_mSettings.colours.textEditTextActive.set(0.9f, 0.9f, 0.9f, 1.0f);
+		_mSettings.colours.textEditTextInactive.set(0.7f, 0.7f, 0.7f, 1.0f);
 //		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowBGFocused.set(1.0f, 1.0f, 1.0f, 0.9f);
-		_mSettings.colours.windowBGNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
-		_mSettings.colours.windowTitlebarTextFocused.set(1.0f, 1.0f, 1.0f, 1.0f);
-		_mSettings.colours.windowTitlebarTextNotFocused.set(1.0f, 1.0f, 1.0f, 0.8f);
+		_mSettings.colours.windowBGFocused.set(0.2f, 0.2f, 0.2f, 0.9f);
+		_mSettings.colours.windowBGNotFocused.set(0.2f, 0.2f, 0.2f, 0.8f);
+		_mSettings.colours.windowTitlebarTextFocused.set(0.8f, 0.8f, 0.8f, 1.0f);
+		_mSettings.colours.windowTitlebarTextNotFocused.set(0.8f, 0.8f, 0.8f, 0.8f);
 
 		// Floats
 		_mSettings.floats.buttonFadeSpeed = 5.0f;
 		_mSettings.floats.buttonImageFadeSpeed = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeed = 1.0f;
-		_mSettings.floats.normalMouseCursorDistance = 50.0f;
+		_mSettings.floats.normalMouseCursorDistance = 10.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
 		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;

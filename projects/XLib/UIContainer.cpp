@@ -1250,7 +1250,7 @@ namespace X
 
 		// Render all the widget backgrounds added above
 		x->pRenderer->scissorTestEnable();
-		x->pRenderer->scissorTestSet(
+		x->pRenderer->scissorTest(
 			(int)getWidgetAreaTLCornerPosition().x,
 			int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y),
 			(int)_mvContainersWidgetAreaDimensions.x,

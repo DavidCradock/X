@@ -165,6 +165,8 @@ namespace X
 			CColour scrollbarTabNotOver;				// CUIScrollbar's tab colour when mouse is not over
 			CColour scrollbarTabOver;					// CUIScrollbar's tab colour when mouse is over
 			CColour text;								// CUIText font colour
+			CColour textEditBGActive;
+			CColour textEditBGInactive;
 			CColour textEditTextActive;					// CUITextEdit's text colour when active
 			CColour textEditTextInactive;				// CUITextEdit's text colour when inactive
 //			CColour textScrollBG;						// CUITextScroll's colour
