@@ -55,9 +55,6 @@ namespace X
 		// Render this widget
 		void renderBG(CResourceVertexBufferCPT2* pVB);
 
-		// Render this widget's non-background items
-		void renderNonBG(void);
-	
 		// Update this widget
 		void update(float fTimeDeltaSec);
 
@@ -65,12 +62,6 @@ namespace X
 		void reset(void);
 
 		/******************************************************************* Widget specific *******************************************************************/
-
-		// Sets the text string to be rendered over the top of the button
-		void setText(const std::string& strText);
-
-		// Returns the text string that's used to render the text over this button.
-		std::string getText(void) const;
 
 		// Returns whether this button has been clicked upon or not.
 		// This is OK for a quick and dirty approach to checking button clicks, but if we have
@@ -89,6 +80,12 @@ namespace X
 		// Pass 0 or NULL here to remove the function
 		void setFunctionOnClicked(void (*function)(void));
 
+		// Sets whether this checkbox is on or off
+		void setState(bool bOn) { _mbOn = bOn; }
+
+		// Gets current state of checkbox. Whether it is on or off
+		bool getState(void) {	return _mbOn;	}
+
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -97,16 +94,15 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		std::string _mstrText;				// Text string to be rendered
-		CColour _mColourBG;					// Current BG colour (fading between up/over/down states)
-		CColour _mColourText;				// Current text colour (fading between up/over/down states)
-		enum state	// The three states of a button
+		enum state	// The states of a checkbox
 		{
-			up,		// Mouse is not over the button
-			over,	// Mouse is over the button
-			down	// Mouse is over the button and left mouse button is pressed
+			off,		// Off and mouse is not over
+			offOver,	// Off and mouse is over
+			on,			// On and mouse is not over
+			onOver		// On and mouse is over
 		};
-		state _mState;				// The current state of the button
+		state _mState;				// The current state of the button, used for rendering
+		bool _mbOn;					// Whether this checkbox is toggled on or off
 		bool _mbClicked;			// Holds whether the button has been clicked upon.
 
 		// Function pointer which can be set with setFunctionOnClicked() which gets called when the button gets clicked upon.

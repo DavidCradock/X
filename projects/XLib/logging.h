@@ -21,7 +21,7 @@ namespace X
 		std::string mstrException;
 	};
 	#ifndef _DEBUG
-		// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
+	// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
 	#ifndef ThrowIfFalse
 	#define ThrowIfFalse(x, y)					\
 		{											\
@@ -38,8 +38,18 @@ namespace X
 		throw CException(y, __FILE__, __LINE__);}	\
 		}
 	#endif
+
+	// Macro to check a pointer and if 0, throw an exception stating that the memory was not allocated with filename and line number.
+	#ifndef ThrowIfMemoryNotAllocated
+	#define ThrowIfMemoryNotAllocated(x)				\
+			{											\
+			if(!x){										\
+			throw CException("Memory allocation error.", __FILE__, __LINE__);}	\
+			}
+	#endif
+
 	#else
-		// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
+	// Macro to check a bool and if false, throw an exception which adds filename, line number and the given text.
 	#ifndef ThrowIfFalse
 	#define ThrowIfFalse(x, y)					\
 		{											\
@@ -57,6 +67,16 @@ namespace X
  		__debugbreak();								\
 		throw CException(y, __FILE__, __LINE__);}	\
 		}
+	#endif
+
+	// Macro to check a pointer and if 0, throw an exception stating that the memory was not allocated with filename and line number.
+	#ifndef ThrowIfMemoryNotAllocated
+	#define ThrowIfMemoryNotAllocated(x)				\
+			{											\
+			if(!x){										\
+ 			__debugbreak();								\
+			throw CException("Memory allocation error.", __FILE__, __LINE__);}	\
+			}
 	#endif
 	#endif
 

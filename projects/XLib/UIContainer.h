@@ -103,6 +103,9 @@ namespace X
 		// it'll be that + the dimensions of the top left corner border of the window using this container's currently set theme.
 		CVector2f getWidgetAreaTLCornerPosition(void) const;
 
+		// Returns the dimensions of the widget area of the container
+		CVector2f getWidgetAreaDimensions(void) const;
+
 		// Returns a vector holding the amount to offset this container's widgets due to this container's scrollbars being enabled
 		CVector2f getWidgetOffset(void) const;
 

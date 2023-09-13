@@ -94,8 +94,6 @@ namespace X
 		// p->setOnEnter(MyFunc);
 		void setOnEnter(void (*func)(const std::string& text));
 
-		// Sets the framebuffer to need updating
-		void setFramebufferNeedsUpdating(void);
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -117,8 +115,6 @@ namespace X
 		unsigned int _muiMaxChars;		// Maximum number of characters this text edit can hold
 		bool _mbIntegerInputOnly;		// Only allow number input?
 		bool _mbWasActiveEnterPressed;	// Is only true for one program loop
-
-		CUIText* _mpTextWidget;			// Text widget for rendering this widget's text.
 
 		// Checks to see if the text contains a number and if not, resets it to zero
 		void _checkIsNumber(bool bResetToZero);

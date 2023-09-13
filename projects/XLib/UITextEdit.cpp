@@ -20,15 +20,10 @@ namespace X
 		_mbIntegerInputOnly = false;
 		_mbWasActiveEnterPressed = false;
 		_mfuncOnEnterPressed = NULL;
-
-		_mpTextWidget = new CUIText(pContainer, strWidgetName);
-		ThrowIfFalse(_mpTextWidget, "CUITextEdit::CUITextEdit() failed to allocate memory for the widget's CUIText object.");
-		_mpTextWidget->setFont(false, pContainer->themeGetSettings()->fonts.textEdit);
 	}
 
 	CUITextEdit::~CUITextEdit()
 	{
-		delete _mpTextWidget;
 	}
 
 	void CUITextEdit::setDimensions(float fX, float fY)
@@ -149,14 +144,6 @@ namespace X
 				strFinalText += "_";
 		}
 
-		CVector2f vTextPosTL;
-		vTextPosTL += _mvPosition;
-		vTextPosTL += idTL->vDims;
-		CVector2f vTextPosBR;
-		vTextPosBR += _mvPosition;
-		vTextPosBR += _mvDimensions;
-		vTextPosBR -= idBR->vDims;
-
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;
 		std::string strTextTemp = _mstrText + "_";	// We use this to compute width to prevent moving forward and backwards of text when cursor flashes.
@@ -168,20 +155,33 @@ namespace X
 		if (_mState == state::inactive)
 			iOffsetX = 0;
 
-		_mpTextWidget->setText(strFinalText);
-		_mpTextWidget->setPosition(iOffsetX + vTextPosTL.x, vTextPosTL.y);
-		CVector2f vDims = _mvDimensions;
-		vDims.x = float(iTextWidth) + 10;
-		_mpTextWidget->setDimensions(vDims);
-		glEnable(GL_SCISSOR_TEST);
-		_mpTextWidget->renderNonBG();
-		glDisable(GL_SCISSOR_TEST);
-	}
+		CVector2f vScissorDims;
+		vScissorDims.x = _mvDimensions.x - idTL->vDims.x - idBR->vDims.x;
+		vScissorDims.y = _mpContainer->getWidgetAreaDimensions().y;
+		CVector2f vScissorPos;
+		vScissorPos.x = _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x;
+		vScissorPos.y = x->pWindow->getHeight();	// Top of screen
+		vScissorPos.y -= _mpContainer->getWidgetAreaTLCornerPosition().y;
+		vScissorPos.y -= _mpContainer->getWidgetAreaDimensions().y;
+		//vScissorPos.y -= (_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + _mpContainer->getWidgetOffset().y + idTL->vDims.y);
+		
 
-	// Sets the framebuffer to need updating
-	void CUITextEdit::setFramebufferNeedsUpdating(void)
-	{
-		_mpTextWidget->setFramebufferNeedsUpdating();
+		x->pRenderer->scissorTestEnable();
+		x->pRenderer->scissorTestSet((int)vScissorPos.x, (int)vScissorPos.y, (int)vScissorDims.x, (int)vScissorDims.y);
+
+		pFont->print(strFinalText,
+			iOffsetX + _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x,
+			_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + idTL->vDims.y + _mpContainer->getWidgetOffset().y,
+			x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, CColour());
+		
+		x->pRenderer->scissorTestDisable();
+
+//		x->pRenderer->blendEnable();
+//		x->pResource->getTexture2DFromFile(x->pResource->defaultRes.texture2DFromFile_default_white)->renderTo2DQuad(
+//			(int)vScissorPos.x,
+//			x->pWindow->getHeight() - (int)vScissorPos.y,
+//			(int)vScissorDims.x, (int)vScissorDims.y, CColour(0.5f, 0.5f, 0.5f, 0.5f));
+//		x->pRenderer->blendDisable();
 	}
 
 	void CUITextEdit::update(float fTimeDeltaSec)
@@ -338,7 +338,6 @@ namespace X
 	void CUITextEdit::reset(void)
 	{
 		_mState = state::inactive;
-		_mpTextWidget->setFramebufferNeedsUpdating();
 	}
 
 	/******************************************************************* Widget specific *******************************************************************/

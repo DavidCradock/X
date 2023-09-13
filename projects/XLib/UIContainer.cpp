@@ -127,6 +127,11 @@ namespace X
 		return vPosition;
 	}
 
+	CVector2f CUIContainer::getWidgetAreaDimensions(void) const
+	{
+		return _mvContainersWidgetAreaDimensions;
+	}
+
 	CVector2f CUIContainer::getWidgetOffset(void) const
 	{
 		return _mvWidgetOffset;
@@ -375,7 +380,6 @@ namespace X
 		// Set settings for new object
 		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
 		pNewObject->setPosition(CVector2f(fPosX, fPosY));
-		pNewObject->setText(strName);
 
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
 		computeScrollbars();
@@ -1075,7 +1079,7 @@ namespace X
 
 		x->pProfiler->begin("CUIContainer::render()_renderNonBG");
 
-		glEnable(GL_SCISSOR_TEST);
+		x->pRenderer->scissorTestEnable();
 
 		x->pProfiler->begin("CUIContainer::render()_renderNonBG_buttons");
 		{
@@ -1097,16 +1101,7 @@ namespace X
 			}
 		}
 
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG_checkboxes");
-		{
-			auto it = _mmapCheckboxes.begin();
-			while (it != _mmapCheckboxes.end())
-			{
-				it->second->renderNonBG();
-				it++;
-			}
-		}
-		x->pProfiler->end("CUIContainer::render()_renderNonBG_checkboxes");
+		// For each CUICheckbox widget (No need)
 
 		{
 			auto it = _mmapImages.begin();
@@ -1143,9 +1138,8 @@ namespace X
 		}
 		x->pProfiler->end("CUIContainer::render()_renderNonBG_texts");
 
+		x->pRenderer->scissorTestDisable();
 		x->pProfiler->begin("CUIContainer::render()_renderNonBG_textEdits");
-		glEnable(GL_SCISSOR_TEST);
-		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
 		{
 			auto it = _mmapTextEdits.begin();
 			while (it != _mmapTextEdits.end())
@@ -1154,7 +1148,7 @@ namespace X
 				it++;
 			}
 		}
-		glDisable(GL_SCISSOR_TEST);
+
 		x->pProfiler->end("CUIContainer::render()_renderNonBG_textEdits");
 
 		x->pProfiler->end("CUIContainer::render()_renderNonBG");
@@ -1255,12 +1249,16 @@ namespace X
 		}
 
 		// Render all the widget backgrounds added above
-		glEnable(GL_SCISSOR_TEST);
-		glScissor((int)getWidgetAreaTLCornerPosition().x, int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y), (int)_mvContainersWidgetAreaDimensions.x, (int)_mvContainersWidgetAreaDimensions.y);
+		x->pRenderer->scissorTestEnable();
+		x->pRenderer->scissorTestSet(
+			(int)getWidgetAreaTLCornerPosition().x,
+			int(x->pWindow->getHeight() - getWidgetAreaTLCornerPosition().y - _mvContainersWidgetAreaDimensions.y),
+			(int)_mvContainersWidgetAreaDimensions.x,
+			(int)_mvContainersWidgetAreaDimensions.y);
 		pVB->update();
 		pVB->render();
 		pVB->removeGeom();
-		glDisable(GL_SCISSOR_TEST);
+		x->pRenderer->scissorTestDisable();
 
 		// Render the container's scrollbars
 		_mpScrollbarH->renderBG(pVB, false);
@@ -1290,14 +1288,6 @@ namespace X
 			}
 		}
 
-		{
-			auto it = _mmapTextEdits.begin();
-			while (it != _mmapTextEdits.end())
-			{
-				it->second->setFramebufferNeedsUpdating();
-				it++;
-			}
-		}
 	}
 
 	/************************************************************************************************************************************************************/

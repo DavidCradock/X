@@ -11,6 +11,7 @@
 #include "messaging.h"
 #include "physicsManager.h"
 #include "profiler.h"
+#include "rendererManager.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
 #include "settings.h"
@@ -73,6 +74,12 @@ namespace X
 		// A pointer to a CProfiler object
 		// Not technically a singleton, but that's OK :)
 		CProfiler* pProfiler;
+
+		// A pointer to the RendererManager class
+		RendererManager* pRendererManager;
+
+		// A pointer to the Renderer class initialised with RendererManager
+		Renderer* pRenderer;
 
 		// A pointer to the SCResourceManager singleton class.
 		// This resource manager holds various resources which require an OpenGL context and is 

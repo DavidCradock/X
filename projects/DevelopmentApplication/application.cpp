@@ -53,13 +53,13 @@ namespace X
 //		CUITextEdit* pTextEdit = pWindow->textEditAdd("textedit", 0, 50, 100, 40, "Hello");
 
 		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
-		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);
+//		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);
 
 		// Show old GUI statistics
 		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
 
 		// Create lots of UI elements for stress testing
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			std::string str;
 			str = "windowSTRESS_TEST_" + std::to_string(i);
@@ -67,7 +67,7 @@ namespace X
 			pWindow->setDimensions(850, 480);
 			pWindow->setPosition(i * 50, 500 + (i * 50));
 			pWindow->textAdd("text_results", 0, 0, 800, 120, "Before optimization in release no debug with vsync off: We get an FPSaverage of 67 fps. In the profiler window...\nx->pUI->render() takes up around 70% of main and a time of around 10 and 11 millseconds.\nx->pUI->update() takes up around 20% of main and a time of around 2.8 and 3.1 millseconds.");
-			for (int j = 5; j < 15; j++)
+			for (int j = 5; j < 20; j++)
 			{
 				str = "button_" + std::to_string(j);
 				CUIButton* pBut = pWindow->buttonAdd(str, 0, j * 30, 100, 24);

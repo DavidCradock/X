@@ -15,6 +15,10 @@ namespace X
 
 		pFile = SCFileManager::getPointer();
 
+		RendererManager* pRendererManager = new RendererManager;
+		ThrowIfMemoryNotAllocated(pRendererManager);
+		pRenderer = pRendererManager->initOpenGL();
+
 		pMessageSystem = SCMessageSystem::getPointer();
 
 		pSettings = SCSettings::getPointer();

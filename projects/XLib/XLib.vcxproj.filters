@@ -70,6 +70,9 @@
     <Filter Include="GUI\Added to UI">
       <UniqueIdentifier>{8470523f-45bf-44a8-86b1-48d7fe2b8dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{8ba34b8a-0a15-45b1-8ba6-888cd0e07cca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -473,6 +476,15 @@
     <ClInclude Include="UICheckbox.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="rendererOpenGL.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="rendererManager.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -832,6 +844,15 @@
     </ClCompile>
     <ClCompile Include="UICheckbox.cpp">
       <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="rendererOpenGL.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="rendererManager.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

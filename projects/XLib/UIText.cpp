@@ -136,7 +136,7 @@ namespace X
 			else
 				pFont = x->pResource->getFont(_mstrFontResourceName);
 
-			glDisable(GL_SCISSOR_TEST);
+			x->pRenderer->scissorTestDisable();
 			pFramebuffer->bindAsRenderTarget(true, false, _mColourFramebufferClear);
 
 			// Render normally
@@ -150,7 +150,7 @@ namespace X
 			{
 				pFont->print(_mstrText, 0, 0, (int)_mvDimensions.x, (int)_mvDimensions.y, 1.0f, _mColourText);
 			}
-			glEnable(GL_SCISSOR_TEST);
+			x->pRenderer->scissorTestEnable();
 			pFramebuffer->unbindAsRenderTarget();
 
 			// Rebind the UI framebuffer

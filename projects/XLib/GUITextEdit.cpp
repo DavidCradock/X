@@ -50,10 +50,10 @@ namespace X
 
 
 		// Enable stencil mask
-		glEnable(GL_SCISSOR_TEST);
+		x->pRenderer->scissorTestEnable();
 		int iScissorX = int(pContainer->mfPositionX + mfPositionX + vTexDimsPoint3.x);
 		int iScissorY = iRTDims[1] - int(pContainer->mfPositionY + mfPositionY + mfHeight - vTexDimsPoint3.y + pTheme->mOffsets.textEditText.iOffsetY);
-		glScissor(iScissorX, iScissorY, GLsizei(mfWidth - vTexDimsPoint6.x), (GLsizei)mfHeight);
+		x->pRenderer->scissorTestSet(iScissorX, iScissorY, int(mfWidth - vTexDimsPoint6.x), (int)mfHeight);
 
 		// Compute offset of text, based upon whether it fits in the text edit box or not
 		int iOffsetX = 0;
@@ -75,7 +75,7 @@ namespace X
 			1.0f,					// Scaling
 			_mTextColour);			// Colour
 
-		glDisable(GL_SCISSOR_TEST);
+		x->pRenderer->scissorTestDisable();
 	}
 
 	void CGUITextEdit::update(void* pParentContainer, bool bParentContainerAcceptingMouseClicks)
