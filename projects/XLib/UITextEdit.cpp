@@ -168,10 +168,20 @@ namespace X
 		if (_mState == state::inactive)
 			iOffsetX = 0;
 
-		_mpTextWidget->setText("Hello");
+		_mpTextWidget->setText(strFinalText);
 		_mpTextWidget->setPosition(iOffsetX + vTextPosTL.x, vTextPosTL.y);
-		_mpTextWidget->setDimensions(_mvDimensions);
+		CVector2f vDims = _mvDimensions;
+		vDims.x = float(iTextWidth) + 10;
+		_mpTextWidget->setDimensions(vDims);
+		glEnable(GL_SCISSOR_TEST);
 		_mpTextWidget->renderNonBG();
+		glDisable(GL_SCISSOR_TEST);
+	}
+
+	// Sets the framebuffer to need updating
+	void CUITextEdit::setFramebufferNeedsUpdating(void)
+	{
+		_mpTextWidget->setFramebufferNeedsUpdating();
 	}
 
 	void CUITextEdit::update(float fTimeDeltaSec)
@@ -328,6 +338,7 @@ namespace X
 	void CUITextEdit::reset(void)
 	{
 		_mState = state::inactive;
+		_mpTextWidget->setFramebufferNeedsUpdating();
 	}
 
 	/******************************************************************* Widget specific *******************************************************************/

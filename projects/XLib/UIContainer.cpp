@@ -1290,7 +1290,14 @@ namespace X
 			}
 		}
 
-
+		{
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->setFramebufferNeedsUpdating();
+				it++;
+			}
+		}
 	}
 
 	/************************************************************************************************************************************************************/

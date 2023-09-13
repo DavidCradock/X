@@ -31,13 +31,11 @@ Screenshot of "X:Default:FontGenerator" container window...
 
 ** TODO **
 Finish off implementing checkbox. Has 4 centre images off, offOver, on, onOver. Plus 9 BG.
-All widgets should be set to minimal dims of theme upon construction.
-Each widget should have setDimsFromTheme(int addioanalWidth, additional Height) or similar
+Finish off impl textedit.
 Add tooltips
 Add large UI stress test windows in application and record stats in release/no debug
 Add a SCRenderer class and add state changing stuff such as glEnable(GL_BLEND), culling, scissor testing etc.
 - Check CUIWindow::getTitlebarArea()
-- We need to try and reduce header file includes (Use PIMPL) as compile times are starting to suck.
 - UI rewrite
 - Implement UIDefaultContainers stuff
 - Add screen resize handling code (For fullscreen and window resize)

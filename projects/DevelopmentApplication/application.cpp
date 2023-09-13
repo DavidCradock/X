@@ -64,7 +64,7 @@ namespace X
 			std::string str;
 			str = "windowSTRESS_TEST_" + std::to_string(i);
 			CUIWindow* pWindow = x->pUI->windowAdd(str, false);
-			pWindow->setDimensions(800, 480);
+			pWindow->setDimensions(850, 480);
 			pWindow->setPosition(i * 50, 500 + (i * 50));
 			pWindow->textAdd("text_results", 0, 0, 800, 120, "Before optimization in release no debug with vsync off: We get an FPSaverage of 67 fps. In the profiler window...\nx->pUI->render() takes up around 70% of main and a time of around 10 and 11 millseconds.\nx->pUI->update() takes up around 20% of main and a time of around 2.8 and 3.1 millseconds.");
 			for (int j = 5; j < 15; j++)

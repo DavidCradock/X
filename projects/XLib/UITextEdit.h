@@ -94,6 +94,8 @@ namespace X
 		// p->setOnEnter(MyFunc);
 		void setOnEnter(void (*func)(const std::string& text));
 
+		// Sets the framebuffer to need updating
+		void setFramebufferNeedsUpdating(void);
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
