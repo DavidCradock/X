@@ -55,7 +55,7 @@ Add a SCRenderer class and add state changing stuff such as glEnable(GL_BLEND), 
 - UI: Implement Tooltip
 - REMOVE GUI.
 
-- Create a simple 2D image editor, I hate the tiny UI of my old version of Photoshop and all other 2D paint apps are awkward to use.
+- Create a simple 2D image editor, I hate the tiny UI of my old version of Photoshop and I find all other 2D paint apps awkward to use, especially for alpha channels.
 - Forward slashes for all file names/paths
 - Private implementation of private members and methods.
 -
