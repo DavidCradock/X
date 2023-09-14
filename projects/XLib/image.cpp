@@ -8,8 +8,6 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
-#include "colour.h"
-
 namespace X
 {
 	CImage::CImage()
@@ -711,10 +709,11 @@ namespace X
 		ThrowIfTrue(iWidthAndHeightOfImage < 1, "CImage::drawColourWheel() failed. Parsed iWidthAndHeightOfImage must be at least 1");
 		createBlank(iWidthAndHeightOfImage, iWidthAndHeightOfImage, 4);
 
-		unsigned int iCentreX = iWidthAndHeightOfImage / 2;
-		unsigned int iCentreY = iCentreX;
 		float fBrightness = float(ucBrightness) / 255.0f;
-		CVector2f vCentrePixelPosition(iCentreX, iCentreY);
+		CVector2f vCentrePixelPosition;
+		vCentrePixelPosition.x = float(iWidthAndHeightOfImage) * 0.5f;
+		vCentrePixelPosition.y = vCentrePixelPosition.x;
+
 		CVector2f vCurrentPixelPosition;
 		CVector2f vCurrentPixelOffsetFromCentre;
 		CColour colour;
@@ -722,7 +721,7 @@ namespace X
 		float fDistanceFromCentre;
 		float fSaturation;	// 0.0f = white, 1.0f = full colour
 		float fAngleDegrees;
-		//unsigned int iPixelIndex = iPixelPosX + (iPixelPosY * _miWidth);
+		float fOneOver360 = 1.0f / 360.0f;
 		unsigned int iPixelIndex = 0;
 		for (unsigned int iPosX = 0; iPosX < (unsigned int)_miWidth; iPosX++)
 		{
@@ -735,7 +734,7 @@ namespace X
 				fSaturation = fCircleRadius - fDistanceFromCentre;
 				fSaturation /= fCircleRadius;	// 0 at edge of circle, 1 at centre. Can be < 0 which is outside circle
 				fAngleDegrees = vCurrentPixelOffsetFromCentre.getAngleDegrees360();
-				fAngleDegrees /= 360.0f;	// 0 when pixel is north, 0.25 when east etc.
+				fAngleDegrees *= fOneOver360;	// 0 when pixel is north, 0.25 when east etc.
 				if (fSaturation < 0.0f)
 					colour.set(0.0f, 0.0f, 0.0f, 0.0f);
 				else
@@ -748,6 +747,79 @@ namespace X
 				_mpData[iPixelIndex+2] = unsigned char(colour.blue * 255);
 				_mpData[iPixelIndex + 3] = unsigned char(colour.alpha * 255);
 				iPixelIndex += 4;
+			}
+		}
+	}
+
+	CColour CImage::getColourWheelColour(unsigned int iPositionX, unsigned int iPositionY, unsigned int iWidthAndHeightOfImage, unsigned char ucBrightness)
+	{
+		ThrowIfTrue(iWidthAndHeightOfImage < 1, "CImage::getColourWheelColour() failed. Parsed iWidthAndHeightOfImage must be at least 1");
+
+		CColour colour;
+		CVector2f vCurrentPixelPosition((float)iPositionX, float(iPositionY));
+		CVector2f vCentrePixelPosition;
+		vCentrePixelPosition.x = float(iWidthAndHeightOfImage) * 0.5f;
+		vCentrePixelPosition.y = vCentrePixelPosition.x;
+		CVector2f vCurrentPixelOffsetFromCentre = vCurrentPixelPosition - vCentrePixelPosition;
+		float fDistanceFromCentre = vCurrentPixelOffsetFromCentre.getMagnitude();
+		float fCircleRadius = float(iWidthAndHeightOfImage) * 0.5f;
+		float fSaturation = fCircleRadius - fDistanceFromCentre;
+		fSaturation /= fCircleRadius;	// 0 at edge of circle, 1 at centre. Can be < 0 which is outside circle
+		float fAngleDegrees = vCurrentPixelOffsetFromCentre.getAngleDegrees360();
+		fAngleDegrees /= 360.0f;	// 0 when pixel is north, 0.25 when east etc.
+		if (fSaturation < 0.0f)
+			colour.set(0.0f, 0.0f, 0.0f, 0.0f);
+		else
+		{
+			colour.setHueColour(fAngleDegrees, fSaturation, float(ucBrightness) / 255.0f);
+			colour.alpha = 1.0f;
+		}
+		return colour;
+	}
+
+	void CImage::drawGradient(unsigned int iWidth, unsigned int iHeight, unsigned int iNumChannels, const CColour& colour0, const CColour& colour1)
+	{
+		ThrowIfTrue(iWidth < 1 || iHeight < 1, "CImage::drawGradient() failed. Invalid dimensions given.");
+		ThrowIfTrue(iNumChannels < 3 || iNumChannels > 4, "CImage::drawGradient() failed. Number of channels must be either 3 or 4.");
+		createBlank(iWidth, iHeight, iNumChannels);
+		bool bHorizontal = true;
+		if (iHeight > iWidth)
+			bHorizontal = false;
+
+		CColour colour;
+		unsigned int iPixelIndex = 0;
+		if (bHorizontal)
+		{
+			for (unsigned int iPosX = 0; iPosX < iWidth; iPosX++)
+			{
+				colour = colour0.interpolate(colour1, float(iPosX) / float(iWidth));
+				for (unsigned int iPosY = 0; iPosY < iHeight; iPosY++)
+				{
+					iPixelIndex = iPosX + (iPosY * _miWidth);
+					iPixelIndex *= iNumChannels;
+					_mpData[iPixelIndex] = unsigned char(colour.red * 255);
+					_mpData[iPixelIndex + 1] = unsigned char(colour.green * 255);
+					_mpData[iPixelIndex + 2] = unsigned char(colour.blue * 255);
+					if (iNumChannels == 4)
+						_mpData[iPixelIndex + 3] = unsigned char(colour.alpha * 255);
+				}
+			}
+		}
+		else
+		{
+			for (unsigned int iPosY = 0; iPosY < iHeight; iPosY++)
+			{
+				colour = colour0.interpolate(colour1, float(iPosY) / float(iHeight));
+				for (unsigned int iPosX = 0; iPosX < iWidth; iPosX++)
+				{
+					iPixelIndex = iPosX + (iPosY * _miWidth);
+					iPixelIndex *= iNumChannels;
+					_mpData[iPixelIndex] = unsigned char(colour.red * 255);
+					_mpData[iPixelIndex + 1] = unsigned char(colour.green * 255);
+					_mpData[iPixelIndex + 2] = unsigned char(colour.blue * 255);
+					if (iNumChannels == 4)
+						_mpData[iPixelIndex + 3] = unsigned char(colour.alpha * 255);
+				}
 			}
 		}
 	}

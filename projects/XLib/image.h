@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "vector2f.h"
+#include "colour.h"
 
 namespace X
 {
@@ -218,6 +219,14 @@ namespace X
 
 		// Sets this image to the given width and height, sets it to have 4 colour channels and then draws a hue based colour wheel using the given brightness.
 		void drawColourWheel(unsigned int iWidthAndHeightOfImage, unsigned char ucBrightness = 255);
+
+		// Not 100% image related, but given an X and Y coordinate over an imaginary drawn colour wheel, returns a CColour value which would
+		// represent the colour of the colour wheel at those X and Y coordinates.
+		// No checking of incorrect position values.
+		CColour getColourWheelColour(unsigned int iPositionX, unsigned int iPositionY, unsigned int iWidthAndHeightOfImage, unsigned char ucBrightness);
+
+		// Creates this image with the specified values and draws a gradient between the two given colours.
+		void drawGradient(unsigned int iWidth, unsigned int iHeight, unsigned int iNumChannels, const CColour& colour0, const CColour& colour1);
 	private:
 		unsigned char* _mpData;
 		unsigned int _muiDataSize;

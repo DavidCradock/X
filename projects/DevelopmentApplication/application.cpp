@@ -105,6 +105,8 @@ namespace X
 		CImage image;
 		image.drawColourWheel(1024);
 		image.saveAsPNG("CImage_drawColourWheel.png");
+		image.drawGradient(64, 256, 4, CColour(1.0f, 1.0f, 1.0f, 1.0f), CColour(0.0f, 0.0f, 0.0f, 1.0f));
+		image.saveAsPNG("CImage_drawGradient.png");
 	}
 
 	void CApplication::onStart(void)
