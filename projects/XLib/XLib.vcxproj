@@ -74,6 +74,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="rendererManager.h" />
     <ClInclude Include="rendererOpenGL.h" />
+    <ClInclude Include="rendererVulkan.h" />
     <ClInclude Include="resourceDepthbuffer.h" />
     <ClInclude Include="resourceLoadingScreen.h" />
     <ClInclude Include="resourceMouseCursor.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="rendererManager.cpp" />
     <ClCompile Include="rendererOpenGL.cpp" />
+    <ClCompile Include="rendererVulkan.cpp" />
     <ClCompile Include="resourceDepthbuffer.cpp" />
     <ClCompile Include="resourceLoadingScreen.cpp" />
     <ClCompile Include="resourceMouseCursor.cpp" />

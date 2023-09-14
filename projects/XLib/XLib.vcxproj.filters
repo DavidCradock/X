@@ -73,6 +73,15 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{8ba34b8a-0a15-45b1-8ba6-888cd0e07cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\Base classes">
+      <UniqueIdentifier>{f2339ca7-f550-4f70-9dc3-17296cb6c4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\OpenGL">
+      <UniqueIdentifier>{7bd4f396-0f0b-4f02-a2fa-c4434c50997c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Vulkan">
+      <UniqueIdentifier>{02875441-edb1-4c9a-82a0-d314eda82205}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -476,14 +485,17 @@
     <ClInclude Include="UICheckbox.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="rendererOpenGL.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="rendererManager.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>Renderer\Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="rendererOpenGL.h">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="rendererVulkan.h">
+      <Filter>Renderer\Vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -845,14 +857,17 @@
     <ClCompile Include="UICheckbox.cpp">
       <Filter>UI\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="rendererOpenGL.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="rendererManager.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>Renderer\Base classes</Filter>
+    </ClCompile>
+    <ClCompile Include="rendererOpenGL.cpp">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="rendererVulkan.cpp">
+      <Filter>Renderer\Vulkan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -100,6 +100,11 @@ namespace X
 		// Real simple as it gets framerate text
 		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
 		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
+
+		// CImage drawColourWheel()
+		CImage image;
+		image.drawColourWheel(1024);
+		image.saveAsPNG("CImage_drawColourWheel.png");
 	}
 
 	void CApplication::onStart(void)

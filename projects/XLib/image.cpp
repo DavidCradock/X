@@ -8,6 +8,8 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
+#include "colour.h"
+
 namespace X
 {
 	CImage::CImage()
@@ -129,28 +131,28 @@ namespace X
 	{
 		ThrowIfTrue(!_mpData, "CImage::saveAsBMP() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!STB::stbi_write_bmp(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData), "CImage::saveAsBMP() failed. Image failed to be written.");
+		ThrowIfTrue(!STB::stbi_write_bmp(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData), "CImage::saveAsBMP(\"" + strFilename + "\") failed.Image failed to be written.");
 	}
 
 	void CImage::saveAsJPG(const std::string& strFilename, bool bFlipOnSave, int iQuality) const
 	{
 		ThrowIfTrue(!_mpData, "CImage::saveAsJPG() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!STB::stbi_write_jpg(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData, iQuality), "CImage::saveAsJPG() failed. Image failed to be written.");
+		ThrowIfTrue(!STB::stbi_write_jpg(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData, iQuality), "CImage::saveAsJPG(\"" + strFilename + "\") failed.Image failed to be written.");
 	}
 
 	void CImage::saveAsPNG(const std::string& strFilename, bool bFlipOnSave) const
 	{
 		ThrowIfTrue(!_mpData, "CImage::saveAsPNG() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!STB::stbi_write_png(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData, _miWidth * _miNumChannels), "CImage::saveAsPNG failed. Image failed to be written.");
+		ThrowIfTrue(!STB::stbi_write_png(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData, _miWidth * _miNumChannels), "CImage::saveAsPNG(\"" + strFilename + "\") failed.Image failed to be written.");
 	}
 
 	void CImage::saveAsTGA(const std::string& strFilename, bool bFlipOnSave) const
 	{
 		ThrowIfTrue(!_mpData, "CImage::saveAsTGA() failed. Image not yet created.");
 		STB::stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
-		ThrowIfTrue(!STB::stbi_write_tga(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData), "CImage::saveAsTGA() failed. Image failed to be written.");
+		ThrowIfTrue(!STB::stbi_write_tga(strFilename.c_str(), _miWidth, _miHeight, _miNumChannels, _mpData), "CImage::saveAsTGA(\"" + strFilename + "\") failed.Image failed to be written.");
 	}
 
 	void CImage::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
@@ -702,5 +704,51 @@ namespace X
 		else if (3 == _miNumChannels)
 			glReadPixels((int)vSourcePosTLCorner.x, (int)vSourcePosTLCorner.y, _miWidth, _miHeight, GL_RGB, GL_UNSIGNED_BYTE, _mpData);
 		flipVertically();
+	}
+
+	void CImage::drawColourWheel(unsigned int iWidthAndHeightOfImage, unsigned char ucBrightness)
+	{
+		ThrowIfTrue(iWidthAndHeightOfImage < 1, "CImage::drawColourWheel() failed. Parsed iWidthAndHeightOfImage must be at least 1");
+		createBlank(iWidthAndHeightOfImage, iWidthAndHeightOfImage, 4);
+
+		unsigned int iCentreX = iWidthAndHeightOfImage / 2;
+		unsigned int iCentreY = iCentreX;
+		float fBrightness = float(ucBrightness) / 255.0f;
+		CVector2f vCentrePixelPosition(iCentreX, iCentreY);
+		CVector2f vCurrentPixelPosition;
+		CVector2f vCurrentPixelOffsetFromCentre;
+		CColour colour;
+		float fCircleRadius = float(iWidthAndHeightOfImage) * 0.5f;
+		float fDistanceFromCentre;
+		float fSaturation;	// 0.0f = white, 1.0f = full colour
+		float fAngleDegrees;
+		//unsigned int iPixelIndex = iPixelPosX + (iPixelPosY * _miWidth);
+		unsigned int iPixelIndex = 0;
+		for (unsigned int iPosX = 0; iPosX < (unsigned int)_miWidth; iPosX++)
+		{
+			vCurrentPixelPosition.x = (float)iPosX;
+			for (unsigned int iPosY = 0; iPosY < (unsigned int)_miHeight; iPosY++)
+			{
+				vCurrentPixelPosition.y = (float)iPosY;
+				vCurrentPixelOffsetFromCentre = vCurrentPixelPosition - vCentrePixelPosition;
+				fDistanceFromCentre = vCurrentPixelOffsetFromCentre.getMagnitude();
+				fSaturation = fCircleRadius - fDistanceFromCentre;
+				fSaturation /= fCircleRadius;	// 0 at edge of circle, 1 at centre. Can be < 0 which is outside circle
+				fAngleDegrees = vCurrentPixelOffsetFromCentre.getAngleDegrees360();
+				fAngleDegrees /= 360.0f;	// 0 when pixel is north, 0.25 when east etc.
+				if (fSaturation < 0.0f)
+					colour.set(0.0f, 0.0f, 0.0f, 0.0f);
+				else
+				{
+					colour.setHueColour(fAngleDegrees, fSaturation, fBrightness);
+					colour.alpha = 1.0f;
+				}
+				_mpData[iPixelIndex] = unsigned char(colour.red * 255);
+				_mpData[iPixelIndex+1] = unsigned char(colour.green * 255);
+				_mpData[iPixelIndex+2] = unsigned char(colour.blue * 255);
+				_mpData[iPixelIndex + 3] = unsigned char(colour.alpha * 255);
+				iPixelIndex += 4;
+			}
+		}
 	}
 }

@@ -74,9 +74,12 @@ namespace X
 		}
 
 		// Now RGB is set, apply saturation
-		red += fSaturation;
-		green += fSaturation;
-		blue += fSaturation;
+		float fSaturationScaleR = 1.0f - red;
+		float fSaturationScaleG = 1.0f - green;
+		float fSaturationScaleB = 1.0f - blue;
+		red += fSaturationScaleR * fSaturation;
+		green += fSaturationScaleG * fSaturation;
+		blue += fSaturationScaleB * fSaturation;
 		clamp(red, 0.0f, 1.0f);
 		clamp(green, 0.0f, 1.0f);
 		clamp(blue, 0.0f, 1.0f);

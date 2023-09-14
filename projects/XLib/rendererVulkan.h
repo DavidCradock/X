@@ -4,11 +4,11 @@
 
 namespace X
 {
-	class RendererOpenGL : public Renderer
+	class RendererVulkan : public Renderer
 	{
 	public:
-		RendererOpenGL();
-		~RendererOpenGL();
+		RendererVulkan();
+		~RendererVulkan();
 
 		void blendDisable(void);
 		void blendEnable(void);

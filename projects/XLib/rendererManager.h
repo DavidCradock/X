@@ -1,6 +1,7 @@
 #pragma once
 #include "PCH.h"
 #include "rendererOpenGL.h"
+#include "rendererVulkan.h"
 
 namespace X
 {
@@ -11,6 +12,7 @@ namespace X
 		~RendererManager();
 
 		Renderer* initOpenGL(void);
+		Renderer* initVulkan(void);
 		Renderer* get(void);
 	private:
 		Renderer* renderer;

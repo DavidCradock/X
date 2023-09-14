@@ -6,7 +6,7 @@ namespace X
 	RendererOpenGL::RendererOpenGL()
 	{
 	}
-	
+
 	RendererOpenGL::~RendererOpenGL()
 	{
 
@@ -22,17 +22,34 @@ namespace X
 		glEnable(GL_BLEND);
 	}
 
-	void RendererOpenGL::blendFunction(EBlendFunction blendFunc)
+	void RendererOpenGL::blendFunction_SrcAlpha_One(void)
 	{
-		switch (blendFunc)
-		{
-		case EBlendFunction::SourceAlpha_One:
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-			break;
-		case EBlendFunction::SourceAlpha_OneMinusSourceAlpha:
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			break;
-		}
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	}
+
+	void RendererOpenGL::blendFunction_SrcAlpha_OneMinusSrcAlpha(void)
+	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	void RendererOpenGL::cullFaceAntiClockwise(void)
+	{
+
+	}
+
+	void RendererOpenGL::cullFaceClockwise(void)
+	{
+
+	}
+
+	void RendererOpenGL::cullFaceDisable(void)
+	{
+
+	}
+
+	void RendererOpenGL::cullFaceEnable(void)
+	{
+
 	}
 
 	void RendererOpenGL::depthTestDisable(void)
@@ -43,6 +60,16 @@ namespace X
 	void RendererOpenGL::depthTestEnable(void)
 	{
 		glEnable(GL_DEPTH_TEST);
+	}
+
+	void RendererOpenGL::pixelsRead(int iPositionX, int iPositionY, int iWidth, int iHeight, void* pixels)
+	{
+
+	}
+
+	void RendererOpenGL::pixelsWrite(int iPositionX, int iPositionY, int iWidth, int iHeight, void* pixels)
+	{
+
 	}
 
 	void RendererOpenGL::scissorTest(int iPositionX, int iPositionY, int iWidth, int iHeight)

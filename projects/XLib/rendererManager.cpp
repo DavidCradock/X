@@ -22,6 +22,13 @@ namespace X
 		return renderer;
 	}
 
+	Renderer* RendererManager::initVulkan(void)
+	{
+		ThrowIfTrue(renderer, "RendererManager::initVulkan() failed. Renderer already initialised.");
+		renderer = new RendererVulkan;
+		ThrowIfMemoryNotAllocated(renderer);
+		return renderer;
+	}
 	Renderer* RendererManager::get(void)
 	{
 		ThrowIfFalse(renderer, "RendererManager::get() failed. Renderer is not initialised.");

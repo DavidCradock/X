@@ -15,6 +15,7 @@ namespace X
 	// HDR(radiance rgbE format)
 	// PIC(Softimage PIC)
 	// PNM(PPM and PGM binary only)
+	// Image pixels are stored in row first, then column. unsigned int iPixelIndex = iPixelPosX + (iPixelPosY * _miWidth);
 	class CImage
 	{
 	public:
@@ -214,6 +215,9 @@ namespace X
 		// If the image doesn't have any dimensions, this silently fails.
 		// Can read in either RGBA or RGB
 		void fillFromOpenGL(const CVector2f& vSourcePosTLCorner = CVector2f());
+
+		// Sets this image to the given width and height, sets it to have 4 colour channels and then draws a hue based colour wheel using the given brightness.
+		void drawColourWheel(unsigned int iWidthAndHeightOfImage, unsigned char ucBrightness = 255);
 	private:
 		unsigned char* _mpData;
 		unsigned int _muiDataSize;
