@@ -35,14 +35,151 @@
 0w:0d:0h:0m:00s : SCSingletons::SCSingletons() complete. All singletons initialised.
 0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() called.
 0w:0d:0h:0m:00s : SCApplicationManager::callAllApps_initOnce() called.
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() calling App's onStart()
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is entering main loop...
-0w:0d:0h:0m:01s : SCApplicationManager::mainLoop() is shutting down...
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() called.
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() releasing OpenGL rendering context.
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() releasing window's device context.
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() closing and destroying the window.
-0w:0d:0h:0m:01s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() unregistering window class.
-0w:0d:0h:0m:01s : SCWindow::destroyWindow() complete.
-0w:0d:0h:0m:01s : Total runtime: 1sec 0min 0hr 0days 0weeks.
+0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() calling App's onStart()
+0w:0d:0h:0m:00s : SCApplicationManager::mainLoop() is entering main loop...
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3071, 1728) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3067, 1728) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3054, 1722) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3044, 1717) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3027, 1710) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 3006, 1698) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2984, 1687) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2957, 1672) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2926, 1657) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2904, 1647) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2875, 1636) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2851, 1625) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2824, 1613) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2796, 1600) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2775, 1592) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2752, 1582) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2727, 1570) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2702, 1555) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2679, 1542) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2660, 1536) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2634, 1523) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2619, 1516) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2599, 1507) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2575, 1497) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2559, 1490) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2531, 1473) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2492, 1452) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2474, 1443) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2452, 1431) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2432, 1420) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2409, 1408) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2406, 1407) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2367, 1387) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2351, 1380) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2331, 1373) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2320, 1366) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2304, 1360) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2291, 1353) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2280, 1348) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2265, 1341) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2255, 1340) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2242, 1332) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2232, 1328) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2220, 1325) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2211, 1320) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2205, 1317) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2194, 1312) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2187, 1308) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2180, 1305) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2172, 1302) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2165, 1298) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2155, 1293) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2142, 1290) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2132, 1283) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2120, 1277) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2109, 1272) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2095, 1267) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2082, 1261) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2077, 1258) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2065, 1252) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2052, 1250) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2044, 1246) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2032, 1242) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2022, 1237) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2012, 1233) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 2004, 1228) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1996, 1227) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1986, 1225) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1977, 1223) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1971, 1221) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1964, 1217) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1955, 1216) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1947, 1213) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1939, 1211) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1931, 1208) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1924, 1205) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1914, 1202) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1901, 1198) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1894, 1196) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1877, 1191) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1871, 1188) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1864, 1186) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1856, 1185) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1850, 1181) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1844, 1180) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1837, 1177) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1831, 1175) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1825, 1173) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1820, 1172) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1815, 1170) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1807, 1167) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1804, 1166) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1799, 1162) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1792, 1161) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1789, 1157) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1784, 1156) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1780, 1155) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1777, 1153) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1774, 1151) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1766, 1150) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1762, 1146) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1757, 1143) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1750, 1141) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1746, 1138) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1742, 1137) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1739, 1133) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1736, 1132) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1731, 1130) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1729, 1128) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1725, 1126) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1722, 1123) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1719, 1120) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1714, 1117) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1711, 1117) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1709, 1112) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1706, 1110) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1702, 1108) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1700, 1107) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1699, 1106) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1695, 1105) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1695, 1103) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1695, 1102) called.
+0w:0d:0h:0m:12s : SCWindow::_resizeOpenGLViewport( 1692, 1102) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1692, 1100) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1690, 1100) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1690, 1098) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1626, 1053) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1625, 1052) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1624, 1052) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1621, 1052) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1621, 1051) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1620, 1050) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1619, 1050) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1619, 1048) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1616, 1048) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1616, 1047) called.
+0w:0d:0h:0m:13s : SCWindow::_resizeOpenGLViewport( 1614, 1047) called.
+0w:0d:0h:1m:44s : SCApplicationManager::mainLoop() is shutting down...
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() called.
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() releasing OpenGL rendering context.
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() releasing window's device context.
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() closing and destroying the window.
+0w:0d:0h:1m:44s : SCWindow::_resizeOpenGLViewport( 0, 0) called.
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() unregistering window class.
+0w:0d:0h:1m:44s : SCWindow::destroyWindow() complete.
+0w:0d:0h:1m:44s : Total runtime: 44sec 1min 0hr 0days 0weeks.

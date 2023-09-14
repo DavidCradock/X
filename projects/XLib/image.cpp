@@ -823,4 +823,42 @@ namespace X
 			}
 		}
 	}
+
+	void CImage::drawCircle(unsigned int iWidthAndHeightOfImage, const CColour& colourInner, const CColour& colourOuter)
+	{
+		ThrowIfTrue(iWidthAndHeightOfImage < 1, "CImage::drawCircle() failed. Parsed iWidthAndHeightOfImage must be at least 1");
+		createBlank(iWidthAndHeightOfImage, iWidthAndHeightOfImage, 4);
+
+		CVector2f vCentrePixelPosition;
+		vCentrePixelPosition.x = float(iWidthAndHeightOfImage) * 0.5f;
+		vCentrePixelPosition.y = vCentrePixelPosition.x;
+
+		CVector2f vCurrentPixelPosition;
+		CVector2f vCurrentPixelOffsetFromCentre;
+		CColour colour;
+		float fCircleRadius = float(iWidthAndHeightOfImage) * 0.5f;
+		float fDistanceFromCentre;
+		float fOneOver360 = 1.0f / 360.0f;
+		unsigned int iPixelIndex = 0;
+		for (unsigned int iPosX = 0; iPosX < (unsigned int)_miWidth; iPosX++)
+		{
+			vCurrentPixelPosition.x = (float)iPosX;
+			for (unsigned int iPosY = 0; iPosY < (unsigned int)_miHeight; iPosY++)
+			{
+				vCurrentPixelPosition.y = (float)iPosY;
+				vCurrentPixelOffsetFromCentre = vCurrentPixelPosition - vCentrePixelPosition;
+				fDistanceFromCentre = fCircleRadius - vCurrentPixelOffsetFromCentre.getMagnitude();
+				fDistanceFromCentre /= fCircleRadius;	// 0 at edge of circle, 1 at centre. Can be < 0 which is outside circle
+				if (fDistanceFromCentre < 0.0f)
+					colour.set(0.0f, 0.0f, 0.0f, 0.0f);
+				else
+					colour = colourOuter.interpolate(colourInner, fDistanceFromCentre);
+				_mpData[iPixelIndex] = unsigned char(colour.red * 255);
+				_mpData[iPixelIndex + 1] = unsigned char(colour.green * 255);
+				_mpData[iPixelIndex + 2] = unsigned char(colour.blue * 255);
+				_mpData[iPixelIndex + 3] = unsigned char(colour.alpha * 255);
+				iPixelIndex += 4;
+			}
+		}
+	}
 }

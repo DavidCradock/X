@@ -313,7 +313,6 @@ namespace X
 
 		// Adds a new texture2D object to the manager.
 		// strResourceName is the name of the new resource which we can use to refer to it with other methods in the manager.
-		// strImageFilename is the name of the file which holds the image data for the texture.
 		// If the named resource already exists, it has a count value which is incremented and the pointer to the existing resource is returned.
 		// When the OpenGL context is destroyed and then recreated, the image data is reloaded from the stored CImage object.
 		// If bLocked is true, this resource will not be removed when calling any of the remove methods such as removeAll(). It's set to true for default resources.

@@ -421,6 +421,64 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* CUIColourSelector */
+	/************************************************************************************************************************************************************/
+
+	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	{
+		// Throw exception if named object already exists
+		ThrowIfTrue(_mmapColourSelectors.find(strName) != _mmapColourSelectors.end(), "CUIContainer::colourSelectorAdd(\"" + strName + "\") failed. Named object already exists.");
+
+		// Create new object
+		CUIColourSelector* pNewObject = new CUIColourSelector(this, strName);
+		ThrowIfFalse(pNewObject, "CUIContainer::colourSelectorAdd() failed to allocate memory for new object.");
+
+		_mmapColourSelectors[strName] = pNewObject;
+
+		// Set settings for new object
+		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
+		pNewObject->setPosition(CVector2f(fPosX, fPosY));
+
+		// Update the scrollbars of the container as the new widget may not fit within the widget area
+		computeScrollbars();
+		return pNewObject;
+	}
+
+	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	{
+		return colourSelectorAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+	}
+
+	CUIColourSelector* CUIContainer::colourSelectorGet(const std::string& strName)
+	{
+		auto it = _mmapColourSelectors.find(strName);
+		ThrowIfTrue(_mmapColourSelectors.end() == it, "CUIContainer::colourSelectorGet(\"" + strName + "\") failed. Named object doesn't exist.");
+		return it->second;
+	}
+
+	void CUIContainer::colourSelectorRemove(const std::string& strName)
+	{
+		auto it = _mmapColourSelectors.find(strName);
+		if (_mmapColourSelectors.end() == it)
+			return;
+		delete it->second;
+		_mmapColourSelectors.erase(it);
+		computeScrollbars();
+	}
+
+	void CUIContainer::colourSelectorRemoveAll(void)
+	{
+		auto it = _mmapColourSelectors.begin();
+		while (it != _mmapColourSelectors.end())
+		{
+			delete it->second;
+			it++;
+		}
+		_mmapColourSelectors.clear();
+		computeScrollbars();
+	}
+
+	/************************************************************************************************************************************************************/
 	/* CUIImage */
 	/************************************************************************************************************************************************************/
 
@@ -779,6 +837,7 @@ namespace X
 		buttonRemoveAll();
 		buttonImageRemoveAll();
 		checkboxRemoveAll();
+		colourSelectorRemoveAll();
 		imageRemoveAll();
 		lineGraphRemoveAll();
 		progressbarRemoveAll();
@@ -818,6 +877,8 @@ namespace X
 				it++;
 			}
 		}
+
+		// For each CUIColourSelector (No need)
 
 		// For each CUIImage widget (No need)
 
@@ -886,6 +947,22 @@ namespace X
 		{
 			auto it = _mmapCheckboxes.begin();
 			while (it != _mmapCheckboxes.end())
+			{
+				if (it->second->_mbVisible)
+				{
+					CVector2f vBRPos = it->second->getPosition() + it->second->getDimensions();
+					if (_mvMaxWidgetCornerPos.x < vBRPos.x)
+						_mvMaxWidgetCornerPos.x = vBRPos.x;
+					if (_mvMaxWidgetCornerPos.y < vBRPos.y)
+						_mvMaxWidgetCornerPos.y = vBRPos.y;
+				}
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapColourSelectors.begin();
+			while (it != _mmapColourSelectors.end())
 			{
 				if (it->second->_mbVisible)
 				{
@@ -1028,6 +1105,15 @@ namespace X
 			}
 		}
 
+		{
+			auto it = _mmapColourSelectors.begin();
+			while (it != _mmapColourSelectors.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
+		}
+		
 		// For each CUIImage widget (No need)
 
 		{
@@ -1073,15 +1159,11 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-		x->pProfiler->begin("CUIContainer::render()_renderWidgetBackgrounds()");
 		_renderWidgetBackgrounds();
-		x->pProfiler->end("CUIContainer::render()_renderWidgetBackgrounds()");
 
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG");
 
 		x->pRenderer->scissorTestEnable();
 
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG_buttons");
 		{
 			auto it = _mmapButtons.begin();
 			while (it != _mmapButtons.end())
@@ -1090,7 +1172,6 @@ namespace X
 				it++;
 			}
 		}
-		x->pProfiler->end("CUIContainer::render()_renderNonBG_buttons");
 
 		{
 			auto it = _mmapButtonImages.begin();
@@ -1104,6 +1185,15 @@ namespace X
 		// For each CUICheckbox widget (No need)
 
 		{
+			auto it = _mmapColourSelectors.begin();
+			while (it != _mmapColourSelectors.end())
+			{
+				it->second->renderNonBG();
+				it++;
+			}
+		}
+
+		{
 			auto it = _mmapImages.begin();
 			while (it != _mmapImages.end())
 			{
@@ -1112,7 +1202,6 @@ namespace X
 			}
 		}
 
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG_linegraphs");
 		{
 			auto it = _mmapLineGraphs.begin();
 			while (it != _mmapLineGraphs.end())
@@ -1121,13 +1210,11 @@ namespace X
 				it++;
 			}
 		}
-		x->pProfiler->end("CUIContainer::render()_renderNonBG_linegraphs");
 
 		// For each CUIProgressbar widget (No need)
 
 		// For each CUIScrollbar widget (No need)
 
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG_texts");
 		{
 			auto it = _mmapTexts.begin();
 			while (it != _mmapTexts.end())
@@ -1136,10 +1223,8 @@ namespace X
 				it++;
 			}
 		}
-		x->pProfiler->end("CUIContainer::render()_renderNonBG_texts");
 
 		x->pRenderer->scissorTestDisable();
-		x->pProfiler->begin("CUIContainer::render()_renderNonBG_textEdits");
 		{
 			auto it = _mmapTextEdits.begin();
 			while (it != _mmapTextEdits.end())
@@ -1149,9 +1234,6 @@ namespace X
 			}
 		}
 
-		x->pProfiler->end("CUIContainer::render()_renderNonBG_textEdits");
-
-		x->pProfiler->end("CUIContainer::render()_renderNonBG");
 	}
 
 	void CUIContainer::_renderWidgetBackgrounds(void)
@@ -1209,6 +1291,8 @@ namespace X
 				it++;
 			}
 		}
+
+		// For each CUIColourSelector widget (No need)
 
 		// For each CUIImage widget (No need)
 

@@ -227,6 +227,9 @@ namespace X
 
 		// Creates this image with the specified values and draws a gradient between the two given colours.
 		void drawGradient(unsigned int iWidth, unsigned int iHeight, unsigned int iNumChannels, const CColour& colour0, const CColour& colour1);
+
+		// Creates this image with the specified values and draws a circle with the given colour values
+		void drawCircle(unsigned int iWidthAndHeightOfImage, const CColour& colourInner, const CColour& colourOuter);
 	private:
 		unsigned char* _mpData;
 		unsigned int _muiDataSize;

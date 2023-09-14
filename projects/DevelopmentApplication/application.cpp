@@ -67,7 +67,7 @@ namespace X
 			pWindow->setDimensions(850, 480);
 			pWindow->setPosition(i * 50, 500 + (i * 50));
 			pWindow->textAdd("text_results", 0, 0, 800, 120, "Before optimization in release no debug with vsync off: We get an FPSaverage of 67 fps. In the profiler window...\nx->pUI->render() takes up around 70% of main and a time of around 10 and 11 millseconds.\nx->pUI->update() takes up around 20% of main and a time of around 2.8 and 3.1 millseconds.");
-			for (int j = 5; j < 20; j++)
+			for (int j = 15; j < 20; j++)
 			{
 				str = "button_" + std::to_string(j);
 				CUIButton* pBut = pWindow->buttonAdd(str, 0, j * 30, 100, 24);
@@ -94,6 +94,8 @@ namespace X
 				str = "textEdit_" + std::to_string(j);
 				pWindow->textEditAdd(str, 710, j * 50, 100, 40, str);
 			}
+
+			pWindow->colourSelectorAdd("colourSelector_", 0, 140, 256, 256);
 		}
 		SCWindow::getPointer()->setVsync(false);
 
@@ -101,12 +103,10 @@ namespace X
 		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
 		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
-		// CImage drawColourWheel()
 		CImage image;
-		image.drawColourWheel(1024);
-		image.saveAsPNG("CImage_drawColourWheel.png");
-		image.drawGradient(64, 256, 4, CColour(1.0f, 1.0f, 1.0f, 1.0f), CColour(0.0f, 0.0f, 0.0f, 1.0f));
-		image.saveAsPNG("CImage_drawGradient.png");
+		image.drawCircle(512, CColour(1, 0, 0, 1), CColour(0, 0, 1, 0.15f));
+		image.saveAsPNG("CImage_drawCircle.png");
+
 	}
 
 	void CApplication::onStart(void)

@@ -128,6 +128,7 @@
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIButtonImage.h" />
     <ClInclude Include="UICheckbox.h" />
+    <ClInclude Include="UIColourSelector.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIDefaultContainers.h" />
     <ClInclude Include="UIImage.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIButtonImage.cpp" />
     <ClCompile Include="UICheckbox.cpp" />
+    <ClCompile Include="UIColourSelector.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIDefaultContainers.cpp" />
     <ClCompile Include="UIImage.cpp" />

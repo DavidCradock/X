@@ -3,6 +3,7 @@
 #include "UIButton.h"
 #include "UIButtonImage.h"
 #include "UICheckbox.h"
+#include "UIColourSelector.h"
 #include "UIImage.h"
 #include "UILineGraph.h"
 #include "UIProgressbar.h"
@@ -188,6 +189,29 @@ namespace X
 		void checkboxRemoveAll(void);
 
 		/************************************************************************************************************************************************************/
+		/* Colour Selectors */
+		/************************************************************************************************************************************************************/
+
+		// Add colour selector to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIColourSelector* colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+
+		// Add colour selector to this container and return a pointer to it
+		// If the name already exists, an exception occurs
+		CUIColourSelector* colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
+
+		// Returns a pointer to the named object
+		// If the object doesn't exist, an exception occurs
+		CUIColourSelector* colourSelectorGet(const std::string& strName);
+
+		// Removes the named object from the container
+		// If the named object doesn't exist, this silently fails
+		void colourSelectorRemove(const std::string& strName);
+
+		// Removes all images from this container
+		void colourSelectorRemoveAll(void);
+
+		/************************************************************************************************************************************************************/
 		/* Images */
 		/************************************************************************************************************************************************************/
 
@@ -348,15 +372,16 @@ namespace X
 		// Theme name used by this container ("default" upon construction)
 		std::string _mstrThemename;
 
-		std::map<std::string, CUIButton*> _mmapButtons;				// Map holding each CUIButton widget
-		std::map<std::string, CUIButtonImage*> _mmapButtonImages;	// Map holding each CUIButtonImage widget
-		std::map<std::string, CUICheckbox*> _mmapCheckboxes;		// Map holding each CUICheckbox widget
-		std::map<std::string, CUIImage*> _mmapImages;				// Map holding each CUIImage widget
-		std::map<std::string, CUILineGraph*> _mmapLineGraphs;		// Map holding each CUILineGraph widget
-		std::map<std::string, CUIProgressbar*> _mmapProgressbars;	// Map holding each CUIProgressbar widget
-		std::map<std::string, CUIScrollbar*> _mmapScrollbars;		// Map holding each CUIScrollbar widget
-		std::map<std::string, CUIText*> _mmapTexts;					// Map holding each CUIText widget
-		std::map<std::string, CUITextEdit*> _mmapTextEdits;			// Map holding each CUITextEdit widget
+		std::map<std::string, CUIButton*> _mmapButtons;
+		std::map<std::string, CUIButtonImage*> _mmapButtonImages;
+		std::map<std::string, CUICheckbox*> _mmapCheckboxes;
+		std::map<std::string, CUIColourSelector*> _mmapColourSelectors;
+		std::map<std::string, CUIImage*> _mmapImages;
+		std::map<std::string, CUILineGraph*> _mmapLineGraphs;
+		std::map<std::string, CUIProgressbar*> _mmapProgressbars;
+		std::map<std::string, CUIScrollbar*> _mmapScrollbars;
+		std::map<std::string, CUIText*> _mmapTexts;
+		std::map<std::string, CUITextEdit*> _mmapTextEdits;
 
 		// Name of this container, set from SCUIManager during call to containerAdd() or windowAdd()
 		std::string _mstrName;

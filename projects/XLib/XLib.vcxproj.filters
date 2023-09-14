@@ -497,6 +497,9 @@
     <ClInclude Include="rendererVulkan.h">
       <Filter>Renderer\Vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="UIColourSelector.h">
+      <Filter>UI\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -868,6 +871,9 @@
     </ClCompile>
     <ClCompile Include="rendererVulkan.cpp">
       <Filter>Renderer\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="UIColourSelector.cpp">
+      <Filter>UI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
