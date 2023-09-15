@@ -107,6 +107,9 @@ namespace X
 		// pSomeUIScrollbar->setFunctionOnTabMoved(MyFunction);
 		// Pass 0 or NULL here to remove the function
 		void setFunctionOnTabMoved(void (*function)(void));
+
+		// Returns true if the tab is being moved
+		bool getTabBeingMoved(void) const;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

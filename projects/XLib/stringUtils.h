@@ -89,5 +89,8 @@ namespace X
 		// So for example, passing "image" as the basename, "png" (or ".png") as the extension and
 		// "50" for the int will return the string "image0050.png"
 		std::string blenderAnimFilename(const std::string& strBasename = "image", const std::string& strExtension = ".png", int iFrameNumber = 0);
+
+		// Converts the given string to a float
+		float stringToFloat(const std::string& string);
 	}
 }

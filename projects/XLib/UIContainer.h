@@ -194,11 +194,11 @@ namespace X
 
 		// Add colour selector to this container and return a pointer to it
 		// If the name already exists, an exception occurs
-		CUIColourSelector* colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight);
+		CUIColourSelector* colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, int iColourWheelRadius = 128);
 
 		// Add colour selector to this container and return a pointer to it
 		// If the name already exists, an exception occurs
-		CUIColourSelector* colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight);
+		CUIColourSelector* colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iColourWheelRadius = 128);
 
 		// Returns a pointer to the named object
 		// If the object doesn't exist, an exception occurs

@@ -424,29 +424,25 @@ namespace X
 	/* CUIColourSelector */
 	/************************************************************************************************************************************************************/
 
-	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight)
+	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, float fPosX, float fPosY, int iColourWheelRadius)
 	{
 		// Throw exception if named object already exists
 		ThrowIfTrue(_mmapColourSelectors.find(strName) != _mmapColourSelectors.end(), "CUIContainer::colourSelectorAdd(\"" + strName + "\") failed. Named object already exists.");
 
 		// Create new object
-		CUIColourSelector* pNewObject = new CUIColourSelector(this, strName);
+		CUIColourSelector* pNewObject = new CUIColourSelector(this, strName, fPosX, fPosY, iColourWheelRadius);
 		ThrowIfFalse(pNewObject, "CUIContainer::colourSelectorAdd() failed to allocate memory for new object.");
 
 		_mmapColourSelectors[strName] = pNewObject;
-
-		// Set settings for new object
-		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
-		pNewObject->setPosition(CVector2f(fPosX, fPosY));
 
 		// Update the scrollbars of the container as the new widget may not fit within the widget area
 		computeScrollbars();
 		return pNewObject;
 	}
 
-	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight)
+	CUIColourSelector* CUIContainer::colourSelectorAdd(const std::string& strName, int iPosX, int iPosY, int iColourWheelRadius)
 	{
-		return colourSelectorAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight));
+		return colourSelectorAdd(strName, float(iPosX), float(iPosY), iColourWheelRadius);
 	}
 
 	CUIColourSelector* CUIContainer::colourSelectorGet(const std::string& strName)

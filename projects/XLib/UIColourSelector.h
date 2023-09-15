@@ -3,6 +3,8 @@
 #include "resourceTexture2DAtlas.h"
 #include "resourceVertexBufferCPT2.h"
 #include "UITheme.h"
+#include "UIScrollBar.h"
+#include "UITextEdit.h"
 
 namespace X
 {
@@ -16,24 +18,15 @@ namespace X
 	{
 		friend class CUIContainer;
 	public:
-		CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName);
+		CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY, int iColourWheelRadius);
 		~CUIColourSelector();
 
 		// Sets the dimensions of the widget.
-		void setDimensions(float fX, float fY);
-
-		// Sets the dimensions of the widget.
-		void setDimensions(int iX, int iY);
-
-		// Sets the dimensions of the widget.
-		void setDimensions(const CVector2f& vDimensions);
+		// This is the radius of the colour wheel only. Additional widgets are added to the parent container.
+		void setDimensions(float fColourWheelRadius);
 
 		// Returns the dimensions of the widget.
 		CVector2f getDimensions(void) const;
-
-		// Returns the minimum dimensions of this widget based upon the container's currently set theme.
-		// As this widget has no background, this returns a vector of (64, 64)
-		CVector2f getDimensionsMinimum(void) const;
 
 		// Sets the position of this widget in relation to it's container.
 		// Both axis should be at least zero.
@@ -64,13 +57,16 @@ namespace X
 
 		/******************************************************************* Widget specific *******************************************************************/
 		
-		// Sets the current brightness value of the colour wheel
-		// Clamped between 0 and 1
-		void setBrightness(float fBrightness);
-		
-		// Sets the width of the brightness selector
-		// Default is 20
-		void setBrightnessWidth(int iWidth);
+		// Sets the radius of the circles showing position in selectors
+		// Default is 10
+		void setSelectorCircleRadius(int iCircleRadius);
+
+		// Sets the colour represented by this widget.
+		// This sets the selection circles to their correct positions
+		void setColour(const CColour& colour);
+
+		// Sets the dimensions of the text edit widgets
+		void setTextEditDims(const CVector2f& vDims = CVector2f(80, 40));
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -79,13 +75,36 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		// The name of the resource stored in SCResourceManager. Set in constructor.
+		// The name of the resources stored in SCResourceManager. Set in constructor.
 		std::string _mstrResourceNameWheel;
-		std::string _mstrResourceNameBrightness;
-		float _mfBrightness;	// Currently set brightness value (Default is 1.0f)
-		int _miBrightnessWidth;	// Width of the brightness selector
+		std::string _mstrResourceNameCircle;
+
+		int _miCircleRadius;			// Radius of the selector circle
+		
+		CColour _mColour;				// Colour represented by this widget
+
+		enum EValue
+		{
+			brightness,
+			colourR,
+			colourG,
+			colourB,
+			colourA,
+			hue,
+			saturation
+		};
+		std::string _mstrScrollbarNames[7];
+		std::string _mstrTextEditNames[7];
+		std::string _mstrTextNames[7];
+		CUIScrollbar* _mpScrollbar[7];
+		CUITextEdit* _mpTextEdit[7];
+		CUIText* _mpText[7];
 
 		// Redraw and update the image textures
 		void _updateTextures(void);
+
+		// Create/update scrollbars and textedit widgets
+		void _updateScrollbarsAndTextEdits(void);
+
 	};
 }

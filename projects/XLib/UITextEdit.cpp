@@ -283,6 +283,7 @@ namespace X
 		}
 
 		// Now add/remove characters to the text based on keyboard input
+		_mbTextHasChanged = false;
 		if (state::active == _mState)
 		{
 			if (x->pInput->key.once(KC_RETURN) || x->pInput->key.once(KC_NUMPADENTER))
@@ -299,6 +300,12 @@ namespace X
 				// Call C function pointer if set
 				if (_mfuncOnEnterPressed != NULL)
 					_mfuncOnEnterPressed(_mstrText);
+
+				if (_mstrTextPrev != _mstrText)
+				{
+					_mstrTextPrev = _mstrText;
+					_mbTextHasChanged = true;
+				}
 			}
 			else if (x->pInput->key.anyPressed())
 			{
@@ -392,5 +399,10 @@ namespace X
 	void CUITextEdit::setOnEnter(void (*func)(const std::string& text))
 	{
 		_mfuncOnEnterPressed = func;
+	}
+
+	bool CUITextEdit::getHasTextChanged(void)
+	{
+		return _mbTextHasChanged;
 	}
 }

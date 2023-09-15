@@ -94,6 +94,8 @@ namespace X
 		// p->setOnEnter(MyFunc);
 		void setOnEnter(void (*func)(const std::string& text));
 
+		// Returns true if the text has changed
+		bool getHasTextChanged(void);
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -121,5 +123,8 @@ namespace X
 
 		// Function pointer which can be set with setOnEnter() which gets called when the text edit box was active and the enter key has been pressed.
 		void (*_mfuncOnEnterPressed)(const std::string& strText);
+
+		std::string _mstrTextPrev;			// Previous text value, for computing _mbTextHasChanged
+		bool _mbTextHasChanged;
 	};
 }

@@ -358,4 +358,9 @@ namespace X
 	{
 		_mfuncOnTabMoved = function;
 	}
+
+	bool CUIScrollbar::getTabBeingMoved(void) const
+	{
+		return _mbTabBeingMoved;
+	}
 }

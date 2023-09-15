@@ -310,5 +310,12 @@ namespace X
 			output += strExt;
 			return output;
 		}
+
+		float stringToFloat(const std::string& string)
+		{
+			float strfloat = std::stof(string);
+			return strfloat;
+		}
 	}
+
 }

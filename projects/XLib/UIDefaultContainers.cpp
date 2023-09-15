@@ -89,9 +89,9 @@ namespace X
 	void CUIDefaultContainers::_initProfiling(void)
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.profiling, true);
-//		pWindow->setVisible(false);
+		pWindow->setVisible(false);
 		pWindow->setDimensions(900, 400);
-		pWindow->setPositionCentre();
+		pWindow->setPosition(0.0f, 20.0f);
 		pWindow->setToFrontAndInFocus();
 
 		_mProfiling.fUpdateDelay = 0.0f;
@@ -226,10 +226,10 @@ namespace X
 	void CUIDefaultContainers::_initStatistics(void)
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.statistics, true);
-//		pWindow->setVisible(false);
+		pWindow->setVisible(false);
 
 		pWindow->setDimensions(450.0f, 330.0f);
-		pWindow->setPosition(99999, 400);
+		pWindow->setPosition(99999, 0);
 
 		_mStatistics.fAddValueToLinegraphDataset = 0.0f;
 

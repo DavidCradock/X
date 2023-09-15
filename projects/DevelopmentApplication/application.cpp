@@ -56,7 +56,7 @@ namespace X
 //		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);
 
 		// Show old GUI statistics
-		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
+//		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
 
 		// Create lots of UI elements for stress testing
 		for (int i = 0; i < 1; i++)
@@ -64,10 +64,9 @@ namespace X
 			std::string str;
 			str = "windowSTRESS_TEST_" + std::to_string(i);
 			CUIWindow* pWindow = x->pUI->windowAdd(str, false);
-			pWindow->setDimensions(850, 480);
-			pWindow->setPosition(i * 50, 500 + (i * 50));
-			pWindow->textAdd("text_results", 0, 0, 800, 120, "Before optimization in release no debug with vsync off: We get an FPSaverage of 67 fps. In the profiler window...\nx->pUI->render() takes up around 70% of main and a time of around 10 and 11 millseconds.\nx->pUI->update() takes up around 20% of main and a time of around 2.8 and 3.1 millseconds.");
-			for (int j = 15; j < 20; j++)
+			pWindow->setDimensions(850, 580);
+			pWindow->setPosition(1000+ (i * 50), 500 + (i * 50));
+			for (int j = 20; j < 22; j++)
 			{
 				str = "button_" + std::to_string(j);
 				CUIButton* pBut = pWindow->buttonAdd(str, 0, j * 30, 100, 24);
@@ -95,18 +94,16 @@ namespace X
 				pWindow->textEditAdd(str, 710, j * 50, 100, 40, str);
 			}
 
-			pWindow->colourSelectorAdd("colourSelector_", 0, 140, 256, 256);
+			pWindow->colourSelectorAdd("colourSelector_", 0, 0, 128);
 		}
-		SCWindow::getPointer()->setVsync(false);
+//		SCWindow::getPointer()->setVsync(false);
 
 		// Real simple as it gets framerate text
 		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
 		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
-		CImage image;
-		image.drawCircle(512, CColour(1, 0, 0, 1), CColour(0, 0, 1, 0.15f));
-		image.saveAsPNG("CImage_drawCircle.png");
-
+		// Show statistics
+		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
 	}
 
 	void CApplication::onStart(void)
@@ -170,8 +167,8 @@ namespace X
 		// Toggle statistics window
 		if (x->pInput->key.once(KC_F3))
 		{
-			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
-			pStatsCont->setVisible(!pStatsCont->getVisible());
+//			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
+//			pStatsCont->setVisible(!pStatsCont->getVisible());
 
 			CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics);
 			pWindow->setVisible(!pWindow->getVisible());
