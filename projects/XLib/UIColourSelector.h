@@ -2,28 +2,24 @@
 #include "PCH.h"
 #include "resourceTexture2DAtlas.h"
 #include "resourceVertexBufferCPT2.h"
+#include "UIImage.h"
 #include "UITheme.h"
 #include "UIScrollBar.h"
 #include "UITextEdit.h"
+#include "colour.h"
 
 namespace X
 {
 	class CUIContainer;
 
 	// A colour selector widget for being able to select a colour
-	// There are no borders or anything, just a simple texture resource to render.
-	// The named texture resource stored in SCResourceManager will be resized to this widget's set dimensions.
-	// That doesn't stop you from setting this widget's dimension though :)
+	// This adds several uniquely named widgets which are controlled by this one, scrollbars, text and text edit widgets.
 	class CUIColourSelector
 	{
 		friend class CUIContainer;
 	public:
-		CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY, int iColourWheelRadius);
+		CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY);
 		~CUIColourSelector();
-
-		// Sets the dimensions of the widget.
-		// This is the radius of the colour wheel only. Additional widgets are added to the parent container.
-		void setDimensions(float fColourWheelRadius);
 
 		// Returns the dimensions of the widget.
 		CVector2f getDimensions(void) const;
@@ -57,16 +53,13 @@ namespace X
 
 		/******************************************************************* Widget specific *******************************************************************/
 		
-		// Sets the radius of the circles showing position in selectors
-		// Default is 10
-		void setSelectorCircleRadius(int iCircleRadius);
-
 		// Sets the colour represented by this widget.
-		// This sets the selection circles to their correct positions
+		// Sets RGBA sliders and text edit widgets to the given colour and then
+		// sets the HSB sliders and text edit widgets from the values stored in RGB sliders.
 		void setColour(const CColour& colour);
 
-		// Sets the dimensions of the text edit widgets
-		void setTextEditDims(const CVector2f& vDims = CVector2f(80, 40));
+		// Returns the colour of the widget
+		CColour getColour(void) const;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -75,36 +68,33 @@ namespace X
 		CUIContainer* _mpContainer;			// The container this widget belongs to. Set in constructor
 
 		// Widget specific
-		// The name of the resources stored in SCResourceManager. Set in constructor.
-		std::string _mstrResourceNameWheel;
-		std::string _mstrResourceNameCircle;
-
-		int _miCircleRadius;			// Radius of the selector circle
-		
 		CColour _mColour;				// Colour represented by this widget
 
 		enum EValue
 		{
-			brightness,
 			colourR,
 			colourG,
 			colourB,
 			colourA,
 			hue,
-			saturation
+			saturation,
+			brightness
 		};
-		std::string _mstrScrollbarNames[7];
-		std::string _mstrTextEditNames[7];
-		std::string _mstrTextNames[7];
-		CUIScrollbar* _mpScrollbar[7];
-		CUITextEdit* _mpTextEdit[7];
-		CUIText* _mpText[7];
+		std::string _mstrScrollbarNames[7];	// Name of each scrollbar widget
+		std::string _mstrTextEditNames[7];	// Name of each textedit widget
+		std::string _mstrTextNames[7];		// Name of each text widget
+		std::string _mstrColourImageName;	// Name of the CUIImage widget used to show colour
+		CUIScrollbar* _mpScrollbar[7];		// Pointer to each scrollbar widget
+		CUITextEdit* _mpTextEdit[7];		// Pointer to each text edit widget
+		CUIText* _mpText[7];				// Pointer to each text widget
+		CUIImage* _mpColourImage;			// Pointer to CUIImage widget
 
-		// Redraw and update the image textures
-		void _updateTextures(void);
+		void _updateWidgetDims(void);
 
-		// Create/update scrollbars and textedit widgets
-		void _updateScrollbarsAndTextEdits(void);
+		// Sets RGB sliders and their text from values in HSB sliders
+		void _helperSetRGBFromHSB(void);
 
+		// Sets HSB sliders and their text from values in RGB sliders
+		void _helperSetHSBFromRGB(void);
 	};
 }

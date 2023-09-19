@@ -6,19 +6,15 @@
 
 namespace X
 {
-	CUIColourSelector::CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY, int iColourWheelRadius)
+	CUIColourSelector::CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY)
 	{
 		_mpContainer = pContainer;
 		
 		_mbVisible = true;
-		_miCircleRadius = 10;
 
-		_mvDimensions.x = (float)iColourWheelRadius * 2.0f;
-		_mvDimensions.y = (float)iColourWheelRadius * 2.0f;
+//		_mvDimensions.x = 200;
+//		_mvDimensions.y = 100;
 		_mColour.set(1, 1, 1, 1);
-		_mstrResourceNameWheel = "CUIColourSelectorImageWheel_" + pContainer->getName() + "_" + strWidgetName;
-		_mstrResourceNameCircle = "CUIColourSelectorImageCircle_" + pContainer->getName() + "_" + strWidgetName;
-		
 
 		_mstrScrollbarNames[EValue::brightness] = pContainer->getName() + "_" + strWidgetName + "scrollbar_brightness";
 		_mstrScrollbarNames[EValue::colourA] = pContainer->getName() + "_" + strWidgetName + "scrollbar_colA";
@@ -47,37 +43,32 @@ namespace X
 		CUIText* pText;
 		for (int i = 0; i < 7; i++)
 		{
-			_mpContainer->scrollbarAdd(_mstrScrollbarNames[i], 0, 0, iColourWheelRadius * 2, 40, 0.01f);
+			_mpContainer->scrollbarAdd(_mstrScrollbarNames[i], 0, 0, (int)_mvDimensions.x, 40, 0.01f);
 			_mpContainer->textEditAdd(_mstrTextEditNames[i], 0, 0, 40, 40, "0");
 			pText = _mpContainer->textAdd(_mstrTextNames[i], 0, 0, 150, 40, "X");
 			pText->setTextColour(false, CColour(1, 1, 1, 0.90f));
 			pText->setCentered(true);
 		}
-		_updateTextures();
-		setTextEditDims();
+
+		_mstrColourImageName = pContainer->getName() + "_" + strWidgetName + "colour_image";
+		_mpColourImage = _mpContainer->imageAdd(_mstrColourImageName, 0, 0, 100, 100);
+		_mpColourImage->setTextureFromFile(x->pResource->defaultRes.texture2DFromFile_default_white);
+
+		
+		_updateWidgetDims();
+		setColour(CColour());
+		_mpContainer->computeScrollbars();
 	}
 
 	CUIColourSelector::~CUIColourSelector()
 	{
-		x->pResource->removeTexture2DFromImage(_mstrResourceNameWheel);
-		x->pResource->removeTexture2DFromImage(_mstrResourceNameCircle);
-
 		for (int i = 0; i < 7; i++)
 		{
 			_mpContainer->scrollbarRemove(_mstrScrollbarNames[i]);
 			_mpContainer->textEditRemove(_mstrTextEditNames[i]);
 		}
-	}
 
-	void CUIColourSelector::setDimensions(float fColourWheelRadius)
-	{
-		_mvDimensions.x = fColourWheelRadius;
-		_mvDimensions.y = fColourWheelRadius;
-
-		_updateTextures();
-		setColour(_mColour);	// Also update selector positions
-		_updateScrollbarsAndTextEdits();
-		_mpContainer->computeScrollbars();
+		_mpContainer->imageRemove(_mstrColourImageName);
 	}
 
 	CVector2f CUIColourSelector::getDimensions(void) const
@@ -123,214 +114,343 @@ namespace X
 		if (!_mbVisible)
 			return;
 
-//		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
-
-		if (_mstrResourceNameWheel.size())
-		{
-			CVector2f vPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mvPosition + _mpContainer->getWidgetOffset();
-			x->pRenderer->blendEnable();
-
-			// Render the wheel
-			CResourceTexture2DFromImage* pImage = x->pResource->getTexture2DFromImage(_mstrResourceNameWheel);
-			CVector2f vWheelDims = pImage->getDimensions();
-			pImage->renderTo2DQuad(
-				(int)vPos.x,
-				(int)vPos.y,
-				(int)vWheelDims.x,
-				(int)vWheelDims.y, CColour());
-		
-			x->pRenderer->blendDisable();
-		}
 	}
+
+	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIColourSelector::update(float fTimeDeltaSec)
 	{
 		CUIScrollbar* pSB;
 		CUITextEdit* pTE;
 		std::string strTxt;
+		CColour colour;
 
-		for (int i = 0; i < 7; i++)
+		// Scrollbar brightness being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness]);
+		if (pSB->getTabBeingMoved())
 		{
-			// Scrollbar
-			pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[i]);
-			if (pSB->getTabBeingMoved())
-			{
-				strTxt.clear();
-				StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
-				pTE = _mpContainer->textEditGet(_mstrTextEditNames[i]);
-				pTE->setText(strTxt);
-			}
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::brightness])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
 
-			// Text edit
-			pTE = _mpContainer->textEditGet(_mstrTextEditNames[i]);
-			if (pTE->getHasTextChanged())
-			{
-				float fValue = StringUtils::stringToFloat(pTE->getText());
-				pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[i]);
-				pSB->setTabPos(fValue);
-			}
+		// Scrollbar hue being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::hue]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::hue])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
+
+		// Scrollbar saturation being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::saturation]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::saturation])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
+
+		// Scrollbar RED being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Scrollbar GREEN being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourG])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Scrollbar BLUE being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourB])->setText(strTxt);
+			// Set RGB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Scrollbar ALPHA being moved
+		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourA]);
+		if (pSB->getTabBeingMoved())
+		{
+			// Set textedit text
+			strTxt.clear();
+			StringUtils::appendFloat(strTxt, pSB->getTabPos(), 3);
+			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourA])->setText(strTxt);
+			_mColour.alpha = pSB->getTabPos();
+			_mpColourImage->setColour(_mColour);
+		}
+
+		// Text edit brightness has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::brightness]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness])->setTabPos(fValue);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
+
+		// Text edit hue has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::hue]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::hue])->setTabPos(fValue);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
+
+		// Text edit saturation has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::saturation]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::saturation])->setTabPos(fValue);
+			// Set RGB scrollbars and textedit
+			_helperSetRGBFromHSB();
+		}
+
+		// Text edit RED has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR])->setTabPos(fValue);
+			// Set HSB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Text edit GREEN has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::colourG]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG])->setTabPos(fValue);
+			// Set HSB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Text edit BLUE has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::colourB]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB])->setTabPos(fValue);
+			// Set HSB scrollbars and textedit
+			_helperSetHSBFromRGB();
+		}
+
+		// Text edit ALPHA has changed
+		pTE = _mpContainer->textEditGet(_mstrTextEditNames[EValue::colourA]);
+		if (pTE->getHasTextChanged())
+		{
+			float fValue = StringUtils::stringToFloat(pTE->getText());
+			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourA])->setTabPos(fValue);
+			_mColour.alpha = fValue;
+			_mpColourImage->setColour(_mColour);
 		}
 	}
 
-	/******************************************************************* Widget specific *******************************************************************/
-
-	void CUIColourSelector::setSelectorCircleRadius(int iCircleRadius)
+	void CUIColourSelector::_helperSetRGBFromHSB(void)
 	{
-		_miCircleRadius = iCircleRadius;
-		_updateTextures();
-	}
-
-	void CUIColourSelector::_updateTextures(void)
-	{
-		// Colour wheel
-		CImage image;
-		unsigned int uiWheelSize = unsigned int(_mvDimensions.x);
+		// Get values from HSB sliders
 		float fBrightness = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness])->getTabPos();
-		image.drawColourWheel(uiWheelSize, unsigned char(fBrightness * 255.0f));
-		CResourceTexture2DFromImage* pImage;
-		if (!x->pResource->getTexture2DFromImageExists(_mstrResourceNameWheel))
-		{
-			pImage = x->pResource->addTexture2DFromImage(_mstrResourceNameWheel, image);
-		}
-		else
-		{
-			pImage = x->pResource->getTexture2DFromImage(_mstrResourceNameWheel);
-			pImage->update(image);
-		}
-		
-		// Selector circle
-		image.drawCircle(_miCircleRadius * 2, CColour(1, 1, 1, 1), CColour(0, 0, 0, 0));
-		if (!x->pResource->getTexture2DFromImageExists(_mstrResourceNameCircle))
-		{
-			pImage = x->pResource->addTexture2DFromImage(_mstrResourceNameCircle, image);
-		}
-		else
-		{
-			pImage = x->pResource->getTexture2DFromImage(_mstrResourceNameCircle);
-			pImage->update(image);
-		}
+		float fSaturation = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::saturation])->getTabPos();
+		float fHue = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::hue])->getTabPos();
+
+		CColour colour;
+		colour.setFromHSB(fHue, fSaturation, fBrightness);
+		colour.alpha = _mColour.alpha;
+
+		// Set values of RGB sliders
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB])->setTabPos(colour.blue);
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG])->setTabPos(colour.green);
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR])->setTabPos(colour.red);
+
+		// Set text of RGB text edits
+		std::string strTxt;
+		StringUtils::appendFloat(strTxt, colour.blue, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourB])->setText(strTxt);
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.green, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourG])->setText(strTxt);
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.red, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR])->setText(strTxt);
+
+		_mpColourImage->setColour(colour);
 	}
 
-
-	void CUIColourSelector::_updateScrollbarsAndTextEdits(void)
+	void CUIColourSelector::_helperSetHSBFromRGB(void)
 	{
-		CVector2f vPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mvPosition + _mpContainer->getWidgetOffset();
-		CResourceTexture2DFromImage* pImage = x->pResource->getTexture2DFromImage(_mstrResourceNameWheel);
-		CVector2f vWheelDims = pImage->getDimensions();
+		// Get values from RGB sliders
+		CColour colour;
+		colour.red = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR])->getTabPos();
+		colour.green = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG])->getTabPos();
+		colour.blue = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB])->getTabPos();
+		colour.alpha = _mColour.alpha;
+
+		float fHue, fSaturation, fBrightness;
+		colour.getHSB(fHue, fSaturation, fBrightness);
+
+		// Set values of HSB sliders
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness])->setTabPos(fBrightness);
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::hue])->setTabPos(fHue);
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::saturation])->setTabPos(fSaturation);
+
+		// Set text of HSB text edits
+		std::string strTxt;
+		StringUtils::appendFloat(strTxt, fBrightness, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::brightness])->setText(strTxt);
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, fHue, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::hue])->setText(strTxt);
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, fSaturation, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::saturation])->setText(strTxt);
+
+		_mpColourImage->setColour(colour);
+	}
+
+	void CUIColourSelector::_updateWidgetDims(void)
+	{
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CVector2f vPos;
 
 		CUITextEdit* pTE;
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[0]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y);
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[1]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y));
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[2]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y * 2));
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[3]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y * 3));
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[4]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y * 4));
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[5]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y * 5));
-
-		pTE = _mpContainer->textEditGet(_mstrTextEditNames[6]);
-		pTE->setPosition(_mvDimensions.x - pTE->getDimensions().x, vWheelDims.y + (pTE->getDimensions().y * 6));
-
 		CUIScrollbar* pSB;
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[0]);
-		pSB->setPosition(0.0f, vWheelDims.y);
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[1]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[2]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y * 2));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[3]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y * 3));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[4]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y * 4));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[5]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y * 5));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[6]);
-		pSB->setPosition(0.0f, vWheelDims.y + (pTE->getDimensions().y * 6));
-		pSB->setDimensions(_mvDimensions.x - pTE->getDimensions().x, pTE->getDimensions().y);
-		pSB->setTabRatio(0.2f);
-
-		CUIText* pText;
-		float fPosX = _mvDimensions.x - pTE->getDimensions().x - (pSB->getDimensions().x * 0.5f);
-		float fPosY = vWheelDims.y + (pTE->getDimensions().y * 0.5f);
-		pText = _mpContainer->textGet(_mstrTextNames[0]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Brightness");
-		
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[1]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Red");
-
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[2]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Green");
-
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[3]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Blue");
-
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[4]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Alpha");
-
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[5]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Hue");
-
-		fPosY += pTE->getDimensions().y;
-		pText = _mpContainer->textGet(_mstrTextNames[6]);
-		pText->setPosition(fPosX, fPosY);
-		pText->setText("Saturation");
-
-	}
-
-	void CUIColourSelector::setTextEditDims(const CVector2f& vDims)
-	{
+		_mvDimensions.x = pThemeSettings->floats.colourSelectorTotalWidth;
+		CVector2f vTextEditDims(pThemeSettings->floats.colourSelectorTextEditWidth, pThemeSettings->floats.colourSelectorTextEditHeight);
+		CVector2f vScrollbarDims(pThemeSettings->floats.colourSelectorTotalWidth - pThemeSettings->floats.colourSelectorTextEditWidth, pThemeSettings->floats.colourSelectorTextEditHeight);
 		for (int i = 0; i < 7; i++)
 		{
-			_mpContainer->textEditGet(_mstrTextEditNames[i])->setDimensions(vDims);
+			pTE = _mpContainer->textEditGet(_mstrTextEditNames[i]);
+			pTE->setDimensions(vTextEditDims);
+			vPos.x = _mvDimensions.x - vTextEditDims.x;
+			pTE->setPosition(vPos);
+			
+			pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[i]);
+			vPos.x = 0.0f;
+			pSB->setPosition(vPos);
+			pSB->setDimensions(vScrollbarDims);
+			pSB->setTabRatio(0.2f);
+
+			vPos.y += pThemeSettings->floats.colourSelectorYspacing;
 		}
-		_updateScrollbarsAndTextEdits();
+
+		_mpColourImage->setDimensions(_mvDimensions.x, 32.0f);
+		_mpColourImage->setPosition(0.0f, vPos.y);
+
+		CUIText* pText;
+		vPos.x = _mvDimensions.x - pTE->getDimensions().x - (pSB->getDimensions().x * 0.5f);
+		vPos.y = pTE->getDimensions().y / 2;
+		pText = _mpContainer->textGet(_mstrTextNames[0]);
+		pText->setPosition(vPos);
+		pText->setText("Red");
+		
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[1]);
+		pText->setPosition(vPos);
+		pText->setText("Green");
+
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[2]);
+		pText->setPosition(vPos);
+		pText->setText("Blue");
+
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[3]);
+		pText->setPosition(vPos);
+		pText->setText("Alpha");
+
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[4]);
+		pText->setPosition(vPos);
+		pText->setText("Hue");
+
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[5]);
+		pText->setPosition(vPos);
+		pText->setText("Saturation");
+
+		vPos.y += pThemeSettings->floats.colourSelectorYspacing;
+		pText = _mpContainer->textGet(_mstrTextNames[6]);
+		pText->setPosition(vPos);
+		pText->setText("Brightness");
 	}
 
 	void CUIColourSelector::setColour(const CColour& colour)
 	{
 		_mColour = colour;
 
-		CVector2f vPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mvPosition + _mpContainer->getWidgetOffset();
-		CResourceTexture2DFromImage* pImage = x->pResource->getTexture2DFromImage(_mstrResourceNameWheel);
-		CVector2f vWheelDims = pImage->getDimensions();
+		// Set RGBA sliders and textedits from given colour
+		std::string strTxt;
 
+		// Scrollbar RED to colour
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR])->setTabPos(colour.red);
+		// Set textedit text
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.red, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR])->setText(strTxt);
+
+		// Scrollbar GREEN to colour
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG])->setTabPos(colour.green);
+		// Set textedit text
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.green, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourG])->setText(strTxt);
+
+		// Scrollbar BLUE to colour
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB])->setTabPos(colour.blue);
+		// Set textedit text
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.blue, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourB])->setText(strTxt);
+
+		// Scrollbar ALPHA to colour
+		_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourA])->setTabPos(colour.alpha);
+		// Set textedit text
+		strTxt.clear();
+		StringUtils::appendFloat(strTxt, colour.alpha, 3);
+		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourA])->setText(strTxt);
+
+		// Set HSB sliders and text edits from values in RGB sliders.
+		_helperSetHSBFromRGB();
+
+		_mpColourImage->setColour(colour);
+	}
+
+	CColour CUIColourSelector::getColour(void) const
+	{
+		return _mColour;
 	}
 }

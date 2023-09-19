@@ -221,6 +221,7 @@ namespace X
 			case KC_NUMPAD8:	keyOnce2Char.append("8"); break;
 			case KC_NUMPAD9:	keyOnce2Char.append("9"); break;
 			case KC_SLASH:		keyOnce2Char.append("/"); break;
+			case KC_DECIMAL:	keyOnce2Char.append("."); break;
 			case KC_PERIOD:		keyOnce2Char.append("."); break;
 			case KC_COMMA:		keyOnce2Char.append(","); break;
 			case KC_SEMICOLON:	keyOnce2Char.append(";"); break;

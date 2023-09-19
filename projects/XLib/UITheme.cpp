@@ -297,6 +297,10 @@ namespace X
 		_mSettings.floats.buttonFadeSpeed = 5.0f;
 		_mSettings.floats.buttonImageFadeSpeed = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeed = 1.0f;
+		_mSettings.floats.colourSelectorTextEditHeight = 40.0f;
+		_mSettings.floats.colourSelectorTextEditWidth = 80.0f;
+		_mSettings.floats.colourSelectorTotalWidth = 250.0f;
+		_mSettings.floats.colourSelectorYspacing = 45.0f;
 		_mSettings.floats.normalMouseCursorDistance = 10.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
 		_mSettings.floats.textEditFlashSpeed = 4.0f;

@@ -739,7 +739,7 @@ namespace X
 					colour.set(0.0f, 0.0f, 0.0f, 0.0f);
 				else
 				{
-					colour.setHueColour(fAngleDegrees, fSaturation, fBrightness);
+					colour.setFromHSB(fAngleDegrees, fSaturation, fBrightness);
 					colour.alpha = 1.0f;
 				}
 				_mpData[iPixelIndex] = unsigned char(colour.red * 255);
@@ -771,7 +771,7 @@ namespace X
 			colour.set(0.0f, 0.0f, 0.0f, 0.0f);
 		else
 		{
-			colour.setHueColour(fAngleDegrees, fSaturation, float(ucBrightness) / 255.0f);
+			colour.setFromHSB(fAngleDegrees, fSaturation, float(ucBrightness) / 255.0f);
 			colour.alpha = 1.0f;
 		}
 		return colour;

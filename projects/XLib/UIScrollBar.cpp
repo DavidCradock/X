@@ -151,14 +151,14 @@ namespace X
 			bAcceptingMouseInput = true;
 
 		// Compute orientation
-		_mbOrientationIsHorizontal = false;
+		bool bOrientationHorizontal = false;
 		if (_mvDimensions.x > _mvDimensions.y)
 		{
-			_mbOrientationIsHorizontal = true;
+			bOrientationHorizontal = true;
 		}
 
 		// Compute tab dims
-		if (_mbOrientationIsHorizontal)
+		if (bOrientationHorizontal)
 		{
 			_mvTabDims.x = _mfTabRatio * _mvDimensions.x;
 			_mvTabDims.y = _mvDimensions.y;
@@ -172,7 +172,7 @@ namespace X
 		// Compute tab position
 		CUITheme* pTheme = _mpContainer->themeGet();
 		const CUITheme::SSettings* pThemeSettings = pTheme->getSettings();
-		if (_mbOrientationIsHorizontal)
+		if (bOrientationHorizontal)
 		{
 			float fTabTotalMovementAmount = _mvDimensions.x - _mvTabDims.x;		// Total amount of movement possible
 			float fCentrePosOfScrollbar = _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + (_mvDimensions.x * 0.5f) - (_mvTabDims.x * 0.5f);
@@ -244,7 +244,7 @@ namespace X
 				// As tab position is in range of 0-1, we need to compute movement based upon mouse delta and scrollbar dims
 				CVector2f vMouseDelta = x->pInput->mouse.getMouseDeltaGUI();
 				float fTabPosOffset = 0;
-				if (_mbOrientationIsHorizontal)
+				if (bOrientationHorizontal)
 				{
 					float fTabTotalMovementAmount = _mvDimensions.x - _mvTabDims.x;
 					if (areFloatsEqual(fTabTotalMovementAmount, 0.0f))	// Prevent divide by zero
@@ -320,7 +320,7 @@ namespace X
 
 	float CUIScrollbar::getTabPos(void) const
 	{
-		if (_mbOrientationIsHorizontal)
+		if (_mvDimensions.x > _mvDimensions.y)
 			return _mfTabPosition;
 		else
 			return 1.0f - _mfTabPosition;	// So that when tab is at bottom, 0 is the result and 1 when at top
@@ -341,7 +341,7 @@ namespace X
 
 	bool CUIScrollbar::getOrientationHorizontal(void) const
 	{
-		return _mbOrientationIsHorizontal;
+		return _mvDimensions.x > _mvDimensions.y;
 	}
 
 	CVector2f CUIScrollbar::getTabDims(void) const

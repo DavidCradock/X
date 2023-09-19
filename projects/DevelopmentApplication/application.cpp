@@ -94,7 +94,7 @@ namespace X
 				pWindow->textEditAdd(str, 710, j * 50, 100, 40, str);
 			}
 
-			pWindow->colourSelectorAdd("colourSelector_", 0, 0, 128);
+			pWindow->colourSelectorAdd("colourSelector_", 0, 0);
 		}
 //		SCWindow::getPointer()->setVsync(false);
 

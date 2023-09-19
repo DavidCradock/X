@@ -121,7 +121,6 @@ namespace X
 		float _mfTabPosition;				// 0-1 position of tab
 		float _mfTabRatio;					// Multiplied by scrollbar dims(depending upon orientation) to obtain tab dimensions
 		bool _mbTabBeingMoved;				// Whether the tab is being moved or not
-		bool _mbOrientationIsHorizontal;	// Computed in update() and used in render(). Scrollbar orientation based on dimensions
 		CVector2f _mvTabPos;				// Computed in update() and used in render(). Tab position
 		CVector2f _mvTabDims;				// Computed in update() and used in render(). Tab dimensions
 		CColour _mTabColour;				// For fading between over/not over colours of tab

@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cstdint>
 #include <chrono>
+#include <cmath>		// min/max etc
 #include <codecvt>
 #include <filesystem>
 #include <format>		// For stuff like std::string strFPS = "FPS: "; strFPS += std::format("{:.2f}", timer.getFPSAveraged());

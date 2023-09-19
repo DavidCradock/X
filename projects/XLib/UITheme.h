@@ -214,6 +214,10 @@ namespace X
 			float buttonFadeSpeed;					// Rate at which button text and BG colours interpolate between
 			float buttonImageFadeSpeed;				// Rate at which button text and image colours interpolate between
 //			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
+			float colourSelectorTextEditWidth;		// Colour selector widget's text edit widget width
+			float colourSelectorTextEditHeight;		// Colour selector widget's text edit widget height
+			float colourSelectorTotalWidth;			// Total width of colour selector widget
+			float colourSelectorYspacing;			// Spacing between widgets along Y axis
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
 			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between
 			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.

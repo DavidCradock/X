@@ -26,7 +26,7 @@ namespace X
 		alpha = fAlpha;
 	}
 
-	void CColour::setHueColour(float fHueAmount, float fSaturation, float fBrightness)
+	void CColour::setFromHSB(float fHueAmount, float fSaturation, float fBrightness)
 	{
 		// Clamp each passed value
 		clamp(fHueAmount, 0.0f, 1.0f);
@@ -92,6 +92,42 @@ namespace X
 		clamp(red, 0.0f, 1.0f);
 		clamp(green, 0.0f, 1.0f);
 		clamp(blue, 0.0f, 1.0f);
+	}
+
+	void CColour::getHSB(float& fHue, float& fSaturation, float& fBrightness) const
+	{
+		// Get maximum and minimum values of current RGB values
+		float cmax = std::max(red, std::max(green, blue));
+		float cmin = std::min(red, std::min(green, blue));
+		float diff = cmax - cmin; // diff of cmax and cmin.
+		fHue = -1, fSaturation = -1;
+
+		// If cmax and cmax are equal then fHue = 0
+		if (cmax == cmin)
+			fHue = 0;
+
+		// If cmax equal r then compute fHue
+		else if (cmax == red)
+			fHue = float(fmod(60 * ((green - blue) / diff) + 360, 360));
+
+		// If cmax equal g then compute fHue
+		else if (cmax == green)
+			fHue = float(fmod(60 * ((blue - red) / diff) + 120, 360));
+
+		// If cmax equal b then compute fHue
+		else if (cmax == blue)
+			fHue = float(fmod(60 * ((red - green) / diff) + 240, 360));
+
+		fHue /= 360.0f;
+
+		// If cmax equal zero
+		if (cmax == 0)
+			fSaturation = 0;
+		else
+			fSaturation = (diff / cmax);// *100;
+
+		// Compute fBrightness
+		fBrightness = cmax;// *100;
 	}
 
 	CColour CColour::interpolate(const CColour other, float fValue) const
