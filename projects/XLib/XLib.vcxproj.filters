@@ -500,6 +500,9 @@
     <ClInclude Include="UIColourSelector.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="UITooltip.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -874,6 +877,9 @@
     </ClCompile>
     <ClCompile Include="UIColourSelector.cpp">
       <Filter>UI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="UITooltip.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

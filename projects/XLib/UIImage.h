@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A simple image.
 	// There are no borders or anything, just a simple texture resource to render.
@@ -59,7 +60,11 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 
-		/******************************************************************* Widget specific *******************************************************************/
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
+		void update(float fTimeDeltaSec);
 
 		// Sets the name of the CResourceTexture2DFromFile stored in the SCResourceManager which is used to render this widget.
 		// If the resource doesn't exist, an exception occurs.
@@ -86,6 +91,10 @@ namespace X
 		// Sets the colour multiplier used when rendering the image.
 		// By default, this is CColour(1,1,1,1);
 		void setColour(const CColour& colour = CColour(1, 1, 1, 1));
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

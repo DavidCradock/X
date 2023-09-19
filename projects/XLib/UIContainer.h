@@ -75,6 +75,7 @@ namespace X
 		void render(void);
 
 		// Render this container's widget's tooltips
+		// Tooltips are updated in update()
 		void renderTooltips(void);
 
 		// Resets all colours and time based values for widgets

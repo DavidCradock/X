@@ -48,6 +48,7 @@ namespace X
 		x->pFile->readString(file, _mSettings.fonts.text);
 		x->pFile->readString(file, _mSettings.fonts.textEdit);
 //		x->pFile->readString(file, _mSettings.fonts.textScroll);
+		x->pFile->readString(file, _mSettings.fonts.tooltipText);
 		x->pFile->readString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
@@ -64,7 +65,7 @@ namespace X
 		_helperReadImageType(file, _mSettings.images.scrollbarTab);
 		_helperReadImageType(file, _mSettings.images.textEditBG);
 //		_helperReadImageType(file, _mSettings.images.textScrollBG);
-//		_helperReadImageType(file, _mSettings.images.tooltipBG);
+		_helperReadImageType(file, _mSettings.images.tooltipBG);
 		_helperReadImageType(file, _mSettings.images.windowBG);
 
 		// Mouse cursors
@@ -74,6 +75,9 @@ namespace X
 		x->pFile->readString(file, _mSettings.cursors.resize_TLtoBR);
 		x->pFile->readString(file, _mSettings.cursors.resize_TRtoBL);
 		x->pFile->readString(file, _mSettings.cursors.resize_TtoB);
+
+		// Vector2fs
+		x->pFile->read(file, _mSettings.vectors);
 
 		// Theme name
 		x->pFile->readString(file, _mSettings.themeName);
@@ -119,6 +123,7 @@ namespace X
 		x->pFile->writeString(file, _mSettings.fonts.text);
 		x->pFile->writeString(file, _mSettings.fonts.textEdit);
 //		x->pFile->writeString(file, _mSettings.fonts.textScroll);
+		x->pFile->writeString(file, _mSettings.fonts.tooltipText);
 		x->pFile->writeString(file, _mSettings.fonts.windowTitlebar);
 
 		// Images
@@ -135,7 +140,7 @@ namespace X
 		_helperWriteImageType(file, _mSettings.images.scrollbarTab);
 		_helperWriteImageType(file, _mSettings.images.textEditBG);
 //		_helperWriteImageType(file, _mSettings.images.textScrollBG);
-//		_helperWriteImageType(file, _mSettings.images.tooltipBG);
+		_helperWriteImageType(file, _mSettings.images.tooltipBG);
 		_helperWriteImageType(file, _mSettings.images.windowBG);
 
 		// Mouse cursors
@@ -145,6 +150,9 @@ namespace X
 		x->pFile->writeString(file, _mSettings.cursors.resize_TLtoBR);
 		x->pFile->writeString(file, _mSettings.cursors.resize_TRtoBL);
 		x->pFile->writeString(file, _mSettings.cursors.resize_TtoB);
+
+		// Vector2fs
+		x->pFile->write(file, _mSettings.vectors);
 
 		// Theme name
 		x->pFile->writeString(file, _mSettings.themeName);
@@ -180,6 +188,7 @@ namespace X
 		x->pResource->addFont(_mSettings.fonts.text, _mSettings.fonts.text, false);
 		x->pResource->addFont(_mSettings.fonts.textEdit, _mSettings.fonts.textEdit, false);
 //		x->pResource->addFont(_mSettings.fonts.textScroll, _mSettings.fonts.textScroll, false);
+		x->pResource->addFont(_mSettings.fonts.tooltipText, _mSettings.fonts.tooltipText, false);
 		x->pResource->addFont(_mSettings.fonts.windowTitlebar, _mSettings.fonts.windowTitlebar, false);
 
 		// Mouse cursors
@@ -227,6 +236,7 @@ namespace X
 		x->pResource->removeFont(_mSettings.fonts.text);
 		x->pResource->removeFont(_mSettings.fonts.textEdit);
 //		x->pResource->removeFont(_mSettings.fonts.textScroll);
+		x->pResource->removeFont(_mSettings.fonts.tooltipText);
 		x->pResource->removeFont(_mSettings.fonts.windowTitlebar);
 
 		// Mouse cursors
@@ -287,7 +297,8 @@ namespace X
 		_mSettings.colours.textEditTextInactive.set(0.7f, 0.7f, 0.7f, 1.0f);
 //		_mSettings.colours.textScrollBG.set(1.0f, 1.0f, 1.0f, 1.0f);
 //		_mSettings.colours.textScrollText.set(1.0f, 1.0f, 1.0f, 1.0f);
-//		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
+		_mSettings.colours.tooltipBG.set(1.0f, 1.0f, 1.0f, 0.9f);
+		_mSettings.colours.tooltipText.set(1.0f, 1.0f, 1.0f, 1.0f);
 		_mSettings.colours.windowBGFocused.set(0.2f, 0.2f, 0.2f, 0.9f);
 		_mSettings.colours.windowBGNotFocused.set(0.2f, 0.2f, 0.2f, 0.8f);
 		_mSettings.colours.windowTitlebarTextFocused.set(0.8f, 0.8f, 0.8f, 1.0f);
@@ -297,15 +308,13 @@ namespace X
 		_mSettings.floats.buttonFadeSpeed = 5.0f;
 		_mSettings.floats.buttonImageFadeSpeed = 5.0f;
 //		_mSettings.floats.checkboxFadeSpeed = 1.0f;
-		_mSettings.floats.colourSelectorTextEditHeight = 40.0f;
-		_mSettings.floats.colourSelectorTextEditWidth = 80.0f;
 		_mSettings.floats.colourSelectorTotalWidth = 250.0f;
 		_mSettings.floats.colourSelectorYspacing = 45.0f;
 		_mSettings.floats.normalMouseCursorDistance = 10.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
 		_mSettings.floats.textEditFlashSpeed = 4.0f;
 //		_mSettings.floats.textScrollScrollbarWidth = 20.0f;
-//		_mSettings.floats.tooltipFadeSpeedSeconds = 2.0f;
+		_mSettings.floats.tooltipFadeSpeed = 2.0f;
 		_mSettings.floats.windowResizeHandleOffsetX = 12.0f;
 		_mSettings.floats.windowResizeHandleOffsetY = 12.0f;
 		_mSettings.floats.windowScrollbarHorizontalHeight = 24.0f;
@@ -317,6 +326,7 @@ namespace X
 		_mSettings.fonts.text = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.textEdit = "data/X/UI/default/satoshi_22";
 //		_mSettings.fonts.textScroll = "data/X/UI/default/satoshi_22";
+		_mSettings.fonts.tooltipText = "data/X/UI/default/satoshi_22";
 		_mSettings.fonts.windowTitlebar = "data/X/UI/default/satoshi_22";
 
 		// Image file names
@@ -333,7 +343,7 @@ namespace X
 		_helperSetNames(_mSettings.images.scrollbarTab, "data/X/UI/default/images/scrollbarTab");
 		_helperSetNames(_mSettings.images.textEditBG, "data/X/UI/default/images/genericBG");
 //		_helperSetNames(_mSettings.images.textScrollBG, "data/X/UI/default/images/textScrollBG");
-//		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/tooltipBG");
+		_helperSetNames(_mSettings.images.tooltipBG, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.windowBG, "data/X/UI/default/images/windowBG");
 
 		// Mouse cursors
@@ -344,6 +354,9 @@ namespace X
 		_mSettings.cursors.resize_TRtoBL	= "data/X/cursors/default_resize_TRtoBL.ani";
 		_mSettings.cursors.resize_TtoB		= "data/X/cursors/default_resize_TtoB.ani";
 
+		// Vectors
+		_mSettings.vectors.colourSelectorTextEditDims.set(80.0f, 40.0f);
+		_mSettings.vectors.tooltipOffsetFromCursor.set(32.0f, 0.0f);
 		// Theme name
 		_mSettings.themeName = "default";
 
@@ -368,7 +381,7 @@ namespace X
 		_helperCheckImageDimsAreOK(_mSettings.images.scrollbarTab, "scrollbarTab");
 		_helperCheckImageDimsAreOK(_mSettings.images.textEditBG, "textEditBG");
 //		_helperCheckImageDimsAreOK(_mSettings.images.textScrollBG, "textScrollBG");
-//		_helperCheckImageDimsAreOK(_mSettings.images.tooltipBG, "tooltipBG");
+		_helperCheckImageDimsAreOK(_mSettings.images.tooltipBG, "tooltipBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.windowBG, "windowBG");
 	}
 
@@ -387,7 +400,7 @@ namespace X
 		_helperBuildNormalImages(_mSettings.images.scrollbarTab, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.textEditBG, bOverwriteNormalImages);
 //		_helperBuildNormalImages(_mSettings.images.textScrollBG, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.tooltipBG, bOverwriteNormalImages);
+		_helperBuildNormalImages(_mSettings.images.tooltipBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.windowBG, bOverwriteNormalImages);
 	}
 

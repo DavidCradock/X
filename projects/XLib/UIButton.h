@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A clickable button with text rendered on top of it.
 	class CUIButton
@@ -58,13 +59,14 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 	
-		// Update this widget
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget
 		void reset(void);
-
-		/******************************************************************* Widget specific *******************************************************************/
 
 		// Sets the text string to be rendered over the top of the button
 		void setText(const std::string& strText);
@@ -89,6 +91,9 @@ namespace X
 		// Pass 0 or NULL here to remove the function
 		void setFunctionOnClicked(void (*function)(void));
 
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

@@ -2,6 +2,7 @@
 #include "UIImage.h"
 #include "UIContainer.h"
 #include "singletons.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -11,11 +12,14 @@ namespace X
 		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_meResourceType = EResourceType::texture2DFromFile;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIImage::~CUIImage()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUIImage::setDimensions(float fX, float fY)
@@ -107,7 +111,16 @@ namespace X
 		}
 	}
 
-	/******************************************************************* Widget specific *******************************************************************/
+	void CUIImage::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
+	void CUIImage::update(float fTimeDeltaSec)
+	{
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
 
 	void CUIImage::setTextureFromFile(const std::string& strResourceName)
 	{

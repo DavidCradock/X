@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -16,11 +17,14 @@ namespace X
 		_mbClicked = false;
 		_mbOn = false;
 		_mfuncOnClicked = 0;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUICheckbox::~CUICheckbox()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUICheckbox::setDimensions(float fX, float fY)
@@ -137,6 +141,11 @@ namespace X
 			pVB);
 	}
 
+	void CUICheckbox::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
 	void CUICheckbox::update(float fTimeDeltaSec)
 	{
 		if (!_mpContainer->getVisible())
@@ -188,6 +197,9 @@ namespace X
 				}
 			}
 		}
+
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUICheckbox::reset(void)
@@ -198,8 +210,6 @@ namespace X
 		else
 			_mState = state::off;
 	}
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	bool CUICheckbox::getClicked(void) const
 	{

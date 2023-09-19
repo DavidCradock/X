@@ -53,6 +53,10 @@ namespace X
 		file >> strWord;	space = file.get();	// Setting name, then space
 		file >> _mfUIVolume;
 
+		// _mfUITooltipDelaySeconds
+		file >> strWord;	space = file.get();	// Setting name, then space
+		file >> _mfUITooltipDelaySeconds;
+
 
 
 		// If an error occurred
@@ -96,6 +100,10 @@ namespace X
 		str = "UIVolume: " + std::to_string(_mfUIVolume) + "\n";
 		file << str;
 
+		// _mfUITooltipDelaySeconds
+		str = "UITooltipDelaySeconds: " + std::to_string(_mfUITooltipDelaySeconds) + "\n";
+		file << str;
+
 
 
 		// Make sure there were no errors
@@ -112,6 +120,7 @@ namespace X
 		_mbWindowFullscreen = false;
 		_mbWindowVSync = true;
 		_mfUIVolume = 1.0f;
+		_mfUITooltipDelaySeconds = 1.0f;
 	}
 
 	void SCSettings::setBackbufferScale(float fBackbufferScale)
@@ -157,5 +166,15 @@ namespace X
 	float SCSettings::getUIVolume(void) const
 	{
 		return _mfUIVolume;
+	}
+
+	void SCSettings::setUITooltipDelay(float fDelayInSeconds)
+	{
+		_mfUITooltipDelaySeconds = fDelayInSeconds;
+	}
+
+	float SCSettings::getUITooltipDelaySeconds(void) const
+	{
+		return _mfUITooltipDelaySeconds;
 	}
 }

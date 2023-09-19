@@ -39,6 +39,11 @@ namespace X
 			return false;
 		}
 
+		// Overload the * operator to multiply two colours together
+		CColour operator*(const CColour& other) const
+		{
+			return CColour(red * other.red, green * other.green, blue * other.blue, alpha * other.alpha );
+		}
 		float red;		// Red colour between 0.0f and 1.0f
 		float green;	// Green colour between 0.0f and 1.0f
 		float blue;		// Blue colour between 0.0f and 1.0f

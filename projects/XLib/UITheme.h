@@ -9,7 +9,7 @@ namespace X
 	// A user interface theme.
 	// These are created and used by the SCUIManager and all of the UI widgets and window.
 	// Each of the widget containers are initially set to use a default theme, more themes can be created and then switched between at runtime.
-	// Themes may be set per widget container/window.
+	// Themes may be set per container/window.
 	// 
 	// Each theme needs the following types of images...
 	// colour:		RGBA. This holds the RGB colour as well as the alpha channel for transparency.
@@ -122,7 +122,7 @@ namespace X
 			SImageType scrollbarTab;		// Image names for CUIScrollbar's tab
 			SImageType textEditBG;			// Image names for CUITextEdit's background.
 //			SImageType textScrollBG;		// Image names for CUITextScroll's background.
-//			SImageType tooltipBG;			// Image names for CUITooltip's background.
+			SImageType tooltipBG;			// Image names for CUITooltip's background.
 			SImageType windowBG;			// Image names for CUIWindow's background.
 		};
 
@@ -134,6 +134,7 @@ namespace X
 			std::string text;						// Font used when rendering a UIText widget.
 			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
 //			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
+			std::string tooltipText;				// Font used when rendering the text of a UITooltip widget's text.
 			std::string windowTitlebar;				// Font used when rendering a window's titlebar text.
 		};
 
@@ -171,7 +172,8 @@ namespace X
 			CColour textEditTextInactive;				// CUITextEdit's text colour when inactive
 //			CColour textScrollBG;						// CUITextScroll's colour
 //			CColour textScrollText;						// CUITextScroll's text colour
-//			CColour tooltipText;						// Tool tip text colour
+			CColour tooltipBG;							// Background colour of a tooltip
+			CColour tooltipText;						// Tooltip text colour
 			CColour windowBGFocused;					// CUIWindow background vertex colour when focused
 			CColour windowBGNotFocused;					// CUIWindow background vertex colour when not focused
 			CColour windowTitlebarTextFocused;			// CUIWindow titlebar text colour when focused
@@ -214,19 +216,24 @@ namespace X
 			float buttonFadeSpeed;					// Rate at which button text and BG colours interpolate between
 			float buttonImageFadeSpeed;				// Rate at which button text and image colours interpolate between
 //			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
-			float colourSelectorTextEditWidth;		// Colour selector widget's text edit widget width
-			float colourSelectorTextEditHeight;		// Colour selector widget's text edit widget height
 			float colourSelectorTotalWidth;			// Total width of colour selector widget
 			float colourSelectorYspacing;			// Spacing between widgets along Y axis
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
 			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between
 			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
 //			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
-//			float tooltipFadeSpeedSeconds;			// Rate at which tooltips face in/out
+			float tooltipFadeSpeed;					// Rate at which tooltips fade in/out
 			float windowResizeHandleOffsetX;		// The distance from a window's borders along X where clicking the mouse can begin window resizing.
 			float windowResizeHandleOffsetY;		// The distance from a window's borders along Y where clicking the mouse can begin window resizing.
 			float windowScrollbarHorizontalHeight;	// Height of a window's horizontal scrollbar
 			float windowScrollbarVerticalWidth;		// Width of a window's vertical scrollbar
+		};
+
+		// Structure to hold all the CVector2f settings
+		struct SVector2fs
+		{
+			CVector2f colourSelectorTextEditDims;	// Dimensions of the CUIColourSelector widget's text edit widget.
+			CVector2f tooltipOffsetFromCursor;		// Offset of tooltips from the position of the mouse cursor
 		};
 
 		// Struct to hold all settings for the theme
@@ -239,6 +246,7 @@ namespace X
 			SImageNamesWidget images;	// Holds all the names of the images stored in a texture atlas used by this theme.
 			std::string imageDir;		// Holds the directory name containing each of the theme's images, for example "data/X/UI/default/images/"
 			SMouseCursors cursors;		// Holds all the mouse cursor file names used by the theme
+			SVector2fs vectors;			// Holds all the CVector2f settings
 			std::string themeName;		// Holds the name of the theme.
 		};
 	private:

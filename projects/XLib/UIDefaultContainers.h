@@ -31,6 +31,10 @@ namespace X
 			// can then be loaded by the SCResourceManager for the font resources.
 			std::string fontGenerator;
 			
+			// Holds the name of the default container called "X:Default:ImageEditor"
+			// A window with functionality to create/load/save/edit/display images.
+			std::string imageEditor;
+
 			// Holds the name of the default container called "X:Default:Profiling"
 			// Shows profiling statistics for the global CProfiler object stored in the global x object, x->pProfiler.
 			// We can add more sections to be profiled and they will be added and shown in this container.
@@ -59,6 +63,14 @@ namespace X
 		void _initFontGenerator(void);						// Init method called from initialise() for "X:Default:FontGenerator" default container.
 		void _updateFontGenerator(float fTimeDeltaSec);		// Update method called from update() for "X:Default:FontGenerator" default container.
 
+		void _initImageEditor(void);
+		void _updateImageEditor(float fTimeDeltaSec);
+		struct SImageEditor
+		{
+			int UNUSED;
+		};
+		SImageEditor _mImageEditor;
+
 		void _initProfiling(void);							// Init method called from initialise() for "X:Default:Profiling" default container.
 		void _updateProfiling(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Profiling" default container.
 		// Struct used by profiling default container
@@ -85,6 +97,11 @@ namespace X
 
 		void _initUIThemeEditor(void);						// Init method called from initialise() for "X:Default:UIThemeEditor" default container.
 		void _updateUIThemeEditor(float fTimeDeltaSec);		// Update method called from update() for "X:Default:UIThemeEditor" default container.
+		struct SUIThemeEditor
+		{
+			int NOT_USED;
+		};
+		SUIThemeEditor _mUIThemeEditor;
 		
 	};
 }

@@ -11,6 +11,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A colour selector widget for being able to select a colour
 	// This adds several uniquely named widgets which are controlled by this one, scrollbars, text and text edit widgets.
@@ -48,11 +49,12 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 
-		// Update this widget
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
-		/******************************************************************* Widget specific *******************************************************************/
-		
 		// Sets the colour represented by this widget.
 		// Sets RGBA sliders and text edit widgets to the given colour and then
 		// sets the HSB sliders and text edit widgets from the values stored in RGB sliders.

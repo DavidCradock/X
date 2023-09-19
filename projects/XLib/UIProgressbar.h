@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A progress bar
 	class CUIProgressbar
@@ -55,13 +56,21 @@ namespace X
 		// Render this widget
 		void renderBG(CResourceVertexBufferCPT2* pVB);
 
-		/******************************************************************* Widget specific *******************************************************************/
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
+		void update(float fTimeDeltaSec);
 
 		// Sets progress 0-1 range
 		void setProgress(float fProgress);
 
 		// Gets progress 0-1 range
 		float getProgress(void) const;
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

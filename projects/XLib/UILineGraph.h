@@ -1,12 +1,11 @@
 #pragma once
 #include "PCH.h"
-//#include "resourceTexture2DAtlas.h"
-//#include "resourceVertexBufferCPT2.h"
 #include "UITheme.h"
 
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// Data set used by CUILineGraph object.
 	class CUILineGraphDataSet
@@ -85,10 +84,11 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 
-		// Update this widget
-		void update(float fTimeDeltaSec);
+		// Render this widget's tooltip
+		void renderTooltip(void);
 
-		/******************************************************************* Widget specific *******************************************************************/
+		// Update this widget and it's tooltip
+		void update(float fTimeDeltaSec);
 
 		// Add a new named data set to this graph
 		// If the named set already exists, an exception occurs
@@ -109,6 +109,10 @@ namespace X
 		// Returns the name of the data set at given index.
 		// If given index is invalid, an exception occurs
 		std::string getDatasetName(unsigned int iIndex);
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

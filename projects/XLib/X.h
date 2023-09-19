@@ -123,4 +123,5 @@
 #include "UIScrollBar.h"
 #include "UIText.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 #include "UIWindow.h"

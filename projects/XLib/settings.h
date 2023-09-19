@@ -54,6 +54,17 @@ namespace X
 
 		// Returns the global volume level for the user interface ranging from 0 to 1
 		float getUIVolume(void) const;
+
+		// Sets the user interfaces tooltip delay in seconds.
+		// This is the amount of time in seconds which the mouse cursor has to be over a widget,
+		// before the widget's tooltip will start to appear.
+		void setUITooltipDelay(float fDelayInSeconds);
+
+		// Returns the user interfaces tooltip delay in seconds.
+		// This is the amount of time in seconds which the mouse cursor has to be over a widget,
+		// before the widget's tooltip will start to appear.
+		float getUITooltipDelaySeconds(void) const;
+
 	private:
 
 		// Sets all settings to default values
@@ -72,5 +83,9 @@ namespace X
 		// Global volume scale for the user interface
 		float _mfUIVolume;
 
+		// The user interfaces tooltip delay in seconds.
+		// This is the amount of time in seconds which the mouse cursor has to be over a widget,
+		// before the widget's tooltip will start to appear.
+		float _mfUITooltipDelaySeconds;
 	};
 }

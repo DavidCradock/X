@@ -3,6 +3,7 @@
 #include "UIWindow.h"
 #include "singletons.h"
 #include "stringUtils.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -12,6 +13,7 @@ namespace X
 		// Set names of each default container
 		names.console = "X:Default:Console";
 		names.fontGenerator = "X:Default:FontGenerator";
+		names.imageEditor = "X:Default:ImageEditor";
 		names.profiling = "X:Default:Profiling";
 		names.settings = "X:Default:Settings";
 		names.statistics = "X:Default:Statistics";
@@ -27,6 +29,7 @@ namespace X
 		// Call each default container's init method
 		_initConsole();
 		_initFontGenerator();
+		_initImageEditor();
 		_initProfiling();
 		_initSettings();
 		_initStatistics();
@@ -38,6 +41,7 @@ namespace X
 		// Call each default container's update method
 		_updateConsole(fTimeDeltaSecs);
 		_updateFontGenerator(fTimeDeltaSecs);
+		_updateImageEditor(fTimeDeltaSecs);
 		_updateProfiling(fTimeDeltaSecs);
 		_updateSettings(fTimeDeltaSecs);
 		_updateStatistics(fTimeDeltaSecs);
@@ -50,15 +54,20 @@ namespace X
 
 	void CUIDefaultContainers::_initConsole(void)
 	{
-		CUIWindow* pWindow = x->pUI->windowAdd(names.console, true);
-		pWindow->setVisible(false);
+		CUIContainer* pContainer = x->pUI->containerAdd(names.console, true);
+		pContainer->setVisible(false);
+		pContainer->setDimensions(x->pWindow->getDimensions());
+		pContainer->setPosition(0, 0);
+
+		pContainer->textAdd("Title", 0.0f, 0.0f, x->pWindow->getDimensions().x, 20.0f, "Console...");
+
 	}
 
 	void CUIDefaultContainers::_updateConsole(float fTimeDeltaSec)
 	{
-		// Is the window visible? If not, simply return
-		CUIWindow* pWindow = x->pUI->windowGet(names.console);
-		if (!pWindow->getVisible())
+		// Is the container visible? If not, simply return
+		CUIContainer* pContainer = x->pUI->containerGet(names.console);
+		if (!pContainer->getVisible())
 			return;
 
 	}
@@ -77,6 +86,28 @@ namespace X
 	{
 		// Is the window visible? If not, simply return
 		CUIWindow* pWindow = x->pUI->windowGet(names.fontGenerator);
+		if (!pWindow->getVisible())
+			return;
+
+	}
+
+	/************************************************************************************************************************************************************/
+	/* Image editor */
+	/************************************************************************************************************************************************************/
+
+	void CUIDefaultContainers::_initImageEditor(void)
+	{
+		CUIWindow* pWindow = x->pUI->windowAdd(names.imageEditor, true);
+		pWindow->setVisible(false);
+		pWindow->setDimensions(320, 400);
+		pWindow->setPosition(200, 200);
+
+	}
+
+	void CUIDefaultContainers::_updateImageEditor(float fTimeDeltaSec)
+	{
+		// Is the window visible? If not, simply return
+		CUIWindow* pWindow = x->pUI->windowGet(names.imageEditor);
 		if (!pWindow->getVisible())
 			return;
 
@@ -273,6 +304,9 @@ namespace X
 		// Close button
 		fYpos += 10;
 		CUIButton* pButton = pWindow->buttonAdd("Close", 225.0f - 50.0f, fYpos, 100.0f, 30.0f); fYpos += 30.0f;
+		// Tooltip
+//		pButton->pTooltip->setEnabled(true);
+//		pButton->pTooltip->textAdd("tooltipText", 0, 0, 500, 100, "Click here to close this statistics window.");
 //		pButton->mpTooltip->setAsText("Close window.");
 
 	}

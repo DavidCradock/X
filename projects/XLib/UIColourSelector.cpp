@@ -3,17 +3,14 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "stringUtils.h"
+#include "UITooltip.h"
 
 namespace X
 {
 	CUIColourSelector::CUIColourSelector(CUIContainer* pContainer, const std::string& strWidgetName, float fPosX, float fPosY)
 	{
 		_mpContainer = pContainer;
-		
 		_mbVisible = true;
-
-//		_mvDimensions.x = 200;
-//		_mvDimensions.y = 100;
 		_mColour.set(1, 1, 1, 1);
 
 		_mstrScrollbarNames[EValue::brightness] = pContainer->getName() + "_" + strWidgetName + "scrollbar_brightness";
@@ -40,21 +37,19 @@ namespace X
 		_mstrTextNames[EValue::hue] = pContainer->getName() + "_" + strWidgetName + "text_hue";
 		_mstrTextNames[EValue::saturation] = pContainer->getName() + "_" + strWidgetName + "text_sat";
 
-		CUIText* pText;
 		for (int i = 0; i < 7; i++)
 		{
-			_mpContainer->scrollbarAdd(_mstrScrollbarNames[i], 0, 0, (int)_mvDimensions.x, 40, 0.01f);
-			_mpContainer->textEditAdd(_mstrTextEditNames[i], 0, 0, 40, 40, "0");
-			pText = _mpContainer->textAdd(_mstrTextNames[i], 0, 0, 150, 40, "X");
-			pText->setTextColour(false, CColour(1, 1, 1, 0.90f));
-			pText->setCentered(true);
+			_mpScrollbar[i] = _mpContainer->scrollbarAdd(_mstrScrollbarNames[i], 0, 0, (int)_mvDimensions.x, 40, 0.01f);
+			_mpTextEdit[i] = _mpContainer->textEditAdd(_mstrTextEditNames[i], 0, 0, 40, 40, "0");
+			_mpText[i] = _mpContainer->textAdd(_mstrTextNames[i], 0, 0, 150, 40, "X");
+			_mpText[i]->setTextColour(false, CColour(1, 1, 1, 0.90f));
+			_mpText[i]->setCentered(true);
 		}
 
 		_mstrColourImageName = pContainer->getName() + "_" + strWidgetName + "colour_image";
 		_mpColourImage = _mpContainer->imageAdd(_mstrColourImageName, 0, 0, 100, 100);
 		_mpColourImage->setTextureFromFile(x->pResource->defaultRes.texture2DFromFile_default_white);
 
-		
 		_updateWidgetDims();
 		setColour(CColour());
 		_mpContainer->computeScrollbars();
@@ -113,10 +108,18 @@ namespace X
 	{
 		if (!_mbVisible)
 			return;
-
 	}
 
-	/******************************************************************* Widget specific *******************************************************************/
+	void CUIColourSelector::renderTooltip(void)
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			_mpScrollbar[i]->pTooltip->render();
+			_mpTextEdit[i]->pTooltip->render();
+			_mpText[i]->pTooltip->render();
+		}
+		_mpColourImage->pTooltip->render();
+	}
 
 	void CUIColourSelector::update(float fTimeDeltaSec)
 	{
@@ -278,6 +281,15 @@ namespace X
 			_mColour.alpha = fValue;
 			_mpColourImage->setColour(_mColour);
 		}
+
+		// Update this widget's, widget's tooltips
+		for (int i = 0; i < 7; i++)
+		{
+			_mpScrollbar[i]->pTooltip->update(_mpScrollbar[i]->getPosition(), _mpScrollbar[i]->getDimensions(), fTimeDeltaSec);
+			_mpTextEdit[i]->pTooltip->update(_mpTextEdit[i]->getPosition(), _mpTextEdit[i]->getDimensions(), fTimeDeltaSec);
+			_mpText[i]->pTooltip->update(_mpText[i]->getPosition(), _mpText[i]->getDimensions(), fTimeDeltaSec);
+		}
+		_mpColourImage->pTooltip->update(_mpColourImage->getPosition(), _mpColourImage->getDimensions(), fTimeDeltaSec);
 	}
 
 	void CUIColourSelector::_helperSetRGBFromHSB(void)
@@ -349,8 +361,8 @@ namespace X
 		CUITextEdit* pTE;
 		CUIScrollbar* pSB;
 		_mvDimensions.x = pThemeSettings->floats.colourSelectorTotalWidth;
-		CVector2f vTextEditDims(pThemeSettings->floats.colourSelectorTextEditWidth, pThemeSettings->floats.colourSelectorTextEditHeight);
-		CVector2f vScrollbarDims(pThemeSettings->floats.colourSelectorTotalWidth - pThemeSettings->floats.colourSelectorTextEditWidth, pThemeSettings->floats.colourSelectorTextEditHeight);
+		CVector2f vTextEditDims(pThemeSettings->vectors.colourSelectorTextEditDims.x, pThemeSettings->vectors.colourSelectorTextEditDims.y);
+		CVector2f vScrollbarDims(pThemeSettings->floats.colourSelectorTotalWidth - pThemeSettings->vectors.colourSelectorTextEditDims.x, pThemeSettings->vectors.colourSelectorTextEditDims.y);
 		for (int i = 0; i < 7; i++)
 		{
 			pTE = _mpContainer->textEditGet(_mstrTextEditNames[i]);

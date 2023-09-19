@@ -140,6 +140,7 @@
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UITextEdit.h" />
     <ClInclude Include="UITheme.h" />
+    <ClInclude Include="UITooltip.h" />
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="vector2d.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UITextEdit.cpp" />
     <ClCompile Include="UITheme.cpp" />
+    <ClCompile Include="UITooltip.cpp" />
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="utilities.cpp" />
     <ClCompile Include="vector2d.cpp" />

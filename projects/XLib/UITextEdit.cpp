@@ -5,6 +5,7 @@
 #include "UIText.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -20,10 +21,14 @@ namespace X
 		_mbIntegerInputOnly = false;
 		_mbWasActiveEnterPressed = false;
 		_mfuncOnEnterPressed = NULL;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUITextEdit::~CUITextEdit()
 	{
+		delete pTooltip;
 	}
 
 	void CUITextEdit::setDimensions(float fX, float fY)
@@ -194,6 +199,11 @@ namespace X
 //		x->pRenderer->blendDisable();
 	}
 
+	void CUITextEdit::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
 	void CUITextEdit::update(float fTimeDeltaSec)
 	{
 		if (!_mpContainer->getVisible())
@@ -348,16 +358,14 @@ namespace X
 			}
 		}
 
-		// Update this object's tooltip
-//		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUITextEdit::reset(void)
 	{
 		_mState = state::inactive;
 	}
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUITextEdit::setText(const std::string& strText)
 	{

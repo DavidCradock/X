@@ -2,6 +2,7 @@
 #include "UIContainer.h"
 #include "UIManager.h"
 #include "singletons.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -1110,7 +1111,14 @@ namespace X
 			}
 		}
 		
-		// For each CUIImage widget (No need)
+		{
+			auto it = _mmapImages.begin();
+			while (it != _mmapImages.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
+		}
 
 		{
 			auto it = _mmapLineGraphs.begin();
@@ -1121,7 +1129,14 @@ namespace X
 			}
 		}
 
-		// For each CUIProgressbar widget (No need)
+		{
+			auto it = _mmapProgressbars.begin();
+			while (it != _mmapProgressbars.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
+		}
 
 		{
 			auto it = _mmapScrollbars.begin();
@@ -1132,7 +1147,14 @@ namespace X
 			}
 		}
 
-		// For each CUIText widget (No need)
+		{
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
+			{
+				it->second->update(fTimeDeltaSec);
+				it++;
+			}
+		}
 
 		{
 			auto it = _mmapTextEdits.begin();
@@ -1354,7 +1376,95 @@ namespace X
 
 	void CUIContainer::renderTooltips(void)
 	{
+		{
+			auto it = _mmapButtons.begin();
+			while (it != _mmapButtons.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
 
+		{
+			auto it = _mmapButtonImages.begin();
+			while (it != _mmapButtonImages.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapCheckboxes.begin();
+			while (it != _mmapCheckboxes.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapColourSelectors.begin();
+			while (it != _mmapColourSelectors.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapImages.begin();
+			while (it != _mmapImages.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapProgressbars.begin();
+			while (it != _mmapProgressbars.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapScrollbars.begin();
+			while (it != _mmapScrollbars.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
+
+		{
+			auto it = _mmapTextEdits.begin();
+			while (it != _mmapTextEdits.end())
+			{
+				it->second->renderTooltip();
+				it++;
+			}
+		}
 	}
 
 	void CUIContainer::_onToggleFullscreen(void)

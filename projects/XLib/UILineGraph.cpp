@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -58,11 +59,14 @@ namespace X
 		_mpContainer = pContainer;
 		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUILineGraph::~CUILineGraph()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUILineGraph::setDimensions(float fX, float fY)
@@ -274,16 +278,16 @@ namespace X
 		glDisable(GL_BLEND);
 	}
 
-
+	void CUILineGraph::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
 
 	void CUILineGraph::update(float fTimeDeltaSec)
 	{
-
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
-
-
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	CUILineGraphDataSet* CUILineGraph::addDataset(const std::string& strName, const CColour& cCol)
 	{

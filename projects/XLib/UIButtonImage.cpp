@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -20,11 +21,14 @@ namespace X
 		_mstrTextureUp = strTextureFromFileResourceNameUp;
 		_mstrTextureOver = strTextureFromFileResourceNameOver;
 		_mstrTextureDown = strTextureFromFileResourceNameDown;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIButtonImage::~CUIButtonImage()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUIButtonImage::setDimensions(float fX, float fY)
@@ -125,6 +129,11 @@ namespace X
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, _mColourText);
 	}
 
+	void CUIButtonImage::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
 	void CUIButtonImage::update(float fTimeDeltaSec)
 	{
 		if (!_mpContainer->getVisible())
@@ -202,6 +211,9 @@ namespace X
 		}
 		x->pUI->_helperColourAdjust(_mColourBG, colTargetBG, fTimeDeltaSec, pSettings->floats.buttonImageFadeSpeed);
 		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonImageFadeSpeed);
+
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIButtonImage::reset(void)
@@ -210,8 +222,6 @@ namespace X
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
 	}
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIButtonImage::setText(const std::string& strText)
 	{

@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -13,11 +14,14 @@ namespace X
 		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_mfProgress = 0.5f;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIProgressbar::~CUIProgressbar()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUIProgressbar::setDimensions(float fX, float fY)
@@ -130,8 +134,16 @@ namespace X
 			pVB);
 	}
 
+	void CUIProgressbar::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
 
-	/******************************************************************* Widget specific *******************************************************************/
+	void CUIProgressbar::update(float fTimeDeltaSec)
+	{
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
 
 	void CUIProgressbar::setProgress(float fProgress)
 	{

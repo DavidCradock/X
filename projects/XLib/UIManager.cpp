@@ -42,6 +42,12 @@ namespace X
 			itWindow++;
 		}
 
+		// Render each container's tooltips
+		for (size_t i = 0; i < _mmanContainers.getNumber(); i++)
+		{
+			_mmanContainers.get(i)->renderTooltips();
+		}
+
 		// Debug rendering of the window resizing areas
 //		itWindow = _mlistWindowZOrder.begin();
 //		while (itWindow != _mlistWindowZOrder.end())

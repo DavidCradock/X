@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -24,11 +25,15 @@ namespace X
 		_mbCentered = false;
 		_mvNonCenteredPos = _mvPosition;
 		_mvNonCenteredDims = _mvDimensions;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIText::~CUIText()
 	{
 		x->pResource->removeFramebuffer(_mstrFramebufferName);
+		delete pTooltip;
 	}
 
 	void CUIText::setDimensions(float fX, float fY)
@@ -169,7 +174,16 @@ namespace X
 		glDisable(GL_BLEND);
 	}
 
-	/******************************************************************* Widget specific *******************************************************************/
+	void CUIText::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
+	void CUIText::update(float fTimeDeltaSec)
+	{
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
 
 	void CUIText::setText(const std::string& strText)
 	{

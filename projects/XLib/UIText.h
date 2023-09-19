@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// Text using a framebuffer to increase rendering performance.
 	// Can accept text with multiple lines. Use "\n" inside the string to create a new line.
@@ -61,7 +62,11 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 
-		/******************************************************************* Widget specific *******************************************************************/
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
+		void update(float fTimeDeltaSec);
 
 		// Sets the text string to be rendered
 		void setText(const std::string& strText);
@@ -91,6 +96,10 @@ namespace X
 
 		// Sets the framebuffer to need updating
 		void setFramebufferNeedsUpdating(void);
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

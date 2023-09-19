@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A clickable checkbox
 	class CUICheckbox
@@ -55,13 +56,14 @@ namespace X
 		// Render this widget
 		void renderBG(CResourceVertexBufferCPT2* pVB);
 
-		// Update this widget
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget
 		void reset(void);
-
-		/******************************************************************* Widget specific *******************************************************************/
 
 		// Returns whether this button has been clicked upon or not.
 		// This is OK for a quick and dirty approach to checking button clicks, but if we have
@@ -86,6 +88,9 @@ namespace X
 		// Gets current state of checkbox. Whether it is on or off
 		bool getState(void) {	return _mbOn;	}
 
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

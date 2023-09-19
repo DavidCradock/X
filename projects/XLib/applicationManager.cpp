@@ -379,7 +379,7 @@ namespace X
 
 		// Setup vertex we'll be using to render with
 		CResourceVertexBufferLine::Vertex vertex;
-		vertex.colour.set(1.0f, 1.0f, 1.0f, 0.2f);
+		vertex.colour.set(1.0f, 1.0f, 1.0f, 0.04f);
 		for (float fX = 0; fX < x->pWindow->getDimensions().x; fX += _mfDebugGridSpacing[0])
 		{
 			// Vertical line going from top to bottom

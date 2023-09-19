@@ -7,6 +7,7 @@
 namespace X
 {
 	class CUIContainer;
+	class CUITooltip;
 
 	// A scrollbar with a draggable tab.
 	// The scrollbar can be either horizontal or vertical.
@@ -64,13 +65,14 @@ namespace X
 		// Render this widget
 		void renderBG(CResourceVertexBufferCPT2* pVB, bool bUseWidgetScrollbarOffset = true);
 
-		// Update this object
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this object and it's tooltip
 		void update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset = true);
 
 		// Resets all colours and time based values for the widget
 		void reset(void);
-
-		/******************************************************************* Widget specific *******************************************************************/
 
 		// Sets tab position, clamped to 0-1 range
 		void setTabPos(float fPos);
@@ -110,6 +112,10 @@ namespace X
 
 		// Returns true if the tab is being moved
 		bool getTabBeingMoved(void) const;
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

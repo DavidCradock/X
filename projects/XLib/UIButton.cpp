@@ -4,6 +4,8 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
+#include "logging.h"
 
 namespace X
 {
@@ -16,11 +18,13 @@ namespace X
 		_mbClicked = false;
 
 		_mfuncOnClicked = 0;
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIButton::~CUIButton()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUIButton::setDimensions(float fX, float fY)
@@ -132,6 +136,11 @@ namespace X
 		pFont->printCentered(_mstrText, (int)vTextPos.x, (int)vTextPos.y, x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, _mColourText);
 	}
 
+	void CUIButton::renderTooltip(void)
+	{
+		pTooltip->render();
+	}
+
 	void CUIButton::update(float fTimeDeltaSec)
 	{
 //		if (!_mpContainer->getVisible())
@@ -213,6 +222,9 @@ namespace X
 		}
 		x->pUI->_helperColourAdjust(_mColourBG, colTargetBG, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
 		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonFadeSpeed);
+
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIButton::reset(void)
@@ -222,8 +234,6 @@ namespace X
 		_mColourText = pSettings->colours.buttonTextUp;
 		_mState = state::up;
 	}
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIButton::setText(const std::string& strText)
 	{

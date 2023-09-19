@@ -104,6 +104,14 @@ namespace X
 
 		// Show statistics
 		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
+
+		// Tooltip window
+		CUIWindow* pWindow = x->pUI->windowAdd("tooltipwindow");
+		pWindow->setDimensions(320, 240);
+		pWindow->setPosition(320, 240);
+		CUIButton* pButton = pWindow->buttonAdd("tooltipbutton", 0, 0, 320, 100);
+		pButton->pTooltip->setEnabled(true);
+		pButton->pTooltip->textAdd("text", 0, 0, 200, 100, "Text which is quite long now eh?");
 	}
 
 	void CApplication::onStart(void)

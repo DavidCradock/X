@@ -9,6 +9,7 @@ namespace X
 {
 	class CUIContainer;
 	class CUIText;
+	class CUITooltip;
 
 	// A clickable text edit widget where we can edit the text inside of it
 	class CUITextEdit
@@ -60,13 +61,14 @@ namespace X
 		// Render this widget's non-background items
 		void renderNonBG(void);
 	
-		// Update this widget
+		// Render this widget's tooltip
+		void renderTooltip(void);
+
+		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
 		// Resets all colours and time based values for the widget
 		void reset(void);
-
-		/******************************************************************* Widget specific *******************************************************************/
 
 		// Sets the text in this object
 		void setText(const std::string& strText);
@@ -96,6 +98,10 @@ namespace X
 
 		// Returns true if the text has changed
 		bool getHasTextChanged(void);
+
+		// Tooltip object for this widget.
+		// Access and use this object to setup and enable the tooltip.
+		CUITooltip* pTooltip;
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget

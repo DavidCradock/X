@@ -4,6 +4,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITheme.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -18,11 +19,14 @@ namespace X
 
 		_mfuncOnTabBeingMoved = 0;
 		_mfuncOnTabMoved = 0;
+
+		pTooltip = new CUITooltip(pContainer);
+		ThrowIfMemoryNotAllocated(pTooltip);
 	}
 
 	CUIScrollbar::~CUIScrollbar()
 	{
-
+		delete pTooltip;
 	}
 
 	void CUIScrollbar::setDimensions(float fX, float fY)
@@ -107,7 +111,6 @@ namespace X
 
 		CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 
-		
 		if (_mbVisible)
 		{
 			// Add geometry for the 9 grid cells of the scrollbar's background
@@ -135,6 +138,11 @@ namespace X
 				_mpContainer,
 				pVB);
 		}
+	}
+
+	void CUIScrollbar::renderTooltip(void)
+	{
+		pTooltip->render();
 	}
 
 	void CUIScrollbar::update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset)
@@ -297,8 +305,8 @@ namespace X
 		else
 			x->pUI->_helperColourAdjust(_mTabColour, pThemeSettings->colours.scrollbarTabNotOver, fTimeDeltaSec, pThemeSettings->floats.scrollbarTabFadeSpeed);
 
-		// Update this object's tooltip
-//		mpTooltip->update(pParentContainer, (CGUIBaseObject*)this, bMouseOver);
+		// Update this widget's tooltip
+		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIScrollbar::reset(void)
@@ -309,8 +317,6 @@ namespace X
 
 		_mbTabBeingMoved = false;
 	}
-
-	/******************************************************************* Widget specific *******************************************************************/
 
 	void CUIScrollbar::setTabPos(float fPos)
 	{
