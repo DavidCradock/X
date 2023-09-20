@@ -58,52 +58,15 @@ namespace X
 		// Show old GUI statistics
 //		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
 
-		// Create lots of UI elements for stress testing
-		for (int i = 0; i < 1; i++)
-		{
-			std::string str;
-			str = "windowSTRESS_TEST_" + std::to_string(i);
-			CUIWindow* pWindow = x->pUI->windowAdd(str, false);
-			pWindow->setDimensions(850, 580);
-			pWindow->setPosition(1000+ (i * 50), 500 + (i * 50));
-			for (int j = 20; j < 22; j++)
-			{
-				str = "button_" + std::to_string(j);
-				CUIButton* pBut = pWindow->buttonAdd(str, 0, j * 30, 100, 24);
 
-				str = "checkbox_" + std::to_string(j);
-				CUICheckbox* pCB = pWindow->checkboxAdd(str, 120, j * 30, 100, 24);
-
-				if (j % 3 == 0)
-				{
-					str = "linegraph_" + std::to_string(j);
-					CUILineGraph* pLG = pWindow->lineGraphAdd(str, 250, j * 40, 100, 100);
-				}
-
-				str = "progressbar_" + std::to_string(j);
-				CUIProgressbar* pPB = pWindow->progressbarAdd(str, 370, j * 30, 100, 30);
-
-				str = "scrollbar_" + std::to_string(j);
-				CUIScrollbar* pSB = pWindow->scrollbarAdd(str, 500, j * 30, 100, 30);
-				pSB->setTabPos(randf(0.0f, 1.0f));
-
-				str = "text_" + std::to_string(j);
-				pWindow->textAdd(str, 610, j * 30, 90, 30, str);
-
-				str = "textEdit_" + std::to_string(j);
-				pWindow->textEditAdd(str, 710, j * 50, 100, 40, str);
-			}
-
-			pWindow->colourSelectorAdd("colourSelector_", 0, 0);
-		}
 //		SCWindow::getPointer()->setVsync(false);
 
 		// Real simple as it gets framerate text
-		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
-		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
+//		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
+//		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
 		// Show statistics
-		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
+//		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
 
 		// Tooltip window
 		CUIWindow* pWindow = x->pUI->windowAdd("tooltipwindow");
@@ -111,7 +74,7 @@ namespace X
 		pWindow->setPosition(320, 240);
 		CUIButton* pButton = pWindow->buttonAdd("tooltipbutton", 0, 0, 320, 100);
 		pButton->pTooltip->setEnabled(true);
-		pButton->pTooltip->textAdd("text", 0, 0, 200, 100, "Text which is quite long now eh?");
+//		pButton->pTooltip->textAdd("text", 0, 0, 200, 100, "Text which is quite long now eh?");
 	}
 
 	void CApplication::onStart(void)
@@ -141,7 +104,7 @@ namespace X
 			sfUpdate = 1.0f;
 			std::string strTxt = "FPS: ";
 			StringUtils::appendFloat(strTxt, timer.getFPSAveraged(), 1);
-			x->pUI->containerGet("FPSonly")->textGet("FPS")->setText(strTxt);
+//			x->pUI->containerGet("FPSonly")->textGet("FPS")->setText(strTxt);
 		}
 
 		// G key to toggle debug grid

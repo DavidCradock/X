@@ -48,6 +48,14 @@ namespace X
 			_mmanContainers.get(i)->renderTooltips();
 		}
 
+		// Render each window's tooltips
+		itWindow = _mlistWindowZOrder.begin();
+		while (itWindow != _mlistWindowZOrder.end())
+		{
+			_mmanWindows.get(*itWindow)->renderTooltips();
+			itWindow++;
+		}
+
 		// Debug rendering of the window resizing areas
 //		itWindow = _mlistWindowZOrder.begin();
 //		while (itWindow != _mlistWindowZOrder.end())

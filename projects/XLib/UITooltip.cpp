@@ -20,8 +20,8 @@ namespace X
 
 	void CUITooltip::render(void)
 	{
-//		if (_mColour.alpha <= 0.0f)
-//			return;
+		if (_mColour.alpha <= 0.0f)
+			return;
 
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
 		CResourceShader* pShader = x->pResource->getShader(x->pResource->defaultRes.shader_ui);
@@ -230,8 +230,8 @@ namespace X
 
 	void CUITooltip::update(const CVector2f& vWidgetPosition, const CVector2f& vWidgetDims, float fTimeDeltaSec)
 	{
-//		if (!_mbEnabled)
-//			return;
+		if (!_mbEnabled)
+			return;
 
 		// Determine whether the mouse cursor is over this widget's container or not.
 		bool bContainerHasMouseOver = false;
@@ -247,9 +247,9 @@ namespace X
 		{
 			// Compute a CRect which represents this widget's actual screen area
 			CRect rctWidget;	// This will hold actual screen position for the widget's four corners.
-			CVector2f vWidgetAreaTLPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
-			rctWidget.miMinX = int(vWidgetAreaTLPos.x + vWidgetPosition.x);
-			rctWidget.miMinY = int(vWidgetAreaTLPos.y + vWidgetPosition.y);
+			CVector2f vWidgetAreaTLPos = vWidgetPosition;// _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
+			rctWidget.miMinX = int(vWidgetPosition.x);
+			rctWidget.miMinY = int(vWidgetPosition.y);
 			rctWidget.miMaxX = rctWidget.miMinX + int(vWidgetDims.x);
 			rctWidget.miMaxY = rctWidget.miMinY + int(vWidgetDims.y);
 
@@ -266,26 +266,25 @@ namespace X
 			if (_mfTooltipDelay >= x->pSettings->getUITooltipDelaySeconds())
 			{
 				_mfTooltipDelay = x->pSettings->getUITooltipDelaySeconds();
-				
+				bFadeIn = true;
 			}
-			bFadeIn = true;
 		}
 		else
+		{
 			_mfTooltipDelay -= fTimeDeltaSec;
+			if (_mfTooltipDelay < 0)
+				_mfTooltipDelay = 0;
+		}
 
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
 		if (bFadeIn)
 			_mColour.alpha += fTimeDeltaSec * pThemeSettings->floats.tooltipFadeSpeed;
 		else
 			_mColour.alpha -= fTimeDeltaSec * pThemeSettings->floats.tooltipFadeSpeed;
-		clamp(_mColour.alpha, 0.2f, 1.0f);
-//		_mColour.alpha = 1.0f;
+		clamp(_mColour.alpha, 0.0f, 1.0f);
+
 		// Set top left corner position of the tooltip
 		_mvPosition = vMousePos + pThemeSettings->vectors.tooltipOffsetFromCursor;
-//		_mvPosition.setZero();
-		
-
-
 	}
 
 	void CUITooltip::setEnabled(bool bEnabled)
