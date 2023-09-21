@@ -306,7 +306,7 @@ namespace X
 			x->pUI->_helperColourAdjust(_mTabColour, pThemeSettings->colours.scrollbarTabNotOver, fTimeDeltaSec, pThemeSettings->floats.scrollbarTabFadeSpeed);
 
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIScrollbar::reset(void)
@@ -316,6 +316,8 @@ namespace X
 		_mTabColour = pThemeSettings->colours.scrollbarTabNotOver;
 
 		_mbTabBeingMoved = false;
+
+		pTooltip->reset();
 	}
 
 	void CUIScrollbar::setTabPos(float fPos)

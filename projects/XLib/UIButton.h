@@ -65,7 +65,7 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
-		// Resets all colours and time based values for the widget
+		// Resets all colours and time based values for the widget, including tooltip
 		void reset(void);
 
 		// Sets the text string to be rendered over the top of the button

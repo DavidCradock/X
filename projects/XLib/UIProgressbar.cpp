@@ -142,7 +142,12 @@ namespace X
 	void CUIProgressbar::update(float fTimeDeltaSec)
 	{
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
+
+	void CUIProgressbar::reset(void)
+	{
+		pTooltip->reset();
 	}
 
 	void CUIProgressbar::setProgress(float fProgress)

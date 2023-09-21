@@ -259,6 +259,34 @@ namespace X
 		return (float)it->second.pResource->getHeight();
 	}
 
+	CResourceFramebuffer* SCResourceManager::getUIFramebuffer(void)
+	{
+		auto it = _mmapResFramebuffers.find("X:ui");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getUIFramebuffer() failed. X:ui resource doesn't exist.");
+		return it->second.pResource;
+	}
+
+	CVector2f SCResourceManager::getUIFramebufferDims(void)
+	{
+		auto it = _mmapResFramebuffers.find("X:ui");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getUIFramebufferDims() failed. X:ui resource doesn't exist.");
+		return it->second.pResource->getDimensions();
+	}
+
+	float SCResourceManager::getUIFramebufferWidth(void)
+	{
+		auto it = _mmapResFramebuffers.find("X:ui");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getUIFramebufferWidth() failed. X:ui resource doesn't exist.");
+		return (float)it->second.pResource->getWidth();
+	}
+
+	float SCResourceManager::getUIFramebufferHeight(void)
+	{
+		auto it = _mmapResFramebuffers.find("X:ui");
+		ThrowIfTrue(it == _mmapResFramebuffers.end(), "SCResourceManager::getUIFramebufferHeight() failed. X:ui resource doesn't exist.");
+		return (float)it->second.pResource->getHeight();
+	}
+
 	void SCResourceManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, int iWeight, bool bAntialiased, bool bItalic, bool bUnderlined, bool bStrikeout, bool bAppendHeightToFilename) const
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
@@ -536,9 +564,9 @@ namespace X
 		// A framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
 		defaultRes.framebuffer_ui = "X:ui";
 		pRM->addFramebuffer(defaultRes.framebuffer_ui, 512, 512, true);	// Dims are set each program loop to match the window's dimensions
-//		// A framebuffer the UI tooltips are rendered to
-//		defaultRes.framebuffer_uitooltipFB = "X:uitooltipFB";
-//		pRM->addFramebuffer(defaultRes.framebuffer_uitooltipFB, 512, 512, true);	// Dims are set when rendering each tooltip's contents
+		// A framebuffer which the UI's tooltips are rendered to. This sis shared between all widget tooltips as there is usually only one tooltip showing at once.
+		defaultRes.framebuffer_uiTooltip = "X:uiTooltip";
+		pRM->addFramebuffer(defaultRes.framebuffer_uiTooltip, 512, 512, true);	// Dims are set when rendering each tooltip's contents
 
 		/******************************************************************************************************************************
 		// Fonts

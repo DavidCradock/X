@@ -66,6 +66,9 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
+		// Resets all colours and time based values for the widget, including tooltip
+		void reset(void);
+
 		// Sets the name of the CResourceTexture2DFromFile stored in the SCResourceManager which is used to render this widget.
 		// If the resource doesn't exist, an exception occurs.
 		void setTextureFromFile(const std::string& strResourceName);

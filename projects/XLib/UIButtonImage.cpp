@@ -213,7 +213,7 @@ namespace X
 		x->pUI->_helperColourAdjust(_mColourText, colTargetText, fTimeDeltaSec, pSettings->floats.buttonImageFadeSpeed);
 
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIButtonImage::reset(void)
@@ -221,6 +221,7 @@ namespace X
 		const CUITheme::SSettings* pSettings = _mpContainer->themeGetSettings();
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
+		pTooltip->reset();
 	}
 
 	void CUIButtonImage::setText(const std::string& strText)

@@ -199,7 +199,7 @@ namespace X
 		}
 
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUICheckbox::reset(void)
@@ -209,6 +209,7 @@ namespace X
 			_mState = state::on;
 		else
 			_mState = state::off;
+		pTooltip->reset();
 	}
 
 	bool CUICheckbox::getClicked(void) const

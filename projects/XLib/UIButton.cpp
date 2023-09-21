@@ -233,6 +233,7 @@ namespace X
 		_mColourBG = pSettings->colours.buttonBGUp;
 		_mColourText = pSettings->colours.buttonTextUp;
 		_mState = state::up;
+		pTooltip->reset();
 	}
 
 	void CUIButton::setText(const std::string& strText)

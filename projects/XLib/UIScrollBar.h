@@ -71,7 +71,7 @@ namespace X
 		// Update this object and it's tooltip
 		void update(float fTimeDeltaSec, bool bUseWidgetScrollbarOffset = true);
 
-		// Resets all colours and time based values for the widget
+		// Resets all colours and time based values for the widget, including tooltip
 		void reset(void);
 
 		// Sets tab position, clamped to 0-1 range

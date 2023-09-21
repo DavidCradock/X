@@ -119,7 +119,12 @@ namespace X
 	void CUIImage::update(float fTimeDeltaSec)
 	{
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
+
+	void CUIImage::reset(void)
+	{
+		pTooltip->reset();
 	}
 
 	void CUIImage::setTextureFromFile(const std::string& strResourceName)

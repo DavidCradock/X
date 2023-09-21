@@ -356,7 +356,7 @@ namespace X
 					// Move Y position down based upon font height
 					iTextYoffset += iTextLineOffset;
 					strLineWhichFits.clear();
-					strLineWhichFits += strNextWord + " ";
+					strLineWhichFits = strNextWord + " ";
 				}
 			}
 			// If the current line being checked still has characters
@@ -369,7 +369,8 @@ namespace X
 					print(vstrTextLines[vstrTextLines.size() - 1], iPosX, iPosY + iTextYoffset, iRenderTargetWidth, iRenderTargetHeight, fFontScaling, colour);
 				iTextYoffset += iTextLineOffset;
 			}
-			iTotalRenderedHeight = iTextYoffset + iTextLineOffset;
+			iTotalRenderedHeight = iTextYoffset;// +iTextLineOffset;
+//			iTotalRenderedHeight = vstrTextLines.size() * iTextLineOffset;
 		}	// Each line of text
 
 	}

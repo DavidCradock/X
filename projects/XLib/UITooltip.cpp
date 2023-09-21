@@ -11,6 +11,7 @@ namespace X
 		_mfTooltipDelay = 0.0f;
 		_mColour.set(1.0f, 1.0f, 1.0f, 0.0f);
 		_mvDimensions.set(200, 100);
+		setText("Tooltip text goes here.", false);
 	}
 
 	CUITooltip::~CUITooltip()
@@ -20,7 +21,7 @@ namespace X
 
 	void CUITooltip::render(void)
 	{
-		if (_mColour.alpha <= 0.0f)
+		if (_mColour.alpha <= 0.0f || !_mbEnabled)
 			return;
 
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
@@ -78,10 +79,40 @@ namespace X
 		CImageAtlasDetails* idNormT = pAtlas->getImageDetailsPointer(pSettings->images.tooltipBG.normal.edgeT);
 
 		CColour col = pSettings->colours.tooltipBG *_mColour;
-		col = _mColour;
+
+		CVector2f vTooltipPos;
+		vTooltipPos.x = _mvPosition.x;
+		vTooltipPos.y = _mvPosition.y;
+		CVector2f vUIFBDims = x->pResource->getUIFramebufferDims();
+		// If goes off right edge of render target
+		if (vTooltipPos.x + _mvDimensions.x > vUIFBDims.x)
+		{
+			// Position so the tooltip's right most edge is to the left of the mouse cursor
+			vTooltipPos.x = vUIFBDims.x - _mvDimensions.x;
+		}
+		// If goes off left edge of render target
+		else if (vTooltipPos.x < 0)
+		{
+			vTooltipPos.x = 0;
+			// If the tooltip is large, it may be rendered underneath the cursor which we don't want, 
+			// move it down so it's not rendered underneath the cursor
+//			vTooltipPosition.y += vTexDimsPoint3.y * 2.0f;
+//			vTooltipPos.y += x->pWindow->getMouseCursorDimensions().y;
+		}
+		// If goes off bottom edge of render target
+		if (vTooltipPos.y + _mvDimensions.y > vUIFBDims.y)
+		{
+			// Position so the tooltip's bottom most edge is above the mouse cursor
+			vTooltipPos.y = vUIFBDims.y - _mvDimensions.y;
+		}
+		// If goes off top edge of render target
+		else if (vTooltipPos.y < 0)
+		{
+			vTooltipPos.y = 0;
+		}
 
 		// Top left corner
-		CVector2f vPos = _mvPosition;
+		CVector2f vPos = vTooltipPos;
 		CVector2f vDims = idColTL->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColTL->sTexCoords.vBL,
@@ -94,8 +125,8 @@ namespace X
 			idNormTL->sTexCoords.vTL);
 
 		// Top edge
-		vPos.x = _mvPosition.x + idColTL->vDims.x;
-		vPos.y = _mvPosition.y;
+		vPos.x = vTooltipPos.x + idColTL->vDims.x;
+		vPos.y = vTooltipPos.y;
 		vDims.x = _mvDimensions.x;
 		vDims.y = idColT->vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
@@ -109,8 +140,8 @@ namespace X
 			idNormT->sTexCoords.vTL);
 
 		// Top right corner
-		vPos.x = _mvPosition.x + idColTL->vDims.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y;
+		vPos.x = vTooltipPos.x + idColTL->vDims.x + _mvDimensions.x;
+		vPos.y = vTooltipPos.y;
 		vDims = idColTR->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColTR->sTexCoords.vBL,
@@ -123,8 +154,8 @@ namespace X
 			idNormTR->sTexCoords.vTL);
 
 		// Left edge
-		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y;
+		vPos.x = vTooltipPos.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y;
 		vDims.x = idColL->vDims.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
@@ -138,8 +169,8 @@ namespace X
 			idNormL->sTexCoords.vTL);
 
 		// Centre
-		vPos.x = _mvPosition.x + idColTL->vDims.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y;
+		vPos.x = vTooltipPos.x + idColTL->vDims.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y;
 		vDims = _mvDimensions;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColC->sTexCoords.vBL,
@@ -152,8 +183,8 @@ namespace X
 			idNormC->sTexCoords.vTL);
 
 		// Right edge
-		vPos.x = _mvPosition.x + idColTL->vDims.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y;
+		vPos.x = vTooltipPos.x + idColTL->vDims.x + _mvDimensions.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y;
 		vDims.x = idColR->vDims.x;
 		vDims.y = _mvDimensions.y;
 		pVB->addQuad2D(vPos, vDims, col,
@@ -167,8 +198,8 @@ namespace X
 			idNormR->sTexCoords.vTL);
 
 		// Bottom left corner
-		vPos.x = _mvPosition.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvDimensions.y;
+		vPos.x = vTooltipPos.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y + _mvDimensions.y;
 		vDims = idColBL->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBL->sTexCoords.vBL,
@@ -181,8 +212,8 @@ namespace X
 			idNormBL->sTexCoords.vTL);
 
 		// Bottom edge
-		vPos.x = _mvPosition.x + idColBL->vDims.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvDimensions.y;
+		vPos.x = vTooltipPos.x + idColBL->vDims.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y + _mvDimensions.y;
 		vDims.x = _mvDimensions.x;
 		vDims.y = idColB->vDims.y;
 		pVB->addQuad2D(vPos, vDims, col,
@@ -196,8 +227,8 @@ namespace X
 			idNormB->sTexCoords.vTL);
 
 		// Bottom right corner
-		vPos.x = _mvPosition.x + idColBL->vDims.x + _mvDimensions.x;
-		vPos.y = _mvPosition.y + idColTL->vDims.y + _mvDimensions.y;
+		vPos.x = vTooltipPos.x + idColBL->vDims.x + _mvDimensions.x;
+		vPos.y = vTooltipPos.y + idColTL->vDims.y + _mvDimensions.y;
 		vDims = idColBR->vDims;
 		pVB->addQuad2D(vPos, vDims, col,
 			idColBR->sTexCoords.vBL,
@@ -218,14 +249,42 @@ namespace X
 		x->pRenderer->depthTestEnable();
 		x->pRenderer->cullFaceEnable();
 
-		{
-			auto it = _mmapTexts.begin();
-			while (it != _mmapTexts.end())
-			{
-				it->second->renderNonBG();
-				it++;
-			}
-		}
+		// Render tooltip text to tooltip framebuffer
+		CResourceFramebuffer* pUITTFB = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_uiTooltip);
+		CResourceFont* pFont = x->pResource->getFont(pSettings->fonts.tooltipText);
+		CColour textColour = pSettings->colours.tooltipText;
+		textColour.alpha = col.alpha;
+		std::vector<std::string> vstrLines;
+		int iTotalRenderedHeight;
+		// Compute total height
+		pFont->printInRectNewline(
+			false,
+			_mstrText,
+			0,//vTooltipPos.x,
+			0,//vTooltipPos.y,
+			_miTextMaxWidth,
+			(int)vUIFBDims.y,
+			vstrLines,
+			iTotalRenderedHeight);
+
+		pUITTFB->resize(_miTextMaxWidth, iTotalRenderedHeight);
+		pUITTFB->bindAsRenderTarget(true, false, CColour(0.0f, 0.0f, 0.0f, 0.0f));
+
+		pFont->printInRectNewline(
+			true,
+			_mstrText,
+			0,
+			0,
+			_miTextMaxWidth,
+			iTotalRenderedHeight,
+			vstrLines,
+			iTotalRenderedHeight);
+
+		pUIFB->bindAsRenderTarget(false, false);
+
+		x->pRenderer->blendEnable();
+		pUITTFB->renderTo2DQuad(int(vTooltipPos.x + idColTL->vDims.x), int(vTooltipPos.y + idColTL->vDims.y), _miTextMaxWidth, iTotalRenderedHeight, textColour);
+		x->pRenderer->blendDisable();
 	}
 
 	void CUITooltip::update(const CVector2f& vWidgetPosition, const CVector2f& vWidgetDims, float fTimeDeltaSec)
@@ -285,11 +344,14 @@ namespace X
 
 		// Set top left corner position of the tooltip
 		_mvPosition = vMousePos + pThemeSettings->vectors.tooltipOffsetFromCursor;
+
 	}
 
 	void CUITooltip::setEnabled(bool bEnabled)
 	{
 		_mbEnabled = bEnabled;
+		if (!_mbEnabled)
+			reset();
 	}
 
 	bool CUITooltip::getEnabled(void) const
@@ -297,82 +359,46 @@ namespace X
 		return _mbEnabled;
 	}
 
-	/************************************************************************************************************************************************************/
-	/* CUIText */
-	/************************************************************************************************************************************************************/
-
-	CUIText* CUITooltip::textAdd(const std::string& strName, float fPosX, float fPosY, float fWidth, float fHeight, const std::string& strText)
+	void CUITooltip::reset(void)
 	{
-		// Throw exception if named object already exists
-		ThrowIfTrue(_mmapTexts.find(strName) != _mmapTexts.end(), "CUITooltip::textAdd(\"" + strName + "\") failed. Named object already exists.");
+		_mColour.alpha = 0.0f;
+		_mfTooltipDelay = 0.0f;
+	}
 
-		// Create new object
-		CUIText* pNewObject = new CUIText(_mpContainer, strName);
-		ThrowIfFalse(pNewObject, "CUITooltip::textAdd() failed to allocate memory for new object.");
-
-		_mmapTexts[strName] = pNewObject;
-
-		// Set settings for new object
-		pNewObject->setDimensions(CVector2f(fWidth, fHeight));
-		pNewObject->setPosition(CVector2f(fPosX, fPosY));
-		pNewObject->setText(strText);
-
+	void CUITooltip::setText(const std::string& strText, bool bEnable, int iMaxWidth)
+	{
+		_mstrText = strText;
+		_miTextMaxWidth = iMaxWidth;
+		if (bEnable)
+			setEnabled(true);
 		_computeDimensions();
-
-		return pNewObject;
-	}
-
-	CUIText* CUITooltip::textAdd(const std::string& strName, int iPosX, int iPosY, int iWidth, int iHeight, const std::string& strText)
-	{
-		return textAdd(strName, float(iPosX), float(iPosY), float(iWidth), float(iHeight), strText);
-	}
-
-	CUIText* CUITooltip::textGet(const std::string& strName)
-	{
-		auto it = _mmapTexts.find(strName);
-		ThrowIfTrue(_mmapTexts.end() == it, "CUITooltip::textGet(\"" + strName + "\") failed. Named object doesn't exist.");
-		return it->second;
-	}
-
-	void CUITooltip::textRemove(const std::string& strName)
-	{
-		auto it = _mmapTexts.find(strName);
-		if (_mmapTexts.end() == it)
-			return;
-		delete it->second;
-		_mmapTexts.erase(it);
-	}
-
-	void CUITooltip::textRemoveAll(void)
-	{
-		auto it = _mmapTexts.begin();
-		while (it != _mmapTexts.end())
-		{
-			delete it->second;
-			it++;
-		}
-		_mmapTexts.clear();
 	}
 
 	void CUITooltip::_computeDimensions(void)
 	{
-		_mvDimensions.setZero();
+		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
+		CResourceFont* pFont = x->pResource->getFont(pThemeSettings->fonts.tooltipText);
+		
+		std::vector<std::string> vstrLines;
+		int iTotalRenderedHeight;
+		pFont->printInRectNewline(
+			false,					// Render?
+			_mstrText,
+			0,						// PosX
+			0,						// PosY
+			_miTextMaxWidth,		// Render target width
+			1000,					// Render target height
+			vstrLines,
+			iTotalRenderedHeight);
 
+		int iMaxWidth = 0;
+		for (int i = 0; i < vstrLines.size(); i++)
 		{
-			auto it = _mmapTexts.begin();
-			CVector2f vBR;
-			while (it != _mmapTexts.end())
-			{
-				vBR = it->second->getPosition() + it->second->getDimensions();
-				if (_mvDimensions.x < vBR.x)
-					_mvDimensions.x = vBR.x;
-				if (_mvDimensions.y < vBR.y)
-					_mvDimensions.y = vBR.y;
-				it++;
-			}
+			int iWidth = (int)pFont->getTextWidth(vstrLines[i]);
+			if (iWidth > iMaxWidth)
+				iMaxWidth = iWidth;
 		}
-
-
-
+		_mvDimensions.y = float(iTotalRenderedHeight);
+		_mvDimensions.x = float(iMaxWidth);
 	}
 }

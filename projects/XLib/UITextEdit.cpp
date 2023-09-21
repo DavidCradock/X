@@ -359,12 +359,13 @@ namespace X
 		}
 
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUITextEdit::reset(void)
 	{
 		_mState = state::inactive;
+		pTooltip->reset();
 	}
 
 	void CUITextEdit::setText(const std::string& strText)

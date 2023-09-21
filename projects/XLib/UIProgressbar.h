@@ -62,6 +62,9 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
+		// Resets all colours and time based values for the widget, including tooltip
+		void reset(void);
+
 		// Sets progress 0-1 range
 		void setProgress(float fProgress);
 

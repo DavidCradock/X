@@ -90,6 +90,9 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
+		// Resets all colours and time based values for the widget, including tooltip
+		void reset(void);
+
 		// Add a new named data set to this graph
 		// If the named set already exists, an exception occurs
 		// Returns a pointer to the newly added data set

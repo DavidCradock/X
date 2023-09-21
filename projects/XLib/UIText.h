@@ -68,6 +68,9 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
+		// Resets all colours and time based values for the widget, including tooltip
+		void reset(void);
+
 		// Sets the text string to be rendered
 		void setText(const std::string& strText);
 

@@ -247,8 +247,8 @@ namespace X
 			// For each data set (line)
 			it = _mmapDataSets.begin();
 			CVector3f vPosBL(
-				_mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetOffset().x + idTL->vDims.x,
-				_mpContainer->getWidgetAreaTLCornerPosition().y + _mpContainer->getWidgetOffset().y + _mvDimensions.y - idBR->vDims.y,
+				_mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetOffset().x + idTL->vDims.x + _mvPosition.x,
+				_mpContainer->getWidgetAreaTLCornerPosition().y + _mpContainer->getWidgetOffset().y + _mvDimensions.y - idBR->vDims.y + _mvPosition.y,
 				0.0f);	// Bottom left corner of widget
 			vert.position.z = 0.0f;
 
@@ -286,7 +286,12 @@ namespace X
 	void CUILineGraph::update(float fTimeDeltaSec)
 	{
 		// Update this widget's tooltip
-		pTooltip->update(_mvPosition, _mvDimensions, fTimeDeltaSec);
+		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
+	}
+
+	void CUILineGraph::reset(void)
+	{
+		pTooltip->reset();
 	}
 
 	CUILineGraphDataSet* CUILineGraph::addDataset(const std::string& strName, const CColour& cCol)

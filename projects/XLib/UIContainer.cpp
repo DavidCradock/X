@@ -875,13 +875,41 @@ namespace X
 			}
 		}
 
-		// For each CUIColourSelector (No need)
+		{
+			auto it = _mmapColourSelectors.begin();
+			while (it != _mmapColourSelectors.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
 
-		// For each CUIImage widget (No need)
+		{
+			auto it = _mmapImages.begin();
+			while (it != _mmapImages.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
 
-		// For each CUILineGraph widget (No need)
+		{
+			auto it = _mmapLineGraphs.begin();
+			while (it != _mmapLineGraphs.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
 
-		// For eacg CUIProgressbar widger (No need)
+		{
+			auto it = _mmapProgressbars.begin();
+			while (it != _mmapProgressbars.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
 
 		{
 			auto it = _mmapScrollbars.begin();
@@ -892,7 +920,14 @@ namespace X
 			}
 		}
 
-		// For each CUIText widget (No need)
+		{
+			auto it = _mmapTexts.begin();
+			while (it != _mmapTexts.end())
+			{
+				it->second->reset();
+				it++;
+			}
+		}
 
 		{
 			auto it = _mmapTextEdits.begin();

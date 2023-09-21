@@ -66,15 +66,26 @@ namespace X
 //		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
 		// Show statistics
-//		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
+		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
 
 		// Tooltip window
 		CUIWindow* pWindow = x->pUI->windowAdd("tooltipwindow");
-		pWindow->setDimensions(320, 240);
-		pWindow->setPosition(320, 240);
+		pWindow->setDimensions(320, 100);
+//		pWindow->setPosition(320, 240);
+//		pWindow->setPositionCentre();
 		CUIButton* pButton = pWindow->buttonAdd("tooltipbutton", 0, 0, 320, 100);
 		pButton->pTooltip->setEnabled(true);
-//		pButton->pTooltip->textAdd("text", 0, 0, 200, 100, "Text which is quite long now eh?");
+		pButton->pTooltip->setText("Text which is quite long now eh? and now it is even longer and longer and longer...");
+
+		// UI Theme editor default window
+		pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
+		pWindow->setVisible(true);
+//		pWindow->setPositionCentre();
+
+		// UI Theme editor default window
+		pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditorUIWidgetExamples);
+		pWindow->setVisible(true);
+		pWindow->setPositionCentre();
 	}
 
 	void CApplication::onStart(void)

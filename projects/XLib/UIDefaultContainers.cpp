@@ -18,6 +18,7 @@ namespace X
 		names.settings = "X:Default:Settings";
 		names.statistics = "X:Default:Statistics";
 		names.uiThemeEditor = "X:Default:UIThemeEditor";
+		names.uiThemeEditorUIWidgetExamples = "X:Default:UIThemeEditorWidgetExamples";
 	}
 
 	void CUIDefaultContainers::initialise(void)
@@ -34,6 +35,7 @@ namespace X
 		_initSettings();
 		_initStatistics();
 		_initUIThemeEditor();
+		_initUIThemeEditorWidgetExamples();
 	}
 
 	void CUIDefaultContainers::update(float fTimeDeltaSecs)
@@ -46,6 +48,7 @@ namespace X
 		_updateSettings(fTimeDeltaSecs);
 		_updateStatistics(fTimeDeltaSecs);
 		_updateUIThemeEditor(fTimeDeltaSecs);
+		_updateUIThemeEditorWidgetExamples(fTimeDeltaSecs);
 	}
 
 	/************************************************************************************************************************************************************/
@@ -438,12 +441,84 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditor, true);
 		pWindow->setVisible(false);
+		pWindow->setDimensions(640, 480);
 	}
 
 	void CUIDefaultContainers::_updateUIThemeEditor(float fTimeDeltaSec)
 	{
 		// Is the window visible? If not, simply return
 		CUIWindow* pWindow = x->pUI->windowGet(names.uiThemeEditor);
+		if (!pWindow->getVisible())
+			return;
+	}
+
+	/************************************************************************************************************************************************************/
+	/* UI Theme Editor Widget Examples */
+	/************************************************************************************************************************************************************/
+
+	void CUIDefaultContainers::_initUIThemeEditorWidgetExamples(void)
+	{
+		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditorUIWidgetExamples, true);
+		pWindow->setVisible(false);
+		pWindow->setDimensions(500, 800);
+
+		int iXpos = 0;
+		int iYpos = 0;
+		
+		pWindow->textAdd("text0", iXpos, iYpos, 200, 40, "CUIButton: ");
+		CUIButton* pButton = pWindow->buttonAdd("button0", iXpos + 200, iYpos, 100, 30);
+		pButton->pTooltip->setText("Tooltip of a CUIButton");
+
+		iYpos += 50;
+		pWindow->textAdd("text1", iXpos, iYpos, 200, 40, "CUIButtonImage: ");
+		CUIButtonImage* pBI = pWindow->buttonImageAdd("buttonImage0", iXpos + 200, iYpos, 100, 40,
+			x->pResource->defaultRes.texture2DFromFile_default_white,
+			x->pResource->defaultRes.texture2DFromFile_default_white,
+			x->pResource->defaultRes.texture2DFromFile_default_white);
+		pBI->pTooltip->setText("Tooltip of a CUIButtonImage");
+
+		iYpos += 50;
+		pWindow->textAdd("text2", iXpos, iYpos, 200, 40, "CUICheckbox: ");
+		CUICheckbox* pCB = pWindow->checkboxAdd("Checkbox", 200, iYpos, 40, 40);
+		pCB->pTooltip->setText("Tooltip of a CUICheckbox");
+
+		iYpos += 50;
+		pWindow->textAdd("text3", iXpos, iYpos, 200, 40, "CUIColourSelector: ");
+		CUIColourSelector* pCS = pWindow->colourSelectorAdd("colourSelector", iXpos + 200, iYpos);
+
+		iYpos += 355;
+		pWindow->textAdd("text4", iXpos, iYpos, 200, 40, "CUILineGraph: ");
+		CUILineGraph* pLG = pWindow->lineGraphAdd("linegraph", iXpos + 200, iYpos, 200, 100);
+		CUILineGraphDataSet* pDataSet = pLG->addDataset("Dataset0", CColour(1.0f, 1.0f, 1.0f, 1.0f));
+		for (float f = 0; f < 10; f += 0.1f)
+			pDataSet->addValue((1.0f+sinf(f)) * 10.0f);
+		pLG->pTooltip->setText("Tooltip of a CUILineGraph");
+
+		iYpos += 100;
+		pWindow->textAdd("text5", iXpos, iYpos, 200, 40, "CUIProgressbar: ");
+		CUIProgressbar* pPB = pWindow->progressbarAdd("progressbar", iXpos + 200, iYpos, 200, 40);
+		pPB->pTooltip->setText("Tooltip of a CUIProgressbar");
+
+		iYpos += 40;
+		pWindow->textAdd("text6", iXpos, iYpos, 200, 40, "CUIScrollbar: ");
+		CUIScrollbar* pSB = pWindow->scrollbarAdd("scrollbar", iXpos + 200, iYpos, 200, 40);
+		pSB->pTooltip->setText("Tooltip of a CUIScrollbar");
+
+		iYpos += 40;
+		pWindow->textAdd("text7", iXpos, iYpos, 200, 40, "CUIText: ");
+		CUIText* pText = pWindow->textAdd("text8", iXpos + 200, iYpos, 200, 40, "CUIText Example.");
+		pText->pTooltip->setText("Tooltip of a CUIText");
+
+		iYpos += 40;
+		pWindow->textAdd("text9", iXpos, iYpos, 200, 40, "CUITextEdit: ");
+		CUITextEdit* pTE = pWindow->textEditAdd("textedit", iXpos + 200, iYpos, 200, 40, "TextEdit");
+		pTE->pTooltip->setText("Tooltip of a CUITextEdit");
+	}
+
+	void CUIDefaultContainers::_updateUIThemeEditorWidgetExamples(float fTimeDeltaSec)
+	{
+		// Is the window visible? If not, simply return
+		CUIWindow* pWindow = x->pUI->windowGet(names.uiThemeEditorUIWidgetExamples);
 		if (!pWindow->getVisible())
 			return;
 

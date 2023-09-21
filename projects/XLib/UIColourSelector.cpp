@@ -12,6 +12,7 @@ namespace X
 		_mpContainer = pContainer;
 		_mbVisible = true;
 		_mColour.set(1, 1, 1, 1);
+		_mvPosition.set(fPosX, fPosY);
 
 		_mstrScrollbarNames[EValue::brightness] = pContainer->getName() + "_" + strWidgetName + "scrollbar_brightness";
 		_mstrScrollbarNames[EValue::colourA] = pContainer->getName() + "_" + strWidgetName + "scrollbar_colA";
@@ -53,6 +54,24 @@ namespace X
 		_updateWidgetDims();
 		setColour(CColour());
 		_mpContainer->computeScrollbars();
+
+		// Tooltips
+		_mpScrollbar[EValue::brightness]->pTooltip->setText("Scroll here to adjust the brightness value of the colour.");
+		_mpScrollbar[EValue::colourA]->pTooltip->setText("Scroll here to adjust the alpha value of the colour.");
+		_mpScrollbar[EValue::colourB]->pTooltip->setText("Scroll here to adjust the blue intensity of the colour.");
+		_mpScrollbar[EValue::colourG]->pTooltip->setText("Scroll here to adjust the green intensity of the colour.");
+		_mpScrollbar[EValue::colourR]->pTooltip->setText("Scroll here to adjust the red intensity of the colour.");
+		_mpScrollbar[EValue::hue]->pTooltip->setText("Scroll here to adjust the hue value of the colour.");
+		_mpScrollbar[EValue::saturation]->pTooltip->setText("Edit here to adjust the saturation value of the colour.");
+		_mpTextEdit[EValue::brightness]->pTooltip->setText("Edit here to adjust the brightness value of the colour.");
+		_mpTextEdit[EValue::colourA]->pTooltip->setText("Edit here to adjust the alpha value of the colour.");
+		_mpTextEdit[EValue::colourB]->pTooltip->setText("Edit here to adjust the blue intensity of the colour.");
+		_mpTextEdit[EValue::colourG]->pTooltip->setText("Edit here to adjust the green intensity of the colour.");
+		_mpTextEdit[EValue::colourR]->pTooltip->setText("Edit here to adjust the red intensity of the colour.");
+		_mpTextEdit[EValue::hue]->pTooltip->setText("Edit here to adjust the hue value of the colour.");
+		_mpTextEdit[EValue::saturation]->pTooltip->setText("Edit here to adjust the saturation value of the colour.");
+		_mpColourImage->pTooltip->setText("This shows the resulting colour calculated from all the widgets above me.");
+
 	}
 
 	CUIColourSelector::~CUIColourSelector()
@@ -283,13 +302,25 @@ namespace X
 		}
 
 		// Update this widget's, widget's tooltips
+		CVector2f vPosOffset = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
 		for (int i = 0; i < 7; i++)
 		{
-			_mpScrollbar[i]->pTooltip->update(_mpScrollbar[i]->getPosition(), _mpScrollbar[i]->getDimensions(), fTimeDeltaSec);
-			_mpTextEdit[i]->pTooltip->update(_mpTextEdit[i]->getPosition(), _mpTextEdit[i]->getDimensions(), fTimeDeltaSec);
-			_mpText[i]->pTooltip->update(_mpText[i]->getPosition(), _mpText[i]->getDimensions(), fTimeDeltaSec);
+			_mpScrollbar[i]->pTooltip->update(_mpScrollbar[i]->getPosition() + vPosOffset, _mpScrollbar[i]->getDimensions(), fTimeDeltaSec);
+			_mpTextEdit[i]->pTooltip->update(_mpTextEdit[i]->getPosition() + vPosOffset, _mpTextEdit[i]->getDimensions(), fTimeDeltaSec);
+			_mpText[i]->pTooltip->update(_mpText[i]->getPosition() + vPosOffset, _mpText[i]->getDimensions(), fTimeDeltaSec);
 		}
-		_mpColourImage->pTooltip->update(_mpColourImage->getPosition(), _mpColourImage->getDimensions(), fTimeDeltaSec);
+		_mpColourImage->pTooltip->update(_mpColourImage->getPosition() + vPosOffset, _mpColourImage->getDimensions(), fTimeDeltaSec);
+	}
+
+	void CUIColourSelector::reset(void)
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			_mpScrollbar[i]->pTooltip->reset();
+			_mpTextEdit[i]->pTooltip->reset();
+			_mpText[i]->pTooltip->reset();
+		}
+		_mpColourImage->pTooltip->reset();
 	}
 
 	void CUIColourSelector::_helperSetRGBFromHSB(void)
@@ -356,7 +387,7 @@ namespace X
 	void CUIColourSelector::_updateWidgetDims(void)
 	{
 		const CUITheme::SSettings* pThemeSettings = _mpContainer->themeGetSettings();
-		CVector2f vPos;
+		CVector2f vPos = _mvPosition;
 
 		CUITextEdit* pTE;
 		CUIScrollbar* pSB;
@@ -367,11 +398,11 @@ namespace X
 		{
 			pTE = _mpContainer->textEditGet(_mstrTextEditNames[i]);
 			pTE->setDimensions(vTextEditDims);
-			vPos.x = _mvDimensions.x - vTextEditDims.x;
+			vPos.x = _mvDimensions.x - vTextEditDims.x + _mvPosition.x;
 			pTE->setPosition(vPos);
 			
 			pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[i]);
-			vPos.x = 0.0f;
+			vPos.x = _mvPosition.x;
 			pSB->setPosition(vPos);
 			pSB->setDimensions(vScrollbarDims);
 			pSB->setTabRatio(0.2f);
@@ -380,11 +411,11 @@ namespace X
 		}
 
 		_mpColourImage->setDimensions(_mvDimensions.x, 32.0f);
-		_mpColourImage->setPosition(0.0f, vPos.y);
+		_mpColourImage->setPosition(_mvPosition.x, vPos.y);
 
 		CUIText* pText;
-		vPos.x = _mvDimensions.x - pTE->getDimensions().x - (pSB->getDimensions().x * 0.5f);
-		vPos.y = pTE->getDimensions().y / 2;
+		vPos.x = _mvPosition.x + _mvDimensions.x - pTE->getDimensions().x - (pSB->getDimensions().x * 0.5f);
+		vPos.y = _mvPosition.y + pTE->getDimensions().y / 2;
 		pText = _mpContainer->textGet(_mstrTextNames[0]);
 		pText->setPosition(vPos);
 		pText->setText("Red");

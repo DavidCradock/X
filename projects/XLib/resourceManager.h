@@ -46,7 +46,7 @@ namespace X
 			std::string framebuffer_gui;						// Holds the name "X:gui" of the default framebuffer which the GUI is rendered to. It is set to the dimensions of the application's window as we don't want the GUI rendered to the possibly scaled back buffer
 			std::string framebuffer_guitooltipFB;				// Holds the name "X:guitooltipFB" of the default framebuffer the GUI tooltips are rendered to
 			std::string framebuffer_ui;							// Holds the name "X:ui" of the default framebuffer which the UI is rendered to. It is set to the dimensions of the application's window as we don't want the UI rendered to the possibly scaled back buffer
-//			std::string framebuffer_uitooltipFB;				// Holds the name "X:uitooltipFB" of the default framebuffer the UI tooltips are rendered to
+			std::string framebuffer_uiTooltip;					// Holds the name "X:uiTooltip" of the default framebuffer the UI tooltips are rendered to
 			std::string font_default;							// Holds the name "X:default" of the font object used for quick font rendering, usually used by debug code.
 			std::string mouseCursorDefaultNormal;				// Holds the name "X:default_normal" of the mouse cursor object used for the default state of the mouse cursor
 			std::string mouseCursorDefaultBusy;					// Holds the name "X:default_busy" of the mouse cursor object used for the busy state of the mouse cursor
@@ -107,6 +107,28 @@ namespace X
 
 		// As the back buffer frame buffer's dimensions are needed alot, here's a methoed to return the it's height
 		float getBackbufferHeight(void);
+
+		// As the user interface's frame buffer is needed alot, here's a method to return a pointer to it.
+		// This saves us from having to type...
+		// CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+		// or
+		// CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer("X:ui");
+		CResourceFramebuffer* getUIFramebuffer(void);
+
+		// As the user interface's frame buffer's dimensions are needed alot, here's a method to return them.
+		// This saves us from having to type...
+		// CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer(x->pResource->defaultRes.framebuffer_ui);
+		// CVector2f vFramebufferDimensions = pFramebuffer->getDimensions();
+		// or
+		// CResourceFramebuffer* pFramebuffer = x->pResource->getFramebuffer("X:ui");
+		// CVector2f vFramebufferDimensions = pFramebuffer->getDimensions();
+		CVector2f getUIFramebufferDims(void);
+
+		// As the user interface's frame buffer's dimensions are needed alot, here's a methoed to return the it's width
+		float getUIFramebufferWidth(void);
+
+		// As the user interface's frame buffer's dimensions are needed alot, here's a methoed to return the it's height
+		float getUIFramebufferHeight(void);
 
 		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by the CResourceFont class.
 		// This is so that we don't have to deal with installing fonts on the end users' system and also gives us the ability to modify the generated character images inside a paint program if desired.

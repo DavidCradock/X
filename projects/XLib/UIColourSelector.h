@@ -55,6 +55,9 @@ namespace X
 		// Update this widget and it's tooltip
 		void update(float fTimeDeltaSec);
 
+		// Resets all colours and time based values for the widget, including tooltip
+		void reset(void);
+
 		// Sets the colour represented by this widget.
 		// Sets RGBA sliders and text edit widgets to the given colour and then
 		// sets the HSB sliders and text edit widgets from the values stored in RGB sliders.
