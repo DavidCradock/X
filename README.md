@@ -20,8 +20,8 @@
 - Physics
 - Spatial partitioning.
 
-Screenshot of User interface shwoing beginnings of user interface theme editor windows...
-![Screenshot of User interface shwoing beginnings of user interface theme editor windows.](https://github.com/DavidCradock/X/blob/de2ba4890c9e25c36481feacced31a8cc5a70d2b/github_images/github_screenshot_2023_09_21.png)
+Screenshot of User interface showing beginnings of user interface theme editor windows...
+![Screenshot of User interface showing beginnings of user interface theme editor windows.](https://github.com/DavidCradock/X/blob/de2ba4890c9e25c36481feacced31a8cc5a70d2b/github_images/github_screenshot_2023_09_21.png)
 
 Screenshot of User interface with colour selector and profiler container windows...
 ![Screenshot of User interface with colour selector and profiler container windows.](https://github.com/DavidCradock/X/blob/d366dc86db4b18b5800adfd48e653434ebefb221/github_images/github_colour_selector_and_profiler_2023_09_14.png)
