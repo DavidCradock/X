@@ -56,21 +56,21 @@ namespace X
 		_mpContainer->computeScrollbars();
 
 		// Tooltips
-		_mpScrollbar[EValue::brightness]->pTooltip->setText("Scroll here to adjust the brightness value of the colour.");
-		_mpScrollbar[EValue::colourA]->pTooltip->setText("Scroll here to adjust the alpha value of the colour.");
-		_mpScrollbar[EValue::colourB]->pTooltip->setText("Scroll here to adjust the blue intensity of the colour.");
-		_mpScrollbar[EValue::colourG]->pTooltip->setText("Scroll here to adjust the green intensity of the colour.");
-		_mpScrollbar[EValue::colourR]->pTooltip->setText("Scroll here to adjust the red intensity of the colour.");
-		_mpScrollbar[EValue::hue]->pTooltip->setText("Scroll here to adjust the hue value of the colour.");
-		_mpScrollbar[EValue::saturation]->pTooltip->setText("Edit here to adjust the saturation value of the colour.");
-		_mpTextEdit[EValue::brightness]->pTooltip->setText("Edit here to adjust the brightness value of the colour.");
-		_mpTextEdit[EValue::colourA]->pTooltip->setText("Edit here to adjust the alpha value of the colour.");
-		_mpTextEdit[EValue::colourB]->pTooltip->setText("Edit here to adjust the blue intensity of the colour.");
-		_mpTextEdit[EValue::colourG]->pTooltip->setText("Edit here to adjust the green intensity of the colour.");
-		_mpTextEdit[EValue::colourR]->pTooltip->setText("Edit here to adjust the red intensity of the colour.");
-		_mpTextEdit[EValue::hue]->pTooltip->setText("Edit here to adjust the hue value of the colour.");
-		_mpTextEdit[EValue::saturation]->pTooltip->setText("Edit here to adjust the saturation value of the colour.");
-		_mpColourImage->pTooltip->setText("This shows the resulting colour calculated from all the widgets above me.");
+		_mpScrollbar[EValue::brightness]->pTooltip->setText("Scroll here to adjust the BRIGHTNESS value of the colour.");
+		_mpScrollbar[EValue::colourA]->pTooltip->setText("Scroll here to adjust the ALPHA value of the colour.");
+		_mpScrollbar[EValue::colourB]->pTooltip->setText("Scroll here to adjust the BLUE intensity of the colour.");
+		_mpScrollbar[EValue::colourG]->pTooltip->setText("Scroll here to adjust the GREEN intensity of the colour.");
+		_mpScrollbar[EValue::colourR]->pTooltip->setText("Scroll here to adjust the RED intensity of the colour.");
+		_mpScrollbar[EValue::hue]->pTooltip->setText("Scroll here to adjust the HUE value of the colour.");
+		_mpScrollbar[EValue::saturation]->pTooltip->setText("Edit here to adjust the SATURATION value of the colour.");
+		_mpTextEdit[EValue::brightness]->pTooltip->setText("Edit here to adjust the BRIGHTNESS value of the colour.");
+		_mpTextEdit[EValue::colourA]->pTooltip->setText("Edit here to adjust the ALPHA value of the colour.");
+		_mpTextEdit[EValue::colourB]->pTooltip->setText("Edit here to adjust the BLUE intensity of the colour.");
+		_mpTextEdit[EValue::colourG]->pTooltip->setText("Edit here to adjust the GREEN intensity of the colour.");
+		_mpTextEdit[EValue::colourR]->pTooltip->setText("Edit here to adjust the RED intensity of the colour.");
+		_mpTextEdit[EValue::hue]->pTooltip->setText("Edit here to adjust the HUE value of the colour.");
+		_mpTextEdit[EValue::saturation]->pTooltip->setText("Edit here to adjust the SATURATION value of the colour.");
+		_mpColourImage->pTooltip->setText("I show the resulting colour calculated from all the widgets above me.");
 
 	}
 

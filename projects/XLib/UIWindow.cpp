@@ -2,6 +2,7 @@
 #include "UIWindow.h"
 #include "UIManager.h"
 #include "singletons.h"
+#include "UITooltip.h"
 
 namespace X
 {
@@ -11,11 +12,17 @@ namespace X
 		_mbVisible = true;
 		_mbContainerIsWindow = true;
 		setResizable(false, CVector2f(), CVector2f());
+		showCloseButton(true);
+		_mpButtonClose = new CUIButton(this);
+		ThrowIfMemoryNotAllocated(_mpButtonClose);
+		_mpButtonClose->setDimensions(24, 24);
+		_mpButtonClose->setText("x");
+		_mpButtonClose->pTooltip->setText("Close Window.");
 	}
 
 	CUIWindow::~CUIWindow()
 	{
-
+		delete _mpButtonClose;
 	}
 
 	void CUIWindow::update(float fTimeDeltaSec)
@@ -34,17 +41,27 @@ namespace X
 			_mvPosition.y = 0;
 		if (_mvPosition.y + vWindowDims.y > vAppWndDims.y)
 			_mvPosition.y = vAppWndDims.y - vWindowDims.y;
+
+		// Update close button
+		if (_mbShowCloseButton)
+		{
+			_mpButtonClose->update(fTimeDeltaSec);
+			if (_mpButtonClose->getClicked())
+			{
+				setVisible(false);
+				
+			}
+		}
 	}
 
 	void CUIWindow::render(void)
 	{
-
 		if (!_mbVisible)
 			return;
 
 		x->pProfiler->begin("CUIWindow::render()");
 
-		_renderBorders();
+		_renderBordersAndWindowButtons();
 
 		// Render all of the widgets
 		CUIContainer::render();
@@ -70,7 +87,7 @@ namespace X
 		x->pProfiler->end("CUIWindow::render()");
 	}
 
-	void CUIWindow::_renderBorders(void)
+	void CUIWindow::_renderBordersAndWindowButtons(void)
 	{
 		// Get required resources needed to render things
 		CResourceVertexBufferCPT2* pVB = x->pResource->getVertexBufferCPT2(x->pResource->defaultRes.vertexbufferCPT2_default);
@@ -278,6 +295,14 @@ namespace X
 			idNormBR->sTexCoords.vTR,
 			idNormBR->sTexCoords.vTL);
 
+		// Close button background
+		if (_mbShowCloseButton)
+		{
+			_mpButtonClose->setPosition(
+				-getWidgetOffset().x + getDimsIncludingTheme().x - _mpButtonClose->getDimensions().x - idColTR->vDims.x,
+				-getWidgetOffset().y - idColTR->vDims.y);
+			_mpButtonClose->renderBG(pVB);
+		}
 		pVB->update();
 		pVB->render();
 
@@ -285,6 +310,13 @@ namespace X
 		pShader->unbind();	// Unbind the GUI shader
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
+
+		// Close button text and tooltip
+		if (_mbShowCloseButton)
+		{
+			_mpButtonClose->renderNonBG();
+			_mpButtonClose->renderTooltip();
+		}
 	}
 
 	CVector2f CUIWindow::getDimsIncludingTheme(void)
@@ -566,5 +598,10 @@ namespace X
 		pVB->removeGeom();
 		pTexture->unbind();
 		pShader->unbind();
+	}
+
+	void CUIWindow::showCloseButton(bool bShowCloseButton)
+	{
+		_mbShowCloseButton = bShowCloseButton;
 	}
 }

@@ -490,9 +490,9 @@ namespace X
 		pWindow->textAdd("text4", iXpos, iYpos, 200, 40, "CUILineGraph: ");
 		CUILineGraph* pLG = pWindow->lineGraphAdd("linegraph", iXpos + 200, iYpos, 200, 100);
 		CUILineGraphDataSet* pDataSet = pLG->addDataset("Dataset0", CColour(1.0f, 1.0f, 1.0f, 1.0f));
-		for (float f = 0; f < 10; f += 0.1f)
-			pDataSet->addValue((1.0f+sinf(f)) * 10.0f);
 		pLG->pTooltip->setText("Tooltip of a CUILineGraph");
+		for (float f = 0; f < 15; f += 0.3f)
+			pDataSet->addValue((1.0f+sinf(f)) * 10.0f);
 
 		iYpos += 100;
 		pWindow->textAdd("text5", iXpos, iYpos, 200, 40, "CUIProgressbar: ");

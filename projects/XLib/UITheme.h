@@ -121,7 +121,6 @@ namespace X
 			SImageType scrollbarBG;			// Image names for CUIScrollbar's background
 			SImageType scrollbarTab;		// Image names for CUIScrollbar's tab
 			SImageType textEditBG;			// Image names for CUITextEdit's background.
-//			SImageType textScrollBG;		// Image names for CUITextScroll's background.
 			SImageType tooltipBG;			// Image names for CUITooltip's background.
 			SImageType windowBG;			// Image names for CUIWindow's background.
 		};
@@ -133,7 +132,6 @@ namespace X
 			std::string buttonImage;				// Font used when rendering a buttonImage's text
 			std::string text;						// Font used when rendering a UIText widget.
 			std::string textEdit;					// Font used when rendering the text of a UITextEdit widget.
-//			std::string textScroll;					// Font used when rendering the text of a UITextScroll widget's text.
 			std::string tooltipText;				// Font used when rendering the text of a UITooltip widget's text.
 			std::string windowTitlebar;				// Font used when rendering a window's titlebar text.
 		};
@@ -170,8 +168,6 @@ namespace X
 			CColour textEditBGInactive;
 			CColour textEditTextActive;					// CUITextEdit's text colour when active
 			CColour textEditTextInactive;				// CUITextEdit's text colour when inactive
-//			CColour textScrollBG;						// CUITextScroll's colour
-//			CColour textScrollText;						// CUITextScroll's text colour
 			CColour tooltipBG;							// Background colour of a tooltip
 			CColour tooltipText;						// Tooltip text colour
 			CColour windowBGFocused;					// CUIWindow background vertex colour when focused
@@ -221,7 +217,6 @@ namespace X
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.
 			float scrollbarTabFadeSpeed;			// Rate at which scrollbar's tab colours interpolate between
 			float textEditFlashSpeed;				// Rate at which the additional character that flashes when a text edit is active.
-//			float textScrollScrollbarWidth;			// Width of a CUITextScroll object's vertical scrollbar.
 			float tooltipFadeSpeed;					// Rate at which tooltips fade in/out
 			float windowResizeHandleOffsetX;		// The distance from a window's borders along X where clicking the mouse can begin window resizing.
 			float windowResizeHandleOffsetY;		// The distance from a window's borders along Y where clicking the mouse can begin window resizing.

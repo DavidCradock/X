@@ -60,8 +60,11 @@ namespace X
 		// which were set with setResizable()
 		void getResizableDims(CVector2f& vMinDims, CVector2f& vMaxDims) const;
 
+		// Sets whether this window shows the close button in the top right of the titlebar or not.
+		// By default, this is enabled.
+		void showCloseButton(bool bShowCloseButton = true);
 	private:
-		void _renderBorders(void);
+		void _renderBordersAndWindowButtons(void);
 
 		// Whether this window is in focus or not.
 		bool _mbInFocus;
@@ -108,5 +111,8 @@ namespace X
 
 		// Debug rendering of computed areas in _mrctResizeArea
 		void _debugRenderAreas(void);
+
+		bool _mbShowCloseButton;	// Whether this window has a close button or not
+		CUIButton* _mpButtonClose;	// The close button
 	};
 }

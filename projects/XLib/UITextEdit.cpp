@@ -166,14 +166,20 @@ namespace X
 			iOffsetX = 0;
 
 		CVector2f vScissorDims;
-		vScissorDims.x = _mvDimensions.x - idTL->vDims.x - idBR->vDims.x;
+		vScissorDims.x = _mvDimensions.x - idTL->vDims.x - idBR->vDims.x;	// Limit along X, inside of text edit text area
 		vScissorDims.y = _mpContainer->getWidgetAreaDimensions().y;
 		CVector2f vScissorPos;
-		vScissorPos.x = _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x;
+		vScissorPos.x = _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x;	// Place scissor pos to TL of text edit text area
+		vScissorPos.x += _mpContainer->getWidgetOffset().x;	// Offset position by scrollbars
+
+		// At the moment, scissor X pos can be to the left or right of the window's widget area.
+		if (vScissorPos.x < _mpContainer->getWidgetAreaTLCornerPosition().x)
+			vScissorPos.x = _mpContainer->getWidgetAreaTLCornerPosition().x;
+		if (vScissorPos.x + vScissorDims.x > _mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetAreaDimensions().x)
+			vScissorDims.x = _mpContainer->getWidgetAreaTLCornerPosition().x + _mpContainer->getWidgetAreaDimensions().x - vScissorPos.x ;
 		vScissorPos.y = (float)x->pWindow->getHeight();	// Top of screen
 		vScissorPos.y -= _mpContainer->getWidgetAreaTLCornerPosition().y;
 		vScissorPos.y -= _mpContainer->getWidgetAreaDimensions().y;
-		//vScissorPos.y -= (_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + _mpContainer->getWidgetOffset().y + idTL->vDims.y);
 		
 		x->pRenderer->scissorTestEnable();
 		x->pRenderer->scissorTest((int)vScissorPos.x, (int)vScissorPos.y, (int)vScissorDims.x, (int)vScissorDims.y);
@@ -185,7 +191,7 @@ namespace X
 			col = pThemeSettings->colours.textEditTextInactive;
 
 		pFont->print(strFinalText,
-			int(iOffsetX + _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x),
+			int(iOffsetX + _mpContainer->getWidgetAreaTLCornerPosition().x + _mvPosition.x + idTL->vDims.x + _mpContainer->getWidgetOffset().x),
 			int(_mpContainer->getWidgetAreaTLCornerPosition().y + _mvPosition.y + idTL->vDims.y + _mpContainer->getWidgetOffset().y),
 			x->pWindow->getWidth(), x->pWindow->getHeight(), 1.0f, col);
 		
