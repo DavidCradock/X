@@ -4,6 +4,8 @@
 #include "singletons.h"
 #include "stringUtils.h"
 #include "UITooltip.h"
+#include "UIManager.h"
+#include "profiler.h"
 
 namespace X
 {

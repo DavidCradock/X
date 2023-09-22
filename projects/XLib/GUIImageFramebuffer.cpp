@@ -3,6 +3,8 @@
 #include "GUIManager.h"
 #include "GUITooltip.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "input.h"
 
 namespace X
 {

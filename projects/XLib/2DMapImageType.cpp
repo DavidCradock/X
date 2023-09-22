@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "2DMapImageType.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "logging.h"
 
 namespace X
 {

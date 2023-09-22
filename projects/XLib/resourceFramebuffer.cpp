@@ -2,6 +2,10 @@
 #include "resourceFramebuffer.h"
 #include "openGLExtensions.h"
 #include "singletons.h"
+#include "settings.h"
+#include "logging.h"
+#include "window.h"
+#include "resourceManager.h"
 
 namespace X
 {

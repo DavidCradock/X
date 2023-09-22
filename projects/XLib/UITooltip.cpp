@@ -1,6 +1,10 @@
 #include "PCH.h"
 #include "UITooltip.h"
 #include "singletons.h"
+#include "UIManager.h"
+#include "input.h"
+#include "renderer.h"
+#include "settings.h"
 
 namespace X
 {

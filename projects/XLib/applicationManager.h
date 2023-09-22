@@ -3,6 +3,7 @@
 #include "singletons.h"
 #include "applicationBase.h"
 #include "timer.h"
+#include "vector2f.h"
 
 namespace X
 {

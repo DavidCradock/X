@@ -2,6 +2,9 @@
 #include "GUITheme.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "logging.h"
+#include "audioManager.h"
 
 namespace X
 {

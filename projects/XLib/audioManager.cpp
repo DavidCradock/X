@@ -2,6 +2,8 @@
 #include "audioManager.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "logging.h"
+#include "resourceLoadingScreen.h"
 
 namespace X
 {

@@ -3,6 +3,7 @@
 #include "logging.h"
 #include "singletons.h"		// For printResults()
 #include "stringUtils.h"	// For printResults()
+#include "resourceManager.h"
 
 namespace X
 {

@@ -4,6 +4,7 @@
 #include "logging.h"
 #include "vector4f.h"
 #include "singletons.h"
+#include "resourceManager.h"
 
 namespace X
 {

@@ -1,6 +1,22 @@
 #pragma once
 #include "PCH.h"
 #include "singletons.h"
+#include "2DRenderer.h"
+#include "applicationManager.h"
+#include "audioManager.h"
+#include "fileManager.h"
+#include "GUIManager.h"
+#include "input.h"
+#include "logging.h"
+#include "messaging.h"
+#include "physicsManager.h"
+#include "profiler.h"
+#include "rendererManager.h"
+#include "resourceLoadingScreen.h"
+#include "resourceManager.h"
+#include "settings.h"
+#include "UIManager.h"
+#include "window.h"
 
 namespace X
 {

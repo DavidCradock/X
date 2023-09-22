@@ -2,6 +2,8 @@
 #include "resourceDepthbuffer.h"
 #include "openGLExtensions.h"
 #include "singletons.h"
+#include "logging.h"
+#include "resourceManager.h"
 
 namespace X
 {

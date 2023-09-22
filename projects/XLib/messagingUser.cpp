@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "messagingUser.h"
 #include "singletons.h"
+#include "messaging.h"
 
 namespace X
 {

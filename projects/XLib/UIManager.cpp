@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "UIManager.h"
 #include "singletons.h"
+#include "profiler.h"
+#include "input.h"
 
 namespace X
 {

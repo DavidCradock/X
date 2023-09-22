@@ -3,6 +3,8 @@
 #include "utilities.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "logging.h"
+#include "resourceManager.h"
 
 namespace X
 {

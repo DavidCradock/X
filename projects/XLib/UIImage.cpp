@@ -3,6 +3,7 @@
 #include "UIContainer.h"
 #include "singletons.h"
 #include "UITooltip.h"
+#include "logging.h"
 
 namespace X
 {

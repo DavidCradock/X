@@ -3,6 +3,12 @@
 #include "stringUtils.h"
 #include "singletons.h"
 #include "profiler.h"
+#include "logging.h"
+#include "resourceManager.h"
+#include "UIManager.h"
+#include "GUIManager.h"
+#include "input.h"
+#include "2DRenderer.h"
 
 // Include each application
 

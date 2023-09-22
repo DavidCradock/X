@@ -3,6 +3,8 @@
 #include "UIManager.h"
 #include "singletons.h"
 #include "UITooltip.h"
+#include "profiler.h"
+#include "input.h"
 
 namespace X
 {

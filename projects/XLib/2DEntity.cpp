@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "2DEntity.h"
 #include "singletons.h"
+#include "logging.h"
 
 namespace X
 {

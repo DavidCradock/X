@@ -16,9 +16,6 @@
     <Filter Include="2D">
       <UniqueIdentifier>{30930f28-af09-48c8-986b-b056a207f254}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\TODO">
-      <UniqueIdentifier>{29a893ac-a9c1-4364-9d18-2414c52e6e7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{8f36b270-3a79-497a-a92f-8205d9b73a62}</UniqueIdentifier>
     </Filter>

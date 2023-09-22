@@ -6,6 +6,9 @@
 #include "UITheme.h"
 #include "UITooltip.h"
 #include "logging.h"
+#include "UIManager.h"
+#include "input.h"
+#include "settings.h"
 
 namespace X
 {

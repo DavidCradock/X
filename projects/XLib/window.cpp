@@ -3,6 +3,11 @@
 #include "openGLExtensions.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "logging.h"
+#include "settings.h"
+#include "input.h"
+#include "resourceManager.h"
+#include "applicationManager.h"
 
 namespace X
 {

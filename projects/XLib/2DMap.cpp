@@ -3,6 +3,8 @@
 #include "singletons.h"
 #include "vector3f.h"
 #include "stringUtils.h"
+#include "logging.h"
+#include "resourceManager.h"
 
 namespace X
 {

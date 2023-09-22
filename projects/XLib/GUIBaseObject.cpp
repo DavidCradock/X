@@ -2,6 +2,8 @@
 #include "GUIBaseObject.h"
 #include "GUIManager.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "input.h"
 
 namespace X
 {

@@ -2,6 +2,9 @@
 #include "resourceMouseCursor.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "logging.h"
+#include "window.h"
+#include "UIManager.h"
 
 namespace X
 {

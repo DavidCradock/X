@@ -3,6 +3,7 @@
 #include "stringUtils.h"
 #include "logging.h"
 #include "singletons.h"
+#include "fileManager.h"
 
 namespace X
 {

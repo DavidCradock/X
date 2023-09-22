@@ -2,6 +2,7 @@
 #include "SMCamera.h"
 #include "utilities.h"
 #include "singletons.h"
+#include "input.h"
 
 namespace X
 {

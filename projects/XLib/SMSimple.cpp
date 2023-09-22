@@ -2,6 +2,8 @@
 #include "SMSimple.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "logging.h"
 
 namespace X
 {

@@ -5,6 +5,8 @@
 #include "singletons.h"
 #include "UITheme.h"
 #include "UITooltip.h"
+#include "logging.h"
+#include "renderer.h"
 
 namespace X
 {

@@ -1,26 +1,29 @@
 #pragma once
 #include "PCH.h"
 #include "singleton.h"
-#include "2DRenderer.h"
-#include "applicationManager.h"
-#include "audioManager.h"
-#include "fileManager.h"
-#include "GUIManager.h"
-#include "input.h"
-#include "logging.h"
-#include "messaging.h"
-#include "physicsManager.h"
-#include "profiler.h"
-#include "rendererManager.h"
-#include "resourceLoadingScreen.h"
-#include "resourceManager.h"
-#include "settings.h"
-#include "UIManager.h"
-#include "window.h"
+
 
 
 namespace X
 {
+	class SC2DRenderer;
+	class SCApplicationManager;
+	class SCAudioManager;
+	class SCFileManager;
+	class SCGUIManager;
+	class SCInputManager;
+	class SCLog;
+	class SCResourceLoadingScreen;
+	class SCMessageSystem;
+	class SCPhysicsManager;
+	class CProfiler;
+	class RendererManager;
+	class Renderer;
+	class SCResourceManager;
+	class SCSettings;
+	class SCUIManager;
+	class SCWindow;
+
 	// A class to get pointers to all singletons found throughout the codebase.
 	// We have a global object available declared below which everything, if including this header,
 	// can use to gain access to all singleton objects.

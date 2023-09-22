@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "octTree.h"
 #include "singletons.h"
+#include "logging.h"
 
 namespace X
 {

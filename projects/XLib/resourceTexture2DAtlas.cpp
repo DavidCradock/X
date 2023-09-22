@@ -2,6 +2,9 @@
 #include "resourceTexture2DAtlas.h"
 #include "image.h"
 #include "singletons.h"
+#include "window.h"
+#include "logging.h"
+#include "resourceManager.h"
 
 namespace X
 {

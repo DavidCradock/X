@@ -2,6 +2,8 @@
 #include "resourceTexture2DFromImage.h"
 #include "image.h"
 #include "singletons.h"
+#include "logging.h"
+#include "resourceManager.h"
 
 namespace X
 {

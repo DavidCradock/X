@@ -3,6 +3,8 @@
 #include "GUIManager.h"
 #include "stringUtils.h"
 #include "singletons.h"
+#include "logging.h"
+#include "UIManager.h"
 
 namespace X
 {

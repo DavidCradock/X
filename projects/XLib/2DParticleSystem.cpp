@@ -1,6 +1,9 @@
 #include "PCH.h"
 #include "2DParticleSystem.h"
 #include "singletons.h"
+#include "resourceManager.h"
+#include "utilities.h"
+#include "logging.h"
 
 namespace X
 {

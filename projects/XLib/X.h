@@ -19,6 +19,7 @@
 #include "2DRenderer.h"
 #include "2DWorld.h"
 // AI
+#include "aStarPathfinding.h"
 #include "finiteStateMachine.h"
 #include "geneticAlgorithm.h"
 #include "neuralNetFeedForward.h"
@@ -29,22 +30,23 @@
 #include "audioManager.h"
 // Core
 #include "colour.h"
-#include "fileManager.h"
-#include "fileMemory.h"
-#include "image.h"
-#include "imageAtlas.h"
 #include "logging.h"
 #include "openGLExtensions.h"
 #include "precision.h"
 #include "profiler.h"
 #include "settings.h"
-#include "singleton.h"
 #include "singletons.h"
 #include "stringUtils.h"
+#include "templateManager.h"
+#include "templateManagerNoRef.h"
+#include "templateManagerNoRefLockable.h"
 #include "timer.h"
 #include "timerMinimal.h"
 #include "utilities.h"
 #include "window.h"
+// File archive
+#include "fileManager.h"
+#include "fileMemory.h"
 // GUI
 #include "GUIBaseObject.h"
 #include "GUIButton.h"
@@ -63,6 +65,9 @@
 #include "GUITextEdit.h"
 #include "GUITheme.h"
 #include "GUITooltip.h"
+// Image
+#include "image.h"
+#include "imageAtlas.h"
 // Input
 #include "input.h"
 #include "inputJoystick.h"
@@ -82,8 +87,20 @@
 #include "vector3f.h"
 #include "vector3r.h"
 #include "vector4f.h"
+// Messaging
+#include "messaging.h"
+#include "messagingMessage.h"
+#include "messagingService.h"
+#include "messagingUser.h"
+// Patterns
+#include "singleton.h"
 // Physics
 #include "physicsManager.h"
+// Renderer
+#include "renderer.h"
+#include "rendererManager.h"
+#include "rendererOpenGL.h"
+#include "rendererVulkan.h"
 // Resources
 #include "resourceBase.h"
 #include "resourceDepthbuffer.h"
@@ -91,6 +108,7 @@
 #include "resourceFramebuffer.h"
 #include "resourceLoadingScreen.h"
 #include "resourceManager.h"
+#include "resourceMouseCursor.h"
 #include "resourceShader.h"
 #include "resourceTexture2DAtlas.h"
 #include "resourceTexture2DFromFile.h"
@@ -111,17 +129,29 @@
 #include "SMSimple.h"
 // Spatial partitioning
 #include "octTree.h"
+#include "octTreeEntity.h"
+#include "octTreeNode.h"
 #include "quadTree.h"
 #include "quadTreeEntity.h"
 #include "quadTreeNode.h"
 // User Interface
+// User Interface widgets
 #include "UIButton.h"
+#include "UIButtonImage.h"
+#include "UICheckbox.h"
+#include "UIColourSelector.h"
+#include "UIImage.h"
+#include "UILineGraph.h"
+#include "UIProgressbar.h"
+#include "UIScrollBar.h"
+#include "UIText.h"
+#include "UITextEdit.h"
+// User interface other
 #include "UIContainer.h"
 #include "UIDefaultContainers.h"
 #include "UIManager.h"
 #include "UIObserver.h"
 #include "UIScrollBar.h"
-#include "UIText.h"
 #include "UITheme.h"
 #include "UITooltip.h"
 #include "UIWindow.h"
