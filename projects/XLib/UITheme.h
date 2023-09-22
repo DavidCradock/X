@@ -45,6 +45,9 @@ namespace X
 		// Constructor which sets everything to the default theme
 		CUITheme();
 
+		// Sets the theme name for this theme
+		void setThemeName(const std::string& strName);
+
 		// Loads the theme with all it's settings from a file on disk previously saved with save()
 		// The filename given, if it doesn't have the ".theme" extension, it is added.
 		// If the file couldn't be opened, an exception occurs.

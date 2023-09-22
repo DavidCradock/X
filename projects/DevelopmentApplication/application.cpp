@@ -10,7 +10,7 @@ namespace X
 		x->pLoadingScreen->setFadeOut(0.0f);
 
 		// Set window title bar text and set icon
-		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle statistics window. F4: Toggle profiling window.");
+		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle defaults window.");
 		x->pWindow->setIcon(IDI_ICON1);
 
 		// Set mouse cursor
@@ -62,16 +62,17 @@ namespace X
 //		SCWindow::getPointer()->setVsync(false);
 
 		// Real simple as it gets framerate text
+		timer.setAveragedFPSRate(1.0f);
 		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
 		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
 		// Show statistics
-		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
+//		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
 
 		// UI Theme editor default window
-		CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
-		pWindow->setVisible(true);
-		pWindow->setPositionCentre();
+//		CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
+//		pWindow->setVisible(true);
+//		pWindow->setPositionCentre();
 	}
 
 	void CApplication::onStart(void)
@@ -125,22 +126,22 @@ namespace X
 		if (x->pInput->key.once(KC_F2))
 			SCWindow::getPointer()->setVsync(!SCWindow::getPointer()->getVSyncEnabled());
 
-		// Toggle statistics window
+		// Toggle defaults window
 		if (x->pInput->key.once(KC_F3))
 		{
 //			CGUIContainer* pStatsCont = x->pGUI->getContainer("X:Default:Statistics");
 //			pStatsCont->setVisible(!pStatsCont->getVisible());
 
-			CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics);
+			CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.defaults);
 			pWindow->setVisible(!pWindow->getVisible());
 		}
 
 		// Toggle profiling window
-		if (x->pInput->key.once(KC_F4))
-		{
-			CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling);
-			pWindow->setVisible(!pWindow->getVisible());
-		}
+//		if (x->pInput->key.once(KC_F4))
+//		{
+//			CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling);
+//			pWindow->setVisible(!pWindow->getVisible());
+//		}
 
 		return true;
 	}

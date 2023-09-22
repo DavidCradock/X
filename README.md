@@ -36,8 +36,6 @@ Screenshot of the development application showing GUI and simple 3D scene manage
 ![Screenshot of the development application showing GUI and simple 3D scene manager with shadow rendering.](https://github.com/DavidCradock/X/blob/e0d565a4164a812c36f54f97c38803a583d7033d/github_images/github_screenshot_2023_07_03.png)
 
 ** TODO **
-Remove usage of singletons inside of X as it causes too much recompilation? It is faster though for runtime, so maybe leave it.
-Remove all unnessessary comments. Some of them are bloomin' obvious (// Set bool to true lol)
 Check 16k texture update performance to see if we need to make smaller textures for image editor.
 Create image editor as default window container
 Add menu widget first

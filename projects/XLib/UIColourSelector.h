@@ -65,6 +65,9 @@ namespace X
 
 		// Returns the colour of the widget
 		CColour getColour(void) const;
+
+		// Returns true if one of the scrollbars or text edit boxes values has changed
+		bool getSomethingHasChanged(void);
 	private:
 		// Common amoung widgets
 		CVector2f _mvDimensions;			// Dimensions of the widget
@@ -101,5 +104,7 @@ namespace X
 
 		// Sets HSB sliders and their text from values in RGB sliders
 		void _helperSetHSBFromRGB(void);
+
+		bool _mbSomethingHasChanged;		// Used by getSomethingHasChanged()
 	};
 }

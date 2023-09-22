@@ -14,6 +14,7 @@ namespace X
 		_mbInitialised = false;
 		// Set names of each default container
 		names.console = "X:Default:Console";
+		names.defaults = "X:Default:Defaults";
 		names.fontGenerator = "X:Default:FontGenerator";
 		names.imageEditor = "X:Default:ImageEditor";
 		names.profiling = "X:Default:Profiling";
@@ -30,6 +31,7 @@ namespace X
 
 		// Call each default container's init method
 		_initConsole();
+		_initDefaults();
 		_initFontGenerator();
 		_initImageEditor();
 		_initProfiling();
@@ -42,6 +44,7 @@ namespace X
 	{
 		// Call each default container's update method
 		_updateConsole(fTimeDeltaSecs);
+		_updateDefaults(fTimeDeltaSecs);
 		_updateFontGenerator(fTimeDeltaSecs);
 		_updateImageEditor(fTimeDeltaSecs);
 		_updateProfiling(fTimeDeltaSecs);
@@ -75,6 +78,109 @@ namespace X
 	}
 
 	/************************************************************************************************************************************************************/
+	/* Defaults */
+	/************************************************************************************************************************************************************/
+
+	void CUIDefaultContainers::_initDefaults(void)
+	{
+		CUIWindow* pWindow = x->pUI->windowAdd(names.defaults, true);
+		pWindow->setVisible(true);
+		pWindow->setDimensions(200, 310);
+		pWindow->setPosition(99999, 99999);
+
+		int iYpos = 0;
+		CUIButton* pBut = pWindow->buttonAdd("Console", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:Console\" default container.");
+
+		pBut = pWindow->buttonAdd("FontGenerator", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:FontGenerator\" default container.");
+
+		pBut = pWindow->buttonAdd("ImageEditor", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:ImageEditor\" default container.");
+
+		pBut = pWindow->buttonAdd("Profiling", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:Profiling\" default container.");
+
+		pBut = pWindow->buttonAdd("Settings", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:Settings\" default container.");
+
+		pBut = pWindow->buttonAdd("Statistics", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:Statistics\" default container.");
+
+		pBut = pWindow->buttonAdd("UIThemeEditor", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:UIThemeEditor\" default container.");
+	}
+
+	void CUIDefaultContainers::_updateDefaults(float fTimeDeltaSec)
+	{
+		// Is the container visible? If not, simply return
+		CUIWindow* pWindow = x->pUI->windowGet(names.defaults);
+		if (!pWindow->getVisible())
+			return;
+
+		if (pWindow->buttonGet("Console")->getClicked())
+		{
+			CUIContainer* pCont = x->pUI->containerGet(x->pUI->getDefaultContainers()->names.console);
+			pCont->setVisible(!pCont->getVisible());
+			return;
+		}
+
+		if (pWindow->buttonGet("FontGenerator")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.fontGenerator);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("ImageEditor")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.imageEditor);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("Profiling")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("Settings")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.settings);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("Statistics")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("UIThemeEditor")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+		}
+
+	}
+
+	/************************************************************************************************************************************************************/
 	/* Font generator */
 	/************************************************************************************************************************************************************/
 
@@ -82,6 +188,7 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.fontGenerator, true);
 		pWindow->setVisible(false);
+		pWindow->setDimensions(320, 240);
 	}
 
 	void CUIDefaultContainers::_updateFontGenerator(float fTimeDeltaSec)
@@ -241,6 +348,7 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.settings, true);
 		pWindow->setVisible(false);
+		pWindow->setDimensions(320, 240);
 	}
 
 	void CUIDefaultContainers::_updateSettings(float fTimeDeltaSec)
@@ -261,7 +369,7 @@ namespace X
 		CUIWindow* pWindow = x->pUI->windowAdd(names.statistics, true);
 		pWindow->setVisible(false);
 
-		pWindow->setDimensions(450.0f, 330.0f);
+		pWindow->setDimensions(450.0f, 290.0f);
 		pWindow->setPosition(99999, 0);
 
 		_mStatistics.fAddValueToLinegraphDataset = 0.0f;
@@ -304,8 +412,8 @@ namespace X
 		pWindow->textAdd("CPU_info", 0.0f, fYpos, pWindow->getDimensions().x, fTextHeight, ""); fYpos += fTextHeight;
 
 		// Close button
-		fYpos += 10;
-		CUIButton* pButton = pWindow->buttonAdd("Close", 225.0f - 50.0f, fYpos, 100.0f, 30.0f); fYpos += 30.0f;
+//		fYpos += 10;
+//		CUIButton* pButton = pWindow->buttonAdd("Close", 225.0f - 50.0f, fYpos, 100.0f, 30.0f); fYpos += 30.0f;
 		// Tooltip
 //		pButton->pTooltip->setEnabled(true);
 //		pButton->pTooltip->textAdd("tooltipText", 0, 0, 500, 100, "Click here to close this statistics window.");
@@ -424,12 +532,10 @@ namespace X
 			pWindow->textGet("Text_Mem2")->setText("MemProcessiPrivateUsage: " + std::to_string((((memInfo.proc.iPrivateUsage) / 1024) / 1024)) + "MB");
 		}
 
-		
-
 		// Close button
-		CUIButton* pButton = pWindow->buttonGet("Close");
-		if (pButton->getClicked())
-			pWindow->setVisible(false);
+//		CUIButton* pButton = pWindow->buttonGet("Close");
+//		if (pButton->getClicked())
+//			pWindow->setVisible(false);
 	}
 
 	/************************************************************************************************************************************************************/
@@ -439,16 +545,41 @@ namespace X
 	void CUIDefaultContainers::_initUIThemeEditor(void)
 	{
 		CUIButton* pButton;
+		CUIText* pText;
+
+		// Main window
 		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditor, true);
 		pWindow->setVisible(false);
-		pWindow->setDimensions(640, 480);
+		pWindow->setDimensions(640, 700);
 
 		pButton = pWindow->buttonAdd("Help", 0, 0, 200, 40);
 		pButton->pTooltip->setText("Open the help window.");
 
 		pButton = pWindow->buttonAdd("Widget Preview", 200, 0, 200, 40);
 		pButton->pTooltip->setText("Open the user interface editor's widget preview window.");
+		
 
+		// Colour selectors
+		int iPosX = 0;
+		int iPosY = 50;
+
+		pText = pWindow->textAdd("AmbientLight", iPosX, iPosY, 200, 40, "AmbientLight colour"); iPosY += 30;
+		CUITheme::SSettings* pThemeSettings = pWindow->themeGetSettings();
+		CUIColourSelector* pCS = pWindow->colourSelectorAdd("AmbientLight", iPosX, iPosY);
+		pCS->setColour(pThemeSettings->colours.ambientLight); iPosY += 370;
+
+		pText = pWindow->textAdd("MouseLight", iPosX, iPosY, 200, 40, "MouseLight colour"); iPosY += 30;
+		pCS = pWindow->colourSelectorAdd("MouseLight", iPosX, iPosY);
+		pCS->setColour(pThemeSettings->colours.mouseLight); iPosY += 370;
+
+		pText = pWindow->textAdd("MouseLightDistance", iPosX, iPosY, 300, 40, "MouseLight Distance"); iPosY += 30;
+		CUIScrollbar* pSB = pWindow->scrollbarAdd("MouseLightDistance", iPosX, iPosY, 500, 30);
+		pSB->setTabPos(pThemeSettings->floats.normalMouseCursorDistance * 0.01f); iPosY += 50;
+
+
+
+
+		// Help window
 		pWindow = x->pUI->windowAdd(names.uiThemeEditor + "_Help", true);
 		pWindow->setDimensions(640, 240);
 		pWindow->setPositionCentre();
@@ -481,6 +612,7 @@ namespace X
 		vPos = pWindow->getPosition();
 		vPos.x -= 700;
 		pWindow->setPosition(vPos);
+		pWindow->themeNameSet("editor");
 		int iXpos = 0;
 		int iYpos = 0;
 
@@ -495,6 +627,7 @@ namespace X
 			x->pResource->defaultRes.texture2DFromFile_default_white,
 			x->pResource->defaultRes.texture2DFromFile_default_white);
 		pBI->pTooltip->setText("Tooltip of a CUIButtonImage");
+		pBI->setText("");
 
 		iYpos += 50;
 		pWindow->textAdd("text2", iXpos, iYpos, 200, 40, "CUICheckbox: ");
@@ -503,7 +636,7 @@ namespace X
 
 		iYpos += 50;
 		pWindow->textAdd("text3", iXpos, iYpos, 200, 40, "CUIColourSelector: ");
-		CUIColourSelector* pCS = pWindow->colourSelectorAdd("colourSelector", iXpos + 200, iYpos);
+		pCS = pWindow->colourSelectorAdd("colourSelector", iXpos + 200, iYpos);
 
 		iYpos += 355;
 		pWindow->textAdd("text4", iXpos, iYpos, 200, 40, "CUILineGraph: ");
@@ -520,12 +653,12 @@ namespace X
 
 		iYpos += 40;
 		pWindow->textAdd("text6", iXpos, iYpos, 200, 40, "CUIScrollbar: ");
-		CUIScrollbar* pSB = pWindow->scrollbarAdd("scrollbar", iXpos + 200, iYpos, 200, 40);
+		pSB = pWindow->scrollbarAdd("scrollbar", iXpos + 200, iYpos, 200, 40);
 		pSB->pTooltip->setText("Tooltip of a CUIScrollbar");
 
 		iYpos += 40;
 		pWindow->textAdd("text7", iXpos, iYpos, 200, 40, "CUIText: ");
-		CUIText* pText = pWindow->textAdd("text8", iXpos + 200, iYpos, 200, 40, "CUIText Example.");
+		pText = pWindow->textAdd("text8", iXpos + 200, iYpos, 200, 40, "CUIText Example.");
 		pText->pTooltip->setText("Tooltip of a CUIText");
 
 		iYpos += 40;
@@ -549,6 +682,27 @@ namespace X
 		{
 			x->pUI->windowGet(names.uiThemeEditor + "_widget_preview")->setVisible(true, true);
 		}
+
+		CUIWindow* pWindowWidgets = x->pUI->windowGet(names.uiThemeEditor + "_widget_preview");
+		CUITheme::SSettings* pThemeSettings = pWindowWidgets->themeGetSettings();
+		CUIColourSelector* pCS;
+		pCS = pWindow->colourSelectorGet("AmbientLight");
+		if (pCS->getSomethingHasChanged())
+		{
+			pThemeSettings->colours.ambientLight = pCS->getColour();
+		}
+		pCS = pWindow->colourSelectorGet("MouseLight");
+		if (pCS->getSomethingHasChanged())
+		{
+			pThemeSettings->colours.mouseLight = pCS->getColour();
+		}
+		CUIScrollbar* pSB = pWindow->scrollbarGet("MouseLightDistance");
+		if (pSB->getTabBeingMoved())
+		{
+			pThemeSettings->floats.normalMouseCursorDistance = pSB->getTabPos() * 1000.0f;
+		}
+
+
 
 		// Widget preview window
 		pWindow = x->pUI->windowGet(names.uiThemeEditor + "_widget_preview");

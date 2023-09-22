@@ -26,6 +26,8 @@
     <ClInclude Include="2DParticleType.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="aStarPathfinding.h" />
+    <ClInclude Include="audioEmitter.h" />
+    <ClInclude Include="audioSample.h" />
     <ClInclude Include="fileManager.h" />
     <ClInclude Include="fileMemory.h" />
     <ClInclude Include="geneticAlgorithm.h" />
@@ -169,6 +171,8 @@
     <ClCompile Include="2DParticleType.cpp" />
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="aStarPathfinding.cpp" />
+    <ClCompile Include="audioEmitter.cpp" />
+    <ClCompile Include="audioSample.cpp" />
     <ClCompile Include="fileManager.cpp" />
     <ClCompile Include="fileMemory.cpp" />
     <ClCompile Include="geneticAlgorithm.cpp" />

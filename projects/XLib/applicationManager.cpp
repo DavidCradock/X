@@ -49,6 +49,9 @@ namespace X
 			// Create default UI theme
 			CUITheme* pTheme = x->pUI->themeAdd("default", true);
 			pTheme->addAllResources(true);
+			// Create editable UI theme used by the theme editor window
+			pTheme = x->pUI->themeAdd("editor", true);
+			pTheme->addAllResources(true);
 
 			// Create default GUI containers
 			x->pGUI->_createDefaultContainers();

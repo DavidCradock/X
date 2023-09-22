@@ -516,7 +516,9 @@ namespace X
 
 	CUITheme* SCUIManager::themeAdd(const std::string& strName, bool bLocked)
 	{
-		return _mmanThemes.add(strName, bLocked);
+		CUITheme* pNewTheme = _mmanThemes.add(strName, bLocked);
+		pNewTheme->setThemeName(strName);
+		return pNewTheme;
 	}
 
 	bool SCUIManager::themeExists(const std::string& strName) const

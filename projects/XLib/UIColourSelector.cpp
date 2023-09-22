@@ -72,6 +72,7 @@ namespace X
 		_mpTextEdit[EValue::saturation]->pTooltip->setText("Edit here to adjust the SATURATION value of the colour.");
 		_mpColourImage->pTooltip->setText("I show the resulting colour calculated from all the widgets above me.");
 
+		_mbSomethingHasChanged = false;
 	}
 
 	CUIColourSelector::~CUIColourSelector()
@@ -147,6 +148,8 @@ namespace X
 		std::string strTxt;
 		CColour colour;
 
+		_mbSomethingHasChanged = false;
+
 		// Scrollbar brightness being moved
 		pSB = _mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness]);
 		if (pSB->getTabBeingMoved())
@@ -157,6 +160,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::brightness])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar hue being moved
@@ -169,6 +173,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::hue])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar saturation being moved
@@ -181,6 +186,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::saturation])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar RED being moved
@@ -193,6 +199,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar GREEN being moved
@@ -205,6 +212,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourG])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar BLUE being moved
@@ -217,6 +225,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourB])->setText(strTxt);
 			// Set RGB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Scrollbar ALPHA being moved
@@ -229,6 +238,7 @@ namespace X
 			_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourA])->setText(strTxt);
 			_mColour.alpha = pSB->getTabPos();
 			_mpColourImage->setColour(_mColour);
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit brightness has changed
@@ -239,6 +249,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::brightness])->setTabPos(fValue);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit hue has changed
@@ -249,6 +260,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::hue])->setTabPos(fValue);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit saturation has changed
@@ -259,6 +271,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::saturation])->setTabPos(fValue);
 			// Set RGB scrollbars and textedit
 			_helperSetRGBFromHSB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit RED has changed
@@ -269,6 +282,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourR])->setTabPos(fValue);
 			// Set HSB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit GREEN has changed
@@ -279,6 +293,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourG])->setTabPos(fValue);
 			// Set HSB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit BLUE has changed
@@ -289,6 +304,7 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourB])->setTabPos(fValue);
 			// Set HSB scrollbars and textedit
 			_helperSetHSBFromRGB();
+			_mbSomethingHasChanged = true;
 		}
 
 		// Text edit ALPHA has changed
@@ -299,7 +315,10 @@ namespace X
 			_mpContainer->scrollbarGet(_mstrScrollbarNames[EValue::colourA])->setTabPos(fValue);
 			_mColour.alpha = fValue;
 			_mpColourImage->setColour(_mColour);
+			_mbSomethingHasChanged = true;
 		}
+
+
 
 		// Update this widget's, widget's tooltips
 		CVector2f vPosOffset = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
@@ -321,6 +340,7 @@ namespace X
 			_mpText[i]->pTooltip->reset();
 		}
 		_mpColourImage->pTooltip->reset();
+		_mbSomethingHasChanged = false;
 	}
 
 	void CUIColourSelector::_helperSetRGBFromHSB(void)
@@ -351,6 +371,8 @@ namespace X
 		_mpContainer->textEditGet(_mstrTextEditNames[EValue::colourR])->setText(strTxt);
 
 		_mpColourImage->setColour(colour);
+
+		_mColour = colour;
 	}
 
 	void CUIColourSelector::_helperSetHSBFromRGB(void)
@@ -382,6 +404,8 @@ namespace X
 		_mpContainer->textEditGet(_mstrTextEditNames[EValue::saturation])->setText(strTxt);
 
 		_mpColourImage->setColour(colour);
+
+		_mColour = colour;
 	}
 
 	void CUIColourSelector::_updateWidgetDims(void)
@@ -495,5 +519,10 @@ namespace X
 	CColour CUIColourSelector::getColour(void) const
 	{
 		return _mColour;
+	}
+
+	bool CUIColourSelector::getSomethingHasChanged(void)
+	{
+		return _mbSomethingHasChanged;
 	}
 }

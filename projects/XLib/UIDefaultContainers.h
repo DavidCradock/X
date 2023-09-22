@@ -26,6 +26,10 @@ namespace X
 			// A text based console/terminal for executing various commands.
 			std::string console;
 
+			// Holds the name of the default container called "X:Default:Defaults"
+			// A window to show and hide all of the default containers found here.
+			std::string defaults;
+
 			// Holds the name of the default container called "X:Default:FontGenerator"
 			// A container with functionality to generate font files from fonts stored in the operating system which
 			// can then be loaded by the SCResourceManager for the font resources.
@@ -59,6 +63,9 @@ namespace X
 
 		void _initConsole(void);							// Init method called from initialise() for "X:Default:Console" default container.
 		void _updateConsole(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Console" default container.
+
+		void _initDefaults(void);							// Init method called from initialise() for "X:Default:Defaults" default container.
+		void _updateDefaults(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Defaults" default container.
 
 		void _initFontGenerator(void);						// Init method called from initialise() for "X:Default:FontGenerator" default container.
 		void _updateFontGenerator(float fTimeDeltaSec);		// Update method called from update() for "X:Default:FontGenerator" default container.
@@ -99,7 +106,7 @@ namespace X
 		void _updateUIThemeEditor(float fTimeDeltaSec);		// Update method called from update() for "X:Default:UIThemeEditor" default container.
 		struct SUIThemeEditor
 		{
-			int NOT_USED;
+
 		};
 		SUIThemeEditor _mUIThemeEditor;		
 	};

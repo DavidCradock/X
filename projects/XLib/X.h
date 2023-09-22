@@ -27,7 +27,9 @@
 #include "applicationBase.h"
 #include "applicationManager.h"
 // Audio
+#include "audioEmitter.h"
 #include "audioManager.h"
+#include "audioSample.h"
 // Core
 #include "colour.h"
 #include "logging.h"

@@ -13,6 +13,11 @@ namespace X
 		_mbResourcesAdded = false;
 	}
 
+	void CUITheme::setThemeName(const std::string& strName)
+	{
+		_mSettings.themeName = strName;
+	}
+
 	/************************************************************************************************************************************************************/
 	/* All methods below this section need to be modified if we're adding a new widget type */
 	/************************************************************************************************************************************************************/
