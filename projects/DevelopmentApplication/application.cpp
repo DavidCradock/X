@@ -72,14 +72,6 @@ namespace X
 		CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
 		pWindow->setVisible(true);
 		pWindow->setPositionCentre();
-
-		// UI Theme editor default window
-		pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditorUIWidgetExamples);
-		pWindow->setVisible(true);
-		pWindow->setPositionCentre();
-		CVector2f vPos = pWindow->getPosition();
-		vPos.x -= 700;
-		pWindow->setPosition(vPos);
 	}
 
 	void CApplication::onStart(void)

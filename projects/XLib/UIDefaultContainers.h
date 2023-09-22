@@ -50,10 +50,6 @@ namespace X
 
 			// Holds the name of the default container called "X:Default:UIThemeEditor"
 			std::string uiThemeEditor;
-
-			// Holds the name of the default container called "X:Default:UIThemeEditorUIWidgetExamples"
-			std::string uiThemeEditorUIWidgetExamples;
-
 		};
 		// Structure holds strings of each default container's name.
 		SNames names;
@@ -105,15 +101,6 @@ namespace X
 		{
 			int NOT_USED;
 		};
-		SUIThemeEditor _mUIThemeEditor;
-
-		void _initUIThemeEditorWidgetExamples(void);
-		void _updateUIThemeEditorWidgetExamples(float fTimeDeltaSec);
-		struct SUIThemeEditorWidgetExamples
-		{
-			int NOT_USED;
-		};
-		SUIThemeEditorWidgetExamples _mUIThemeEditorWidgetExamples;
-		
+		SUIThemeEditor _mUIThemeEditor;		
 	};
 }

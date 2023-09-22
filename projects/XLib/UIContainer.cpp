@@ -77,11 +77,20 @@ namespace X
 		return _mvPosition;
 	}
 
-	void CUIContainer::setVisible(bool bVisible)
+	void CUIContainer::setVisible(bool bVisible, bool bBringToFrontAndSetFocus)
 	{
 		_mbVisible = bVisible;
 		if (!_mbVisible)
 			reset();
+
+		if (bBringToFrontAndSetFocus)
+		{
+			if (_mbContainerIsWindow)
+			{
+				x->pUI->windowSetFocused(_mstrName);
+				x->pUI->windowMoveToFront(_mstrName);
+			}
+		}
 	}
 
 	bool CUIContainer::getVisible(void) const

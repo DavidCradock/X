@@ -20,7 +20,6 @@ namespace X
 		names.settings = "X:Default:Settings";
 		names.statistics = "X:Default:Statistics";
 		names.uiThemeEditor = "X:Default:UIThemeEditor";
-		names.uiThemeEditorUIWidgetExamples = "X:Default:UIThemeEditorWidgetExamples";
 	}
 
 	void CUIDefaultContainers::initialise(void)
@@ -37,7 +36,6 @@ namespace X
 		_initSettings();
 		_initStatistics();
 		_initUIThemeEditor();
-		_initUIThemeEditorWidgetExamples();
 	}
 
 	void CUIDefaultContainers::update(float fTimeDeltaSecs)
@@ -50,7 +48,6 @@ namespace X
 		_updateSettings(fTimeDeltaSecs);
 		_updateStatistics(fTimeDeltaSecs);
 		_updateUIThemeEditor(fTimeDeltaSecs);
-		_updateUIThemeEditorWidgetExamples(fTimeDeltaSecs);
 	}
 
 	/************************************************************************************************************************************************************/
@@ -441,34 +438,54 @@ namespace X
 
 	void CUIDefaultContainers::_initUIThemeEditor(void)
 	{
+		CUIButton* pButton;
 		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditor, true);
 		pWindow->setVisible(false);
 		pWindow->setDimensions(640, 480);
-	}
 
-	void CUIDefaultContainers::_updateUIThemeEditor(float fTimeDeltaSec)
-	{
-		// Is the window visible? If not, simply return
-		CUIWindow* pWindow = x->pUI->windowGet(names.uiThemeEditor);
-		if (!pWindow->getVisible())
-			return;
-	}
+		pButton = pWindow->buttonAdd("Help", 0, 0, 200, 40);
+		pButton->pTooltip->setText("Open the help window.");
 
-	/************************************************************************************************************************************************************/
-	/* UI Theme Editor Widget Examples */
-	/************************************************************************************************************************************************************/
+		pButton = pWindow->buttonAdd("Widget Preview", 200, 0, 200, 40);
+		pButton->pTooltip->setText("Open the user interface editor's widget preview window.");
 
-	void CUIDefaultContainers::_initUIThemeEditorWidgetExamples(void)
-	{
-		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditorUIWidgetExamples, true);
+		pWindow = x->pUI->windowAdd(names.uiThemeEditor + "_Help", true);
+		pWindow->setDimensions(640, 240);
+		pWindow->setPositionCentre();
+		CVector2f vPos = pWindow->getPosition();
+		vPos.y = 0;
+		pWindow->setPosition(vPos);
+		pWindow->setVisible(false);
+		std::string strText;
+		strText = "Help for the user interface editor.\n";
+		strText += "First up, with great power, comes great responsibility! I heard that somewhere, perhaps in a film and it seems quite apt here.\n";
+		strText += "With the user interface editor, we can create new themes for the user interface system.\n";
+		strText += "The reason I mentioned the above is because there is no checking of us setting values to stupid values.\n";
+		strText += "For example, if we set some text colour to white and the background colour to white aswell, then we won't be able to see the text!\n";
+		strText += "So, be carefull :)\n";
+		strText += "With that out of the way, here's how to use the thing...\n";
+		strText += "Close this help window or move it out of the way and then click on the \"Widget Preview\" button.\n";
+		strText += "This will open a window which shows all of the user interface's available widgets.\n";
+		strText += "Click on a widget to make it the currently editable widget and once clicked, it's settings will be shown in the main window.\n";
+		strText += "You can then edit this widget's various settings.\n";
+		pWindow->textAdd("help", 0, 0, 640, 540, strText);
+
+
+
+
+		// Window for widget previews
+		pWindow = x->pUI->windowAdd(names.uiThemeEditor + "_widget_preview", true);
 		pWindow->setVisible(false);
 		pWindow->setDimensions(550, 800);
-
+		pWindow->setPositionCentre();
+		vPos = pWindow->getPosition();
+		vPos.x -= 700;
+		pWindow->setPosition(vPos);
 		int iXpos = 0;
 		int iYpos = 0;
-		
+
 		pWindow->textAdd("text0", iXpos, iYpos, 200, 40, "CUIButton: ");
-		CUIButton* pButton = pWindow->buttonAdd("button0", iXpos + 200, iYpos, 100, 30);
+		pButton = pWindow->buttonAdd("button0", iXpos + 200, iYpos, 100, 30);
 		pButton->pTooltip->setText("Tooltip of a CUIButton");
 
 		iYpos += 50;
@@ -494,7 +511,7 @@ namespace X
 		CUILineGraphDataSet* pDataSet = pLG->addDataset("Dataset0", CColour(1.0f, 1.0f, 1.0f, 1.0f));
 		pLG->pTooltip->setText("Tooltip of a CUILineGraph");
 		for (float f = 0; f < 15; f += 0.3f)
-			pDataSet->addValue((1.0f+sinf(f)) * 10.0f);
+			pDataSet->addValue((1.0f + sinf(f)) * 10.0f);
 
 		iYpos += 100;
 		pWindow->textAdd("text5", iXpos, iYpos, 200, 40, "CUIProgressbar: ");
@@ -517,12 +534,28 @@ namespace X
 		pTE->pTooltip->setText("Tooltip of a CUITextEdit");
 	}
 
-	void CUIDefaultContainers::_updateUIThemeEditorWidgetExamples(float fTimeDeltaSec)
+	void CUIDefaultContainers::_updateUIThemeEditor(float fTimeDeltaSec)
 	{
-		// Is the window visible? If not, simply return
-		CUIWindow* pWindow = x->pUI->windowGet(names.uiThemeEditorUIWidgetExamples);
+		// Main editor window
+		CUIWindow* pWindow = x->pUI->windowGet(names.uiThemeEditor);
 		if (!pWindow->getVisible())
 			return;
 
+		if (pWindow->buttonGet("Help")->getClicked())
+		{
+			x->pUI->windowGet(names.uiThemeEditor + "_Help")->setVisible(true, true);
+		}
+		if (pWindow->buttonGet("Widget Preview")->getClicked())
+		{
+			x->pUI->windowGet(names.uiThemeEditor + "_widget_preview")->setVisible(true, true);
+		}
+
+		// Widget preview window
+		pWindow = x->pUI->windowGet(names.uiThemeEditor + "_widget_preview");
+		if (pWindow->getVisible())
+		{
+		}
+
 	}
+
 }

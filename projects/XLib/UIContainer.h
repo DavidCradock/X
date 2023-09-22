@@ -62,8 +62,10 @@ namespace X
 		// Returns the position of this container.
 		CVector2f getPosition(void) const;
 
-		// Sets whether this container is visible or not
-		void setVisible(bool bVisible);
+		// Sets whether this container is visible or not.
+		// If the container is a window (_mbContainerIsWindow == true) then bBringToFrontAndSetFocus will do what it is named.
+		// Has no affect upon containers which are not windows.
+		void setVisible(bool bVisible, bool bBringToFrontAndSetFocus = false);
 
 		// Returns whether this container is visible or not
 		bool getVisible(void) const;

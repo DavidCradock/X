@@ -110,7 +110,7 @@ namespace X
 			return;
 
 		// Render image
-		CVector2f vWidgetOffset = _mpContainer->getWidgetOffset();
+		CVector2f vWidgetOffset = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
 		CVector2f vPos = vWidgetOffset + _mvPosition;
 		if (state::up == _mState)
 			x->pResource->getTexture2DFromFile(_mstrTextureUp)->renderTo2DQuad((int)vPos.x, (int)vPos.y, (int)_mvDimensions.x, (int)_mvDimensions.y, _mColourBG);
