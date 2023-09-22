@@ -110,7 +110,6 @@ namespace X
 		struct SImageNamesWidget
 		{
 			SImageType buttonBG;			// Image names for CUIButton's background
-//			SImageType buttonImageBG;		// Image names for CUIButtonImage's background
 			SImageType checkboxBGOff;		// Image names for CUICheckbox's OFF state
 			SImageType checkboxBGOffOver;	// Image names for CUICheckbox's OFF, with mouse over state
 			SImageType checkboxBGOn;		// Image names for CUICheckbox's ON state
@@ -186,7 +185,6 @@ namespace X
 		struct SAudio
 		{
 			AudioSampleInfo buttonClicked;				// Audio sample to play when a button is clicked
-//			AudioSampleInfo buttonImageClicked;			// Audio sample to play when an image button is clicked
 			AudioSampleInfo textEditActivate;			// Audio sample to play when a text edit box is clicked upon and activated
 			AudioSampleInfo textEditBackspace;			// Audio sample to play when a text edit box is activated and the backspace key is pressed
 			AudioSampleInfo textEditNoMoreCharSpace;	// Audio sample to play when a text edit box is activated, a character key is pressed an the edit box has reached it's character limit.
@@ -211,7 +209,6 @@ namespace X
 		{
 			float buttonFadeSpeed;					// Rate at which button text and BG colours interpolate between
 			float buttonImageFadeSpeed;				// Rate at which button text and image colours interpolate between
-//			float checkboxFadeSpeed;				// Rate at which the checkbox fades between ON and OFF states
 			float colourSelectorTotalWidth;			// Total width of colour selector widget
 			float colourSelectorYspacing;			// Spacing between widgets along Y axis
 			float normalMouseCursorDistance;		// Distance the mouse cursor is from the fragments when computing the bump mapping.

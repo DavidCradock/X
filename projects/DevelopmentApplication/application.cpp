@@ -62,30 +62,24 @@ namespace X
 //		SCWindow::getPointer()->setVsync(false);
 
 		// Real simple as it gets framerate text
-//		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
-//		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
+		x->pUI->containerAdd("FPSonly")->textAdd("FPS", 0, 0, 150, 30, "FPS");
+		x->pUI->containerGet("FPSonly")->setDimensions(150, 40);
 
 		// Show statistics
 		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.statistics)->setVisible(true);
 
-		// Tooltip window
-		CUIWindow* pWindow = x->pUI->windowAdd("tooltipwindow");
-		pWindow->setDimensions(320, 100);
-//		pWindow->setPosition(320, 240);
-//		pWindow->setPositionCentre();
-		CUIButton* pButton = pWindow->buttonAdd("tooltipbutton", 0, 0, 320, 100);
-		pButton->pTooltip->setEnabled(true);
-		pButton->pTooltip->setText("Text which is quite long now eh? and now it is even longer and longer and longer...");
-
 		// UI Theme editor default window
-		pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
+		CUIWindow* pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditor);
 		pWindow->setVisible(true);
-//		pWindow->setPositionCentre();
+		pWindow->setPositionCentre();
 
 		// UI Theme editor default window
 		pWindow = x->pUI->windowGet(x->pUI->getDefaultContainers()->names.uiThemeEditorUIWidgetExamples);
 		pWindow->setVisible(true);
 		pWindow->setPositionCentre();
+		CVector2f vPos = pWindow->getPosition();
+		vPos.x -= 700;
+		pWindow->setPosition(vPos);
 	}
 
 	void CApplication::onStart(void)
@@ -98,13 +92,6 @@ namespace X
 
 	bool CApplication::onUpdate(void)
 	{
-
-//		static float sfProgress = 0.0f;
-//		sfProgress += timer.getSecondsPast();
-//		if (sfProgress >= 1.0f)
-//			sfProgress = 0.0f;
-//		x->pUI->windowGet("window1 200x200")->progressbarGet("pb1")->setProgress(sfProgress);
-
 		// Timer delta
 		timer.update();
 
@@ -115,7 +102,7 @@ namespace X
 			sfUpdate = 1.0f;
 			std::string strTxt = "FPS: ";
 			StringUtils::appendFloat(strTxt, timer.getFPSAveraged(), 1);
-//			x->pUI->containerGet("FPSonly")->textGet("FPS")->setText(strTxt);
+			x->pUI->containerGet("FPSonly")->textGet("FPS")->setText(strTxt);
 		}
 
 		// G key to toggle debug grid

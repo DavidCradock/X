@@ -29,7 +29,6 @@ namespace X
 
 		// Audio
 		_helperReadAudio(file, _mSettings.audio.buttonClicked);
-//		_helperReadAudio(file, _mSettings.audio.buttonImageClicked);
 		_helperReadAudio(file, _mSettings.audio.textEditActivate);
 		_helperReadAudio(file, _mSettings.audio.textEditBackspace);
 		_helperReadAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
@@ -52,7 +51,6 @@ namespace X
 
 		// Images
 		_helperReadImageType(file, _mSettings.images.buttonBG);
-//		_helperReadImageType(file, _mSettings.images.buttonImageBG);
 		_helperReadImageType(file, _mSettings.images.checkboxBGOff);
 		_helperReadImageType(file, _mSettings.images.checkboxBGOffOver);
 		_helperReadImageType(file, _mSettings.images.checkboxBGOn);
@@ -102,7 +100,6 @@ namespace X
 
 		// Audio
 		_helperWriteAudio(file, _mSettings.audio.buttonClicked);
-//		_helperWriteAudio(file, _mSettings.audio.buttonImageClicked);
 		_helperWriteAudio(file, _mSettings.audio.textEditActivate);
 		_helperWriteAudio(file, _mSettings.audio.textEditBackspace);
 		_helperWriteAudio(file, _mSettings.audio.textEditNoMoreCharSpace);
@@ -125,7 +122,6 @@ namespace X
 
 		// Images
 		_helperWriteImageType(file, _mSettings.images.buttonBG);
-//		_helperWriteImageType(file, _mSettings.images.buttonImageBG);
 		_helperWriteImageType(file, _mSettings.images.checkboxBGOff);
 		_helperWriteImageType(file, _mSettings.images.checkboxBGOffOver);
 		_helperWriteImageType(file, _mSettings.images.checkboxBGOn);
@@ -170,7 +166,6 @@ namespace X
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->addNewSampleGroup("UI");
 		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
-//		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
 		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->addSample(strTmp, "UI");	pAM->addEmitter(strTmp, strTmp, 4, "UI");
@@ -218,7 +213,6 @@ namespace X
 		SCAudioManager* pAM = SCAudioManager::getPointer();
 		pAM->unloadSampleGroup("UI");
 		strTmp = _mSettings.audio.buttonClicked.sampleName;				pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
-//		strTmp = _mSettings.audio.buttonImageClicked.sampleName;		pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 		strTmp = _mSettings.audio.textEditActivate.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 		strTmp = _mSettings.audio.textEditBackspace.sampleName;			pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
 		strTmp = _mSettings.audio.textEditNoMoreCharSpace.sampleName;	pAM->removeSample(strTmp, "UI");	pAM->removeEmitter(strTmp);
@@ -252,7 +246,6 @@ namespace X
 	{
 		// Audio
 		_helperSetAudio(_mSettings.audio.buttonClicked, "data/X/UI/default/buttonClicked.wav", 1.0f, 0.8f);
-//		_helperSetAudio(_mSettings.audio.buttonImageClicked, "data/X/UI/default/buttonImageClicked.wav", 1.0f, 0.8f);
 		_helperSetAudio(_mSettings.audio.textEditActivate, "data/X/UI/default/textEditActivate.wav", 1.0f, 0.8f);
 		_helperSetAudio(_mSettings.audio.textEditBackspace, "data/X/UI/default/textEditBackspace.wav", 1.0f, 0.2f);
 		_helperSetAudio(_mSettings.audio.textEditNoMoreCharSpace, "data/X/UI/default/textEditNoMoreCharSpace.wav", 1.0f, 0.2f);
@@ -299,8 +292,7 @@ namespace X
 		// Floats
 		_mSettings.floats.buttonFadeSpeed = 5.0f;
 		_mSettings.floats.buttonImageFadeSpeed = 5.0f;
-//		_mSettings.floats.checkboxFadeSpeed = 1.0f;
-		_mSettings.floats.colourSelectorTotalWidth = 250.0f;
+		_mSettings.floats.colourSelectorTotalWidth = 350.0f;
 		_mSettings.floats.colourSelectorYspacing = 45.0f;
 		_mSettings.floats.normalMouseCursorDistance = 10.0f;
 		_mSettings.floats.scrollbarTabFadeSpeed = 5.0f;
@@ -321,7 +313,6 @@ namespace X
 
 		// Image file names
 		_helperSetNames(_mSettings.images.buttonBG, "data/X/UI/default/images/genericBG");
-//		_helperSetNames(_mSettings.images.buttonImageBG, "data/X/UI/default/images/buttonImageBG");
 		_helperSetNames(_mSettings.images.checkboxBGOff, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.checkboxBGOffOver, "data/X/UI/default/images/genericBG");
 		_helperSetNames(_mSettings.images.checkboxBGOn, "data/X/UI/default/images/genericBG");
@@ -358,7 +349,6 @@ namespace X
 		ThrowIfFalse(_mbResourcesAdded, "CUITheme::_helperCheckImageDimsAreOK() failed. Resources have not been added to resource managers yet.");
 		// Note: The second parameter for the below method calls can be anything, it's used during creating of the exception text.
 		_helperCheckImageDimsAreOK(_mSettings.images.buttonBG, "buttonBG");
-//		_helperCheckImageDimsAreOK(_mSettings.images.buttonImageBG, "buttonImageBG");
 		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOff, "checkboxBGOff");
 		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOffOver, "checkboxBGOffOver");
 		_helperCheckImageDimsAreOK(_mSettings.images.checkboxBGOn, "checkboxBGOn");
@@ -376,7 +366,6 @@ namespace X
 	void CUITheme::_helperBuildNormalImages(bool bOverwriteNormalImages)
 	{
 		_helperBuildNormalImages(_mSettings.images.buttonBG, bOverwriteNormalImages);
-//		_helperBuildNormalImages(_mSettings.images.buttonImageBG, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.checkboxBGOff, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.checkboxBGOffOver, bOverwriteNormalImages);
 		_helperBuildNormalImages(_mSettings.images.checkboxBGOn, bOverwriteNormalImages);

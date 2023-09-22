@@ -460,7 +460,7 @@ namespace X
 	{
 		CUIWindow* pWindow = x->pUI->windowAdd(names.uiThemeEditorUIWidgetExamples, true);
 		pWindow->setVisible(false);
-		pWindow->setDimensions(500, 800);
+		pWindow->setDimensions(550, 800);
 
 		int iXpos = 0;
 		int iYpos = 0;

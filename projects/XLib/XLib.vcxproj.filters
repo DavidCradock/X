@@ -161,9 +161,6 @@
     <ClInclude Include="GUIImageAnimated.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUITooltip.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="frustum.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -338,9 +335,6 @@
     <ClInclude Include="singletons.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="GUICheckbox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="2DMapTile.h">
       <Filter>2D</Filter>
     </ClInclude>
@@ -503,6 +497,12 @@
     <ClInclude Include="UITooltip.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="GUITooltip.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUICheckbox.h">
+      <Filter>GUI\Added to UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -564,9 +564,6 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="GUIImageAnimated.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITooltip.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="frustum.cpp">
@@ -737,9 +734,6 @@
     <ClCompile Include="singletons.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="GUICheckbox.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="2DMapTile.cpp">
       <Filter>2D</Filter>
     </ClCompile>
@@ -880,6 +874,12 @@
     </ClCompile>
     <ClCompile Include="UITooltip.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITooltip.cpp">
+      <Filter>GUI\Added to UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUICheckbox.cpp">
+      <Filter>GUI\Added to UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
