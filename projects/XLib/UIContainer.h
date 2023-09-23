@@ -113,7 +113,7 @@ namespace X
 		// Returns a vector holding the amount to offset this container's widgets due to this container's scrollbars being enabled
 		CVector2f getWidgetOffset(void) const;
 
-		// Updates the this container's two scrollbar positions, dimensions and ratios
+		// Updates this container's two scrollbar positions, dimensions and ratios
 		// Called if the theme changes, the dimensions change, a new widget is added (or removed) to the container or if a widgets dims or pos are changed
 		// Also calls _helperComputeMaxWidgetCornerPos which computes _mvMaxWidgetCornerPos
 		void computeScrollbars(void);

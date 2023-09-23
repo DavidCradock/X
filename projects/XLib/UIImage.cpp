@@ -4,6 +4,8 @@
 #include "singletons.h"
 #include "UITooltip.h"
 #include "logging.h"
+#include "UIManager.h"
+#include "input.h"
 
 namespace X
 {
@@ -13,7 +15,8 @@ namespace X
 		_mvDimensions = getDimensionsMinimum();
 		_mbVisible = true;
 		_meResourceType = EResourceType::texture2DFromFile;
-
+		_mbClicked = false;
+		_mfuncOnClicked = 0;
 		pTooltip = new CUITooltip(pContainer);
 		ThrowIfMemoryNotAllocated(pTooltip);
 	}
@@ -119,12 +122,46 @@ namespace X
 
 	void CUIImage::update(float fTimeDeltaSec)
 	{
+		// Determine whether the mouse cursor is over this widget's container or not.
+		// This is all to prevent doing expensive checks if we don't need to.
+		bool bContainerHasMouseOver = false;
+		std::string strMouseIsOver = x->pUI->getMouseIsOverWhichContainer();	// Get the name of the container/window that the mouse cursor is over, if any.
+		if (strMouseIsOver == _mpContainer->getName())
+			bContainerHasMouseOver = true;
+		_mbClicked = false;
+		if (bContainerHasMouseOver)
+		{
+			CVector2f vMousePos = x->pInput->mouse.getCursorPos();
+
+			CRect rctWidget;	// This will hold actual screen position for the widget's four corners.
+			CVector2f vWidgetAreaTLPos = _mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset();
+			rctWidget.miMinX = int(vWidgetAreaTLPos.x + _mvPosition.x);
+			rctWidget.miMinY = int(vWidgetAreaTLPos.y + _mvPosition.y);
+			rctWidget.miMaxX = rctWidget.miMinX + int(_mvDimensions.x);
+			rctWidget.miMaxY = rctWidget.miMinY + int(_mvDimensions.y);
+
+			bool bMouseOver = false;
+			if (rctWidget.doesPositionFitWithin(vMousePos))
+				bMouseOver = true;
+
+			if (bMouseOver)
+			{
+				if (x->pInput->mouse.leftButtonOnce())
+				{
+					_mbClicked = true;
+					if (_mfuncOnClicked)
+						_mfuncOnClicked();
+				}
+			}
+		}	// if (bContainerHasMouseOver)
+
 		// Update this widget's tooltip
 		pTooltip->update(_mpContainer->getWidgetAreaTLCornerPosition() + _mpContainer->getWidgetOffset() + _mvPosition, _mvDimensions, fTimeDeltaSec);
 	}
 
 	void CUIImage::reset(void)
 	{
+		_mbClicked = false;
 		pTooltip->reset();
 	}
 
@@ -169,5 +206,15 @@ namespace X
 	void CUIImage::setColour(const CColour& colour)
 	{
 		_mColour = colour;
+	}
+
+	bool CUIImage::getClicked(void) const
+	{
+		return _mbClicked;
+	}
+
+	void CUIImage::setFunctionOnClicked(void (*function)(void))
+	{
+		_mfuncOnClicked = function;
 	}
 }

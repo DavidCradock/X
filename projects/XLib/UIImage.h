@@ -95,6 +95,23 @@ namespace X
 		// By default, this is CColour(1,1,1,1);
 		void setColour(const CColour& colour = CColour(1, 1, 1, 1));
 
+		// Returns whether this widget has been clicked upon or not.
+		// This is OK for a quick and dirty approach to checking clicks, but if we have
+		// many widgets, there will be a lot of if then statements in the calling code and things start
+		// to get inefficient.
+		// If you are using this method, don't forget to check if the widget's container is visible, otherwise
+		// there's no point checking to see if the widget has changed state as it will not have.
+		// Instead of using this, use observers or function pointers for optimal performance.
+		bool getClicked(void) const;
+
+		// Set the C function which'll be called once the widget has been clicked upon.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pWidget->setFunctionOnClicked(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnClicked(void (*function)(void));
+
 		// Tooltip object for this widget.
 		// Access and use this object to setup and enable the tooltip.
 		CUITooltip* pTooltip;
@@ -125,6 +142,11 @@ namespace X
 		// then this holds the name of the image stored in the atlas to use when rendering this widget.
 		std::string _mstrImageInAtlasName;
 
-		CColour _mColour;	// Colour multiplier used when rendering the texture image.
+		CColour _mColour;			// Colour multiplier used when rendering the texture image.
+
+		bool _mbClicked;			// Holds whether the widget has been clicked upon.
+
+		// Function pointer which can be set with setFunctionOnClicked() which gets called when the widget gets clicked upon.
+		void (*_mfuncOnClicked)(void);
 	};
 }

@@ -1,6 +1,14 @@
 #pragma once
 #include "PCH.h"
 #include "timer.h"
+#include "UIDefConConsole.h"
+#include "UIDefConDefaults.h"
+#include "UIDefConFontGenerator.h"
+#include "UIDefConImageEditor.h"
+#include "UIDefConProfiling.h"
+#include "UIDefConSettings.h"
+#include "UIDefConStatistics.h"
+#include "UIDefConUIThemeEditor.h"
 
 namespace X
 {
@@ -61,53 +69,13 @@ namespace X
 		// Is set to true once initialise() has been called.
 		bool _mbInitialised;
 
-		void _initConsole(void);							// Init method called from initialise() for "X:Default:Console" default container.
-		void _updateConsole(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Console" default container.
-
-		void _initDefaults(void);							// Init method called from initialise() for "X:Default:Defaults" default container.
-		void _updateDefaults(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Defaults" default container.
-
-		void _initFontGenerator(void);						// Init method called from initialise() for "X:Default:FontGenerator" default container.
-		void _updateFontGenerator(float fTimeDeltaSec);		// Update method called from update() for "X:Default:FontGenerator" default container.
-
-		void _initImageEditor(void);
-		void _updateImageEditor(float fTimeDeltaSec);
-		struct SImageEditor
-		{
-			int UNUSED;
-		};
-		SImageEditor _mImageEditor;
-
-		void _initProfiling(void);							// Init method called from initialise() for "X:Default:Profiling" default container.
-		void _updateProfiling(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Profiling" default container.
-		// Struct used by profiling default container
-		struct SProfiling
-		{
-			float fUpdateDelaySeconds;		// Number of seconds between updating of text
-			float fUpdateDelay;				// When reached zero, we update the text
-			bool bPaused;
-		};
-		SProfiling _mProfiling;
-
-		void _initSettings(void);							// Init method called from initialise() for "X:Default:Settings" default container.
-		void _updateSettings(float fTimeDeltaSec);			// Update method called from update() for "X:Default:Settings" default container.
-
-		void _initStatistics(void);							// Init method called from initialise() for "X:Default:Statistics" default container.
-		void _updateStatistics(float fTimeDeltaSec);		// Update method called from update() for "X:Default:Statistics" default container.
-		struct SStatistics
-		{
-			float fAddValueToLinegraphDataset;	// Time counter used to add a new value to the data set.
-			CTimer timer;
-			bool bvsyncEnabled;					// Used for comparison and only update text when value has changed
-		};
-		SStatistics _mStatistics;
-
-		void _initUIThemeEditor(void);						// Init method called from initialise() for "X:Default:UIThemeEditor" default container.
-		void _updateUIThemeEditor(float fTimeDeltaSec);		// Update method called from update() for "X:Default:UIThemeEditor" default container.
-		struct SUIThemeEditor
-		{
-
-		};
-		SUIThemeEditor _mUIThemeEditor;		
+		CUIDefConConsole _mConsole;
+		CUIDefConDefaults _mDefaults;
+		CUIDefConFontGenerator _mFontGenerator;
+		CUIDefConImageEditor _mImageEditor;
+		CUIDefConProfiling _mProfiling;
+		CUIDefConSettings _mSettings;
+		CUIDefConStatistics _mStatistics;
+		CUIDefConUIThemeEditor _mUIThemeEditor;
 	};
 }

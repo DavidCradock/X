@@ -301,8 +301,8 @@ namespace X
 		if (_mbShowCloseButton)
 		{
 			_mpButtonClose->setPosition(
-				-getWidgetOffset().x + getDimsIncludingTheme().x - _mpButtonClose->getDimensions().x - idColTR->vDims.x,
-				-getWidgetOffset().y - idColTR->vDims.y);
+				-getWidgetOffset().x + getDimsIncludingTheme().x - _mpButtonClose->getDimensions().x - idColTR->vDims.x + pSettings->vectors.windowCloseButtonOffset.x,
+				-getWidgetOffset().y - idColTR->vDims.y + pSettings->vectors.windowCloseButtonOffset.y);
 			_mpButtonClose->renderBG(pVB);
 		}
 		pVB->update();

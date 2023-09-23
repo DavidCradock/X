@@ -79,6 +79,9 @@
     <Filter Include="Renderer\Vulkan">
       <UniqueIdentifier>{02875441-edb1-4c9a-82a0-d314eda82205}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\DefaultContainers">
+      <UniqueIdentifier>{f35916b2-f4d9-45f1-8144-0ba9de25276d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h" />
@@ -401,9 +404,6 @@
     <ClInclude Include="timerMinimal.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="UIDefaultContainers.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="UIButton.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
@@ -505,6 +505,33 @@
     </ClInclude>
     <ClInclude Include="audioEmitter.h">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefaultContainers.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConUIThemeEditor.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConConsole.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConDefaults.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConFontGenerator.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConImageEditor.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConProfiling.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConSettings.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDefConStatistics.h">
+      <Filter>UI\DefaultContainers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -785,9 +812,6 @@
     <ClCompile Include="timerMinimal.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="UIDefaultContainers.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UIButton.cpp">
       <Filter>UI\Widgets</Filter>
     </ClCompile>
@@ -889,6 +913,33 @@
     </ClCompile>
     <ClCompile Include="audioEmitter.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefaultContainers.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConUIThemeEditor.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConConsole.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConDefaults.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConFontGenerator.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConImageEditor.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConProfiling.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConSettings.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConStatistics.cpp">
+      <Filter>UI\DefaultContainers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,6 @@ namespace X
 		_mbVisible = true;
 		_mState = state::up;
 		_mbClicked = false;
-
 		_mfuncOnClicked = 0;
 		pTooltip = new CUITooltip(pContainer);
 		ThrowIfMemoryNotAllocated(pTooltip);

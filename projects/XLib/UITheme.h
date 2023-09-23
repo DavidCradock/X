@@ -229,6 +229,7 @@ namespace X
 		{
 			CVector2f colourSelectorTextEditDims;	// Dimensions of the CUIColourSelector widget's text edit widget.
 			CVector2f tooltipOffsetFromCursor;		// Offset of tooltips from the position of the mouse cursor
+			CVector2f windowCloseButtonOffset;		// Offset of the window's close button from edge of border.
 		};
 
 		// Struct to hold all settings for the theme

@@ -343,6 +343,8 @@ namespace X
 		// Vectors
 		_mSettings.vectors.colourSelectorTextEditDims.set(80.0f, 40.0f);
 		_mSettings.vectors.tooltipOffsetFromCursor.set(32.0f, 0.0f);
+		_mSettings.vectors.windowCloseButtonOffset.set(-10, 8);
+
 		// Theme name
 		_mSettings.themeName = "default";
 
