@@ -35,7 +35,7 @@ namespace X
 		void reset(void);
 
 		// Sets the text to be displayed in the tooltip
-		void setText(const std::string& strText, bool bEnable = true, int iMaxWidth = 300);
+		void setText(const std::string& strText, bool bEnable = true, int iMaxWidth = 600);
 	private:
 		CVector2f _mvDimensions;			// Dimensions of the tooltip
 		CVector2f _mvPosition;				// Top left corner position of the tooltip.

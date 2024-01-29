@@ -15,8 +15,8 @@ namespace X
 	{
 		CUIDefaultContainers* pDefCons = x->pUI->getDefaultContainers();
 		CUIWindow* pWindow = x->pUI->windowAdd(pDefCons->names.defaults, true);
-		pWindow->setVisible(true);
-		pWindow->setDimensions(200, 310);
+		pWindow->setVisible(false);
+		pWindow->setDimensions(200, 355);
 		pWindow->setPosition(99999, 99999);
 
 		int iYpos = 0;
@@ -28,6 +28,9 @@ namespace X
 
 		pBut = pWindow->buttonAdd("ImageEditor", 0, iYpos, 200, 40); iYpos += 45;
 		pBut->pTooltip->setText("Toggles the \"X:Default:ImageEditor\" default container.");
+
+		pBut = pWindow->buttonAdd("MapEditor", 0, iYpos, 200, 40); iYpos += 45;
+		pBut->pTooltip->setText("Toggles the \"X:Default:MapEditor\" default container.");
 
 		pBut = pWindow->buttonAdd("Profiling", 0, iYpos, 200, 40); iYpos += 45;
 		pBut->pTooltip->setText("Toggles the \"X:Default:Profiling\" default container.");
@@ -70,6 +73,15 @@ namespace X
 		if (pWindow->buttonGet("ImageEditor")->getClicked())
 		{
 			CUIWindow* pWnd = x->pUI->windowGet(pDefCons->names.imageEditor);
+			pWnd->setVisible(!pWnd->getVisible());
+			if (pWnd->getVisible())
+				pWnd->setToFrontAndInFocus();
+			return;
+		}
+
+		if (pWindow->buttonGet("MapEditor")->getClicked())
+		{
+			CUIWindow* pWnd = x->pUI->windowGet(pDefCons->names.mapEditor);
 			pWnd->setVisible(!pWnd->getVisible());
 			if (pWnd->getVisible())
 				pWnd->setToFrontAndInFocus();

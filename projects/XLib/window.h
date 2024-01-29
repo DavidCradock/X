@@ -98,5 +98,8 @@ namespace X
 
 		// Resize the window's OpenGL viewport
 		void _resizeOpenGLViewport(unsigned int iNewWidth, unsigned int iNewHeight);
+
+		// Members for toggleFullscreen to restore icon
+		int _iIconResourceSetWith_setIcon;
 	};
 }

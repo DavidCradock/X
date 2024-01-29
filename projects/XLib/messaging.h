@@ -11,7 +11,7 @@ namespace X
 	// CMessage which represents a single message that is passed around the messaging system.
 	// CMessageUser which represents a single message user which can send and receive messages to and from a...
 	// CMessageService which is responsible for receiving and sending messages to/from CMessageUsers.
-	// Important note: Once a user is cacpable of receiving messages, by being subscribed to service, that user
+	// Important note: Once a user is capable of receiving messages, by being subscribed to service, that user
 	// needs to check it's inbox and empty it on a regular basis, otherwise the inbox will eventually fill up with loads of messages.
 	// To empty the inbox, either call the user's getMessageFromInbox() until it's doesInboxContainMessages() returns false, or
 	// call the user's getMessagesFromInbox() method. Alternatively, a call to that user's emptyInbox() will suffice.

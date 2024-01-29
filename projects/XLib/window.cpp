@@ -34,6 +34,9 @@ namespace X
 		SCSettings* pSettings = SCSettings::getPointer();
 		_mbVsyncEnabled = pSettings->getWindowVSync();
 		_mbWindowFullscreen = pSettings->getWindowFullscreen();
+
+		// Icon resource number set by setIcon()
+		_iIconResourceSetWith_setIcon = 0;
 	}
 
 	void SCWindow::createWindow(std::string strWindowTitle)
@@ -429,8 +432,14 @@ namespace X
 		x->pResource->getBackbuffer()->resizeToWindowDimsScaled();
 
 		// Call SCApplicationManager::onToggleFullscreen to call all app's method too.
-		// That method calls SCUIManager::onToggleFullscreen
+		// That method also calls SCUIManager::onToggleFullscreen
 		x->pAppMan->onWindowToggleFullscreen(_mbWindowFullscreen, _muiWindowWidth, _muiWindowHeight);
+
+		// Reset icon for window
+		if (_iIconResourceSetWith_setIcon)
+		{
+			setIcon(_iIconResourceSetWith_setIcon);
+		}
 	}
 
 	unsigned int SCWindow::getMaxTextureSize(void) const
@@ -445,6 +454,9 @@ namespace X
 		HICON hIcon = LoadIcon(_mhInstance, MAKEINTRESOURCE(iIconResource));
 //		_ASSERTE(hIcon != 0);
 		SendMessage(_mhWindowHandle, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+
+		// Store icon number to restore in toggleFullscreen
+		_iIconResourceSetWith_setIcon = iIconResource;
 	}
 
 	unsigned int SCWindow::getRefreshRate(void) const

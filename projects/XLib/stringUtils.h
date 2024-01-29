@@ -92,5 +92,8 @@ namespace X
 
 		// Converts the given string to a float
 		float stringToFloat(const std::string& string);
+
+		// Converts the given string to an int
+		int stringToInt(const std::string& string);
 	}
 }

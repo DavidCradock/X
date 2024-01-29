@@ -1,5 +1,7 @@
 #pragma once
 #include "PCH.h"
+#include "colour.h"
+#include "UIImage.h"
 
 namespace X
 {
@@ -15,6 +17,13 @@ namespace X
 		// Called from CUIDefaultContainers::update() to update everything
 		void update(float fTimeDeltaSecs);
 
+		CColour* pCurrentlySelectedThemeColour;
+		CUIImage* pCurrentlySelectedThemeColourImageWidget;
 	private:
+		void _initMainWindow(void);
+		void _initHelpWindow(void);
+		void _initWidgetPreviewWindow(void);
+
+		void _colourImageAdd(const std::string& strName, int& iPositionY, CColour& colour, void (*function)(void));
 	};
 }

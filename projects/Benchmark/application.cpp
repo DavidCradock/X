@@ -298,7 +298,7 @@ namespace X
 		pCont->setPositionCentreWindow();
 
 		// Add animated image
-		std::vector<std::string> vstrImages = StringUtils::getFilesInDir("data/DemoBenchmark/Images/disc/");
+		std::vector<std::string> vstrImages = StringUtils::getFilesInDir("data/Benchmark/Images/disc/");
 		CGUIImageAnimated* pImageAnim = pCont->addImageAnimated("Anim", -16, -16, vstrImages, 16, 16);
 
 		// Add text

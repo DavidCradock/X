@@ -52,12 +52,12 @@ namespace X
 	{
 		if (_mhCursor)
 		{
-			if (x->pUI->mouseCursorGetPreviouslySet() != _mstrResourceName)
-			{
+//			if (x->pUI->mouseCursorGetPreviouslySet() != _mstrResourceName)
+//			{
 				SetClassLongPtr(x->pWindow->getWindowHandle(), GCLP_HCURSOR, (LONG_PTR)_mhCursor);
 				SetCursor(_mhCursor);
 				x->pUI->mouseCursorSetPreviouslySet(_mstrResourceName);
-			}
+//			}
 		}
 	}
 }

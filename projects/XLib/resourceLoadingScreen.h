@@ -42,7 +42,7 @@ namespace X
 		// Calling this method, enables the loading screen.
 		void onInit(int iTotalNumberOfResourcesToLoad = 0);
 
-		// Must be called at the end of our application's onInit() method one all resources are loaded.
+		// Must be called at the end of our application's onInit() method once all resources are loaded.
 		void onInitEnd(void);
 
 		// Sets the loading screen's small text font filename to use during rendering, it also loads it in ready for use

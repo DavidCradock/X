@@ -10,6 +10,7 @@
 #include "renderer.h"
 #include "input.h"
 #include "settings.h"
+#include "stringUtils.h"
 
 namespace X
 {
@@ -344,8 +345,24 @@ namespace X
 					{
 						if (_mstrText.length() < _muiMaxChars)
 						{
-							_mstrText += strNewChar;
-							x->pAudio->getEmitter(pThemeSettings->audio.textEditTextAdd.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditTextAdd.volume, pThemeSettings->audio.textEditTextAdd.pitch);
+							if (_mbIntegerInputOnly)
+							{
+								if (StringUtils::representsNumber(strNewChar))
+								{
+									_mstrText += strNewChar;
+									x->pAudio->getEmitter(pThemeSettings->audio.textEditTextAdd.sampleName)->play(x->pSettings->getUIVolume() * pThemeSettings->audio.textEditTextAdd.volume, pThemeSettings->audio.textEditTextAdd.pitch);
+								}
+								else
+								{
+									x->pAudio->getEmitter(pThemeSettings->audio.textEditNoMoreCharSpace.sampleName)->play(x->pSettings->getUIVolume()* pThemeSettings->audio.textEditNoMoreCharSpace.volume, pThemeSettings->audio.textEditNoMoreCharSpace.pitch);
+								}
+							}
+							else
+							{
+								_mstrText += strNewChar;
+								x->pAudio->getEmitter(pThemeSettings->audio.textEditTextAdd.sampleName)->play(x->pSettings->getUIVolume()* pThemeSettings->audio.textEditTextAdd.volume, pThemeSettings->audio.textEditTextAdd.pitch);
+							}
+							
 						}
 						else
 						{

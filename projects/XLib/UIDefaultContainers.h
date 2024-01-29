@@ -5,6 +5,7 @@
 #include "UIDefConDefaults.h"
 #include "UIDefConFontGenerator.h"
 #include "UIDefConImageEditor.h"
+#include "UIDefConMapEditor.h"
 #include "UIDefConProfiling.h"
 #include "UIDefConSettings.h"
 #include "UIDefConStatistics.h"
@@ -47,6 +48,9 @@ namespace X
 			// A window with functionality to create/load/save/edit/display images.
 			std::string imageEditor;
 
+			// Holds the name of the default container called "X:Default:MapEditor"
+			std::string mapEditor;
+
 			// Holds the name of the default container called "X:Default:Profiling"
 			// Shows profiling statistics for the global CProfiler object stored in the global x object, x->pProfiler.
 			// We can add more sections to be profiled and they will be added and shown in this container.
@@ -65,17 +69,21 @@ namespace X
 		};
 		// Structure holds strings of each default container's name.
 		SNames names;
+
+		CUIDefConConsole console;
+		CUIDefConDefaults defaults;
+		CUIDefConFontGenerator fontGenerator;
+		CUIDefConImageEditor imageEditor;
+		CUIDefConMapEditor mapEditor;
+		CUIDefConProfiling profiling;
+		CUIDefConSettings settings;
+		CUIDefConStatistics statistics;
+		CUIDefConUIThemeEditor themeEditor;
+
 	private:
 		// Is set to true once initialise() has been called.
 		bool _mbInitialised;
 
-		CUIDefConConsole _mConsole;
-		CUIDefConDefaults _mDefaults;
-		CUIDefConFontGenerator _mFontGenerator;
-		CUIDefConImageEditor _mImageEditor;
-		CUIDefConProfiling _mProfiling;
-		CUIDefConSettings _mSettings;
-		CUIDefConStatistics _mStatistics;
-		CUIDefConUIThemeEditor _mUIThemeEditor;
+		
 	};
 }

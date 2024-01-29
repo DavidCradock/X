@@ -20,6 +20,7 @@ namespace X
 		_mpButtonClose->setDimensions(24, 24);
 		_mpButtonClose->setText("x");
 		_mpButtonClose->pTooltip->setText("Close Window.");
+		_mfuncOnCloseButtonClicked = 0;
 	}
 
 	CUIWindow::~CUIWindow()
@@ -51,7 +52,8 @@ namespace X
 			if (_mpButtonClose->getClicked())
 			{
 				setVisible(false);
-				
+				if (_mfuncOnCloseButtonClicked != 0)
+					_mfuncOnCloseButtonClicked();
 			}
 		}
 	}
@@ -605,5 +607,10 @@ namespace X
 	void CUIWindow::showCloseButton(bool bShowCloseButton)
 	{
 		_mbShowCloseButton = bShowCloseButton;
+	}
+
+	void CUIWindow::setFunctionOnCloseButtonClicked(void (*function)(void))
+	{
+		_mfuncOnCloseButtonClicked = function;
 	}
 }

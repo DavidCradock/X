@@ -1,13 +1,14 @@
 #pragma once
 #include "PCH.h"
+#include "2DMapTile.h"
 
 namespace X
 {
-	// This container has functionality for editing images
-	class CUIDefConImageEditor
+	// Editor of 2D maps
+	class CUIDefConMapEditor
 	{
 	public:
-		CUIDefConImageEditor();
+		CUIDefConMapEditor();
 
 		// Called from CUIDefaultContainers::initialise() to initialise everything
 		void initialise(void);
@@ -15,7 +16,7 @@ namespace X
 		// Called from CUIDefaultContainers::update() to update everything
 		void update(float fTimeDeltaSecs);
 
-
 	private:
+		C2DMapTile* _mpMapTilePrev;
 	};
 }

@@ -533,6 +533,12 @@
     <ClInclude Include="UIDefConStatistics.h">
       <Filter>UI\DefaultContainers</Filter>
     </ClInclude>
+    <ClInclude Include="UIDefConMapEditor.h">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH.cpp" />
@@ -940,6 +946,12 @@
     </ClCompile>
     <ClCompile Include="UIDefConStatistics.cpp">
       <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDefConMapEditor.cpp">
+      <Filter>UI\DefaultContainers</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

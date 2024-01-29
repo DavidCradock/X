@@ -110,7 +110,7 @@ namespace X
 	{
 		_mbEnabled = false;
 
-		// Turn vync to it's state it was before onInit() was called, which disables it.
+		// Turn vsync to it's state it was before onInit() was called, which disables it.
 		x->pWindow->setVsync(_mbVsyncStatePriorToLoading);
 
 		// Set cursor to what it was set to before all this began

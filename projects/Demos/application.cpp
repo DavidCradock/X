@@ -99,8 +99,8 @@ namespace X
 
 		// TEMP
 		// Switch to state straight away, and hide the Demo states container
-		_mFSM.switchToState("demo2D");
-		x->pGUI->getContainer("DemoStates")->setVisible(false);
+//		_mFSM.switchToState("demo2D");
+//		x->pGUI->getContainer("DemoStates")->setVisible(false);
 
 		// SUPER TEMP DEBUG ATLAS
 		// Setup UserInterface theme

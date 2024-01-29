@@ -316,6 +316,12 @@ namespace X
 			float strfloat = std::stof(string);
 			return strfloat;
 		}
+
+		int stringToInt(const std::string& string)
+		{
+			int strInt = std::stoi(string);
+			return strInt;
+		}
 	}
 
 }

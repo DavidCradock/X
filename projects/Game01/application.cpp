@@ -6,60 +6,20 @@ namespace X
 	void CApplication::initOnce(void)
 	{
 		// Use the resource loading screen
-		x->pLoadingScreen->onInit(0);
-		x->pLoadingScreen->setFadeOut(0.0f);
+//		x->pLoadingScreen->onInit(0);
+//		x->pLoadingScreen->setFadeOut(0.0f);
 
 		// Set window title bar text and set icon
-		x->pWindow->setText("X: DevApp. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle defaults window.");
+		x->pWindow->setText("X: Game01. F1: Toggle fullscreen. F2: Toggle Vsync. F3: Toggle defaults window.");
 		x->pWindow->setIcon(IDI_ICON1);
 
 		// Set mouse cursor
 		x->pUI->mouseCursorSetToNormal();
 
 		// End of loading screen
-		x->pLoadingScreen->onInitEnd();
+//		x->pLoadingScreen->onInitEnd();
 
-		// Setup messaging system
-		// Create a message service which handles sending and receiving of messages to/from message users
-		CMessageService* pMsgService = x->pMessageSystem->serviceAdd("service");	// Create a messaging service
-		CMessageUser* pUserDavid = x->pMessageSystem->userAdd("David");				// Add a user
-		CMessageUser* pUserMojo = x->pMessageSystem->userAdd("Mojo");				// Add another user
-		x->pMessageSystem->subscribeUserToService("David", "service");				// Subscribe "David" user to "service" service.
-		CMessage msg("ThisIsMessageContents", EMessageType::UNKNOWN);				// Create a message for some user to send to the service
-		pUserMojo->postNewMessage(msg, "service");									// Let user "Mojo" send the message to the "service" service
-		pMsgService->dispatch();													// Get the service to dispatch all received messages to all subscribed users
-		while (pUserMojo->doesInboxContainMessages())								// Get Mojo user to check to see if their inbox contains any messages
-			CMessage message = pUserMojo->getMessageFromInbox();					// If there's a message, remove it from the user's inbox and then we can read the message
-		// There won't be any messages as user Mojo is not subscribed to any service.
-		if (pUserDavid->doesInboxContainMessages())									// Get David user to check to see if their inbox contains any messages
-		{
-			std::vector<CMessage> messages = pUserDavid->getMessagesFromInbox();	// Get all messages from the user's inbox, emptying the inbox in the process.
-			for (size_t iMessage = 0; iMessage < messages.size(); iMessage++)		// Do stuff with the messages
-			{
-				CMessage mes = messages[iMessage];
-				if (mes.getMessageSender() == "Mojo")
-				{
-					std::string strContents = mes.getMessageContents();
-				}
-			}
-		}
-
-		// Setup UserInterface theme
-//		CUIWindow* pWindow = x->pUI->windowAdd("window1 200x200", false);
-//		pWindow->setDimensions(CVector2f(200, 200));
-//		pWindow->setPosition(1400-16, 200-30);
-//		pWindow->setResizable(true, CVector2f(200, 200), CVector2f(400, 400));
-//		pWindow->progressbarAdd("pb1", 0, 0, 200, 30);
-//		CUITextEdit* pTextEdit = pWindow->textEditAdd("textedit", 0, 50, 100, 40, "Hello");
-
-//		x->pAppMan->debugShowGrid(!x->pAppMan->debugGridShown(), 100, 100);
-//		x->pUI->windowGet(x->pUI->getDefaultContainers()->names.profiling)->setPosition(0, 0);
-
-		// Show old GUI statistics
-//		x->pGUI->getContainer("X:Default:Statistics")->setVisible(true);
-
-
-//		SCWindow::getPointer()->setVsync(false);
+		
 
 		// Real simple as it gets framerate text
 		timer.setAveragedFPSRate(1.0f);

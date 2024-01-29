@@ -14,7 +14,7 @@ namespace X
 		_mbEnabled = false;
 		_mfTooltipDelay = 0.0f;
 		_mColour.set(1.0f, 1.0f, 1.0f, 0.0f);
-		_mvDimensions.set(200, 100);
+		_mvDimensions.set(300, 100);
 		setText("Tooltip text goes here.", false);
 	}
 

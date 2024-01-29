@@ -36,6 +36,7 @@
     <ClInclude Include="messagingMessage.h" />
     <ClInclude Include="messagingService.h" />
     <ClInclude Include="messagingUser.h" />
+    <ClInclude Include="multithreading.h" />
     <ClInclude Include="neuralNetFeedForward.h" />
     <ClInclude Include="octTree.h" />
     <ClInclude Include="2DRenderer.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="UIDefConDefaults.h" />
     <ClInclude Include="UIDefConFontGenerator.h" />
     <ClInclude Include="UIDefConImageEditor.h" />
+    <ClInclude Include="UIDefConMapEditor.h" />
     <ClInclude Include="UIDefConProfiling.h" />
     <ClInclude Include="UIDefConSettings.h" />
     <ClInclude Include="UIDefConStatistics.h" />
@@ -189,6 +191,7 @@
     <ClCompile Include="messagingMessage.cpp" />
     <ClCompile Include="messagingService.cpp" />
     <ClCompile Include="messagingUser.cpp" />
+    <ClCompile Include="multithreading.cpp" />
     <ClCompile Include="neuralNetFeedForward.cpp" />
     <ClCompile Include="octTree.cpp" />
     <ClCompile Include="2DRenderer.cpp" />
@@ -280,6 +283,7 @@
     <ClCompile Include="UIDefConDefaults.cpp" />
     <ClCompile Include="UIDefConFontGenerator.cpp" />
     <ClCompile Include="UIDefConImageEditor.cpp" />
+    <ClCompile Include="UIDefConMapEditor.cpp" />
     <ClCompile Include="UIDefConProfiling.cpp" />
     <ClCompile Include="UIDefConSettings.cpp" />
     <ClCompile Include="UIDefConStatistics.cpp" />

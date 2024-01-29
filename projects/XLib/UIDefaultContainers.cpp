@@ -18,6 +18,7 @@ namespace X
 		names.defaults = "X:Default:Defaults";
 		names.fontGenerator = "X:Default:FontGenerator";
 		names.imageEditor = "X:Default:ImageEditor";
+		names.mapEditor = "X:Default:MapEditor";
 		names.profiling = "X:Default:Profiling";
 		names.settings = "X:Default:Settings";
 		names.statistics = "X:Default:Statistics";
@@ -30,25 +31,27 @@ namespace X
 			return;
 		_mbInitialised = true;
 
-		_mConsole.initialise();
-		_mDefaults.initialise();
-		_mFontGenerator.initialise();
-		_mImageEditor.initialise();
-		_mProfiling.initialise();
-		_mSettings.initialise();
-		_mStatistics.initialise();
-		_mUIThemeEditor.initialise();
+		console.initialise();
+		defaults.initialise();
+		fontGenerator.initialise();
+		imageEditor.initialise();
+		mapEditor.initialise();
+		profiling.initialise();
+		settings.initialise();
+		statistics.initialise();
+		themeEditor.initialise();
 	}
 
 	void CUIDefaultContainers::update(float fTimeDeltaSecs)
 	{
-		_mConsole.update(fTimeDeltaSecs);
-		_mDefaults.update(fTimeDeltaSecs);
-		_mFontGenerator.update(fTimeDeltaSecs);
-		_mImageEditor.update(fTimeDeltaSecs);
-		_mProfiling.update(fTimeDeltaSecs);
-		_mSettings.update(fTimeDeltaSecs);
-		_mStatistics.update(fTimeDeltaSecs);
-		_mUIThemeEditor.update(fTimeDeltaSecs);
+		console.update(fTimeDeltaSecs);
+		defaults.update(fTimeDeltaSecs);
+		fontGenerator.update(fTimeDeltaSecs);
+		imageEditor.update(fTimeDeltaSecs);
+		mapEditor.update(fTimeDeltaSecs);
+		profiling.update(fTimeDeltaSecs);
+		settings.update(fTimeDeltaSecs);
+		statistics.update(fTimeDeltaSecs);
+		themeEditor.update(fTimeDeltaSecs);
 	}	
 }

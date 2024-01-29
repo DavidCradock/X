@@ -63,6 +63,15 @@ namespace X
 		// Sets whether this window shows the close button in the top right of the titlebar or not.
 		// By default, this is enabled.
 		void showCloseButton(bool bShowCloseButton = true);
+
+		// Set the C function which'll be called once the close button of this window has been clicked upon.
+		// To use, create a function with the following signature...
+		// void MyFunction(void);
+		// Then set it to be called with the following syntax...
+		// pWidget->setFunctionOnClicked(MyFunction);
+		// Pass 0 or NULL here to remove the function
+		void setFunctionOnCloseButtonClicked(void (*function)(void));
+
 	private:
 		void _renderBordersAndWindowButtons(void);
 
@@ -114,5 +123,7 @@ namespace X
 
 		bool _mbShowCloseButton;	// Whether this window has a close button or not
 		CUIButton* _mpButtonClose;	// The close button
+		// Function pointer which can be set with setFunctionOnCloseButtonClicked() which gets called when the c,lose button gets clicked upon.
+		void (*_mfuncOnCloseButtonClicked)(void);
 	};
 }

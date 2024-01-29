@@ -2,8 +2,6 @@
 #include "PCH.h"
 #include "singleton.h"
 
-
-
 namespace X
 {
 	class SC2DRenderer;
@@ -94,7 +92,7 @@ namespace X
 		// A pointer to the SCSettings singleton class.
 		// The SCSettings class which holds all global settings.
 		// These settings are things which are usually accessed from a program's settings interface and include such things as..
-		// Shadow map resolution, backbuffer resolution, global audio volumn and more.
+		// Shadow map resolution, backbuffer resolution, global audio volume and more.
 		SCSettings* pSettings;
 
 		// A pointer to the SCUIManager singleton class.
